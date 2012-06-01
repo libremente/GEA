@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title><ui:insert name="title">CRL</ui:insert></title>
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <link type="text/css" rel="ICON" href="#{request.contextPath}/resources/img/favicon.ico"/>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/css.css"/>
+        <ui:insert name="css"></ui:insert>
+        <ui:insert name="js"></ui:insert>            
+        <ui:insert name="style"></ui:insert>
+        <ui:insert name="script"></ui:insert>
+    </h:head>
+
+    <h:body style="width:1035px;margin:auto">
+
+        <ui:include src="header.xhtml"/>
+
+        <div id="wrapper1"><!-- sets background to white and creates full length leftcol-->
+
+            <div id="wrapper2"><!-- sets background to white and creates full length rightcol-->
+
+                <div id="maincol"><!-- begin main content area -->
+                    <div id="leftcol"><!-- begin leftCol -->
+                        <ui:insert name="leftCol">Left column is empty</ui:insert>
+                    </div><!-- end righttcol -->
+
+                    <div id="centercol"><!-- begin centercol -->
+                        <ui:insert name="mainContent">Main content is empty</ui:insert>
+                    </div><!-- end centercol -->
+                </div><!-- end main content area -->
+
+            </div><!-- end wrapper2 -->
+
+        </div><!-- end wrapper1 -->
+
+        <ui:include src="footer.xhtml"/>
+
+        <ui:insert name="dialogs"></ui:insert>
+    </h:body>
+</html>
