@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>it.pronetics</groupId>
+    <groupId>com.sourcesense</groupId>
     <artifactId>crl_web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -22,7 +22,7 @@
             <artifactId>primefaces</artifactId>
             <version>3.3</version>
             <type>jar</type>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -36,7 +36,7 @@
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
             <version>2.1.9</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         
         <dependency>
@@ -50,8 +50,13 @@
             <groupId>com.sun.facelets</groupId>
             <artifactId>jsf-facelets</artifactId>
             <version>1.1.14</version>
+            <scope>provided</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>crl_business</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     
     <build>

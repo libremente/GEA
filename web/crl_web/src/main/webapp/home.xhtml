@@ -6,13 +6,15 @@
     <ui:define name="title">CRL Home</ui:define>
 
     <ui:define name="content">
-        <h:form>
-            <p:calendar />
-        </h:form>
+        <ui:include src="/cercaAtto.xhtml"/>
     </ui:define>
     
     <ui:define name="top">
         <ui:include src="resources/template/header.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="left">
+        <ui:include src="/leftmenu.xhtml"/>
     </ui:define>
     
     <ui:define name="bottom">

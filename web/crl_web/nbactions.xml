@@ -32,4 +32,11 @@
                 <netbeans.deploy.profilemode>true</netbeans.deploy.profilemode>
             </properties>
         </action>
+        <action>
+            <actionName>test</actionName>
+            <preAction>build-with-dependencies</preAction>
+            <goals>
+                <goal>test</goal>
+            </goals>
+        </action>
     </actions>

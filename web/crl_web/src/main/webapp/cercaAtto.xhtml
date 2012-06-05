@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:form>  
+        <p:panelGrid columns="1" id="mainPanel">
+            <p:outputPanel>
+                <h:form>
+                <p:calendar/>
+                </h:form>
+                <h:outputText style="color: #BBBB">Qui Maschera di ricerca</h:outputText>
+            </p:outputPanel>
+            <p:dataTable id="listaAtti" var="atto" value="#{searchBean.lazyAttoModel}" rows="10" paginator="true"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+                             paginatorAlwaysVisible="false" paginatorPosition="bottom"> 
+                <p:column>  
+                    <f:facet name="header">Tipo</f:facet>  
+                    <h:outputText value="#{atto.tipo}" />  
+                </p:column>  
+                <p:column headerText="N.Atto">  
+                    <h:outputText value="#{atto.codice}" />  
+                </p:column>  
+                <p:column headerText="Oggetto">  
+                    <h:outputText value="#{atto.oggetto}" />  
+                </p:column>  
+                <p:column headerText="1 Firmatario">  
+                    <h:outputText value="#{atto.primoFirmatario}" />  
+                </p:column>
+                <p:column headerText="Data Presetazione">  
+                    <h:outputText value="#{atto.dataPresentazione}" />  
+                </p:column>
+                <p:column headerText="Stato">  
+                    <h:outputText value="#{atto.stato}" />  
+                </p:column>
+                <p:column headerText="Alert">  
+                    <h:outputText value="" />  
+                </p:column>
+                <p:column headerText="Azioni">  
+                    <h:outputText value="" />  
+                </p:column>
+            </p:dataTable>  
+        </p:panelGrid> 
+    </h:form> 
+</html>

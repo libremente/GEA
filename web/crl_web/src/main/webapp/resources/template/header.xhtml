@@ -7,7 +7,12 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:panelGroup layout="block"><!-- begin header -->
-        <h:outputText value="header"/>
+    <h:panelGroup layout="block" style="height: 50px"><!-- begin header -->
+        <div id="footer_logo">
+            <h:graphicImage alt="regione lombardia" value="/resources/img/logo.gif" width="100"/>
+        </div>
+        <div id="footer_menu">
+        <h:outputText value="Gestione Atti CRL" style="font-size: 1.5em; padding-top: 55px; vertical-align: middle"/>
+        </div>
     </h:panelGroup>
 </html>

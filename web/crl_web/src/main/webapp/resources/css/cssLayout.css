@@ -18,7 +18,7 @@
 
 #footer_logo{float:left;margin-left:10px; margin-top: auto; margin-bottom: auto}
 
-#footer_menu{text-align:right;margin-right:10px; font-size:12px;}
+#footer_menu{text-align:right;vertical-align: middle; font-size:12px;}
 #footer_menu ul li{display:inline}
 #footer_menu li a,footer_menu li a:visited,footer_menu li a:hover,footer_menu li a:active{text-decoration:none;}
 
@@ -27,6 +27,17 @@
     background-color: #ece3a5;
     padding: 5px;
     width: 150px;
+    margin-bottom: 10px;
+}
+
+#left2 {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    min-height: 100%;
 }
 
 #right {
@@ -42,16 +53,16 @@
     padding: 5px;
 }
 
-.left_content {
-    background-color: #dddddd;
-    padding: 5px;
-    margin-left: 170px;
-}
-
 .right_content {
     background-color: #dddddd;
     padding: 5px;
-    margin: 0px 170px 0px 170px;
+    margin: 0px 0px 0px 170px;
+}
+
+.right_content_2menu {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 0px 0px 340px;
 }
 
 #top a:link, #top a:visited {
@@ -67,7 +78,7 @@
 }
 
 /* Rounded DIVS */
-#top, #right, #left, #content, #bottom {
+#top, #right, #left, #left2, #content, #bottom {
     -moz-border-radius: 4px; /* Firefox */
     -webkit-border-radius: 4px; /* Safari, Chrome */
     -khtml-border-radius: 4px; /* KHTML */
