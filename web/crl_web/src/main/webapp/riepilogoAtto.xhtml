@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:form>  
+        <p:tabView id="tabView" dynamic="true" cache="true" effect="slide" >  
+            <p:tab id="tba1" title="Informazioni Generali">  
+                <p:panel toggleable="true" collapsed="false" header="Informazioni Generali">
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <h:outputText value="codice: " />
+                        <h:outputText value="#{mgmtBean.atto.codice}" />
+                        <h:outputText value="oggetto: " />
+                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
+                    </h:panelGrid>  
+                </p:panel>
+                <p:panel toggleable="true" collapsed="true" header="Ufficio Servizio Segreterie Commissioni">
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <h:outputText value="codice: " />
+                        <h:outputText value="#{mgmtBean.atto.codice}" />
+                        <h:outputText value="oggetto: " />
+                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
+                    </h:panelGrid>  
+                </p:panel>
+                <p:panel toggleable="true" collapsed="true" header="Commissioni">
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <h:outputText value="codice: " />
+                        <h:outputText value="#{mgmtBean.atto.codice}" />
+                        <h:outputText value="oggetto: " />
+                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
+                    </h:panelGrid>  
+                </p:panel>
+                <p:panel toggleable="true" collapsed="true" header="Aula">
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <h:outputText value="codice: " />
+                        <h:outputText value="#{mgmtBean.atto.codice}" />
+                        <h:outputText value="oggetto: " />
+                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
+                    </h:panelGrid>  
+                </p:panel>
+                <p:panel toggleable="true" collapsed="true" header="Chiusura iter">
+                    <h:panelGrid columns="2" cellpadding="10">  
+                        <h:outputText value="codice: " />
+                        <h:outputText value="#{mgmtBean.atto.codice}" />
+                        <h:outputText value="oggetto: " />
+                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
+                    </h:panelGrid>  
+                </p:panel>
+            </p:tab>  
+
+            <p:tab id="tab2" title="Documenti Allegati">  
+                <h:panelGrid columns="1" cellpadding="10">  
+                    <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
+                                  In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,  
+                                  killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."/>  
+                </h:panelGrid>  
+            </p:tab>  
+
+            <p:tab id="tab3" title="Sedute">  
+                <h:panelGrid columns="1" cellpadding="10">  
+                    <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.  
+                                  Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate."/>  
+                </h:panelGrid>  
+            </p:tab>
+        </p:tabView>  
+    </h:form> 
+</html>

@@ -114,4 +114,21 @@ public class AttoService
         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "count: {0}", data.size());
         return data.size();
     }
+    
+    public Atto get(String cod)
+    {
+        if (data == null)
+            return null;
+        
+        
+        for (Atto atto: data)
+        {
+            if (atto.getCodice() != null && atto.getCodice().equals(cod))
+            {
+                return atto;
+            }
+        }
+        
+        return null;
+    }
 }

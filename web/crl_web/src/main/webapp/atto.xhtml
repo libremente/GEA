@@ -1,12 +1,12 @@
 <ui:composition xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/resources/template/base.xhtml">
+                template="/resources/template/base-2leftmenus.xhtml">
     
-    <ui:define name="title">CRL Atto</ui:define>
+    <ui:define name="title">CRL Home</ui:define>
 
     <ui:define name="content">
-        <ui:include src="/cercaAtto.xhtml"/>
+        <ui:include src="/riepilogoAtto.xhtml"/>
     </ui:define>
     
     <ui:define name="top">
@@ -15,6 +15,10 @@
     
     <ui:define name="left">
         <ui:include src="/leftmenu.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="left2">
+        <ui:include src="/leftmenu2_atto.xhtml"/>
     </ui:define>
     
     <ui:define name="bottom">

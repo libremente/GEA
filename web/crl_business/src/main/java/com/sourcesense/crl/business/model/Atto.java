@@ -18,12 +18,11 @@ import java.util.Date;
  */
 public class Atto
 {
-    //Tipo N.Atto Oggetto 1 Firmatario Data present. Stato Alert Azioni
     private String tipo;
     private String codice;
     private String oggetto;
     private String primoFirmatario;
-    private Date dataPresentazione;
+    private Date   dataPresentazione;
     private String stato;
 
     /**

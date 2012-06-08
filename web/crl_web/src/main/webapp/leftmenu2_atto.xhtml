@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:panelGrid columns="1"><!-- begin leftmenu -->
+        <h:outputLink value="#{request.contextPath}/atto"><h:outputText value="Riepilogo Atto" /><f:param name="code" value="#{mgmtBean.atto.codice}"/></h:outputLink>
+        <h:outputLink value="javascript:void(0)"><h:outputText value="Presentazione e Assegnazione" /></h:outputLink>
+        <h:outputLink value="javascript:void(0)"><h:outputText value="Esame Commissioni" /></h:outputLink>
+        <h:outputLink value="javascript:void(0)"><h:outputText value="Esame Aula" /></h:outputLink>
+        <h:outputLink value="javascript:void(0)"><h:outputText value="Chiusura Iter" /></h:outputLink>
+        
+        <h:outputLink value="javascript:void(0)"><h:outputText value="Consultazione e Pareri" /></h:outputLink>
+        <h:outputLink value="javascript:void(0)"><h:outputText value="Collegamenti" /></h:outputLink>
+        <h:outputLink value="javascript:void(0)"><h:outputText value="Lettere e Notifiche" /></h:outputLink>
+    </h:panelGrid><!-- end leftmenu -->
+</html>

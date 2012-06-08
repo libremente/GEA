@@ -24,7 +24,10 @@
                     <h:outputText value="#{atto.tipo}" />  
                 </p:column>  
                 <p:column headerText="N.Atto">  
-                    <h:outputText value="#{atto.codice}" />  
+                    <h:outputLink value="#{request.contextPath}/atto">
+                        <h:outputText value="#{atto.codice}" />
+                        <f:param name="code" value="#{atto.codice}"/>
+                    </h:outputLink>
                 </p:column>  
                 <p:column headerText="Oggetto">  
                     <h:outputText value="#{atto.oggetto}" />  
