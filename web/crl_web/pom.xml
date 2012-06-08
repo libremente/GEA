@@ -1,132 +1,121 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>pronetics-parent-war</artifactId>
+		<groupId>it.pronetics</groupId>
+		<version>RELEASE</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sourcesense</groupId>
-    <artifactId>crl_web</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+	<groupId>com.sourcesense.crl</groupId>
+	<artifactId>crl_web</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
 
-    <name>crl_web</name>
+	<name>crl_web</name>
+	<scm>
+		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/trunk/web/crl_web</developerConnection>
+		<connection>https://forge.pronetics.it/svn/manpower</connection>
+		<url>https://forge.pronetics.it/svn/manpower</url>
+	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>3.3</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
-    </properties>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>3.3</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>2.1.9</version>
+			<scope>compile</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.faces</artifactId>
-            <version>2.1.9</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.ocpsoft</groupId>
-            <artifactId>prettyfaces-jsf2</artifactId>
-            <version>3.3.3</version>
-            <scope>runtime</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.sun.facelets</groupId>
-            <artifactId>jsf-facelets</artifactId>
-            <version>1.1.14</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>crl_business</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
-    
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    
-    <repositories>
-        <repository>
-            <id>prime-repo</id>
-            <name>Prime Repo</name>
-            <url>http://repository.primefaces.org</url>
-        </repository>
-        <repository>
-            <id>jvnet-nexus-releases</id>
-            <name>jvnet-nexus-releases</name>
-            <url>https://maven.java.net/content/repositories/releases/</url>
-        </repository>
-        <repository>
-            <url>http://repository.primefaces.org/</url>
-            <id>primefaces</id>
-            <layout>default</layout>
-            <name>Repository for library Library[primefaces]</name>
-        </repository>
-    </repositories>
-    
-    
+		<dependency>
+			<groupId>com.ocpsoft</groupId>
+			<artifactId>prettyfaces-jsf2</artifactId>
+			<version>3.3.3</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.facelets</groupId>
+			<artifactId>jsf-facelets</artifactId>
+			<version>1.1.14</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>crl_business</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>deploy</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<version>1.2.1</version>
+						 <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>deployer-redeploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+						<configuration>
+							<container>
+								<containerId>tomcat7x</containerId>
+								<type>remote</type>
+							</container>
+							<configuration>
+								<type>runtime</type>
+								<properties>
+								<!--  queste proprietà dovrebbero essere passate in input con il comando 
+								mvn  package -P deploy -Dcargo.remote.uri="<URI>" -Dcargo.remote.password="<PASS>" -Dcargo.remote.username="<USER>"
+									<cargo.remote.uri>http://localhost:8080/manager/text</cargo.remote.uri>
+									<cargo.remote.username>admin</cargo.remote.username>
+									<cargo.remote.password></cargo.remote.password> 
+								-->
+								</properties>
+							</configuration>
+							<deployer>
+								<type>remote</type>
+								<deployables>
+									<deployable>
+										<groupId>${project.groupId}</groupId>
+										<artifactId>${project.artifactId}</artifactId>
+										<type>war</type>
+									</deployable>
+								</deployables>
+							</deployer>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
