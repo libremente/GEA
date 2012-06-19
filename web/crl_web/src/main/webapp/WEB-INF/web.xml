@@ -34,7 +34,7 @@
       <url-pattern>/*</url-pattern>
     </web-resource-collection>
     <auth-constraint>
-      <role-name>admin</role-name>
+      <role-name>crl</role-name>
     </auth-constraint>
   </security-constraint>  
   <login-config>
