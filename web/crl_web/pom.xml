@@ -26,8 +26,18 @@
 			<version>3.3</version>
 			<type>jar</type>
 			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.7</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -77,14 +87,14 @@
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
 						<version>1.2.1</version>
-						 <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>deployer-redeploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>deployer-redeploy</goal>
+								</goals>
+							</execution>
+						</executions>
 						<configuration>
 							<container>
 								<containerId>tomcat7x</containerId>
@@ -93,12 +103,10 @@
 							<configuration>
 								<type>runtime</type>
 								<properties>
-								<!--  queste proprietà dovrebbero essere passate in input con il comando 
-								mvn  package -P deploy -Dcargo.remote.uri="<URI>" -Dcargo.remote.password="<PASS>" -Dcargo.remote.username="<USER>"
-									<cargo.remote.uri>http://localhost:8080/manager/text</cargo.remote.uri>
-									<cargo.remote.username>admin</cargo.remote.username>
-									<cargo.remote.password></cargo.remote.password> 
-								-->
+									<!-- queste proprietà dovrebbero essere passate in input con il 
+										comando mvn package -P deploy -Dcargo.remote.uri="<URI>" -Dcargo.remote.password="<PASS>" 
+										-Dcargo.remote.username="<USER>" <cargo.remote.uri>http://localhost:8080/manager/text</cargo.remote.uri> 
+										<cargo.remote.username>admin</cargo.remote.username> <cargo.remote.password></cargo.remote.password> -->
 								</properties>
 							</configuration>
 							<deployer>

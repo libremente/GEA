@@ -10,47 +10,54 @@
 
     <h:form>  
         <p:tabView id="tabView" dynamic="true" cache="true" effect="slide" >  
+            
             <p:tab id="tba1" title="Informazioni Generali">  
-                <p:panel toggleable="true" collapsed="false" header="Informazioni Generali">
+                
+                <p:fieldset legend="Informazioni Generali" toggleable="true" toggleSpeed="500">  
+                    <h:panelGrid columns="2" >  
+                        <h:outputText value="codice: " />
+                        <h:outputText value="#{mgmtBean.atto.codice}" />
+                        <h:outputText value="oggetto: " />
+                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
+                    </h:panelGrid>  
+                </p:fieldset>
+                
+                <p:fieldset legend="Ufficio Servizio Segreterie Commissioni" collapsed="true" toggleable="true" toggleSpeed="500">
                     <h:panelGrid columns="2" cellpadding="10">  
                         <h:outputText value="codice: " />
                         <h:outputText value="#{mgmtBean.atto.codice}" />
                         <h:outputText value="oggetto: " />
                         <h:outputText value="#{mgmtBean.atto.oggetto}" />  
                     </h:panelGrid>  
-                </p:panel>
-                <p:panel toggleable="true" collapsed="true" header="Ufficio Servizio Segreterie Commissioni">
+                </p:fieldset>
+                
+                <p:fieldset legend="Commissioni" toggleable="true" collapsed="true" toggleSpeed="500">
                     <h:panelGrid columns="2" cellpadding="10">  
                         <h:outputText value="codice: " />
                         <h:outputText value="#{mgmtBean.atto.codice}" />
                         <h:outputText value="oggetto: " />
                         <h:outputText value="#{mgmtBean.atto.oggetto}" />  
                     </h:panelGrid>  
-                </p:panel>
-                <p:panel toggleable="true" collapsed="true" header="Commissioni">
+                </p:fieldset>
+                
+                <p:fieldset legend="Aula" toggleable="true" collapsed="true" toggleSpeed="500">
                     <h:panelGrid columns="2" cellpadding="10">  
                         <h:outputText value="codice: " />
                         <h:outputText value="#{mgmtBean.atto.codice}" />
                         <h:outputText value="oggetto: " />
                         <h:outputText value="#{mgmtBean.atto.oggetto}" />  
                     </h:panelGrid>  
-                </p:panel>
-                <p:panel toggleable="true" collapsed="true" header="Aula">
+                </p:fieldset>
+                
+                <p:fieldset legend="Chiusura iter" toggleable="true" collapsed="true" toggleSpeed="500">
                     <h:panelGrid columns="2" cellpadding="10">  
                         <h:outputText value="codice: " />
                         <h:outputText value="#{mgmtBean.atto.codice}" />
                         <h:outputText value="oggetto: " />
                         <h:outputText value="#{mgmtBean.atto.oggetto}" />  
                     </h:panelGrid>  
-                </p:panel>
-                <p:panel toggleable="true" collapsed="true" header="Chiusura iter">
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="codice: " />
-                        <h:outputText value="#{mgmtBean.atto.codice}" />
-                        <h:outputText value="oggetto: " />
-                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
-                    </h:panelGrid>  
-                </p:panel>
+                </p:fieldset>
+                
             </p:tab>  
 
             <p:tab id="tab2" title="Documenti Allegati">  

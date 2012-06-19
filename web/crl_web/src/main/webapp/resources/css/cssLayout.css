@@ -86,3 +86,15 @@
     /* for IEs */
     behavior: url(/crl/resources/css/PIE.htc); /* teaching IE to understand border-radius */
 }
+
+
+.ui-panelgrid tr, .ui-panelgrid td {
+border:0 !important;
+}
+
+.ui-fieldset-toggleable .ui-fieldset-legend {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    cursor: pointer;
+}
+

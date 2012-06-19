@@ -22,54 +22,194 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 /**
- *
+ * 
  * @author uji
  */
 
 @ManagedBean(name = "searchBean")
 @ViewScoped
-public class SearchBean implements Serializable
-{
-    private AttoService as = new AttoService();
-    
-    private LazyDataModel<Atto> lazyAttoModel;
-    
-    @PostConstruct
-    protected void initLazyModel()
-    {
-        setLazyAttoModel(new LazyDataModel<Atto>()
-         {
-             
-             @Override
-             public List<Atto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters)
-             {
-                 return as.find(first, pageSize);
-             }
+public class SearchBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-             @Override
-             public int getRowCount()
-             {
-                 return (int) as.count();
-             }
-         });
-    }
+	private AttoService as = new AttoService();
 
-    /**
-     * @return the lazyAttoModel
+	private LazyDataModel<Atto> lazyAttoModel;
+
+	private String numeroAtto;
+
+	private String dataIniziativaDa;
+
+	private String dataIniziativaA;
+
+	private String tipoatto;
+
+	private String legislatura;
+
+	private String stato;
+
+	private String numeroprotocollo;
+
+	private String tipoiniziativa;
+
+	private String numerodcr;
+
+	private String primofirmatario;
+
+	private String oggetto;
+
+	private String firmatario;
+
+	@PostConstruct
+	protected void initLazyModel() {
+		setLazyAttoModel(new LazyDataModel<Atto>() {
+
+			@Override
+			public List<Atto> load(int first, int pageSize, String sortField,
+					SortOrder sortOrder, Map<String, String> filters) {
+				return as.find(first, pageSize);
+			}
+
+			@Override
+			public int getRowCount() {
+				return (int) as.count();
+			}
+		});
+	}
+
+	/**
+	 * @return the lazyAttoModel
+	 */
+	public LazyDataModel<Atto> getLazyAttoModel() {
+		return lazyAttoModel;
+	}
+
+	/**
+	 * @param lazyAttoModel
+	 *            the lazyAttoModel to set
+	 */
+	public void setLazyAttoModel(LazyDataModel<Atto> lazyAttoModel) {
+		this.lazyAttoModel = lazyAttoModel;
+	}
+
+	/**
      */
-    public LazyDataModel<Atto> getLazyAttoModel()
-    {
-        return lazyAttoModel;
-    }
+	public void searchLazyAttoModel() {
 
-    /**
-     * @param lazyAttoModel the lazyAttoModel to set
-     */
-    public void setLazyAttoModel(LazyDataModel<Atto> lazyAttoModel)
-    {
-        this.lazyAttoModel = lazyAttoModel;
-    }
-    
-    
-    
+		as = new AttoService();
+		
+		lazyAttoModel = new LazyDataModel<Atto>() {
+
+			@Override
+			public List<Atto> load(int first, int pageSize, String sortField,
+					SortOrder sortOrder, Map<String, String> filters) {
+				return as.find(1, 10);
+			}
+
+			@Override
+			public int getRowCount() {
+				return (int) as.count();
+			}
+		};
+
+	}
+
+	public String getNumeroAtto() {
+		return numeroAtto;
+	}
+
+	public void setNumeroAtto(String numeroAtto) {
+		this.numeroAtto = numeroAtto;
+	}
+
+	public String getDataIniziativaDa() {
+		return dataIniziativaDa;
+	}
+
+	public void setDataIniziativaDa(String dataIniziativaDa) {
+		this.dataIniziativaDa = dataIniziativaDa;
+	}
+
+	public String getDataIniziativaA() {
+		return dataIniziativaA;
+	}
+
+	public void setDataIniziativaA(String dataIniziativaA) {
+		this.dataIniziativaA = dataIniziativaA;
+	}
+
+	public String getTipoatto() {
+		return tipoatto;
+	}
+
+	public void setTipoatto(String tipoatto) {
+		this.tipoatto = tipoatto;
+	}
+
+	public String getLegislatura() {
+		return legislatura;
+	}
+
+	public void setLegislatura(String legislatura) {
+		this.legislatura = legislatura;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	public String getNumeroprotocollo() {
+		return numeroprotocollo;
+	}
+
+	public void setNumeroprotocollo(String numeroprotocollo) {
+		this.numeroprotocollo = numeroprotocollo;
+	}
+
+	public String getTipoiniziativa() {
+		return tipoiniziativa;
+	}
+
+	public void setTipoiniziativa(String tipoiniziativa) {
+		this.tipoiniziativa = tipoiniziativa;
+	}
+
+	public String getNumerodcr() {
+		return numerodcr;
+	}
+
+	public void setNumerodcr(String numerodcr) {
+		this.numerodcr = numerodcr;
+	}
+
+	public String getPrimofirmatario() {
+		return primofirmatario;
+	}
+
+	public void setPrimofirmatario(String primofirmatario) {
+		this.primofirmatario = primofirmatario;
+	}
+
+	public String getOggetto() {
+		return oggetto;
+	}
+
+	public void setOggetto(String oggetto) {
+		this.oggetto = oggetto;
+	}
+
+	public String getFirmatario() {
+		return firmatario;
+	}
+
+	public void setFirmatario(String firmatario) {
+		this.firmatario = firmatario;
+	}
+
 }

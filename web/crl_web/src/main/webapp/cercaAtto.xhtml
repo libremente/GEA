@@ -9,88 +9,194 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-	<p:panelGrid style="text-align:left" columns="1" id="mainPanel">
-     
-     <p:row>
-     
+<h:form id="searchAttoForm">
 
-		<p:panelGrid style="width:100%" columns="4" id="searchPanel">
-			<f:facet name="header">  
-                  
-                <p:row>    
-                <p:column colspan="4">
+<p:panel style="text-align:left;margin-bottom:5px" id="mainPanel">
+
+	
+		<!-- Pannello ricerca -->
+
+		<p:panelGrid style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;" id="searchPanel">
+
+			<f:facet name="header">
+				<p:row>
+					<p:column style="text-align:left" colspan="4">
 						Ricerca Atto:
 			    </p:column>
-			    </p:row>
-            </f:facet>
+				</p:row>
+			</f:facet>
 
-
-			<!-- <p:calendar/> -->
 			<p:row>
-				<h:form>
-					
-						<h:outputLabel for="tipoatto" value="Tipo atto: " />
-						<p:selectOneMenu id="tipoatto" value="" />
-					
-						<h:outputLabel for="legislatura" value="Legisl: " />
-						<p:selectOneMenu id="legislatura" value="" />
-						
-						<h:outputLabel for="numeroatto" value="Numero Atto: " />
-						<p:inputText id="numeroatto"></p:inputText>
-					
-						<h:outputLabel for="stato" value="Stato: " />
-						<p:inputText id="stato"></p:inputText>
-					
-				</h:form>
+				<p:column>
+					<h:outputLabel for="tipoatto" value="Tipo atto: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="tipoatto" value="#{searchBean.tipoatto}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="legislatura" value="Legislatura: " />
+					<p:selectOneMenu id="legislatura" value="#{searchBean.legislatura}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="stato" value="Stato: " />
+					<p:selectOneMenu id="stato" value="#{searchBean.stato}" />
+				</p:column>
 			</p:row>
-			
-			
-			
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numeroatto" value="Numero Atto: " />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="numeroatto" value="#{searchBean.numeroAtto}"></p:inputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:outputLabel value="Data Iniziativa " />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<h:outputLabel for="datainiziativa_da" value="da: " />
+					<p:calendar size="10" locale="it" id="datainiziativa_da"
+						value="#{searchBean.dataIniziativaDa}" />
+				&nbsp;&nbsp;&nbsp;
+				<h:outputLabel for="datainiziativa_a" value="a: " />
+					<p:calendar size="10" locale="it" id="datainiziativa_a"
+						value="#{searchBean.dataIniziativaA}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numeroprotocollo" value="Numero Protocollo: " />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="numeroprotocollo"
+						value="#{searchBean.numeroprotocollo}"></p:inputText>
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="tipoiniziativa" value="Tipo Iniziativa: " />
+				</p:column>
+				
+				<p:column>
+					<p:selectOneMenu id="tipoiniziativa"
+						value="#{searchBean.tipoiniziativa}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numerodcr" value="Numero DCR: " />
+				</p:column>
+				
+				<p:column>
+					<p:inputText id="numerodcr" value="#{searchBean.numerodcr}"></p:inputText>
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="primofirmatario" value="1° Firmatario: " />
+				</p:column>
+				
+				<p:column>
+					<p:selectOneMenu id="primofirmatario"
+						value="#{searchBean.primofirmatario}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="oggetto" value="Oggetto: " />
+				</p:column>
+				
+				<p:column>
+					<p:inputText id="oggetto" value="#{searchBean.oggetto}"></p:inputText>
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="firmatario" value="Firmatario: " />
+				</p:column>
+				
+				<p:column>
+					<p:selectOneMenu id="firmatario" value="#{searchBean.firmatario}" />
+				</p:column>
+			</p:row>
 
 
-			<h:outputText style="color: #BBBB">Qui Maschera di ricerca</h:outputText>
+			<p:row>
+
+				<p:column colspan="3">
+
+					<p:commandButton value="Cerca" update="listaAtti"
+						id="btncercaatto_cerca"
+						actionListener="#{searchBean.searchLazyAttoModel()}" />
+
+					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
+						<p:dataExporter type="xls" target="listaAtti"
+							fileName="lista_atti" />
+					</h:commandLink>
+
+
+
+             <!-- 
+					 
+             <p:commandButton value="Ricerca Avanzata" update="listaAtti" id="btncercaatto_ricavnz"  actionListener="" />  
+              
+              <p:commandButton value="Reimposta" update="searchPanel" id="btncercaatto_reset" actionListener="" />
+              
+               -->
+
+
+				</p:column>
+
+
+			</p:row>
+
+			<!-- <h:outputText style="color: #BBBB">Qui Maschera di ricerca</h:outputText> -->
 
 		</p:panelGrid>
+	
+	<!-- Pannello ricerca end -->
 
-        </p:row>
+	<p:dataTable id="listaAtti" var="atto"
+		value="#{searchBean.lazyAttoModel}" rows="10" paginator="true"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+		paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		<p:column>
+			<f:facet name="header">Tipo</f:facet>
+			<h:outputText value="#{atto.tipo}" />
+		</p:column>
 
-        <p:row>
+		<p:column headerText="N.Atto">
+			<h:outputLink value="#{request.contextPath}/atto">
+				<h:outputText value="#{atto.codice}" />
+				<f:param name="code" value="#{atto.codice}" />
+			</h:outputLink>
+		</p:column>
+		<p:column headerText="Oggetto">
+			<h:outputText value="#{atto.oggetto}" />
+		</p:column>
+		<p:column headerText="1 Firmatario">
+			<h:outputText value="#{atto.primoFirmatario}" />
+		</p:column>
+		<p:column headerText="Data Presetazione">
+			<h:outputText value="#{atto.dataPresentazione}" />
+		</p:column>
+		<p:column headerText="Stato">
+			<h:outputText value="#{atto.stato}" />
+		</p:column>
+		<p:column headerText="Alert">
+			<h:outputText value="" />
+		</p:column>
+		<p:column headerText="Azioni">
+			<h:outputText value="" />
+		</p:column>
+	</p:dataTable>
 
-		<p:dataTable id="listaAtti" var="atto"
-			value="#{searchBean.lazyAttoModel}" rows="10" paginator="true"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
-			paginatorAlwaysVisible="false" paginatorPosition="bottom">
-			<p:column>
-				<f:facet name="header">Tipo</f:facet>
-				<h:outputText value="#{atto.tipo}" />
-			</p:column>
-			<p:column headerText="N.Atto">
-				<h:outputLink value="#{request.contextPath}/atto">
-					<h:outputText value="#{atto.codice}" />
-					<f:param name="code" value="#{atto.codice}" />
-				</h:outputLink>
-			</p:column>
-			<p:column headerText="Oggetto">
-				<h:outputText value="#{atto.oggetto}" />
-			</p:column>
-			<p:column headerText="1 Firmatario">
-				<h:outputText value="#{atto.primoFirmatario}" />
-			</p:column>
-			<p:column headerText="Data Presetazione">
-				<h:outputText value="#{atto.dataPresentazione}" />
-			</p:column>
-			<p:column headerText="Stato">
-				<h:outputText value="#{atto.stato}" />
-			</p:column>
-			<p:column headerText="Alert">
-				<h:outputText value="" />
-			</p:column>
-			<p:column headerText="Azioni">
-				<h:outputText value="" />
-			</p:column>
-		</p:dataTable>
-		
-		</p:row>
-	</p:panelGrid>
-
+</p:panel>
+</h:form>
+<!-- -->
 </html>
