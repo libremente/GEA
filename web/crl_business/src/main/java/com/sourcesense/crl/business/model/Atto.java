@@ -10,15 +10,20 @@
  */
 package com.sourcesense.crl.business.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author uji
  */
-public class Atto
+public class Atto implements Serializable
 {
-    private String tipo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String tipo;
     private String codice;
     private String oggetto;
     private String primoFirmatario;

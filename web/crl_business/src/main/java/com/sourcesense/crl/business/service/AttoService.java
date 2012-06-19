@@ -11,6 +11,8 @@
 package com.sourcesense.crl.business.service;
 
 import com.sourcesense.crl.business.model.Atto;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -20,9 +22,13 @@ import java.util.logging.Logger;
  *
  * @author uji
  */
-public class AttoService
+public class AttoService implements Serializable
 {
-    private ArrayList<Atto> data;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ArrayList<Atto> data;
     
     private void initDummyData()
     {
