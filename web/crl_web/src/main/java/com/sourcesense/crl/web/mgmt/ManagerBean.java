@@ -25,6 +25,10 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class ManagerBean implements Serializable
 {
+	
+	
+	private boolean showCommDetail;
+	
     private String code;
     
     private Atto atto;
@@ -65,4 +69,18 @@ public class ManagerBean implements Serializable
     {
         this.atto = atto;
     }
+
+	public boolean isShowCommDetail() {
+		return showCommDetail;
+	}
+
+	public void setShowCommDetail(boolean showCommDetail) {
+		this.showCommDetail = showCommDetail;
+	}
+    
+	public void visualizeCommDetail() {
+		this.showCommDetail=true;
+	}
+    
+    
 }
