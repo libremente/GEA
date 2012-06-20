@@ -2,78 +2,216 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-    <h:form>  
-        <p:tabView id="tabView" dynamic="true" cache="true" effect="slide" >  
-            
-            <p:tab id="tba1" title="Informazioni Generali">  
-                
-                <p:fieldset legend="Informazioni Generali" toggleable="true" toggleSpeed="500">  
-                    <h:panelGrid columns="2" >  
-                        <h:outputText value="codice: " />
-                        <h:outputText value="#{mgmtBean.atto.codice}" />
-                        <h:outputText value="oggetto: " />
-                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
-                    </h:panelGrid>  
-                </p:fieldset>
-                
-                <p:fieldset legend="Ufficio Servizio Segreterie Commissioni" collapsed="true" toggleable="true" toggleSpeed="500">
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="codice: " />
-                        <h:outputText value="#{mgmtBean.atto.codice}" />
-                        <h:outputText value="oggetto: " />
-                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
-                    </h:panelGrid>  
-                </p:fieldset>
-                
-                <p:fieldset legend="Commissioni" toggleable="true" collapsed="true" toggleSpeed="500">
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="codice: " />
-                        <h:outputText value="#{mgmtBean.atto.codice}" />
-                        <h:outputText value="oggetto: " />
-                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
-                    </h:panelGrid>  
-                </p:fieldset>
-                
-                <p:fieldset legend="Aula" toggleable="true" collapsed="true" toggleSpeed="500">
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="codice: " />
-                        <h:outputText value="#{mgmtBean.atto.codice}" />
-                        <h:outputText value="oggetto: " />
-                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
-                    </h:panelGrid>  
-                </p:fieldset>
-                
-                <p:fieldset legend="Chiusura iter" toggleable="true" collapsed="true" toggleSpeed="500">
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="codice: " />
-                        <h:outputText value="#{mgmtBean.atto.codice}" />
-                        <h:outputText value="oggetto: " />
-                        <h:outputText value="#{mgmtBean.atto.oggetto}" />  
-                    </h:panelGrid>  
-                </p:fieldset>
-                
-            </p:tab>  
+<h:form>
+	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
 
-            <p:tab id="tab2" title="Documenti Allegati">  
-                <h:panelGrid columns="1" cellpadding="10">  
-                    <h:outputText value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
+		<p:tab id="tba1" title="Informazioni Generali">
+
+			<p:fieldset legend="Informazioni Generali" toggleable="true"
+				toggleSpeed="500">
+
+				<p:panelGrid style="width:100%;padding : 6px" id="infogeneralipane">
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Legislatura: " />
+							<h:outputText value="VIII" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Tipo Atto: " />
+							<h:outputText value="PDL" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="N° Atto: " />
+							<h:outputText value="xxxxx" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText style="font-weight: bold;" value="Stato Attuale: " />
+							<h:outputText value="Pubblicato" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Classificazione: " />
+							<h:outputText value="128/2011" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="N° Repertorio: " />
+							<h:outputText value="VIII" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Repertorio: " />
+							<h:outputText value="15/05/2011" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Iniziativa: " />
+							<h:outputText value="16/04/2011" />
+						</p:column>
+
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;"
+								value="Tipo Iniziativa: " />
+							<h:outputText value="Iniziativa popolare" />
+						</p:column>
+
+
+					</p:row>
+
+					<p:row style="margin-bottom:20px">
+						<p:column colspan="3">
+							<h:outputText style="font-weight: bold;" value="Oggetto: " />
+							<h:outputText
+								value="Proposta di abolizione delle nomine del responsabile di quartiere." />
+						</p:column>
+
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<table id="generalInfoTab" style="width: 90%;text-align: left;" >
+								<thead >
+									<th></th>
+									<th>Nome Firmatario</th>
+									<th>Data Firma</th>
+									<th>Data Ritiro</th>
+								</thead>
+								<tbody >
+									<tr>
+										<td align="left"><b>Primo Firmatario:</b></td>
+										<td align="left">Francesco Russo (PD)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left"></td>
+									</tr>
+									
+									<tr>
+										<td align="left"><b>Altri Firmatari:</b></td>
+										<td align="left">Marco Rossi (PDL)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left"></td>
+									</tr>
+									
+									<tr>
+										<td align="left"></td>
+										<td align="left">Luigi Verdi (IDV)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left">23/04/2011</td>
+									</tr>
+									
+									<tr>
+										<td align="left"></td>
+										<td align="left">Danila Bianchi (AN)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left"></td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column colspan="3">
+							<table id="generalInfoTab" style="width: 90%;text-align: left;" >
+								<thead >
+								</thead>
+								<tbody >
+									<tr>
+										<td align="left"><b>Abbinamenti:</b></td>
+										<td align="left">PDL-0510 del 11/03/2011</td>
+									</tr>
+									
+									<tr>
+										<td align="left"></td>
+										<td align="left">PDL-0510 del 11/03/2011</td>
+										
+									</tr>
+									
+								</tbody>
+							</table>
+						</p:column>
+					</p:row>
+					
+				</p:panelGrid>
+
+			</p:fieldset>
+
+			<p:fieldset legend="Ufficio Servizio Segreterie Commissioni"
+				collapsed="true" toggleable="true" toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="codice: " />
+					<h:outputText value="#{mgmtBean.atto.codice}" />
+					<h:outputText value="oggetto: " />
+					<h:outputText value="#{mgmtBean.atto.oggetto}" />
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Commissioni" toggleable="true" collapsed="true"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="codice: " />
+					<h:outputText value="#{mgmtBean.atto.codice}" />
+					<h:outputText value="oggetto: " />
+					<h:outputText value="#{mgmtBean.atto.oggetto}" />
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Aula" toggleable="true" collapsed="true"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="codice: " />
+					<h:outputText value="#{mgmtBean.atto.codice}" />
+					<h:outputText value="oggetto: " />
+					<h:outputText value="#{mgmtBean.atto.oggetto}" />
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Chiusura iter" toggleable="true" collapsed="true"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="10">
+					<h:outputText value="codice: " />
+					<h:outputText value="#{mgmtBean.atto.codice}" />
+					<h:outputText value="oggetto: " />
+					<h:outputText value="#{mgmtBean.atto.oggetto}" />
+				</h:panelGrid>
+			</p:fieldset>
+
+		</p:tab>
+
+		<p:tab id="tab2" title="Documenti Allegati">
+			<h:panelGrid columns="1" cellpadding="10">
+				<h:outputText
+					value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
                                   In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,  
-                                  killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."/>  
-                </h:panelGrid>  
-            </p:tab>  
+                                  killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows." />
+			</h:panelGrid>
+		</p:tab>
 
-            <p:tab id="tab3" title="Sedute">  
-                <h:panelGrid columns="1" cellpadding="10">  
-                    <h:outputText value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.  
-                                  Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate."/>  
-                </h:panelGrid>  
-            </p:tab>
-        </p:tabView>  
-    </h:form> 
+		<p:tab id="tab3" title="Sedute">
+			<h:panelGrid columns="1" cellpadding="10">
+				<h:outputText
+					value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family.  
+                                  Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate." />
+			</h:panelGrid>
+		</p:tab>
+	</p:tabView>
+</h:form>
 </html>
