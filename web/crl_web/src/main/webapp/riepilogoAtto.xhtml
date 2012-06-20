@@ -16,8 +16,8 @@
 			<p:fieldset legend="Informazioni Generali" toggleable="true"
 				toggleSpeed="500">
 
-				<p:panelGrid  styleClass="infoTable"  id="infogeneralipane">
-					<p:row >
+				<p:panelGrid styleClass="infoTable" id="infogeneralipane">
+					<p:row>
 						<p:column>
 							<h:outputText style="font-weight: bold;" value="Legislatura: " />
 							<h:outputText value="VIII" />
@@ -87,81 +87,108 @@
 
 					<p:row>
 						<p:column colspan="3">
-							<table id="generalInfoTab" style="table-layout:auto; width: 90%;text-align: left;" >
-								<thead >
+							<table id="generalInfoTab"
+								style="table-layout: auto; width: 90%; text-align: left;">
+								<thead>
 									<th></th>
 									<th>Nome Firmatario</th>
 									<th>Data Firma</th>
 									<th>Data Ritiro</th>
 								</thead>
-								<tbody >
+								<tbody>
 									<tr>
-										<td align="left"><b>Primo Firmatario:</b></td>
+										<td align="left"><b>Primo Firmatario:</b>
+										</td>
 										<td align="left">Francesco Russo (PD)</td>
 										<td align="left">16/04/2011</td>
 										<td align="left"></td>
 									</tr>
-									
+
 									<tr>
-										<td align="left"><b>Altri Firmatari:</b></td>
+										<td align="left"><b>Altri Firmatari:</b>
+										</td>
 										<td align="left">Marco Rossi (PDL)</td>
 										<td align="left">16/04/2011</td>
 										<td align="left"></td>
 									</tr>
-									
+
 									<tr>
 										<td align="left"></td>
 										<td align="left">Luigi Verdi (IDV)</td>
 										<td align="left">16/04/2011</td>
 										<td align="left">23/04/2011</td>
 									</tr>
-									
+
 									<tr>
 										<td align="left"></td>
 										<td align="left">Danila Bianchi (AN)</td>
 										<td align="left">16/04/2011</td>
 										<td align="left"></td>
 									</tr>
-									
+
 								</tbody>
 							</table>
 						</p:column>
 					</p:row>
-					
+
 					<p:row>
 						<p:column colspan="3">
-							<table id="generalInfoTab" style="width: 90%;text-align: left;" >
-								<thead >
+							<table id="generalInfoTab" style="width: 90%; text-align: left;">
+								<thead>
 								</thead>
-								<tbody >
+								<tbody>
 									<tr>
-										<td align="left"><b>Abbinamenti:</b></td>
+										<td align="left"><b>Abbinamenti:</b>
+										</td>
 										<td align="left">PDL-0510 del 11/03/2011</td>
 									</tr>
-									
+
 									<tr>
 										<td align="left"></td>
 										<td align="left">PDL-0510 del 11/03/2011</td>
-										
 									</tr>
-									
+
 								</tbody>
 							</table>
 						</p:column>
 					</p:row>
-					
+
 				</p:panelGrid>
 
 			</p:fieldset>
 
 			<p:fieldset legend="Ufficio Servizio Segreterie Commissioni"
 				collapsed="true" toggleable="true" toggleSpeed="500">
-				<h:panelGrid columns="2" cellpadding="10">
-					<h:outputText value="codice: " />
-					<h:outputText value="#{mgmtBean.atto.codice}" />
-					<h:outputText value="oggetto: " />
-					<h:outputText value="#{mgmtBean.atto.oggetto}" />
-				</h:panelGrid>
+				<p:panelGrid styleClass="infoTable" id="infoUffServSegrComm">
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Data Assegnazione: " />
+							<h:outputText value="18/04/2011" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Data presa in carico: " />
+							<h:outputText value="20/04/2011" />
+						</p:column>		
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Esito Validazione: " />
+							<h:outputText value="Ammissibile" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Data Validazione: " />
+							<h:outputText value="16/04/2011" />
+						</p:column>		
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;" value="Data Assegnazione Commissioni:  " />
+							<h:outputText value="18/04/2011" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 			</p:fieldset>
 
 			<p:fieldset legend="Commissioni" toggleable="true" collapsed="true"
