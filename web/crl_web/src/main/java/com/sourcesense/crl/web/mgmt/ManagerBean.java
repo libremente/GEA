@@ -11,7 +11,9 @@
 package com.sourcesense.crl.web.mgmt;
 
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.service.AttoService;
+import com.sourcesense.crl.business.service.AttoServiceManager;
+
+
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -33,7 +35,7 @@ public class ManagerBean implements Serializable
     
     private Atto atto;
     
-    private AttoService as = new AttoService();
+    private AttoServiceManager as = new AttoServiceManager();
     
     /**
      * @return the code

@@ -8,10 +8,15 @@
         <view-id value="/home.xhtml" />
     </url-mapping>
     
+    <url-mapping id="home"> 
+        <pattern value="/home" /> 
+        <view-id value="/home.xhtml" />
+    </url-mapping>
+    
     <url-mapping id="atto"> 
         <pattern value="/atto" /> 
-        <view-id value="/atto.xhtml"/>
-        
-        <!-- <query-param name="code">#{mgmtBean.code}</query-param> -->
+        <query-param name="code"  > #{mgmtBean.code} </query-param>
+        <view-id value="views/home/riepilogoatto/riepilogoatto_base.xhtml" />        
     </url-mapping> 
+
 </pretty-config>

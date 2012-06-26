@@ -10,14 +10,17 @@
  */
 package com.sourcesense.crl.web.search;
 
-import com.sourcesense.crl.business.service.AttoService;
+import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.model.Atto;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+
+
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -26,15 +29,17 @@ import org.primefaces.model.SortOrder;
  * @author uji
  */
 
-@ManagedBean(name = "searchBean")
 @ViewScoped
+@ManagedBean(name= "searchBean")
 public class SearchBean implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private AttoService as = new AttoService();
+    
+	
+	@ManagedProperty(value="#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager ;
 
 	private LazyDataModel<Atto> lazyAttoModel;
 
@@ -69,12 +74,12 @@ public class SearchBean implements Serializable {
 			@Override
 			public List<Atto> load(int first, int pageSize, String sortField,
 					SortOrder sortOrder, Map<String, String> filters) {
-				return as.find(first, pageSize);
+				return attoServiceManager.find(first, pageSize);
 			}
 
 			@Override
 			public int getRowCount() {
-				return (int) as.count();
+				return (int) attoServiceManager.count();
 			}
 		});
 	}
@@ -98,19 +103,19 @@ public class SearchBean implements Serializable {
      */
 	public void searchLazyAttoModel() {
 
-		as = new AttoService();
+		attoServiceManager = new AttoServiceManager();
 		
 		lazyAttoModel = new LazyDataModel<Atto>() {
 
 			@Override
 			public List<Atto> load(int first, int pageSize, String sortField,
 					SortOrder sortOrder, Map<String, String> filters) {
-				return as.find(1, 10);
+				return attoServiceManager.find(1, 10);
 			}
 
 			@Override
 			public int getRowCount() {
-				return (int) as.count();
+				return (int) attoServiceManager.count();
 			}
 		};
 
@@ -210,6 +215,14 @@ public class SearchBean implements Serializable {
 
 	public void setFirmatario(String firmatario) {
 		this.firmatario = firmatario;
+	}
+	
+	public AttoServiceManager getAttoServiceManager() {
+		return attoServiceManager;
+	}
+
+	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+		this.attoServiceManager = attoServiceManager;
 	}
 
 }
