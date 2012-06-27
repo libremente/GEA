@@ -31,7 +31,7 @@ public class AttoBean implements Serializable
 	
 	private Atto atto;
 	
-	
+	private String numeroAtto;
 	
 	public Atto getAtto() {
 		return atto;
@@ -47,6 +47,16 @@ public class AttoBean implements Serializable
 
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
+	}
+	
+	
+
+	public String getNumeroAtto() {
+		return numeroAtto;
+	}
+
+	public void setNumeroAtto(String numeroAtto) {
+		this.numeroAtto = numeroAtto;
 	}
 
 	public void  inserisciAtto(ActionEvent actionEvent){
