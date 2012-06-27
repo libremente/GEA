@@ -1,0 +1,65 @@
+!SESSION 2012-06-27 12:11:12.938 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_33
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=it_IT
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.team.svn.core.svnnature 4 0 2012-06-27 12:24:22.481
+!MESSAGE SVN: '0x00400107: Get Repository Resource Revision' operation finished with error
+!SUBENTRY 1 org.eclipse.team.svn.core.svnnature 4 0 2012-06-27 12:24:22.481
+!MESSAGE Get repository resource revision operation failed.
+!STACK 0
+org.eclipse.team.svn.core.connector.SVNConnectorException: svn: E215000: GNOME Keyring is locked and we are non-interactive
+	at org.polarion.team.svn.connector.svnkit.SVNKitConnector.handleClientException(SVNKitConnector.java:2348)
+	at org.polarion.team.svn.connector.svnkit.SVNKitConnector.info(SVNKitConnector.java:1674)
+	at org.eclipse.team.svn.core.extension.factory.ThreadNameModifier.info(ThreadNameModifier.java:688)
+	at org.eclipse.team.svn.core.utility.SVNUtility.info(SVNUtility.java:378)
+	at org.eclipse.team.svn.core.svnstorage.SVNRepositoryContainer.getRevisionImpl(SVNRepositoryContainer.java:109)
+	at org.eclipse.team.svn.core.svnstorage.SVNRepositoryResource.getRevision(SVNRepositoryResource.java:97)
+	at org.eclipse.team.svn.ui.operation.GetRemoteResourceRevisionOperation.runImpl(GetRemoteResourceRevisionOperation.java:40)
+	at org.eclipse.team.svn.core.operation.AbstractActionOperation.run(AbstractActionOperation.java:81)
+	at org.eclipse.team.svn.core.utility.ProgressMonitorUtility.doTask(ProgressMonitorUtility.java:104)
+	at org.eclipse.team.svn.core.operation.CompositeOperation.runImpl(CompositeOperation.java:95)
+	at org.eclipse.team.svn.core.operation.AbstractActionOperation.run(AbstractActionOperation.java:81)
+	at org.eclipse.team.svn.core.operation.LoggedOperation.run(LoggedOperation.java:39)
+	at org.eclipse.team.svn.core.utility.ProgressMonitorUtility.doTask(ProgressMonitorUtility.java:104)
+	at org.eclipse.team.svn.core.utility.ProgressMonitorUtility.doTaskExternal(ProgressMonitorUtility.java:90)
+	at org.eclipse.team.svn.ui.utility.DefaultCancellableOperationWrapper.run(DefaultCancellableOperationWrapper.java:55)
+	at org.eclipse.team.svn.ui.utility.ScheduledOperationWrapper.run(ScheduledOperationWrapper.java:37)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: org.apache.subversion.javahl.ClientException: svn: E215000: GNOME Keyring is locked and we are non-interactive
+	at org.apache.subversion.javahl.ClientException.fromException(ClientException.java:68)
+	at org.tmatesoft.svn.core.javahl17.SVNClientImpl.getClientException(SVNClientImpl.java:1280)
+	at org.tmatesoft.svn.core.javahl17.SVNClientImpl.info2(SVNClientImpl.java:1461)
+	at org.polarion.team.svn.connector.svnkit.SVNKitConnector.info(SVNKitConnector.java:1669)
+	... 15 more
+Caused by: org.tmatesoft.svn.core.SVNAuthenticationException: svn: E215000: GNOME Keyring is locked and we are non-interactive
+	at org.tmatesoft.svn.core.internal.wc.SVNErrorManager.error(SVNErrorManager.java:62)
+	at org.tmatesoft.svn.core.internal.wc.SVNErrorManager.error(SVNErrorManager.java:51)
+	at org.tmatesoft.svn.core.internal.util.jna.SVNGnomeKeyring.setPassword(SVNGnomeKeyring.java:267)
+	at org.tmatesoft.svn.core.internal.util.jna.SVNJNAUtil.addPasswordToGnomeKeyring(SVNJNAUtil.java:159)
+	at org.tmatesoft.svn.core.internal.wc.DefaultSVNPersistentAuthenticationProvider$GnomeKeyringPasswordStorage.savePassword(DefaultSVNPersistentAuthenticationProvider.java:641)
+	at org.tmatesoft.svn.core.internal.wc.DefaultSVNPersistentAuthenticationProvider.savePasswordCredential(DefaultSVNPersistentAuthenticationProvider.java:366)
+	at org.tmatesoft.svn.core.internal.wc.DefaultSVNPersistentAuthenticationProvider.saveAuthentication(DefaultSVNPersistentAuthenticationProvider.java:315)
+	at org.tmatesoft.svn.core.internal.wc.DefaultSVNAuthenticationManager.acknowledgeAuthentication(DefaultSVNAuthenticationManager.java:246)
+	at org.tmatesoft.svn.core.auth.BasicAuthenticationManager.acknowledgeAuthentication(BasicAuthenticationManager.java:56)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.request(HTTPConnection.java:651)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.request(HTTPConnection.java:287)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.request(HTTPConnection.java:275)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVConnection.performHttpRequest(DAVConnection.java:696)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVConnection.exchangeCapabilities(DAVConnection.java:619)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVConnection.open(DAVConnection.java:103)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVRepository.openConnection(DAVRepository.java:1016)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVRepository.getLatestRevision(DAVRepository.java:180)
+	at org.tmatesoft.svn.core.internal.wc2.ng.SvnNgRepositoryAccess.getRevisionNumber(SvnNgRepositoryAccess.java:117)
+	at org.tmatesoft.svn.core.internal.wc2.SvnRepositoryAccess.getLocations(SvnRepositoryAccess.java:148)
+	at org.tmatesoft.svn.core.internal.wc2.ng.SvnNgRepositoryAccess.createRepositoryFor(SvnNgRepositoryAccess.java:44)
+	at org.tmatesoft.svn.core.internal.wc2.remote.SvnRemoteGetInfo.run(SvnRemoteGetInfo.java:47)
+	at org.tmatesoft.svn.core.internal.wc2.remote.SvnRemoteGetInfo.run(SvnRemoteGetInfo.java:1)
+	at org.tmatesoft.svn.core.internal.wc2.SvnOperationRunner.run(SvnOperationRunner.java:20)
+	at org.tmatesoft.svn.core.wc2.SvnOperationFactory.run(SvnOperationFactory.java:1221)
+	at org.tmatesoft.svn.core.wc2.SvnOperation.run(SvnOperation.java:292)
+	at org.tmatesoft.svn.core.javahl17.SVNClientImpl.info2(SVNClientImpl.java:1459)
+	... 16 more
