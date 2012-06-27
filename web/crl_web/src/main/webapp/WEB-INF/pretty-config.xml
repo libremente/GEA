@@ -9,8 +9,8 @@
     </url-mapping>
     
     <url-mapping id="home"> 
-        <pattern value="/home" /> 
-        <view-id value="/home.xhtml" />
+        <pattern value="/inserisciatto" /> 
+        <view-id value="views/inserisciatto/inserisciatto_base.xhtml" />
     </url-mapping>
     
     <url-mapping id="atto"> 

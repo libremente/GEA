@@ -35,8 +35,39 @@ public class Atto implements Serializable
     private String primoFirmatario;
     private Date   dataPresentazione;
     private String stato;
+    private String numeroAtto;
+    private String tipoAtto;
+    private String tipologia;
+    
+    
+    
+    
+    
+    public String getNumeroAtto() {
+		return numeroAtto;
+	}
 
-    /**
+	public void setNumeroAtto(String numeroAtto) {
+		this.numeroAtto = numeroAtto;
+	}
+
+	public String getTipoAtto() {
+		return tipoAtto;
+	}
+
+	public void setTipoAtto(String tipoAtto) {
+		this.tipoAtto = tipoAtto;
+	}
+
+	public String getTipologia() {
+		return tipologia;
+	}
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
+	}
+
+	/**
      * @return the tipo
      */
     public String getTipo()

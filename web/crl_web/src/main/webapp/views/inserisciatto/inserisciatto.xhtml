@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:panelGrid style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;" id="insertattopanel">
+
+			<f:facet name="header">
+				<p:row>
+					<p:column style="text-align:left" colspan="4">
+						Inserisci Atto:
+			    </p:column>
+				</p:row>
+			</f:facet>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numeroatto" value="Numero Atto: "  />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="numeroatto" value="#{attoBean.atto.numeroAtto}"  required="true"/>
+				</p:column>
+				
+				<p:message for="numeroatto" display="icon"/>  
+			</p:row>
+			
+			<p:row>
+				<p:column>
+					<h:outputLabel for="tipoatto" value="Tipo atto: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="tipoatto" value="#{attoBean.atto.tipoatto}" />
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column>
+					<h:outputLabel for="tipologia" value="Tipologia: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="tipologia" value="#{attoBean.atto.tipologia}" />
+				</p:column>
+			</p:row>
+			
+			<p:row>
+			
+			 <p:column colspan="2">
+			     
+			     <p:commandButton id="insertattobtn" value="Salva" update="insertattopanel" actionListener="#{attoBean.inserisciAtto()}"/>
+			 </p:column>
+			</p:row>
+			
+			
+    </p:panelGrid>
+
+	
+		
+</h:form>
+</html>

@@ -7,16 +7,14 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:form>
+
 	<h:panelGrid columns="1">
 		<!-- begin leftmenu -->
 		<h:outputLink value="#{request.contextPath}/">
               <h:outputText value="Home" />
         </h:outputLink>
 
-		
-
-		<h:outputLink value="javascript:void(0)">
+		<h:outputLink value="#{request.contextPath}/inserisciatto">
 			<h:outputText value="Inserisci atto" />
 		</h:outputLink>
 		<h:outputLink value="javascript:void(0)">
@@ -30,5 +28,5 @@
 		</h:outputLink>
 	</h:panelGrid>
 	<!-- end leftmenu -->
-</h:form>
+
 </html>

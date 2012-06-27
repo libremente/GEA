@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+<p:fieldset legend="Informazioni Generali" toggleable="true"
+				toggleSpeed="500">
+
+				<p:panelGrid styleClass="infoTable" id="infogeneralipane">
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Legislatura: " />
+							<h:outputText value="VIII" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Tipo Atto: " />
+							<h:outputText value="PDL" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="N° Atto: " />
+							<h:outputText value="#{mgmtBean.code}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText style="font-weight: bold;" value="Stato Attuale: " />
+							<h:outputText value="Pubblicato" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Classificazione: " />
+							<h:outputText value="128/2011" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="N° Repertorio: " />
+							<h:outputText value="VIII" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Repertorio: " />
+							<h:outputText value="15/05/2011" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Iniziativa: " />
+							<h:outputText value="16/04/2011" />
+						</p:column>
+
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;"
+								value="Tipo Iniziativa: " />
+							<h:outputText value="Iniziativa popolare" />
+						</p:column>
+
+
+					</p:row>
+
+					<p:row style="margin-bottom:20px">
+						<p:column colspan="3">
+							<h:outputText style="font-weight: bold;" value="Oggetto: " />
+							<h:outputText
+								value="Proposta di abolizione delle nomine del responsabile di quartiere." />
+						</p:column>
+
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<table class="generalInfoTab" style="width: 90%;" border="0">
+								<thead>
+									<th></th>
+									<th>Nome Firmatario</th>
+									<th>Data Firma</th>
+									<th>Data Ritiro</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="left"><b>Primo Firmatario:</b></td>
+										<td align="left">Francesco Russo (PD)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left"></td>
+									</tr>
+
+									<tr>
+										<td align="left"><b>Altri Firmatari:</b></td>
+										<td align="left">Marco Rossi (PDL)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left"></td>
+									</tr>
+
+									<tr>
+										<td align="left"></td>
+										<td align="left">Luigi Verdi (IDV)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left">23/04/2011</td>
+									</tr>
+
+									<tr>
+										<td align="left"></td>
+										<td align="left">Danila Bianchi (AN)</td>
+										<td align="left">16/04/2011</td>
+										<td align="left"></td>
+									</tr>
+
+								</tbody>
+							</table>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<table class="generalInfoTab"
+								style="width: 90%; text-align: left;">
+								<thead>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="left"><b>Abbinamenti:</b></td>
+										<td align="left">PDL-0510 del 11/03/2011</td>
+									</tr>
+
+									<tr>
+										<td align="left"></td>
+										<td align="left">PDL-0510 del 11/03/2011</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+			</p:fieldset>
+
+			<p:fieldset legend="Ufficio Servizio Segreterie Commissioni"
+				collapsed="true" toggleable="true" toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="infoUffServSegrComm">
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Assegnazione: " />
+							<h:outputText value="18/04/2011" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data presa in carico: " />
+							<h:outputText value="20/04/2011" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Esito Validazione: " />
+							<h:outputText value="Ammissibile" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Validazione: " />
+							<h:outputText value="16/04/2011" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;"
+								value="Data Assegnazione Commissioni:  " />
+							<h:outputText value="18/04/2011" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Commissioni" toggleable="true" collapsed="true"
+				toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="infoComm">
+					<p:row>
+						<p:column colspan="2">
+							<table class="generalInfoTab" style="width: 90%;">
+								<thead>
+									<th></th>
+									<th>Nome Commissione</th>
+									<th>Ruolo</th>
+									<th>Stato</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="left">
+										<p:commandLink update="commDetail" action="#{mgmtBean.visualizeCommDetail()}" >
+												<h:graphicImage value="/resources/img/show.png" />
+										</p:commandLink>
+										</td>
+										<td align="left">Commissione I - Bilancio</td>
+										<td align="left">Referente</td>
+										<td align="left">Trasmesso</td>
+									</tr>
+									<tr>
+										<td align="left"><img src="resources/img/show.png"
+											alt="Dettaglio" /></td>
+										<td align="left">Commissione II - xxx</td>
+										<td align="left">Consultiva</td>
+										<td align="left">Votato</td>
+									</tr>
+									<tr>
+										<td align="left"><img src="resources/img/show.png"
+											alt="Dettaglio" /></td>
+										<td align="left">Commissione consultiva VII - xxx</td>
+										<td align="left">Consultiva</td>
+										<td align="left">Preso in carico</td>
+									</tr>
+								</tbody>
+							</table>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="2">
+						    <p:outputPanel id="commDetail" >
+							<p:panelGrid styleClass="infoTable" id="commDetailPanel">
+								
+								<p:row>
+									<p:column colspan="2">
+										<h:outputText style="font-weight: bold;" value="Dettaglio Commissione I: " />
+										
+									</p:column>								
+								</p:row>
+								
+								<p:row>
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Assegnazione: " />
+										<h:outputText value="18/01/2011" />
+									</p:column>
+
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Presa in Carico: " />
+										<h:outputText value="18/01/2011" />
+									</p:column>
+								</p:row>
+								
+								<p:row>
+									<p:column>
+										<h:outputText style="font-weight: bold;"
+											value="Nome Relatore: " />
+										<h:outputText value="Mario Rossi(PD)" />
+									</p:column>
+
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Nomina: " />
+										<h:outputText value="16/04/2011" />
+									</p:column>
+								</p:row>
+								
+								<p:row>
+									<p:column>
+										<h:outputText style="font-weight: bold;"
+											value="Nome Relatore: " />
+										<h:outputText value="Mario Rossi(PD)" />
+									</p:column>
+
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Nomina: " />
+										<h:outputText value="16/04/2011" />
+									</p:column>
+								</p:row>
+								
+								<p:row>
+									<p:column colspan="2">
+										<h:outputText style="font-weight: bold;"
+											value="Membri Comitato Ristretto: " />
+										<h:outputText value="Alessandra Bianchi (PDL) - Walter Verdi (UDC) - Maria Rossi (IDV)" />
+									</p:column>
+
+									
+								</p:row>
+								
+								<p:row>
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Apertura Lavori Comitato: " />
+										<h:outputText value="20/04/2011" />
+									</p:column>
+
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Chiusura Lavori Comitato: " />
+										<h:outputText value="20/04/2011" />
+									</p:column>
+								</p:row>
+								
+								<p:row>
+									<p:column>
+										<h:outputText style="font-weight: bold;"
+											value="Tipo Votazione: " />
+										<h:outputText value="Palese per alzata di mano" />
+									</p:column>
+
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Votazione: " />
+										<h:outputText value="16/04/2011" />
+									</p:column>
+								</p:row>
+								
+								<p:row>
+									<p:column>
+										<h:outputText style="font-weight: bold;"
+											value="Esito Votazione: " />
+										<h:outputText value="Approvazione" />
+									</p:column>
+
+									<p:column>
+										<h:outputText style="font-weight: bold;" value="Data Trasmissione: " />
+										<h:outputText value="25/04/2011" />
+									</p:column>
+								</p:row>
+								
+							</p:panelGrid>
+							</p:outputPanel>
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Aula" toggleable="true" collapsed="true"
+				toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="infoAula">
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Numero DCR: " />
+							<h:outputText value="IX/013/1001" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Numero LCR: " />
+							<h:outputText value="067" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
+							<h:outputText value="Ammissibile" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Data Seduta: " />
+							<h:outputText value="16/04/2011" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;"
+								value="Esito Votazione:  " />
+							<h:outputText value="Approvato" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Chiusura iter" toggleable="true" collapsed="true"
+				toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="infoChiusuraIter">
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Stato di chiusura: " />
+							<h:outputText value="Pubblicato" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Data Chiusura: " />
+							<h:outputText value="07/05/2011" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Pubblicazione BURL: " />
+							<h:outputText value="11/05/2011" />
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Numero Pubblicazione BURL: " />
+							<h:outputText value="04564" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Numero LR:  " />
+							<h:outputText value="0112" />
+						</p:column>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Data LR:  " />
+							<h:outputText value="11/05/2011" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+	</h:form>
+	</html>		
