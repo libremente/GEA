@@ -20,5 +20,11 @@
           
     </url-mapping> 
     
+    <url-mapping id="presentazioneassegnazione"> 
+        <pattern value="/presentazioneassegnazione" /> 
+        <view-id value="views/home/presentazioneassegnazione/presentazioneassegnazione_base.xhtml" />      
+          
+    </url-mapping> 
+    
 
 </pretty-config>
