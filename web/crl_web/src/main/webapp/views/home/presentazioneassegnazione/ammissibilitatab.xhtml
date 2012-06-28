@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:fieldset legend="Ammissibilità dell'Atto" toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="ammissibilitaattopanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Valutazione ammissibilità: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu>
+						<f:selectItem itemLabel="Ricevibile" itemValue="1" />
+						<f:selectItem itemLabel="Ammissibile" itemValue="2" />
+						<f:selectItem itemLabel="Inammissibile" itemValue="3" />
+						<f:selectItem itemLabel="Improcedibile" itemValue="4" />
+						<f:selectItem itemLabel="Irricevibile" itemValue="5" />
+					</p:selectOneMenu>
+				</p:column>
+				
+			</p:row>
+
+			<p:row>
+				<p:column colspan="2">
+					<p:commandLink value="Creazione lettera di non ammissibilità" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="datarichiestainformazioni"
+							value="Data richiesta informazioni: " /> 
+					</b>
+				</p:column>
+				
+				<p:column>
+					<p:calendar size="10" locale="it"
+							id="datarichiestainformazioni" />
+				</p:column>
+				
+			</p:row>
+			
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="dataricevimentoinformazioni"
+							value="Data richiesta informazioni: " /> 
+					</b>
+				</p:column>
+				
+				<p:column>
+					<p:calendar size="10" locale="it"
+							id="dataricevimentoinformazioni" />
+				</p:column>
+				
+			</p:row>
+			
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Aiuti Stato: " />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox/>
+				</p:column>
+				
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Norma finanziaria: " />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox/>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Votazione urgenza: " />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox/>
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="datavotazioneurgenza"
+							value="Data votazione urgenza: " /> 
+					</b>
+				</p:column>
+				
+				<p:column>
+					<p:calendar size="10" locale="it"
+							id="datavotazioneurgenza" />
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Note ammissibilità:" />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea rows="2" cols="75" 
+						autoResize="false" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		</p:fieldset>
+		<p><p:commandButton value="Conferma"/></p>
+</h:form>
+</html>

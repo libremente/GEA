@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
+		<p:row>
+			<p:column colspan="3">
+				<p>
+					<p:commandButton value="Presa in Carico">
+						<b> <h:outputLabel for="datapresaincarico"
+								value="Data presa in carico: " /> <p:calendar size="10"
+								locale="it" id="datapresaincarico"
+								/>
+						</b>
+					</p:commandButton>
+				</p>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	<p:fieldset legend="Dati dell'Atto" collapsed="true" toggleable="true" toggleSpeed="500">
+
+		<p:panelGrid styleClass="infoTable" id="datiattopanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Numero Atto: " />					
+				</p:column>
+				<p:column>
+					<p:inputText id="inputnumeroatto" />
+				</p:column>
+				
+
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Classificazione: " />					
+				</p:column>
+				<p:column>
+					<p:inputText id="inputclassificazione" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Oggetto: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea rows="2" cols="82" 
+						autoResize="false" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Numero repertorio: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="inputnumrepertorio" />
+				</p:column>
+
+				<p:column>
+					<b> <h:outputLabel for="datarepertorio"
+							value="Data Repertorio: " /> 
+					</b>
+				</p:column>
+				
+				<p:column>
+					<p:calendar size="10" locale="it"
+							id="datarepertorio" />
+				</p:column>
+
+
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<b> <h:outputText style="font-weight: bold;"
+							value="Tipo Iniziativa: " /> 
+					</b>
+				</p:column>
+				
+				<p:column>
+					<p:selectOneMenu id="tipoiniziativa" />
+				</p:column>
+
+				<p:column>
+					<b><h:outputLabel for="datainiziativa"
+								value="Data iniziativa: " /> 
+								</b>
+				</p:column>
+				
+				<p:column>
+					<p:calendar size="10" locale="it"
+							id="datainiziativa"/>
+				</p:column>
+
+
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Descrizione iniziativa: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea rows="2" cols="82" autoResize="false" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+							value="Numero DGR: " /> 
+					
+				</p:column>
+				
+				<p:column>
+					<p:inputText id="inputnumerodgr" />
+				</p:column>
+
+				<p:column>
+					<b> <h:outputLabel for="datadgr"
+							value="Data DGR: " /> 
+					</b>
+				</p:column>
+				
+				<p:column>
+					<p:calendar size="10" locale="it"
+							id="datadgr" />
+				</p:column>
+
+			</p:row>	
+			
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Assegnazione: " />					
+				</p:column>
+					<p:column colspan="3">
+					<p:inputText id="inputassegnazione" />
+				</p:column>
+			</p:row>		
+
+		</p:panelGrid>
+
+	</p:fieldset>
+
+	<p:fieldset legend="Testo dell'Atto" collapsed="true" toggleable="true"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="testoattopanel">
+			<p:row>
+				<p:column colspan="4">
+					<table class="generalInfoTab" id="testitab" style="width: 90%;"
+						border="0">
+						<thead>
+							<th colspan="2">Testo Dell'Atto</th>
+							<th>Documento</th>
+							<th>Pubblico</th>
+							<th>Opzioni</th>
+						</thead>
+						
+						<!-- il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+						
+						<tbody>
+							<tr>
+								<td align="left" colspan="2"><b>PDF</b></td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download"/>
+									</h:commandLink></td>
+								<td align="left"> <p:selectBooleanCheckbox/>
+								</td>
+								<td align="left">
+									<h:graphicImage alt="delete" value="/resources/img/delete.png" />
+								</td>
+
+							</tr>
+
+							<tr>
+								<td align="left" colspan="2"><b>HTML</b></td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download"/>
+									</h:commandLink></td>
+								<td align="left"> <p:selectBooleanCheckbox/>
+								</td>
+								<td align="left">
+									<h:graphicImage alt="delete" value="/resources/img/delete.png" />
+								</td>
+
+							</tr>
+							
+							<tr>
+								<td align="left" colspan="2"><b>DOC</b></td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download"/>
+									</h:commandLink></td>
+								<td align="left"> <p:selectBooleanCheckbox/>
+								</td>
+								<td align="left">
+									<h:graphicImage alt="delete" value="/resources/img/delete.png" />
+								</td>
+
+							</tr>
+								
+							<tr>
+								<td align="left" colspan="2">Selezionare un documento...</td>
+								<td align="left"></td>
+								<td align="left"></td>
+								<td align="left">
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+				<p:column>
+					<p:fileUpload mode="simple" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+
+	<p:fieldset legend="Firmatari" toggleable="true" collapsed="true"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="firmataripanel">
+			<p:row>
+				<p:column>
+					<p:commandButton value="Inserimento Multiplo"/>
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column colspan="6">
+					<table class="generalInfoTab" id="testitab" style="width: 90%;"
+						border="0" type="ordered">
+						<thead>
+							<th>N°</th>
+							<th>Nome</th>
+							<th>Gruppo Consiliare</th>
+							<th>Data firma</th>
+							<th>Data ritiro</th>
+							<th>1° firm.</th>
+						</thead>
+						
+						<!-- il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+						
+						<tbody>
+							<tr>
+								<td align="left" >1</td>
+								<td align="left">Mario Bianchi</td>
+								<td align="left">PD</td>
+								<td align="left">1/5/2011</td>
+								<td align="left"></td>
+								<td align="left"><p:selectBooleanCheckbox/></td>
+
+							</tr>
+
+							<tr>
+								<td align="left" >2</td>
+								<td align="left">Marco Fumagalli</td>
+								<td align="left">PDL</td>
+								<td align="left">1/5/2011</td>
+								<td align="left">7/5/2011</td>
+								<td align="left"><p:selectBooleanCheckbox/></td>
+
+
+							</tr>
+							
+							<tr>
+								<td align="left" >3</td>
+								<td align="left">Paolo Calcaterra</td>
+								<td align="left">IDV</td>
+								<td align="left">15/6/2011</td>
+								<td align="left"></td>
+								<td align="left"><p:selectBooleanCheckbox/></td>
+
+							</tr>
+							
+							<tr>
+								<td align="left">4</td>
+								<td align="left"><p:selectOneMenu id="nome" /></td>
+								<td align="left"><p:selectOneMenu id="gruppoconsiliare" /></td>
+								<td align="left"><p:calendar size="10" locale="it"
+										id="datafirma" /></td>
+								<td align="left"><p:calendar size="10" locale="it"
+										id="dataritiro" /></td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+
+
+							</tr>
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column>
+					<p:commandButton value="Ritira per mancanza firmatari"/>
+				</p:column>
+				
+				<p:column>
+					<p:commandLink value="Creazione lettera di aggiunta firma"/>
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column>
+				</p:column>
+				
+				<p:column>
+					<p:commandLink value="Creazione lettera di ritiro firma"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		
+	</p:fieldset>
+	<p><p:commandButton value="Salva"/></p>
+</h:form>
+</html>		
