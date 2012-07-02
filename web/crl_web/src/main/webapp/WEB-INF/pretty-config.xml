@@ -26,5 +26,12 @@
           
     </url-mapping> 
     
+     <url-mapping id="esamecommissioni"> 
+        <pattern value="/esamecommissioni" /> 
+        <view-id value="views/home/esamecommissioni/esamecommissioni_base.xhtml" />      
+          
+    </url-mapping> 
+    
+    
 
 </pretty-config>

@@ -11,7 +11,7 @@
     <h:panelGrid columns="1"><!-- begin leftmenu -->
         <h:outputLink value="#{request.contextPath}/atto"><h:outputText value="Riepilogo Atto" /><f:param name="code" value="#{mgmtBean.atto.codice}"/></h:outputLink>
         <h:outputLink value="#{request.contextPath}/presentazioneassegnazione"><h:outputText value="Presentazione e Assegnazione" /></h:outputLink>
-        <h:outputLink value="javascript:void(0)"><h:outputText value="Esame Commissioni" /></h:outputLink>
+        <h:outputLink value="#{request.contextPath}/esamecommissioni"><h:outputText value="Esame Commissioni" /></h:outputLink>
         <h:outputLink value="javascript:void(0)"><h:outputText value="Esame Aula" /></h:outputLink>
         <h:outputLink value="javascript:void(0)"><h:outputText value="Chiusura Iter" /></h:outputLink>
         
