@@ -87,6 +87,11 @@
     behavior: url(/crl/resources/css/PIE.htc); /* teaching IE to understand border-radius */
 }
 
+#content{
+	
+	  background-color: white;
+}
+
 
 .ui-panelgrid tr, .ui-panelgrid td {
 border:0 !important;
@@ -128,21 +133,6 @@ padding: 8px 19px 4px 10px ;
 	
     height: 16px;
     width: 16px;
+    margin-left: 10px;
     
-}
-
-
-.ui-fieldset-legend {
-    background: none repeat scroll 0 0 transparent;
-    border: 0 none;
-    cursor: pointer;
-}
-
-
-
-.fieldSetTab img {
-	
-    height: 16px;
-    width: 16px;
-       
 }
