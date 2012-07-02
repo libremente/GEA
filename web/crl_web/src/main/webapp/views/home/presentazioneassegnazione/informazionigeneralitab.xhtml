@@ -247,6 +247,7 @@
 							<th>Data firma</th>
 							<th>Data ritiro</th>
 							<th>1° firm.</th>
+							<th>Opzioni</th>
 						</thead>
 						
 						<!-- il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
@@ -259,6 +260,9 @@
 								<td align="left">1/5/2011</td>
 								<td align="left"></td>
 								<td align="left"><p:selectBooleanCheckbox/></td>
+								<td align="left">
+									<h:graphicImage alt="delete" value="/resources/img/delete.png" />
+								</td>
 
 							</tr>
 
@@ -269,7 +273,9 @@
 								<td align="left">1/5/2011</td>
 								<td align="left">7/5/2011</td>
 								<td align="left"><p:selectBooleanCheckbox/></td>
-
+								<td align="left">
+									<h:graphicImage alt="delete" value="/resources/img/delete.png" />
+								</td>
 
 							</tr>
 							
@@ -280,6 +286,9 @@
 								<td align="left">15/6/2011</td>
 								<td align="left"></td>
 								<td align="left"><p:selectBooleanCheckbox/></td>
+								<td align="left">
+									<h:graphicImage alt="delete" value="/resources/img/delete.png" />
+								</td>
 
 							</tr>
 							
@@ -292,6 +301,9 @@
 								<td align="left"><p:calendar size="10" locale="it"
 										id="dataritiro" /></td>
 								<td align="left"><p:selectBooleanCheckbox /></td>
+								<td align="left">
+									<h:graphicImage alt="delete" value="/resources/img/delete.png" />
+								</td>
 
 
 							</tr>
@@ -303,7 +315,14 @@
 			
 			<p:row>
 				<p:column>
-					<p:commandButton value="Ritira per mancanza firmatari"/>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+			</p:row>
+			
+			
+			<p:row>
+				<p:column>
+					
 				</p:column>
 				
 				<p:column>
@@ -313,6 +332,7 @@
 			
 			<p:row>
 				<p:column>
+					<p:commandButton value="Ritira per mancanza firmatari"/>
 				</p:column>
 				
 				<p:column>
