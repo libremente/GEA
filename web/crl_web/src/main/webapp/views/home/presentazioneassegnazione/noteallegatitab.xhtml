@@ -12,7 +12,7 @@
 <p:panelGrid styleClass="infoTable" id="notePanel">
 	<p:row>
 		<p:column>
-			<p:fieldset styleClass="fieldSetTab" legend="Note:" collapsed="true"
+			<p:fieldset styleClass="fieldSetTab" legend="Note:" collapsed="false"
 				toggleable="true" toggleSpeed="500">
 
 				<b>Note generali: </b>
@@ -71,9 +71,10 @@
 				</table>
 
 				<h:commandLink>
-					<h:graphicImage alt="Aggiungi allegato" value="/resources/img/add.png" />
+					<h:graphicImage alt="Aggiungi allegato"
+						value="/resources/img/add.png" />
 				</h:commandLink>
-				
+
 				<!-- TODO : upload file al click sul pulsante-->
 
 			</p:fieldset>
@@ -120,11 +121,24 @@
 				</table>
 
 				<h:commandLink>
-					<h:graphicImage alt="Aggiungi collegamento" value="/resources/img/add.png" />
+					<h:graphicImage alt="Aggiungi collegamento"
+						value="/resources/img/add.png" />
 				</h:commandLink>
 
 			</p:fieldset>
 		</p:column>
 	</p:row>
+
+
+
+	<p:row>
+		<p:column>
+
+			<p>
+				<p:commandButton value="Salva" />
+			</p>
+		</p:column>
+	</p:row>
+
 </p:panelGrid>
 </html>
