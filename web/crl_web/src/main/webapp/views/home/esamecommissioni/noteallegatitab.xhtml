@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<p:panelGrid styleClass="infoTable" id="notePanel">
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab" legend="Note:" collapsed="false"
+				toggleable="true" toggleSpeed="500">
+
+				<b>Note generali: </b>
+				<br />
+				<br />
+				<p:inputTextarea rows="5" cols="101" autoResize="false" />
+
+				<h:outputText id="counter" />
+
+
+			</p:fieldset>
+		</p:column>
+	</p:row>
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab" legend="Allegati:"
+				collapsed="true" toggleable="true" toggleSpeed="500">
+
+				<table class="generalInfoTab" id="assegnazionePareri"
+					style="width: 100%;" border="0">
+					<thead>
+						<th>Descrizione Allegato</th>
+						<th>Documento</th>
+						<th>Pubblico</th>
+						<th>Opzioni</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="left">Allegato 1</td>
+							<td align="left"><p:commandLink id="downloadLink1"
+									value="Download" ajax="false">
+									<p:fileDownload value="#{fileDownloadController.file}" />
+								</p:commandLink></td>
+
+							<td align="left"><p:selectBooleanCheckbox /></td>
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td align="left">Allegato 2</td>
+							<td align="left"><p:commandLink id="downloadLink2"
+									value="Download" ajax="false">
+									<p:fileDownload value="#{fileDownloadController.file}" />
+								</p:commandLink></td>
+							<td align="left"><p:selectBooleanCheckbox /></td>
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<h:commandLink>
+					<h:graphicImage alt="Aggiungi allegato"
+						value="/resources/img/add.png" />
+				</h:commandLink>
+
+				<!-- TODO : upload file al click sul pulsante-->
+
+			</p:fieldset>
+		</p:column>
+	</p:row>
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab" legend="Link:" collapsed="true"
+				toggleable="true" toggleSpeed="500">
+
+				<table class="generalInfoTab" id="assegnazionePareri"
+					style="width: 100%;" border="0">
+					<thead>
+						<th>Descrizione collegamento</th>
+						<th>Indirizzo collegamento</th>
+						<th>Pubblico</th>
+						<th>Opzioni</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="left">Link 1</td>
+							<td align="left">http://consiglio.regione.lombardia.it/link1
+							</td>
+
+							<td align="left"><p:selectBooleanCheckbox /></td>
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td align="left">Link 2</td>
+							<td align="left">http://consiglio.regione.lombardia.it/link1
+							</td>
+							<td align="left"><p:selectBooleanCheckbox /></td>
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<h:commandLink>
+					<h:graphicImage alt="Aggiungi collegamento"
+						value="/resources/img/add.png" />
+				</h:commandLink>
+
+			</p:fieldset>
+		</p:column>
+	</p:row>
+
+
+
+	<p:row>
+		<p:column>
+
+			<p>
+				<p:commandButton value="Salva" />
+			</p>
+		</p:column>
+	</p:row>
+
+</p:panelGrid>
+</html>

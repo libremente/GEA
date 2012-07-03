@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panelGrid styleClass="infoTable" id="emendamentiPanel">
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab" legend="Emendamenti:"
+				collapsed="false" toggleable="true" toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="emendamentiGrid">
+					<p:row>
+						<p:column>
+							<table class="generalInfoTab" id="emendamentiPresentati"
+								style="width: 100%;" border="0">
+								<thead>
+									<th>Emendamenti presentati</th>
+									<th>Azioni</th>
+									<th>Pubblico</th>
+									<th>Opzioni</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="left">Emendamenti del 15/06</td>
+										<td align="left"><p:commandLink id="downloadEmendamento1"
+												value="Download" ajax="false">
+												<p:fileDownload value="#{fileDownloadController.file}" />
+											</p:commandLink></td>
+
+										<td align="left"><p:selectBooleanCheckbox /></td>
+										<td align="left"><h:commandLink>
+												<h:graphicImage alt="Elimina riga"
+													value="/resources/img/delete.png" />
+											</h:commandLink></td>
+									</tr>
+
+									<tr>
+										<td align="left">Emendamenti del 18/06</td>
+										<td align="left"><p:commandLink id="downloadEmendamento2"
+												value="Download" ajax="false">
+												<p:fileDownload value="#{fileDownloadController.file}" />
+											</p:commandLink></td>
+										<td align="left"><p:selectBooleanCheckbox /></td>
+										<td align="left"><h:commandLink>
+												<h:graphicImage alt="Elimina riga"
+													value="/resources/img/delete.png" />
+											</h:commandLink></td>
+									</tr>
+
+								</tbody>
+							</table>
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column>
+							<h:commandLink>
+								<h:graphicImage alt="Aggiungi collegamento"
+									value="/resources/img/add.png" />
+							</h:commandLink>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column>
+
+							<table class="generalInfoTab" id="numEmendamenti"
+								style="width: 100%;" border="0">
+
+								<tbody>
+									<tr>
+										<td align="left"></td>
+										<td align="left">Maggior.</td>
+										<td align="left">Minor.</td>
+										<td align="left">Giunta</td>
+										<td align="left">Misto</td>
+										<td align="left"><b>Totale</b></td>
+									</tr>
+
+									<tr>
+										<td align="left">Num. Emend. Presentati</td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+									</tr>
+
+									<tr>
+										<td align="left">Num. Emend. Approvati</td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+										<td align="left"><p:inputTextarea rows="1" cols="5"
+												maxlength="5" /></td>
+									</tr>
+
+								</tbody>
+							</table>
+
+						</p:column>
+					</p:row>
+					
+				</p:panelGrid>
+				<p:panelGrid styleClass="infoTable" id="nonApprovati">
+					<p:row>
+
+						<p:column>Non ammissibili</p:column>
+						<p:column>Decaduti</p:column>
+						<p:column>Ritirati</p:column>
+						<p:column>Respinti</p:column>
+						<p:column>
+							<b>Totale non approvati</b>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+						</p:column>
+						<p:column>
+							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+						</p:column>
+						<p:column>
+							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+						</p:column>
+						<p:column>
+							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+						</p:column>
+						<p:column>
+							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+				Note emendamenti: 
+				
+				<br />
+				<p:inputTextarea rows="5" cols="101" autoResize="false" />
+
+
+
+
+			</p:fieldset>
+
+		</p:column>
+	</p:row>
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab" legend="Clausola Valutativa:"
+				collapsed="true" toggleable="true" toggleSpeed="500">
+
+				<p:panelGrid styleClass="infoTable" id="clausolaValutativaGrid">
+					<p:row>
+						<p:column>
+							Data presa in carico proposta: 
+						</p:column>
+						<p:column>
+							<p:calendar size="10" locale="it"
+								id="dataPresaInCarico" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							Data intesa:
+						</p:column>
+						<p:column>
+							<p:calendar size="10" locale="it"
+								id="dataIntesa" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							Esito votazione intesa: 
+						</p:column>
+						<p:column>
+						<p:selectOneMenu id="esitoVotazioneIntesa">
+						<f:selectItem itemLabel="Accettata" itemValue="1" />
+						<f:selectItem itemLabel="Accettata con modifiche" itemValue="2" />
+						<f:selectItem itemLabel="Non accettata" itemValue="3" />
+					</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				
+					
+				Note: 
+				
+				<br />
+				<p:inputTextarea rows="5" cols="101" autoResize="false" />
+				<br /><br />
+				
+				<table class="generalInfoTab" id="assegnazionePareri"
+					style="width: 100%;" border="0">
+					<thead>
+						<th>Testi clausola</th>
+						<th>Azioni</th>
+						<th>Pubblico</th>
+						<th>Opzioni</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="left">Lettera di proposta</td>
+							<td align="left"><p:commandLink id="downloadTesto1"
+									value="Download" ajax="false">
+									<p:fileDownload value="#{fileDownloadController.file}" />
+								</p:commandLink></td>
+
+							<td align="left"><p:selectBooleanCheckbox /></td>
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td align="left">Lettera di comunicazione esito</td>
+							<td align="left"><p:commandLink id="downloadTesto2"
+									value="Download" ajax="false">
+									<p:fileDownload value="#{fileDownloadController.file}" />
+								</p:commandLink></td>
+							<td align="left"><p:selectBooleanCheckbox /></td>
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+						
+						<tr>
+							<td align="left">Testo della clausola trasmesso</td>
+							<td align="left"><p:commandLink id="downloadTesto3"
+									value="Download" ajax="false">
+									<p:fileDownload value="#{fileDownloadController.file}" />
+								</p:commandLink></td>
+							<td align="left"><p:selectBooleanCheckbox /></td>
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<h:commandLink>
+					<h:graphicImage alt="Aggiungi allegato"
+						value="/resources/img/add.png" />
+				</h:commandLink>
+
+				<!-- TODO : upload file al click sul pulsante-->
+
+			</p:fieldset>
+			<p>
+				<p:commandButton value="Salva" />
+			</p>
+		</p:column>
+	</p:row>
+
+
+</p:panelGrid>
+
+
+
+
+
+</html>
