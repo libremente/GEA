@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:form>
+
+	<p:fieldset legend="Consultazioni" toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="consultazionipanel">
+			<p:row>
+				<p:column colspan="6">
+					<table class="generalInfoTab" id="consultazionitab"
+						style="width: 90%;" border="0" type="ordered">
+						<thead>
+							<th>Data consultazione</th>
+							<th>Soggetti consultati</th>
+							<th>Documenti</th>
+							<th>Opzioni</th>
+						</thead>
+
+						<!-- TODO
+							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
+
+						<tbody>
+							<tr>
+								<td align="left">12/3/2011</td>
+								<td align="left">Agenzia delle Entrate</td>
+								<td align="left"><h:graphicImage alt="txt"
+										value="/resources/img/txt.png" /></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr>
+								<td align="left">19/3/2011</td>
+								<td align="left">Confindustria, INPS</td>
+								<td align="left"><h:graphicImage alt="txt"
+										value="/resources/img/txt.png" /></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="6">
+					<p:fieldset legend="Dettagli consultazione" collapsed="true"
+						toggleable="true" toggleSpeed="500">
+						<p:panelGrid styleClass="infoTable"
+							id="dettagliconsultazionepanel">
+							<p:row>
+								<p:column>
+									<h:outputText style="font-weight: bold;"
+										value="Data seduta: " />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu>
+									</p:selectOneMenu>
+								</p:column>
+								<p:column>
+									<h:outputText style="font-weight: bold;" value="Prevista: " />
+								</p:column>
+								<p:column>
+									<p:selectBooleanCheckbox>
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column>
+									<h:outputText style="font-weight: bold;" value="Discussa: " />
+								</p:column>
+								<p:column>
+									<p:selectBooleanCheckbox>
+									</p:selectBooleanCheckbox>
+								</p:column>
+
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<b> <h:outputLabel for="dataconsultazione"
+											value="Data consultazione: " />
+									</b>
+								</p:column>
+								<p:column>
+									<p:calendar size="10" locale="it" id="dataconsultazione" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<h:outputText style="font-weight: bold;" value="Note: " />
+								</p:column>
+								<p:column colspan="6">
+									<p:inputTextarea rows="2" cols="82" autoResize="false" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column colspan="4">
+									<table class="generalInfoTab" id="soggettiinvitatitab"
+										style="width: 90%;" border="0">
+										<thead>
+											<th colspan="2">Soggetti invitati</th>
+											<th>Intervenuti</th>
+										</thead>
+
+										<!-- TODO: 
+							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
+							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+
+										<tbody>
+											<tr>
+												<td align="left" colspan="2">Confindustria</td>
+												<td align="left"><p:selectBooleanCheckbox /></td>
+
+											</tr>
+
+											<tr>
+												<td align="left" colspan="2">INPS</td>
+												<td align="left"><p:selectBooleanCheckbox /></td>
+
+											</tr>
+
+										</tbody>
+									</table>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:graphicImage alt="add" value="/resources/img/add.png" />
+								</p:column>
+							</p:row>
+							
+							<p:row>
+								<p:column>
+									&nbsp;
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column colspan="4">
+									<table class="generalInfoTab" id="documentazioneallegatatab"
+										style="width: 100%;" border="0">
+										<thead>
+											<th colspan="2">Documentazione allegata</th>
+											<th>Documento</th>
+											<th>Pubblico</th>
+										</thead>
+
+										<!-- TODO: 
+							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
+							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+
+										<tbody>
+											<tr>
+												<td align="left" colspan="2">Allegato 1</td>
+												<td align="left"><h:commandLink>
+														<h:outputText value="download" />
+													</h:commandLink></td>
+												<td align="left"><p:selectBooleanCheckbox /></td>
+
+											</tr>
+
+											<tr>
+												<td align="left" colspan="2">Allegato 2</td>
+												<td align="left"><h:commandLink>
+														<h:outputText value="download" />
+													</h:commandLink></td>
+												<td align="left"><p:selectBooleanCheckbox /></td>
+
+											</tr>
+
+										</tbody>
+									</table>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:graphicImage alt="add" value="/resources/img/add.png" />
+								</p:column>
+								<p:column>
+									<p:fileUpload mode="simple" />
+								</p:column>
+							</p:row>
+							
+							<p:row>
+								<p:column>
+									<p:commandButton value="Inserisci"/>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:fieldset>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+</h:form>
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:fieldset legend="Chiudi fascicolo" toggleable="true"
+		toggleSpeed="500">
+
+		<p:panelGrid styleClass="infoTable" id="chiudifascicolopanel">
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="datachiusura" value="Data chiusura: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it" id="datachiusura" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Tipo chiusura: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu>
+						<f:selectItem itemLabel="Pubblicato" itemValue="1" />
+						<f:selectItem itemLabel="Approvato e Trasmesso alla Giunta"
+							itemValue="2" />
+						<f:selectItem itemLabel="Rifiutato e Trasmesso alla Giunta"
+							itemValue="3" />
+						<f:selectItem itemLabel="Per inamissibilità" itemValue="4" />
+						<f:selectItem itemLabel="Ritirato dai promotori" itemValue="5" />
+						<f:selectItem itemLabel="Abbinato ad altro atto" itemValue="6" />
+						<f:selectItem itemLabel="Per decadenza (fine legislatura)"
+							itemValue="7" />
+						<f:selectItem itemLabel="Per motivi diversi" itemValue="8" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Note: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea rows="2" cols="82" autoResize="false" />
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
+
+	</p:fieldset>
+	<p:fieldset legend="Registrazione su BURL" collapsed="true"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="registrazioneburlpanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Numero Riferimento BURL: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="inputnumerorifburl" />
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="databurl" value="Data BURL: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it" id="databurl" />
+				</p:column>
+
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Numero LR: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="inputnumerolr" />
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="datalr" value="Data LR: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it" id="datalr" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="2">
+					<p:commandLink
+						value="Creazione lettera per pubblicazione del Presidente" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<p>
+		<p:commandButton value="Chiusura atto" />
+	</p>
+</h:form>
+</html>

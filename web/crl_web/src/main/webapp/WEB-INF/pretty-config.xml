@@ -32,11 +32,24 @@
           
     </url-mapping> 
     
+    <url-mapping id="chiusuraiter"> 
+        <pattern value="/chiusuraiter" /> 
+        <view-id value="views/home/chiusuraiter/chiusuraiter_base.xhtml" />      
+          
+    </url-mapping> 
+
      <url-mapping id="esameaula"> 
         <pattern value="/esameaula" /> 
         <view-id value="views/home/esameaula/esameaula_base.xhtml" />      
           
     </url-mapping> 
+    
+      <url-mapping id="consultazioneepareri"> 
+        <pattern value="/consultazioneepareri" /> 
+        <view-id value="views/home/consultazioneepareri/consultazioneepareri_base.xhtml" />      
+          
+    </url-mapping> 
+
     
     
 

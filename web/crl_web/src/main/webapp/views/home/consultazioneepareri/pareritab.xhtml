@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:fieldset legend="Pareri" toggleable="true" toggleSpeed="500">
+
+		<p:panelGrid styleClass="infoTable" id="pareripanel">
+			<p:row>
+				<p:column colspan="6">
+					<table class="generalInfoTab" id="pareritab" style="width: 90%;"
+						border="0" type="ordered">
+						<thead>
+							<th>N°</th>
+							<th>Organismo Statuario</th>
+							<th>Richiesto</th>
+							<th>Ricevuto</th>
+							<th>Esito</th>
+							<th>Allegati</th>
+							<th>Opzioni</th>
+						</thead>
+
+						<!-- TODO
+							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
+
+						<tbody>
+							<tr>
+								<td align="left">1</td>
+								<td align="left">CPCV</td>
+								<td align="left">1/5/2011</td>
+								<td align="left">1/7/2011</td>
+								<td align="left">Esito parere 1...</td>
+								<td align="left"></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr>
+								<td align="left">2</td>
+								<td align="left">CORECOM</td>
+								<td align="left">1/5/2011</td>
+								<td align="left">4/7/2011</td>
+								<td align="left">Esito parere 2...</td>
+								<td align="left"><h:graphicImage alt="txt"
+										value="/resources/img/txt.png" /></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="6">
+					<p:fieldset legend="Dettagli parere" collapsed="true"
+						toggleable="true" toggleSpeed="500">
+						<p:panelGrid styleClass="infoTable" id="dettagliparerepanel">
+							<p:row>
+								<p:column>
+									<h:outputText style="font-weight: bold;"
+										value="Organismo Statuario: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="CPCV" readonly="true" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<h:outputText style="font-weight: bold;"
+										value="Data Assegnazione: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="1/5/2011" readonly="true" />
+								</p:column>
+								<p:column>
+									<b> <h:outputLabel for="dataricezioneorgano"
+											value="Data ricezione organo: " />
+									</b>
+								</p:column>
+								<p:column>
+									<p:calendar size="10" locale="it" id="dataricezioneorgano" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<b> <h:outputLabel for="dataricezioneparere"
+											value="Data ricezione parere: " />
+									</b>
+								</p:column>
+								<p:column>
+									<p:calendar size="10" locale="it" id="dataricezioneparere" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<h:outputText style="font-weight: bold;" value="Esito: " />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu>
+										<f:selectItem itemLabel="Positivo" itemValue="1" />
+										<f:selectItem itemLabel="Positivo condizionato" itemValue="2" />
+										<f:selectItem itemLabel="Negativo" itemValue="3" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<h:outputText style="font-weight: bold;" value="Note: " />
+								</p:column>
+								<p:column colspan="3">
+									<p:inputTextarea rows="2" cols="82" autoResize="false" />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column colspan="4">
+									<table class="generalInfoTab" id="documentazioneallegatatab" style="width: 100%;"
+										border="0">
+										<thead>
+											<th colspan="2">Documentazione allegata</th>
+											<th>Documento</th>
+											<th>Pubblico</th>
+										</thead>
+
+										<!-- TODO: 
+							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
+							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+
+										<tbody>
+											<tr>
+												<td align="left" colspan="2">Allegato 1</td>
+												<td align="left"><h:commandLink>
+														<h:outputText value="download" />
+													</h:commandLink></td>
+												<td align="left"><p:selectBooleanCheckbox /></td>
+
+											</tr>
+
+											<tr>
+												<td align="left" colspan="2">Allegato 2</td>
+												<td align="left"><h:commandLink>
+														<h:outputText value="download" />
+													</h:commandLink></td>
+												<td align="left"><p:selectBooleanCheckbox /></td>
+
+											</tr>
+
+										</tbody>
+									</table>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:graphicImage alt="add" value="/resources/img/add.png" />
+								</p:column>
+								<p:column>
+									<p:fileUpload mode="simple" />
+								</p:column>
+							</p:row>
+							
+							<p:row>
+								<p:column>
+									<p:commandButton value="Inserisci"/>
+								</p:column>
+							</p:row>
+
+						</p:panelGrid>
+					</p:fieldset>
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
+	</p:fieldset>
+</h:form>
+</html>
