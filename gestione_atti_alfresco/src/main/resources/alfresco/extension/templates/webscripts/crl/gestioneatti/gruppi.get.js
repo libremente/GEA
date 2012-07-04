@@ -1,0 +1,1 @@
+model.gruppi = people.getContainerGroups(person);

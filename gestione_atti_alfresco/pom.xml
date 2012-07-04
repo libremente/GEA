@@ -80,7 +80,8 @@
 		-->
 		<env>local</env>
 		<!-- Webapp used to test/develop locally the AMP -->
-		<webapp.name>${project.artifactId}-webapp</webapp.name>
+		<!-- <webapp.name>${project.artifactId}-webapp</webapp.name>-->
+		<webapp.name>alfresco</webapp.name>
 		<!--
 			| | By default the src/test/properties/local/alfresco-global.properties
 			uses the property "alfresco.data.location" to specify where |
@@ -181,6 +182,7 @@
                         -->
                     <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>ftl</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>acp</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
@@ -361,6 +363,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-war-plugin</artifactId>
+						<version>2.1.1</version>
 						<executions>
 							<!-- Runs war packaging when 'integration-test' phase is called -->
 							<execution>

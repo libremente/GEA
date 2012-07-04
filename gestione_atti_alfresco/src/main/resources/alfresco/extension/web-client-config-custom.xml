@@ -1,0 +1,120 @@
+<alfresco-config>
+   
+   <config evaluator="string-compare" condition="Content Wizards">
+      <content-types>
+         <type name="crlatti:atto" />
+         <type name="crlatti:legislaturaAnagrafica" />
+      </content-types>
+   </config>
+   
+   <config evaluator="string-compare" condition="Action Wizards">
+      <specialise-types>
+      	<type name="crlatti:atto"/>
+      	<type name="crlatti:attoPdl"/>
+      </specialise-types>
+   </config>
+   
+   <config evaluator="string-compare" condition="Space Wizards">
+      <folder-types>
+         <type name="crlatti:atto" />
+         <type name="crlatti:attoPdl"/>
+      </folder-types>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:legislaturaAnagrafica">
+      <property-sheet>            
+         <show-property name="crlatti:anni" />
+   	  </property-sheet>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:atto">
+      <property-sheet>            
+         <show-property name="crlatti:legislatura" />
+         <show-property name="crlatti:statoAtto" />
+         <show-property name="crlatti:numeroAtto" />
+         <show-property name="crlatti:dataIniziativa" />
+         <show-property name="crlatti:numeroProtocollo" />
+         <show-property name="crlatti:tipoIniziativa" />
+         <show-property name="crlatti:numeroDcr" />
+         <show-property name="crlatti:primoFirmatario" />
+         
+         <show-property name="crlatti:oggetto" />
+         <show-property name="crlatti:firmatario" />
+         <show-property name="crlatti:tipoChiusura" />
+         <show-property name="crlatti:dataPubblicazione" />
+         <show-property name="crlatti:esitoVotoComRef" />
+         <show-property name="crlatti:dataSedutaSc" />
+         <show-property name="crlatti:esitoVotoAula" />
+         <show-property name="crlatti:dataSedutaComm" />
+         
+         <show-property name="crlatti:commReferente" />
+         <show-property name="crlatti:dataSedutaAula" />
+         <show-property name="crlatti:commConsultiva" />
+         <show-property name="crlatti:relatori" />
+         <show-property name="crlatti:redigente" />
+         <show-property name="crlatti:deliberante" />
+         <show-property name="crlatti:organismoStatutario" />
+         
+         <show-property name="crlatti:numeroLcr" />
+         <show-property name="crlatti:soggettoConsultato" />
+         <show-property name="crlatti:numeroLr" />
+         <show-property name="crlatti:anno" />
+         <show-property name="crlatti:emendato" />
+         
+         <show-property name="crlatti:rinviato" />
+         <show-property name="crlatti:sospeso" />
+         <show-property name="crlatti:abbinamento" />
+         <show-property name="crlatti:stralcio" />
+         
+      </property-sheet>
+   </config>
+   
+   <config evaluator="string-compare" condition="Advanced Search">
+      <advanced-search>
+         <content-types>
+            <type name="crlatti:atto" />
+         </content-types>
+         <custom-properties>
+            <meta-data type="crlatti:atto" property="crlatti:legislatura" />
+            
+            <meta-data type="crlatti:atto" property="crlatti:statoAtto" />
+            <meta-data type="crlatti:atto" property="crlatti:numeroAtto" />
+            <meta-data type="crlatti:atto" property="crlatti:dataIniziativa" />
+            <meta-data type="crlatti:atto" property="crlatti:numeroProtocollo" />
+            <meta-data type="crlatti:atto" property="crlatti:tipoIniziativa" />
+			<meta-data type="crlatti:atto" property="crlatti:numeroDcr" />
+			<meta-data type="crlatti:atto" property="crlatti:primoFirmatario" />
+			<meta-data type="crlatti:atto" property="crlatti:oggetto" />
+			<meta-data type="crlatti:atto" property="crlatti:firmatario" />
+			<meta-data type="crlatti:atto" property="crlatti:tipoChiusura" />
+			
+			<meta-data type="crlatti:atto" property="crlatti:dataPubblicazione" />
+			<meta-data type="crlatti:atto" property="crlatti:esitoVotoComRef" />
+			<meta-data type="crlatti:atto" property="crlatti:dataSedutaSc" />
+			<meta-data type="crlatti:atto" property="crlatti:esitoVotoAula" />
+			<meta-data type="crlatti:atto" property="crlatti:dataSedutaComm" />
+			
+			<meta-data type="crlatti:atto" property="crlatti:commReferente" />
+			<meta-data type="crlatti:atto" property="crlatti:dataSedutaAula" />
+			<meta-data type="crlatti:atto" property="crlatti:commConsultiva" />
+			<meta-data type="crlatti:atto" property="crlatti:relatori" />
+			
+			<meta-data type="crlatti:atto" property="crlatti:redigente" />
+			<meta-data type="crlatti:atto" property="crlatti:deliberante" />
+			<meta-data type="crlatti:atto" property="crlatti:organismoStatutario" />
+			<meta-data type="crlatti:atto" property="crlatti:numeroLcr" />
+			<meta-data type="crlatti:atto" property="crlatti:soggettoConsultato" />
+			<meta-data type="crlatti:atto" property="crlatti:numeroLr" />
+			
+			<meta-data type="crlatti:atto" property="crlatti:anno" />
+			<meta-data type="crlatti:atto" property="crlatti:emendato" />
+			<meta-data type="crlatti:atto" property="crlatti:rinviato" />
+			<meta-data type="crlatti:atto" property="crlatti:sospeso" />
+			<meta-data type="crlatti:atto" property="crlatti:abbinamento" />
+			<meta-data type="crlatti:atto" property="crlatti:stralcio" />
+
+         </custom-properties>
+      </advanced-search>
+   </config>
+
+</alfresco-config>
