@@ -32,6 +32,12 @@
           
     </url-mapping> 
     
+     <url-mapping id="esameaula"> 
+        <pattern value="/esameaula" /> 
+        <view-id value="views/home/esameaula/esameaula_base.xhtml" />      
+          
+    </url-mapping> 
+    
     
 
 </pretty-config>

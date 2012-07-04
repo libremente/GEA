@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panelGrid styleClass="infoTable" id="rinviostralciPanel">
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab" legend="Rinvio esame: " collapsed="false"
+				toggleable="true" toggleSpeed="500">
+	
+			<p:panelGrid styleClass="infoTable" id="rinvioGrid">
+			<p:row>
+			<p:column>
+			Data seduta:
+			
+			</p:column>
+			<p:column>
+			<p:calendar size="10" locale="it" id="dataSeduta" />
+			</p:column>
+			</p:row>
+			
+			<p:row>
+			<p:column>
+			Termine massimo:
+			
+			</p:column>
+			<p:column>
+			<p:calendar size="10" locale="it" id="termineMassimo" />
+			</p:column>
+			</p:row>
+			<p:row>
+						<p:column>
+
+					Motivazione: 
+
+						</p:column>
+												<p:column>
+							<p:inputTextarea rows="6" cols="65" autoResize="false" />
+
+						</p:column>
+
+
+						<p:column>
+
+							<p:commandButton value="Conferma" />
+
+						</p:column>
+					</p:row>
+			
+			</p:panelGrid>
+			
+			</p:fieldset>
+			</p:column>
+			</p:row>
+			<p:row>
+			<p:column>
+			
+			<p:fieldset styleClass="fieldSetTab" legend="Stralci: " collapsed="true"
+				toggleable="true" toggleSpeed="500">
+	
+			<p:panelGrid styleClass="infoTable" id="stralciGrid">
+			<p:row>
+			<p:column>
+			Data seduta:
+			</p:column>
+			<p:column>
+			<p:calendar size="10" locale="it" />
+			</p:column>
+			</p:row>
+			<p:row>
+			<p:column>
+			Data Stralcio:
+			</p:column>
+			<p:column>
+			<p:calendar size="10" locale="it" />
+			</p:column>
+			</p:row>
+			<p:row>
+			<p:column>
+			Data iniziativa:
+			</p:column>
+			<p:column>
+			<p:calendar size="10" locale="it" />
+			</p:column>
+			</p:row>
+			
+			<p:row>
+						<p:column>
+
+					Note stralcio: 
+
+						</p:column>
+												<p:column>
+							<p:inputTextarea rows="6" cols="65" autoResize="false" />
+
+						</p:column>
+
+
+						
+					</p:row>
+					<p:row>
+						<p:column>
+
+					Quorum: 
+
+						</p:column>
+												<p:column>
+							<p:inputTextarea rows="6" cols="65" autoResize="false" />
+
+						</p:column>
+
+
+						
+					</p:row>
+					<p:row>
+					<p:column>
+					Quorum:
+					</p:column>
+					<p:column>
+					<p:selectOneMenu id="quorum">
+								<f:selectItem itemLabel="Maggioranza" itemValue="1" />
+								<f:selectItem itemLabel="Unanimità"
+									itemValue="2" />
+								
+							</p:selectOneMenu>
+					</p:column>
+					</p:row>
+					<p:row>
+					<p:column>
+					<p:commandButton value="Inserisci" />
+					</p:column>
+					</p:row>
+			</p:panelGrid>
+			</p:fieldset>
+			
+			
+			</p:column>
+			</p:row>
+			</p:panelGrid>
+			
+	
+	
+</html>

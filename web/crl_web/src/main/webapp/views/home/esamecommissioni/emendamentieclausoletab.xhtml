@@ -13,7 +13,7 @@
 		<p:column>
 			<p:fieldset styleClass="fieldSetTab" legend="Emendamenti:"
 				collapsed="false" toggleable="true" toggleSpeed="500">
-				<p:panelGrid styleClass="infoTable" id="emendamentiGrid">
+				<p:panelGrid styleClass="infoTable" id="emendamentiClausoleGrid">
 					<p:row>
 						<p:column>
 							<table class="generalInfoTab" id="emendamentiPresentati"
@@ -63,6 +63,8 @@
 								<h:graphicImage alt="Aggiungi collegamento"
 									value="/resources/img/add.png" />
 							</h:commandLink>
+							
+							<!-- TODO : upload file al click sul pulsante-->
 
 						</p:column>
 					</p:row>
@@ -85,30 +87,20 @@
 
 									<tr>
 										<td align="left">Num. Emend. Presentati</td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
 									</tr>
 
 									<tr>
 										<td align="left">Num. Emend. Approvati</td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
-										<td align="left"><p:inputTextarea rows="1" cols="5"
-												maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+										<td align="left"><p:inputText size="5" maxlength="5" /></td>
 									</tr>
 
 								</tbody>
@@ -131,19 +123,19 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5" />
 						</p:column>
 						<p:column>
-							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5" />
 						</p:column>
 						<p:column>
-							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5" />
 						</p:column>
 						<p:column>
-							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5" />
 						</p:column>
 						<p:column>
-							<p:inputTextarea rows="1" cols="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
+
+		
+		<p:tab id="tab1" title="Votazione">
+			
+			<ui:include src="./votazione.xhtml"/> 
+		</p:tab>
+
+		<p:tab id="tab2" title="Emendamenti">
+		
+			<ui:include src="./emendamentitab.xhtml"/>
+			
+		</p:tab>
+		
+		<p:tab id="tab3" title="Rinvio e Stralci">
+            
+
+            <ui:include src="./rinvioestralcitab.xhtml"/>
+		
+
+		</p:tab>
+		
+		<p:tab id="tab4" title="Note e Allegati">
+            
+
+            <ui:include src="./noteallegatitab.xhtml"/>
+		
+
+		</p:tab>
+		
+	</p:tabView>
+</h:form>
+</html>
