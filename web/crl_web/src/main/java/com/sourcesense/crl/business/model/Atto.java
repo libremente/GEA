@@ -38,7 +38,8 @@ public class Atto implements Serializable
     private String numeroAtto;
     private String tipoAtto;
     private String tipologia;
-    
+    private String legislatura;
+    private String anno;
     
     
     
@@ -162,4 +163,22 @@ public class Atto implements Serializable
     {
         this.stato = stato;
     }
+
+	public String getLegislatura() {
+		return legislatura;
+	}
+
+	public void setLegislatura(String legislatura) {
+		this.legislatura = legislatura;
+	}
+
+	public String getAnno() {
+		return anno;
+	}
+
+	public void setAnno(String anno) {
+		this.anno = anno;
+	}
+    
+    
 }
