@@ -67,12 +67,11 @@
 							id="dettagliconsultazionepanel">
 							<p:row>
 								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data seduta: " />
+									<b> <h:outputLabel for="dataseduta" value="Data seduta: " />
+									</b>
 								</p:column>
 								<p:column>
-									<p:selectOneMenu>
-									</p:selectOneMenu>
+									<p:calendar size="10" locale="it" id="dataseduta" />
 								</p:column>
 								<p:column>
 									<h:outputText style="font-weight: bold;" value="Prevista: " />
@@ -118,6 +117,7 @@
 										<thead>
 											<th colspan="2">Soggetti invitati</th>
 											<th>Intervenuti</th>
+											<th>Opzioni</th>
 										</thead>
 
 										<!-- TODO: 
@@ -128,13 +128,15 @@
 											<tr>
 												<td align="left" colspan="2">Confindustria</td>
 												<td align="left"><p:selectBooleanCheckbox /></td>
-
+												<td align="left"><h:graphicImage alt="delete"
+														value="/resources/img/delete.png" /></td>
 											</tr>
 
 											<tr>
 												<td align="left" colspan="2">INPS</td>
 												<td align="left"><p:selectBooleanCheckbox /></td>
-
+												<td align="left"><h:graphicImage alt="delete"
+														value="/resources/img/delete.png" /></td>
 											</tr>
 
 										</tbody>
@@ -146,7 +148,7 @@
 									<h:graphicImage alt="add" value="/resources/img/add.png" />
 								</p:column>
 							</p:row>
-							
+
 							<p:row>
 								<p:column>
 									&nbsp;
@@ -161,6 +163,7 @@
 											<th colspan="2">Documentazione allegata</th>
 											<th>Documento</th>
 											<th>Pubblico</th>
+											<th>Opzioni</th>
 										</thead>
 
 										<!-- TODO: 
@@ -174,6 +177,8 @@
 														<h:outputText value="download" />
 													</h:commandLink></td>
 												<td align="left"><p:selectBooleanCheckbox /></td>
+												<td align="left"><h:graphicImage alt="delete"
+														value="/resources/img/delete.png" /></td>
 
 											</tr>
 
@@ -183,6 +188,8 @@
 														<h:outputText value="download" />
 													</h:commandLink></td>
 												<td align="left"><p:selectBooleanCheckbox /></td>
+												<td align="left"><h:graphicImage alt="delete"
+														value="/resources/img/delete.png" /></td>
 
 											</tr>
 
@@ -198,10 +205,10 @@
 									<p:fileUpload mode="simple" />
 								</p:column>
 							</p:row>
-							
+
 							<p:row>
 								<p:column>
-									<p:commandButton value="Inserisci"/>
+									<p:commandButton value="Inserisci" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
