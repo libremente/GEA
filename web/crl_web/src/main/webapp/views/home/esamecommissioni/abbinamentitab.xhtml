@@ -197,34 +197,52 @@
 
 		<h3>Atti abbinati</h3>
 
-		<p:dataTable id="attiabbinati" var="atto"
-			value="#{searchBean.lazyAttoModel}" rows="2" paginator="true"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
-			paginatorAlwaysVisible="false" paginatorPosition="bottom">
-			<p:column>
-				<f:facet name="header">Tipo</f:facet>
-				<h:outputText value="#{atto.tipo}" />
-			</p:column>
+		<p:panelGrid styleClass="infoTable" id="gestionerelatoripanel">
+			<p:row>
+				<p:column colspan="6">
+					<table class="generalInfoTab" id="testitab" style="width: 90%;"
+						border="0" type="ordered">
+						<thead>
+							<th>Tipo Atto</th>
+							<th>N.Atto</th>
+							<th>N.Protocollo</th>
+							<th>Oggetto</th>
+							<th>Azioni</th>
+						</thead>
 
-			<p:column headerText="N.Atto">
-				<h:outputLink value="#{request.contextPath}/atto">
-					<h:outputText value="#{atto.codice}" />
-					<f:param name="code" value="#{atto.codice}" />
-				</h:outputLink>
-			</p:column>
-			<p:column headerText="Oggetto">
-				<h:outputText value="#{atto.oggetto}" />
-			</p:column>
-			<p:column headerText="Data abbinamento">
+						<!-- TODO
+							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
 
-			</p:column>
-			<p:column headerText="Data disabbinamento">
+						<tbody>
+							<tr style="color: red;">
+								<td align="left">PDL</td>
+								<td align="left">19</td>
+								<td align="left">30/4/2011</td>
+								<td align="left">5/5/2011</td>								
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" />
+										<h:graphicImage alt="txt"
+										value="/resources/img/txt.png" /></td>
 
-			</p:column>
-			<p:column headerText="Azioni">
+							</tr>
 
-			</p:column>
-		</p:dataTable>
+							<tr>
+								<td align="left">PDL</td>
+								<td align="left">76</td>
+								<td align="left">25/5/2011</td>
+								<td align="left"></td>								
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" />
+										<h:graphicImage alt="txt"
+										value="/resources/img/txt.png" /></td>
+
+							</tr>
+						
+						</tbody>
+					</table>
+				</p:column>
+				</p:row>
+		</p:panelGrid>
 
 		<p:fieldset legend="Dettagli abbinamento" collapsed="true"
 			toggleable="true" toggleSpeed="500">
