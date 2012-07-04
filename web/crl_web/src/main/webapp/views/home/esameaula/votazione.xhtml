@@ -8,7 +8,34 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<p:panelGrid styleClass="infoTable" id="votazionePanel">
+<p:panelGrid styleClass="infoTable" id="votazionePanel1">
+	<p:row>
+		<p:column>
+		
+		Data presa in carico:
+		</p:column>
+		<p:column>
+			<p:calendar size="10" locale="it" />
+		</p:column>
+		<p:column>
+			<p:commandButton value="Conferma" />
+		</p:column>
+	</p:row>
+	<p:row>
+		<p:column>
+		Relazione scritta:
+		</p:column>
+		<p:column>
+			<p:selectOneMenu id="relazioneScritta">
+				<f:selectItem itemLabel="Sì" itemValue="1" />
+				<f:selectItem itemLabel="No" itemValue="2" />
+
+			</p:selectOneMenu>
+		</p:column>
+	</p:row>
+</p:panelGrid>
+
+<p:panelGrid styleClass="infoTable" id="votazionePanel2">
 	<p:row>
 		<p:column>
 			<p:fieldset styleClass="fieldSetTab" legend="Esame in assemblea: "
@@ -70,15 +97,15 @@
 					<p:row>
 						<p:column>
 
-					Emendato:: 
+					Emendato: 
 
 						</p:column>
+
+
 						<p:column>
-
-							<p:column>
-								<p:inputText size="4" maxlength="4" id="emendato" />
-							</p:column>
+							<p:selectBooleanCheckbox />
 						</p:column>
+
 
 					</p:row>
 
@@ -88,7 +115,7 @@
 					Note: 
 
 						</p:column>
-					
+
 						<p:column>
 							<p:inputTextarea rows="3" cols="60" autoResize="false" />
 
@@ -147,7 +174,7 @@
 										value="/resources/img/delete.png" />
 								</h:commandLink></td>
 						</tr>
-						
+
 						<tr>
 							<td align="left">DOC</td>
 							<td align="left"><p:commandLink id="downloadTestoAtto3"
