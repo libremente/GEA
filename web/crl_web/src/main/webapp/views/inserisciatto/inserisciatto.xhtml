@@ -9,60 +9,95 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form>
-	<p:panelGrid style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;" id="insertattopanel">
+	<p:panelGrid
+		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
+		id="insertattopanel">
 
-			<f:facet name="header">
-				<p:row>
-					<p:column style="text-align:left" colspan="4">
+		<f:facet name="header">
+			<p:row>
+				<p:column style="text-align:left" colspan="4">
 						Inserisci Atto:
 			    </p:column>
-				</p:row>
-			</f:facet>
-
-			<p:row>
-				<p:column>
-					<h:outputLabel for="numeroatto" value="Numero Atto: "  />
-				</p:column>
-
-				<p:column>
-					<p:inputText id="numeroatto" value="#{attoBean?.atto.numeroAtto}" v required="true"/>
-				</p:column>
-				
-				<p:message for="numeroatto" display="icon"/>  
 			</p:row>
-			
-			<p:row>
-				<p:column>
-					<h:outputLabel for="tipoatto" value="Tipo atto: " />
-				</p:column>
+		</f:facet>
 
-				<p:column>
-					<p:selectOneMenu id="tipoatto" value="#{attoBean.atto.tipoatto}" />
-				</p:column>
-			</p:row>
-			
-			<p:row>
-				<p:column>
-					<h:outputLabel for="tipologia" value="Tipologia: " />
-				</p:column>
+		<p:row>
+			<p:column>
+				<h:outputLabel for="numeroatto" value="Numero Atto: " />
+			</p:column>
 
-				<p:column>
-					<p:selectOneMenu id="tipologia" value="#{attoBean.atto.tipologia}" />
-				</p:column>
-			</p:row>
-			
-			<p:row>
-			
-			 <p:column colspan="2">
-			     
-			     <p:commandButton id="insertattobtn" value="Salva" update="insertattopanel" actionListener="#{attoBean.inserisciAtto()}"/>
-			 </p:column>
-			</p:row>
-			
-			
-    </p:panelGrid>
+			<p:column>
+				<p:inputText id="numeroatto" value="#{attoController.numeroAtto}"
+					required="true" />
+			</p:column>
 
-	
-		
+			<p:message for="numeroatto" display="icon" />
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="tipoatto" value="Tipo atto: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="tipoatto" value="#{attoController.tipoAtto}">
+					<f:selectItems value="#{attoController.tipiAtto}" />
+					<p:ajax update="tipologia"
+						listener="#{attoController.handleTipoAttoChange}" />
+				</p:selectOneMenu>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="tipologia" value="Tipologia: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="tipologia" value="#{attoController.tipologie}">
+					<f:selectItems value="#{attoController.tipologia}" />
+				</p:selectOneMenu>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="legislatura" value="Legislatura: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="legislatura"
+					value="#{attoController.legislature}">
+					<f:selectItems value="#{attoController.legislatura}" />
+				</p:selectOneMenu>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="anno" value="Anno: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="anno" value="#{attoController.anni}">
+					<f:selectItems value="#{attoController.anno}" />
+				</p:selectOneMenu>
+			</p:column>
+		</p:row>
+
+		<p:row>
+
+			<p:column colspan="2">
+
+				<p:commandButton id="insertattobtn" value="Salva"
+					update="insertattopanel" action="#{attoController.inserisciAtto()}" />
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+
+
 </h:form>
 </html>

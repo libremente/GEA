@@ -15,7 +15,7 @@
     
     <url-mapping id="atto"> 
         <pattern value="/atto" /> 
-        <query-param name="code"  > #{mgmtBean.code} </query-param>
+        <query-param name="numeroatto"> #{attoBean.numeroAtto} </query-param>
         <view-id value="views/home/riepilogoatto/riepilogoatto_base.xhtml" />      
           
     </url-mapping> 

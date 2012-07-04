@@ -35,7 +35,7 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="tipoatto" value="#{searchBean.tipoatto}" />
+					<p:selectOneMenu id="tipoatto" value="#{searchBean.tipoatto}"  />
 				</p:column>
 
 				<p:column>
@@ -135,7 +135,7 @@
 
 					<p:commandButton value="Cerca" update="listaAtti"
 						id="btncercaatto_cerca"
-						actionListener="#{searchBean.searchLazyAttoModel()}" />
+						actionListener="#{searchBean.searchAtti()}" />
 
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
 						<p:dataExporter type="xls" target="listaAtti"
@@ -175,8 +175,8 @@
 
 		<p:column headerText="N.Atto">
 			<h:outputLink value="#{request.contextPath}/atto">
-				<h:outputText value="#{atto.codice}" />
-				<f:param name="code" value="#{atto.codice}" />
+				<h:outputText value="#{atto.numeroAtto}" />
+				<f:param name="numeroatto" value="#{atto.numeroAtto}" />
 			</h:outputLink>
 		</p:column>
 		<p:column headerText="Oggetto">
