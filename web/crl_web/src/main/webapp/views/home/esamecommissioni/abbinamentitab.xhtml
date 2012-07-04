@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:form id="insertattoform">
+
+	<p:fieldset legend="Abbinamenti e disabbinamenti" toggleable="true"
+		toggleSpeed="500">
+
+
+		<!-- Pannello ricerca -->
+
+		<p:panelGrid
+			style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;"
+			id="searchPanel">
+
+
+			<f:facet name="header">
+				<p:row>
+					<p:column style="text-align:left" colspan="4">
+						Ricerca Atto:
+			    </p:column>
+				</p:row>
+			</f:facet>
+
+			<p:messages id="msgs" />
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="tipoatto" value="Tipo atto: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="tipoatto" value="#{searchBean.tipoatto}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="legislatura" value="Legislatura: " />
+					<p:selectOneMenu id="legislatura" value="#{searchBean.legislatura}" />
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="stato" value="Stato: " />
+					<p:selectOneMenu id="stato" value="#{searchBean.stato}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numeroatto" value="Numero Atto: " />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="numeroatto" value="#{searchBean.numeroAtto}"></p:inputText>
+				</p:column>
+
+				<p:column colspan="2">
+					<h:outputLabel value="Data Iniziativa " />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<h:outputLabel for="datainiziativa_da" value="da: " />
+					<p:calendar size="10" locale="it" id="datainiziativa_da"
+						value="#{searchBean.dataIniziativaDa}" />
+				&nbsp;&nbsp;&nbsp;
+				<h:outputLabel for="datainiziativa_a" value="a: " />
+					<p:calendar size="10" locale="it" id="datainiziativa_a"
+						value="#{searchBean.dataIniziativaA}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numeroprotocollo" value="Numero Protocollo: " />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="numeroprotocollo"
+						value="#{searchBean.numeroprotocollo}"></p:inputText>
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="tipoiniziativa" value="Tipo Iniziativa: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="tipoiniziativa"
+						value="#{searchBean.tipoiniziativa}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numerodcr" value="Numero DCR: " />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="numerodcr" value="#{searchBean.numerodcr}"></p:inputText>
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="primofirmatario" value="1° Firmatario: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="primofirmatario"
+						value="#{searchBean.primofirmatario}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="oggetto" value="Oggetto: " />
+				</p:column>
+
+				<p:column>
+					<p:inputText id="oggetto" value="#{searchBean.oggetto}"></p:inputText>
+				</p:column>
+
+				<p:column>
+					<h:outputLabel for="firmatario" value="Firmatario: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="firmatario" value="#{searchBean.firmatario}" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+
+				<p:column colspan="3">
+
+					<p:commandButton value="Cerca" update="listaAtti"
+						id="btncercaatto_cerca"
+						actionListener="#{searchBean.searchLazyAttoModel()}" />
+
+					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
+						<p:dataExporter type="xls" target="listaAtti"
+							fileName="lista_atti" />
+					</h:commandLink>
+
+
+
+					<!-- 
+					 
+             <p:commandButton value="Ricerca Avanzata" update="listaAtti" id="btncercaatto_ricavnz"  actionListener="" />  
+              
+              <p:commandButton value="Reimposta" update="searchPanel" id="btncercaatto_reset" actionListener="" />
+              
+               -->
+
+
+				</p:column>
+
+
+			</p:row>
+
+			<!-- <h:outputText style="color: #BBBB">Qui Maschera di ricerca</h:outputText> -->
+
+		</p:panelGrid>
+
+		<!-- Pannello ricerca end -->
+
+		<h3>Risultati ricerca</h3>
+
+		<p:dataTable id="listaAtti" var="atto"
+			value="#{searchBean.lazyAttoModel}" rows="3" paginator="true"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+			paginatorAlwaysVisible="false" paginatorPosition="bottom">
+			<p:column>
+				<f:facet name="header">Tipo</f:facet>
+				<h:outputText value="#{atto.tipo}" />
+			</p:column>
+
+			<p:column headerText="N.Atto">
+				<h:outputLink value="#{request.contextPath}/atto">
+					<h:outputText value="#{atto.codice}" />
+					<f:param name="code" value="#{atto.codice}" />
+				</h:outputLink>
+			</p:column>
+			<p:column headerText="N.Protocollo">
+
+			</p:column>
+			<p:column headerText="Oggetto">
+				<h:outputText value="#{atto.oggetto}" />
+			</p:column>
+			<p:column headerText="Azioni">
+
+			</p:column>
+		</p:dataTable>
+
+		<h3>Atti abbinati</h3>
+
+		<p:dataTable id="attiabbinati" var="atto"
+			value="#{searchBean.lazyAttoModel}" rows="2" paginator="true"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+			paginatorAlwaysVisible="false" paginatorPosition="bottom">
+			<p:column>
+				<f:facet name="header">Tipo</f:facet>
+				<h:outputText value="#{atto.tipo}" />
+			</p:column>
+
+			<p:column headerText="N.Atto">
+				<h:outputLink value="#{request.contextPath}/atto">
+					<h:outputText value="#{atto.codice}" />
+					<f:param name="code" value="#{atto.codice}" />
+				</h:outputLink>
+			</p:column>
+			<p:column headerText="Oggetto">
+				<h:outputText value="#{atto.oggetto}" />
+			</p:column>
+			<p:column headerText="Data abbinamento">
+
+			</p:column>
+			<p:column headerText="Data disabbinamento">
+
+			</p:column>
+			<p:column headerText="Azioni">
+
+			</p:column>
+		</p:dataTable>
+
+		<p:fieldset legend="Dettagli abbinamento" collapsed="true"
+			toggleable="true" toggleSpeed="500">
+			<p:panelGrid styleClass="infoTable" id="dettagliabbinamentopanel">
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Tipo testo: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu>
+							<f:selectItem itemLabel="Testo base" itemValue="1" />
+							<f:selectItem itemLabel="Testo modificato" itemValue="2" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<b> <h:outputLabel for="dataabbinamento"
+								value="Data abbinamento: " />
+						</b>
+					</p:column>
+					<p:column>
+						<p:calendar size="10" locale="it" id="dataabbinamento" />
+					</p:column>
+					<p:column>
+						<p:commandButton value="Conferma Abbinamento" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<b> <h:outputLabel for="datadisabbinamento"
+								value="Data disabbinamento: " />
+						</b>
+					</p:column>
+					<p:column>
+						<p:calendar size="10" locale="it" id="datadisabbinamento" />
+					</p:column>
+					<p:column>
+						<p:commandButton value="Conferma Disabbinamento" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Note: " />
+					</p:column>
+					<p:column colspan="3">
+						<p:inputTextarea rows="2" cols="82" autoResize="false" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:fieldset>
+
+		<p:row>
+					<p:column>
+						<p>
+						<h:outputText style="font-weight: bold;" value="Modifica oggetto dell'atto corrente: " />
+						</p>
+					</p:column>
+					<p:column colspan="3">
+						<p:inputTextarea rows="2" cols="82" autoResize="false" />
+					</p:column>
+				</p:row>
+
+	</p:fieldset>
+</h:form>
+<!-- -->
+</html>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:fieldset legend="Registrazione votazione" toggleable="true"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="registrazionevotazionepanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Esito votazione: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu></p:selectOneMenu>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Quorum: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu>
+						<f:selectItem itemLabel="Maggioranza" itemValue="1" />
+						<f:selectItem itemLabel="Unanimità" itemValue="2" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="dataseduta1" value="Data seduta: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="dataseduta1" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Registra" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<p:fieldset legend="Testo dell'Atto votato" collapsed="true"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="testoattovotatopanel">
+			<p:row>
+				<p:column colspan="4">
+					<table class="generalInfoTab" id="testitab" style="width: 90%;"
+						border="0">
+						<thead>
+							<th colspan="2">Testo Dell'Atto</th>
+							<th>Documento</th>
+							<th>Pubblico</th>
+							<th>Opzioni</th>
+						</thead>
+
+						<!-- TODO: 
+							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
+							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+
+						<tbody>
+							<tr>
+								<td align="left" colspan="2"><b>PDF</b></td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download" />
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr>
+								<td align="left" colspan="2"><b>HTML</b></td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download" />
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr>
+								<td align="left" colspan="2"><b>DOC</b></td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download" />
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+
+
+							<tr>
+								<td align="left" colspan="2">Selezionare un documento...</td>
+								<td align="left"></td>
+								<td align="left"></td>
+								<td align="left"></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+				<p:column>
+					<p:fileUpload mode="simple" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<p:fieldset legend="Continuazione dei lavori in referente"
+		collapsed="true" toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="contlavoriinreferentepanel">
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="dataseduta2" value="Data seduta: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="dataseduta2" />
+					</p>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Motivazioni: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea rows="2" cols="82" autoResize="false" />
+				</p:column>
+			</p:row>
+			<p:row>	
+				<p:column>
+					<p:commandButton value="Cambia Ruolo"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	
+	<p:fieldset legend="Trasmissione"
+		collapsed="true" toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="datatrasmissione" value="Data Trasmissione: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="datatrasmissione" />
+					</p>
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="datarichsiscrzaula" value="Data Richiesta Iscrizione Aula: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="datarichsiscrzaula" />
+					</p>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Passaggio diretto in Aula: " />
+				</p:column>
+				<p:column >
+					<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				</p:column>
+			</p:row>
+			<p:row>	
+				<p:column>
+					<p:commandButton value="Conferma Trasmissione"/>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+</h:form>
+</html>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:panelGrid styleClass="infoTable" id="relatoriecomitatiristrettipanel">
+		<p:row>
+			<p:column>
+				<b> <h:outputLabel for="datapresaincarico"
+						value="Data presa in carico: " />
+				</b>
+			</p:column>
+			<p:column>
+				<p>
+					<p:calendar size="10" locale="it" id="datapresaincarico" />
+					&nbsp;
+					<p:commandButton value="Presa in Carico" />
+				</p>
+			</p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+			<p:column></p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p>
+					<h:outputText style="font-weight: bold;" value="Materia: " />	
+				</p>
+			</p:column>
+			<p:column>
+				<p:inputText id="inputmateria" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<b> <h:outputLabel for="datascadenza"
+						value="Data scadenza: " />
+				</b>
+			</p:column>
+			<p:column>
+				<p>
+					<p:calendar size="10" locale="it" id="datascadenza" />
+				</p>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+	<p:fieldset legend="Gestione Relatori" collapsed="true"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="gestionerelatoripanel">
+			<p:row>
+				<p:column colspan="6">
+					<table class="generalInfoTab" id="testitab" style="width: 90%;"
+						border="0" type="ordered">
+						<thead>
+							<th>N°</th>
+							<th>Relatore</th>
+							<th>Data nomina</th>
+							<th>Data uscita</th>
+							<th>Opzioni</th>
+						</thead>
+
+						<!-- TODO
+							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
+
+						<tbody>
+							<tr style="color: red;">
+								<td align="left">1</td>
+								<td align="left">Mario Bianchi</td>
+								<td align="left">1/5/2011</td>
+								<td align="left">3/5/2011</td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr style="color: red;">
+								<td align="left">2</td>
+								<td align="left">Marco Rossi</td>
+								<td align="left">4/5/2011</td>
+								<td align="left">7/5/2011</td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr>
+								<td align="left">3</td>
+								<td align="left">Paolo Calcaterra</td>
+								<td align="left">15/5/2011</td>
+								<td align="left"></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Conferma Relatori" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<p:fieldset legend="Gestione Comitati Ristretti" collapsed="true"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable"
+			id="gestionecomitatiristrettipanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Presenza Comitato Ristretto: " />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox />
+				</p:column>
+				<p:column>
+
+					<b> <h:outputLabel for="dataistituzionecomitato"
+							value="Data istituzione Comitato: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="dataistituzionecomitato" />
+					</p>
+				</p:column>
+
+			</p:row>
+			<p:row>
+				<p:column colspan="6">
+					<table class="generalInfoTab" id="testitab" style="width: 90%;"
+						border="0" type="ordered">
+						<thead>
+							<th>N°</th>
+							<th>Componenti</th>
+							<th>Data nomina</th>
+							<th>Coordinatore</th>
+							<th>Data uscita</th>
+							<th>Opzioni</th>
+						</thead>
+
+						<!-- TODO
+							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
+
+						<tbody>
+							<tr>
+								<td align="left">1</td>
+								<td align="left">Mario Bianchi</td>
+								<td align="left">1/5/2011</td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+								<td align="left"></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr style="color: red;">
+								<td align="left">2</td>
+								<td align="left">Marco Rossi</td>
+								<td align="left">4/5/2011</td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+								<td align="left">7/5/2011</td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+							<tr>
+								<td align="left">3</td>
+								<td align="left">Paolo Calcaterra</td>
+								<td align="left">15/5/2011</td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+								<td align="left"></td>
+								<td align="left"><h:graphicImage alt="delete"
+										value="/resources/img/delete.png" /></td>
+
+							</tr>
+
+
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Conferma Comitato" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					&nbsp;
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
+					<table class="generalInfoTab" id="testitab" style="width: 90%;"
+						border="0">
+						<thead>
+							<th>Data seduta</th>
+							<th>Testi del Comitato Ristretto</th>
+							<th>Documento</th>
+							<th>Pubblico</th>
+						</thead>
+
+						<!-- TODO: 
+							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
+							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+
+						<tbody>
+							<tr>
+								<td align="left">15/5/2011</td>
+								<td align="left">Documento resoconto lavori 1</td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download" />
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+
+							</tr>
+
+							<tr>
+								<td align="left">15/5/2011</td>
+								<td align="left">Documento resoconto lavori 1</td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download" />
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+
+							</tr>
+							<tr>
+								<td align="left">20/5/2011</td>
+								<td align="left">Documento resoconto lavori 2</td>
+								<td align="left"><h:commandLink>
+										<h:outputText value="download" />
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox /></td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>
+				<p:column>
+					<p:fileUpload mode="simple" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="datafinelavori"
+							value="Data Fine Lavori: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="datafinelavori" />
+					</p>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Conferma Fine Lavori" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+</h:form>
+</html>
