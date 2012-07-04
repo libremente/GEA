@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:fieldset legend="Tipo di notifiche" toggleable="true"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="tiponotifichepanel">
+			<p:row>
+				<p:column>
+					<p:tree	selectionMode="multiple" id="tiponotifichetree">
+
+						<p:treeNode>
+						</p:treeNode>
+					</p:tree>
+
+					<p:commandButton value="Mostra selezionato" 
+						id="btnDisplay" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<p:fieldset legend="Dettagli notifica selezionata" collapsed="true"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="dettaglinotificapanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Nome Presidente del Consiglio: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="inputpresidenteconsiglio" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="datalettera" value="Data Lettera: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="datalettera" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Salva personalizzazione" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<p>
+		<p:commandButton value="Genera lettera" />
+	</p>
+
+</h:form>
+</html>

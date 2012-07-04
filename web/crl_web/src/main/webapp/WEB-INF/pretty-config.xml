@@ -49,8 +49,14 @@
         <view-id value="views/home/consultazioneepareri/consultazioneepareri_base.xhtml" />      
           
     </url-mapping> 
+    
+     <url-mapping id="lettereenotifiche"> 
+        <pattern value="/lettereenotifiche" /> 
+        <view-id value="views/home/lettereenotifiche/lettereenotifiche_base.xhtml" />      
+          
+    </url-mapping> 
 
     
-    
+
 
 </pretty-config>
