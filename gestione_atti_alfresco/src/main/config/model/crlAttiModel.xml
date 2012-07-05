@@ -22,6 +22,10 @@
 			<title>Atto</title>
 			<parent>cm:folder</parent> 
 			<properties>
+				<property name="crlatti:tipologia">
+					<title>Tipologia</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:legislatura">
 					<title>Legislatura</title>
 					<type>d:text</type>

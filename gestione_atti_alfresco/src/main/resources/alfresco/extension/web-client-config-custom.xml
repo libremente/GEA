@@ -8,6 +8,10 @@
    </config>
    
    <config evaluator="string-compare" condition="Action Wizards">
+   	  <subtypes>
+         <type name="crlatti:atto" />
+         <type name="crlatti:attoPdl" />
+      </subtypes>
       <specialise-types>
       	<type name="crlatti:atto"/>
       	<type name="crlatti:attoPdl"/>
@@ -27,8 +31,52 @@
    	  </property-sheet>
    </config>
    
+   <config evaluator="node-type" condition="crlatti:attoPdl">
+   	<property-sheet>            
+      	 <show-property name="crlatti:tipologia"/>
+         <show-property name="crlatti:legislatura" />
+         <show-property name="crlatti:statoAtto" />
+         <show-property name="crlatti:numeroAtto" />
+         <show-property name="crlatti:dataIniziativa" />
+         <show-property name="crlatti:numeroProtocollo" />
+         <show-property name="crlatti:tipoIniziativa" />
+         <show-property name="crlatti:numeroDcr" />
+         <show-property name="crlatti:primoFirmatario" />
+         
+         <show-property name="crlatti:oggetto" />
+         <show-property name="crlatti:firmatario" />
+         <show-property name="crlatti:tipoChiusura" />
+         <show-property name="crlatti:dataPubblicazione" />
+         <show-property name="crlatti:esitoVotoComRef" />
+         <show-property name="crlatti:dataSedutaSc" />
+         <show-property name="crlatti:esitoVotoAula" />
+         <show-property name="crlatti:dataSedutaComm" />
+         
+         <show-property name="crlatti:commReferente" />
+         <show-property name="crlatti:dataSedutaAula" />
+         <show-property name="crlatti:commConsultiva" />
+         <show-property name="crlatti:relatori" />
+         <show-property name="crlatti:redigente" />
+         <show-property name="crlatti:deliberante" />
+         <show-property name="crlatti:organismoStatutario" />
+         
+         <show-property name="crlatti:numeroLcr" />
+         <show-property name="crlatti:soggettoConsultato" />
+         <show-property name="crlatti:numeroLr" />
+         <show-property name="crlatti:anno" />
+         <show-property name="crlatti:emendato" />
+         
+         <show-property name="crlatti:rinviato" />
+         <show-property name="crlatti:sospeso" />
+         <show-property name="crlatti:abbinamento" />
+         <show-property name="crlatti:stralcio" />
+         
+      </property-sheet>
+   </config>
+   
    <config evaluator="node-type" condition="crlatti:atto">
       <property-sheet>            
+      	 <show-property name="crlatti:tipologia"/>
          <show-property name="crlatti:legislatura" />
          <show-property name="crlatti:statoAtto" />
          <show-property name="crlatti:numeroAtto" />
@@ -71,10 +119,17 @@
    
    <config evaluator="string-compare" condition="Advanced Search">
       <advanced-search>
+         <!-- 
          <content-types>
             <type name="crlatti:atto" />
          </content-types>
+         -->
+         <folder-types>
+         	<type name="crlatti:atto" />
+         	<type name="crlatti:attoPdl" />
+         </folder-types>
          <custom-properties>
+            <meta-data type="crlatti:atto" property="crlatti:tipologia" />
             <meta-data type="crlatti:atto" property="crlatti:legislatura" />
             
             <meta-data type="crlatti:atto" property="crlatti:statoAtto" />
