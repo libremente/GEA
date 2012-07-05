@@ -44,6 +44,14 @@
           
     </url-mapping> 
     
+
+     <url-mapping id="collegamenti"> 
+        <pattern value="/collegamenti" /> 
+        <view-id value="views/home/collegamenti/collegamenti_base.xhtml" />      
+          
+    </url-mapping> 
+    
+
       <url-mapping id="consultazioneepareri"> 
         <pattern value="/consultazioneepareri" /> 
         <view-id value="views/home/consultazioneepareri/consultazioneepareri_base.xhtml" />      
@@ -55,6 +63,7 @@
         <view-id value="views/home/lettereenotifiche/lettereenotifiche_base.xhtml" />      
           
     </url-mapping> 
+
 
     
 

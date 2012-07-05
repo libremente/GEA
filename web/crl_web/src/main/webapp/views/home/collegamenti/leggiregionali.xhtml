@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<p:panelGrid styleClass="infoTable" id="LRIndirizzoPanel">
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab"
+				legend="Collegamenti con Atti di Indirizzo e di Sindacato Ispettivo: " collapsed="false" toggleable="true"
+				toggleSpeed="500">
+
+				<table class="generalInfoTab" id="collegametiLR"
+					style="width: 100%;" border="0">
+					<thead>
+						<th>Tipo</th>
+						<th>N. Atto</th>
+						<th>Descrizione collegamento</th>
+						<th>Link</th>
+						<th>Opzioni</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="left"><p:selectOneMenu id="annoLR1">
+									<f:selectItem itemLabel="2010" itemValue="1" />
+									<f:selectItem itemLabel="2011" itemValue="2" />
+
+								</p:selectOneMenu></td>
+							<td align="left"><p:selectOneMenu id="nLR1">
+									<f:selectItem itemLabel="12" itemValue="1" />
+									<f:selectItem itemLabel="55" itemValue="2" />
+
+								</p:selectOneMenu></td>
+
+							<td align="left">Affinità nel tema trattato.</td>
+							
+							<td><h:commandLink>
+								<h:graphicImage alt="html" value="/resources/img/html.png" />
+							</h:commandLink></td>
+							
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td align="left"><p:selectOneMenu id="annoLR2">
+									<f:selectItem itemLabel="2010" itemValue="1" />
+									<f:selectItem itemLabel="1011" itemValue="2" />
+
+								</p:selectOneMenu></td>
+							<td align="left"><p:selectOneMenu id="nLR2">
+									<f:selectItem itemLabel="12" itemValue="1" />
+									<f:selectItem itemLabel="55" itemValue="2" />
+
+								</p:selectOneMenu></td>
+
+							<td align="left">Affinità nel tema trattato.</td>
+							
+							<td><h:commandLink>
+								<h:graphicImage alt="html" value="/resources/img/html.png" />
+							</h:commandLink></td>
+							
+							<td align="left"><h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<h:commandLink>
+					<h:graphicImage alt="Aggiungi allegato"
+						value="/resources/img/add.png" />
+				</h:commandLink>
+
+				<!-- TODO : upload file al click sul pulsante-->
+
+			</p:fieldset>
+		</p:column>
+	</p:row>
+</p:panelGrid>	
+	
+</html>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<p:panel style="text-align:left;margin-bottom:5px" id="mainPanel">
+
+
+	<!-- Pannello ricerca -->
+
+	<p:panelGrid
+		style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;"
+		id="searchPanel">
+
+
+		<f:facet name="header">
+			<p:row>
+				<p:column style="text-align:left" colspan="4">
+						Ricerca Atto:
+			    </p:column>
+			</p:row>
+		</f:facet>
+
+		<p:messages id="msgs" />
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="tipoatto" value="Tipo atto: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="tipoatto" />
+			</p:column>
+
+			<p:column>
+				<h:outputLabel for="legislatura" value="Legislatura: " />
+				<p:selectOneMenu id="legislatura" />
+			</p:column>
+
+			<p:column>
+				<h:outputLabel for="stato" value="Stato: " />
+				<p:selectOneMenu id="stato" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="numeroatto" value="Numero Atto: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="numeroatto"></p:inputText>
+			</p:column>
+
+			<p:column colspan="2">
+				<h:outputLabel value="Data Iniziativa " />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<h:outputLabel for="datainiziativa_da" value="da: " />
+				<p:calendar size="10" locale="it" id="datainiziativa_da" />
+				&nbsp;&nbsp;&nbsp;
+				<h:outputLabel for="datainiziativa_a" value="a: " />
+				<p:calendar size="10" locale="it" id="datainiziativa_a" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="numeroprotocollo" value="Numero Protocollo: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="numeroprotocollo"></p:inputText>
+			</p:column>
+
+			<p:column>
+				<h:outputLabel for="tipoiniziativa" value="Tipo Iniziativa: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="tipoiniziativa" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="numerodcr" value="Numero DCR: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="numerodcr"></p:inputText>
+			</p:column>
+
+			<p:column>
+				<h:outputLabel for="primofirmatario" value="1° Firmatario: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="primofirmatario" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="oggetto" value="Oggetto: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="oggetto"></p:inputText>
+			</p:column>
+
+			<p:column>
+				<h:outputLabel for="firmatario" value="Firmatario: " />
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="firmatario" />
+			</p:column>
+		</p:row>
+
+
+		<p:row>
+
+			<p:column colspan="3">
+
+				<p:commandButton value="Cerca" id="btncercaatto_cerca" />
+				<!-- 
+					 
+             <p:commandButton value="Ricerca Avanzata" update="listaAtti" id="btncercaatto_ricavnz"  actionListener="" />  
+              
+              <p:commandButton value="Reimposta" update="searchPanel" id="btncercaatto_reset" actionListener="" />
+              
+               -->
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	
+	<p:dataTable id="listaAtti" var="atto"
+		value="#{searchBean.lazyAttoModel}" rows="10" paginator="true"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+		paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		<f:facet name="header">  
+            Risultati ricerca  
+        </f:facet>  
+		<p:column>
+			<f:facet name="header">Tipo Atto</f:facet>
+			<h:outputText value="#{atto.tipo}" />
+		</p:column>
+
+		<p:column headerText="N.Atto">
+			<h:outputLink value="#{request.contextPath}/atto">
+				<h:outputText value="#{atto.numeroAtto}" />
+				<f:param name="numeroatto" value="#{atto.numeroAtto}" />
+			</h:outputLink>
+		</p:column>
+		<p:column headerText="N.Protocollo">
+			<h:outputText value="#{atto.oggetto}" />
+		</p:column>
+		<p:column headerText="Oggetto">
+			<h:outputText value="#{atto.primoFirmatario}" />
+		</p:column>
+		<p:column headerText="Azioni">
+			<h:outputText value="" />
+		</p:column>
+	</p:dataTable>
+	<br />
+	<p:dataTable id="attiCollegati" var="atto"
+		 rows="10" paginator="true"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+		paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		<f:facet name="header">  
+            Atti collegati  
+        </f:facet>  
+		<p:column>
+			<f:facet name="header">Tipo Atto</f:facet>
+			<h:outputText  />
+		</p:column>
+		<p:column headerText="N.Atto">
+			<h:outputText  />
+		</p:column>
+		<p:column headerText="Note">
+			<h:outputText value="#{atto.primoFirmatario}" />
+		</p:column>
+		<p:column headerText="Ogetto">
+			<h:outputText value="#{atto.dataPresentazione}" />
+		</p:column>
+		<p:column headerText="Azioni">
+			<h:outputText value="" />
+		</p:column>
+	</p:dataTable>
+	
+</p:panel>
+
+
+
+
+</html>
