@@ -33,7 +33,11 @@
 	</bean>
 
 
-    <bean factory-method="create"  class="com.sun.jersey.api.client.Client"   id="client"/> 
+    <bean factory-method="create"  class="com.sun.jersey.api.client.Client"   id="client">
+    </bean> 
+     
+     <bean class="org.codehaus.jackson.map.ObjectMapper"   id="objectMapper">
+    </bean> 
      
 
 

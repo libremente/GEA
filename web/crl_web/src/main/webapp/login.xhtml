@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:panelGrid
+		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
+		id="insertattopanel">
+
+		<f:facet name="header">
+			<p:row>
+				<p:column style="text-align:left" colspan="4">
+						Effettua Login:
+			    </p:column>
+			</p:row>
+		</f:facet>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="username" value="Username: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="username" value="#{loginController.username}"
+					required="true" />
+			</p:column>
+			
+		</p:row>
+
+        <p:row>
+			<p:column>
+				<h:outputLabel for="password" value="Password: " />
+			</p:column>
+
+			<p:column>
+				<p:password id="password" value="#{loginController.password}"
+					required="true" />
+			</p:column>
+			
+		</p:row>
+		
+		<p:row>
+
+			<p:column colspan="2">
+
+				<p:commandButton id="insertattobtn" value="Salva"
+					update="insertattopanel" action="#{loginController.login()}" />
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+
+
+</h:form>
+</html>

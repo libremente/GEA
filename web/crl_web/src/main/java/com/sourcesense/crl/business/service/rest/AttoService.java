@@ -8,15 +8,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.util.CRLMessage;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -57,7 +55,7 @@ public class AttoService implements Serializable {
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
 				.post(ClientResponse.class, atto);
 
-		if (response.getStatus() != 201) {
+		if (response.getStatus() != 200) {
 			throw new RuntimeException("Failed : HTTP error code : "
 					+ response.getStatus());
 		}

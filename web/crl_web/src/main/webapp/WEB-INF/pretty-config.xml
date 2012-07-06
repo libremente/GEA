@@ -3,12 +3,19 @@
                xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.2
                                    		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.2.xsd">
 
-    <url-mapping id="home"> 
+    
+    
+    <url-mapping id="login"> 
         <pattern value="/" /> 
-        <view-id value="/home.xhtml" />
+        <view-id value="/authenticate.xhtml" />
     </url-mapping>
     
     <url-mapping id="home"> 
+        <pattern value="/home" /> 
+        <view-id value="/home.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="inserisciAtto"> 
         <pattern value="/inserisciatto" /> 
         <view-id value="views/inserisciatto/inserisciatto_base.xhtml" />
     </url-mapping>

@@ -48,7 +48,7 @@ public class TipoAttoService implements Serializable{
     
     public Map<String, String>  getTipologieByTipoAtto(String tipoAtto){
     	
-        WebResource webResource = client.resource(messageSource.getMessage("alfresco_context_url", null, Locale.ITALY));
+       /* WebResource webResource = client.resource(messageSource.getMessage("alfresco_context_url", null, Locale.ITALY));
 		
 		ClientResponse response = webResource.queryParam("tipoAtto", tipoAtto).type(MediaType.APPLICATION_JSON)
 				.get(ClientResponse.class);
@@ -56,7 +56,7 @@ public class TipoAttoService implements Serializable{
 		if (response.getStatus() != 201) {
 			throw new RuntimeException("Failed : HTTP error code : "
 					+ response.getStatus());
-		}
+		}*/
         
 		return null;
     	
