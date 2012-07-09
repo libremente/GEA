@@ -122,6 +122,8 @@
          </type>
 
          <type name="cm:folder">
+         	<subtype name="crlatti:atto" />
+         	<subtype name="crlatti:attoPdl" />
          </type>
       </types>
 
@@ -327,5 +329,233 @@
       </remote>
    </config>
    -->
+   
+   <config evaluator="model-type" condition="crlatti:atto">
+   <forms>
+      <form id="search">
+           <field-visibility>
+            <hide id="cm:contains" />
+            <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:tipologia"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:primoFirmatario"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:firmatario"/>
+            <show id="crlatti:tipoChiusura"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:numeroLr"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>  
+          </field-visibility>
+      </form>
+   </forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:atto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   			<hide id="cm:contains" />
+   		    <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:tipologia"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:primoFirmatario"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:firmatario"/>
+            <show id="crlatti:tipoChiusura"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:numeroLr"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="model-type" condition="crlatti:attoPdl">
+   <forms>
+      <form id="search">
+           <field-visibility>
+            <hide id="cm:contains" />
+            <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:tipologia"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:primoFirmatario"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:firmatario"/>
+            <show id="crlatti:tipoChiusura"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:numeroLr"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>  
+          </field-visibility>
+      </form>
+   </forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:attoPdl">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   			<hide id="cm:contains" />
+   		    <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:tipologia"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:primoFirmatario"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:firmatario"/>
+            <show id="crlatti:tipoChiusura"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:numeroLr"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   
+   <config evaluator="node-type" condition="crlatti:legislaturaAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:anni" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="string-compare" condition="AdvancedSearch" replace="true">
+      <advanced-search>
+         <!-- Forms for the advanced search type list -->
+         <forms>
+            <!--
+               The 'form' config element contains the name of the model type
+               of the form to display.
+               
+               The element supports the following optional attributes:
+                  id = form id, the id of "search" will be assumed if not set
+                  label = label text to display - defaults to model type if not set
+                  labelId = I18N message id of label text to display
+                  description = description text to display
+                  descriptionId = I18N message id of description text to display
+            -->
+            <form labelId="search.form.label.cm_content" descriptionId="search.form.desc.cm_content">cm:content</form>
+            <form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
+            <form label="Atto" description="Cerca tra tutti gli atti">crlatti:atto</form>
+            <form label="PDL" description="Cerca tra tutti i PDL">crlatti:attoPdl</form>
+            
+         </forms>
+      </advanced-search>
+   </config>
    
 </alfresco-config>
