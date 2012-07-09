@@ -1,7 +1,7 @@
 <webscript>
-  <shortname>Test creazione di un atto</shortname>
-  <description>Test per la creazione del nodo per un nuovo atto</description>
-  <url>/crl/test/atto</url>
+  <shortname>Test upload record atto</shortname>
+  <description>Test per l'upload del record di un atto</description>
+  <url>/crl/test/post/attorecord</url>
   <format default="html"/>
   <authentication>admin</authentication>
   <transaction allow="readonly">required</transaction>

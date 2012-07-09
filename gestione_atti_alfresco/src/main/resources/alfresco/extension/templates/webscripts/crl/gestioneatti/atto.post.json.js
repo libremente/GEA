@@ -64,4 +64,4 @@ attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 attoFolderNode.properties["crlatti:anno"] = anno;
 attoFolderNode.save();
 
-model.attoFolderNode = attoFolderNode;
+model.atto = attoFolderNode;

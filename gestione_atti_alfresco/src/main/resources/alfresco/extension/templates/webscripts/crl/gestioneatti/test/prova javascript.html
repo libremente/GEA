@@ -1,0 +1,103 @@
+<html>
+<head>
+<script type="text/javascript">
+	
+	function creaAtto() {
+	
+	var atto = {
+		"atto" : "prova valore"
+	};
+	
+		var xmlhttp;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+			}
+		}
+		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto?alf_ticket=TICKET_8af42bd7620c1dd211920b5a8a7bb0be4ecae820", true);
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		
+		xmlhttp.send(JSON.stringify(atto));
+	}
+	
+	function creaAttoCustom(){
+		var currentForm = document.forms[0];
+		var numeroAtto = currentForm.numeroAtto.value;
+		var tipoAtto = currentForm.tipoAtto.options[currentForm.tipoAtto.selectedIndex].value;
+		var legislatura = currentForm.legislatura.options[currentForm.legislatura.selectedIndex].value;
+		
+		var attoCustom = {
+		"atto" : [ {
+			"numeroAtto" : "101",
+			"tipoAtto" : "PDL",
+			"tipologia" : "BOH",
+			"legislatura" : "Legislatura1",
+			"anno" : "2012"
+			} ]
+		};
+		
+		alert(attoCustom);
+		
+		creaAtto(attoCustom);
+
+	}
+	
+</script>
+</head>
+<body>
+	<div id="myDiv">
+		<h1>Test creazione atto</h1>
+	</div>
+	<button type="button" onclick="creaAtto()">Crea Atto</button>
+	
+	<div id="myDiv">
+		<h1>Test creazione atto custom</h1>
+	</div>
+	<form onsubmit="return creaAttoCustom()">
+	<table>
+		<tr>
+			<td>
+				<input type="text" name="numeroAtto">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<select name="tipoAtto">
+				
+					<option value="PDL">PDL</option>
+				
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td><input type="text" name="tipologia"></td>
+		</tr>
+		<tr>
+			<td>
+				<select name="legislatura">
+				
+					<option value="Legislatura1">Legislatura1</option>
+					<option value="Legislatura1">Legislatura2</option>
+					<option value="Legislatura1">Legislatura3</option>
+				
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="anno">
+			</td>
+		</tr>
+	</table>
+	
+	
+	<input type="submit">
+	</form>
+</body>
+</html>
+
