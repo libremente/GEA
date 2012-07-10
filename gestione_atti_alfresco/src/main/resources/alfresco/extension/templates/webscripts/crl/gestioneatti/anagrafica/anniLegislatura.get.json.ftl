@@ -1,10 +1,12 @@
 {
    "legislatura":"${nomeLegislatura}",
-   "anni": [
+   "List": [
    <#list anniLegislatura as anno>
-   {
-	"anno":"${anno?c}"
+   { "anno": 
+	   {
+		"descrizione":"${anno?c}"
+	   }
    }<#if anno_has_next>,</#if>
-   ]
    </#list>
+   ]
 }
