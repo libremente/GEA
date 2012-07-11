@@ -22,5 +22,4 @@ if(tipoAtto!=undefined
 	status.redirect = true;
 }
 
-model.tipoAtto = tipoAtto;
 model.tipologieAtto = tipologieAtto;

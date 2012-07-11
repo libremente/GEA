@@ -1,9 +1,8 @@
 {
-   "tipoAtto":"${tipoAtto}",
    
    "List":[
-   { tipologia : 
-	   <#list tipologieAtto as tipologiaAttoNode>
+   <#list tipologieAtto as tipologiaAttoNode>
+   { "tipologia" : 
 	   {
 		"descrizione":"${tipologiaAttoNode.name}"
 	   }

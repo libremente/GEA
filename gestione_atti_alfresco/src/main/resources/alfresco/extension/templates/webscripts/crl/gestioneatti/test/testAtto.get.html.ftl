@@ -25,15 +25,13 @@
 		var tipologia = currentForm.tipologia.value;
 		var tipoAtto = currentForm.tipoAtto.options[currentForm.tipoAtto.selectedIndex].value;
 		var legislatura = currentForm.legislatura.options[currentForm.legislatura.selectedIndex].value;
-		var anno = currentForm.anno.value;
 		
 		var attoCustom = {
 		"atto" : [ {
 			"numeroAtto" : ""+numeroAtto+"",
 			"tipoAtto" : ""+tipoAtto+"",
 			"tipologia" : ""+tipologia+"",
-			"legislatura" : ""+legislatura+"",
-			"anno" : ""+anno+""
+			"legislatura" : ""+legislatura+""
 			} ]
 		};
 		
@@ -78,12 +76,6 @@
 					<option value="${legislatura.name}">${legislatura.name}</option>
 				</#list>
 				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>Anno:</td>
-			<td>
-				<input type="text" name="anno">
 			</td>
 		</tr>
 		<tr>

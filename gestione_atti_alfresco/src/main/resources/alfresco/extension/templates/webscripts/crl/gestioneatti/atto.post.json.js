@@ -4,11 +4,11 @@
 var atto = json.get("atto").get(0);
 var legislatura = atto.get("legislatura");
 var tipologia = atto.get("tipologia");
-var anno = atto.get("anno");
 var numeroAtto = atto.get("numeroAtto");
 var tipoAtto = atto.get("tipoAtto");
 var dataImportazione = new Date();
 var mese = dataImportazione.getMonth() + 1;
+var anno = dataImportazione.getFullYear();
 
 var gestioneAttiPath = "/app:company_home"+
 "/cm:"+search.ISO9075Encode("CRL")+

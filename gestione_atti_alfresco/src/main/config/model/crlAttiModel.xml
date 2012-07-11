@@ -80,7 +80,7 @@
 				</property>
 				<property name="crlatti:dataSedutaSc">
 					<title>Data seduta sc</title>
-					<type>d:text</type>
+					<type>d:date</type>
 				</property>
 				<property name="crlatti:esitoVotoAula">
 					<title>Esito voto aula</title>
