@@ -62,6 +62,10 @@
 	            <prop key="path">/${spaces.company_home.childname}</prop>
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/anagrafica-spaces.acp</prop>
 	         </props>
+	         <props>
+	            <prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.templates.childname}</prop>
+	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/spaceTemplates.acp</prop>
+	         </props>
 	         <!-- 
             <props>
                  <prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}/cm:scripts</prop>

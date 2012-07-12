@@ -1,9 +1,9 @@
+<import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
+
 var nomeLegislatura = args.nomeLegislatura;
 var anniLegislatura = null;
 
-if(nomeLegislatura!=undefined
-		&& nomeLegislatura!=null
-		&& nomeLegislatura!="") {
+if(checkIsNotNull(nomeLegislatura)) {
 	
 	var legislaturaPath = "/app:company_home" +
 	"/cm:"+search.ISO9075Encode("CRL") +

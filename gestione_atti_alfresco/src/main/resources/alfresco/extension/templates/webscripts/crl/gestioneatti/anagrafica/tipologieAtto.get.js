@@ -1,9 +1,9 @@
+<import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
+
 var tipoAtto = args.tipoAtto;
 var tipologieAtto = null;
 
-if(tipoAtto!=undefined 
-		&& tipoAtto != null
-		&& tipoAtto != ""){
+if(checkIsNotNull(tipoAtto)){
 	
 	var tipologieAttoPath = "/app:company_home" +
 	"/cm:"+search.ISO9075Encode("CRL") +

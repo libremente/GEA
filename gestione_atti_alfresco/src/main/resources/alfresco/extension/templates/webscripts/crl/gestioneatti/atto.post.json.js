@@ -1,7 +1,4 @@
-//json.get("atto").get(0).get("legislatura");
-//Legislatura1
-
-var atto = json.get("atto").get(0);
+var atto = json.get("atto");
 var legislatura = atto.get("legislatura");
 var tipologia = atto.get("tipologia");
 var numeroAtto = atto.get("numeroAtto");
