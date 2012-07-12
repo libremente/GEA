@@ -51,19 +51,25 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+
 		<!-- Jersey -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
-        
-        <dependency>
+
+		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
-        
+
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
 			<artifactId>jersey-spring</artifactId>
@@ -116,7 +122,7 @@
 			<artifactId>jackson-xc</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-		
+
 		<!-- Jsf -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
