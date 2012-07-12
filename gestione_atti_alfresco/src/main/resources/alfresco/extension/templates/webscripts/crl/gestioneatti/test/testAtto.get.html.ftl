@@ -27,12 +27,12 @@
 		var legislatura = currentForm.legislatura.options[currentForm.legislatura.selectedIndex].value;
 		
 		var attoCustom = {
-		"atto" : [ {
+		"atto" : {
 			"numeroAtto" : ""+numeroAtto+"",
 			"tipoAtto" : ""+tipoAtto+"",
 			"tipologia" : ""+tipologia+"",
 			"legislatura" : ""+legislatura+""
-			} ]
+			}
 		};
 		
 		creaAtto(JSON.stringify(attoCustom));
