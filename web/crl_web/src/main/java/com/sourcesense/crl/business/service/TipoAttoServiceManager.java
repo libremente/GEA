@@ -16,10 +16,7 @@ import com.sourcesense.crl.util.URLBuilder;
 @Service("tipoAttoServiceManager")
 public class TipoAttoServiceManager implements ServiceManager {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
 	
 	
 	@Autowired
