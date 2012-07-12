@@ -10,11 +10,14 @@
  */
 package com.sourcesense.crl.business.model;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.codehaus.jackson.annotate.JsonTypeName;
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
@@ -23,12 +26,15 @@ import org.springframework.beans.factory.annotation.Configurable;
  */
 @Configurable
 @XmlRootElement
-public class Atto implements Serializable
+@JsonRootName("atto")
+@JsonTypeName("atto")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+public class Atto 
 {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	
 	private String tipo;
     private String codice;
     private String oggetto;

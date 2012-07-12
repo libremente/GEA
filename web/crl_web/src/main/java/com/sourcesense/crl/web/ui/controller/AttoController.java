@@ -4,15 +4,16 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
+
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
-import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -27,13 +28,13 @@ import javax.faces.event.ActionEvent;
  */
 
 @ManagedBean(name = "attoController")
-@RequestScoped
-public class AttoController implements Serializable {
+@ViewScoped
+public class AttoController {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -42,7 +43,7 @@ public class AttoController implements Serializable {
 	private LegislaturaServiceManager legislaturaServiceManager;
 	                          
 	@ManagedProperty(value = "#{tipoAttoServiceManager}")
-	private TipoAttoServiceManager tipoAttoServiceManager;
+	private  TipoAttoServiceManager tipoAttoServiceManager;
 	
 	
 	private Atto atto = new Atto();
@@ -59,48 +60,46 @@ public class AttoController implements Serializable {
 
 	private Map<String, String> tipiAtto = new HashMap<String, String>();
 
-	private Map<String,String> tipologie = new HashMap<String, String>();
+	private Map<String,String> tipologie = new HashMap<String, String>(){
+		
+	};
 
 	private Map<String, String> legislature = new HashMap<String, String>();
 
 	private Map<String,String> anni = new HashMap<String, String>();
 
 	
-	
 	@PostConstruct
 	private void initializeValues(){
 		
+		
 		//TODO
 		setTipiAtto(tipoAttoServiceManager.findAll());
-		//setAnni(attoServiceManager.findAllAnno());
 		setLegislature(legislaturaServiceManager.findAll());
-		//setTipologie(attoServiceManager.findAllTipologiaAtto());
+		
+		
 	}
+	
     
+	public boolean validTipologie(){
+		
+		return true;
+	}
+	
 	public void handleTipoAttoChange() {  
-        if(tipoAtto !=null && !tipoAtto.equals(""))  
-            tipologie = tipoAttoServiceManager.findTipologieByTipoAtto(tipoAtto);  
+		
+		
+        if(atto.getTipoAtto() !=null && !atto.getTipoAtto().equals(""))  
+            setTipologie(tipoAttoServiceManager.findTipologieByTipoAtto(atto.getTipoAtto()));  
         else  
         	tipologie = new HashMap<String, String>();  
     }  
 	
-	public void handleLegislaturaChange() {  
-        if(legislatura !=null && !legislatura.equals(""))  
-            anni = legislaturaServiceManager.findAnniByLegislatura(legislatura);  
-        else  
-        	anni = new HashMap<String, String>();  
-    }
-	
 	
 	public String inserisciAtto() {
 
+		
 		if (attoServiceManager.persist(atto)) {
-
-			/*
-			 * AttoBean attoBean = (AttoBean) FacesContext.getCurrentInstance().
-			 * getExternalContext().getSessionMap().put("attoBean",new
-			 * AttoBean());
-			 */
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = (AttoBean) context
@@ -115,7 +114,7 @@ public class AttoController implements Serializable {
 
 		} else {
 
-			return CRLMessage.SUBMIT_FAILURE;
+		    return CRLMessage.SUBMIT_FAILURE;
 
 		}
 	}
@@ -133,7 +132,8 @@ public class AttoController implements Serializable {
 	
 
 	public Map<String, String> getTipiAtto() {
-		return tipiAtto;
+		//return tipoAttoServiceManager.findAll();
+		return this.tipiAtto;
 	}
 
 	public void setTipiAtto(Map<String, String> tipiAtto) {
@@ -149,7 +149,8 @@ public class AttoController implements Serializable {
 	}
 
 	public Map<String, String> getLegislature() {
-		return legislature;
+		//return legislaturaServiceManager.findAll();
+		return this.legislature;
 	}
 
 	public void setLegislature(Map<String, String> legislature) {
@@ -224,6 +225,7 @@ public class AttoController implements Serializable {
 
 	public void setTipologia(String tipologia) {
 		this.atto.setTipologia(tipologia);
+		this.tipologia = tipologia;
 	}
 
 

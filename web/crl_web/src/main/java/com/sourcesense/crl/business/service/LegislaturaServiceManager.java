@@ -1,25 +1,33 @@
 package com.sourcesense.crl.business.service;
 
-import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import com.sourcesense.crl.business.service.rest.LegislaturaService;;
+import com.sourcesense.crl.business.model.Legislatura;
+import com.sourcesense.crl.business.service.rest.LegislaturaService;
+import com.sourcesense.crl.util.URLBuilder;
 
 @Service("legislaturaServiceManager")
-public class LegislaturaServiceManager implements Serializable, ServiceManager {
+public class LegislaturaServiceManager implements ServiceManager {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
 
-
+	
 	@Autowired
-	LegislaturaService legislaturaService;
+	private transient URLBuilder urlBuilder;
+	
+	
+	@Autowired
+	private LegislaturaService legislaturaService;
+	
+	
 	
 	
 	@Override
@@ -43,14 +51,23 @@ public class LegislaturaServiceManager implements Serializable, ServiceManager {
 	@Override
 	public Map<String, String> findAll() {
 		
-		return legislaturaService.getAllLegislatura();
+		Map<String, String> legislature = new HashMap<String, String>();
+		
+		List<Legislatura> listLegislature = legislaturaService.getAllLegislatura(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_legislature",null));
+		
+		for (Legislatura legislatura : listLegislature) {
+
+			legislature.put(legislatura.getNome(), legislatura.getNome());
+
+		}
+		return legislature;
 	}
 
 	
 	
     public Map<String, String> findAnniByLegislatura(String legislatura) {
 		
-		return legislaturaService.getAnniByLegislatura(legislatura);
+		return legislaturaService.getAnniByLegislatura(urlBuilder.buildAlfrescoURL("alfresco_context_url", "pathPropertyName",null),legislatura);
 	}
 	
 	

@@ -28,21 +28,22 @@
 
 			<p:column>
 				<p:inputText id="numeroatto" value="#{attoController.numeroAtto}"
-					required="true" />
+					/>
 			</p:column>
 
 			<p:message for="numeroatto" display="icon" />
 		</p:row>
 
 		<p:row>
-			<p:column>
+			<p:column >
 				<h:outputLabel for="tipoatto" value="Tipo atto: " />
 			</p:column>
 
 			<p:column>
-				<p:selectOneMenu id="tipoatto" value="#{attoController.tipoAtto}">
+				<p:selectOneMenu  id="tipoatto" value="#{attoController.tipoAtto}" >
+				    <f:selectItem itemLabel="Scegli Tipo" itemValue="" />  
 					<f:selectItems value="#{attoController.tipiAtto}" />
-					<p:ajax update="tipologia"
+					<p:ajax update="tipologia" 
 						listener="#{attoController.handleTipoAttoChange}" />
 				</p:selectOneMenu>
 			</p:column>
@@ -54,8 +55,9 @@
 			</p:column>
 
 			<p:column>
-				<p:selectOneMenu id="tipologia" value="#{attoController.tipologie}">
-					<f:selectItems value="#{attoController.tipologia}" />
+				<p:selectOneMenu id="tipologia" value="#{attoController.tipologia}"  >
+				    <f:selectItem itemLabel="Scegli Tipologia" itemValue="" />
+					<f:selectItems  value="#{attoController.tipologie}"  />
 				</p:selectOneMenu>
 			</p:column>
 		</p:row>
@@ -67,37 +69,25 @@
 
 			<p:column>
 				<p:selectOneMenu id="legislatura"
-					value="#{attoController.legislature}">
-					<f:selectItems value="#{attoController.legislatura}" />
+					value="#{attoController.legislatura}" >
+					<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
+					<f:selectItems value="#{attoController.legislature}" />
 				</p:selectOneMenu>
 			</p:column>
 		</p:row>
 
-		<p:row>
-			<p:column>
-				<h:outputLabel for="anno" value="Anno: " />
-			</p:column>
-
-			<p:column>
-				<p:selectOneMenu id="anno" value="#{attoController.anni}">
-					<f:selectItems value="#{attoController.anno}" />
-				</p:selectOneMenu>
-			</p:column>
-		</p:row>
-
+		
 		<p:row>
 
 			<p:column colspan="2">
-
-				<p:commandButton id="insertattobtn" value="Salva"
-					update="insertattopanel" action="#{attoController.inserisciAtto()}" />
+				<p:commandButton ajax="false" update="insertattopanel" id="insertattobtn" value="Salva" action="#{attoController.inserisciAtto}" />
 			</p:column>
 		</p:row>
 
 
 	</p:panelGrid>
 
-
+     
 
 </h:form>
 </html>

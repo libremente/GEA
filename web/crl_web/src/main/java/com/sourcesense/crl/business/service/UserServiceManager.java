@@ -3,12 +3,14 @@ package com.sourcesense.crl.business.service;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 
 import com.sourcesense.crl.business.model.User;
 import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 import com.sourcesense.crl.business.service.rest.UserService;
+import com.sourcesense.crl.util.URLBuilder;
 
 
 
@@ -16,12 +18,23 @@ import com.sourcesense.crl.business.service.rest.UserService;
 public class UserServiceManager implements ServiceManager {
 
 	@Autowired
-	private UserService userService;
-
+	private transient URLBuilder urlBuilder;
 	
-	public AlfrescoSessionTicket authenticate(User user) {
-		// TODO Auto-generated method stub
-		return userService.getAuthenticationToken(user);
+	@Autowired
+	private UserService userService;
+	
+	
+	
+	public boolean authenticate(User user) {
+		
+		urlBuilder.setAlfrescoSessionTicket(userService.getAuthenticationToken(urlBuilder.buildURL("alfresco_context_url","alfresco_authentication"),user));
+		
+		if(urlBuilder.getAlfrescoSessionTicket()!=null){
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 	
 	

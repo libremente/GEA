@@ -12,6 +12,7 @@ package com.sourcesense.crl.business.service;
 
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.service.rest.AttoService;
+import com.sourcesense.crl.util.URLBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,37 +31,29 @@ import org.springframework.stereotype.Service;
  */
 
 @Service("attoServiceManager")
-public class AttoServiceManager implements Serializable, ServiceManager {
+public class AttoServiceManager implements ServiceManager { 
 
-	private static final long serialVersionUID = 1L;
+	
 
+	@Autowired
+	private transient URLBuilder urlBuilder;
+	
 	@Autowired
 	private AttoService attoService;
 
+	
 	
 	public ArrayList<Atto> searchAtti(Atto atto){
 		return find(1,10);
 		
 	}
 	
-	public Atto get(String cod) {
-		if (data == null)
-			return null;
-
-		for (Atto atto : data) {
-			if (atto.getNumeroAtto() != null
-					&& atto.getNumeroAtto().equals(cod)) {
-				return atto;
-			}
-		}
-
-		return null;
-	}
-
 	@Override
 	public boolean persist(Object object) {
 		// TODO Auto-generated method stub
-		return true;
+		
+		return attoService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_new_atto",null), (Atto)object);
+		
 	}
 
 	@Override
@@ -78,6 +72,20 @@ public class AttoServiceManager implements Serializable, ServiceManager {
 
 	private ArrayList<Atto> data;
 
+	public Atto get(String cod) {
+		if (data == null)
+			return null;
+
+		for (Atto atto : data) {
+			if (atto.getNumeroAtto() != null
+					&& atto.getNumeroAtto().equals(cod)) {
+				return atto;
+			}
+		}
+
+		return null;
+	}
+	
 	public ArrayList<Atto> find(int first, int pageSize) {
 		if (data == null)
 			return null;

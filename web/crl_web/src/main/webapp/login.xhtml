@@ -11,7 +11,7 @@
 <h:form>
 	<p:panelGrid
 		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
-		id="insertattopanel">
+		id="loginpanel">
 
 		<f:facet name="header">
 			<p:row>
@@ -50,7 +50,7 @@
 			<p:column colspan="2">
 
 				<p:commandButton id="insertattobtn" value="Salva"
-					update="insertattopanel" action="#{loginController.login()}" />
+					update="loginpanel" action="#{loginController.login()}" />
 			</p:column>
 		</p:row>
 

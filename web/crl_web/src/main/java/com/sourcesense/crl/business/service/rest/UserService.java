@@ -8,6 +8,8 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
@@ -22,21 +24,19 @@ import com.sun.jersey.api.client.WebResource;
 @Path("/users")
 public class UserService {
 
-	@Autowired
-	ResourceBundleMessageSource messageSource;
-
+	
 	@Autowired
 	ObjectMapper objectMapper;
 	
 	@Autowired
 	Client client;
 
-	public AlfrescoSessionTicket getAuthenticationToken(User user) {
+	public AlfrescoSessionTicket getAuthenticationToken(String url, User user) {
 		String responseMsg = "error";
 		AlfrescoSessionTicket data=null;
 		try{
 		WebResource webResource = client
-				.resource("http://37.59.169.203:8081/alfresco/service/api/login.json");
+				.resource(url);
 
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, user);
 

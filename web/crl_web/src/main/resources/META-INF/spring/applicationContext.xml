@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<!-- This will automatically locate any and all property files you have 
@@ -27,18 +27,35 @@
 		which instructs Spring to dependency inject an object into your class. -->
 	<context:component-scan base-package="com.sourcesense.crl" />
 
-	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="/WEB-INF/messages/ext_resources" />
+	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
+		<property name="basename" value="/WEB-INF/messages/ext_resources" /> </bean> -->
+
+
+	<bean
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		id="messageSource" 
+		p:basenames="WEB-INF/messages/ext_resources"
+		p:fallbackToSystemLocale="false" />
+
+	<bean factory-method="create" class="com.sun.jersey.api.client.Client"
+		id="client">
+	</bean>
+
+	<bean class="org.codehaus.jackson.map.ObjectMapper" id="objectMapper">
 	</bean>
 
 
-    <bean factory-method="create"  class="com.sun.jersey.api.client.Client"   id="client">
-    </bean> 
-     
-     <bean class="org.codehaus.jackson.map.ObjectMapper"   id="objectMapper">
-    </bean> 
-     
+    <bean class="com.sourcesense.crl.util.URLBuilder" id="urlBuilder">
+    
+	</bean>
+
+	<bean class="com.sourcesense.crl.business.security.AlfrescoSessionTicket"
+		id="alfrescoSessionTicket" scope="session">
+		<aop:scoped-proxy />
+	</bean>
+
+
+    
 
 
 </beans>

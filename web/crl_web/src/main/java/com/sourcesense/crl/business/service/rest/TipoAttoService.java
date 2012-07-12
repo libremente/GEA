@@ -2,16 +2,26 @@ package com.sourcesense.crl.business.service.rest;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
+import com.sourcesense.crl.business.model.TipoAtto;
+import com.sourcesense.crl.business.model.TipologiaAtto;
+import com.sourcesense.crl.web.ui.beans.UserBean;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -19,46 +29,77 @@ import com.sun.jersey.api.client.WebResource;
 
 @Component(value = "tipoAttoService")
 @Path("/tipiatto")
-public class TipoAttoService implements Serializable{
+public class TipoAttoService {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
-	@Autowired
-	ResourceBundleMessageSource messageSource;
+	
 	
 	@Autowired
 	Client client;
 	
+	@Autowired
+	ObjectMapper objectMapper;
 	
-    public Map<String, String> getAllTipoAtto() {
+    public List<TipoAtto> getAllTipoAtto(String url) {
+    	
+    	List<TipoAtto> listTipiAtto =null;
+        
+		try{
+			WebResource webResource = client
+					.resource(url);
+
+			ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+			
+			
+			String responseMsg = response.getEntity(String.class);
+	        objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+	        listTipiAtto =  objectMapper.readValue(responseMsg, new TypeReference<List<TipoAtto>>() { });
+	        
+			}catch(Exception ex){
+				
+				ex.printStackTrace();
+			}
 		
-		Map<String,String> suburbsIstanbul = new HashMap<String, String>();  
-        suburbsIstanbul.put("DOC", "DOC");  
-        suburbsIstanbul.put("INP", "INP");  
-        suburbsIstanbul.put("PAR", "PAR");
-		// TODO Auto-generated method stub
-		return suburbsIstanbul;
+		
+		return listTipiAtto;
+		
 	}
     
     
     
     
-    public Map<String, String>  getTipologieByTipoAtto(String tipoAtto){
+    public List<TipologiaAtto> getTipologieByTipoAtto(String url){
     	
-       /* WebResource webResource = client.resource(messageSource.getMessage("alfresco_context_url", null, Locale.ITALY));
-		
-		ClientResponse response = webResource.queryParam("tipoAtto", tipoAtto).type(MediaType.APPLICATION_JSON)
-				.get(ClientResponse.class);
-
-		if (response.getStatus() != 201) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ response.getStatus());
-		}*/
+        List<TipologiaAtto> listTipologieAtto =null;
         
-		return null;
+		try{
+			WebResource webResource = client
+					.resource(url);
+
+			ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+			
+			
+			String responseMsg = response.getEntity(String.class);
+	        objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+	        listTipologieAtto =  objectMapper.readValue(responseMsg, new TypeReference<List<TipologiaAtto>>() { });
+	        
+			}catch(Exception ex){
+				
+				ex.printStackTrace();
+			}
+		
+		
+		return listTipologieAtto;
     	
     }
 

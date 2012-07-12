@@ -1,5 +1,7 @@
 package com.sourcesense.crl.web.ui.beans;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -10,10 +12,15 @@ import com.sourcesense.crl.business.model.User;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
-public class UserBean {
+public class UserBean implements Serializable{
 	
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7726122743894534255L;
+
 	private User user = new User();
 	
 	private String username;
@@ -22,6 +29,8 @@ public class UserBean {
 	
 	private String sessionToken;
 
+	
+	
 	
 	
 	public User getUser() {

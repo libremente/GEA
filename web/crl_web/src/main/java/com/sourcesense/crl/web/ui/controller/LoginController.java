@@ -30,10 +30,8 @@ public class LoginController {
 	
 
 	public String login() {
-
-		AlfrescoSessionTicket alfTicket = userServiceManager.authenticate(user);
 		
-		if (alfTicket !=null) {
+		if (userServiceManager.authenticate(user)) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = (UserBean) context
@@ -44,6 +42,7 @@ public class LoginController {
 					.getValue(context.getELContext());
 
 			userBean.setUser(this.user);
+			
 			return CRLMessage.SUBMIT_SUCCESS;
 
 		} else {

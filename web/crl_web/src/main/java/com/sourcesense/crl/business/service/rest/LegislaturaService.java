@@ -2,55 +2,72 @@ package com.sourcesense.crl.business.service.rest;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
+import com.sourcesense.crl.business.model.Legislatura;
+import com.sourcesense.crl.business.model.TipoAtto;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 @Component(value = "legislaturaService")
 @Path("/legislature")
-public class LegislaturaService implements Serializable {
+public class LegislaturaService {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
 
 	@Autowired
-	ResourceBundleMessageSource messageSource;
-
+	transient Client client;
+	
 	@Autowired
-	Client client;
+	transient ObjectMapper objectMapper;
 
-	public Map<String, String> getAllLegislatura() {
+	public List<Legislatura> getAllLegislatura(String url) {
 
-		/*
-		 * WebResource webResource =
-		 * client.resource(messageSource.getMessage("alfresco_context_url",
-		 * null, Locale.ITALY));
-		 * 
-		 * ClientResponse response =
-		 * webResource.type(MediaType.APPLICATION_JSON)
-		 * .get(ClientResponse.class);
-		 * 
-		 * if (response.getStatus() != 201) { throw new
-		 * RuntimeException("Failed : HTTP error code : " +
-		 * response.getStatus()); }
-		 */
-		// TODO Auto-generated method stub
-		return null;
+		List<Legislatura> listLegislature =null;
+
+		try {
+			WebResource webResource = client.resource(url);
+
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+		    listLegislature = objectMapper.readValue(responseMsg,
+					new TypeReference<List<Legislatura>>() {
+					});
+
+			
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return listLegislature;
 	}
 
-	public Map<String, String> getAnniByLegislatura(String legislatura) {
+	public Map<String, String> getAnniByLegislatura(String url,
+			String legislatura) {
 
 		/*
 		 * WebResource webResource =

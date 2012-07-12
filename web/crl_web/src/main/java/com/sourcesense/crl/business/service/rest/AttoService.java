@@ -10,8 +10,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpStatus.Series;
 import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.Atto;
@@ -21,45 +26,39 @@ import com.sun.jersey.api.client.WebResource;
 
 @Component(value = "attoService")
 @Path("/atti")
-public class AttoService implements Serializable {
-
+public class AttoService  {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Autowired
-    ResourceBundleMessageSource messageSource;
 	
 	@Autowired 
 	Client client;
 	
-	@GET
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Atto list() {
+	@Autowired
+	ObjectMapper objectMapper;
+	
+	
+	
 
-		Atto atto = new Atto();
-		atto.setCodice("pippo");
-		atto.setPrimoFirmatario("mario");
-		return atto;
-
-	}
-
-	public boolean create(Atto atto) {
+	public boolean create(String url,Atto atto) {
 
 		
-		WebResource webResource = client.resource(messageSource.getMessage("alfresco_context_url", null, Locale.ITALY));
+		try{
 		
+		WebResource webResource = client.resource(url);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
+		String json =  objectMapper.writeValueAsString(atto);
+		System.out.println("JSON==="+json);
 		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
-				.post(ClientResponse.class, atto);
+				.post(ClientResponse.class, json);
 
 		if (response.getStatus() != 200) {
+			
 			throw new RuntimeException("Failed : HTTP error code : "
 					+ response.getStatus());
 		}
 
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		return true;
 	}
 
