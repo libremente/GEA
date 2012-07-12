@@ -47,6 +47,28 @@ public class Atto
     private String legislatura;
     private String anno;
     
+	private String numeroprotocollo;
+	private String tipoiniziativa;
+	private String numerodcr;
+	private String firmatario;
+	private String tipoChiusura;
+	private String esitoVotoCommissioneReferente;
+	private String esitoVotoAula;
+	private String commissioneReferente;
+	private String commissioneConsultiva;
+	private boolean redigente;
+	private boolean deliberante;
+	private String numeroLCR;
+	private String numeroLR;
+	private boolean abbinamento;	
+	private boolean stralcio;
+	private String relatore;	
+	private String organismoStatutario;	
+	private String soggettoConsultato;	
+	private boolean emendato;	
+	private boolean rinviato;	
+	private boolean sospeso;
+    
     
     
     
@@ -185,6 +207,177 @@ public class Atto
 	public void setAnno(String anno) {
 		this.anno = anno;
 	}
+
+	public String getNumeroprotocollo() {
+		return numeroprotocollo;
+	}
+
+	public void setNumeroprotocollo(String numeroprotocollo) {
+		this.numeroprotocollo = numeroprotocollo;
+	}
+
+	public String getTipoiniziativa() {
+		return tipoiniziativa;
+	}
+
+	public void setTipoiniziativa(String tipoiniziativa) {
+		this.tipoiniziativa = tipoiniziativa;
+	}
+
+	public String getNumerodcr() {
+		return numerodcr;
+	}
+
+	public void setNumerodcr(String numerodcr) {
+		this.numerodcr = numerodcr;
+	}
+
+	public String getFirmatario() {
+		return firmatario;
+	}
+
+	public void setFirmatario(String firmatario) {
+		this.firmatario = firmatario;
+	}
+
+	public String getTipoChiusura() {
+		return tipoChiusura;
+	}
+
+	public void setTipoChiusura(String tipoChiusura) {
+		this.tipoChiusura = tipoChiusura;
+	}
+
+	public String getEsitoVotoCommissioneReferente() {
+		return esitoVotoCommissioneReferente;
+	}
+
+	public void setEsitoVotoCommissioneReferente(
+			String esitoVotoCommissioneReferente) {
+		this.esitoVotoCommissioneReferente = esitoVotoCommissioneReferente;
+	}
+
+	public String getEsitoVotoAula() {
+		return esitoVotoAula;
+	}
+
+	public void setEsitoVotoAula(String esitoVotoAula) {
+		this.esitoVotoAula = esitoVotoAula;
+	}
+
+	public String getCommissioneReferente() {
+		return commissioneReferente;
+	}
+
+	public void setCommissioneReferente(String commissioneReferente) {
+		this.commissioneReferente = commissioneReferente;
+	}
+
+	public String getCommissioneConsultiva() {
+		return commissioneConsultiva;
+	}
+
+	public void setCommissioneConsultiva(String commissioneConsultiva) {
+		this.commissioneConsultiva = commissioneConsultiva;
+	}
+
+	public boolean isRedigente() {
+		return redigente;
+	}
+
+	public void setRedigente(boolean redigente) {
+		this.redigente = redigente;
+	}
+
+	public boolean isDeliberante() {
+		return deliberante;
+	}
+
+	public void setDeliberante(boolean deliberante) {
+		this.deliberante = deliberante;
+	}
+
+	public String getNumeroLCR() {
+		return numeroLCR;
+	}
+
+	public void setNumeroLCR(String numeroLCR) {
+		this.numeroLCR = numeroLCR;
+	}
+
+	public String getNumeroLR() {
+		return numeroLR;
+	}
+
+	public void setNumeroLR(String numeroLR) {
+		this.numeroLR = numeroLR;
+	}
+
+	public boolean isAbbinamento() {
+		return abbinamento;
+	}
+
+	public void setAbbinamento(boolean abbinamento) {
+		this.abbinamento = abbinamento;
+	}
+
+	public boolean isStralcio() {
+		return stralcio;
+	}
+
+	public void setStralcio(boolean stralcio) {
+		this.stralcio = stralcio;
+	}
+
+	public String getRelatore() {
+		return relatore;
+	}
+
+	public void setRelatore(String relatore) {
+		this.relatore = relatore;
+	}
+
+	public String getOrganismoStatutario() {
+		return organismoStatutario;
+	}
+
+	public void setOrganismoStatutario(String organismoStatutario) {
+		this.organismoStatutario = organismoStatutario;
+	}
+
+	public String getSoggettoConsultato() {
+		return soggettoConsultato;
+	}
+
+	public void setSoggettoConsultato(String soggettoConsultato) {
+		this.soggettoConsultato = soggettoConsultato;
+	}
+
+	public boolean isEmendato() {
+		return emendato;
+	}
+
+	public void setEmendato(boolean emendato) {
+		this.emendato = emendato;
+	}
+
+	public boolean isRinviato() {
+		return rinviato;
+	}
+
+	public void setRinviato(boolean rinviato) {
+		this.rinviato = rinviato;
+	}
+
+	public boolean isSospeso() {
+		return sospeso;
+	}
+
+	public void setSospeso(boolean sospeso) {
+		this.sospeso = sospeso;
+	}
+	
+	
     
     
 }
