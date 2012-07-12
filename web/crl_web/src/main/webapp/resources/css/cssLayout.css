@@ -100,10 +100,17 @@ border:0 !important;
 
 }
 
-.ui-fieldset-toggleable .ui-fieldset-legend {
-    background: none repeat scroll 0 0 transparent;
-    border: 0 none;
+.ui-fieldset, .ui-fieldset  {
+    background: none repeat scroll 0 0 transparent !important;
+    border: 1 none;
     cursor: pointer;
+}
+
+.ui-fieldset-legend {
+	background: none repeat scroll 0 0 transparent !important;
+    border: 0 none !important;
+    cursor: pointer;
+	
 }
 
 .infoTable {
@@ -141,10 +148,14 @@ padding: 8px 19px 4px 10px ;
 
 .ui-selectonemenu {
 	width: 160px;
+<<<<<<< .mine
+}
+
+.ui-tabs-nav  { height: 33px }=======
 }
 
 .ui-datatable table {
     border-collapse: collapse;
     font-size: 12px;
     width: 100%;
-}
+}>>>>>>> .r96
