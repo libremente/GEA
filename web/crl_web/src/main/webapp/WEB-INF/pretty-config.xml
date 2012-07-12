@@ -18,6 +18,7 @@
     <url-mapping id="inserisciAtto"> 
         <pattern value="/inserisciatto" /> 
         <view-id value="views/inserisciatto/inserisciatto_base.xhtml" />
+        
     </url-mapping>
     
     <url-mapping id="atto"> 
@@ -71,8 +72,8 @@
           
     </url-mapping> 
 
-
-    
+     
+          
 
 
 </pretty-config>

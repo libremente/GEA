@@ -20,18 +20,25 @@ public class AttoBean implements Serializable {
 
 	private boolean showCommDetail;
 	private Atto atto = new Atto();
-	
 	private String codice;
 	private String numeroAtto;
-	
-	
+	private String tipoAtto;
+	private String tipologia;
+	private String legislatura;
 
-	@ManagedProperty(value="#{attoServiceManager}")
-	private AttoServiceManager attoServiceManager ;
+	@ManagedProperty(value = "#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager;
 
-	
-	
-	
+	/* Services */
+	public AttoServiceManager getAttoServiceManager() {
+		return attoServiceManager;
+	}
+
+	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+		this.attoServiceManager = attoServiceManager;
+	}
+
+	/* Fields */
 	/**
 	 * @return the code
 	 */
@@ -82,19 +89,32 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setNumeroAtto(String numeroAtto) {
-		
+
 		this.atto.setNumeroAtto(numeroAtto);
 	}
 
-	public AttoServiceManager getAttoServiceManager() {
-		return attoServiceManager;
+	public String getTipoAtto() {
+		return this.atto.getTipoAtto();
 	}
 
-	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
-		this.attoServiceManager = attoServiceManager;
+	public void setTipoAtto(String tipoAtto) {
+		this.atto.setTipoAtto(tipoAtto);
 	}
-	
-	
-	
+
+	public String getTipologia() {
+		return this.atto.getTipologia();
+	}
+
+	public void setTipologia(String tipologia) {
+		this.atto.setTipologia(tipologia);
+	}
+
+	public String getLegislatura() {
+		return this.atto.getLegislatura();
+	}
+
+	public void setLegislatura(String legislatura) {
+		this.atto.setLegislatura(legislatura);
+	}
 
 }

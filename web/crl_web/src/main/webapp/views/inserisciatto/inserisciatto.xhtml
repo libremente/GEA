@@ -27,7 +27,7 @@
 			</p:column>
 
 			<p:column>
-				<p:inputText id="numeroatto" value="#{attoController.numeroAtto}"
+				<p:inputText id="numeroatto" value="#{inserisciAttoController.numeroAtto}"
 					/>
 			</p:column>
 
@@ -40,11 +40,11 @@
 			</p:column>
 
 			<p:column>
-				<p:selectOneMenu  id="tipoatto" value="#{attoController.tipoAtto}" >
+				<p:selectOneMenu  id="tipoatto" value="#{inserisciAttoController.tipoAtto}" >
 				    <f:selectItem itemLabel="Scegli Tipo" itemValue="" />  
-					<f:selectItems value="#{attoController.tipiAtto}" />
+					<f:selectItems value="#{inserisciAttoController.tipiAtto}" />
 					<p:ajax update="tipologia" 
-						listener="#{attoController.handleTipoAttoChange}" />
+						listener="#{inserisciAttoController.handleTipoAttoChange}" />
 				</p:selectOneMenu>
 			</p:column>
 		</p:row>
@@ -55,9 +55,9 @@
 			</p:column>
 
 			<p:column>
-				<p:selectOneMenu id="tipologia" value="#{attoController.tipologia}"  >
+				<p:selectOneMenu id="tipologia" value="#{inserisciAttoController.tipologia}"  >
 				    <f:selectItem itemLabel="Scegli Tipologia" itemValue="" />
-					<f:selectItems  value="#{attoController.tipologie}"  />
+					<f:selectItems  value="#{inserisciAttoController.tipologie}"  />
 				</p:selectOneMenu>
 			</p:column>
 		</p:row>
@@ -69,9 +69,9 @@
 
 			<p:column>
 				<p:selectOneMenu id="legislatura"
-					value="#{attoController.legislatura}" >
+					value="#{inserisciAttoController.legislatura}" >
 					<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
-					<f:selectItems value="#{attoController.legislature}" />
+					<f:selectItems value="#{inserisciAttoController.legislature}" />
 				</p:selectOneMenu>
 			</p:column>
 		</p:row>
@@ -80,7 +80,7 @@
 		<p:row>
 
 			<p:column colspan="2">
-				<p:commandButton ajax="false" update="insertattopanel" id="insertattobtn" value="Salva" action="#{attoController.inserisciAtto}" />
+				<p:commandButton ajax="false" update="insertattopanel" id="insertattobtn" value="Salva" action="#{inserisciAttoController.inserisciAtto}" />
 			</p:column>
 		</p:row>
 

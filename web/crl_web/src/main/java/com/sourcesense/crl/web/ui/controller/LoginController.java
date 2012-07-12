@@ -43,11 +43,11 @@ public class LoginController {
 
 			userBean.setUser(this.user);
 			
-			return CRLMessage.SUBMIT_SUCCESS;
+			return "pretty:home";
 
 		} else {
 
-			return CRLMessage.SUBMIT_FAILURE;
+			return null;
 
 		}
 

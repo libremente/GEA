@@ -4,33 +4,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
 	version="2.0">
 
-
     <!-- Spring resolver for Spring DI into JSF ManagedBeans -->
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 	</application>
-
-
-    <!-- Navigation -->
-	<navigation-rule>
-		<from-view-id>/views/inserisciatto/inserisciatto_base.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id >views/home/riepilogoatto/riepilogoatto_base.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>failure</from-outcome>
-			<to-view-id>/error.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-
-    <navigation-rule>
-		<from-view-id>/authenticate.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id >/home.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
 
 </faces-config>

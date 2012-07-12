@@ -27,13 +27,11 @@ import javax.faces.event.ActionEvent;
  * @author uji
  */
 
-@ManagedBean(name = "attoController")
+@ManagedBean(name = "inserisciAttoController")
 @ViewScoped
-public class AttoController {
+public class InserisciAttoController {
 
-	/**
-	 * 
-	 */
+	
 	
 
 	@ManagedProperty(value = "#{attoServiceManager}")
@@ -81,10 +79,7 @@ public class AttoController {
 	}
 	
     
-	public boolean validTipologie(){
-		
-		return true;
-	}
+	
 	
 	public void handleTipoAttoChange() {  
 		
@@ -110,11 +105,11 @@ public class AttoController {
 					.getValue(context.getELContext());
 
 			attoBean.setAtto(this.atto);
-			return CRLMessage.SUBMIT_SUCCESS;
+			return "pretty:atto";
 
 		} else {
 
-		    return CRLMessage.SUBMIT_FAILURE;
+		    return null;
 
 		}
 	}
