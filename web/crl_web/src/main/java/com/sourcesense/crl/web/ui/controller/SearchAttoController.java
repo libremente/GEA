@@ -15,7 +15,7 @@ import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.OrganismoStatutarioServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
-import com.sourcesense.crl.business.service.StatoServiceManager;
+import com.sourcesense.crl.business.service.StatoAttoServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 import com.sourcesense.crl.business.service.TipoChiusuraServiceManager;
 import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
@@ -42,13 +42,10 @@ import org.primefaces.model.SortOrder;
  * @author uji
  */
 
-@RequestScoped
-@ManagedBean(name= "searchBean")
-public class SearchAttoBean implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+@ViewScoped
+@ManagedBean(name= "searchAttoController")
+public class SearchAttoController  {
+	
     
 	
 	@ManagedProperty(value="#{attoServiceManager}")
@@ -60,8 +57,8 @@ public class SearchAttoBean implements Serializable {
 	@ManagedProperty(value = "#{tipoAttoServiceManager}")
 	private TipoAttoServiceManager tipoAttoServiceManager;
 	
-	@ManagedProperty(value = "#{statoServiceManager}")
-	private StatoServiceManager statoServiceManager;
+	@ManagedProperty(value = "#{statoAttoServiceManager}")
+	private StatoAttoServiceManager statoAttoServiceManager;
 	
 	@ManagedProperty(value = "#{tipoIniziativaServiceManager}")
 	private TipoIniziativaServiceManager tipoIniziativaServiceManager;
@@ -170,8 +167,6 @@ public class SearchAttoBean implements Serializable {
 	
 	private Map<String, String> tipiIniziative = new HashMap<String, String>();
 	
-	private Map<String, String> primiFirmatari = new HashMap<String, String>();
-	
 	private Map<String, String> firmatari = new HashMap<String, String>();
 	
 	private Map<String, String> tipiChiusura = new HashMap<String, String>();
@@ -209,7 +204,26 @@ public class SearchAttoBean implements Serializable {
 	
 	@PostConstruct
 	protected void initLazyModel() {
+		
+		setCommissioniReferenti(commissioneServiceManager.findAllCommissioneReferente());
+		setCommissioniConsultive(commissioneServiceManager.findAllCommissioneConsultiva());
+		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
+		setFirmatari(personaleServiceManager.findAllFirmatario());
+		setRelatori(personaleServiceManager.findAllRelatore());
+		setStati(statoAttoServiceManager.findAll());
+		setTipiChiusura(tipoChiusuraServiceManager.findAll());
+		setTipiIniziative(tipoIniziativaServiceManager.findAll());
+		
+		//TODO: 
+		//setEsitiVotoAula(votazioneServiceManager.findAllEsitoVotoAula());
+		//setEsitoVotoCommissioneReferente(votazioneServiceManager.findAllEsitoVotoCommissioneReferente());
+		
+		setTipiAtto(tipoAttoServiceManager.findAll());
+		setLegislature(legislaturaServiceManager.findAll());
+		
+		
 		setLazyAttoModel(new LazyDataModel<Atto>() {
+		
 
 			@Override
 			public List<Atto> load(int first, int pageSize, String sortField,
@@ -223,6 +237,8 @@ public class SearchAttoBean implements Serializable {
 			}
 		});
 	}
+	
+
 
 	/**
 	 * @return the lazyAttoModel
@@ -260,11 +276,6 @@ public class SearchAttoBean implements Serializable {
 		};
 
 	}
-	
-//	@PostConstruct
-//	private void initializeValues(){
-//		//TODO
-//	}
 
 	public String getNumeroAtto() {
 		return this.atto.getNumeroAtto();
@@ -682,16 +693,6 @@ public class SearchAttoBean implements Serializable {
 	}
 
 
-	public Map<String, String> getPrimiFirmatari() {
-		return primiFirmatari;
-	}
-
-
-	public void setPrimiFirmatari(Map<String, String> primiFirmatari) {
-		this.primiFirmatari = primiFirmatari;
-	}
-
-
 	public Map<String, String> getFirmatari() {
 		return firmatari;
 	}
@@ -795,13 +796,13 @@ public class SearchAttoBean implements Serializable {
 	}
 
 
-	public StatoServiceManager getStatoServiceManager() {
-		return statoServiceManager;
+	public StatoAttoServiceManager getStatoAttoServiceManager() {
+		return statoAttoServiceManager;
 	}
 
 
-	public void setStatoServiceManager(StatoServiceManager statoServiceManager) {
-		this.statoServiceManager = statoServiceManager;
+	public void setStatoAttoServiceManager(StatoAttoServiceManager statoAttoServiceManager) {
+		this.statoAttoServiceManager = statoAttoServiceManager;
 	}
 
 

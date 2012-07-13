@@ -1,23 +1,26 @@
 package com.sourcesense.crl.business.service;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.StatoAtto;
+import com.sourcesense.crl.business.model.TipoChiusura;
 import com.sourcesense.crl.business.service.rest.TipoChiusuraService;
+import com.sourcesense.crl.util.URLBuilder;
 
 @Service("tipoChiusuraServiceManager")
-public class TipoChiusuraServiceManager implements ServiceManager, Serializable{
+public class TipoChiusuraServiceManager implements ServiceManager{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	@Autowired
+	private transient URLBuilder urlBuilder;
 	
 	@Autowired
-	TipoChiusuraService tipoChiusuraService;
+	private TipoChiusuraService tipoChiusuraService;
 
 	@Override
 	public boolean persist(Object object) {
@@ -37,9 +40,18 @@ public class TipoChiusuraServiceManager implements ServiceManager, Serializable{
 		return false;
 	}
 
-	@Override
+	
 	public Map<String, String> findAll() {
-		return tipoChiusuraService.getAllTipoChiusura();
+		Map<String, String> tipiChiusura = new HashMap<String, String>();
+
+		List<TipoChiusura> listTipiChiusura = tipoChiusuraService.getAllTipoChiusura(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_chiusura",null));
+
+		for (TipoChiusura tipoChiusura : listTipiChiusura) {
+
+			tipiChiusura.put(tipoChiusura.getDescrizione(), tipoChiusura.getDescrizione());
+
+		}
+		return tipiChiusura;
 	}
 
 	@Override

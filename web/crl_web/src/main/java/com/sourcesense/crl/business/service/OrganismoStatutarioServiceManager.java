@@ -1,24 +1,27 @@
 package com.sourcesense.crl.business.service;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.Legislatura;
+import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.service.rest.OrganismoStatutarioService;
 import com.sourcesense.crl.business.service.rest.TipoAttoService;
+import com.sourcesense.crl.util.URLBuilder;
 
 @Service("organismoStatutarioServiceManager")
-public class OrganismoStatutarioServiceManager implements ServiceManager, Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class OrganismoStatutarioServiceManager implements ServiceManager{
 	
 	@Autowired
-	OrganismoStatutarioService organismoStatutarioService;
+	private transient URLBuilder urlBuilder;
+
+	@Autowired
+	private OrganismoStatutarioService organismoStatutarioService;
 
 	@Override
 	public boolean persist(Object object) {
@@ -38,9 +41,17 @@ public class OrganismoStatutarioServiceManager implements ServiceManager, Serial
 		return false;
 	}
 
-	@Override
 	public Map<String, String> findAll() {
-		return organismoStatutarioService.getAllOrganismoStatutario();
+		Map<String, String> organismoStatutari = new HashMap<String, String>();
+
+		List<OrganismoStatutario> listOrganismiStatutari = organismoStatutarioService.getAllOrganismoStatutario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_organismi_statutari",null));
+
+		for (OrganismoStatutario organismoStatutario : listOrganismiStatutari) {
+
+			organismoStatutari.put(organismoStatutario.getDescrizione(), organismoStatutario.getDescrizione());
+
+		}
+		return organismoStatutari;
 	}
 
 	@Override
@@ -48,6 +59,6 @@ public class OrganismoStatutarioServiceManager implements ServiceManager, Serial
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 
 }

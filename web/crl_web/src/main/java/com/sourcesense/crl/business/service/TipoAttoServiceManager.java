@@ -16,6 +16,7 @@ import com.sourcesense.crl.util.URLBuilder;
 @Service("tipoAttoServiceManager")
 public class TipoAttoServiceManager implements ServiceManager {
 
+
 	
 	
 	

@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 import com.sourcesense.crl.business.service.rest.VotazioneService;
 
 @Service("votazioneServiceManager")
-public class VotazioneServiceManager implements ServiceManager, Serializable{
+public class VotazioneServiceManager implements ServiceManager{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
 	
 	@Autowired
 	VotazioneService votazioneService;
@@ -36,13 +33,17 @@ public class VotazioneServiceManager implements ServiceManager, Serializable{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	//TODO
 	public Map<String, String> findAllEsitoVotoAula() {
-		return votazioneService.getAllEsitoVotoAula();
+		//return votazioneService.getAllEsitoVotoAula();
+		return null;
 	}
 	
+	//TODO
 	public Map<String, String> findAllEsitoVotoCommissioneReferente() {
-		return votazioneService.getAllEsitoVotoCommissioneReferente();
+		//return votazioneService.getAllEsitoVotoCommissioneReferente();
+		return null;
 	}
 
 	@Override

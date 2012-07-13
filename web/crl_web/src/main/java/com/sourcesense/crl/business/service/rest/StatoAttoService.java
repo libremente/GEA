@@ -14,14 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.Legislatura;
-import com.sourcesense.crl.business.model.TipoChiusura;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-@Component(value = "tipoChiusuraService")
-@Path("/tipichiusura")
-public class TipoChiusuraService {
+@Component(value = "statoService")
+@Path("/stati")
+public class StatoAttoService {
 
 	@Autowired
 	transient Client client;
@@ -29,8 +29,9 @@ public class TipoChiusuraService {
 	@Autowired
 	transient ObjectMapper objectMapper;
 
-	public List<TipoChiusura> getAllTipoChiusura(String url) {
-		List<TipoChiusura> listTipiChiusura =null;
+
+	public List<StatoAtto> getAllStato(String url) {
+		List<StatoAtto> listStati =null;
 
 		try {
 			WebResource webResource = client.resource(url);
@@ -46,8 +47,8 @@ public class TipoChiusuraService {
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(
 					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-		    listTipiChiusura = objectMapper.readValue(responseMsg,
-					new TypeReference<List<TipoChiusura>>() {
+		    listStati = objectMapper.readValue(responseMsg,
+					new TypeReference<List<StatoAtto>>() {
 					});
 
 			
@@ -55,7 +56,7 @@ public class TipoChiusuraService {
 
 			ex.printStackTrace();
 		}
-		return listTipiChiusura;
+		return listStati;
 	}
 
 }
