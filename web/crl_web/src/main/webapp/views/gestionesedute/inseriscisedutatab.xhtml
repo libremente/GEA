@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panelGrid styleClass="infoTable" id="inserisciSeduta">
+	<p:row>
+	
+		<p:column style="width:50%;">
+			<p:fieldset styleClass="fieldSetTab" legend="Elenco sedute:"
+				collapsed="false" toggleable="false">
+				
+
+
+Filtra data:&nbsp;&nbsp;&nbsp;
+<h:outputLabel for="filtraData_da" value="da " />
+				<p:calendar size="10" locale="it" id="filtraData_da" />
+
+				<h:outputLabel for="filtraData_a" value="a " />
+				<p:calendar size="10" locale="it" id="filtraData_a" />
+
+				<br />
+				<br />
+
+				<table class="generalInfoTab" id="elencoSeduteTable"
+					style="width: 100%;" border="0">
+					<thead>
+						<th>Data<br />seduta
+						</th>
+						<th>Num.<br />verbal.
+						</th>
+						<th>Opzioni</th>
+
+					</thead>
+					<tbody>
+						<tr>
+							<td>07/03/2011</td>
+							<td>7</td>
+							<td><h:commandLink value="ODG" id="odgLink1" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>02/03/2011</td>
+							<td>6</td>
+							<td><h:commandLink value="ODG" id="odgLink2" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>22/02/2011</td>
+							<td>5</td>
+							<td><h:commandLink value="ODG" id="odgLink3" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>15/02/2011</td>
+							<td>4</td>
+							<td><h:commandLink value="ODG" id="odgLink4" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>09/02/2011</td>
+							<td>3</td>
+							<td><h:commandLink value="ODG" id="odgLink5" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>22/01/2011</td>
+							<td>2</td>
+							<td><h:commandLink value="ODG" id="odgLink6" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>16/01/2011</td>
+							<td>1</td>
+							<td><h:commandLink value="ODG" id="odgLink7" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>13/12/2010</td>
+							<td>15</td>
+							<td><h:commandLink value="ODG" id="odgLink8" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+						<tr>
+							<td>03/12/2010</td>
+							<td>14</td>
+							<td><h:commandLink value="ODG" id="odgLink9" /> <h:commandLink>
+									<h:graphicImage alt="Elimina riga"
+										value="/resources/img/delete.png" />
+								</h:commandLink></td>
+						</tr>
+
+
+					</tbody>
+				</table>
+
+
+			</p:fieldset>
+		</p:column>
+		<p:column>
+
+			<p:fieldset styleClass="fieldSetTab" legend="Dettagli seduta:"
+				collapsed="false" toggleable="false">
+				<p:panelGrid style="width:100%;margin-bottom:7px;">
+					<p:row>
+						<p:column>
+
+
+							<h:outputLabel for="dataSeduta" value="Data seduta:  " />
+						</p:column>
+						<p:column>
+							<p:calendar size="10" locale="it" id="dataSeduta" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="numVerbale" value="Num. verbale: " />
+						</p:column>
+						<p:column>
+							<p:inputText size="10" id="numVerbale" />
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+Note : 
+				<br />
+							<br />
+							<p:inputTextarea rows="5" cols="53" autoResize="false" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+
+							<table class="generalInfoTab" id="dettagliSeduteTable"
+								style="width: 100%;" border="0">
+								<thead>
+									<th>Descrizione link</th>
+									<th>Link</th>
+									<th>opzioni</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Verbale 07/03/11</td>
+										<td>http://verbali.consiglior</td>
+										<td><h:commandLink>
+												<h:graphicImage alt="Elimina riga"
+													value="/resources/img/delete.png" />
+											</h:commandLink></td>
+									</tr>
+									<tr>
+										<td>Filmato mediateca</td>
+										<td>http://mediateca.consig</td>
+										<td><h:commandLink>
+												<h:graphicImage alt="Elimina riga"
+													value="/resources/img/delete.png" />
+											</h:commandLink></td>
+									</tr>
+
+								</tbody>
+							</table>
+
+							<h:commandLink>
+								<h:graphicImage alt="Aggiungi allegato"
+									value="/resources/img/add.png" />
+							</h:commandLink>
+
+							<p>
+								<p:commandButton value="Aggiungi / Salva" />
+							</p>
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+
+		</p:column>
+	</p:row>
+</p:panelGrid>
+</html>

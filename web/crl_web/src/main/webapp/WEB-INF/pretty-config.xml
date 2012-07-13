@@ -21,6 +21,11 @@
         
     </url-mapping>
     
+    <url-mapping id="gestioneSedute"> 
+        <pattern value="/gestionesedute" /> 
+        <view-id value="views/gestionesedute/gestionesedute_base.xhtml" />
+    </url-mapping>
+    
     <url-mapping id="atto"> 
         <pattern value="/atto" /> 
         <query-param name="numeroatto"> #{attoBean.numeroAtto} </query-param>
