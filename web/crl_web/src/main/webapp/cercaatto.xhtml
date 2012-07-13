@@ -6,6 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 
 
@@ -14,7 +15,8 @@
 
 
 
-	<p:panel style="text-align:left;margin-bottom:5px;font-size:12px" id="mainPanel">
+	<p:panel style="text-align:left;margin-bottom:5px;font-size:12px"
+		id="mainPanel">
 
 
 		<!-- Pannello ricerca -->
@@ -226,8 +228,11 @@
 								<p:column>
 
 									<p:selectOneMenu id="esitoVotoComRef">
-										<f:selectItem itemLabel="Scegli Esito Voto Commissione Referente" itemValue="" />
-										<f:selectItems value="#{searchAttoController.esitiVotoCommissioneReferente}" />
+										<f:selectItem
+											itemLabel="Scegli Esito Voto Commissione Referente"
+											itemValue="" />
+										<f:selectItems
+											value="#{searchAttoController.esitiVotoCommissioneReferente}" />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -257,7 +262,7 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="esitoVotoAula" >
+									<p:selectOneMenu id="esitoVotoAula">
 										<f:selectItem itemLabel="Scegli Esito Voto Aula" itemValue="" />
 										<f:selectItems value="#{searchAttoController.esitiVotoAula}" />
 									</p:selectOneMenu>
@@ -290,9 +295,11 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="commissioneReferente" >
-										<f:selectItem itemLabel="Scegli Commissione Referente" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioniReferenti}" />
+									<p:selectOneMenu id="commissioneReferente">
+										<f:selectItem itemLabel="Scegli Commissione Referente"
+											itemValue="" />
+										<f:selectItems
+											value="#{searchAttoController.commissioniReferenti}" />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -323,9 +330,11 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="commissioneConsultiva" >
-										<f:selectItem itemLabel="Scegli Commissione Consultiva" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioniConsultive}" />
+									<p:selectOneMenu id="commissioneConsultiva">
+										<f:selectItem itemLabel="Scegli Commissione Consultiva"
+											itemValue="" />
+										<f:selectItems
+											value="#{searchAttoController.commissioniConsultive}" />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -336,7 +345,7 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="relatore" >
+									<p:selectOneMenu id="relatore">
 										<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
 										<f:selectItems value="#{searchAttoController.relatori}" />
 									</p:selectOneMenu>
@@ -366,9 +375,11 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="organismoStatutario" >
-										<f:selectItem itemLabel="Scegli Organismo Statutario" itemValue="" />
-										<f:selectItems value="#{searchAttoController.organismiStatutari}" />
+									<p:selectOneMenu id="organismoStatutario">
+										<f:selectItem itemLabel="Scegli Organismo Statutario"
+											itemValue="" />
+										<f:selectItems
+											value="#{searchAttoController.organismiStatutari}" />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -556,10 +567,11 @@
 			</p:column>
 
 			<p:column headerText="N.Atto">
-				<h:outputLink value="#{request.contextPath}/atto">
-					<h:outputText value="#{atto.numeroAtto}" />
-					<f:param name="numeroatto" value="#{atto.numeroAtto}" />
-				</h:outputLink>
+			    <c:set value="#{atto.numeroAtto}" var="numeroAttoParam" /> 
+				<p:commandLink  action ="#{searchAttoController.attoDetail(numeroAttoParam)}" update="listaAtti">
+					<h:outputText  value="#{atto.numeroAtto}" />
+					<!-- <f:param name="numeroatto" value="#{atto.numeroAtto}" /> -->
+				</p:commandLink>
 			</p:column>
 			<p:column headerText="Oggetto">
 				<h:outputText value="#{atto.oggetto}" />

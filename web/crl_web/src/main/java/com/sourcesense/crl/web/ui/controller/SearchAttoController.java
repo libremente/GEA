@@ -22,6 +22,7 @@ import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.business.service.VotazioneServiceManager;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 
 import org.primefaces.model.LazyDataModel;
@@ -276,6 +278,28 @@ public class SearchAttoController  {
 		};
 
 	}
+	
+	
+	public String attoDetail(String numeroAttoParam){
+		
+		
+		System.out.println("PARAM=="+numeroAttoParam);
+		
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = (AttoBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(),
+						"#{attoBean}", AttoBean.class)
+				.getValue(context.getELContext());
+		
+		//TODO Ottenere dettaglio atto da Alfresco
+		attoBean.setAtto(this.atto);
+		return "pretty:atto";
+		
+	}
+	
 
 	public String getNumeroAtto() {
 		return this.atto.getNumeroAtto();
