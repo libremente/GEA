@@ -25,6 +25,7 @@ public class AttoBean implements Serializable {
 	private String tipoAtto;
 	private String tipologia;
 	private String legislatura;
+	
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;

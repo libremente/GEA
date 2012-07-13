@@ -5,7 +5,7 @@ import javax.faces.bean.ViewScoped;
 
 
 
-@ManagedBean(name = "inserisciAttoController")
+@ManagedBean(name = "riepilogoAttoController")
 @ViewScoped
 public class RiepilogoAttoController {
 
