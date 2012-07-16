@@ -121,6 +121,9 @@
       -->
       <types>
          <type name="cm:content">
+         	<subtype name="crlatti:firmatario"/>
+         	<subtype name="crlatti:firmatarioAnagrafica"/>
+         	<subtype name="crlatti:legislaturaAnagrafica"/>
          </type>
 
          <type name="cm:folder">
@@ -350,9 +353,7 @@
             <show id="crlatti:numeroProtocollo"/>
             <show id="crlatti:tipoIniziativa"/>
             <show id="crlatti:numeroDcr"/>
-            <show id="crlatti:primoFirmatario"/>
             <show id="crlatti:oggetto"/>
-            <show id="crlatti:firmatario"/>
             <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
@@ -374,7 +375,9 @@
             <show id="crlatti:rinviato"/>
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
-            <show id="crlatti:stralcio"/>  
+            <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" />
+            <show id="crlatti:firmatari"/>
           </field-visibility>
       </form>
    </forms>
@@ -423,6 +426,8 @@
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
             <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" />
+            <show id="crlatti:firmatari"/>
    			</field-visibility>
    		</form>
    	</forms>
@@ -446,9 +451,7 @@
             <show id="crlatti:numeroProtocollo"/>
             <show id="crlatti:tipoIniziativa"/>
             <show id="crlatti:numeroDcr"/>
-            <show id="crlatti:primoFirmatario"/>
             <show id="crlatti:oggetto"/>
-            <show id="crlatti:firmatario"/>
             <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
@@ -470,7 +473,9 @@
             <show id="crlatti:rinviato"/>
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
-            <show id="crlatti:stralcio"/>  
+            <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" /> 
+            <show id="crlatti:firmatari"/>
           </field-visibility>
       </form>
    </forms>
@@ -494,9 +499,7 @@
             <show id="crlatti:numeroProtocollo"/>
             <show id="crlatti:tipoIniziativa"/>
             <show id="crlatti:numeroDcr"/>
-            <show id="crlatti:primoFirmatario"/>
             <show id="crlatti:oggetto"/>
-            <show id="crlatti:firmatario"/>
             <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
@@ -519,6 +522,8 @@
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
             <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" />
+            <show id="crlatti:firmatari"/>
    			</field-visibility>
    		</form>
    	</forms>
@@ -531,6 +536,29 @@
    		<form>
    			<field-visibility>
    				<show id="crlatti:anni" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crlatti:firmatarioAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:gruppoConsiliare" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:firmatario">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:gruppoConsiliare" />
+   				<show id="crlatti:dataFirma" />
+         		<show id="crlatti:dataRitiro" />
+         		<show id="crlatti:primoFirmatario" />
    			</field-visibility>
    		</form>
    	</forms>
