@@ -35,6 +35,7 @@ public class Atto
 	 * 
 	 */
 	
+	private String id;
 	private String tipo;
     private String codice;
     private String oggetto;
@@ -47,9 +48,9 @@ public class Atto
     private String legislatura;
     private String anno;
     
-	private String numeroprotocollo;
-	private String tipoiniziativa;
-	private String numerodcr;
+	private String numeroProtocollo;
+	private String tipoIniziativa;
+	private String numeroDcr;
 	private String firmatario;
 	private String tipoChiusura;
 	private String esitoVotoCommissioneReferente;
@@ -68,6 +69,8 @@ public class Atto
 	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
+	
+	private String numero;
     
     
     
@@ -208,28 +211,28 @@ public class Atto
 		this.anno = anno;
 	}
 
-	public String getNumeroprotocollo() {
-		return numeroprotocollo;
+	public String getNumeroProtocollo() {
+		return numeroProtocollo;
 	}
 
-	public void setNumeroprotocollo(String numeroprotocollo) {
-		this.numeroprotocollo = numeroprotocollo;
+	public void setNumeroProtocollo(String numeroprotocollo) {
+		this.numeroProtocollo = numeroprotocollo;
 	}
 
-	public String getTipoiniziativa() {
-		return tipoiniziativa;
+	public String getTipoIniziativa() {
+		return tipoIniziativa;
 	}
 
-	public void setTipoiniziativa(String tipoiniziativa) {
-		this.tipoiniziativa = tipoiniziativa;
+	public void setTipoIniziativa(String tipoiniziativa) {
+		this.tipoIniziativa = tipoiniziativa;
 	}
 
-	public String getNumerodcr() {
-		return numerodcr;
+	public String getNumeroDcr() {
+		return numeroDcr;
 	}
 
-	public void setNumerodcr(String numerodcr) {
-		this.numerodcr = numerodcr;
+	public void setNumeroDcr(String numerodcr) {
+		this.numeroDcr = numerodcr;
 	}
 
 	public String getFirmatario() {
@@ -375,6 +378,22 @@ public class Atto
 
 	public void setSospeso(boolean sospeso) {
 		this.sospeso = sospeso;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 	
 	
