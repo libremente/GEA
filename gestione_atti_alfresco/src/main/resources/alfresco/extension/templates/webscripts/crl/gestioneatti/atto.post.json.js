@@ -53,12 +53,22 @@ if(tipoAtto=="PDL"){
 	nodeType = "crlatti:attoPdl";
 }
 
-//creazione del nodo
-var attoFolderNode = meseFolderNode.createNode(numeroAtto,nodeType);
-attoFolderNode.properties["crlatti:legislatura"] = legislatura;
-attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
-attoFolderNode.properties["crlatti:tipologia"] = tipologia;
-attoFolderNode.properties["crlatti:anno"] = anno;
-attoFolderNode.save();
-
-model.atto = attoFolderNode;
+//verifica esistenza del folder dell'atto
+var attoPath = mesePath + "/cm:" + search.ISO9075Encode(numeroAtto);
+var attoLuceneQuery = "PATH:\""+attoPath+"\"";
+var attoResults = search.luceneSearch(attoLuceneQuery);
+if(attoResults!=null && attoResults.length>0){
+	//atto presente
+	status.code = 500;
+	status.message = "atto numero "+numeroAtto+" già presente nel repository";
+	status.redirect = true;
+} else {
+	//creazione del nodo
+	var attoFolderNode = meseFolderNode.createNode(numeroAtto,nodeType);
+	attoFolderNode.properties["crlatti:legislatura"] = legislatura;
+	attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
+	attoFolderNode.properties["crlatti:tipologia"] = tipologia;
+	attoFolderNode.properties["crlatti:anno"] = anno;
+	attoFolderNode.save();
+	model.atto = attoFolderNode;
+}

@@ -8,7 +8,7 @@
 		   {
 		    "id" : "${atto.nodeRef}",
 			"tipo" : "${tipoTroncatoMaiuscolo}",
-			"numero" : "${atto.properties["crlatti:numeroAtto"]}",
+			"numero" : "<#if atto.properties["crlatti:numeroAtto"]?exists>${atto.properties["crlatti:numeroAtto"]}<#else></#if>",
 			"oggetto" : "<#if atto.properties["crlatti:oggetto"]?exists>${atto.properties["crlatti:oggetto"]}<#else></#if>",
 			"primoFirmatario" : "<#if atto.properties["crlatti:primoFirmatario"]?exists>${atto.properties["crlatti:primoFirmatario"]}<#else></#if>",
 			"dataPresentazione" : "<#if atto.properties["crlatti:dataPubblicazione"]?exists>${atto.properties["crlatti:dataPubblicazione"]}?string("dd/MM/yyyy")<#else></#if>",

@@ -35,7 +35,7 @@
 		var firmatario = currentForm.firmatario.value;
 		
 		var jsonRicerca = {
-		"atto" : [ {
+		"atto" : {
 			"numeroAtto" : ""+numeroAtto+"",
 			"tipoAtto" : ""+tipoAtto+"",
 			"stato" : ""+stato+"",
@@ -48,7 +48,7 @@
 			"firmatario" : ""+firmatario+"",
 			"dataIniziativaDa" : ""+dataIniziativaDa+"",
 			"dataIniziativaA" : ""+dataIniziativaA+""
-			} ]
+			}
 		};
 		
 		ricerca(JSON.stringify(jsonRicerca));

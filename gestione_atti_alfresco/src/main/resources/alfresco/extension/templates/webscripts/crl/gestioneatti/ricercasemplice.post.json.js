@@ -1,6 +1,6 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
-var atto = json.get("atto").get(0);
+var atto = json.get("atto");
 
 var tipoAtto = atto.get("tipoAtto");
 var legislatura = atto.get("legislatura");

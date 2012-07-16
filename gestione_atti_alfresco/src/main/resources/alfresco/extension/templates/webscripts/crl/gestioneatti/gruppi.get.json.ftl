@@ -1,8 +1,12 @@
 {
-   "gruppi":
+   "List": [
    <#list gruppi as gruppo>
-   {
-	"gruppo":"${gruppo.name}"
-   }<#if gruppo_has_next>,</#if>
+   	{ 
+   		"gruppoUtente" : 
+    		{
+			"nome" : "${gruppo.name}"
+   		}
+   	}<#if gruppo_has_next>,</#if>
    </#list>
+   ]
 }
