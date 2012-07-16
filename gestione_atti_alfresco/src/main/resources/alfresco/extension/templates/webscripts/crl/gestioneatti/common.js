@@ -9,7 +9,8 @@ function verifyAND(luceneQuery){
 function checkIsNotNull(parameterValue){
 	if(parameterValue!=null
 			&& parameterValue!=undefined
-			&& parameterValue!=""){
+			&& parameterValue!=""
+			&& parameterValue!="null"){
 		return true;
 	} else {
 		return false;

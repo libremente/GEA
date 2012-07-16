@@ -9,18 +9,20 @@
 	<version>1.0</version>
 
 	<imports>
-		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
 		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
 	</imports>
 
 	<namespaces>
-		<namespace uri="http://www.regione.lombardia.it/content/model/atti/1.0" prefix="crlatti" />
+		<namespace uri="http://www.regione.lombardia.it/content/model/atti/1.0"
+			prefix="crlatti" />
 	</namespaces>
 
 	<types>
 		<type name="crlatti:atto">
 			<title>Atto</title>
-			<parent>cm:folder</parent> 
+			<parent>cm:folder</parent>
 			<properties>
 				<property name="crlatti:tipologia">
 					<title>Tipologia</title>
@@ -54,16 +56,8 @@
 					<title>Numero DCR</title>
 					<type>d:text</type>
 				</property>
-				<property name="crlatti:primoFirmatario">
-					<title>Primo firmatario</title>
-					<type>d:text</type>
-				</property>
 				<property name="crlatti:oggetto">
 					<title>Oggetto</title>
-					<type>d:text</type>
-				</property>
-				<property name="crlatti:firmatario">
-					<title>Firmatario</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:tipoChiusura">
@@ -155,17 +149,44 @@
 					<title>Stralcio</title>
 					<type>d:boolean</type>
 				</property>
+				<property name="crlatti:firmatari">
+					<title>Firmatari</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+				</property>
+				<property name="crlatti:primoFirmatario">
+					<title>Primo firmatario</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
-		
+
 		<type name="crlatti:attoPdl">
 			<title>Progetto di Legge</title>
 			<parent>crlatti:atto</parent>
 		</type>
-		
-		
+
+		<type name="crlatti:firmatario">
+			<title>Firmatario</title>
+			<parent>crlatti:firmatarioAnagrafica</parent>
+			<properties>
+				<property name="crlatti:dataFirma">
+					<title>Data firma</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRitiro">
+					<title>Data ritiro</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:primoFirmatario">
+					<title>Primo firmatario</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</type>
+
 		<!-- anagrafica -->
-		
+
 		<type name="crlatti:legislaturaAnagrafica">
 			<title>Legislatura</title>
 			<parent>cm:content</parent>
@@ -177,7 +198,18 @@
 				</property>
 			</properties>
 		</type>
-		
+
+		<type name="crlatti:firmatarioAnagrafica">
+			<title>Firmatario Anagrafica</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:gruppoConsiliare">
+					<title>Gruppo Consiliare</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+
 	</types>
 
 </model>

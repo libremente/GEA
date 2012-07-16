@@ -2,19 +2,20 @@
    
    <config evaluator="string-compare" condition="Content Wizards">
       <content-types>
-         <type name="crlatti:atto" />
          <type name="crlatti:legislaturaAnagrafica" />
+         <type name="crlatti:firmatarioAnagrafica" />
+         <type name="crlatti:firmatario" />
       </content-types>
    </config>
    
    <config evaluator="string-compare" condition="Action Wizards">
    	  <subtypes>
-         <type name="crlatti:atto" />
-         <type name="crlatti:attoPdl" />
+         <type name="crlatti:legislaturaAnagrafica" />
+         <type name="crlatti:firmatario" />
       </subtypes>
       <specialise-types>
-      	<type name="crlatti:atto"/>
-      	<type name="crlatti:attoPdl"/>
+      	<type name="crlatti:legislaturaAnagrafica" />
+        <type name="crlatti:firmatario" />
       </specialise-types>
    </config>
    
@@ -31,6 +32,20 @@
    	  </property-sheet>
    </config>
    
+   <config evaluator="node-type" condition="crlatti:firmatarioAnagrafica">
+      <property-sheet>            
+         <show-property name="crlatti:gruppoConsiliare" />
+   	  </property-sheet>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:firmatario">
+      <property-sheet>            
+         <show-property name="crlatti:dataFirma" />
+         <show-property name="crlatti:dataRitiro" />
+         <show-property name="crlatti:primoFirmatario" />
+   	  </property-sheet>
+   </config>
+   
    <config evaluator="node-type" condition="crlatti:attoPdl">
    	<property-sheet>            
       	 <show-property name="crlatti:tipologia"/>
@@ -41,10 +56,8 @@
          <show-property name="crlatti:numeroProtocollo" />
          <show-property name="crlatti:tipoIniziativa" />
          <show-property name="crlatti:numeroDcr" />
-         <show-property name="crlatti:primoFirmatario" />
          
          <show-property name="crlatti:oggetto" />
-         <show-property name="crlatti:firmatario" />
          <show-property name="crlatti:tipoChiusura" />
          <show-property name="crlatti:dataPubblicazione" />
          <show-property name="crlatti:esitoVotoComRef" />
@@ -70,7 +83,8 @@
          <show-property name="crlatti:sospeso" />
          <show-property name="crlatti:abbinamento" />
          <show-property name="crlatti:stralcio" />
-         
+         <show-property name="crlatti:primoFirmatario"/>
+         <show-property name="crlatti:firmatari"/>
       </property-sheet>
    </config>
    
@@ -84,10 +98,8 @@
          <show-property name="crlatti:numeroProtocollo" />
          <show-property name="crlatti:tipoIniziativa" />
          <show-property name="crlatti:numeroDcr" />
-         <show-property name="crlatti:primoFirmatario" />
          
          <show-property name="crlatti:oggetto" />
-         <show-property name="crlatti:firmatario" />
          <show-property name="crlatti:tipoChiusura" />
          <show-property name="crlatti:dataPubblicazione" />
          <show-property name="crlatti:esitoVotoComRef" />
@@ -114,16 +126,21 @@
          <show-property name="crlatti:abbinamento" />
          <show-property name="crlatti:stralcio" />
          
+         <show-property name="crlatti:primoFirmatario"/>
+         <show-property name="crlatti:firmatari"/>
+         
       </property-sheet>
    </config>
    
    <config evaluator="string-compare" condition="Advanced Search">
       <advanced-search>
-         <!-- 
+         
          <content-types>
-            <type name="crlatti:atto" />
+            <type name="crlatti:firmatario" />
+            <type name="crlatti:firmatarioAnagrafica" />
+            <type name="crlatti:legislaturaAnagrafica"/>
          </content-types>
-         -->
+         
          <folder-types>
          	<type name="crlatti:atto" />
          	<type name="crlatti:attoPdl" />
@@ -138,9 +155,7 @@
             <meta-data type="crlatti:atto" property="crlatti:numeroProtocollo" />
             <meta-data type="crlatti:atto" property="crlatti:tipoIniziativa" />
 			<meta-data type="crlatti:atto" property="crlatti:numeroDcr" />
-			<meta-data type="crlatti:atto" property="crlatti:primoFirmatario" />
 			<meta-data type="crlatti:atto" property="crlatti:oggetto" />
-			<meta-data type="crlatti:atto" property="crlatti:firmatario" />
 			<meta-data type="crlatti:atto" property="crlatti:tipoChiusura" />
 			
 			<meta-data type="crlatti:atto" property="crlatti:dataPubblicazione" />
