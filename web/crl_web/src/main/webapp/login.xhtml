@@ -11,7 +11,7 @@
 <h:form>
 	<p:panelGrid
 		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
-		id="loginpanel">
+		id="loginpanel" >
 
 		<f:facet name="header">
 			<p:row>
@@ -22,34 +22,48 @@
 		</f:facet>
 
 		<p:row>
+			<p:column colspan="3">
+				<p:messages id="msgs" />
+			</p:column>
+		</p:row>
+
+		<p:row>
 			<p:column>
-				<h:outputLabel for="username" value="Username: " />
+				<h:outputLabel for="username" value="Username: *" />
 			</p:column>
 
 			<p:column>
 				<p:inputText id="username" value="#{loginController.username}"
-					required="true" />
+					required="true" label="Username"  requiredMessage="Username obbligatorio" />
+
 			</p:column>
 			
+			<p:column>
+				<p:message for="username" display="icon" />
+			</p:column>
 		</p:row>
 
-        <p:row>
+		<p:row>
 			<p:column>
-				<h:outputLabel for="password" value="Password: " />
+				<h:outputLabel for="password" value="Password: *" />
 			</p:column>
 
 			<p:column>
 				<p:password id="password" value="#{loginController.password}"
-					required="true" />
+					required="true" label="Password" requiredMessage="Password obbligatoria"  />
+				
 			</p:column>
-			
+			<p:column>
+				<p:message for="password" display="icon" />
+			</p:column>
+
 		</p:row>
-		
+
 		<p:row>
 
-			<p:column colspan="2">
+			<p:column colspan="3" style="align:center">
 
-				<p:commandButton id="insertattobtn" value="Salva"
+				<p:commandButton id="insertattobtn" value="Accedi"
 					update="loginpanel" action="#{loginController.login()}" />
 			</p:column>
 		</p:row>

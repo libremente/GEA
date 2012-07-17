@@ -42,19 +42,19 @@ public class UserBean implements Serializable{
 	}
 
 	public String getUsername() {
-		return username;
+		return user.getUsername();
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.user.setUsername(username);
 	}
 
 	public String getPassword() {
-		return password;
+		return user.getPassword();
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.user.setPassword(password);
 	}
 
 	public String getSessionToken() {

@@ -31,7 +31,9 @@ public class LoginController {
 
 	public String login() {
 		
-		if (userServiceManager.authenticate(user)) {
+		User sessionUser = userServiceManager.authenticate(user);
+		
+		if (sessionUser!=null) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = (UserBean) context
@@ -41,12 +43,13 @@ public class LoginController {
 							"#{userBean}", UserBean.class)
 					.getValue(context.getELContext());
 
-			userBean.setUser(this.user);
+			userBean.setUser(sessionUser);
 			
 			return "pretty:home";
 
 		} else {
 
+			
 			return null;
 
 		}

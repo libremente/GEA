@@ -1,6 +1,7 @@
 package com.sourcesense.crl.web.ui.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -25,7 +26,7 @@ public class AttoBean implements Serializable {
 	private String tipoAtto;
 	private String tipologia;
 	private String legislatura;
-	
+	private Date dataPresaInCarico;
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -118,4 +119,15 @@ public class AttoBean implements Serializable {
 		this.atto.setLegislatura(legislatura);
 	}
 
+	public Date getDataPresaInCarico() {
+		return atto.getDataPresaInCarico();
+	}
+
+	public void setDataPresaInCarico(Date dataPresaInCarico) {
+		this.atto.setDataPresaInCarico(dataPresaInCarico);
+	}
+
+	
+	
+	
 }

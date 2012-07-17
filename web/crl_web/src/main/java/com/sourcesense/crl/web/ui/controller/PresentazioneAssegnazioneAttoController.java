@@ -20,12 +20,17 @@ public class PresentazioneAssegnazioneAttoController {
         
 		//TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean)context.getExternalContext().getSessionMap().get("attoBean"));
 		String username = ((UserBean)context.getExternalContext().getSessionMap().get("userBean")).getUsername();
-		String numeroAtto = ((AttoBean)context.getExternalContext().getSessionMap().get("attoBean")).getNumeroAtto();
-		
-        context.addMessage(null, new FacesMessage("Atto "+numeroAtto+" preso in carico con successo dall' utente "+username));  
+		String numeroAtto = attoBean.getNumeroAtto();
+		System.out.println("AttoBean New ===="+attoBean.getDataPresaInCarico());
+		context.addMessage(null, new FacesMessage("Atto "+numeroAtto+" preso in carico con successo dall' utente "+username));  
         
     }  
+	
+	
+	
+	
 	
 	
 }
