@@ -43,6 +43,7 @@ public class Atto
     private String oggetto;
     private String primoFirmatario;
     private Date   dataPresentazione;
+    private Date   dataPresaInCarico;
     private String stato;
     private String numeroAtto;
     private String tipoAtto;
@@ -74,7 +75,7 @@ public class Atto
 	
 	private String numero;
     
-    
+    private List <Firmatario> firmatari
     
     
     public String getNumeroAtto() {
@@ -396,6 +397,14 @@ public class Atto
 
 	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+
+	public Date getDataPresaInCarico() {
+		return dataPresaInCarico;
+	}
+
+	public void setDataPresaInCarico(Date dataPresaInCarico) {
+		this.dataPresaInCarico = dataPresaInCarico;
 	}
 	
 	

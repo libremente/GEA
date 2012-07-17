@@ -1,5 +1,7 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.beans.factory.annotation.Configurable;
@@ -12,6 +14,7 @@ public class User {
 	private String username ;
 	private String password ;
 	
+	private List <GruppoUtente> gruppi;
 	
 	
 	public String getUsername() {
@@ -25,6 +28,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List<GruppoUtente> getGruppi() {
+		return gruppi;
+	}
+	public void setGruppi(List<GruppoUtente> gruppi) {
+		this.gruppi = gruppi;
 	}
 	
 	

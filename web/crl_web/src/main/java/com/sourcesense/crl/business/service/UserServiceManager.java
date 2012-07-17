@@ -18,24 +18,30 @@ import com.sourcesense.crl.util.URLBuilder;
 public class UserServiceManager implements ServiceManager {
 
 	@Autowired
-	private transient URLBuilder urlBuilder;
+	private  URLBuilder urlBuilder;
 	
 	@Autowired
 	private UserService userService;
 	
 	
 	
-	public boolean authenticate(User user) {
+	public User authenticate(User user) {
 		
 		urlBuilder.setAlfrescoSessionTicket(userService.getAuthenticationToken(urlBuilder.buildURL("alfresco_context_url","alfresco_authentication"),user));
 		
+		User sessionUser = userService.completeAuthentication(urlBuilder.buildAlfrescoURL("alfresco_context_url","alf_gruppi_utente",null),user);
+		
+		
 		if(urlBuilder.getAlfrescoSessionTicket()!=null){
-			return true;
+			return sessionUser;
 		}else{
-			return false;
+			return null;
 		}
 		
 	}
+	
+	
+	
 	
 	
 	@Override
