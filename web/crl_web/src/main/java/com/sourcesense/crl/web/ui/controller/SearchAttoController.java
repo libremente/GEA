@@ -22,6 +22,7 @@ import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.business.service.VotazioneServiceManager;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.util.LazyAttoDataModel;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 import java.io.Serializable;
@@ -84,6 +85,8 @@ public class SearchAttoController  {
 	private OrganismoStatutarioServiceManager organismoStatutarioServiceManager;
 	
 	private LazyDataModel<Atto> lazyAttoModel;
+	
+	private List<Atto> listAtti;
 
 	private String numeroAtto;
 
@@ -188,21 +191,10 @@ public class SearchAttoController  {
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 	
     public void searchAtti() {
-
-    	lazyAttoModel.setWrappedData(attoServiceManager.searchAtti(atto));
-//    	setLazyAttoModel(new LazyDataModel<Atto>() {
-//
-//			@Override
-//			public List<Atto> load(int first, int pageSize, String sortField,
-//					SortOrder sortOrder, Map<String, String> filters) {
-//				return attoServiceManager.find(first, pageSize);
-//			}
-//
-//			@Override
-//			public int getRowCount() {
-//				return (int) attoServiceManager.count();
-//			}
-//		});
+    	
+    	setListAtti(attoServiceManager.searchAtti(atto));
+    	
+    	lazyAttoModel = new LazyAttoDataModel(listAtti);
 	}
 	
 	
@@ -225,20 +217,10 @@ public class SearchAttoController  {
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.findAll());
 		
-		setLazyAttoModel(new LazyDataModel<Atto>() {
 		
-
-			@Override
-			public List<Atto> load(int first, int pageSize, String sortField,
-					SortOrder sortOrder, Map<String, String> filters) {
-				return attoServiceManager.find(first, pageSize);
-			}
-
-			@Override
-			public int getRowCount() {
-				return (int) attoServiceManager.count();
-			}
-		});
+		setListAtti(attoServiceManager.initListAtti());
+		
+		setLazyAttoModel(new LazyAttoDataModel(listAtti));
 	}
 	
 
@@ -260,31 +242,31 @@ public class SearchAttoController  {
 
 	/**
      */
-	public void searchLazyAttoModel() {
-
-		
-		
-		lazyAttoModel = new LazyDataModel<Atto>() {
-
-			@Override
-			public List<Atto> load(int first, int pageSize, String sortField,
-					SortOrder sortOrder, Map<String, String> filters) {
-				return attoServiceManager.find(1, 10);
-			}
-
-			@Override
-			public int getRowCount() {
-				return (int) attoServiceManager.count();
-			}
-		};
-
-	}
+//	public void searchLazyAttoModel() {
+//
+//		
+//		
+//		lazyAttoModel = new LazyDataModel<Atto>() {
+//
+//			@Override
+//			public List<Atto> load(int first, int pageSize, String sortField,
+//					SortOrder sortOrder, Map<String, String> filters) {
+//				return null;
+//			}
+//
+//			@Override
+//			public int getRowCount() {
+//				return (int) attoServiceManager.count();
+//			}
+//		};
+//
+//	}
 	
 	
-	public String attoDetail(String numeroAttoParam){
+	public String attoDetail(String idAttoParam){
 		
 		
-		System.out.println("PARAM=="+numeroAttoParam);
+		System.out.println("PARAM=="+idAttoParam);
 		
 		
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -296,7 +278,7 @@ public class SearchAttoController  {
 				.getValue(context.getELContext());
 		
 		//TODO Ottenere dettaglio atto da Alfresco
-		//attoBean.setAtto(attoServiceManager.findByNumeroAtto(numeroAttoParam));
+		attoBean.setAtto(attoServiceManager.findById(idAttoParam));
 		return "pretty:atto";
 		
 	}
@@ -894,6 +876,16 @@ public class SearchAttoController  {
 	public void setCommissioneServiceManager(
 			CommissioneServiceManager commissioneServiceManager) {
 		this.commissioneServiceManager = commissioneServiceManager;
+	}
+
+
+	public List<Atto> getListAtti() {
+		return listAtti;
+	}
+
+
+	public void setListAtti(List<Atto> listAtti) {
+		this.listAtti = listAtti;
 	}
 	
 	

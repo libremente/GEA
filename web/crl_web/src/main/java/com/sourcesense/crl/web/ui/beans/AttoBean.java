@@ -55,8 +55,8 @@ public class AttoBean implements Serializable {
 	public void setCodice(String codice) {
 		this.codice = codice;
 
-		if (codice != null)
-			setAtto(attoServiceManager.get(codice));
+//		if (codice != null)
+//			setAtto(attoServiceManager.get(codice));
 	}
 
 	/**

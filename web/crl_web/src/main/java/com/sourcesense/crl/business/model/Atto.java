@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 @JsonRootName("atto")
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Atto 
 {
     /**
@@ -80,8 +79,6 @@ public class Atto
 	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
-	
-	private String numero;
     
    
     
@@ -397,14 +394,6 @@ public class Atto
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
 	}
 
 	public Date getDataPresaInCarico() {
