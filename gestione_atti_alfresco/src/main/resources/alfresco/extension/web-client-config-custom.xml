@@ -39,10 +39,12 @@
    </config>
    
    <config evaluator="node-type" condition="crlatti:firmatario">
-      <property-sheet>            
+      <property-sheet>
+         <show-property name="crlatti:nomeFirmatario" />
+      	 <show-property name="crlatti:gruppoConsiliare" />            
          <show-property name="crlatti:dataFirma" />
          <show-property name="crlatti:dataRitiro" />
-         <show-property name="crlatti:primoFirmatario" />
+         <show-property name="crlatti:isPrimoFirmatario" />
    	  </property-sheet>
    </config>
    
