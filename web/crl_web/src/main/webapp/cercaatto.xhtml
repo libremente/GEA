@@ -97,7 +97,7 @@
 								<p:column style="width: 20%;">
 									<h:outputLabel for="datainiziativa_da" value="da: " />
 									<p:calendar size="10" locale="it" id="datainiziativa_da"
-										value="#{searchAttoController.dataIniziativaDa}" />
+										value="#{searchAttoController.dataIniziativaDa}"/>
 								</p:column>
 								<p:column style="width: 20%;">
 									<h:outputLabel for="datainiziativa_a" value="a: " />
@@ -499,7 +499,7 @@
 
 								<p:commandButton value="Cerca" update="listaAtti"
 									id="btncercaatto_cerca"
-									actionListener="#{searchBean.searchAtti()}" />
+									actionListener="#{searchAttoController.searchAtti()}" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
 									<p:dataExporter type="xls" target="listaAtti"
@@ -567,9 +567,11 @@
 			</p:column>
 
 			<p:column headerText="N.Atto">
-			    <c:set value="#{atto.numeroAtto}" var="numeroAttoParam" /> 
-				<p:commandLink  action ="#{searchAttoController.attoDetail(numeroAttoParam)}" update="listaAtti">
-					<h:outputText  value="#{atto.numeroAtto}" />
+				<c:set value="#{atto.numeroAtto}" var="numeroAttoParam" />
+				<p:commandLink
+					action="#{searchAttoController.attoDetail(numeroAttoParam)}"
+					update="listaAtti">
+					<h:outputText value="#{atto.numeroAtto}" />
 					<!-- <f:param name="numeroatto" value="#{atto.numeroAtto}" /> -->
 				</p:commandLink>
 			</p:column>

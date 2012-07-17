@@ -17,6 +17,7 @@ import com.sourcesense.crl.util.URLBuilder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,10 +44,11 @@ public class AttoServiceManager implements ServiceManager {
 
 	
 	
-	public ArrayList<Atto> searchAtti(Atto atto){
-		return find(1,10);
+	public List<Atto> searchAtti(Atto atto){
+		return attoService.parametricSearch(atto, urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_atto_ricerca_semplice", null));
 		
 	}
+	
 	
 	@Override
 	public boolean persist(Object object) {

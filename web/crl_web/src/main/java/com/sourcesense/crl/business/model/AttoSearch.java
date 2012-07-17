@@ -1,111 +1,126 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.Date;
+
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-@JsonRootName("attoSearch")
-@JsonTypeName("attoSearch")
+import com.sourcesense.crl.util.JsonDateSerializer;
+
+@JsonRootName("atto")
+@JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class AttoSearch extends Atto {
 
-private String dataPubblicazioneDa;
+	private Date dataPubblicazioneDa;
 	
-	private String dataPubblicazioneA;
+	private Date dataPubblicazioneA;
 	
-	private String dataSedutaSCDa;
+	private Date dataSedutaSCDa;
 	
-	private String dataSedutaSCA;
+	private Date dataSedutaSCA;
 	
-	private String dataSedutaCommissioneDa;
+	private Date dataSedutaCommissioneDa;
 	
-	private String dataSedutaCommissioneA;
+	private Date dataSedutaCommissioneA;
 	
-	private String dataSedutaAulaDa;
+	private Date dataSedutaAulaDa;
 	
-	private String dataSedutaAulaA;
+	private Date dataSedutaAulaA;
 	
-	private String dataIniziativaDa;
+	private Date dataIniziativaDa;
 
-	private String dataIniziativaA;
+	private Date dataIniziativaA;
 
-	public String getDataPubblicazioneDa() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPubblicazioneDa() {
 		return dataPubblicazioneDa;
 	}
 
-	public void setDataPubblicazioneDa(String dataPubblicazioneDa) {
+	public void setDataPubblicazioneDa(Date dataPubblicazioneDa) {
 		this.dataPubblicazioneDa = dataPubblicazioneDa;
 	}
 
-	public String getDataPubblicazioneA() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPubblicazioneA() {
 		return dataPubblicazioneA;
 	}
 
-	public void setDataPubblicazioneA(String dataPubblicazioneA) {
+	public void setDataPubblicazioneA(Date dataPubblicazioneA) {
 		this.dataPubblicazioneA = dataPubblicazioneA;
 	}
 
-	public String getDataSedutaSCDa() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaSCDa() {
 		return dataSedutaSCDa;
 	}
 
-	public void setDataSedutaSCDa(String dataSedutaSCDa) {
+	public void setDataSedutaSCDa(Date dataSedutaSCDa) {
 		this.dataSedutaSCDa = dataSedutaSCDa;
 	}
 
-	public String getDataSedutaSCA() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaSCA() {
 		return dataSedutaSCA;
 	}
 
-	public void setDataSedutaSCA(String dataSedutaSCA) {
+	public void setDataSedutaSCA(Date dataSedutaSCA) {
 		this.dataSedutaSCA = dataSedutaSCA;
 	}
 
-	public String getDataSedutaCommissioneDa() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaCommissioneDa() {
 		return dataSedutaCommissioneDa;
 	}
 
-	public void setDataSedutaCommissioneDa(String dataSedutaCommissioneDa) {
+	public void setDataSedutaCommissioneDa(Date dataSedutaCommissioneDa) {
 		this.dataSedutaCommissioneDa = dataSedutaCommissioneDa;
 	}
 
-	public String getDataSedutaCommissioneA() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaCommissioneA() {
 		return dataSedutaCommissioneA;
 	}
 
-	public void setDataSedutaCommissioneA(String dataSedutaCommissioneA) {
+	public void setDataSedutaCommissioneA(Date dataSedutaCommissioneA) {
 		this.dataSedutaCommissioneA = dataSedutaCommissioneA;
 	}
 
-	public String getDataSedutaAulaDa() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaAulaDa() {
 		return dataSedutaAulaDa;
 	}
 
-	public void setDataSedutaAulaDa(String dataSedutaAulaDa) {
+	public void setDataSedutaAulaDa(Date dataSedutaAulaDa) {
 		this.dataSedutaAulaDa = dataSedutaAulaDa;
 	}
 
-	public String getDataSedutaAulaA() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaAulaA() {
 		return dataSedutaAulaA;
 	}
 
-	public void setDataSedutaAulaA(String dataSedutaAulaA) {
+	public void setDataSedutaAulaA(Date dataSedutaAulaA) {
 		this.dataSedutaAulaA = dataSedutaAulaA;
 	}
-
-	public String getDataIniziativaDa() {
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIniziativaDa() {
 		return dataIniziativaDa;
 	}
-
-	public void setDataIniziativaDa(String dataIniziativaDa) {
+	
+	public void setDataIniziativaDa(Date dataIniziativaDa) {
 		this.dataIniziativaDa = dataIniziativaDa;
 	}
 
-	public String getDataIniziativaA() {
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIniziativaA() {
 		return dataIniziativaA;
 	}
 
-	public void setDataIniziativaA(String dataIniziativaA) {
+	public void setDataIniziativaA(Date dataIniziativaA) {
 		this.dataIniziativaA = dataIniziativaA;
 	}
 	

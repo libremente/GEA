@@ -25,6 +25,11 @@ import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +52,6 @@ import org.primefaces.model.SortOrder;
 @ViewScoped
 @ManagedBean(name= "searchAttoController")
 public class SearchAttoController  {
-	
-    
 	
 	@ManagedProperty(value="#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager ;
@@ -80,14 +83,13 @@ public class SearchAttoController  {
 	@ManagedProperty(value = "#{organismoStatutarioServiceManager}")
 	private OrganismoStatutarioServiceManager organismoStatutarioServiceManager;
 	
-
 	private LazyDataModel<Atto> lazyAttoModel;
 
 	private String numeroAtto;
 
-	private String dataIniziativaDa;
+	private Date dataIniziativaDa;
 
-	private String dataIniziativaA;
+	private Date dataIniziativaA;
 
 	private String tipoatto;
 
@@ -131,21 +133,21 @@ public class SearchAttoController  {
 	
 	private boolean stralcio;
 	
-	private String dataPubblicazioneDa;
+	private Date dataPubblicazioneDa;
 	
-	private String dataPubblicazioneA;
+	private Date dataPubblicazioneA;
 	
-	private String dataSedutaSCDa;
+	private Date dataSedutaSCDa;
 	
-	private String dataSedutaSCA;
+	private Date dataSedutaSCA;
 	
-	private String dataSedutaCommissioneDa;
+	private Date dataSedutaCommissioneDa;
 	
-	private String dataSedutaCommissioneA;
+	private Date dataSedutaCommissioneA;
 	
-	private String dataSedutaAulaDa;
+	private Date dataSedutaAulaDa;
 	
-	private String dataSedutaAulaA;
+	private Date dataSedutaAulaA;
 	
 	private String relatore;
 	
@@ -187,20 +189,20 @@ public class SearchAttoController  {
 	
     public void searchAtti() {
 
-    	//lazyAttoModel.setWrappedData(attoServiceManager.searchAtti(atto));
-    	setLazyAttoModel(new LazyDataModel<Atto>() {
-
-			@Override
-			public List<Atto> load(int first, int pageSize, String sortField,
-					SortOrder sortOrder, Map<String, String> filters) {
-				return attoServiceManager.find(first, pageSize);
-			}
-
-			@Override
-			public int getRowCount() {
-				return (int) attoServiceManager.count();
-			}
-		});
+    	lazyAttoModel.setWrappedData(attoServiceManager.searchAtti(atto));
+//    	setLazyAttoModel(new LazyDataModel<Atto>() {
+//
+//			@Override
+//			public List<Atto> load(int first, int pageSize, String sortField,
+//					SortOrder sortOrder, Map<String, String> filters) {
+//				return attoServiceManager.find(first, pageSize);
+//			}
+//
+//			@Override
+//			public int getRowCount() {
+//				return (int) attoServiceManager.count();
+//			}
+//		});
 	}
 	
 	
@@ -222,7 +224,6 @@ public class SearchAttoController  {
 		
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.findAll());
-		
 		
 		setLazyAttoModel(new LazyDataModel<Atto>() {
 		
@@ -295,7 +296,7 @@ public class SearchAttoController  {
 				.getValue(context.getELContext());
 		
 		//TODO Ottenere dettaglio atto da Alfresco
-		attoBean.setAtto(this.atto);
+		//attoBean.setAtto(attoServiceManager.findByNumeroAtto(numeroAttoParam));
 		return "pretty:atto";
 		
 	}
@@ -309,19 +310,19 @@ public class SearchAttoController  {
 		this.atto.setNumeroAtto(numeroAtto);
 	}
 
-	public String getDataIniziativaDa() {
+	public Date getDataIniziativaDa() {
 		return this.atto.getDataIniziativaDa();
 	}
 
-	public void setDataIniziativaDa(String dataIniziativaDa) {
+	public void setDataIniziativaDa(Date dataIniziativaDa)  {
 		this.atto.setDataIniziativaDa(dataIniziativaDa);
 	}
 
-	public String getDataIniziativaA() {
+	public Date getDataIniziativaA() {
 		return atto.getDataIniziativaA();
 	}
 
-	public void setDataIniziativaA(String dataIniziativaA) {
+	public void setDataIniziativaA(Date dataIniziativaA) {
 		this.atto.setDataIniziativaA(dataIniziativaA);
 	}
 
@@ -350,27 +351,27 @@ public class SearchAttoController  {
 	}
 
 	public String getNumeroprotocollo() {
-		return this.atto.getNumeroprotocollo();
+		return this.atto.getNumeroProtocollo();
 	}
 
 	public void setNumeroprotocollo(String numeroprotocollo) {
-		this.atto.setNumeroprotocollo(numeroprotocollo);
+		this.atto.setNumeroProtocollo(numeroprotocollo);
 	}
 
 	public String getTipoiniziativa() {
-		return this.atto.getTipoiniziativa();
+		return this.atto.getTipoIniziativa();
 	}
 
 	public void setTipoiniziativa(String tipoiniziativa) {
-		this.atto.setTipoiniziativa(tipoiniziativa);
+		this.atto.setTipoIniziativa(tipoiniziativa);
 	}
 
 	public String getNumerodcr() {
-		return atto.getNumerodcr();
+		return atto.getNumeroDcr();
 	}
 
 	public void setNumerodcr(String numerodcr) {
-		this.atto.setNumerodcr(numerodcr);
+		this.atto.setNumeroDcr(numerodcr);
 	}
 
 	public String getPrimofirmatario() {
@@ -537,82 +538,82 @@ public class SearchAttoController  {
 	}
 
 
-	public String getDataPubblicazioneDa() {
+	public Date getDataPubblicazioneDa() {
 		return this.atto.getDataPubblicazioneDa();
 	}
 
 
-	public void setDataPubblicazioneDa(String dataPubblicazioneDa) {
+	public void setDataPubblicazioneDa(Date dataPubblicazioneDa) {
 		this.atto.setDataPubblicazioneDa(dataPubblicazioneDa);
 	}
 
 
-	public String getDataPubblicazioneA() {
+	public Date getDataPubblicazioneA() {
 		return this.atto.getDataPubblicazioneA();
 	}
 
 
-	public void setDataPubblicazioneA(String dataPubblicazioneA) {
+	public void setDataPubblicazioneA(Date dataPubblicazioneA) {
 		this.atto.setDataPubblicazioneA(dataPubblicazioneA);
 	}
 
 
-	public String getDataSedutaSCDa() {
+	public Date getDataSedutaSCDa() {
 		return this.atto.getDataSedutaSCDa();
 	}
 
 
-	public void setDataSedutaSCDa(String dataSedutaSCDa) {
+	public void setDataSedutaSCDa(Date dataSedutaSCDa) {
 		this.atto.setDataSedutaSCDa(dataSedutaSCDa);
 	}
 
 
-	public String getDataSedutaSCA() {
+	public Date getDataSedutaSCA() {
 		return this.atto.getDataSedutaSCA();
 	}
 
 
-	public void setDataSedutaSCA(String dataSedutaSCA) {
+	public void setDataSedutaSCA(Date dataSedutaSCA) {
 		this.atto.setDataSedutaSCA(dataSedutaSCA);
 	}
 
 
-	public String getDataSedutaCommissioneDa() {
+	public Date getDataSedutaCommissioneDa() {
 		return this.atto.getDataSedutaCommissioneDa();
 	}
 
 
-	public void setDataSedutaCommissioneDa(String dataSedutaCommissioneDa) {
+	public void setDataSedutaCommissioneDa(Date dataSedutaCommissioneDa) {
 		this.atto.setDataSedutaCommissioneDa(dataSedutaCommissioneDa);
 	}
 
 
-	public String getDataSedutaCommissioneA() {
+	public Date getDataSedutaCommissioneA() {
 		return this.atto.getDataSedutaCommissioneA();
 	}
 
 
-	public void setDataSedutaCommissioneA(String dataSedutaCommissioneA) {
+	public void setDataSedutaCommissioneA(Date dataSedutaCommissioneA) {
 		this.atto.setDataSedutaCommissioneA(dataSedutaCommissioneA);
 	}
 
 
-	public String getDataSedutaAulaDa() {
+	public Date getDataSedutaAulaDa() {
 		return atto.getDataSedutaAulaDa();
 	}
 
 
-	public void setDataSedutaAulaDa(String dataSedutaAulaDa) {
+	public void setDataSedutaAulaDa(Date dataSedutaAulaDa) {
 		this.atto.setDataSedutaAulaDa(dataSedutaAulaDa);
 	}
 
 
-	public String getDataSedutaAulaA() {
+	public Date getDataSedutaAulaA() {
 		return this.atto.getDataSedutaAulaA();
 	}
 
 
-	public void setDataSedutaAulaA(String dataSedutaAulaA) {
+	public void setDataSedutaAulaA(Date dataSedutaAulaA) {
 		this.atto.setDataSedutaAulaA(dataSedutaAulaA);
 	}
 
