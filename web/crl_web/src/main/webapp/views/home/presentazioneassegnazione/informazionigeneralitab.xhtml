@@ -15,11 +15,11 @@
 		<p:row>
 			<p:column colspan="3">
 				<p>
-					<p:growl id="presaCaricoMsg" showDetail="true" sticky="true" />
+					<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
 					  
 						<b> <h:outputLabel for="datapresaincarico"
 								value="Data presa in carico: " /> 
-							<p:calendar size="10" locale="it" id="datapresaincarico"   /> </b>
+							<p:calendar size="10" locale="it" id="datapresaincarico"  value="#{attoBean.dataPresaInCarico}"  /> </b>
 					<p:commandButton value="Presa in Carico"   update="presaCaricoMsg"
 					   actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
 				</p>
