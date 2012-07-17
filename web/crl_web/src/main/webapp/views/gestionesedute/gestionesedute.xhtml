@@ -11,23 +11,21 @@
 <h:form>
 	<p:tabView id="gestioneSedute" dynamic="true" cache="true" effect="slide">
 	
-	<p:tab id="tab1" title="Inserisci ODG">
-			
-			<ui:include src="./inserisciodgtab.xhtml" /> 
-			
-		</p:tab>
-
- 		<p:tab id="tab2" title="Inserisci Seduta">
+	<p:tab id="tab1" title="Inserisci Seduta">
             
 
            <ui:include src="./inseriscisedutatab.xhtml" />
 			
 
 		</p:tab>
+	
+	<p:tab id="tab2" title="Inserisci ODG">
+			
+			<ui:include src="./inserisciodgtab.xhtml" /> 
+			
+		</p:tab>
 
-		
-
-		
+ 			
 	</p:tabView>
 </h:form>
 </html>
