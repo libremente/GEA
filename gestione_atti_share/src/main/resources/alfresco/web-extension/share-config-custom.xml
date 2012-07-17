@@ -403,7 +403,7 @@
             <show id="crlatti:numeroDcr"/>
             <show id="crlatti:primoFirmatario"/>
             <show id="crlatti:oggetto"/>
-            <show id="crlatti:firmatario"/>
+            <show id="crlatti:firmatari"/>
             <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
@@ -555,10 +555,11 @@
    	<forms>
    		<form>
    			<field-visibility>
+   				<show id="crlatti:nomeFirmatario"/>
    				<show id="crlatti:gruppoConsiliare" />
    				<show id="crlatti:dataFirma" />
          		<show id="crlatti:dataRitiro" />
-         		<show id="crlatti:primoFirmatario" />
+         		<show id="crlatti:isPrimoFirmatario" />
    			</field-visibility>
    		</form>
    	</forms>
