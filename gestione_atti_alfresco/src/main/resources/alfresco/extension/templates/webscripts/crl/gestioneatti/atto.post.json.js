@@ -60,7 +60,7 @@ var attoResults = search.luceneSearch(attoLuceneQuery);
 if(attoResults!=null && attoResults.length>0){
 	//atto presente
 	status.code = 500;
-	status.message = "atto numero "+numeroAtto+" già presente nel repository";
+	status.message = "atto numero "+numeroAtto+" gia' presente nel repository";
 	status.redirect = true;
 } else {
 	//creazione del nodo
@@ -70,5 +70,11 @@ if(attoResults!=null && attoResults.length>0){
 	attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 	attoFolderNode.properties["crlatti:anno"] = anno;
 	attoFolderNode.save();
+	
+	//copia del template Firmatari
+	
+	var firmatariSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Firmatari\"";
+	var firmatariFolderNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
+	firmatariFolderNode.copy(attoFolderNode);
 	model.atto = attoFolderNode;
 }

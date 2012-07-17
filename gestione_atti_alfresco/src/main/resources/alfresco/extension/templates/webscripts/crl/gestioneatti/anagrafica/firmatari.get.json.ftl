@@ -4,7 +4,8 @@
 	   { 
 		   	"firmatario" : 
 		   	{
-				"descrizione":"${firmatario.name}"
+				"descrizione" : "${firmatario.name}",
+				"gruppoConsiliare" : "${firmatario.properties["crlatti:gruppoConsiliare"]}"
 		    }
 	   }<#if firmatario_has_next>,</#if>
 	   </#list>

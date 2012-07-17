@@ -14,7 +14,7 @@
 				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/ricerca/semplice?alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://37.59.169.203:8081/alfresco/service/crl/atto/ricerca/semplice?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(atto);
 	}

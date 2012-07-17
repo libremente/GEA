@@ -67,7 +67,7 @@ if(checkIsNotNull(oggetto)){
 
 if(checkIsNotNull(firmatario)){
 	verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:firmatario:\""+firmatario+"\"";
+	luceneQuery += "@crlatti\\:firmatari:\""+firmatario+"\"";
 }
 
 

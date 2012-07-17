@@ -1,0 +1,68 @@
+<import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
+
+var jsonFirmatario = filterParam(json.get("firmatario"));
+var idAtto = filterParam(jsonFirmatario.get("idAtto"));
+var descrizione = filterParam(jsonFirmatario.get("descrizione"));
+var gruppoConsiliare = filterParam(jsonFirmatario.get("gruppoConsiliare"));
+var dataFirma = filterParam(jsonFirmatario.get("dataFirma"));
+var dataRitiro = filterParam(jsonFirmatario.get("dataRitiro"));
+var primoFirmatario = filterParam(jsonFirmatario.get("primoFirmatario"));
+var firmatarioNode = null;
+
+if(checkIsNotNull(jsonFirmatario)
+		&& checkIsNotNull(idAtto)
+		&& checkIsNotNull(descrizione)){
+	
+	var attoFolderNode = utils.getNodeFromString(idAtto);
+	var children = attoFolderNode.getChildAssocsByType("cm:folder");
+	var firmatariFolderNode = null;
+	for each (child in children){
+		if(child.name=="Firmatari"){
+			firmatariFolderNode = child;
+		}
+	}
+	
+	
+	//ricerca firmatario esistente
+//	var firmatarioEsistenteQuery = "TYPE:\"crlatti:firmatario\" " +
+//			"AND @crlatti\\:nomeFirmatario:\""+descrizione+"\" " +
+//			"AND PARENT:\""+firmatariFolderNode.nodeRef+""\"";
+	
+	for each (firmatarioEsistente in firmatariFolderNode.children){
+		var nomeFirmatarioEsistente = firmatarioEsistente.name;
+		var descrizioneStringa = ""+descrizione+"";
+		if(nomeFirmatarioEsistente==descrizioneStringa){
+			firmatarioNode = firmatarioEsistente;
+		}
+	}
+	
+	if(firmatarioNode==null){
+		//creazione di un nuovo firmatario
+		firmatarioNode = firmatariFolderNode.createNode(descrizione,"crlatti:firmatario");	
+	}
+	
+	var dataFirmaParsed = null;
+	if(checkIsNotNull(dataFirma)){
+		var dataFirmaSplitted = dataFirma.split("-");
+		dataFirmaParsed = new Date(dataFirmaSplitted[0],dataFirmaSplitted[1]-1,dataFirmaSplitted[2]);
+	}
+	
+	var dataRitiroParsed = null;
+	if(checkIsNotNull(dataRitiro)){
+		var dataRitiroSplitted = dataRitiro.split("-");
+		dataRitiroParsed = new Date(dataRitiroSplitted[0],dataRitiroSplitted[1]-1,dataRitiroSplitted[2]);
+	}
+	
+	firmatarioNode.properties["crlatti:dataFirma"] = dataFirmaParsed;
+	firmatarioNode.properties["crlatti:dataRitiro"] = dataRitiroParsed;
+	firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
+	firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
+	firmatarioNode.save();
+	
+} else {
+	status.code = 400;
+	status.message = "firmatario non valorizzato correttamente: idAtto e descrizione sono obbligatori";
+	status.redirect = true;
+}
+
+model.firmatario = firmatarioNode;

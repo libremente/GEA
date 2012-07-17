@@ -16,3 +16,11 @@ function checkIsNotNull(parameterValue){
 		return false;
 	}
 }
+
+function filterParam(parameterValue){
+	if(checkIsNotNull(parameterValue)){
+		return parameterValue;
+	} else {
+		return "";
+	}
+}
