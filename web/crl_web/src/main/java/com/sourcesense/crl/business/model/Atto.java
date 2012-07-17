@@ -50,6 +50,14 @@ public class Atto
     private String tipologia;
     private String legislatura;
     private String anno;
+    private String classificazione;
+    private String numeroRepertorio;
+    private Date   dataRepertorio;
+    private Date   dataIniziativa;
+    private String descrizioneIniziativa;
+    private String numeroDGR;
+    private Date   dataDGR;
+    private String assegnazione;
     
 	private String numeroProtocollo;
 	private String tipoIniziativa;
@@ -75,7 +83,7 @@ public class Atto
 	
 	private String numero;
     
-    private List <Firmatario> firmatari
+   
     
     
     public String getNumeroAtto() {
@@ -405,6 +413,70 @@ public class Atto
 
 	public void setDataPresaInCarico(Date dataPresaInCarico) {
 		this.dataPresaInCarico = dataPresaInCarico;
+	}
+
+	public String getClassificazione() {
+		return classificazione;
+	}
+
+	public void setClassificazione(String classificazione) {
+		this.classificazione = classificazione;
+	}
+
+	public String getNumeroRepertorio() {
+		return numeroRepertorio;
+	}
+
+	public void setNumeroRepertorio(String numeroRepertorio) {
+		this.numeroRepertorio = numeroRepertorio;
+	}
+
+	public Date getDataRepertorio() {
+		return dataRepertorio;
+	}
+
+	public void setDataRepertorio(Date dataRepertorio) {
+		this.dataRepertorio = dataRepertorio;
+	}
+
+	public Date getDataIniziativa() {
+		return dataIniziativa;
+	}
+
+	public void setDataIniziativa(Date dataIniziativa) {
+		this.dataIniziativa = dataIniziativa;
+	}
+
+	public String getDescrizioneIniziativa() {
+		return descrizioneIniziativa;
+	}
+
+	public void setDescrizioneIniziativa(String descrizioneIniziativa) {
+		this.descrizioneIniziativa = descrizioneIniziativa;
+	}
+
+	public String getNumeroDGR() {
+		return numeroDGR;
+	}
+
+	public void setNumeroDGR(String numeroDGR) {
+		this.numeroDGR = numeroDGR;
+	}
+
+	public Date getDataDGR() {
+		return dataDGR;
+	}
+
+	public void setDataDGR(Date dataDGR) {
+		this.dataDGR = dataDGR;
+	}
+
+	public String getAssegnazione() {
+		return assegnazione;
+	}
+
+	public void setAssegnazione(String assegnazione) {
+		this.assegnazione = assegnazione;
 	}
 	
 	
