@@ -159,10 +159,97 @@
 					<type>d:text</type>
 				</property>
 			</properties>
+			<associations>
+				<child-association name="crlatti:abbinamenti">
+					<title>Abbinamenti</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>crlatti:abbinamento</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</child-association>
+			</associations>
+		</type>
+
+		<type name="crlatti:abbinamento">
+			<title>Abbinamento</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:tipoTestoAbbinamento">
+					<title>Tipo testo</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataAbbinamento">
+					<title>Data abbinamento</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataDisabbinamento">
+					<title>Data disabbinamento</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+			<associations>
+				<child-association name="crlatti:attoAssociatoAbbinamento">
+				<title>Atto associato</title>
+				<source>
+					<mandatory>false</mandatory>
+					<many>true</many>
+				</source>
+				<target>
+					<class>crlatti:atto</class>
+					<mandatory>false</mandatory>
+					<many>false</many>
+				</target>
+				</child-association>
+			</associations>
 		</type>
 
 		<type name="crlatti:attoPdl">
 			<title>Progetto di Legge</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoInp">
+			<title>Petizione popolare</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoPar">
+			<title>Parere</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoPda">
+			<title>Proposta Atto Amministrativo</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoPlp">
+			<title>Proposta Legge Parlamentare</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoPre">
+			<title>Proposta di Regolamento</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoRef">
+			<title>Proposta di Referendum</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoRel">
+			<title>Relazione</title>
+			<parent>crlatti:atto</parent>
+		</type>
+
+		<type name="crlatti:attoEac">
+			<title>Elenchi di Atti Comunitari</title>
 			<parent>crlatti:atto</parent>
 		</type>
 
@@ -176,7 +263,7 @@
 					<index enabled="true">
 						<atomic>true</atomic>
 						<stored>false</stored>
-						<tokenised>false</tokenised>
+						<tokenised>both</tokenised>
 					</index>
 				</property>
 				<property name="crlatti:dataFirma">
@@ -214,6 +301,81 @@
 			<properties>
 				<property name="crlatti:gruppoConsiliare">
 					<title>Gruppo Consiliare</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+
+		<type name="crlatti:commissione">
+			<title>Commissione</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:relatoriCommissione">
+					<title>Relatori</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:dataAssegnazioneCommissione">
+					<title>Data assegnazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataPresaInCaricoCommissione">
+					<title>Data presa in carico</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataNominaCommissione">
+					<title>Data nomina</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:membriComitatoRistrettoCommissione">
+					<title>Membri comitato ristretto</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:dataAperturaLavoriComitatoCommissione">
+					<title>Data apertura lavori comitato</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataChiusuraLavoriComitatoCommissione">
+					<title>Data chiusura lavori comitato</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:tipoVotazioneCommissione">
+					<title>Tipo votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoVotazioneCommissione">
+					<title>Esito votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataVotazioneCommissione">
+					<title>Data votazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataTrasmissioneCommissione">
+					<title>Data trasmissione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataAnnulloCommissione">
+					<title>Data annullo</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:ruoloCommissione">
+					<title>Ruolo</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:statoCommissione">
+					<title>Stato</title>
 					<type>d:text</type>
 				</property>
 			</properties>

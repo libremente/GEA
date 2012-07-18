@@ -1,7 +1,7 @@
 <html>
 <head>
 <script type="text/javascript">
-	function eliminaFirmatario(firmatario) {
+	function creaFirmatario(firmatario) {
 		var xmlhttp;
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp = new XMLHttpRequest();
@@ -13,16 +13,32 @@
 				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("DELETE", "http://localhost:8080/alfresco/service/crl/atto/firmatario?id="+firmatario+"&alf_method=delete&alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/firmatario?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(firmatario);
 	}
 	
-	function eliminaFirmatarioCustom(){
+	function creaFirmatarioCustom(){
 		var currentForm = document.forms[0];
+		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
 		var firmatario = currentForm.firmatario.options[currentForm.firmatario.selectedIndex].value;
-		var firmatarioCustom = firmatario;
-		eliminaFirmatario(firmatarioCustom);
+		var gruppoConsiliare = currentForm.gruppoConsiliare.value;
+		var dataFirma = currentForm.dataFirma.value;
+		var dataRitiro = currentForm.dataRitiro.value;
+		var primoFirmatario = currentForm.primoFirmatario.value;
+		
+		var firmatarioCustom = {
+		"firmatario" : {
+			"idAtto" : ""+idAtto+"",
+			"descrizione" : ""+firmatario+"",
+			"gruppoConsiliare" : ""+gruppoConsiliare+"",
+			"dataFirma" : ""+dataFirma+"",
+			"dataRitiro" : ""+dataRitiro+"",
+			"primoFirmatario" : ""+primoFirmatario+""
+			}
+		};
+		
+		creaFirmatario(JSON.stringify(firmatarioCustom));
 
 	}
 	
@@ -30,19 +46,53 @@
 </head>
 <body>
 	<div>
-		<h1>Test eliminazione firmatario</h1>
+		<h1>Test creazione modifica firmatario</h1>
 	</div>
 	
-	<form action="javascript:eliminaFirmatarioCustom()">
+	<form action="javascript:creaFirmatarioCustom()">
 	<table>
+		<tr>
+			<td>Tipo:</td>
+			<td>
+				<select name="idAtto">
+				<#list atti as atto>
+					<option value="${atto.nodeRef}">${atto.name}</option>
+				</#list>
+				</select>
+			</td>
+		</tr>
 		<tr>
 			<td>Firmatario:</td>
 			<td>
 				<select name="firmatario">
 				<#list firmatari as firmatario>
-					<option value="${firmatario.nodeRef}">${firmatario.name} - ${firmatario.parent.parent.name}</option>
+					<option value="${firmatario.name}">${firmatario.name}</option>
 				</#list>
 				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Gruppo consiliare:</td>
+			<td>
+				<input type="text" name="gruppoConsiliare">
+			</td>
+		</tr>
+		<tr>
+			<td>Primo firmatario:</td>
+			<td>
+				<input type="text" name="primoFirmatario">
+			</td>
+		</tr>
+		<tr>
+			<td>Data firma:</td>
+			<td>
+				<input type="text" name="dataFirma">
+			</td>
+		</tr>
+		<tr>
+			<td>Data ritiro:</td>
+			<td>
+				<input type="text" name="dataRitiro">
 			</td>
 		</tr>
 		<tr>

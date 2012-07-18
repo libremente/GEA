@@ -76,5 +76,14 @@ if(attoResults!=null && attoResults.length>0){
 	var firmatariSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Firmatari\"";
 	var firmatariFolderNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
 	firmatariFolderNode.copy(attoFolderNode);
+	
+	var commissioniSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Commissioni\"";
+	var commissioniFolderNode = search.luceneSearch(commissioniSpaceTemplateQuery)[0];
+	commissioniFolderNode.copy(attoFolderNode);
+	
+	var abbinamentiSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Abbinamenti\"";
+	var abbinamentiFolderNode = search.luceneSearch(abbinamentiSpaceTemplateQuery)[0];
+	abbinamentiFolderNode.copy(attoFolderNode);
+	
 	model.atto = attoFolderNode;
 }
