@@ -15,6 +15,7 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -22,7 +23,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
- *
+ *@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+ * @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
  * @author uji
  */
 @Configurable
@@ -35,6 +37,8 @@ public class Atto
     /**
 	 * 
 	 */
+	
+	
 	
 	private String id;
 	private String tipo;

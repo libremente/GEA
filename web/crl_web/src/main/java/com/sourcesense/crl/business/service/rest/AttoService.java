@@ -92,7 +92,7 @@ public class AttoService  {
 
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			atto =  objectMapper.readValue(responseMsg, new TypeReference<Atto>() { });
+			atto =  objectMapper.readValue(responseMsg, Atto.class);
 
 		}catch(Exception ex){
 
