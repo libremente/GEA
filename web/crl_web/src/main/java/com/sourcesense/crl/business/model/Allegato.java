@@ -10,11 +10,11 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class Allegato {
 	
+	private String nome;
 	private String descrizione;
 	private String downloadUrl;
 	private boolean pubblico;
-	private String tipoAllegato;
-	
+	private String tipoAllegato;	
 	
 	
 	public String getDescrizione() {
@@ -40,6 +40,12 @@ public class Allegato {
 	}
 	public void setTipoAllegato(String tipoAllegato) {
 		this.tipoAllegato = tipoAllegato;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
 	

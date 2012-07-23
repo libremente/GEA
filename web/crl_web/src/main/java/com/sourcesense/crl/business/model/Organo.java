@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
@@ -13,7 +14,8 @@ public class Organo {
 	
 	private String nome;
 	private Date dataSeduta;
-	// link
+	private Allegato ODG;
+	private List<Allegato> risorseEsterne;
 	
 	public String getNome() {
 		return nome;
@@ -27,6 +29,19 @@ public class Organo {
 	public void setDataSeduta(Date dataSeduta) {
 		this.dataSeduta = dataSeduta;
 	}
+	public Allegato getODG() {
+		return ODG;
+	}
+	public void setODG(Allegato oDG) {
+		ODG = oDG;
+	}
+	public List<Allegato> getRisorseEsterne() {
+		return risorseEsterne;
+	}
+	public void setRisorseEsterne(List<Allegato> risorseEsterne) {
+		this.risorseEsterne = risorseEsterne;
+	}
+	
 	
 	
 

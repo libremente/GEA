@@ -87,7 +87,6 @@ public class Atto
 	private String numeroLR;
 	private boolean abbinamento;	
 	private boolean stralcio;
-	private String relatore;	
 	private String organismoStatutario;	
 	private String soggettoConsultato;	
 	private boolean emendato;	
@@ -367,14 +366,6 @@ public class Atto
 		this.stralcio = stralcio;
 	}
 
-	public String getRelatore() {
-		return relatore;
-	}
-
-	public void setRelatore(String relatore) {
-		this.relatore = relatore;
-	}
-
 	public String getOrganismoStatutario() {
 		return organismoStatutario;
 	}
@@ -504,7 +495,7 @@ public class Atto
 	public void setAssegnazione(String assegnazione) {
 		this.assegnazione = assegnazione;
 	}
-
+	
 	public String getnRepertorio() {
 		return nRepertorio;
 	}
@@ -624,7 +615,6 @@ public class Atto
 	public void setLinks(List <Link> links) {
 		this.links = links;
 	}
-    
 	
 	
 }

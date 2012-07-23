@@ -35,6 +35,8 @@ public class AttoSearch extends Atto {
 	private Date dataIniziativaDa;
 
 	private Date dataIniziativaA;
+	
+	private String relatore;
 
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPubblicazioneDa() {
@@ -124,6 +126,14 @@ public class AttoSearch extends Atto {
 
 	public void setDataIniziativaA(Date dataIniziativaA) {
 		this.dataIniziativaA = dataIniziativaA;
+	}
+
+	public String getRelatore() {
+		return relatore;
+	}
+
+	public void setRelatore(String relatore) {
+		this.relatore = relatore;
 	}
 	
 	

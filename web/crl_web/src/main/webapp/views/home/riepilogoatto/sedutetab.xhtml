@@ -7,140 +7,69 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:form>	
-	
-<p:panelGrid styleClass="infoTable" id="sedutetab">
-<p:row>
-	<p:column colspan="3">
-		<table class="generalInfoTab" id="organiInterni" style="width: 90%;" border="0">
-			<thead>
-				<th>Organi Interni</th>
-				<th>Data Seduta</th>
-				<th>ODG</th>
-				<th>Link Risorse Esterne</th>
-			</thead>
-			<tbody>
-					<tr>
-						<td align="left">Referente - Commissione 1</td>
-						<td align="left">15/05/2011</td>
-						<td align="left">
-						<h:commandLink>
-							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
-						</h:commandLink>
-					</td>
-						<td align="left">
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-						</td>
-						
-					</tr>
+<h:form>
 
-					<tr>
-					<td align="left">Referente - Commissione 1</td>
-					<td align="left">18/05/2011</td>
-					<td align="left">
-						<h:commandLink>
-							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
-						</h:commandLink>
-					</td>
-					<td align="left">
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-						</td>
-				</tr>
-
-				<tr>
-					<td align="left">Consulta - Commissione 3</td>
-					<td align="left">18/05/2011</td>
-					<td align="left">
-						<h:commandLink>
-							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
-						</h:commandLink>
-					</td>
-					<td align="left">
-					        <h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-						</td>
-				</tr>
-				
-				<tr>
-					<td align="left">Aula</td>
-					<td align="left">25/05/2011</td>
-					<td align="left">
-						<h:commandLink>
-							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
-						</h:commandLink>
-					</td>
-					<td align="left">
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-							<h:commandLink>
-								<h:graphicImage alt="html" value="/resources/img/html.png" />
-							</h:commandLink>
-						</td>
-				</tr>
-
-			</tbody>
-		</table>
-		</p:column>
-		</p:row>
-		
+	<p:panelGrid styleClass="infoTable" id="sedutetab">
 		<p:row>
-	<p:column colspan="3">
-		<table class="generalInfoTab" id="AltriOrgani" style="width: 61%;" border="0">
-			<thead>
-				<th>Altri Organi</th>
-				<th>Data Seduta</th>
-			</thead>
-			<tbody>
-					<tr>
-						<td align="left">Consultazione 1</td>
-						<td align="left">15/05/2011</td>
-						
-					</tr>
+			<p:column colspan="3">
+				<h:dataTable id="listaOrganiInterni"
+					value="#{RiepilogoAttoController.organiInterni}" var="organo"
+					styleClass="generalInfoTab">
 
-					<tr>
-					<td align="left">Comitato ristretto 1</td>
-					<td align="left">15/05/2011</td>
-				</tr>
+					<h:column>
+						<f:facet name="header">Organi Interni</f:facet>
+							#{organo.nome}
+    			       </h:column>
 
-				<tr>
-					<td align="left">Parere 1</td>
-					<td align="left">18/05/2011</td>
-					
-				</tr>
-				
-				
+					<h:column>
+						<f:facet name="header">Data Seduta</f:facet>
+					#{organo.dataSeduta}
+				</h:column>
 
-			</tbody>
-		</table>
-		</p:column>
+					<h:column>
+						<f:facet name="header">ODG</f:facet>
+						<h:commandLink>
+							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Link Risorse Esterne</f:facet>
+						<h:commandLink>
+							<h:graphicImage alt="html" value="/resources/img/html.png" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+
+
+
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<h:dataTable id="listaAltriOrgani"
+					value="#{RiepilogoAttoController.altriOrgani}" var="organo"
+					styleClass="generalInfoTab">
+
+					<h:column>
+						<f:facet name="header">Altri Organi</f:facet>
+							#{organo.nome}
+    			       </h:column>
+
+					<h:column>
+						<f:facet name="header">Data Seduta</f:facet>
+					#{organo.dataSeduta}
+				</h:column>
+
+				</h:dataTable>
+			</p:column>
 		</p:row>
 	</p:panelGrid>
-	
-	
 
-	
-	
-	
-</h:form>	
-</html>		
+
+
+
+
+
+</h:form>
+</html>

@@ -462,13 +462,6 @@ public class AttoBean implements Serializable {
 		this.atto.setStralcio(stralcio);
 	}
 
-	public String getRelatore() {
-		return atto.getRelatore();
-	}
-
-	public void setRelatore(String relatore) {
-		this.atto.setRelatore(relatore);
-	}
 
 	public String getOrganismoStatutario() {
 		return atto.getOrganismoStatutario();
