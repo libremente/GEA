@@ -8,6 +8,9 @@ public class Personale {
 	private String descrizione;
 	private String gruppoConsiliare;
 
+	
+	
+	
 	public String getDescrizione() {
 		return descrizione;
 	}

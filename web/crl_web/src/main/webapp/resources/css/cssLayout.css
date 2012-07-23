@@ -122,7 +122,13 @@ padding: 8px 19px 4px 10px ;
 .generalInfoTab  {
 	border: solid 1px;
 	background-color: #E6E6FA;
+	width: 90%;
 	
+}
+
+.new-icon{
+	
+	background-image: url(../img/add.png) !important;
 }
 
 .generalInfoTab thead, th{
@@ -149,7 +155,6 @@ padding: 8px 19px 4px 10px ;
 
 .ui-selectonemenu {
 	width: 160px;
-<<<<<<< .mine
 }
 
 .ui-tabs-nav  { height: 33px }=======
@@ -159,4 +164,4 @@ padding: 8px 19px 4px 10px ;
     border-collapse: collapse;
     font-size: 12px;
     width: 100%;
-}>>>>>>> .r96
+}

@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
+import org.codehaus.jackson.annotate.JsonUnwrapped;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -28,7 +29,7 @@ import org.springframework.beans.factory.annotation.Configurable;
  * @author uji
  */
 @Configurable
-@XmlRootElement
+@XmlRootElement(name="atto")
 @JsonRootName("atto")
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
@@ -39,7 +40,7 @@ public class Atto
 	 */
 	
 	
-	
+
 	private String id;
 	private String tipo;
     private String codice;

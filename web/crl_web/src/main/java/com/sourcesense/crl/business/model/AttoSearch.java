@@ -14,6 +14,8 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class AttoSearch extends Atto {
 
+	
+	
 	private Date dataPubblicazioneDa;
 	
 	private Date dataPubblicazioneA;

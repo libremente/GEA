@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
@@ -89,11 +90,19 @@ public class AttoService  {
 						+ response.getStatus());
 			}
 
-
+            
+			//atto= response.getEntity(Atto.class);
 			String responseMsg = response.getEntity(String.class);
+			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
+			
+			//objectMapper.configure(DeserializationConfig.Feature., false);
 			atto =  objectMapper.readValue(responseMsg, Atto.class);
-
+			//JsonNode root  = objectMapper.readTree(responseMsg);
+			//System.out.println("ROOT::::"+root);
+			
+			
 		}catch(Exception ex){
 
 			ex.printStackTrace();
@@ -130,8 +139,7 @@ public class AttoService  {
 
 			String responseMsg = response.getEntity(String.class);
 			//System.out.println("response==="+responseMsg);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			listAtti = objectMapper.readValue(responseMsg,
 					new TypeReference<List<Atto>>() {
 			});

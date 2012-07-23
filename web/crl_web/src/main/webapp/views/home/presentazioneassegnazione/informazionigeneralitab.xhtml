@@ -8,20 +8,21 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
+<h:form enctype="multipart/form-data">
 	<p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
-	
-	   
+
+
 		<p:row>
 			<p:column colspan="3">
 				<p>
 					<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
-					  
-						<b> <h:outputLabel for="datapresaincarico"
-								value="Data presa in carico: " /> 
-							<p:calendar size="10" locale="it" id="datapresaincarico"  value="#{attoBean.dataPresaInCarico}"  /> </b>
-					<p:commandButton value="Presa in Carico"   update="presaCaricoMsg"
-					   actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
+
+					<b> <h:outputLabel for="datapresaincarico"
+							value="Data presa in carico: " /> <p:calendar size="10"
+							locale="it" id="datapresaincarico"
+							value="#{attoBean.dataPresaInCarico}" /> </b>
+					<p:commandButton value="Presa in Carico" update="presaCaricoMsg"
+						actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
 				</p>
 			</p:column>
 		</p:row>
@@ -43,7 +44,8 @@
 					<h:outputText style="font-weight: bold;" value="Classificazione: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="inputclassificazione" />
+					<p:inputText id="inputclassificazione"
+						value="#{attoBean.classificazione}" />
 				</p:column>
 			</p:row>
 
@@ -52,7 +54,8 @@
 					<h:outputText style="font-weight: bold;" value="Oggetto: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" autoResize="false" />
+					<p:inputTextarea rows="2" cols="82" value="#{attoBean.oggetto}"
+						autoResize="false" />
 				</p:column>
 			</p:row>
 
@@ -62,7 +65,8 @@
 						value="Numero repertorio: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="inputnumrepertorio" />
+					<p:inputText id="inputnumrepertorio"
+						value="#{attoBean.numeroRepertorio}" />
 				</p:column>
 
 				<p:column>
@@ -71,7 +75,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datarepertorio" />
+					<p:calendar size="10" locale="it" id="datarepertorio"
+						value="#{attoBean.dataRepertorio}" />
 				</p:column>
 
 
@@ -84,7 +89,8 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="tipoiniziativa" />
+					<p:selectOneMenu id="tipoiniziativa"
+						value="#{attoBean.tipoIniziativa}" />
 				</p:column>
 
 				<p:column>
@@ -93,7 +99,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datainiziativa" />
+					<p:calendar size="10" locale="it" id="datainiziativa"
+						value="#{attoBean.dataIniziativa}" />
 				</p:column>
 
 
@@ -105,7 +112,8 @@
 						value="Descrizione iniziativa: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" autoResize="false" />
+					<p:inputTextarea rows="2" cols="82" autoResize="false"
+						value="#{attoBean.descrizioneIniziativa}" />
 				</p:column>
 			</p:row>
 
@@ -116,7 +124,7 @@
 				</p:column>
 
 				<p:column>
-					<p:inputText id="inputnumerodgr" />
+					<p:inputText id="inputnumerodgr" value="#{attoBean.numeroDGR}" />
 				</p:column>
 
 				<p:column>
@@ -124,7 +132,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datadgr" />
+					<p:calendar size="10" locale="it" id="datadgr"
+						value="#{attoBean.dataDGR}" />
 				</p:column>
 
 			</p:row>
@@ -134,7 +143,8 @@
 					<h:outputText style="font-weight: bold;" value="Assegnazione: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputText id="inputassegnazione" />
+					<p:inputText id="inputassegnazione"
+						value="#{attoBean.assegnazione}" />
 				</p:column>
 			</p:row>
 
@@ -162,41 +172,41 @@
 
 						<tbody>
 							<tr>
-								<td align="left" colspan="2"><b>PDF</b>
-								</td>
+								<td align="left" colspan="2"><b>PDF</b></td>
 								<td align="left"><h:commandLink>
 										<h:outputText value="download" />
-									</h:commandLink>
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox />
 								</td>
-								<td align="left"><p:selectBooleanCheckbox /></td>
 								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+										value="/resources/img/delete.png" />
+								</td>
 
 							</tr>
 
 							<tr>
-								<td align="left" colspan="2"><b>HTML</b>
-								</td>
+								<td align="left" colspan="2"><b>HTML</b></td>
 								<td align="left"><h:commandLink>
 										<h:outputText value="download" />
-									</h:commandLink>
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox />
 								</td>
-								<td align="left"><p:selectBooleanCheckbox /></td>
 								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+										value="/resources/img/delete.png" />
+								</td>
 
 							</tr>
 
 							<tr>
-								<td align="left" colspan="2"><b>DOC</b>
-								</td>
+								<td align="left" colspan="2"><b>DOC</b></td>
 								<td align="left"><h:commandLink>
 										<h:outputText value="download" />
-									</h:commandLink>
+									</h:commandLink></td>
+								<td align="left"><p:selectBooleanCheckbox />
 								</td>
-								<td align="left"><p:selectBooleanCheckbox /></td>
 								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+										value="/resources/img/delete.png" />
+								</td>
 
 							</tr>
 
@@ -214,11 +224,13 @@
 				</p:column>
 			</p:row>
 			<p:row>
-				<p:column>
+				<!-- <p:column>
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
-				</p:column>
+				</p:column>-->
 				<p:column>
-					<p:fileUpload mode="simple" />
+					<p:fileUpload label="Carica File"
+						fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}"
+						mode="advanced" auto="true" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
@@ -227,97 +239,73 @@
 	<p:fieldset legend="Firmatari" toggleable="true" collapsed="false"
 		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="firmataripanel">
-			<p:row>
+			<!-- <p:row>
 				<p:column>
 					<p:commandButton value="Inserimento Multiplo" />
 				</p:column>
-			</p:row>
+			</p:row>-->
 
 			<p:row>
 				<p:column colspan="6">
-					<table class="generalInfoTab" id="firmataritab" style="width: 90%;"
-						border="0" type="ordered">
-						<thead>
-							<th>N°</th>
-							<th>Nome</th>
-							<th>Gruppo Consiliare</th>
-							<th>Data firma</th>
-							<th>Data ritiro</th>
-							<th>1° firm.</th>
-							<th>Opzioni</th>
-						</thead>
 
-						<!-- TODO
-							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
+					<h:dataTable id="listaFirmatari"
+						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
+						var="personale" styleClass="generalInfoTab">
 
-						<tbody>
-							<tr>
-								<td align="left">1</td>
-								<td align="left">Mario Bianchi</td>
-								<td align="left">PD</td>
-								<td align="left">1/5/2011</td>
-								<td align="left"></td>
-								<td align="left"><p:selectBooleanCheckbox />
-								</td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+							#{personale.descrizione}
+    			       </h:column>
 
-							</tr>
+						<h:column>
+							<f:facet name="header">Gruppo Consiliare</f:facet>
 
-							<tr>
-								<td align="left">2</td>
-								<td align="left">Marco Fumagalli</td>
-								<td align="left">PDL</td>
-								<td align="left">1/5/2011</td>
-								<td align="left">7/5/2011</td>
-								<td align="left"><p:selectBooleanCheckbox />
-								</td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+						</h:column>
 
-							</tr>
+						<h:column>
+							<f:facet name="header">Data Firma</f:facet>
 
-							<tr>
-								<td align="left">3</td>
-								<td align="left">Paolo Calcaterra</td>
-								<td align="left">IDV</td>
-								<td align="left">15/6/2011</td>
-								<td align="left"></td>
-								<td align="left"><p:selectBooleanCheckbox />
-								</td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+						</h:column>
 
-							</tr>
+						<h:column>
+							<f:facet name="header">Data Ritiro</f:facet>
 
-							<tr>
-								<td align="left">4</td>
-								<td align="left"><p:selectOneMenu id="nome" />
-								</td>
-								<td align="left"><p:selectOneMenu id="gruppoconsiliare" />
-								</td>
-								<td align="left"><p:calendar size="10" locale="it"
-										id="datafirma" />
-								</td>
-								<td align="left"><p:calendar size="10" locale="it"
-										id="dataritiro" />
-								</td>
-								<td align="left"><p:selectBooleanCheckbox />
-								</td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">1° firm.</f:facet>
 
-
-							</tr>
-
-						</tbody>
-					</table>
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+                             <h:graphicImage alt="delete"
+										value="/resources/img/delete.png" />
+						</h:column>
+						
+					</h:dataTable>
 				</p:column>
 			</p:row>
 
 			<p:row>
 				<p:column>
-					<h:graphicImage alt="add" value="/resources/img/add.png" />
+					<p:panelGrid id="addFirmatarioPanel" columns="5">
+						<p:selectOneMenu id="firmatario"
+							value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
+							<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+							<f:selectItems
+								value="#{presentazioneAssegnazioneAttoController.firmatari}" />
+						</p:selectOneMenu>
+
+						<p:selectOneMenu id="gruppoconsiliare" />
+						<p:calendar size="10" locale="it" id="datafirma" />
+						<p:calendar size="10" locale="it" id="dataritiro" />
+						<p:selectBooleanCheckbox />
+						
+					</p:panelGrid>
+					
+					<p:commandButton value="Aggiungi Firmatario"  action="#{presentazioneAssegnazioneAttoController.addFirmatario}" id="addFirmatario"   
+                                     update="listaFirmatari , presaCaricoMsg" icon="new-icon" />  
 				</p:column>
 			</p:row>
 

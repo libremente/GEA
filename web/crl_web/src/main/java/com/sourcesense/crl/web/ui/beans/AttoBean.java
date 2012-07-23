@@ -27,6 +27,43 @@ public class AttoBean implements Serializable {
 	private String tipologia;
 	private String legislatura;
 	private Date dataPresaInCarico;
+	private String classificazione;
+    private String numeroRepertorio;
+    private Date   dataRepertorio;
+    private Date   dataIniziativa;
+    private String descrizioneIniziativa;
+    private String numeroDGR;
+    private Date   dataDGR;
+    private String assegnazione;
+    private String oggetto;
+    private String id;
+	private String tipo;
+    private String primoFirmatario;
+    private Date   dataPresentazione;
+    private String stato;
+    private String anno;
+    
+	private String numeroProtocollo;
+	private String tipoIniziativa;
+	private String numeroDcr;
+	private String firmatario;
+	private String tipoChiusura;
+	private String esitoVotoCommissioneReferente;
+	private String esitoVotoAula;
+	private String commissioneReferente;
+	private String commissioneConsultiva;
+	private boolean redigente;
+	private boolean deliberante;
+	private String numeroLCR;
+	private String numeroLR;
+	private boolean abbinamento;	
+	private boolean stralcio;
+	private String relatore;	
+	private String organismoStatutario;	
+	private String soggettoConsultato;	
+	private boolean emendato;	
+	private boolean rinviato;	
+	private boolean sospeso;
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -127,6 +164,299 @@ public class AttoBean implements Serializable {
 		this.atto.setDataPresaInCarico(dataPresaInCarico);
 	}
 
+	public String getClassificazione() {
+		return atto.getClassificazione();
+	}
+
+	public void setClassificazione(String classificazione) {
+		this.atto.setClassificazione(classificazione);
+	}
+
+	public String getNumeroRepertorio() {
+		return atto.getNumeroRepertorio();
+	}
+
+	public void setNumeroRepertorio(String numeroRepertorio) {
+		this.atto.setNumeroRepertorio(numeroRepertorio);
+	}
+
+	public Date getDataRepertorio() {
+		return atto.getDataRepertorio();
+	}
+
+	public void setDataRepertorio(Date dataRepertorio) {
+		this.atto.setDataRepertorio(dataRepertorio);
+	}
+
+	public Date getDataIniziativa() {
+		return atto.getDataIniziativa();
+	}
+
+	public void setDataIniziativa(Date dataIniziativa) {
+		this.atto.setDataIniziativa(dataIniziativa);
+	}
+
+	public String getDescrizioneIniziativa() {
+		return atto.getDescrizioneIniziativa();
+	}
+
+	public void setDescrizioneIniziativa(String descrizioneIniziativa) {
+		this.atto.setDescrizioneIniziativa (descrizioneIniziativa);
+	}
+
+	public String getNumeroDGR() {
+		return atto.getNumeroDGR();
+	}
+
+	public void setNumeroDGR(String numeroDGR) {
+		this.atto.setNumeroDGR(numeroDGR);
+	}
+
+	public Date getDataDGR() {
+		return atto.getDataDGR();
+	}
+
+	public void setDataDGR(Date dataDGR) {
+		this.atto.setDataDGR(dataDGR);
+	}
+
+	public String getAssegnazione() {
+		return atto.getAssegnazione();
+	}
+
+	public void setAssegnazione(String assegnazione) {
+		this.atto.setAssegnazione(assegnazione);
+	}
+
+	public String getOggetto() {
+		return this.atto.getOggetto();
+	}
+
+	public void setOggetto(String oggetto) {
+		this.atto.setOggetto(oggetto);
+	}
+
+	public String getId() {
+		return atto.getId();
+	}
+
+	public void setId(String id) {
+		this.atto.setId(id);
+	}
+
+	public String getTipo() {
+		return atto.getTipo();
+	}
+
+	public void setTipo(String tipo) {
+		this.atto.setTipo(tipo);
+	}
+
+	public String getPrimoFirmatario() {
+		return atto.getPrimoFirmatario();
+	}
+
+	public void setPrimoFirmatario(String primoFirmatario) {
+		this.atto.setPrimoFirmatario(primoFirmatario);
+	}
+
+	public Date getDataPresentazione() {
+		return atto.getDataPresentazione();
+	}
+
+	public void setDataPresentazione(Date dataPresentazione) {
+		this.atto.setDataPresentazione(dataPresentazione);
+	}
+
+	public String getStato() {
+		return atto.getStato();
+	}
+
+	public void setStato(String stato) {
+		this.atto.setStato(stato);
+	}
+
+	public String getAnno() {
+		return atto.getAnno();
+	}
+
+	public void setAnno(String anno) {
+		this.atto.setAnno(anno);
+	}
+
+	public String getNumeroProtocollo() {
+		return atto.getNumeroProtocollo();
+	}
+
+	public void setNumeroProtocollo(String numeroProtocollo) {
+		this.atto.setNumeroProtocollo (numeroProtocollo);
+	}
+
+	public String getTipoIniziativa() {
+		return atto.getTipoIniziativa();
+	}
+
+	public void setTipoIniziativa(String tipoIniziativa) {
+		this.atto.setTipoIniziativa(tipoIniziativa);
+	}
+
+	public String getNumeroDcr() {
+		return atto.getNumeroDcr();
+	}
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.atto.setNumeroDcr(numeroDcr);
+	}
+
+	public String getFirmatario() {
+		return atto.getFirmatario();
+	}
+
+	public void setFirmatario(String firmatario) {
+		this.atto.setFirmatario ( firmatario);
+	}
+
+	public String getTipoChiusura() {
+		return atto.getTipoChiusura();
+	}
+
+	public void setTipoChiusura(String tipoChiusura) {
+		this.atto.setTipoChiusura (tipoChiusura);
+	}
+
+	public String getEsitoVotoCommissioneReferente() {
+		return atto.getEsitoVotoCommissioneReferente();
+	}
+
+	public void setEsitoVotoCommissioneReferente(
+			String esitoVotoCommissioneReferente) {
+		this.atto.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
+	}
+
+	public String getEsitoVotoAula() {
+		return atto.getEsitoVotoAula();
+	}
+
+	public void setEsitoVotoAula(String esitoVotoAula) {
+		this.atto.setEsitoVotoAula(esitoVotoAula);
+	}
+
+	public String getCommissioneReferente() {
+		return atto.getCommissioneReferente();
+	}
+
+	public void setCommissioneReferente(String commissioneReferente) {
+		this.atto.setCommissioneReferente (commissioneReferente);
+	}
+
+	public String getCommissioneConsultiva() {
+		return atto.getCommissioneConsultiva();
+	}
+
+	public void setCommissioneConsultiva(String commissioneConsultiva) {
+		this.atto.setCommissioneConsultiva (commissioneConsultiva);
+	}
+
+	public boolean isRedigente() {
+		return atto.isRedigente();
+	}
+
+	public void setRedigente(boolean redigente) {
+		this.atto.setRedigente ( redigente);
+	}
+
+	public boolean isDeliberante() {
+		return atto.isDeliberante();
+	}
+
+	public void setDeliberante(boolean deliberante) {
+		this.atto.setDeliberante(deliberante);
+	}
+
+	public String getNumeroLCR() {
+		return atto.getNumeroLCR();
+	}
+
+	public void setNumeroLCR(String numeroLCR) {
+		this.atto.setNumeroLCR( numeroLCR);
+	}
+
+	public String getNumeroLR() {
+		return atto.getNumeroLR();
+	}
+
+	public void setNumeroLR(String numeroLR) {
+		this.atto.setNumeroLR( numeroLR);
+	}
+
+	public boolean isAbbinamento() {
+		return atto.isAbbinamento();
+	}
+
+	public void setAbbinamento(boolean abbinamento) {
+		this.atto.setAbbinamento( abbinamento);
+	}
+
+	public boolean isStralcio() {
+		return atto.isStralcio();
+	}
+
+	public void setStralcio(boolean stralcio) {
+		this.atto.setStralcio( stralcio);
+	}
+
+	public String getRelatore() {
+		return atto.getRelatore();
+	}
+
+	public void setRelatore(String relatore) {
+		this.atto.setRelatore( relatore);
+	}
+
+	public String getOrganismoStatutario() {
+		return atto.getOrganismoStatutario() ;
+	}
+
+	public void setOrganismoStatutario(String organismoStatutario) {
+		this.atto.setOrganismoStatutario( organismoStatutario);
+	}
+
+	public String getSoggettoConsultato() {
+		return atto.getSoggettoConsultato() ;
+	}
+
+	public void setSoggettoConsultato(String soggettoConsultato) {
+		this.atto.setSoggettoConsultato( soggettoConsultato);
+	}
+
+	public boolean isEmendato() {
+		return atto.isEmendato();
+	}
+
+	public void setEmendato(boolean emendato) {
+		this.atto.setEmendato( emendato);
+	}
+
+	public boolean isRinviato() {
+		return atto.isRinviato();
+	}
+
+	public void setRinviato(boolean rinviato) {
+		this.atto.setRinviato( rinviato) ;
+	}
+
+	public boolean isSospeso() {
+		return atto.isSospeso();
+	}
+
+	public void setSospeso(boolean sospeso) {
+		this.atto.setSospeso( sospeso);
+	}
+
+	
+	
+	
+	
 	
 	
 	

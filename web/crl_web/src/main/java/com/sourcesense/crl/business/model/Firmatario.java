@@ -9,4 +9,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class Firmatario extends Personale {
 
+	
+
 }
