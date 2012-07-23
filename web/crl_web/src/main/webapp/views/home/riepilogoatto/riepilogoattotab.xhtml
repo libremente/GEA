@@ -33,25 +33,25 @@
 					<p:row>
 						<p:column colspan="3">
 							<h:outputText style="font-weight: bold;" value="Stato Attuale: " />
-							<h:outputText value="Pubblicato" />
+							<h:outputText value="#{attoBean.statoAttuale}" />
 						</p:column>
 					</p:row>
                     <p:row>
 						<p:column>
 							<h:outputText style="font-weight: bold;"
 								value="Classificazione: " />
-							<h:outputText value="128/2011" />
+							<h:outputText value="#{attoBean.classificazione}" />
 						</p:column>
 
 						<p:column>
 							<h:outputText style="font-weight: bold;" value="N° Repertorio: " />
-							<h:outputText value="VIII" />
+							<h:outputText value="#{attoBean.numeroRepertorio}" />
 						</p:column>
 
 						<p:column>
 							<h:outputText style="font-weight: bold;"
 								value="Data Repertorio: " />
-							<h:outputText value="15/05/2011" />
+							<h:outputText value="#{attoBean.dataRepertorio}" />
 						</p:column>
 					</p:row>
 
@@ -59,13 +59,13 @@
 						<p:column>
 							<h:outputText style="font-weight: bold;"
 								value="Data Iniziativa: " />
-							<h:outputText value="16/04/2011" />
+							<h:outputText value="#{attoBean.dataIniziativa}" />
 						</p:column>
 
 						<p:column colspan="2">
 							<h:outputText style="font-weight: bold;"
 								value="Tipo Iniziativa: " />
-							<h:outputText value="Iniziativa popolare" />
+							<h:outputText value="#{attoBean.tipoIniziativa}" />
 						</p:column>
 
 
@@ -75,7 +75,7 @@
 						<p:column colspan="3">
 							<h:outputText style="font-weight: bold;" value="Oggetto: " />
 							<h:outputText
-								value="Proposta di abolizione delle nomine del responsabile di quartiere." />
+								value="#{attoBean.oggetto}" />
 						</p:column>
 
 					</p:row>
@@ -156,33 +156,33 @@
 						<p:column>
 							<h:outputText style="font-weight: bold;"
 								value="Data Assegnazione: " />
-							<h:outputText value="18/04/2011" />
+							<h:outputText value="#{attoBean.dataAssegnazione}" />
 						</p:column>
 
 						<p:column>
 							<h:outputText style="font-weight: bold;"
 								value="Data presa in carico: " />
-							<h:outputText value="20/04/2011" />
+							<h:outputText value="#{attoBean.dataPresaInCarico}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText style="font-weight: bold;"
 								value="Esito Validazione: " />
-							<h:outputText value="Ammissibile" />
+							<h:outputText value="#{attoBean.esitoValidazione}" />
 						</p:column>
 
 						<p:column>
 							<h:outputText style="font-weight: bold;"
 								value="Data Validazione: " />
-							<h:outputText value="16/04/2011" />
+							<h:outputText value="#{attoBean.dataValidazione}" />
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column colspan="2">
 							<h:outputText style="font-weight: bold;"
 								value="Data Assegnazione Commissioni:  " />
-							<h:outputText value="18/04/2011" />
+							<h:outputText value="#{attoBean.dataAssegnazioneCommissioni}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

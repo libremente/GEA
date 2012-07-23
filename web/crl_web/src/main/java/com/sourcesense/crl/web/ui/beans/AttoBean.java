@@ -27,15 +27,24 @@ public class AttoBean implements Serializable {
 	private String tipologia;
 	private String legislatura;
 	private Date dataPresaInCarico;
+	
+	private String statoAttuale;
 	private String classificazione;
-    private String numeroRepertorio;
-    private Date   dataRepertorio;
-    private Date   dataIniziativa;
-    private String descrizioneIniziativa;
+	private String numeroRepertorio;
+	private Date dataRepertorio;
+	private Date dataIniziativa;
+	private String tipoIniziativa;
+	private String oggetto;
+    private Date dataAssegnazione;
+    private String esitoValidazione;    
+    private Date dataValidazione;
+    private Date dataAssegnazioneCommissioni;
+    
+
+	private String descrizioneIniziativa;
     private String numeroDGR;
     private Date   dataDGR;
     private String assegnazione;
-    private String oggetto;
     private String id;
 	private String tipo;
     private String primoFirmatario;
@@ -44,7 +53,6 @@ public class AttoBean implements Serializable {
     private String anno;
     
 	private String numeroProtocollo;
-	private String tipoIniziativa;
 	private String numeroDcr;
 	private String firmatario;
 	private String tipoChiusura;
@@ -64,6 +72,9 @@ public class AttoBean implements Serializable {
 	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
+
+
+	
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -164,6 +175,14 @@ public class AttoBean implements Serializable {
 		this.atto.setDataPresaInCarico(dataPresaInCarico);
 	}
 
+	public String getStatoAttuale() {
+		return atto.getStatoAttuale();
+	}
+
+	public void setStatoAttuale(String statoAttuale) {
+		this.atto.setStatoAttuale(statoAttuale);
+	}
+
 	public String getClassificazione() {
 		return atto.getClassificazione();
 	}
@@ -172,16 +191,8 @@ public class AttoBean implements Serializable {
 		this.atto.setClassificazione(classificazione);
 	}
 
-	public String getNumeroRepertorio() {
-		return atto.getNumeroRepertorio();
-	}
-
-	public void setNumeroRepertorio(String numeroRepertorio) {
-		this.atto.setNumeroRepertorio(numeroRepertorio);
-	}
-
-	public Date getDataRepertorio() {
-		return atto.getDataRepertorio();
+	public String getnRepertorio() {
+		return atto.getnRepertorio();
 	}
 
 	public void setDataRepertorio(Date dataRepertorio) {
@@ -196,12 +207,74 @@ public class AttoBean implements Serializable {
 		this.atto.setDataIniziativa(dataIniziativa);
 	}
 
+	public String getTipoIniziativa() {
+		return atto.getTipoIniziativa();
+	}
+
+	public void setTipoIniziativa(String tipoIniziativa) {
+		this.atto.setTipoIniziativa(tipoIniziativa);
+	}
+
+	public String getOggetto() {
+		return atto.getOggetto();
+	}
+
+	public void setOggetto(String oggetto) {
+		this.atto.setOggetto(oggetto);
+	}
+
+	public String getNumeroRepertorio() {
+		return atto.getNumeroRepertorio();
+	}
+
+	public void setNumeroRepertorio(String numeroRepertorio) {
+		this.atto.setNumeroRepertorio(numeroRepertorio);
+	}
+
+	public Date getDataRepertorio() {
+		return atto.getDataRepertorio();
+	}
+
+	public Date getDataAssegnazione() {
+		return atto.getDataAssegnazione();
+	}
+
+	public void setDataAssegnazione(Date dataAssegnazione) {
+		this.atto.setDataAssegnazione(dataAssegnazione);
+	}
+
+	public String getEsitoValidazione() {
+		return atto.getEsitoValidazione();
+	}
+
+	public void setEsitoValidazione(String esitoValidazione) {
+		this.atto.setEsitoValidazione(esitoValidazione);
+	}
+
+	public Date getDataValidazione() {
+		return atto.getDataValidazione();
+	}
+
+	public void setDataValidazione(Date dataValidazione) {
+		this.atto.setDataValidazione(dataValidazione);
+	}
+
+	public Date getDataAssegnazioneCommissioni() {
+		return atto.getDataAssegnazioneCommissioni();
+	}
+
+	public void setDataAssegnazioneCommissioni(Date dataAssegnazioneCommissioni) {
+		this.atto.setDataAssegnazioneCommissioni(dataAssegnazioneCommissioni);
+	}
+	
+	
+	
 	public String getDescrizioneIniziativa() {
 		return atto.getDescrizioneIniziativa();
 	}
 
 	public void setDescrizioneIniziativa(String descrizioneIniziativa) {
-		this.atto.setDescrizioneIniziativa (descrizioneIniziativa);
+		this.atto.setDescrizioneIniziativa(descrizioneIniziativa);
 	}
 
 	public String getNumeroDGR() {
@@ -226,14 +299,6 @@ public class AttoBean implements Serializable {
 
 	public void setAssegnazione(String assegnazione) {
 		this.atto.setAssegnazione(assegnazione);
-	}
-
-	public String getOggetto() {
-		return this.atto.getOggetto();
-	}
-
-	public void setOggetto(String oggetto) {
-		this.atto.setOggetto(oggetto);
 	}
 
 	public String getId() {
@@ -289,15 +354,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setNumeroProtocollo(String numeroProtocollo) {
-		this.atto.setNumeroProtocollo (numeroProtocollo);
-	}
-
-	public String getTipoIniziativa() {
-		return atto.getTipoIniziativa();
-	}
-
-	public void setTipoIniziativa(String tipoIniziativa) {
-		this.atto.setTipoIniziativa(tipoIniziativa);
+		this.atto.setNumeroProtocollo(numeroProtocollo);
 	}
 
 	public String getNumeroDcr() {
@@ -313,7 +370,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setFirmatario(String firmatario) {
-		this.atto.setFirmatario ( firmatario);
+		this.atto.setFirmatario(firmatario);
 	}
 
 	public String getTipoChiusura() {
@@ -321,7 +378,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setTipoChiusura(String tipoChiusura) {
-		this.atto.setTipoChiusura (tipoChiusura);
+		this.atto.setTipoChiusura(tipoChiusura);
 	}
 
 	public String getEsitoVotoCommissioneReferente() {
@@ -346,7 +403,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setCommissioneReferente(String commissioneReferente) {
-		this.atto.setCommissioneReferente (commissioneReferente);
+		this.atto.setCommissioneReferente(commissioneReferente);
 	}
 
 	public String getCommissioneConsultiva() {
@@ -354,7 +411,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setCommissioneConsultiva(String commissioneConsultiva) {
-		this.atto.setCommissioneConsultiva (commissioneConsultiva);
+		this.atto.setCommissioneConsultiva(commissioneConsultiva);
 	}
 
 	public boolean isRedigente() {
@@ -362,7 +419,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setRedigente(boolean redigente) {
-		this.atto.setRedigente ( redigente);
+		this.atto.setRedigente(redigente);
 	}
 
 	public boolean isDeliberante() {
@@ -378,7 +435,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setNumeroLCR(String numeroLCR) {
-		this.atto.setNumeroLCR( numeroLCR);
+		this.atto.setNumeroLCR(numeroLCR);
 	}
 
 	public String getNumeroLR() {
@@ -386,7 +443,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setNumeroLR(String numeroLR) {
-		this.atto.setNumeroLR( numeroLR);
+		this.atto.setNumeroLR(numeroLR);
 	}
 
 	public boolean isAbbinamento() {
@@ -394,7 +451,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setAbbinamento(boolean abbinamento) {
-		this.atto.setAbbinamento( abbinamento);
+		this.atto.setAbbinamento(abbinamento);
 	}
 
 	public boolean isStralcio() {
@@ -402,7 +459,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setStralcio(boolean stralcio) {
-		this.atto.setStralcio( stralcio);
+		this.atto.setStralcio(stralcio);
 	}
 
 	public String getRelatore() {
@@ -410,23 +467,23 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setRelatore(String relatore) {
-		this.atto.setRelatore( relatore);
+		this.atto.setRelatore(relatore);
 	}
 
 	public String getOrganismoStatutario() {
-		return atto.getOrganismoStatutario() ;
+		return atto.getOrganismoStatutario();
 	}
 
 	public void setOrganismoStatutario(String organismoStatutario) {
-		this.atto.setOrganismoStatutario( organismoStatutario);
+		this.atto.setOrganismoStatutario(organismoStatutario);
 	}
 
 	public String getSoggettoConsultato() {
-		return atto.getSoggettoConsultato() ;
+		return atto.getSoggettoConsultato();
 	}
 
 	public void setSoggettoConsultato(String soggettoConsultato) {
-		this.atto.setSoggettoConsultato( soggettoConsultato);
+		this.atto.setSoggettoConsultato(soggettoConsultato);
 	}
 
 	public boolean isEmendato() {
@@ -434,7 +491,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setEmendato(boolean emendato) {
-		this.atto.setEmendato( emendato);
+		this.atto.setEmendato(emendato);
 	}
 
 	public boolean isRinviato() {
@@ -442,7 +499,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setRinviato(boolean rinviato) {
-		this.atto.setRinviato( rinviato) ;
+		this.atto.setRinviato(rinviato);
 	}
 
 	public boolean isSospeso() {
@@ -450,14 +507,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public void setSospeso(boolean sospeso) {
-		this.atto.setSospeso( sospeso);
+		this.atto.setSospeso(sospeso);
 	}
-
-	
-	
-	
-	
-	
-	
 	
 }

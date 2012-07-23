@@ -12,6 +12,7 @@ package com.sourcesense.crl.business.model;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -54,14 +55,22 @@ public class Atto
     private String tipologia;
     private String legislatura;
     private String anno;
+    
+    private String statoAttuale;
     private String classificazione;
+    private String nRepertorio;
+    private Date dataRepertorio;
+    private Date dataIniziativa;
     private String numeroRepertorio;
-    private Date   dataRepertorio;
-    private Date   dataIniziativa;
     private String descrizioneIniziativa;
     private String numeroDGR;
     private Date   dataDGR;
-    private String assegnazione;
+    private String assegnazione;    
+    private Date dataAssegnazione;
+    private String esitoValidazione;
+    private Date dataValidazione;
+    private Date dataAssegnazioneCommissioni;
+   
     
 	private String numeroProtocollo;
 	private String tipoIniziativa;
@@ -84,8 +93,21 @@ public class Atto
 	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
+	
+	private List <Commissione> commissioni;
+	private List <Atto> abbinamenti;
+	private List <Organo> organi;
+	private List <Firmatario> firmatari;
+	private List <Relatore> relatori;
+	private List <Parere> pareri;
+	private List <Consultazione> consultazioni;
+	private List <Atto> collegamenti;
+	private List <Allegato> allegati;
+	private List <Link> links;
+	
+	
     
-   
+
     
     
     public String getNumeroAtto() {
@@ -401,6 +423,7 @@ public class Atto
 		this.id = id;
 	}
 
+	
 	public Date getDataPresaInCarico() {
 		return dataPresaInCarico;
 	}
@@ -415,6 +438,14 @@ public class Atto
 
 	public void setClassificazione(String classificazione) {
 		this.classificazione = classificazione;
+	}
+
+	public String getStatoAttuale() {
+		return statoAttuale;
+	}
+
+	public void setStatoAttuale(String statoAttuale) {
+		this.statoAttuale = statoAttuale;
 	}
 
 	public String getNumeroRepertorio() {
@@ -441,11 +472,12 @@ public class Atto
 		this.dataIniziativa = dataIniziativa;
 	}
 
+		
 	public String getDescrizioneIniziativa() {
 		return descrizioneIniziativa;
 	}
-
-	public void setDescrizioneIniziativa(String descrizioneIniziativa) {
+	
+    public void setDescrizioneIniziativa(String descrizioneIniziativa) {
 		this.descrizioneIniziativa = descrizioneIniziativa;
 	}
 
@@ -472,8 +504,127 @@ public class Atto
 	public void setAssegnazione(String assegnazione) {
 		this.assegnazione = assegnazione;
 	}
+
+	public String getnRepertorio() {
+		return nRepertorio;
+	}
+
+	public void setnRepertorio(String nRepertorio) {
+		this.nRepertorio = nRepertorio;
+	}
+
+	public Date getDataAssegnazione() {
+		return dataAssegnazione;
+	}
+
+	public void setDataAssegnazione(Date dataAssegnazione) {
+		this.dataAssegnazione = dataAssegnazione;
+	}
+
+	public String getEsitoValidazione() {
+		return esitoValidazione;
+	}
+
+	public void setEsitoValidazione(String esitoValidazione) {
+		this.esitoValidazione = esitoValidazione;
+	}
+
+	public Date getDataValidazione() {
+		return dataValidazione;
+	}
+
+	public void setDataValidazione(Date dataValidazione) {
+		this.dataValidazione = dataValidazione;
+	}
+
+	public Date getDataAssegnazioneCommissioni() {
+		return dataAssegnazioneCommissioni;
+	}
+
+	public void setDataAssegnazioneCommissioni(Date dataAssegnazioneCommissioni) {
+		this.dataAssegnazioneCommissioni = dataAssegnazioneCommissioni;
+	}
+
+	public List<Commissione> getCommissioni() {
+		return commissioni;
+	}
+
+	public void setCommissioni(List<Commissione> commissioni) {
+		this.commissioni = commissioni;
+	}
+
+	public List<Atto> getAbbinamenti() {
+		return abbinamenti;
+	}
+
+	public void setAbbinamenti(List<Atto> abbinamenti) {
+		this.abbinamenti = abbinamenti;
+	}
+
+	public List<Organo> getOrgani() {
+		return organi;
+	}
+
+	public void setOrgani(List<Organo> organi) {
+		this.organi = organi;
+	}
+
+	public List<Firmatario> getFirmatari() {
+		return firmatari;
+	}
+
+	public void setFirmatari(List<Firmatario> firmatari) {
+		this.firmatari = firmatari;
+	}
+
+	public List <Relatore> getRelatori() {
+		return relatori;
+	}
+
+	public void setRelatori(List <Relatore> relatori) {
+		this.relatori = relatori;
+	}
+
+	public List <Parere> getPareri() {
+		return pareri;
+	}
+
+	public void setPareri(List <Parere> pareri) {
+		this.pareri = pareri;
+	}
+
+	public List <Consultazione> getConsultazioni() {
+		return consultazioni;
+	}
+
+	public void setConsultazioni(List <Consultazione> consultazioni) {
+		this.consultazioni = consultazioni;
+	}
+
+	public List <Atto> getCollegamenti() {
+		return collegamenti;
+	}
+
+	public void setCollegamenti(List <Atto> collegamenti) {
+		this.collegamenti = collegamenti;
+	}
+
+	public List <Allegato> getAllegati() {
+		return allegati;
+	}
+
+	public void setAllegati(List <Allegato> allegati) {
+		this.allegati = allegati;
+	}
+
+	public List <Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List <Link> links) {
+		this.links = links;
+	}
+    
 	
 	
-    
-    
 }
