@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 public class Link {
 	
 	private String descrizione;
-	private String downloadUrl;
+	private String collegamentoUrl;
 	private boolean pubblico;
 	
 	
@@ -21,11 +21,11 @@ public class Link {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	public String getDownloadUrl() {
-		return downloadUrl;
+	public String getCollegamentoUrl() {
+		return collegamentoUrl;
 	}
-	public void setDownloadUrl(String downloadUrl) {
-		this.downloadUrl = downloadUrl;
+	public void setCollegamentoUrl(String collegamentoUrl) {
+		this.collegamentoUrl = collegamentoUrl;
 	}
 	public boolean isPubblico() {
 		return pubblico;

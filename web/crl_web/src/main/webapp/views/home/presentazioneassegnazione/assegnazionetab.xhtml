@@ -12,101 +12,198 @@
 <p:panelGrid styleClass="infoTable" id="assegnazionePanel">
 	<p:row>
 		<p:column>
+			<p>
+				<!-- Messaggio azioni -->
+				<p:growl id="assegnazioneMsg" showDetail="true" sticky="false" />
+
+				<p:confirmDialog id="confirmCommissioneDialog"
+					message="Sei sicuro di voler eliminare la Commissione?"
+					header="Cancellazione Commissione" severity="alert"
+					widgetVar="commissioneDialog">
+
+					<p:commandButton id="confirmCommissione" value="Conferma"
+						oncomplete="commissioneDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.removeCommissione}"
+						update="listaCommissioni" />
+					<p:commandButton id="declineCommissione" value="Annulla"
+						onclick="commissioneDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<p:confirmDialog id="confirmAnnullaCommissioneDialog"
+					message="Sei sicuro di voler annullare la Commissione?"
+					header="Annullamento Commissione" severity="alert"
+					widgetVar="annullaCommissioneDialog">
+					
+					<p>
+					<p:calendar size="10" locale="it_IT" id="dataannullo"
+						pattern="dd/MM/yyyy"
+						value="#{presentazioneAssegnazioneAttoController.dataAnnullo}" />
+						</p>
+					<p:commandButton id="confirmAnnulCommissione" value="Conferma"
+						oncomplete="annullaCommissioneDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.annulCommissione}"
+						update="listaCommissioni" />
+					<p:commandButton id="declineAnnullaCommissione" value="Annulla"
+						onclick="annullaCommissioneDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<p:confirmDialog id="confirmOrganismoStatutarioDialog"
+					message="Sei sicuro di voler eliminare l'Organismo Statutario?"
+					header="Cancellazione Organismo Statutario" severity="alert"
+					widgetVar="organismoStatutarioDialog">
+
+					<p:commandButton id="confirmOrganismoStatutario" value="Conferma"
+						oncomplete="organismoStatutarioDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.removeOrganismoStatutario}"
+						update="listaOrganismiStatutari" />
+					<p:commandButton id="declineOrganismoStatutario" value="Annulla"
+						onclick="organismoStatutarioDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+			</p>
+
+
+
 			<p:fieldset styleClass="fieldSetTab"
 				legend="Assegnazione Commissioni:" collapsed="false"
 				toggleable="true" toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="commissionipanel">
+					<p:row>
+						<p:column colspan="6">
 
-				<table class="generalInfoTab" id="assegnazioneCommissioni"
-					style="width: 100%;" border="0">
-					<thead>
-						<th>N°</th>
-						<th>Commissione</th>
-						<th>Data<br />proposta
-						</th>
-						<th>Data<br />assegnaz.
-						</th>
-						<th>Ruolo</th>
-						<th>Stato</th>
-						<th>Data<br />annullo
-						</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">1</td>
-							<td align="left">II Commissione</td>
-							<td align="left">01/05/2011</td>
-							<td align="left">01/05/2011</td>
-							<td align="left">Referente</td>
-							<td align="left">In carico</td>
-							<td align="left"></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/disable.jpg" />
-								</h:commandLink></td>
-						</tr>
+							<p:panelGrid id="addCommissionePanel" styleClass="tableAppend">
+								<f:facet name="header">
+									<p:row>
+										<p:column>Commissione</p:column>
+										<p:column>Data proposta</p:column>
+										<p:column>Data assegnazione</p:column>
+										<p:column>Stato</p:column>
+										<p:column></p:column>
+									</p:row>
+								</f:facet>
+								<p:row>
+									<p:column>
+										<p:selectOneMenu id="commissione"
+											value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
+											<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
+											<f:selectItems
+												value="#{presentazioneAssegnazioneAttoController.commissioni}" />
+										</p:selectOneMenu>
+									</p:column>
 
-						<tr style="color: red;">
-							<td align="left">2</td>
-							<td align="left">I Commissione</td>
-							<td align="left">01/05/2011</td>
-							<td align="left">01/05/2011</td>
-							<td align="left">Consultiva</td>
-							<td align="left">Annulato</td>
-							<td align="left">13/05/2011</td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/disable.jpg" />
-								</h:commandLink></td>
-						</tr>
+									<p:column>
+										<p:calendar size="10" locale="it_IT" id="dataproposta"
+											pattern="dd/MM/yyyy"
+											value="#{presentazioneAssegnazioneAttoController.dataProposta}" />
+									</p:column>
 
-						<tr>
-							<td align="left">3</td>
-							<td align="left">IV Commissione</td>
-							<td align="left">03/05/2011</td>
-							<td align="left">03/05/2011</td>
-							<td align="left">Referente</td>
-							<td align="left">Assegnato</td>
-							<td align="left"></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/disable.jpg" />
-								</h:commandLink></td>
-						</tr>
+									<p:column>
+										<p:calendar size="10" locale="it_IT" id="dataassegnazione"
+											pattern="dd/MM/yyyy"
+											value="#{presentazioneAssegnazioneAttoController.dataAssegnazione}" />
+									</p:column>
 
-						<tr>
-							<td align="left">4</td>
-							<td align="left">I Commissione</td>
-							<td align="left">03/05/2011</td>
-							<td align="left">04/05/2011</td>
-							<td align="left">Consultiva</td>
-							<td align="left">Proposto</td>
-							<td align="left"></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/disable.jpg" />
-								</h:commandLink></td>
-						</tr>
+									<p:column>
+										<p:selectOneMenu id="ruolo"
+											value="#{presentazioneAssegnazioneAttoController.ruolo}">
+											<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
+											<f:selectItem itemLabel="Referente" itemValue="Referente" />
+											<f:selectItem itemLabel="Co-Referente"
+												itemValue="Co-Referente" />
+											<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
+											<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
+											<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
+										</p:selectOneMenu>
+									</p:column>
 
-					</tbody>
-				</table>
+									<p:column>
+										<p:commandButton value="Aggiungi"
+											action="#{presentazioneAssegnazioneAttoController.addCommissione}"
+											id="addCommissione"
+											update="listaCommissioni , assegnazioneMsg" icon="new-icon" />
+									</p:column>
 
-				<h:commandLink>
-					<h:graphicImage alt="Aggiungi riga" value="/resources/img/add.png" />
-				</h:commandLink>
+								</p:row>
 
+							</p:panelGrid>
+
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="7">
+
+							<h:dataTable id="listaCommissioni"
+								value="#{presentazioneAssegnazioneAttoController.commissioniList}"
+								var="commissione" styleClass="generalInfoTab">
+
+								<h:column>
+									<f:facet name="header">Nome</f:facet>
+							#{commissione.descrizione}
+    			       </h:column>
+
+								<h:column>
+									<f:facet name="header">Data Proposta</f:facet>
+									<h:outputText value="#{commissione.dataProposta}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Data Assegnazione</f:facet>
+									<h:outputText value="#{commissione.dataAssegnazione}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Ruolo</f:facet>
+							#{commissione.ruolo}
+
+						</h:column>
+
+								<h:column>
+									<f:facet name="header">Stato</f:facet>
+							#{commissione.stato}
+
+						</h:column>
+
+								<h:column>
+									<f:facet name="header">Data Annullo</f:facet>
+									<h:outputText value="#{commissione.dataAnnullo}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Annulla</f:facet>
+									<p:commandButton value="Annulla" oncomplete="annullaCommissioneDialog.show()">
+										<f:setPropertyActionListener
+											value="#{commissione.descrizione}"
+											target="#{presentazioneAssegnazioneAttoController.commissioneToAnnul}" />
+									</p:commandButton>
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Elimina</f:facet>
+
+									<p:commandButton oncomplete="commissioneDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener
+											value="#{commissione.descrizione}"
+											target="#{presentazioneAssegnazioneAttoController.commissioneToDelete}" />
+									</p:commandButton>
+								</h:column>
+
+							</h:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 			</p:fieldset>
 		</p:column>
 	</p:row>
@@ -115,57 +212,115 @@
 
 			<p:fieldset legend="Ufficio Servizio Segreterie Commissioni"
 				collapsed="false" toggleable="true" toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="organismistatutaripanel">
 
 
+					<p:row>
+						<p:column colspan="5">
+							<p:panelGrid id="addOrganismoStatutarioPanel"
+								styleClass="tableAppend">
 
-				<table class="generalInfoTab" id="assegnazionePareri"
-					style="width: 100%;" border="0">
-					<thead>
-						<th>N°</th>
-						<th>Organi Statuari</th>
-						<th>Data asseg.</th>
-						<th>Data annullo</th>
-						<th>Obbligatorio</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">1</td>
-							<td align="left">CAL</td>
-							<td align="left">01/05/2011</td>
-							<td align="left"></td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+								<f:facet name="header">
+									<p:row>
+										<p:column>Organismo Statutario</p:column>
+										<p:column>Data assegnazione</p:column>
+										<p:column>Data annullo</p:column>
+										<p:column>Obbligatorio</p:column>
+										<p:column></p:column>
+									</p:row>
+								</f:facet>
+								<p:row>
+									<p:column>
+										<p:selectOneMenu id="organismostatutario"
+											value="#{presentazioneAssegnazioneAttoController.nomeOrganismoStatutario}">
+											<f:selectItem itemLabel="Scegli Organismo Statutario"
+												itemValue="" />
+											<f:selectItems
+												value="#{presentazioneAssegnazioneAttoController.organismiStatutari}" />
+										</p:selectOneMenu>
+									</p:column>
 
-						<tr style="color: red;">
-							<td align="left">2</td>
-							<td align="left">CORECOM</td>
-							<td align="left">01/05/2011</td>
-							<td align="left">13/05/2011</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+									<p:column>
+										<p:calendar size="10" locale="it_IT"
+											id="dataassegnazioneorganismo" pattern="dd/MM/yyyy"
+											value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneOrganismo}" />
+									</p:column>
 
-					</tbody>
-				</table>
+									<p:column>
+										<p:calendar size="10" locale="it_IT"
+											id="dataannulloorganismostatutario" pattern="dd/MM/yyyy"
+											value="#{presentazioneAssegnazioneAttoController.dataAnnulloOrganismo}" />
+									</p:column>
 
-				<h:commandLink>
-					<h:graphicImage alt="Aggiungi riga" value="/resources/img/add.png" />
-				</h:commandLink>
+									<p:column>
+										<p:selectBooleanCheckbox id="obbligatorio"
+											value="#{presentazioneAssegnazioneAttoController.obbligatorio}" />
+									</p:column>
+
+									<p:column>
+										<p:commandButton value="Aggiungi"
+											action="#{presentazioneAssegnazioneAttoController.addOrganismoStatutario}"
+											id="addOrganismoStatutario"
+											update="listaOrganismiStatutari , assegnazioneMsg"
+											icon="new-icon" />
+									</p:column>
+
+								</p:row>
+							</p:panelGrid>
 
 
+						</p:column>
+					</p:row>
 
+					<p:row>
+						<p:column colspan="5">
 
+							<h:dataTable id="listaOrganismiStatutari"
+								value="#{presentazioneAssegnazioneAttoController.organismiStatutariList}"
+								var="organismoStatutario" styleClass="generalInfoTab">
 
+								<h:column>
+									<f:facet name="header">Nome</f:facet>
+							#{organismoStatutario.descrizione}
+    			       </h:column>
 
+								<h:column>
+									<f:facet name="header">Data Assegnazione</f:facet>
+									<h:outputText value="#{organismoStatutario.dataAssegnazione}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
 
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Data Annullo</f:facet>
+									<h:outputText value="#{organismoStatutario.dataAnnullo}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Obbligatorio</f:facet>
+								#{organismoStatutario.obbligatorio}
+    			      		 </h:column>
+
+								<h:column>
+									<f:facet name="header">Elimina</f:facet>
+
+									<p:commandButton oncomplete="organismoStatutarioDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener
+											value="#{organismoStatutario.descrizione}"
+											target="#{presentazioneAssegnazioneAttoController.organismoStatutarioToDelete}" />
+									</p:commandButton>
+								</h:column>
+
+							</h:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 			</p:fieldset>
 
 		</p:column>

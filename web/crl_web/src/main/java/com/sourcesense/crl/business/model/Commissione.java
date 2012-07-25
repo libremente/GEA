@@ -25,6 +25,9 @@ public class Commissione {
 	private Date dataVotazione;
 	private Date dataTrasmissione;
 	private List <Relatore> relatori;
+	private Date dataProposta;
+	private Date dataAnnullo;
+	private boolean annullata = false;
 	
 
 	public String getDescrizione() {
@@ -113,6 +116,30 @@ public class Commissione {
 
 	public void setRelatori(List<Relatore> relatori) {
 		this.relatori = relatori;
+	}
+
+	public Date getDataProposta() {
+		return dataProposta;
+	}
+
+	public void setDataProposta(Date dataProposta) {
+		this.dataProposta = dataProposta;
+	}
+
+	public Date getDataAnnullo() {
+		return dataAnnullo;
+	}
+
+	public void setDataAnnullo(Date dataAnnullo) {
+		this.dataAnnullo = dataAnnullo;
+	}
+
+	public boolean isAnnullata() {
+		return annullata;
+	}
+
+	public void setAnnullata(boolean annullata) {
+		this.annullata = annullata;
 	}
 	
 	

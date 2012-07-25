@@ -6,10 +6,52 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 
 <p:panelGrid styleClass="infoTable" id="notePanel">
+	<p:row>
+		<p:column>
+			<p>
+				<!-- Messaggio azioni -->
+				<p:growl id="noteAllegatiMsg" showDetail="true" sticky="false" />
+
+
+
+				<!-- Confirm dialog -->
+				<p:confirmDialog id="confirmAllegatoDialog"
+					message="Sei sicuro di voler eliminare l'Allegato ?"
+					header="Cancellazione Allegato" severity="alert"
+					widgetVar="allegatoDialog">
+
+					<p:commandButton id="confirmAllegato" value="Conferma"
+						oncomplete="allegatoDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.removeAllegato}"
+						update="listaAllegati" />
+					<p:commandButton id="declineAllegato" value="Annulla"
+						onclick="allegatoDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<p:confirmDialog id="confirmLinkDialog"
+					message="Sei sicuro di voler eliminare il Link?"
+					header="Cancellazione Link" severity="alert" widgetVar="linkDialog">
+
+					<p:commandButton id="confirmLink" value="Conferma"
+						oncomplete="linkDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.removeLink}"
+						update="listaLinks" />
+					<p:commandButton id="declineLink" value="Annulla"
+						onclick="linkDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+			</p>
+		</p:column>
+	</p:row>
+
+
+
 	<p:row>
 		<p:column>
 			<p:fieldset styleClass="fieldSetTab" legend="Note:" collapsed="false"
@@ -31,49 +73,58 @@
 			<p:fieldset styleClass="fieldSetTab" legend="Allegati:"
 				collapsed="false" toggleable="true" toggleSpeed="500">
 
-				<table class="generalInfoTab" id="assegnazionePareri"
-					style="width: 100%;" border="0">
-					<thead>
-						<th>Descrizione Allegato</th>
-						<th>Documento</th>
-						<th>Pubblico</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">Allegato 1</td>
-							<td align="left"><p:commandLink id="downloadLink1"
-									value="Download" ajax="false">
-									<p:fileDownload value="#{fileDownloadController.file}" />
-								</p:commandLink></td>
+				<p:panelGrid styleClass="infoTable" id="allegatopanel">
+					<p:row>
+						<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+						<p:column colspan="3">
+							<p:fileUpload label="Carica File"
+								fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadAllegato}"
+								mode="advanced" auto="true"
+								update="listaAllegati ,noteAllegatiMsg" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="4">
 
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+							<h:dataTable id="listaAllegati"
+								value="#{presentazioneAssegnazioneAttoController.allegatiList}"
+								var="allegato" styleClass="generalInfoTab">
 
-						<tr>
-							<td align="left">Allegato 2</td>
-							<td align="left"><p:commandLink id="downloadLink2"
-									value="Download" ajax="false">
-									<p:fileDownload value="#{fileDownloadController.file}" />
-								</p:commandLink></td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+								<h:column>
+									<f:facet name="header">Descrizione Allegato</f:facet>
+							#{allegato.descrizione}
+						</h:column>
 
-					</tbody>
-				</table>
+								<h:column>
+									<f:facet name="header">Documento</f:facet>
+									<h:outputText
+										value="#{fn:substring(allegato.descrizione, fn:indexOf(allegato.descrizione,'.') ,fn:length(allegato.descrizione) )}" />
 
-				<h:commandLink>
-					<h:graphicImage alt="Aggiungi allegato"
-						value="/resources/img/add.png" />
-				</h:commandLink>
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Pubblico</f:facet>
+							#{allegato.pubblico}
+						</h:column>
+
+								<h:column>
+									<f:facet name="header">Elimina</f:facet>
+									<p:commandButton oncomplete="allegatoDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener value="#{allegato.id}"
+											target="#{presentazioneAssegnazioneAttoController.allegatoToDelete}" />
+									</p:commandButton>
+								</h:column>
+
+
+							</h:dataTable>
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
 
 				<!-- TODO : upload file al click sul pulsante-->
 
@@ -85,46 +136,89 @@
 			<p:fieldset styleClass="fieldSetTab" legend="Link:" collapsed="false"
 				toggleable="true" toggleSpeed="500">
 
-				<table class="generalInfoTab" id="assegnazionePareri"
-					style="width: 100%;" border="0">
-					<thead>
-						<th>Descrizione collegamento</th>
-						<th>Indirizzo collegamento</th>
-						<th>Pubblico</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">Link 1</td>
-							<td align="left">http://consiglio.regione.lombardia.it/link1
-							</td>
+				<p:panelGrid styleClass="infoTable" id="linkspanel">
 
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
 
-						<tr>
-							<td align="left">Link 2</td>
-							<td align="left">http://consiglio.regione.lombardia.it/link1
-							</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+					<p:row>
+						<p:column colspan="4">
+							<p:panelGrid id="addLinkPanel" styleClass="tableAppend">
 
-					</tbody>
-				</table>
+								<f:facet name="header">
+									<p:row>
+										<p:column>Descrizione collegamento</p:column>
+										<p:column>Indirizzo collegamento</p:column>
+										<p:column>Pubblico</p:column>
+										<p:column></p:column>
+									</p:row>
+								</f:facet>
+								<p:row>
+									<p:column>
+										<p:inputText id="link"
+											value="#{presentazioneAssegnazioneAttoController.nomeLink}" />
+									</p:column>
 
-				<h:commandLink>
-					<h:graphicImage alt="Aggiungi collegamento"
-						value="/resources/img/add.png" />
-				</h:commandLink>
+									<p:column>
+										<p:inputText id="urllink"
+											value="#{presentazioneAssegnazioneAttoController.urlLink}" />
+									</p:column>
 
+									<p:column>
+										<p:selectBooleanCheckbox id="pubblico"
+											value="#{presentazioneAssegnazioneAttoController.pubblico}" />
+									</p:column>
+
+									<p:column>
+										<p:commandButton value="Aggiungi"
+											action="#{presentazioneAssegnazioneAttoController.addLink}"
+											id="addLink" update="listaLinks , noteAllegatiMsg"
+											icon="new-icon" />
+									</p:column>
+
+								</p:row>
+							</p:panelGrid>
+
+
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="4">
+
+							<h:dataTable id="listaLinks"
+								value="#{presentazioneAssegnazioneAttoController.linksList}"
+								var="link" styleClass="generalInfoTab">
+
+								<h:column>
+									<f:facet name="header">Descrizione collegamento</f:facet>
+							#{link.descrizione}
+    			       </h:column>
+
+								<h:column>
+									<f:facet name="header">Indirizzo collegamento</f:facet>
+									<p:commandLink value="#{link.collegamentoUrl}" />
+
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Pubblico</f:facet>
+								#{link.pubblico}
+    			      		 </h:column>
+
+								<h:column>
+									<f:facet name="header">Elimina</f:facet>
+
+									<p:commandButton oncomplete="linkDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener value="#{link.descrizione}"
+											target="#{presentazioneAssegnazioneAttoController.linkToDelete}" />
+									</p:commandButton>
+								</h:column>
+
+							</h:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 			</p:fieldset>
 		</p:column>
 	</p:row>
