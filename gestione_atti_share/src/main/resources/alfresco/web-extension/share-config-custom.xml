@@ -126,6 +126,7 @@
          	<subtype name="crlatti:legislaturaAnagrafica"/>
          	<subtype name="crlatti:abbinamento"/>
          	<subtype name="crlatti:commissione"/>
+         	<subtype name="crlatti:allegato"/>
          </type>
 
          <type name="cm:folder">
@@ -559,6 +560,16 @@
    	</forms>
    </config>
    
+   <config evaluator="node-type" condition="crlatti:allegato">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:tipologiaAllegato" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
    
    <config evaluator="node-type" condition="crlatti:legislaturaAnagrafica">
    	<forms>
@@ -639,6 +650,7 @@
             <form label="Abbinamento" description="Cerca tra tutti gli abbinamenti">crlatti:abbinamento</form>
             <form label="Commissione" description="Cerca tra tutte le commissioni">crlatti:commissione</form>
             <form label="Firmatario" description="Cerca tra tutti i firmatari">crlatti:firmatario</form>
+            <form label="Allegato" description="Cerca tra tutti gli allegati">crlatti:allegato</form>
             <form label="DOC" description="Cerca tra tutti gli atti">crlatti:atto</form>
             <form label="PDL" description="Cerca tra tutti i progetti di legge">crlatti:attoPdl</form>
             <form label="INP" description="Cerca tra tutte le petizioni popolari">crlatti:attoInp</form>
