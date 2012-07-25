@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.Legislatura;
+import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.service.rest.PersonaleService;
 import com.sourcesense.crl.util.URLBuilder;
@@ -24,15 +25,15 @@ public class PersonaleServiceManager implements ServiceManager{
 	private PersonaleService personaleService;
 
 	@Override
-	public boolean persist(Object object) {
+	public Personale persist(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean merge(Object object) {
+	public Personale merge(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -76,6 +77,12 @@ public class PersonaleServiceManager implements ServiceManager{
 
 	@Override
 	public Map<String, String> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object> retrieveAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

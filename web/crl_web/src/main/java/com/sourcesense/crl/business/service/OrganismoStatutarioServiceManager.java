@@ -24,15 +24,15 @@ public class OrganismoStatutarioServiceManager implements ServiceManager{
 	private OrganismoStatutarioService organismoStatutarioService;
 
 	@Override
-	public boolean persist(Object object) {
+	public OrganismoStatutario persist(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean merge(Object object) {
+	public OrganismoStatutario merge(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -56,6 +56,12 @@ public class OrganismoStatutarioServiceManager implements ServiceManager{
 
 	@Override
 	public Object findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object> retrieveAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

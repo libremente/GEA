@@ -4,9 +4,13 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
 	version="2.0">
 
-    <!-- Spring resolver for Spring DI into JSF ManagedBeans -->
+	<!-- Spring resolver for Spring DI into JSF ManagedBeans -->
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 	</application>
 
+
+	<lifecycle>
+		<phase-listener>com.sourcesense.crl.business.security.SessionPhaseListener</phase-listener>
+	</lifecycle>
 </faces-config>

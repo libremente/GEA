@@ -28,15 +28,15 @@ public class TipoAttoServiceManager implements ServiceManager {
 	
 	
 	@Override
-	public boolean persist(Object object) {
+	public TipoAtto persist(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean merge(Object object) {
+	public TipoAtto merge(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -81,6 +81,12 @@ public class TipoAttoServiceManager implements ServiceManager {
 
 	@Override
 	public Object findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object> retrieveAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

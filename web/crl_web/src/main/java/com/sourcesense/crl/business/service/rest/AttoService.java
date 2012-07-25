@@ -1,5 +1,7 @@
 package com.sourcesense.crl.business.service.rest;
 
+import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +25,17 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.HttpStatus.Series;
 import org.springframework.stereotype.Component;
 
+import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Legislatura;
 import com.sourcesense.crl.business.model.TipologiaAtto;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.FileDataBodyPart;
+import com.sun.jersey.multipart.file.StreamDataBodyPart;
+
 
 @Component(value = "attoService")
 @Path("/atti")
@@ -44,27 +51,41 @@ public class AttoService  {
 
 
 
-	public boolean create(String url,Atto atto) {
+	public Atto create(String url,Atto atto) {
 
-
+       Atto attoRet=null;
+		
 		try{
 			WebResource webResource = client.resource(url);
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 			String json =  objectMapper.writeValueAsString(atto);
-			System.out.println("JSON==="+json);
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
 
-			if (response.getStatus() != 200) {
+			if (response.getStatus() == 500) {
 
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
+				atto.setError(response.getEntity(String.class));
+				
+			}else if (response.getStatus() != 200) {
+				
+				throw new RuntimeException();
+				
 			}
+			
+			String responseMsg = response.getEntity(String.class);
+			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
+			responseMsg = responseMsg.replace("atto", "Atto").replace("nome", "numeroAtto");
+			//objectMapper.configure(DeserializationConfig.Feature., false);
+			attoRet =  objectMapper.readValue(responseMsg, Atto.class);
+			atto.setId(attoRet.getId());
 
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			return null;
 		}
-		return true;
+		return atto;
 	}
 
 
@@ -93,6 +114,8 @@ public class AttoService  {
             
 			//atto= response.getEntity(Atto.class);
 			String responseMsg = response.getEntity(String.class);
+			
+			//responseMsg;
 			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
@@ -118,6 +141,37 @@ public class AttoService  {
 		return null;
 	}
 
+	
+	public Allegato uploadFile(String url,InputStream stream){
+		
+		Allegato allegato=null;
+		
+		try {
+			
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream), MediaType.MULTIPART_FORM_DATA_TYPE);
+			
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, part);
+			
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			allegato = objectMapper.readValue(responseMsg,
+					Allegato.class);
+
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return allegato;
+	}
+	
 
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti =null;
@@ -127,8 +181,6 @@ public class AttoService  {
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 			//objectMapper.configure(SerializationConfig.Feature.WRITE_NULL_PROPERTIES, false);
 			String json =  objectMapper.writeValueAsString(atto);
-
-			System.out.println("JSON==="+json);
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
 
@@ -149,7 +201,7 @@ public class AttoService  {
 
 			ex.printStackTrace();
 		}
-		System.out.println("size lista: "+listAtti.size());
+		//System.out.println("size lista: "+listAtti.size());
 		return listAtti;
 
 	}

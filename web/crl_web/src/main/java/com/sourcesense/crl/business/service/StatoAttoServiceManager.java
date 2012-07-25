@@ -23,15 +23,15 @@ public class StatoAttoServiceManager implements ServiceManager{
 	private StatoAttoService statoAttoService;
 
 	@Override
-	public boolean persist(Object object) {
+	public StatoAtto persist(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean merge(Object object) {
+	public StatoAtto merge(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -56,6 +56,12 @@ public class StatoAttoServiceManager implements ServiceManager{
 
 	@Override
 	public Object findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object> retrieveAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

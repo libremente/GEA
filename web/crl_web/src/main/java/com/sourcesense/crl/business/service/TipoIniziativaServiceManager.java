@@ -23,15 +23,15 @@ public class TipoIniziativaServiceManager implements ServiceManager{
 	private TipoIniziativaService tipoIniziativaService;
 
 	@Override
-	public boolean persist(Object object) {
+	public TipoIniziativa persist(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean merge(Object object) {
+	public TipoIniziativa merge(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -55,6 +55,12 @@ public class TipoIniziativaServiceManager implements ServiceManager{
 
 	@Override
 	public Object findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object> retrieveAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

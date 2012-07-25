@@ -6,7 +6,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:form enctype="multipart/form-data">
 	<p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
@@ -15,11 +17,43 @@
 		<p:row>
 			<p:column colspan="3">
 				<p>
+				    <!-- Messaggio azioni -->
 					<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
+
+					
+
+                    <!-- Confirm dialog -->
+					<p:confirmDialog id="confirmAttoDialog"
+						message="Sei sicuro di voler eliminare il File ?"
+						header="Cancellazione Testo Atto" severity="alert"
+						widgetVar="testoAttoDialog">
+
+						<p:commandButton id="confirmAllegato" value="Conferma"
+							oncomplete="testoAttoDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
+							update="listaTestiAtto" />
+						<p:commandButton id="declineAllegato" value="Annulla"
+							onclick="testoAttoDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+					
+					<p:confirmDialog id="confirmDialog"
+						message="Sei sicuro di voler eliminare il Firmatario?"
+						header="Cancellazione Firmatario" severity="alert"
+						widgetVar="firmatarioDialog">
+
+						<p:commandButton id="confirm" value="Conferma"
+							oncomplete="firmatarioDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeFirmatario}"
+							update="listaFirmatari" />
+						<p:commandButton id="decline" value="Annulla"
+							onclick="firmatarioDialog.hide()" type="button" />
+
+					</p:confirmDialog>
 
 					<b> <h:outputLabel for="datapresaincarico"
 							value="Data presa in carico: " /> <p:calendar size="10"
-							locale="it" id="datapresaincarico"
+							locale="it_IT" id="datapresaincarico"
 							value="#{attoBean.dataPresaInCarico}" /> </b>
 					<p:commandButton value="Presa in Carico" update="presaCaricoMsg"
 						actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
@@ -75,7 +109,7 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datarepertorio"
+					<p:calendar size="10" locale="it_IT" id="datarepertorio"
 						value="#{attoBean.dataRepertorio}" />
 				</p:column>
 
@@ -99,7 +133,7 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datainiziativa"
+					<p:calendar size="10" locale="it_IT" id="datainiziativa"
 						value="#{attoBean.dataIniziativa}" />
 				</p:column>
 
@@ -132,7 +166,7 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datadgr"
+					<p:calendar size="10" locale="it_IT" id="datadgr"
 						value="#{attoBean.dataDGR}" />
 				</p:column>
 
@@ -156,83 +190,54 @@
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="testoattopanel">
 			<p:row>
-				<p:column colspan="4">
-					<table class="generalInfoTab" id="testitab" style="width: 90%;"
-						border="0">
-						<thead>
-							<th colspan="2">Testo Dell'Atto</th>
-							<th>Documento</th>
-							<th>Pubblico</th>
-							<th>Opzioni</th>
-						</thead>
-
-						<!-- TODO: 
-							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
-							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
-
-						<tbody>
-							<tr>
-								<td align="left" colspan="2"><b>PDF</b></td>
-								<td align="left"><h:commandLink>
-										<h:outputText value="download" />
-									</h:commandLink></td>
-								<td align="left"><p:selectBooleanCheckbox />
-								</td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" />
-								</td>
-
-							</tr>
-
-							<tr>
-								<td align="left" colspan="2"><b>HTML</b></td>
-								<td align="left"><h:commandLink>
-										<h:outputText value="download" />
-									</h:commandLink></td>
-								<td align="left"><p:selectBooleanCheckbox />
-								</td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" />
-								</td>
-
-							</tr>
-
-							<tr>
-								<td align="left" colspan="2"><b>DOC</b></td>
-								<td align="left"><h:commandLink>
-										<h:outputText value="download" />
-									</h:commandLink></td>
-								<td align="left"><p:selectBooleanCheckbox />
-								</td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" />
-								</td>
-
-							</tr>
-
-
-
-							<tr>
-								<td align="left" colspan="2">Selezionare un documento...</td>
-								<td align="left"></td>
-								<td align="left"></td>
-								<td align="left"></td>
-							</tr>
-
-						</tbody>
-					</table>
-				</p:column>
-			</p:row>
-			<p:row>
 				<!-- <p:column>
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
-				<p:column>
+				<p:column colspan="3">
 					<p:fileUpload label="Carica File"
 						fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}"
-						mode="advanced" auto="true" />
+						mode="advanced" auto="true" update="listaTestiAtto ,presaCaricoMsg" />
 				</p:column>
 			</p:row>
+			<p:row>
+				<p:column colspan="4">
+
+					<h:dataTable id="listaTestiAtto"
+						value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
+						var="testoAtto" styleClass="generalInfoTab">
+
+						<h:column>
+							<f:facet name="header">Testo Dell'Atto</f:facet>
+							#{testoAtto.descrizione}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Documento</f:facet>
+							<h:outputText
+								value="#{fn:substring(testoAtto.descrizione, fn:indexOf(testoAtto.descrizione,'.') ,fn:length(testoAtto.descrizione) )}" />
+
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Pubblico</f:facet>
+							#{testoAtto.pubblico}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="testoAttoDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{testoAtto.id}"
+									target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
+							</p:commandButton>
+						</h:column>
+
+
+					</h:dataTable>
+				</p:column>
+			</p:row>
+
 		</p:panelGrid>
 	</p:fieldset>
 
@@ -247,76 +252,141 @@
 
 			<p:row>
 				<p:column colspan="6">
+					<p:panelGrid id="addFirmatarioPanel" styleClass="tableAppend">
+
+						<f:facet name="header">
+							<p:row>
+								<p:column>Firmatario</p:column>
+								<p:column>Gruppo Cons.</p:column>
+								<p:column>Data Firma</p:column>
+								<p:column>Data Ritiro</p:column>
+								<p:column>Primo Firm.</p:column>
+								<p:column></p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:selectOneMenu id="firmatario"
+									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
+									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+									<f:selectItems
+										value="#{presentazioneAssegnazioneAttoController.firmatari}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu id="gruppoconsiliare"
+									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}">
+									<f:selectItem itemLabel="Scegli Gruppo" itemValue="" />
+									<f:selectItems
+										value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="datafirma"
+									pattern="dd/MM/yyyy"
+									value="#{presentazioneAssegnazioneAttoController.dataFirma}" />
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="dataritiro"
+									pattern="dd/MM/yyyy"
+									value="#{presentazioneAssegnazioneAttoController.dataRitiro}" />
+							</p:column>
+
+							<p:column>
+								<p:selectBooleanCheckbox id="primofirmatario"
+									value="#{presentazioneAssegnazioneAttoController.primoFirmatario}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Aggiungi"
+									action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
+									id="addFirmatario" update="listaFirmatari , presaCaricoMsg"
+									icon="new-icon" />
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+
+
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="6">
 
 					<h:dataTable id="listaFirmatari"
 						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
-						var="personale" styleClass="generalInfoTab">
+						var="firmatario" styleClass="generalInfoTab">
 
 						<h:column>
 							<f:facet name="header">Nome</f:facet>
-							#{personale.descrizione}
+							#{firmatario.descrizione}
     			       </h:column>
 
 						<h:column>
 							<f:facet name="header">Gruppo Consiliare</f:facet>
-
+                            #{firmatario.gruppoConsiliare}
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Data Firma</f:facet>
+							<h:outputText value="#{firmatario.dataFirma}">
+								<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+							</h:outputText>
 
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Data Ritiro</f:facet>
 
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">1° firm.</f:facet>
+							<h:outputText value="#{firmatario.dataRitiro}">
+								<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+							</h:outputText>
+
 
 						</h:column>
-						
+
+						<h:column>
+							<f:facet name="header">1° firm.</f:facet>
+							#{firmatario.primoFirmatario}
+
+						</h:column>
+
 						<h:column>
 							<f:facet name="header">Elimina</f:facet>
-                             <h:graphicImage alt="delete"
-										value="/resources/img/delete.png" />
+
+							<p:commandButton oncomplete="firmatarioDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{firmatario.descrizione}"
+									target="#{presentazioneAssegnazioneAttoController.firmatarioToDelete}" />
+							</p:commandButton>
 						</h:column>
-						
+
 					</h:dataTable>
 				</p:column>
 			</p:row>
 
 			<p:row>
 				<p:column>
-					<p:panelGrid id="addFirmatarioPanel" columns="5">
-						<p:selectOneMenu id="firmatario"
-							value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
-							<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
-							<f:selectItems
-								value="#{presentazioneAssegnazioneAttoController.firmatari}" />
-						</p:selectOneMenu>
 
-						<p:selectOneMenu id="gruppoconsiliare" />
-						<p:calendar size="10" locale="it" id="datafirma" />
-						<p:calendar size="10" locale="it" id="dataritiro" />
-						<p:selectBooleanCheckbox />
-						
-					</p:panelGrid>
-					
-					<p:commandButton value="Aggiungi Firmatario"  action="#{presentazioneAssegnazioneAttoController.addFirmatario}" id="addFirmatario"   
-                                     update="listaFirmatari , presaCaricoMsg" icon="new-icon" />  
+				</p:column>
+
+				<p:column colspan="5">
+					<p:commandLink value="Creazione lettera di aggiunta firma" />
 				</p:column>
 			</p:row>
-
 
 			<p:row>
 				<p:column>
 
 				</p:column>
 
-				<p:column>
-					<p:commandLink value="Creazione lettera di aggiunta firma" />
+				<p:column colspan="5">
+					<p:commandLink value="Creazione lettera di ritiro firma" />
 				</p:column>
 			</p:row>
 
@@ -325,10 +395,11 @@
 					<p:commandButton value="Ritira per mancanza firmatari" />
 				</p:column>
 
-				<p:column>
-					<p:commandLink value="Creazione lettera di ritiro firma" />
+				<p:column colspan="5">
+
 				</p:column>
 			</p:row>
+
 		</p:panelGrid>
 
 	</p:fieldset>

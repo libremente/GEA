@@ -14,7 +14,9 @@ public class Allegato {
 	private String descrizione;
 	private String downloadUrl;
 	private boolean pubblico;
-	private String tipoAllegato;	
+	private String tipoAllegato;
+	private String id;
+	
 	
 	
 	public String getDescrizione() {
@@ -40,6 +42,12 @@ public class Allegato {
 	}
 	public void setTipoAllegato(String tipoAllegato) {
 		this.tipoAllegato = tipoAllegato;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getNome() {
 		return nome;

@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +46,15 @@ public class UserServiceManager implements ServiceManager {
 	
 	
 	@Override
-	public boolean persist(Object object) {
+	public User persist(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean merge(Object object) {
+	public User merge(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -70,6 +71,14 @@ public class UserServiceManager implements ServiceManager {
 
 	@Override
 	public Object findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<Object> retrieveAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

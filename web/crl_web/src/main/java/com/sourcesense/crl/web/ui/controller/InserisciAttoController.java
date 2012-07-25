@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -93,8 +94,9 @@ public class InserisciAttoController {
 	
 	public String inserisciAtto() {
 
+		Atto attoRet = attoServiceManager.persist(atto);
 		
-		if (attoServiceManager.persist(atto)) {
+		if (attoRet!=null && attoRet.getError()==null) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = (AttoBean) context
@@ -104,10 +106,18 @@ public class InserisciAttoController {
 							"#{attoBean}", AttoBean.class)
 					.getValue(context.getELContext());
 
-			attoBean.setAtto(this.atto);
+			attoBean.setAtto(attoRet);
 			return "pretty:atto";
 
-		} else {
+		} else if (attoRet!=null && attoRet.getError()!=null && !attoRet.getError().equals("")) {
+			
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));
+			return null;
+			
+		}else {
 
 		    return null;
 

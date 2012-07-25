@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneConsultiva;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.Legislatura;
@@ -24,15 +25,15 @@ public class CommissioneServiceManager implements ServiceManager{
 	private CommissioneService commissioneService;
 
 	@Override
-	public boolean persist(Object object) {
+	public Commissione persist(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public boolean merge(Object object) {
+	public Commissione merge(Object object) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
@@ -76,6 +77,12 @@ public class CommissioneServiceManager implements ServiceManager{
 
 	@Override
 	public Map<String, String> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object> retrieveAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

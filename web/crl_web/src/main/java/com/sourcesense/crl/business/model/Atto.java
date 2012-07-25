@@ -55,6 +55,7 @@ public class Atto
     private String tipologia;
     private String legislatura;
     private String anno;
+    private String error;
     
     private String statoAttuale;
     private String classificazione;
@@ -614,6 +615,14 @@ public class Atto
 
 	public void setLinks(List <Link> links) {
 		this.links = links;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 	
 	
