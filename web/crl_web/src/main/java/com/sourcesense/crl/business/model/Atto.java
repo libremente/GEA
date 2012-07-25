@@ -25,9 +25,47 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
+ * "id" : "workspace://SpacesStore/b0190a2c-763e-4f29-b3f7-b1476e1ab8b9",
+	"nome" : "777",
+	"numeroAtto" : "777",
+	"tipologia" : "Tipologia1",
+	"legislatura" : "Legislatura1",
+	"stato" : "",
+	"dataIniziativa" : "",
+	"numeroProtocollo" : "",
+	"tipoIniziativa" : "",
+	"numeroDcr" : "",
+	"oggetto" : "",
+	"tipoChiusura" : "",
+	"dataPubblicazione" : "",
+	"esitoVotoCommissioneReferente" : "",
+	"dataSedutaSc" : "",
+	"esitoVotoAula" : "",
+	"dataSedutaCommissione" : "",
+	"commissioneReferente" : "",
+	"dataSedutaAula" : "",
+	"commissioneConsultiva" : "",
+	"redigente" : "",
+	"deliberante" : "",
+	"organismoStatutario" : "",
+	"numeroLcr" : "",
+	"soggettoConsultato" : "",
+	"numeroLr" : "",
+	"anno" : "2012",
+	"emendato" : "",
+	"rinviato" : "",
+	"sospeso" : "",
+	"abbinamento" : "",
+	"stralcio" : "",
+	"primoFirmatario" : "",
+	"relatori" : 	
  *@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
  * @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
  * @author uji
+ */
+/**
+ * @author pronetics
+ *
  */
 @Configurable
 @XmlRootElement(name="atto")
@@ -43,12 +81,16 @@ public class Atto
 	
 
 	private String id;
+	private String nome;
 	private String tipo;
     private String codice;
     private String oggetto;
     private String primoFirmatario;
     private Date   dataPresentazione;
     private Date   dataPresaInCarico;
+    private Date   dataPubblicazione;
+    private Date   dataSedutaSc;
+    private Date   dataSedutaAula;
     private String stato;
     private String numeroAtto;
     private String tipoAtto;
@@ -64,14 +106,14 @@ public class Atto
     private Date dataIniziativa;
     private String numeroRepertorio;
     private String descrizioneIniziativa;
-    private String numeroDGR;
-    private Date   dataDGR;
+    private String numeroDgr;
+    private Date   dataDgr;
     private String assegnazione;    
     private Date dataAssegnazione;
     private String esitoValidazione;
     private Date dataValidazione;
     private Date dataAssegnazioneCommissioni;
-   
+    private Date dataSedutaCommissione;
     
 	private String numeroProtocollo;
 	private String tipoIniziativa;
@@ -84,8 +126,8 @@ public class Atto
 	private String commissioneConsultiva;
 	private boolean redigente;
 	private boolean deliberante;
-	private String numeroLCR;
-	private String numeroLR;
+	private String numeroLcr;
+	private String numeroLr;
 	private boolean abbinamento;	
 	private boolean stralcio;
 	private String organismoStatutario;	
@@ -110,7 +152,15 @@ public class Atto
 
     
     
-    public String getNumeroAtto() {
+    public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getNumeroAtto() {
 		return numeroAtto;
 	}
 
@@ -335,22 +385,7 @@ public class Atto
 		this.deliberante = deliberante;
 	}
 
-	public String getNumeroLCR() {
-		return numeroLCR;
-	}
-
-	public void setNumeroLCR(String numeroLCR) {
-		this.numeroLCR = numeroLCR;
-	}
-
-	public String getNumeroLR() {
-		return numeroLR;
-	}
-
-	public void setNumeroLR(String numeroLR) {
-		this.numeroLR = numeroLR;
-	}
-
+	
 	public boolean isAbbinamento() {
 		return abbinamento;
 	}
@@ -473,21 +508,7 @@ public class Atto
 		this.descrizioneIniziativa = descrizioneIniziativa;
 	}
 
-	public String getNumeroDGR() {
-		return numeroDGR;
-	}
-
-	public void setNumeroDGR(String numeroDGR) {
-		this.numeroDGR = numeroDGR;
-	}
-
-	public Date getDataDGR() {
-		return dataDGR;
-	}
-
-	public void setDataDGR(Date dataDGR) {
-		this.dataDGR = dataDGR;
-	}
+	
 
 	public String getAssegnazione() {
 		return assegnazione;
@@ -623,6 +644,70 @@ public class Atto
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public Date getDataPubblicazione() {
+		return dataPubblicazione;
+	}
+
+	public void setDataPubblicazione(Date dataPubblicazione) {
+		this.dataPubblicazione = dataPubblicazione;
+	}
+
+	public Date getDataSedutaSc() {
+		return dataSedutaSc;
+	}
+
+	public void setDataSedutaSc(Date dataSedutaSc) {
+		this.dataSedutaSc = dataSedutaSc;
+	}
+
+	public Date getDataSedutaCommissione() {
+		return dataSedutaCommissione;
+	}
+
+	public void setDataSedutaCommissione(Date dataSedutaCommissione) {
+		this.dataSedutaCommissione = dataSedutaCommissione;
+	}
+
+	public Date getDataSedutaAula() {
+		return dataSedutaAula;
+	}
+
+	public void setDataSedutaAula(Date dataSedutaAula) {
+		this.dataSedutaAula = dataSedutaAula;
+	}
+
+	public String getNumeroDgr() {
+		return numeroDgr;
+	}
+
+	public void setNumeroDgr(String numeroDgr) {
+		this.numeroDgr = numeroDgr;
+	}
+
+	public Date getDataDgr() {
+		return dataDgr;
+	}
+
+	public void setDataDgr(Date dataDgr) {
+		this.dataDgr = dataDgr;
+	}
+
+	public String getNumeroLcr() {
+		return numeroLcr;
+	}
+
+	public void setNumeroLcr(String numeroLcr) {
+		this.numeroLcr = numeroLcr;
+	}
+
+	public String getNumeroLr() {
+		return numeroLr;
+	}
+
+	public void setNumeroLr(String numeroLr) {
+		this.numeroLr = numeroLr;
 	}
 	
 	

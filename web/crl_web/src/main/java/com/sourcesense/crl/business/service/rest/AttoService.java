@@ -32,7 +32,9 @@ import com.sourcesense.crl.business.model.TipologiaAtto;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.multipart.BodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.MultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
@@ -76,7 +78,7 @@ public class AttoService  {
 			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
 			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
-			responseMsg = responseMsg.replace("atto", "Atto").replace("nome", "numeroAtto");
+			//responseMsg = responseMsg.replace("atto", "Atto").replace("nome", "numeroAtto");
 			//objectMapper.configure(DeserializationConfig.Feature., false);
 			attoRet =  objectMapper.readValue(responseMsg, Atto.class);
 			atto.setId(attoRet.getId());
@@ -114,7 +116,7 @@ public class AttoService  {
             
 			//atto= response.getEntity(Atto.class);
 			String responseMsg = response.getEntity(String.class);
-			
+			System.out.println(responseMsg);
 			//responseMsg;
 			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
@@ -151,8 +153,15 @@ public class AttoService  {
 			WebResource webResource = client.resource(url);
 			FormDataMultiPart part = new FormDataMultiPart();
 			part.bodyPart(new StreamDataBodyPart("file", stream), MediaType.MULTIPART_FORM_DATA_TYPE);
+			//part.
 			
-			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, part);
+			
+			MultiPart multiPart = new MultiPart();
+			//multiPart.bodyPart(new BodyPart(stream, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+			//multiPart.bodyPart(new BodyPart(stream, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+			
+			
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, multiPart);
 			
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "

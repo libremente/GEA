@@ -278,19 +278,19 @@ public class AttoBean implements Serializable {
 	}
 
 	public String getNumeroDGR() {
-		return atto.getNumeroDGR();
+		return atto.getNumeroDgr();
 	}
 
 	public void setNumeroDGR(String numeroDGR) {
-		this.atto.setNumeroDGR(numeroDGR);
+		this.atto.setNumeroDgr(numeroDGR);
 	}
 
 	public Date getDataDGR() {
-		return atto.getDataDGR();
+		return atto.getDataDgr();
 	}
 
 	public void setDataDGR(Date dataDGR) {
-		this.atto.setDataDGR(dataDGR);
+		this.atto.setDataDgr(dataDGR);
 	}
 
 	public String getAssegnazione() {
@@ -431,19 +431,19 @@ public class AttoBean implements Serializable {
 	}
 
 	public String getNumeroLCR() {
-		return atto.getNumeroLCR();
+		return atto.getNumeroLcr();
 	}
 
 	public void setNumeroLCR(String numeroLCR) {
-		this.atto.setNumeroLCR(numeroLCR);
+		this.atto.setNumeroLcr(numeroLCR);
 	}
 
 	public String getNumeroLR() {
-		return atto.getNumeroLR();
+		return atto.getNumeroLr();
 	}
 
 	public void setNumeroLR(String numeroLR) {
-		this.atto.setNumeroLR(numeroLR);
+		this.atto.setNumeroLr(numeroLR);
 	}
 
 	public boolean isAbbinamento() {

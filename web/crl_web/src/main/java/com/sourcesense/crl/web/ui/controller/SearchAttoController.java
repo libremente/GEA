@@ -471,22 +471,22 @@ public class SearchAttoController  {
 
 
 	public String getNumeroLCR() {
-		return this.atto.getNumeroLCR();
+		return this.atto.getNumeroLcr();
 	}
 
 
 	public void setNumeroLCR(String numeroLCR) {
-		this.atto.setNumeroLCR(numeroLCR);
+		this.atto.setNumeroLcr(numeroLCR);
 	}
 
 
 	public String getNumeroLR() {
-		return this.atto.getNumeroLR();
+		return this.atto.getNumeroLr();
 	}
 
 
 	public void setNumeroLR(String numeroLR) {
-		this.atto.setNumeroLR(numeroLR);
+		this.atto.setNumeroLr(numeroLR);
 	}
 
 
