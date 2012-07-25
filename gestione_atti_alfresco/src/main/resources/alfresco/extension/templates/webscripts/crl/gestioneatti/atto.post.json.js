@@ -85,5 +85,9 @@ if(attoResults!=null && attoResults.length>0){
 	var abbinamentiFolderNode = search.luceneSearch(abbinamentiSpaceTemplateQuery)[0];
 	abbinamentiFolderNode.copy(attoFolderNode);
 	
+	var allegatiSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Allegati\"";
+	var allegatiFolderNode = search.luceneSearch(allegatiSpaceTemplateQuery)[0];
+	allegatiFolderNode.copy(attoFolderNode);
+	
 	model.atto = attoFolderNode;
 }

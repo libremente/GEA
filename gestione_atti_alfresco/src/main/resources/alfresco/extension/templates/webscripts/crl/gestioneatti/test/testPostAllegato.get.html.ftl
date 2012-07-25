@@ -19,6 +19,12 @@
 					</#list>
 				</select>
 			</td>
+			<td>
+				<select name="tipologia">
+					<option value="Tipologia1">Tipologia1</option>
+					<option value="Tipologia2">Tipologia2</option>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td>File:</td>

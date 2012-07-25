@@ -1,5 +1,5 @@
 {
-   "atto": 
+   "Atto": 
    {
 	"id" : "${atto.nodeRef}",
 	"nome" : "${atto.name}",
@@ -14,13 +14,13 @@
 	"oggetto" : "<#if atto.properties["crlatti:oggetto"]?exists>${atto.properties["crlatti:oggetto"]}<#else></#if>",
 	"tipoChiusura" : "<#if atto.properties["crlatti:tipoChiusura"]?exists>${atto.properties["crlatti:tipoChiusura"]}<#else></#if>",
 	"dataPubblicazione" : "<#if atto.properties["crlatti:dataPubblicazione"]?exists>${atto.properties["crlatti:dataPubblicazione"]?string("dd/MM/yyyy")}<#else></#if>",
-	"esitoVotoComRef" : "<#if atto.properties["crlatti:esitoVotoComRef"]?exists>${atto.properties["crlatti:esitoVotoComRef"]}<#else></#if>",
+	"esitoVotoCommissioneReferente" : "<#if atto.properties["crlatti:esitoVotoComRef"]?exists>${atto.properties["crlatti:esitoVotoComRef"]}<#else></#if>",
 	"dataSedutaSc" : "<#if atto.properties["crlatti:dataSedutaSc"]?exists>${atto.properties["crlatti:dataSedutaSc"]?string("dd/MM/yyyy")}<#else></#if>",
 	"esitoVotoAula" : "<#if atto.properties["crlatti:esitoVotoAula"]?exists>${atto.properties["crlatti:esitoVotoAula"]}<#else></#if>",
-	"dataSedutaComm" : "<#if atto.properties["crlatti:dataSedutaComm"]?exists>${atto.properties["crlatti:dataSedutaComm"]?string("dd/MM/yyyy")}<#else></#if>",
-	"commReferente" : "<#if atto.properties["crlatti:commReferente"]?exists>${atto.properties["crlatti:commReferente"]}<#else></#if>",
+	"dataSedutaCommissione" : "<#if atto.properties["crlatti:dataSedutaComm"]?exists>${atto.properties["crlatti:dataSedutaComm"]?string("dd/MM/yyyy")}<#else></#if>",
+	"commissioneReferente" : "<#if atto.properties["crlatti:commReferente"]?exists>${atto.properties["crlatti:commReferente"]}<#else></#if>",
 	"dataSedutaAula" : "<#if atto.properties["crlatti:dataSedutaAula"]?exists>${atto.properties["crlatti:dataSedutaAula"]?string("dd/MM/yyyy")}<#else></#if>",
-	"commConsultiva" : "<#if atto.properties["crlatti:commConsultiva"]?exists>${atto.properties["crlatti:commConsultiva"]}<#else></#if>",
+	"commissioneConsultiva" : "<#if atto.properties["crlatti:commConsultiva"]?exists>${atto.properties["crlatti:commConsultiva"]}<#else></#if>",
 	"redigente" : "<#if atto.properties["crlatti:redigente"]?exists>${atto.properties["crlatti:redigente"]?string("true","false")}<#else></#if>",
 	"deliberante" : "<#if atto.properties["crlatti:deliberante"]?exists>${atto.properties["crlatti:deliberante"]?string("true","false")}<#else></#if>",
 	"organismoStatutario" : "<#if atto.properties["crlatti:organismoStatutario"]?exists>${atto.properties["crlatti:organismoStatutario"]}<#else></#if>",
@@ -33,10 +33,9 @@
 	"sospeso" : "<#if atto.properties["crlatti:sospeso"]?exists>${atto.properties["crlatti:sospeso"]?string("true","false")}<#else></#if>",
 	"abbinamento" : "<#if atto.properties["crlatti:abbinamento"]?exists>${atto.properties["crlatti:abbinamento"]?string("true","false")}<#else></#if>",
 	"stralcio" : "<#if atto.properties["crlatti:stralcio"]?exists>${atto.properties["crlatti:stralcio"]?string("true","false")}<#else></#if>",
-	"sospeso" : "<#if atto.properties["crlatti:sospeso"]?exists>${atto.properties["crlatti:sospeso"]?string("true","false")}<#else></#if>",
 	"primoFirmatario" : "<#if atto.properties["crlatti:primoFirmatario"]?exists>${atto.properties["crlatti:primoFirmatario"]}<#else></#if>",
-	"relatori" : <#if atto.properties["crlatti:relatori"]?exists>
-	[
+	"relatori" : [<#if atto.properties["crlatti:relatori"]?exists>
+	
 	<#list atto.properties["crlatti:relatori"] as relatore>
 		{ 
 			"relatore" : 
@@ -46,9 +45,9 @@
 		}
 		<#if relatore_has_next>,</#if>
 	</#list>
-	]
+	
 		<#else>
-	</#if>
+	</#if>]
 	
    }
 }

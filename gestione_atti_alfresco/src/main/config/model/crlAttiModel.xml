@@ -174,6 +174,22 @@
 				</child-association>
 			</associations>
 		</type>
+		
+		<type name="crlatti:allegato">
+			<title>Allegato</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:tipologiaAllegato">
+					<title>Tipologia</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+			</properties>
+		</type>
 
 		<type name="crlatti:abbinamento">
 			<title>Abbinamento</title>

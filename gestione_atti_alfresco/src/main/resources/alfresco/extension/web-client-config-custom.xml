@@ -7,6 +7,7 @@
 			<type name="crlatti:firmatario" />
 			<type name="crlatti:commissione" />
 			<type name="crlatti:abbinamento" />
+			<type name="crlatti:allegato"/>
 		</content-types>
 	</config>
 
@@ -16,12 +17,14 @@
 			<type name="crlatti:firmatario" />
 			<type name="crlatti:commissione" />
 			<type name="crlatti:abbinamento"/>
+			<type name="crlatti:allegato"/>
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
 			<type name="crlatti:commissione" />
 			<type name="crlatti:abbinamento"/>
+			<type name="crlatti:allegato"/>
 		</specialise-types>
 	</config>
 
@@ -38,6 +41,12 @@
 			<type name="crlatti:attoRel" />
 			<type name="crlatti:attoEac" />
 		</folder-types>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:allegato">
+		<property-sheet>
+			<show-property name="crlatti:tipologiaAllegato"/>
+		</property-sheet>
 	</config>
 
 	<config evaluator="node-type" condition="crlatti:commissione">
@@ -190,6 +199,7 @@
 				<type name="crlatti:legislaturaAnagrafica" />
 				<type name="crlatti:commissione" />
 				<type name="crlatti:abbinamento" />
+				<type name="crlatti:allegato"/>
 			</content-types>
 
 			<folder-types>

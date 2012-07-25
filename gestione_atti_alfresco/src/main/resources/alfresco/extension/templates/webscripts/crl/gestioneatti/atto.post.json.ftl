@@ -1,7 +1,7 @@
 {
-   "atto": 
+   "Atto": 
    {
 	"id":"${atto.nodeRef}",
-	"nome":"${atto.name}"
+	"numeroAtto":"${atto.properties["crlatti:numeroAtto"]}"
    }
 }
