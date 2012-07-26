@@ -105,36 +105,26 @@ public class PresentazioneAssegnazioneAttoController {
 	@PostConstruct
 	protected void init() {
 		setFirmatari(personaleServiceManager.findAllFirmatario());
-
-	}
-
-	public void updateInfoGenHandler() {
-
-		setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
-
 		// TODO: setCommissioni(commissioneServiceManager.findAll());
 		setCommissioni(commissioneServiceManager.findAllCommissioneConsultiva());
-
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 
 	}
 
+	public void updateInfoGenHandler() {
+		setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
+	}
+
 	public void updateAmmissibilitaHandler() {
-
 		setStatoCommitAmmissibilita(CRLMessage.COMMIT_UNDONE);
-
 	}
 
 	public void updateAssegnazioneHandler() {
-
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_UNDONE);
-
 	}
 
 	public void updateNoteHandler() {
-
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
-
 	}
 
 	public void changeTabHandler() {
@@ -232,6 +222,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 			// TODO aggiungi a bean di sessione
 			testiAttoList.add(allegato);
+			setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
 		}
 	}
 
@@ -311,10 +302,6 @@ public class PresentazioneAssegnazioneAttoController {
 		// TODO Service logic
 
 	}
-
-
-
-
 
 	public void salvaInfoGenerali() {
 
@@ -453,7 +440,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		return true;
 	}
-	
+
 	public void confermaAssegnazione() {
 		// TODO
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
@@ -566,7 +553,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		return true;
 	}
-	
+
 	public void salvaNoteEAllegati() {
 		// TODO
 	}
