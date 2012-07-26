@@ -18,6 +18,7 @@ import javax.print.attribute.standard.Severity;
 import org.primefaces.event.FileUploadEvent;
 
 import com.sourcesense.crl.business.model.Allegato;
+import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoConsiliare;
@@ -101,6 +102,8 @@ public class PresentazioneAssegnazioneAttoController {
 	private boolean pubblico;
 
 	private String linkToDelete;
+	
+	private Atto atto=new Atto();
 
 	@PostConstruct
 	protected void init() {
