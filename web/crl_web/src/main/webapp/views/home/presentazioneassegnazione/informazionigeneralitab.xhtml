@@ -70,7 +70,8 @@
 					<h:outputText style="font-weight: bold;" value="Numero Atto: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="inputnumeroatto" value="#{attoBean.numeroAtto}" />
+					<p:inputText 
+					             id="inputnumeroatto" value="#{attoBean.numeroAtto}" />
 				</p:column>
 
 
@@ -78,8 +79,11 @@
 					<h:outputText style="font-weight: bold;" value="Classificazione: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="inputclassificazione"
-						value="#{attoBean.classificazione}" />
+					<p:inputText  id="inputclassificazione"
+						value="#{attoBean.classificazione}" >
+						<p:ajax event="change" 
+                    listener="#{presentazioneAssegnazioneAttoController.updateHandler}"/>  
+					</p:inputText>	
 				</p:column>
 			</p:row>
 

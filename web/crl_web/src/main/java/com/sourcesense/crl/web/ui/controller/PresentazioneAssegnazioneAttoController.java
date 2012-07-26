@@ -29,6 +29,7 @@ import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.OrganismoStatutarioServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
+import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
@@ -48,8 +49,6 @@ public class PresentazioneAssegnazioneAttoController {
 	@ManagedProperty(value = "#{organismoStatutarioServiceManager}")
 	private OrganismoStatutarioServiceManager organismoStatutarioServiceManager;
 
-
-
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
 	private Map<String, String> firmatari = new HashMap<String, String>();
 	private String nomeFirmatario;
@@ -64,6 +63,11 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private String firmatarioToDelete;
 	private String testoAttoToDelete;
+
+	private String statoCommitInfoGen = CRLMessage.COMMIT_DONE;
+	private String statoCommitAmmissibilita = CRLMessage.COMMIT_DONE;
+	private String statoCommitAssegnazione = CRLMessage.COMMIT_DONE;
+	private String statoCommitNote = CRLMessage.COMMIT_DONE;
 
 	private Map<String, String> commissioni = new HashMap<String, String>();
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
@@ -89,27 +93,95 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private List<Allegato> allegatiList = new ArrayList<Allegato>();
 	private String allegatoToDelete;
-	
+
 	private List<Link> linksList = new ArrayList<Link>();
-	
+
 	private String nomeLink;
 	private String urlLink;
 	private boolean pubblico;
-	
+
 	private String linkToDelete;
 
 	@PostConstruct
 	protected void init() {
-
 		setFirmatari(personaleServiceManager.findAllFirmatario());
 
-		//TODO: setCommissioni(commissioneServiceManager.findAll());
+	}
+
+	public void updateInfoGenHandler() {
+
+		setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
+
+		// TODO: setCommissioni(commissioneServiceManager.findAll());
 		setCommissioni(commissioneServiceManager.findAllCommissioneConsultiva());
 
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 
 	}
 
+	public void updateAmmissibilitaHandler() {
+
+		setStatoCommitAmmissibilita(CRLMessage.COMMIT_UNDONE);
+
+	}
+
+	public void updateAssegnazioneHandler() {
+
+		setStatoCommitAssegnazione(CRLMessage.COMMIT_UNDONE);
+
+	}
+
+	public void updateNoteHandler() {
+
+		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
+
+	}
+
+	public void changeTabHandler() {
+
+		if (statoCommitInfoGen.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche alle Informazioni Generali non sono state salvate ",
+							""));
+		}
+
+		if (statoCommitAmmissibilita.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche di Ammissibilità non sono state salvate ",
+							""));
+		}
+
+		if (statoCommitAssegnazione.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche di Assegnazione non sono state salvate ",
+							""));
+		}
+
+		if (statoCommitNote.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche alle Note ed Allegati non sono state salvate ",
+							""));
+		}
+
+	}
+
+	// Info Generali******************************************************
 	public void presaInCarico() {
 
 		// TODO Service logic
@@ -125,6 +197,68 @@ public class PresentazioneAssegnazioneAttoController {
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username));
 
+	}
+
+	public void uploadTestoAtto(FileUploadEvent event) {
+
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkTestoAtto(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+
+		} else {
+
+			// TODO Alfresco upload
+			Allegato allegatoRet = null;
+			Allegato allegato = new Allegato();
+			allegato.setDescrizione(fileName);
+			allegato.setDownloadUrl("hppt://yourhost:0808/file");
+			allegato.setPubblico(true);
+			allegato.setTipoAllegato("TestoAtto");
+
+			try {
+				allegatoRet = attoServiceManager.uploadFile(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), allegato, event
+								.getFile().getInputstream());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			testiAttoList.add(allegato);
+		}
+	}
+
+	private boolean checkTestoAtto(String fileName) {
+
+		for (Allegato element : testiAttoList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public void removeTestoAtto() {
+
+		for (Allegato element : testiAttoList) {
+
+			if (element.getDescrizione().equals(testoAttoToDelete)) {
+				// TODO Alfresco delete
+				testiAttoList.remove(element);
+				break;
+			}
+		}
 	}
 
 	public void addFirmatario() {
@@ -168,72 +302,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 				return false;
 			}
-
 		}
-
 		return true;
-	}
-
-
-	public void uploadTestoAtto(FileUploadEvent event) {
-
-		// TODO Service logic
-		String fileName = event.getFile().getFileName();
-
-		if (!checkTestoAtto(fileName)) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
-							+ fileName + " è già stato allegato ", ""));
-
-		} else {
-
-			// TODO Alfresco upload
-			Allegato allegatoRet = null;
-			Allegato allegato = new Allegato();
-			allegato.setDescrizione(fileName);
-			allegato.setDownloadUrl("hppt://yourhost:0808/file");
-			allegato.setPubblico(true);
-			allegato.setTipoAllegato("TestoAtto");
-
-			try{
-				allegatoRet = attoServiceManager.uploadFile(((AttoBean) FacesContext.getCurrentInstance().getExternalContext()
-						.getSessionMap().get("attoBean")).getAtto(), allegato, event.getFile().getInputstream()) ;
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			//TODO aggiungi a bean di sessione
-			testiAttoList.add(allegato);
-		}
-	}
-
-	private boolean checkTestoAtto(String fileName) {
-
-		for (Allegato element : testiAttoList) {
-
-			if (element.getDescrizione().equals(fileName)) {
-
-				return false;
-			}
-
-		}
-
-		return true;
-	}
-
-	public void removeTestoAtto() {
-
-		for (Allegato element : testiAttoList) {
-
-			if (element.getDescrizione().equals(testoAttoToDelete)) {
-
-
-				//TODO Alfresco delete
-				testiAttoList.remove(element);
-				break;
-			}
-		}
 	}
 
 	public void ritiraPerMancanzaFirmatari() {
@@ -242,14 +312,49 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+
+
+
+
+	public void salvaInfoGenerali() {
+
+		// TODO Service logic
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		// TODO
+
+		// set lists
+		attoBean.getAtto().setAllegati(this.testiAttoList);
+		attoBean.getAtto().setFirmatari(this.firmatariList);
+		attoServiceManager.merge(attoBean.getAtto());
+
+	}
+
+	// Ammissibilita******************************************************
+
+	public void salvaAmmissibilita() {
+
+		// TODO Service logic
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		// TODO
+
+		// attoBean.merge();
+
+	}
+
+	// Assegnazione******************************************************
 	public void addCommissione() {
 
 		if (nomeCommissione != null && !nomeCommissione.trim().equals("")) {
 			if (!checkCommissioni()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Attenzione ! Commissione "
-								+ nomeCommissione + " già presente ", ""));
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Commissione " + nomeCommissione
+								+ " già presente ", ""));
 
 			} else {
 				Commissione commissione = new Commissione();
@@ -287,9 +392,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 		return true;
 	}
-	
+
 	public void annulCommissione() {
-		
+
 		for (Commissione element : commissioniList) {
 
 			if (element.getDescrizione().equals(commissioneToAnnul)) {
@@ -300,24 +405,23 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
-
-
-
-
-
 	public void addOrganismoStatutario() {
 
-		if (nomeOrganismoStatutario != null && !nomeOrganismoStatutario.trim().equals("")) {
+		if (nomeOrganismoStatutario != null
+				&& !nomeOrganismoStatutario.trim().equals("")) {
 			if (!checkOrganismiStatutari()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Attenzione ! Organismo Statutario "
-								+ nomeOrganismoStatutario + " già presente ", ""));
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Organismo Statutario "
+								+ nomeOrganismoStatutario + " già presente ",
+						""));
 
 			} else {
 				OrganismoStatutario organismoStatutario = new OrganismoStatutario();
 				organismoStatutario.setDescrizione(nomeOrganismoStatutario);
-				organismoStatutario.setDataAssegnazione(dataAssegnazioneOrganismo);
+				organismoStatutario
+						.setDataAssegnazione(dataAssegnazioneOrganismo);
 				organismoStatutario.setObbligatorio(obbligatorio);
 				organismiStatutariList.add(organismoStatutario);
 			}
@@ -350,11 +454,12 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 	
-	
+	public void confermaAssegnazione() {
+		// TODO
+		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
+	}
 
-
-
-
+	// Note e Allegati******************************************************
 	public void uploadAllegato(FileUploadEvent event) {
 
 		// TODO Service logic
@@ -375,14 +480,17 @@ public class PresentazioneAssegnazioneAttoController {
 			allegato.setPubblico(true);
 			allegato.setTipoAllegato("Allegato");
 
-			try{
-				allegatoRet = attoServiceManager.uploadFile(((AttoBean) FacesContext.getCurrentInstance().getExternalContext()
-						.getSessionMap().get("attoBean")).getAtto(), allegato, event.getFile().getInputstream()) ;
-			}catch (IOException e) {
+			try {
+				allegatoRet = attoServiceManager.uploadFile(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), allegato, event
+								.getFile().getInputstream());
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			//TODO aggiungi a bean di sessione
+			// TODO aggiungi a bean di sessione
 			allegatiList.add(allegato);
 		}
 	}
@@ -407,17 +515,13 @@ public class PresentazioneAssegnazioneAttoController {
 
 			if (element.getDescrizione().equals(allegatoToDelete)) {
 
-
-				//TODO Alfresco delete
+				// TODO Alfresco delete
 				allegatiList.remove(element);
 				break;
 			}
 		}
 	}
-	
-	
-	
-	
+
 	public void addLink() {
 
 		if (nomeLink != null && !nomeLink.trim().equals("")) {
@@ -463,33 +567,11 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 	
-	
-	
-
-
-
-
-	public void salva() {
-
-		// TODO Service logic
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-		// TODO
-
-		// set lists
-		// attoBean.merge();
-
-	}
-	
-	public void confermaAssegnazione() {
-		//TODO
-	}
-	
 	public void salvaNoteEAllegati() {
-		//TODO
+		// TODO
 	}
 
+	// Getters & Setters******************************************************
 	public List<Firmatario> getFirmatariList() {
 		return firmatariList;
 	}
@@ -721,7 +803,8 @@ public class PresentazioneAssegnazioneAttoController {
 		return organismoStatutarioToDelete;
 	}
 
-	public void setOrganismoStatutarioToDelete(String organismoStatutarioToDelete) {
+	public void setOrganismoStatutarioToDelete(
+			String organismoStatutarioToDelete) {
 		this.organismoStatutarioToDelete = organismoStatutarioToDelete;
 	}
 
@@ -797,17 +880,37 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setCommissioneToAnnul(String commissioneToAnnul) {
 		this.commissioneToAnnul = commissioneToAnnul;
 	}
-	
-	
-	
-	
-	
-	
 
+	public String getStatoCommitInfoGen() {
+		return statoCommitInfoGen;
+	}
 
+	public void setStatoCommitInfoGen(String statoCommitInfoGen) {
+		this.statoCommitInfoGen = statoCommitInfoGen;
+	}
 
+	public String getStatoCommitAmmissibilita() {
+		return statoCommitAmmissibilita;
+	}
 
+	public void setStatoCommitAmmissibilita(String statoCommitAmmissibilita) {
+		this.statoCommitAmmissibilita = statoCommitAmmissibilita;
+	}
 
+	public String getStatoCommitAssegnazione() {
+		return statoCommitAssegnazione;
+	}
 
+	public void setStatoCommitAssegnazione(String statoCommitAssegnazione) {
+		this.statoCommitAssegnazione = statoCommitAssegnazione;
+	}
+
+	public String getStatoCommitNote() {
+		return statoCommitNote;
+	}
+
+	public void setStatoCommitNote(String statoCommitNote) {
+		this.statoCommitNote = statoCommitNote;
+	}
 
 }

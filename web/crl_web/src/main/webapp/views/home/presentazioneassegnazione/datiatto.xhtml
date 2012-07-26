@@ -8,10 +8,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
-	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
+<h:form id="presAssForm">
 
-		<p:tab id="tba1" title="Informazioni Generali">
+    <p:growl id="tabPresAssMsg" showDetail="true" sticky="false" />
+
+	<p:tabView onTabChange="" id="tabView" dynamic="true" cache="true" effect="slide">
+        
+        
+
+        <p:ajax event="tabChange" listener="#{presentazioneAssegnazioneAttoController.changeTabHandler}" update=":presAssForm:tabPresAssMsg"/>  
+        
+
+		<p:tab id="tba1"  title="Informazioni Generali">
             
 
            <ui:include src="./informazionigeneralitab.xhtml"/>
