@@ -481,6 +481,14 @@ public class PresentazioneAssegnazioneAttoController {
 		// attoBean.merge();
 
 	}
+	
+	public void confermaAssegnazione() {
+		//TODO
+	}
+	
+	public void salvaNoteEAllegati() {
+		//TODO
+	}
 
 	public List<Firmatario> getFirmatariList() {
 		return firmatariList;
