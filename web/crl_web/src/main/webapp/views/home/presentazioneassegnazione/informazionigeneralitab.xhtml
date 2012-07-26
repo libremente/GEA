@@ -79,10 +79,8 @@
 					<h:outputText style="font-weight: bold;" value="Classificazione: " />
 				</p:column>
 				<p:column>
-					<p:inputText  id="inputclassificazione"
-						value="#{attoBean.classificazione}" >
-						<p:ajax event="change" 
-                    listener="#{presentazioneAssegnazioneAttoController.updateHandler}"/>  
+					<p:inputText  id="inputclassificazione" value="#{attoBean.classificazione}" >
+						<p:ajax event="change" listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"/>  
 					</p:inputText>	
 				</p:column>
 			</p:row>
