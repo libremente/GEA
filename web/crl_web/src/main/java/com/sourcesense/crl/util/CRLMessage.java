@@ -12,7 +12,8 @@ public class CRLMessage {
 	public static final String SUBMIT_SUCCESS ="success";
 	public static final String SUBMIT_FAILURE ="failure";
 	
-	
+	public static final String COMMIT_UNDONE ="Da salvare";
+	public static final String COMMIT_DONE ="Salvato";
 	
 	
 }

@@ -67,7 +67,7 @@ public class AttoServiceManager implements ServiceManager {
 	public Allegato uploadFile(Atto atto, Allegato allegato,InputStream stream) {
 
 		return attoService.uploadFile(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_file", new String[] { atto.getId() }), stream);
+				"alfresco_context_url", "alf_upload_file", new String[] { atto.getId() }),atto, stream);
 	}
 
 	@Override

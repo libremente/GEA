@@ -144,7 +144,7 @@ public class AttoService  {
 	}
 
 	
-	public Allegato uploadFile(String url,InputStream stream){
+	public Allegato uploadFile(String url,Atto atto,InputStream stream){
 		
 		Allegato allegato=null;
 		
@@ -152,16 +152,18 @@ public class AttoService  {
 			
 			WebResource webResource = client.resource(url);
 			FormDataMultiPart part = new FormDataMultiPart();
-			part.bodyPart(new StreamDataBodyPart("file", stream), MediaType.MULTIPART_FORM_DATA_TYPE);
+			part.bodyPart(new StreamDataBodyPart("file", stream));
+			part.field("id", atto.getId());
+			
 			//part.
 			
 			
-			MultiPart multiPart = new MultiPart();
+			//MultiPart multiPart = new MultiPart();
 			//multiPart.bodyPart(new BodyPart(stream, MediaType.APPLICATION_OCTET_STREAM_TYPE));
 			//multiPart.bodyPart(new BodyPart(stream, MediaType.APPLICATION_OCTET_STREAM_TYPE));
 			
 			
-			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, multiPart);
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, part);
 			
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
