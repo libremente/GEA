@@ -3,11 +3,11 @@ package com.sourcesense.crl.business.model;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.springframework.beans.factory.annotation.Configurable;
 
-@JsonRootName("testoAtto")
-@JsonTypeName("testoAtto")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-public class TestoAtto {
+@Configurable
+@JsonRootName("attoRecord")
+public class AttoRecord {
 	
 	private String nome;
 	private String descrizione;

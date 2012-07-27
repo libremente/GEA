@@ -68,16 +68,25 @@ import org.springframework.beans.factory.annotation.Configurable;
  * @author pronetics
  *
  */
-@Configurable
+@Configurable()
 @XmlRootElement(name="atto")
 @JsonRootName("atto")
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-public class Atto 
+public class Atto implements Cloneable
 {
     /**
 	 * 
 	 */
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 
@@ -148,7 +157,7 @@ public class Atto
 	private List <Allegato> allegati = new ArrayList<Allegato>();
 	private List <Link> links = new ArrayList<Link>();
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
-	private List <TestoAtto> testiAtto = new ArrayList<TestoAtto>();
+	private List <AttoRecord> testiAtto = new ArrayList<AttoRecord>();
 	
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
@@ -813,13 +822,14 @@ public class Atto
 		this.noteNoteAllegatiPresentazioneAssegnazione = noteNoteAllegatiPresentazioneAssegnazione;
 	}
 
-	public List <TestoAtto> getTestiAtto() {
+	public List <AttoRecord> getTestiAtto() {
 		return testiAtto;
 	}
 
-	public void setTestiAtto(List <TestoAtto> testiAtto) {
+	public void setTestiAtto(List <AttoRecord> testiAtto) {
 		this.testiAtto = testiAtto;
 	}
+
 	
 	
 
