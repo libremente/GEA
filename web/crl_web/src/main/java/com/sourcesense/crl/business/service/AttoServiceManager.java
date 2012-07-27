@@ -63,6 +63,13 @@ public class AttoServiceManager implements ServiceManager {
 		return searchAtti(attoInit);
 
 	}
+	
+	
+	/*public Atto persist(Object object) {
+		return attoService.create(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_new_atto", null), (Atto) object);
+
+	}*/
 
 	public Allegato uploadFile(Atto atto, Allegato allegato,InputStream stream) {
 
