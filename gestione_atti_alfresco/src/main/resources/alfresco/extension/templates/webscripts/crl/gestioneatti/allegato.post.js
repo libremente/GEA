@@ -25,7 +25,7 @@ if(nodeRefAtto == ""){
 	var allegatiSpace = attoFolderNode.childrenByXPath(allegatiXpathQuery)[0];
 		
 	var allegatoXpathQuery = "*[@cm:name='"+filename+"']";
-	var allegatoResults = allegatiSpace.childrenByXPath(allegatoXpathQuery)[0];
+	var allegatoResults = allegatiSpace.childrenByXPath(allegatoXpathQuery);
 	
 	if(allegatoResults!=null && allegatoResults.length>0){
 		var allegatoEsistente = allegatoResults[0];

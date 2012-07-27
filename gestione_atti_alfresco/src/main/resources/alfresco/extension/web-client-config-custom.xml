@@ -141,7 +141,7 @@
 			<show-property name="crlatti:primoFirmatario" />
 			<show-property name="crlatti:firmatari" />
 
-			<show-property name="crlatti:abbinamenti" />
+			<show-child-association name="crlatti:abbinamenti" />
 		</property-sheet>
 	</config>
 
@@ -186,7 +186,7 @@
 			<show-property name="crlatti:primoFirmatario" />
 			<show-property name="crlatti:firmatari" />
 
-			<show-property name="crlatti:abbinamenti" />
+			<show-child-association name="crlatti:abbinamenti" />
 		</property-sheet>
 	</config>
 
