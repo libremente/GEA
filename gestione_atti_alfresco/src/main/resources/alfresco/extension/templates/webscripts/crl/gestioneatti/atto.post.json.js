@@ -51,6 +51,24 @@ if(meseResults!=null && meseResults.length>0){
 var nodeType = "crlatti:atto";
 if(tipoAtto=="PDL"){
 	nodeType = "crlatti:attoPdl";
+} else if(tipoAtto=="DOC"){
+	nodeType = "crlatti:atto";
+} else if(tipoAtto=="INP"){
+	nodeType = "crlatti:attoInp";
+} else if(tipoAtto=="PAR"){
+	nodeType = "crlatti:attoPar";
+} else if(tipoAtto=="PDA"){
+	nodeType = "crlatti:attoPda";
+} else if(tipoAtto=="PLP"){
+	nodeType = "crlatti:attoPlp";
+} else if(tipoAtto=="PRE"){
+	nodeType = "crlatti:attoPre";
+} else if(tipoAtto=="REF"){
+	nodeType = "crlatti:attoRef";
+} else if(tipoAtto=="REL"){
+	nodeType = "crlatti:attoRel";
+} else if(tipoAtto=="EAC"){
+	nodeType = "crlatti:attoEac";
 }
 
 //verifica esistenza del folder dell'atto
@@ -64,30 +82,15 @@ if(attoResults!=null && attoResults.length>0){
 	status.redirect = true;
 } else {
 	//creazione del nodo
-	var attoFolderNode = meseFolderNode.createNode(numeroAtto,nodeType);
+	var attoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Atto\"";
+	var attoSpaceTemplateNode = search.luceneSearch(attoSpaceTemplateQuery)[0];
+	var attoFolderNode = attoSpaceTemplateNode.copy(meseFolderNode,true);
+	attoFolderNode.name = numeroAtto;
+	attoFolderNode.specializeType(nodeType);
 	attoFolderNode.properties["crlatti:legislatura"] = legislatura;
 	attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
 	attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 	attoFolderNode.properties["crlatti:anno"] = anno;
 	attoFolderNode.save();
-	
-	//copia del template Firmatari
-	
-	var firmatariSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Firmatari\"";
-	var firmatariFolderNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
-	firmatariFolderNode.copy(attoFolderNode);
-	
-	var commissioniSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Commissioni\"";
-	var commissioniFolderNode = search.luceneSearch(commissioniSpaceTemplateQuery)[0];
-	commissioniFolderNode.copy(attoFolderNode);
-	
-	var abbinamentiSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Abbinamenti\"";
-	var abbinamentiFolderNode = search.luceneSearch(abbinamentiSpaceTemplateQuery)[0];
-	abbinamentiFolderNode.copy(attoFolderNode);
-	
-	var allegatiSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Allegati\"";
-	var allegatiFolderNode = search.luceneSearch(allegatiSpaceTemplateQuery)[0];
-	allegatiFolderNode.copy(attoFolderNode);
-	
 	model.atto = attoFolderNode;
 }

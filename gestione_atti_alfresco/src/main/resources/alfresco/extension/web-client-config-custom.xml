@@ -130,6 +130,7 @@
 
 	<config evaluator="node-type" condition="crlatti:attoPdl">
 		<property-sheet>
+			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
 			<show-property name="crlatti:numeroAtto" />
@@ -173,6 +174,7 @@
 
 	<config evaluator="node-type" condition="crlatti:atto">
 		<property-sheet>
+			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
 			<show-property name="crlatti:numeroAtto" />

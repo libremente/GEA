@@ -169,6 +169,9 @@
 					</target>
 				</child-association>
 			</associations>
+			<mandatory-aspects>
+				<aspect>crlatti:tipizzabile</aspect>
+			</mandatory-aspects>
 		</type>
 		
 		<type name="crlatti:testo">

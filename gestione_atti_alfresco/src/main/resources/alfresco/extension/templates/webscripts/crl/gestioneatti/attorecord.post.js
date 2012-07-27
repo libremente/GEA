@@ -23,8 +23,11 @@ if(nodeRefAtto == ""){
 	
 	var attoFolderNode = utils.getNodeFromString(nodeRefAtto);
 	var attoRecordNode = null;
+	var testiXPathQuery = "*[@cm:name='Testi']";
 	var recordXPathQuery = "*[@cm:name='"+filename+"']";
-	var attoResults = attoFolderNode.childrenByXPath(recordXPathQuery);
+	
+	var testiFolderNode = attoFolderNode.childrenByXPath(testiXPathQuery)[0];
+	var attoResults = testiFolderNode.childrenByXPath(recordXPathQuery);
 	
 	if(attoResults!=null && attoResults.length>0){
 	
@@ -35,10 +38,12 @@ if(nodeRefAtto == ""){
 		attoEsistente.save();
 		attoRecordNode = attoEsistente;
 	
-	} else if (attoRecordNode == null){
+	} 
+	
+	if (attoRecordNode == null){
 	
 		// creazione binario
-		attoRecordNode = attoFolderNode.createFile(filename);
+		attoRecordNode = testiFolderNode.createFile(filename);
 		attoRecordNode.specializeType("crlatti:testo");
 		attoRecordNode.properties.content.write(content);
 		attoRecordNode.properties.content.setEncoding("UTF-8");
