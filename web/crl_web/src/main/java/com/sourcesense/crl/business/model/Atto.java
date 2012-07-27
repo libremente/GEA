@@ -11,6 +11,7 @@
 package com.sourcesense.crl.business.model;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -136,17 +137,30 @@ public class Atto
 	private boolean rinviato;	
 	private boolean sospeso;
 	
-	private List <Commissione> commissioni;
-	private List <Atto> abbinamenti;
-	private List <Organo> organi;
-	private List <Firmatario> firmatari;
-	private List <Relatore> relatori;
-	private List <Parere> pareri;
-	private List <Consultazione> consultazioni;
-	private List <Atto> collegamenti;
-	private List <Allegato> allegati;
-	private List <Link> links;
+	private List <Commissione> commissioni = new ArrayList<Commissione>();
+	private List <Atto> abbinamenti = new ArrayList<Atto>();
+	private List <Organo> organi = new ArrayList<Organo>();
+	private List <Firmatario> firmatari = new ArrayList<Firmatario>();
+	private List <Relatore> relatori = new ArrayList<Relatore>();
+	private List <Parere> pareri = new ArrayList<Parere>();
+	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
+	private List <Atto> collegamenti = new ArrayList<Atto>();
+	private List <Allegato> allegati = new ArrayList<Allegato>();
+	private List <Link> links = new ArrayList<Link>();
+	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
+	private List <TestoAtto> testiAtto = new ArrayList<TestoAtto>();
 	
+	private String valutazioneAmmissibilita;
+	private Date dataRichiestaInformazioni;
+	private Date dataRicevimentoInformazioni;
+	private boolean aiutiStato;
+	private boolean normaFinanziaria;
+	private boolean richiestaUrgenza;
+	private boolean votazioneUrgenza;
+	private Date dataVotazioneUrgenza;
+	private String noteAmmissibilita;
+	
+	private String noteNoteAllegatiPresentazioneAssegnazione;
 	
     
 
@@ -709,6 +723,106 @@ public class Atto
 	public void setNumeroLr(String numeroLr) {
 		this.numeroLr = numeroLr;
 	}
+
+	public List <OrganismoStatutario> getOrganismiStatutari() {
+		return organismiStatutari;
+	}
+
+	public void setOrganismiStatutari(List <OrganismoStatutario> organismiStatutari) {
+		this.organismiStatutari = organismiStatutari;
+	}
+
+	public String getValutazioneAmmissibilita() {
+		return valutazioneAmmissibilita;
+	}
+
+	public void setValutazioneAmmissibilita(String valutazioneAmmissibilita) {
+		this.valutazioneAmmissibilita = valutazioneAmmissibilita;
+	}
+
+	public Date getDataRichiestaInformazioni() {
+		return dataRichiestaInformazioni;
+	}
+
+	public void setDataRichiestaInformazioni(Date dataRichiestaInformazioni) {
+		this.dataRichiestaInformazioni = dataRichiestaInformazioni;
+	}
+
+	public Date getDataRicevimentoInformazioni() {
+		return dataRicevimentoInformazioni;
+	}
+
+	public void setDataRicevimentoInformazioni(Date dataRicevimentoInformazioni) {
+		this.dataRicevimentoInformazioni = dataRicevimentoInformazioni;
+	}
+
+	public boolean isAiutiStato() {
+		return aiutiStato;
+	}
+
+	public void setAiutiStato(boolean aiutiStato) {
+		this.aiutiStato = aiutiStato;
+	}
+
+	public boolean isNormaFinanziaria() {
+		return normaFinanziaria;
+	}
+
+	public void setNormaFinanziaria(boolean normaFinanziaria) {
+		this.normaFinanziaria = normaFinanziaria;
+	}
+
+	public boolean isRichiestaUrgenza() {
+		return richiestaUrgenza;
+	}
+
+	public void setRichiestaUrgenza(boolean richiestaUrgenza) {
+		this.richiestaUrgenza = richiestaUrgenza;
+	}
+
+	public boolean isVotazioneUrgenza() {
+		return votazioneUrgenza;
+	}
+
+	public void setVotazioneUrgenza(boolean votazioneUrgenza) {
+		this.votazioneUrgenza = votazioneUrgenza;
+	}
+
+	public Date getDataVotazioneUrgenza() {
+		return dataVotazioneUrgenza;
+	}
+
+	public void setDataVotazioneUrgenza(Date dataVotazioneUrgenza) {
+		this.dataVotazioneUrgenza = dataVotazioneUrgenza;
+	}
+
+	public String getNoteAmmissibilita() {
+		return noteAmmissibilita;
+	}
+
+	public void setNoteAmmissibilita(String noteAmmissibilita) {
+		this.noteAmmissibilita = noteAmmissibilita;
+	}
+
+	public String getNoteNoteAllegatiPresentazioneAssegnazione() {
+		return noteNoteAllegatiPresentazioneAssegnazione;
+	}
+
+	public void setNoteNoteAllegatiPresentazioneAssegnazione(
+			String noteNoteAllegatiPresentazioneAssegnazione) {
+		this.noteNoteAllegatiPresentazioneAssegnazione = noteNoteAllegatiPresentazioneAssegnazione;
+	}
+
+	public List <TestoAtto> getTestiAtto() {
+		return testiAtto;
+	}
+
+	public void setTestiAtto(List <TestoAtto> testiAtto) {
+		this.testiAtto = testiAtto;
+	}
+	
+	
+
 	
 	
 }
