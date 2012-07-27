@@ -7,7 +7,8 @@
 			<type name="crlatti:firmatario" />
 			<type name="crlatti:commissione" />
 			<type name="crlatti:abbinamento" />
-			<type name="crlatti:allegato"/>
+			<type name="crlatti:allegato" />
+			<type name="crlatti:testo" />
 		</content-types>
 	</config>
 
@@ -16,16 +17,22 @@
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
 			<type name="crlatti:commissione" />
-			<type name="crlatti:abbinamento"/>
-			<type name="crlatti:allegato"/>
+			<type name="crlatti:abbinamento" />
+			<type name="crlatti:allegato" />
+			<type name="crlatti:testo" />
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
 			<type name="crlatti:commissione" />
-			<type name="crlatti:abbinamento"/>
-			<type name="crlatti:allegato"/>
+			<type name="crlatti:abbinamento" />
+			<type name="crlatti:allegato" />
+			<type name="crlatti:testo" />
 		</specialise-types>
+		<aspects>
+         	<aspect name="crlatti:tipizzabile" />
+         	<aspect name="crlatti:pubblico" />
+        </aspects>
 	</config>
 
 	<config evaluator="string-compare" condition="Space Wizards">
@@ -42,13 +49,33 @@
 			<type name="crlatti:attoEac" />
 		</folder-types>
 	</config>
-	
-	<config evaluator="node-type" condition="crlatti:allegato">
+
+	<config evaluator="aspect-name" condition="crlatti:tipizzabile">
 		<property-sheet>
-			<show-property name="crlatti:tipologiaAllegato"/>
+			<show-property name="crlatti:tipologia" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:pubblicabile">
+		<property-sheet>
+			<show-property name="crlatti:pubblico" />
 		</property-sheet>
 	</config>
 
+	<config evaluator="node-type" condition="crlatti:allegato">
+		<property-sheet> 
+			<show-property name="crlatti:tipologia"/>
+			<show-property name="crlatti:pubblico"/>
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:testo">
+		<property-sheet> 
+			<show-property name="crlatti:tipologia"/>
+			<show-property name="crlatti:pubblico"/>
+		</property-sheet>
+	</config>
+		
 	<config evaluator="node-type" condition="crlatti:commissione">
 		<property-sheet>
 			<show-property name="crlatti:relatoriCommissione" />
@@ -103,7 +130,6 @@
 
 	<config evaluator="node-type" condition="crlatti:attoPdl">
 		<property-sheet>
-			<show-property name="crlatti:tipologia" />
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
 			<show-property name="crlatti:numeroAtto" />
@@ -147,7 +173,6 @@
 
 	<config evaluator="node-type" condition="crlatti:atto">
 		<property-sheet>
-			<show-property name="crlatti:tipologia" />
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
 			<show-property name="crlatti:numeroAtto" />
@@ -199,7 +224,8 @@
 				<type name="crlatti:legislaturaAnagrafica" />
 				<type name="crlatti:commissione" />
 				<type name="crlatti:abbinamento" />
-				<type name="crlatti:allegato"/>
+				<type name="crlatti:allegato" />
+				<type name="crlatti:testo" />
 			</content-types>
 
 			<folder-types>

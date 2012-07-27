@@ -24,10 +24,6 @@
 			<title>Atto</title>
 			<parent>cm:folder</parent>
 			<properties>
-				<property name="crlatti:tipologia">
-					<title>Tipologia</title>
-					<type>d:text</type>
-				</property>
 				<property name="crlatti:legislatura">
 					<title>Legislatura</title>
 					<type>d:text</type>
@@ -175,20 +171,22 @@
 			</associations>
 		</type>
 		
+		<type name="crlatti:testo">
+			<title>Testo</title>
+			<parent>cm:content</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:tipizzabile</aspect>
+				<aspect>crlatti:pubblicabile</aspect>
+			</mandatory-aspects>
+		</type>
+		
 		<type name="crlatti:allegato">
 			<title>Allegato</title>
 			<parent>cm:content</parent>
-			<properties>
-				<property name="crlatti:tipologiaAllegato">
-					<title>Tipologia</title>
-					<type>d:text</type>
-					<index enabled="true">
-						<atomic>true</atomic>
-						<stored>false</stored>
-						<tokenised>false</tokenised>
-					</index>
-				</property>
-			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:tipizzabile</aspect>
+				<aspect>crlatti:pubblicabile</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:abbinamento">
@@ -398,5 +396,35 @@
 		</type>
 
 	</types>
+	
+	<aspects>
+		
+		<aspect name="crlatti:tipizzabile">
+			<title>Tipizzabile</title>
+			<properties>
+				<property name="crlatti:tipologia">
+					<title>Tipologia</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:pubblicabile">
+			<title>Pubblicabile</title>
+			<properties>
+				<property name="crlatti:pubblico">
+					<title>Pubblico</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		
+	</aspects>
 
 </model>

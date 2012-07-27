@@ -40,7 +40,7 @@ if(nodeRefAtto == ""){
 		// creazione binario
 		allegatoNode = allegatiSpace.createFile(filename);
 		allegatoNode.specializeType("crlatti:allegato");
-		allegatoNode.properties["crlatti:tipologiaAllegato"] = tipologia;
+		allegatoNode.properties["crlatti:tipologia"] = tipologia;
 		allegatoNode.properties.content.write(content);
 		allegatoNode.properties.content.setEncoding("UTF-8");
 		allegatoNode.properties.content.guessMimetype(filename);
