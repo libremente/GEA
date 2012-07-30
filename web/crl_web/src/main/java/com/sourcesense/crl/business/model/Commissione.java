@@ -2,6 +2,7 @@ package com.sourcesense.crl.business.model;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,12 @@ public class Commissione {
 	private String esitoVotazione;
 	private Date dataVotazione;
 	private Date dataTrasmissione;
-	private List <Relatore> relatori;
+	
+	private Date dataChiusuraLavoriComitato;
+	private Date dataAperturaLavoriComitato;
+	private Date dataNomina;
+	
+	private List <Relatore> relatori = new ArrayList<Relatore>();
 	private Date dataProposta;
 	private Date dataAnnullo;
 	private boolean annullata = false;
@@ -140,6 +146,30 @@ public class Commissione {
 
 	public void setAnnullata(boolean annullata) {
 		this.annullata = annullata;
+	}
+
+	public Date getDataChiusuraLavoriComitato() {
+		return dataChiusuraLavoriComitato;
+	}
+
+	public void setDataChiusuraLavoriComitato(Date dataChiusuraLavoriComitato) {
+		this.dataChiusuraLavoriComitato = dataChiusuraLavoriComitato;
+	}
+
+	public Date getDataAperturaLavoriComitato() {
+		return dataAperturaLavoriComitato;
+	}
+
+	public void setDataAperturaLavoriComitato(Date dataAperturaLavoriComitato) {
+		this.dataAperturaLavoriComitato = dataAperturaLavoriComitato;
+	}
+
+	public Date getDataNomina() {
+		return dataNomina;
+	}
+
+	public void setDataNomina(Date dataNomina) {
+		this.dataNomina = dataNomina;
 	}
 	
 	

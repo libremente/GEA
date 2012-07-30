@@ -122,8 +122,10 @@ import org.springframework.beans.factory.annotation.Configurable;
     private Date dataAssegnazione;
     private String esitoValidazione;
     private Date dataValidazione;
+
     private Date dataAssegnazioneCommissioni;
     private Date dataSedutaCommissione;
+
     
 	private String numeroProtocollo;
 	private String tipoIniziativa;
@@ -145,6 +147,18 @@ import org.springframework.beans.factory.annotation.Configurable;
 	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
+	private Date dataLR;
+	private String numeroPubblicazioneBURL;
+	private Date dataPubblicazioneBURL;
+	private Date dataChiusura;
+	private String statoChiusura;
+	private String esitoVotazione;
+	private Date dataSeduta;
+	private String tipoVotazione;
+	private String numeroDCR;
+	
+	
+	
 	
 	private List <Commissione> commissioni = new ArrayList<Commissione>();
 	private List <Atto> abbinamenti = new ArrayList<Atto>();
@@ -171,7 +185,55 @@ import org.springframework.beans.factory.annotation.Configurable;
 	
 	private String noteNoteAllegatiPresentazioneAssegnazione;
 	
-    
+
+	public Atto(){
+		
+		Commissione commissione = new Commissione();
+		commissione.setDescrizione("Descrizione1");
+		commissione.setNome("Commissione 1");
+		commissione.setRuolo("Ruolo commissione 1");
+		commissione.setStato("Stato comm 1");
+		commissione.setDataAssegnazione(new Date());
+		commissione.setDataPresaInCarico(new Date());
+		commissione.setTipoVotazione("tipo lavorazione 1");
+		commissione.setEsitoVotazione("Esito votazione 1");
+		commissione.setDataVotazione(new Date());
+		commissione.setDataTrasmissione(new Date());
+		commissione.setDataChiusuraLavoriComitato(new Date());
+		commissione.setDataAperturaLavoriComitato(new Date());
+		commissione.setDataNomina(new Date());
+		commissione.setDataProposta(new Date());
+		commissione.setDataAnnullo(new Date());
+		
+		
+		Commissione commissione2 = new Commissione();
+		commissione2.setDescrizione("Descrizione2");
+		commissione2.setNome("Commissione 2");
+		commissione2.setRuolo("Ruolo commissione 2");
+		commissione2.setStato("Stato comm 2");
+		commissione2.setDataAssegnazione(new Date());
+		commissione2.setDataPresaInCarico(new Date());
+		commissione2.setTipoVotazione("tipo lavorazione 2");
+		commissione2.setEsitoVotazione("Esito votazione 2");
+		commissione2.setDataVotazione(new Date());
+		commissione2.setDataTrasmissione(new Date());
+		commissione2.setDataChiusuraLavoriComitato(new Date());
+		commissione2.setDataAperturaLavoriComitato(new Date());
+		commissione2.setDataNomina(new Date());
+		commissione2.setDataProposta(new Date());
+		commissione2.setDataAnnullo(new Date());
+		
+
+		
+		List <Commissione> commissioni = new ArrayList<Commissione>();
+		
+		
+		commissioni.add(commissione);
+		commissioni.add(commissione2);
+		
+		this.setCommissioni(commissioni);
+		
+	}
 
     
     
@@ -661,6 +723,82 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.links = links;
 	}
 
+
+
+	public Date getDataLR() {
+		return dataLR;
+	}
+
+	public void setDataLR(Date dataLR) {
+		this.dataLR = dataLR;
+	}
+
+	public String getNumeroPubblicazioneBURL() {
+		return numeroPubblicazioneBURL;
+	}
+
+	public void setNumeroPubblicazioneBURL(String numeroPubblicazioneBURL) {
+		this.numeroPubblicazioneBURL = numeroPubblicazioneBURL;
+	}
+
+	public Date getDataPubblicazioneBURL() {
+		return dataPubblicazioneBURL;
+	}
+
+	public void setDataPubblicazioneBURL(Date dataPubblicazioneBURL) {
+		this.dataPubblicazioneBURL = dataPubblicazioneBURL;
+	}
+
+	public Date getDataChiusura() {
+		return dataChiusura;
+	}
+
+	public void setDataChiusura(Date dataChiusura) {
+		this.dataChiusura = dataChiusura;
+	}
+
+	public String getStatoChiusura() {
+		return statoChiusura;
+	}
+
+	public void setStatoChiusura(String statoChiusura) {
+		this.statoChiusura = statoChiusura;
+	}
+
+	public String getEsitoVotazione() {
+		return esitoVotazione;
+	}
+
+	public void setEsitoVotazione(String esitoVotazione) {
+		this.esitoVotazione = esitoVotazione;
+	}
+
+	public Date getDataSeduta() {
+		return dataSeduta;
+	}
+
+	public void setDataSeduta(Date dataSeduta) {
+		this.dataSeduta = dataSeduta;
+	}
+
+	public String getTipoVotazione() {
+		return tipoVotazione;
+	}
+
+	public void setTipoVotazione(String tipoVotazione) {
+		this.tipoVotazione = tipoVotazione;
+	}
+
+	public String getNumeroDCR() {
+		return numeroDCR;
+	}
+
+	public void setNumeroDCR(String numeroDCR) {
+		this.numeroDCR = numeroDCR;
+	}
+
+
+
 	public String getError() {
 		return error;
 	}
@@ -836,3 +974,4 @@ import org.springframework.beans.factory.annotation.Configurable;
 	
 	
 }
+

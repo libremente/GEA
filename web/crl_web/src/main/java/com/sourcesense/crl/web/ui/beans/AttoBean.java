@@ -1,13 +1,17 @@
 package com.sourcesense.crl.web.ui.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
 @ManagedBean(name = "attoBean")
@@ -72,6 +76,20 @@ public class AttoBean implements Serializable {
 	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
+
+	
+	private Date dataLR;
+	private String numeroPubblicazioneBURL;
+	private Date dataPubblicazioneBURL;
+	private Date dataChiusura;
+	private String statoChiusura;
+	private String esitoVotazione;
+	private Date dataSeduta;
+	private String tipoVotazione;
+	private String numeroDCR;
+
+
+
 	
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
@@ -83,6 +101,7 @@ public class AttoBean implements Serializable {
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
 	private String noteNoteAllegatiPresentazioneAssegnazione;
+
 
 	
 
@@ -512,6 +531,81 @@ public class AttoBean implements Serializable {
 	public void setSospeso(boolean sospeso) {
 		this.atto.setSospeso(sospeso);
 	}
+<<<<<<< .mine
+
+	public Date getDataLR() {
+		return atto.getDataLR();
+	}
+
+	public void setDataLR(Date dataLR) {
+		this.atto.setDataLR(dataLR);
+	}
+
+	public String getNumeroPubblicazioneBURL() {
+		return atto.getNumeroPubblicazioneBURL();
+	}
+
+	public void setNumeroPubblicazioneBURL(String numeroPubblicazioneBURL) {
+		this.atto.setNumeroPubblicazioneBURL(numeroPubblicazioneBURL);
+	}
+
+	public Date getDataPubblicazioneBURL() {
+		return atto.getDataPubblicazioneBURL();
+	}
+
+	public void setDataPubblicazioneBURL(Date dataPubblicazioneBURL) {
+		this.atto.setDataPubblicazioneBURL(dataPubblicazioneBURL);
+	}
+
+	public Date getDataChiusura() {
+		return atto.getDataChiusura();
+	}
+
+	public void setDataChiusura(Date dataChiusura) {
+		this.atto.setDataChiusura(dataChiusura);
+	}
+
+	public String getStatoChiusura() {
+		return atto.getStatoChiusura();
+	}
+
+	public void setStatoChiusura(String statoChiusura) {
+		this.atto.setStatoChiusura(statoChiusura);
+	}
+
+	public String getEsitoVotazione() {
+		return atto.getEsitoVotazione();
+	}
+
+	public void setEsitoVotazione(String esitoVotazione) {
+		this.atto.setEsitoVotazione(esitoVotazione);
+	}
+
+	public Date getDataSeduta() {
+		return atto.getDataSeduta();
+	}
+
+	public void setDataSeduta(Date dataSeduta) {
+		this.atto.setDataSeduta(dataSeduta);
+	}
+
+	public String getTipoVotazione() {
+		return atto.getTipoVotazione();
+	}
+
+	public void setTipoVotazione(String tipoVotazione) {
+		this.atto.setTipoVotazione(tipoVotazione);
+	}
+
+	public String getNumeroDCR() {
+		return atto.getNumeroDCR();
+	}
+
+	public void setNumeroDCR(String numeroDCR) {
+		this.atto.setNumeroDCR(numeroDCR);
+	}
+
+}=======
 
 	public String getValutazioneAmmissibilita() {
 		return atto.getValutazioneAmmissibilita();
@@ -596,3 +690,4 @@ public class AttoBean implements Serializable {
 	}
 	
 }
+

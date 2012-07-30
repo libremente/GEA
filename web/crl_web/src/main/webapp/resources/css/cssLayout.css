@@ -143,6 +143,11 @@ padding: 8px 19px 4px 10px ;
 	background-image: url(../img/delete.png) !important;
 }
 
+.detail-icon{
+	
+	background-image: url(../img/show.png) !important;
+}
+
 .generalInfoTab thead, th{
 	
 	background-color:  #E6E6FA;
