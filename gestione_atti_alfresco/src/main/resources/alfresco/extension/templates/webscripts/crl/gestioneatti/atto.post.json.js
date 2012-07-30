@@ -52,7 +52,7 @@ var nodeType = "crlatti:atto";
 if(tipoAtto=="PDL"){
 	nodeType = "crlatti:attoPdl";
 } else if(tipoAtto=="DOC"){
-	nodeType = "crlatti:atto";
+	nodeType = "crlatti:attoDoc";
 } else if(tipoAtto=="INP"){
 	nodeType = "crlatti:attoInp";
 } else if(tipoAtto=="PAR"){
@@ -92,5 +92,12 @@ if(attoResults!=null && attoResults.length>0){
 	attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 	attoFolderNode.properties["crlatti:anno"] = anno;
 	attoFolderNode.save();
+	
+	if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){
+		var firmatariSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Firmatari\"";
+		var firmatariSpaceTemplateNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
+		firmatariSpaceTemplateNode.copy(attoFolderNode);
+	}
+	
 	model.atto = attoFolderNode;
 }

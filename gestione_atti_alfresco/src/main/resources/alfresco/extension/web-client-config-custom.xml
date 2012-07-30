@@ -32,12 +32,15 @@
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
          	<aspect name="crlatti:pubblico" />
+         	<aspect name="crlatti:dgr"/>
+         	<aspect name="crlatti:firmatariAspect"/>
         </aspects>
 	</config>
 
 	<config evaluator="string-compare" condition="Space Wizards">
 		<folder-types>
 			<type name="crlatti:atto" />
+			<type name="crlatti:attoDoc" />
 			<type name="crlatti:attoPdl" />
 			<type name="crlatti:attoInp" />
 			<type name="crlatti:attoPar" />
@@ -53,6 +56,20 @@
 	<config evaluator="aspect-name" condition="crlatti:tipizzabile">
 		<property-sheet>
 			<show-property name="crlatti:tipologia" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:dgr">
+		<property-sheet>
+			<show-property name="crlatti:numeroDgr" />
+			<show-property name="crlatti:dataDgr" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:firmatariAspect">
+		<property-sheet>
+			<show-property name="crlatti:firmatari" />
+			<show-property name="crlatti:primoFirmatario" />
 		</property-sheet>
 	</config>
 	

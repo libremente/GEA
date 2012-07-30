@@ -145,15 +145,6 @@
 					<title>Stralcio</title>
 					<type>d:boolean</type>
 				</property>
-				<property name="crlatti:firmatari">
-					<title>Firmatari</title>
-					<type>d:text</type>
-					<multiple>true</multiple>
-				</property>
-				<property name="crlatti:primoFirmatario">
-					<title>Primo firmatario</title>
-					<type>d:text</type>
-				</property>
 			</properties>
 			<associations>
 				<child-association name="crlatti:abbinamenti">
@@ -225,9 +216,22 @@
 			</associations>
 		</type>
 
+		<type name="crlatti:attoDoc">
+			<title>Documento generico</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
 		<type name="crlatti:attoPdl">
 			<title>Progetto di Legge</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:attoInp">
@@ -238,36 +242,60 @@
 		<type name="crlatti:attoPar">
 			<title>Parere</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:attoPda">
 			<title>Proposta Atto Amministrativo</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:attoPlp">
 			<title>Proposta Legge Parlamentare</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:attoPre">
 			<title>Proposta di Regolamento</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:attoRef">
 			<title>Proposta di Referendum</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:attoRel">
 			<title>Relazione</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:attoEac">
 			<title>Elenchi di Atti Comunitari</title>
 			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="crlatti:firmatario">
@@ -424,6 +452,35 @@
 					<title>Pubblico</title>
 					<type>d:boolean</type>
 					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:dgr">
+			<title>DGR</title>
+			<properties>
+				<property name="crlatti:numeroDgr">
+					<title>Numero DGR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataDgr">
+					<title>Data DGR</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:firmatariAspect">
+			<title>Firmatari</title>
+			<properties>
+				<property name="crlatti:firmatari">
+					<title>Firmatari</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+				</property>
+				<property name="crlatti:primoFirmatario">
+					<title>Primo firmatario</title>
+					<type>d:text</type>
 				</property>
 			</properties>
 		</aspect>
