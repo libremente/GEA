@@ -357,6 +357,9 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
             <show id="crlatti:tipologia"/>
             <show id="crlatti:legislatura"/>
             <show id="crlatti:statoAtto"/>
@@ -407,6 +410,10 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:classificazione"/>
             <show id="crlatti:tipologia"/>
             <show id="crlatti:legislatura"/>
             <show id="crlatti:statoAtto"/>
@@ -459,6 +466,10 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:classificazione"/>
             <show id="crlatti:pubblico"/>
             <show id="crlatti:legislatura"/>
             <show id="crlatti:statoAtto"/>
@@ -509,6 +520,10 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:classificazione"/>
             <show id="crlatti:pubblico"/>
             <show id="crlatti:legislatura"/>
             <show id="crlatti:statoAtto"/>
@@ -665,7 +680,7 @@
             <form label="Firmatario" description="Cerca tra tutti i firmatari">crlatti:firmatario</form>
             <form label="Allegato" description="Cerca tra tutti gli allegati">crlatti:allegato</form>
             <form label="Testo" description="Cerca tra tutti i testi degli atti">crlatti:testo</form>
-            <form label="DOC" description="Cerca tra tutti gli atti">crlatti:atto</form>
+            <form label="DOC" description="Cerca tra tutti gli atti">crlatti:attoDoc</form>
             <form label="PDL" description="Cerca tra tutti i progetti di legge">crlatti:attoPdl</form>
             <form label="INP" description="Cerca tra tutte le petizioni popolari">crlatti:attoInp</form>
             <form label="PAR" description="Cerca tra tutti i pareri">crlatti:attoPar</form>
