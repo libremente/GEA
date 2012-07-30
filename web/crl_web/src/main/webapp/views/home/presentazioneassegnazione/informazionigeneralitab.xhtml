@@ -124,6 +124,7 @@
 
 				<p:column>
 					<p:calendar size="10" locale="it_IT" id="datarepertorio"
+						pattern="dd/MM/yyyy"
 						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
 						<p:ajax event="dateSelect"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -158,6 +159,7 @@
 
 				<p:column>
 					<p:calendar size="10" locale="it_IT" id="datainiziativa"
+						pattern="dd/MM/yyyy"
 						value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
 						<p:ajax event="dateSelect"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -202,6 +204,7 @@
 
 				<p:column>
 					<p:calendar size="10" locale="it_IT" id="datadgr"
+						pattern="dd/MM/yyyy"
 						value="#{presentazioneAssegnazioneAttoController.dataDgr}">
 						<p:ajax event="dateSelect"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
