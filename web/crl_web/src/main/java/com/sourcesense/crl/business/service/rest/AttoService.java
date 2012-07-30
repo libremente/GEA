@@ -166,6 +166,7 @@ public class AttoService  {
 
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			System.out.println(responseMsg);
 			allegato = objectMapper.readValue(responseMsg,
 					Allegato.class);
 

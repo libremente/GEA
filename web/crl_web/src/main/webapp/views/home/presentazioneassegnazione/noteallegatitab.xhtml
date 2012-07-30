@@ -101,20 +101,21 @@
 
 								<h:column>
 									<f:facet name="header">Descrizione Allegato</f:facet>
-							#{allegato.descrizione}
+							#{allegato.nome}
 						</h:column>
 
 								<h:column>
 									<f:facet name="header">Documento</f:facet>
 									<h:outputText
-										value="#{fn:substring(allegato.descrizione, fn:indexOf(allegato.descrizione,'.') ,fn:length(allegato.descrizione) )}" />
+										value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
 
 								</h:column>
 
 								<h:column>
 									<f:facet name="header">Pubblico</f:facet>
-							#{allegato.pubblico}
-						</h:column>
+									<h:outputText value="si" rendered="#{allegato.pubblico}" />
+									<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+								</h:column>
 
 								<h:column>
 									<f:facet name="header">Elimina</f:facet>
@@ -178,7 +179,6 @@
 									<p:column>
 										<p:commandButton value="Aggiungi"
 											action="#{presentazioneAssegnazioneAttoController.addLink}"
-											actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
 											id="addLink" update="listaLinks , noteAllegatiMsg"
 											icon="new-icon" />
 									</p:column>
@@ -204,14 +204,17 @@
 
 								<h:column>
 									<f:facet name="header">Indirizzo collegamento</f:facet>
-									<p:commandLink value="#{link.collegamentoUrl}" />
+									<h:outputLink value="http://#{link.collegamentoUrl}">
+										<h:outputText value="#{link.collegamentoUrl}" />
+									</h:outputLink>
 
 								</h:column>
 
 								<h:column>
 									<f:facet name="header">Pubblico</f:facet>
-								#{link.pubblico}
-    			      		 </h:column>
+									<h:outputText value="si" rendered="#{link.pubblico}" />
+									<h:outputText value="no" rendered="#{!link.pubblico}" />
+								</h:column>
 
 								<h:column>
 									<f:facet name="header">Elimina</f:facet>
@@ -239,7 +242,8 @@
 
 			<p>
 				<p:commandButton value="Salva" id="salvanoteeallegati"
-					action="#{presentazioneAssegnazioneAttoController.salvaNoteEAllegati}" />
+					action="#{presentazioneAssegnazioneAttoController.salvaNoteEAllegati}"
+					update="noteAllegatiMsg" />
 			</p>
 		</p:column>
 	</p:row>

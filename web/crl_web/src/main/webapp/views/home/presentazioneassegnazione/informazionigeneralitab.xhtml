@@ -265,7 +265,8 @@
 
 						<h:column>
 							<f:facet name="header">Pubblico</f:facet>
-							#{testoAtto.pubblico}
+							<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+							<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
 						</h:column>
 
 						<h:column>
@@ -348,7 +349,6 @@
 							<p:column>
 								<p:commandButton value="Aggiungi"
 									action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
-									actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
 									id="addFirmatario" update="listaFirmatari , presaCaricoMsg"
 									icon="new-icon" />
 							</p:column>
@@ -397,8 +397,9 @@
 
 						<h:column>
 							<f:facet name="header">1° firm.</f:facet>
-							#{firmatario.primoFirmatario}
-
+							<h:outputText value="si" rendered="#{firmatario.primoFirmatario}" />
+							<h:outputText value="no"
+								rendered="#{!firmatario.primoFirmatario}" />
 						</h:column>
 
 						<h:column>
@@ -451,7 +452,8 @@
 	</p:fieldset>
 	<p>
 		<p:commandButton value="Salva" id="salvainfogenerali"
-			action="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}" />
+			action="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}"
+			update="presaCaricoMsg" />
 	</p>
 </h:form>
 </html>

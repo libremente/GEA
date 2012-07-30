@@ -12,6 +12,11 @@
 <p:panelGrid styleClass="infoTable" id="ammissibilitàattopanel">
 	<p:row>
 		<p:column>
+			<p:growl id="ammissibilitaMsg" showDetail="true" sticky="false" />
+		</p:column>
+	</p:row>
+	<p:row>
+		<p:column>
 			<p:fieldset legend="Ammissibilità dell'Atto" toggleable="true"
 				toggleSpeed="500">
 				<p:panelGrid styleClass="infoTable" id="formammissibilitaattopanel">
@@ -22,7 +27,7 @@
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="valutazioneammissibilità"
-								value="presentazioneAssegnazioneAttoController.valutazioneAmmissibilita">
+								value="#{presentazioneAssegnazioneAttoController.valutazioneAmmissibilita}">
 								<f:selectItem itemLabel="Scegli valutazione" itemValue="" />
 								<f:selectItem itemLabel="Ricevibile" itemValue="Ricevibile" />
 								<f:selectItem itemLabel="Ammissibile" itemValue="Ammissibile" />
@@ -169,7 +174,8 @@
 		<p:column>
 			<p>
 				<p:commandButton value="Conferma" id="confermaammissibilità"
-					action="#{presentazioneAssegnazioneAttoController.salvaAmmissibilita}" />
+					action="#{presentazioneAssegnazioneAttoController.salvaAmmissibilita}" 
+					update="ammissibilitaMsg"/>
 			</p>
 		</p:column>
 	</p:row>

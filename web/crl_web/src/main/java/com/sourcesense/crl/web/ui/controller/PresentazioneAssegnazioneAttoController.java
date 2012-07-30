@@ -98,7 +98,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private boolean votazioneUrgenza;
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
-
+	
 	private Map<String, String> commissioni = new HashMap<String, String>();
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 
@@ -271,15 +271,13 @@ public class PresentazioneAssegnazioneAttoController {
 
 			attoBean.getAtto().getTestiAtto().add(testoAttoRet);
 
-			//atto.getTestiAtto().add(testoAttoRet);
-
-			setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
+			testiAttoList.add(testoAttoRet);
 		}
 	}
 
 	private boolean checkTestoAtto(String fileName) {
 
-		for (AttoRecord element : atto.getTestiAtto()) {
+		for (AttoRecord element : testiAttoList) {
 
 			if (element.getDescrizione().equals(fileName)) {
 
@@ -293,11 +291,11 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void removeTestoAtto() {
 
-		for (AttoRecord element : atto.getTestiAtto()) {
+		for (AttoRecord element : testiAttoList) {
 
-			if (element.getDescrizione().equals(testoAttoToDelete)) {
+			if (element.getId().equals(testoAttoToDelete)) {
 				// TODO Alfresco delete
-				atto.getTestiAtto().remove(element);
+				testiAttoList.remove(element);
 				break;
 			}
 		}
@@ -312,6 +310,11 @@ public class PresentazioneAssegnazioneAttoController {
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Firmatario "
 								+ nomeFirmatario + " già presente ", ""));
 
+			} else if (primoFirmatario && checkPrimoFirmatario()){
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Primo firmatario già selezionato ", ""));
+
 			} else {
 				Firmatario firmatario = new Firmatario();
 				firmatario.setDescrizione(nomeFirmatario);
@@ -320,6 +323,8 @@ public class PresentazioneAssegnazioneAttoController {
 				firmatario.setGruppoConsiliare(gruppoConsiliare);
 				firmatario.setPrimoFirmatario(primoFirmatario);
 				firmatariList.add(firmatario);
+				
+				updateInfoGenHandler();
 			}
 		}
 	}
@@ -346,6 +351,18 @@ public class PresentazioneAssegnazioneAttoController {
 			}
 		}
 		return true;
+	}
+
+	private boolean checkPrimoFirmatario() {
+
+		for (Firmatario element : firmatariList) {
+
+			if (element.isPrimoFirmatario()) {
+
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void ritiraPerMancanzaFirmatari() {
@@ -378,6 +395,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
+		context.addMessage(null, new FacesMessage("Informazioni Generali salvate con successo", ""));
+
 	}
 
 	// Ammissibilita******************************************************
@@ -389,7 +408,7 @@ public class PresentazioneAssegnazioneAttoController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		attoBean.getAtto().setValutazioneAmmissibilita(atto.getValutazioneAmmissibilita());
 		attoBean.getAtto().setDataRichiestaInformazioni(atto.getDataRichiestaInformazioni());
 		attoBean.getAtto().setDataRicevimentoInformazioni(atto.getDataRicevimentoInformazioni());
@@ -401,6 +420,8 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setNoteAmmissibilita(atto.getNoteAmmissibilita());
 
 		setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
+
+		context.addMessage(null, new FacesMessage("Ammissibilità salvata con successo", ""));
 
 	}
 
@@ -422,6 +443,8 @@ public class PresentazioneAssegnazioneAttoController {
 				commissione.setDataProposta(dataProposta);
 				commissione.setRuolo(ruolo);
 				commissioniList.add(commissione);
+				
+				updateAssegnazioneHandler();
 			}
 		}
 	}
@@ -481,8 +504,11 @@ public class PresentazioneAssegnazioneAttoController {
 				organismoStatutario.setDescrizione(nomeOrganismoStatutario);
 				organismoStatutario
 				.setDataAssegnazione(dataAssegnazioneOrganismo);
+				organismoStatutario.setDataAnnullo(dataAnnulloOrganismo);
 				organismoStatutario.setObbligatorio(obbligatorio);
 				organismiStatutariList.add(organismoStatutario);
+				
+				updateAssegnazioneHandler();
 			}
 		}
 	}
@@ -527,6 +553,8 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setOrganismiStatutari(organismiStatutariList);
 
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
+
+		context.addMessage(null, new FacesMessage("Assegnazione salvata con successo", ""));
 	}
 
 	// Note e Allegati******************************************************
@@ -562,13 +590,13 @@ public class PresentazioneAssegnazioneAttoController {
 
 			attoBean.getAtto().getAllegati().add(allegatoRet);
 
-			//atto.getAllegati().add(allegatoRet);
+			allegatiList.add(allegatoRet);
 		}
 	}
 
 	private boolean checkAllegato(String fileName) {
 
-		for (Allegato element : atto.getAllegati()) {
+		for (Allegato element : allegatiList) {
 
 			if (element.getDescrizione().equals(fileName)) {
 
@@ -582,12 +610,12 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void removeAllegato() {
 
-		for (Allegato element : atto.getAllegati()) {
+		for (Allegato element : allegatiList) {
 
-			if (element.getDescrizione().equals(allegatoToDelete)) {
+			if (element.getId().equals(allegatoToDelete)) {
 
 				// TODO Alfresco delete
-				atto.getAllegati().remove(element);
+				allegatiList.remove(element);
 				break;
 			}
 		}
@@ -608,6 +636,8 @@ public class PresentazioneAssegnazioneAttoController {
 				link.setCollegamentoUrl(urlLink);
 				link.setPubblico(pubblico);
 				linksList.add(link);
+				
+				updateNoteHandler();
 			}
 		}
 	}
@@ -651,6 +681,8 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setLinks(linksList);		
 
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
+
+		context.addMessage(null, new FacesMessage("Note e Allegati salvati con successo", ""));
 
 	}
 
@@ -1087,11 +1119,11 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public Date getDataRepertorio() {
-		return dataRepertorio;
+		return atto.getDataRepertorio();
 	}
 
 	public void setDataRepertorio(Date dataRepertorio) {
-		this.dataRepertorio = dataRepertorio;
+		this.atto.setDataRepertorio(dataRepertorio);
 	}
 
 	public String getTipoIniziativa() {
