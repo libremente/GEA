@@ -72,7 +72,17 @@ public class AttoBean implements Serializable {
 	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
-
+	
+	private String valutazioneAmmissibilita;
+	private Date dataRichiestaInformazioni;
+	private Date dataRicevimentoInformazioni;
+	private boolean aiutiStato;
+	private boolean normaFinanziaria;
+	private boolean richiestaUrgenza;
+	private boolean votazioneUrgenza;
+	private Date dataVotazioneUrgenza;
+	private String noteAmmissibilita;
+	private String noteNoteAllegatiPresentazioneAssegnazione;
 
 	
 
@@ -501,6 +511,88 @@ public class AttoBean implements Serializable {
 
 	public void setSospeso(boolean sospeso) {
 		this.atto.setSospeso(sospeso);
+	}
+
+	public String getValutazioneAmmissibilita() {
+		return atto.getValutazioneAmmissibilita();
+	}
+
+	public void setValutazioneAmmissibilita(String valutazioneAmmissibilita) {
+		this.atto.setValutazioneAmmissibilita(valutazioneAmmissibilita);
+	}
+
+	public Date getDataRichiestaInformazioni() {
+		return atto.getDataRichiestaInformazioni();
+	}
+
+	public void setDataRichiestaInformazioni(Date dataRichiestaInformazioni) {
+		this.atto.setDataRichiestaInformazioni(dataRichiestaInformazioni);
+	}
+
+	public Date getDataRicevimentoInformazioni() {
+		return atto.getDataRicevimentoInformazioni();
+	}
+
+	public void setDataRicevimentoInformazioni(
+			Date dataRicevimentoInformazioni) {
+		this.atto.setDataRicevimentoInformazioni(dataRicevimentoInformazioni);
+	}
+
+	public boolean isAiutiStato() {
+		return atto.isAiutiStato();
+	}
+
+	public void setAiutiStato(boolean aiutiStato) {
+		this.atto.setAiutiStato(aiutiStato);
+	}
+
+	public boolean isNormaFinanziaria() {
+		return atto.isNormaFinanziaria();
+	}
+
+	public void setNormaFinanziaria(boolean normaFinanziaria) {
+		this.atto.setNormaFinanziaria(normaFinanziaria);
+	}
+
+	public boolean isRichiestaUrgenza() {
+		return atto.isRichiestaUrgenza();
+	}
+
+	public void setRichiestaUrgenza(boolean richiestaUrgenza) {
+		this.atto.setRichiestaUrgenza(richiestaUrgenza);
+	}
+
+	public boolean isVotazioneUrgenza() {
+		return atto.isVotazioneUrgenza();
+	}
+
+	public void setVotazioneUrgenza(boolean votazioneUrgenza) {
+		this.atto.setVotazioneUrgenza(votazioneUrgenza);
+	}
+
+	public Date getDataVotazioneUrgenza() {
+		return atto.getDataVotazioneUrgenza();
+	}
+
+	public void setDataVotazioneUrgenza(Date dataVotazioneUrgenza) {
+		this.atto.setDataVotazioneUrgenza(dataVotazioneUrgenza);
+	}
+
+	public String getNoteAmmissibilita() {
+		return atto.getNoteAmmissibilita();
+	}
+
+	public void setNoteAmmissibilita(String noteAmmissibilita) {
+		this.atto.setNoteAmmissibilita(noteAmmissibilita);
+	}
+
+	public String getNoteNoteAllegatiPresentazioneAssegnazione() {
+		return atto.getNoteNoteAllegatiPresentazioneAssegnazione();
+	}
+
+	public void setNoteNoteAllegatiPresentazioneAssegnazione(
+			String noteNoteAllegatiPresentazioneAssegnazione) {
+		this.atto.setNoteNoteAllegatiPresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
 	}
 	
 }

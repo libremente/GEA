@@ -28,6 +28,7 @@
 					<p:commandButton id="confirmAllegato" value="Conferma"
 						oncomplete="allegatoDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.removeAllegato}"
+						actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
 						update="listaAllegati" />
 					<p:commandButton id="declineAllegato" value="Annulla"
 						onclick="allegatoDialog.hide()" type="button" />
@@ -41,6 +42,7 @@
 					<p:commandButton id="confirmLink" value="Conferma"
 						oncomplete="linkDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.removeLink}"
+						actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
 						update="listaLinks" />
 					<p:commandButton id="declineLink" value="Annulla"
 						onclick="linkDialog.hide()" type="button" />
@@ -60,7 +62,11 @@
 				<b>Note generali: </b>
 				<br />
 				<br />
-				<p:inputTextarea rows="5" cols="101" autoResize="false" />
+				<p:inputTextarea rows="5" cols="101" autoResize="false"
+					value="#{presentazioneAssegnazioneAttoController.noteNoteAllegati}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}" />
+				</p:inputTextarea>
 
 				<h:outputText id="counter" />
 
@@ -81,6 +87,7 @@
 						<p:column colspan="3">
 							<p:fileUpload label="Carica File"
 								fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadAllegato}"
+								actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
 								mode="advanced" auto="true"
 								update="listaAllegati ,noteAllegatiMsg" />
 						</p:column>
@@ -155,6 +162,7 @@
 									<p:column>
 										<p:inputText id="link"
 											value="#{presentazioneAssegnazioneAttoController.nomeLink}" />
+
 									</p:column>
 
 									<p:column>
@@ -170,6 +178,7 @@
 									<p:column>
 										<p:commandButton value="Aggiungi"
 											action="#{presentazioneAssegnazioneAttoController.addLink}"
+											actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
 											id="addLink" update="listaLinks , noteAllegatiMsg"
 											icon="new-icon" />
 									</p:column>
@@ -229,7 +238,8 @@
 		<p:column>
 
 			<p>
-				<p:commandButton value="Salva" />
+				<p:commandButton value="Salva" id="salvanoteeallegati"
+					action="#{presentazioneAssegnazioneAttoController.salvaNoteEAllegati}" />
 			</p>
 		</p:column>
 	</p:row>

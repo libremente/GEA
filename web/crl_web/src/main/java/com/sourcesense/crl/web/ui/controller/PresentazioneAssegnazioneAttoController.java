@@ -19,6 +19,7 @@ import org.primefaces.event.FileUploadEvent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoConsiliare;
@@ -30,6 +31,7 @@ import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.OrganismoStatutarioServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
+import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
@@ -50,11 +52,28 @@ public class PresentazioneAssegnazioneAttoController {
 	@ManagedProperty(value = "#{organismoStatutarioServiceManager}")
 	private OrganismoStatutarioServiceManager organismoStatutarioServiceManager;
 
+	@ManagedProperty(value = "#{tipoIniziativaServiceManager}")
+	TipoIniziativaServiceManager tipoIniziativaServiceManager;
+
+	private Map<String, String> tipiIniziativa = new HashMap<String, String>();
+
+	private String numeroAtto;
+	private String classificazione;
+	private String oggetto;
+	private String numeroRepertorio;
+	private Date dataRepertorio;
+	private String tipoIniziativa;
+	private Date dataIniziativa;
+	private String descrizioneIniziativa;
+	private String numeroDgr;
+	private Date dataDgr;
+	private String assegnazione;
+
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
 	private Map<String, String> firmatari = new HashMap<String, String>();
 	private String nomeFirmatario;
 
-	private List<Allegato> testiAttoList = new ArrayList<Allegato>();
+	private List<AttoRecord> testiAttoList = new ArrayList<AttoRecord>();
 	private String gruppoConsiliare;
 	private List<GruppoConsiliare> gruppiConsiliari = new ArrayList<GruppoConsiliare>();
 
@@ -69,6 +88,16 @@ public class PresentazioneAssegnazioneAttoController {
 	private String statoCommitAmmissibilita = CRLMessage.COMMIT_DONE;
 	private String statoCommitAssegnazione = CRLMessage.COMMIT_DONE;
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
+
+	private String valutazioneAmmissibilita;
+	private Date dataRichiestaInformazioni;
+	private Date dataRicevimentoInformazioni;
+	private boolean aiutiStato;
+	private boolean normaFinanziaria;
+	private boolean richiestaUrgenza;
+	private boolean votazioneUrgenza;
+	private Date dataVotazioneUrgenza;
+	private String noteAmmissibilita;
 
 	private Map<String, String> commissioni = new HashMap<String, String>();
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
@@ -102,8 +131,10 @@ public class PresentazioneAssegnazioneAttoController {
 	private boolean pubblico;
 
 	private String linkToDelete;
-	
-	private Atto atto=new Atto();
+
+	private String noteNoteAllegati;
+
+	private Atto atto = new Atto();
 
 	@PostConstruct
 	protected void init() {
@@ -111,6 +142,21 @@ public class PresentazioneAssegnazioneAttoController {
 		// TODO: setCommissioni(commissioneServiceManager.findAll());
 		setCommissioni(commissioneServiceManager.findAllCommissioneConsultiva());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
+		setTipiIniziativa(tipoIniziativaServiceManager.findAll());
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		setAtto((Atto) attoBean.getAtto().clone());
+
+		this.firmatariList = new ArrayList<Firmatario>(this.atto.getFirmatari());
+		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
+		this.organismiStatutariList = new ArrayList<OrganismoStatutario>(this.atto.getOrganismiStatutari());
+		this.linksList = new ArrayList<Link>(this.atto.getLinks());
+
+		//TODO
+		//setAllegatiList(allegatoServiceManager.findByTipo());
+		//setTestiAtto(recordAttoServiceManager.findByTipo());
 
 	}
 
@@ -206,32 +252,34 @@ public class PresentazioneAssegnazioneAttoController {
 		} else {
 
 			// TODO Alfresco upload
-			Allegato allegatoRet = null;
-			Allegato allegato = new Allegato();
-			allegato.setDescrizione(fileName);
-			allegato.setDownloadUrl("hppt://yourhost:0808/file");
-			allegato.setPubblico(true);
-			allegato.setTipoAllegato("TestoAtto");
+			AttoRecord testoAttoRet = null;
 
 			try {
-				allegatoRet = attoServiceManager.uploadFile(
+				testoAttoRet = attoServiceManager.uploadTesto(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
-								.get("attoBean")).getAtto(), allegato, event
-								.getFile().getInputstream());
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			// TODO aggiungi a bean di sessione
-			testiAttoList.add(allegato);
+			// TODO aggiungi a bean di sessione			
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getTestiAtto().add(testoAttoRet);
+
+			//atto.getTestiAtto().add(testoAttoRet);
+
 			setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
 		}
 	}
 
 	private boolean checkTestoAtto(String fileName) {
 
-		for (Allegato element : testiAttoList) {
+		for (AttoRecord element : atto.getTestiAtto()) {
 
 			if (element.getDescrizione().equals(fileName)) {
 
@@ -245,11 +293,11 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void removeTestoAtto() {
 
-		for (Allegato element : testiAttoList) {
+		for (AttoRecord element : atto.getTestiAtto()) {
 
 			if (element.getDescrizione().equals(testoAttoToDelete)) {
 				// TODO Alfresco delete
-				testiAttoList.remove(element);
+				atto.getTestiAtto().remove(element);
 				break;
 			}
 		}
@@ -307,31 +355,52 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void salvaInfoGenerali() {
+		atto.setFirmatari(firmatariList);
+		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
 
 		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		// TODO
 
-		// set lists
-		attoBean.getAtto().setAllegati(this.testiAttoList);
-		attoBean.getAtto().setFirmatari(this.firmatariList);
-		attoServiceManager.merge(attoBean.getAtto());
+		attoBean.getAtto().setClassificazione(this.atto.getClassificazione());
+		attoBean.getAtto().setOggetto(this.atto.getOggetto());
+		attoBean.getAtto().setNumeroRepertorio(atto.getNumeroRepertorio());
+		attoBean.getAtto().setDataRepertorio(this.atto.getDataRepertorio());
+		attoBean.getAtto().setTipoIniziativa(atto.getTipoIniziativa());
+		attoBean.getAtto().setDataIniziativa(atto.getDataIniziativa());
+		attoBean.getAtto().setDescrizioneIniziativa(atto.getDescrizioneIniziativa());
+		attoBean.getAtto().setNumeroDgr(atto.getNumeroDgr());
+		attoBean.getAtto().setDataDgr(atto.getDataDgr());
+		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
+
+		attoBean.getAtto().setFirmatari(firmatariList);
+
+		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
 	}
 
 	// Ammissibilita******************************************************
 
 	public void salvaAmmissibilita() {
+		attoServiceManager.salvaAmmissibilitaPresentazione(atto);
 
 		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		// TODO
+		
+		attoBean.getAtto().setValutazioneAmmissibilita(atto.getValutazioneAmmissibilita());
+		attoBean.getAtto().setDataRichiestaInformazioni(atto.getDataRichiestaInformazioni());
+		attoBean.getAtto().setDataRicevimentoInformazioni(atto.getDataRicevimentoInformazioni());
+		attoBean.getAtto().setAiutiStato(atto.isAiutiStato());
+		attoBean.getAtto().setNormaFinanziaria(atto.isNormaFinanziaria());
+		attoBean.getAtto().setRichiestaUrgenza(atto.isRichiestaUrgenza());
+		attoBean.getAtto().setVotazioneUrgenza(atto.isVotazioneUrgenza());
+		attoBean.getAtto().setDataVotazioneUrgenza(atto.getDataVotazioneUrgenza());
+		attoBean.getAtto().setNoteAmmissibilita(atto.getNoteAmmissibilita());
 
-		// attoBean.merge();
+		setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
 
 	}
 
@@ -344,7 +413,7 @@ public class PresentazioneAssegnazioneAttoController {
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Commissione " + nomeCommissione
-								+ " già presente ", ""));
+						+ " già presente ", ""));
 
 			} else {
 				Commissione commissione = new Commissione();
@@ -411,7 +480,7 @@ public class PresentazioneAssegnazioneAttoController {
 				OrganismoStatutario organismoStatutario = new OrganismoStatutario();
 				organismoStatutario.setDescrizione(nomeOrganismoStatutario);
 				organismoStatutario
-						.setDataAssegnazione(dataAssegnazioneOrganismo);
+				.setDataAssegnazione(dataAssegnazioneOrganismo);
 				organismoStatutario.setObbligatorio(obbligatorio);
 				organismiStatutariList.add(organismoStatutario);
 			}
@@ -445,7 +514,18 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void confermaAssegnazione() {
-		// TODO
+		this.atto.setCommissioni(commissioniList);
+		this.atto.setOrganismiStatutari(organismiStatutariList);
+		attoServiceManager.salvaAssegnazionePresentazione(atto);
+
+		// TODO Service logic
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setCommissioni(commissioniList);
+		attoBean.getAtto().setOrganismiStatutari(organismiStatutariList);
+
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
 	}
 
@@ -464,30 +544,31 @@ public class PresentazioneAssegnazioneAttoController {
 
 			// TODO Alfresco upload
 			Allegato allegatoRet = null;
-			Allegato allegato = new Allegato();
-			allegato.setDescrizione(fileName);
-			allegato.setDownloadUrl("hppt://yourhost:0808/file");
-			allegato.setPubblico(true);
-			allegato.setTipoAllegato("Allegato");
 
 			try {
-				allegatoRet = attoServiceManager.uploadFile(
+				allegatoRet = attoServiceManager.uploadAllegato(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
-								.get("attoBean")).getAtto(), allegato, event
-								.getFile().getInputstream());
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			// TODO aggiungi a bean di sessione
-			allegatiList.add(allegato);
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getAllegati().add(allegatoRet);
+
+			//atto.getAllegati().add(allegatoRet);
 		}
 	}
 
 	private boolean checkAllegato(String fileName) {
 
-		for (Allegato element : allegatiList) {
+		for (Allegato element : atto.getAllegati()) {
 
 			if (element.getDescrizione().equals(fileName)) {
 
@@ -501,12 +582,12 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void removeAllegato() {
 
-		for (Allegato element : allegatiList) {
+		for (Allegato element : atto.getAllegati()) {
 
 			if (element.getDescrizione().equals(allegatoToDelete)) {
 
 				// TODO Alfresco delete
-				allegatiList.remove(element);
+				atto.getAllegati().remove(element);
 				break;
 			}
 		}
@@ -558,17 +639,22 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void salvaNoteEAllegati() {
-		// TODO
+		this.atto.setLinks(linksList);
+		attoServiceManager.salvaNoteAllegatiPresentazione(atto);
+
+		// TODO Service logic
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
+		attoBean.getAtto().setLinks(linksList);		
+
+		setStatoCommitNote(CRLMessage.COMMIT_DONE);
+
 	}
 
 	// Getters & Setters******************************************************
-	public List<Firmatario> getFirmatariList() {
-		return firmatariList;
-	}
-
-	public void setFirmatariList(List<Firmatario> firmatariList) {
-		this.firmatariList = firmatariList;
-	}
 
 	public PersonaleServiceManager getPersonaleServiceManager() {
 		return personaleServiceManager;
@@ -593,14 +679,6 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void setNomeFirmatario(String nomeFirmatario) {
 		this.nomeFirmatario = nomeFirmatario;
-	}
-
-	public List<Allegato> getTestiAttoList() {
-		return testiAttoList;
-	}
-
-	public void setTestiAttoList(List<Allegato> testiAttoList) {
-		this.testiAttoList = testiAttoList;
 	}
 
 	public List<GruppoConsiliare> getGruppiConsiliari() {
@@ -675,14 +753,6 @@ public class PresentazioneAssegnazioneAttoController {
 		this.commissioni = commissioni;
 	}
 
-	public List<Commissione> getCommissioniList() {
-		return commissioniList;
-	}
-
-	public void setCommissioniList(List<Commissione> commissioniList) {
-		this.commissioniList = commissioniList;
-	}
-
 	public CommissioneServiceManager getCommissioneServiceManager() {
 		return commissioneServiceManager;
 	}
@@ -748,15 +818,6 @@ public class PresentazioneAssegnazioneAttoController {
 		this.organismiStatutari = organismiStatutari;
 	}
 
-	public List<OrganismoStatutario> getOrganismiStatutariList() {
-		return organismiStatutariList;
-	}
-
-	public void setOrganismiStatutariList(
-			List<OrganismoStatutario> organismiStatutariList) {
-		this.organismiStatutariList = organismiStatutariList;
-	}
-
 	public String getNomeOrganismoStatutario() {
 		return nomeOrganismoStatutario;
 	}
@@ -807,28 +868,12 @@ public class PresentazioneAssegnazioneAttoController {
 		this.organismoStatutarioServiceManager = organismoStatutarioServiceManager;
 	}
 
-	public List<Allegato> getAllegatiList() {
-		return allegatiList;
-	}
-
-	public void setAllegatiList(List<Allegato> allegatiList) {
-		this.allegatiList = allegatiList;
-	}
-
 	public String getAllegatoToDelete() {
 		return allegatoToDelete;
 	}
 
 	public void setAllegatoToDelete(String allegatoToDelete) {
 		this.allegatoToDelete = allegatoToDelete;
-	}
-
-	public List<Link> getLinksList() {
-		return linksList;
-	}
-
-	public void setLinksList(List<Link> linksList) {
-		this.linksList = linksList;
 	}
 
 	public String getLinkToDelete() {
@@ -902,5 +947,250 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setStatoCommitNote(String statoCommitNote) {
 		this.statoCommitNote = statoCommitNote;
 	}
+
+	public Atto getAtto() {
+		return atto;
+	}
+
+	public void setAtto(Atto atto) {
+		this.atto = atto;
+	}
+
+	public String getValutazioneAmmissibilita() {
+		return atto.getValutazioneAmmissibilita();
+	}
+
+	public void setValutazioneAmmissibilita(String valutazioneAmmissibilita) {
+		this.atto.setValutazioneAmmissibilita(valutazioneAmmissibilita);
+	}
+
+	public Date getDataRichiestaInformazioni() {
+		return atto.getDataRichiestaInformazioni();
+	}
+
+	public void setDataRichiestaInformazioni(Date dataRichiestaInformazioni) {
+		this.atto.setDataRichiestaInformazioni(dataRichiestaInformazioni);
+	}
+
+	public Date getDataRicevimentoInformazioni() {
+		return atto.getDataRicevimentoInformazioni();
+	}
+
+	public void setDataRicevimentoInformazioni(
+			Date dataRicevimentoInformazioni) {
+		this.atto.setDataRicevimentoInformazioni(dataRicevimentoInformazioni);
+	}
+
+	public boolean isAiutiStato() {
+		return atto.isAiutiStato();
+	}
+
+	public void setAiutiStato(boolean aiutiStato) {
+		this.atto.setAiutiStato(aiutiStato);
+	}
+
+	public boolean isNormaFinanziaria() {
+		return atto.isNormaFinanziaria();
+	}
+
+	public void setNormaFinanziaria(boolean normaFinanziaria) {
+		this.atto.setNormaFinanziaria(normaFinanziaria);
+	}
+
+	public boolean isRichiestaUrgenza() {
+		return atto.isRichiestaUrgenza();
+	}
+
+	public void setRichiestaUrgenza(boolean richiestaUrgenza) {
+		this.atto.setRichiestaUrgenza(richiestaUrgenza);
+	}
+
+	public boolean isVotazioneUrgenza() {
+		return atto.isVotazioneUrgenza();
+	}
+
+	public void setVotazioneUrgenza(boolean votazioneUrgenza) {
+		this.atto.setVotazioneUrgenza(votazioneUrgenza);
+	}
+
+	public Date getDataVotazioneUrgenza() {
+		return atto.getDataVotazioneUrgenza();
+	}
+
+	public void setDataVotazioneUrgenza(Date dataVotazioneUrgenza) {
+		this.atto.setDataVotazioneUrgenza(dataVotazioneUrgenza);
+	}
+
+	public String getNoteAmmissibilita() {
+		return atto.getNoteAmmissibilita();
+	}
+
+	public void setNoteAmmissibilita(String noteAmmissibilita) {
+		this.atto.setNoteAmmissibilita(noteAmmissibilita);
+	}
+
+	public String getNoteNoteAllegati() {
+		return atto.getNoteNoteAllegatiPresentazioneAssegnazione();
+	}
+
+	public void setNoteNoteAllegati(String noteNoteAllegati) {
+		this.atto.setNoteNoteAllegatiPresentazioneAssegnazione(noteNoteAllegati);
+	}
+
+	public Map<String, String> getTipiIniziativa() {
+		return tipiIniziativa;
+	}
+
+	public void setTipiIniziativa(Map<String, String> tipiIniziativa) {
+		this.tipiIniziativa = tipiIniziativa;
+	}
+
+	public TipoIniziativaServiceManager getTipoIniziativaServiceManager() {
+		return tipoIniziativaServiceManager;
+	}
+
+	public void setTipoIniziativaServiceManager(
+			TipoIniziativaServiceManager tipoIniziativaServiceManager) {
+		this.tipoIniziativaServiceManager = tipoIniziativaServiceManager;
+	}
+
+	public String getNumeroAtto() {
+		return atto.getNumeroAtto();
+	}
+
+	public void setNumeroAtto(String numeroAtto) {
+		this.atto.setNumeroAtto(numeroAtto);
+	}
+
+	public String getClassificazione() {
+		return atto.getClassificazione();
+	}
+
+	public void setClassificazione(String classificazione) {
+		this.atto.setClassificazione(classificazione);
+	}
+
+	public String getOggetto() {
+		return atto.getOggetto();
+	}
+
+	public void setOggetto(String oggetto) {
+		this.atto.setOggetto(oggetto);
+	}
+
+	public String getNumeroRepertorio() {
+		return atto.getNumeroRepertorio();
+	}
+
+	public void setNumeroRepertorio(String numeroRepertorio) {
+		this.atto.setNumeroRepertorio(numeroRepertorio);
+	}
+
+	public Date getDataRepertorio() {
+		return dataRepertorio;
+	}
+
+	public void setDataRepertorio(Date dataRepertorio) {
+		this.dataRepertorio = dataRepertorio;
+	}
+
+	public String getTipoIniziativa() {
+		return atto.getTipoIniziativa();
+	}
+
+	public void setTipoIniziativa(String tipoIniziativa) {
+		this.atto.setTipoIniziativa(tipoIniziativa);
+	}
+
+	public Date getDataIniziativa() {
+		return atto.getDataIniziativa();
+	}
+
+	public void setDataIniziativa(Date dataIniziativa) {
+		this.atto.setDataIniziativa(dataIniziativa);
+	}
+
+	public String getDescrizioneIniziativa() {
+		return atto.getDescrizioneIniziativa();
+	}
+
+	public void setDescrizioneIniziativa(String descrizioneIniziativa) {
+		this.atto.setDescrizioneIniziativa(descrizioneIniziativa);
+	}
+
+	public String getNumeroDgr() {
+		return atto.getNumeroDgr();
+	}
+
+	public void setNumeroDgr(String numeroDgr) {
+		this.atto.setNumeroDgr(numeroDgr);
+	}
+
+	public Date getDataDgr() {
+		return atto.getDataDgr();
+	}
+
+	public void setDataDgr(Date dataDgr) {
+		this.atto.setDataDgr(dataDgr);
+	}
+
+	public String getAssegnazione() {
+		return atto.getAssegnazione();
+	}
+
+	public void setAssegnazione(String assegnazione) {
+		this.atto.setAssegnazione(assegnazione);
+	}
+
+	public List<Firmatario> getFirmatariList() {
+		return firmatariList;
+	}
+
+	public void setFirmatariList(List<Firmatario> firmatariList) {
+		this.firmatariList = firmatariList;
+	}
+
+
+	public List<Commissione> getCommissioniList() {
+		return commissioniList;
+	}
+
+	public void setCommissioniList(List<Commissione> commissioniList) {
+		this.commissioniList = commissioniList;
+	}
+
+	public List<OrganismoStatutario> getOrganismiStatutariList() {
+		return organismiStatutariList;
+	}
+
+	public void setOrganismiStatutariList(List<OrganismoStatutario> organismiStatutariList) {
+		this.organismiStatutariList = organismiStatutariList;
+	}
+
+	public List<Link> getLinksList() {
+		return linksList;
+	}
+
+	public void setLinksList(List<Link> linksList) {
+		this.linksList = linksList;
+	}
+
+	public List<AttoRecord> getTestiAttoList() {
+		return testiAttoList;
+	}
+
+	public void setTestiAttoList(List<AttoRecord> testiAttoList) {
+		this.testiAttoList = testiAttoList;
+	}
+
+	public List<Allegato> getAllegatiList() {
+		return allegatiList;
+	}
+
+	public void setAllegatiList(List<Allegato> allegatiList) {
+		this.allegatiList = allegatiList;
+	}
+
+
 
 }

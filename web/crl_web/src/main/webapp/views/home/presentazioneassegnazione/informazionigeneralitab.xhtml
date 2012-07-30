@@ -17,12 +17,12 @@
 		<p:row>
 			<p:column colspan="3">
 				<p>
-				    <!-- Messaggio azioni -->
+					<!-- Messaggio azioni -->
 					<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
 
-					
 
-                    <!-- Confirm dialog -->
+
+					<!-- Confirm dialog -->
 					<p:confirmDialog id="confirmAttoDialog"
 						message="Sei sicuro di voler eliminare il File ?"
 						header="Cancellazione Testo Atto" severity="alert"
@@ -36,7 +36,7 @@
 							onclick="testoAttoDialog.hide()" type="button" />
 
 					</p:confirmDialog>
-					
+
 					<p:confirmDialog id="confirmDialog"
 						message="Sei sicuro di voler eliminare il Firmatario?"
 						header="Cancellazione Firmatario" severity="alert"
@@ -45,6 +45,7 @@
 						<p:commandButton id="confirm" value="Conferma"
 							oncomplete="firmatarioDialog.hide()"
 							action="#{presentazioneAssegnazioneAttoController.removeFirmatario}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
 							update="listaFirmatari" />
 						<p:commandButton id="decline" value="Annulla"
 							onclick="firmatarioDialog.hide()" type="button" />
@@ -54,7 +55,8 @@
 					<b> <h:outputLabel for="datapresaincarico"
 							value="Data presa in carico: " /> <p:calendar size="10"
 							locale="it_IT" id="datapresaincarico"
-							value="#{attoBean.dataPresaInCarico}" /> </b>
+							value="#{attoBean.dataPresaInCarico}" />
+					</b>
 					<p:commandButton value="Presa in Carico" update="presaCaricoMsg"
 						actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
 				</p>
@@ -70,8 +72,8 @@
 					<h:outputText style="font-weight: bold;" value="Numero Atto: " />
 				</p:column>
 				<p:column>
-					<p:inputText 
-					             id="inputnumeroatto" value="#{attoBean.numeroAtto}" />
+					<p:inputText readonly="true" id="inputnumeroatto"
+						value="#{presentazioneAssegnazioneAttoController.numeroAtto}" />
 				</p:column>
 
 
@@ -79,9 +81,11 @@
 					<h:outputText style="font-weight: bold;" value="Classificazione: " />
 				</p:column>
 				<p:column>
-					<p:inputText  id="inputclassificazione" value="#{attoBean.classificazione}" >
-						<p:ajax event="change" listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"/>  
-					</p:inputText>	
+					<p:inputText id="inputclassificazione"
+						value="#{presentazioneAssegnazioneAttoController.classificazione}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputText>
 				</p:column>
 			</p:row>
 
@@ -90,8 +94,12 @@
 					<h:outputText style="font-weight: bold;" value="Oggetto: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" value="#{attoBean.oggetto}"
-						autoResize="false" />
+					<p:inputTextarea rows="2" cols="82"
+						value="#{presentazioneAssegnazioneAttoController.oggetto}"
+						autoResize="false">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputTextarea>
 				</p:column>
 			</p:row>
 
@@ -102,17 +110,24 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="inputnumrepertorio"
-						value="#{attoBean.numeroRepertorio}" />
+						value="#{presentazioneAssegnazioneAttoController.numeroRepertorio}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputText>
 				</p:column>
 
 				<p:column>
 					<b> <h:outputLabel for="datarepertorio"
-							value="Data Repertorio: " /> </b>
+							value="Data Repertorio: " />
+					</b>
 				</p:column>
 
 				<p:column>
 					<p:calendar size="10" locale="it_IT" id="datarepertorio"
-						value="#{attoBean.dataRepertorio}" />
+						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
+						<p:ajax event="dateSelect"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:calendar>
 				</p:column>
 
 
@@ -121,12 +136,19 @@
 			<p:row>
 				<p:column>
 					<b> <h:outputText style="font-weight: bold;"
-							value="Tipo Iniziativa: " /> </b>
+							value="Tipo Iniziativa: " />
+					</b>
 				</p:column>
 
 				<p:column>
 					<p:selectOneMenu id="tipoiniziativa"
-						value="#{attoBean.tipoIniziativa}" />
+						value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
+						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
+						<f:selectItems
+							value="#{presentazioneAssegnazioneAttoController.tipiIniziativa}" />
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:selectOneMenu>
 				</p:column>
 
 				<p:column>
@@ -136,7 +158,10 @@
 
 				<p:column>
 					<p:calendar size="10" locale="it_IT" id="datainiziativa"
-						value="#{attoBean.dataIniziativa}" />
+						value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
+						<p:ajax event="dateSelect"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:calendar>
 				</p:column>
 
 
@@ -149,7 +174,10 @@
 				</p:column>
 				<p:column colspan="3">
 					<p:inputTextarea rows="2" cols="82" autoResize="false"
-						value="#{attoBean.descrizioneIniziativa}" />
+						value="#{presentazioneAssegnazioneAttoController.descrizioneIniziativa}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputTextarea>
 				</p:column>
 			</p:row>
 
@@ -160,16 +188,24 @@
 				</p:column>
 
 				<p:column>
-					<p:inputText id="inputnumerodgr" value="#{attoBean.numeroDGR}" />
+					<p:inputText id="inputnumerodgr"
+						value="#{presentazioneAssegnazioneAttoController.numeroDgr}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputText>
 				</p:column>
 
 				<p:column>
-					<b> <h:outputLabel for="datadgr" value="Data DGR: " /> </b>
+					<b> <h:outputLabel for="datadgr" value="Data DGR: " />
+					</b>
 				</p:column>
 
 				<p:column>
 					<p:calendar size="10" locale="it_IT" id="datadgr"
-						value="#{attoBean.dataDGR}" />
+						value="#{presentazioneAssegnazioneAttoController.dataDgr}">
+						<p:ajax event="dateSelect"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:calendar>
 				</p:column>
 
 			</p:row>
@@ -180,7 +216,10 @@
 				</p:column>
 				<p:column colspan="3">
 					<p:inputText id="inputassegnazione"
-						value="#{attoBean.assegnazione}" />
+						value="#{presentazioneAssegnazioneAttoController.assegnazione}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputText>
 				</p:column>
 			</p:row>
 
@@ -198,7 +237,8 @@
 				<p:column colspan="3">
 					<p:fileUpload label="Carica File"
 						fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}"
-						mode="advanced" auto="true" update="listaTestiAtto ,presaCaricoMsg" />
+						mode="advanced" auto="true"
+						update="listaTestiAtto ,presaCaricoMsg" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -210,13 +250,13 @@
 
 						<h:column>
 							<f:facet name="header">Testo Dell'Atto</f:facet>
-							#{testoAtto.descrizione}
+							#{testoAtto.nome}
 						</h:column>
 
 						<h:column>
 							<f:facet name="header">Documento</f:facet>
 							<h:outputText
-								value="#{fn:substring(testoAtto.descrizione, fn:indexOf(testoAtto.descrizione,'.') ,fn:length(testoAtto.descrizione) )}" />
+								value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" />
 
 						</h:column>
 
@@ -305,6 +345,7 @@
 							<p:column>
 								<p:commandButton value="Aggiungi"
 									action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
+									actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
 									id="addFirmatario" update="listaFirmatari , presaCaricoMsg"
 									icon="new-icon" />
 							</p:column>
@@ -406,7 +447,8 @@
 
 	</p:fieldset>
 	<p>
-		<p:commandButton value="Salva" />
+		<p:commandButton value="Salva" id="salvainfogenerali"
+			action="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}" />
 	</p>
 </h:form>
 </html>

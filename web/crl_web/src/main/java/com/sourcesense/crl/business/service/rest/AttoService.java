@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.Legislatura;
 import com.sourcesense.crl.business.model.TipologiaAtto;
 import com.sun.jersey.api.client.Client;
@@ -55,8 +56,8 @@ public class AttoService  {
 
 	public Atto create(String url,Atto atto) {
 
-       Atto attoRet=null;
-		
+		Atto attoRet=null;
+
 		try{
 			WebResource webResource = client.resource(url);
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
@@ -67,13 +68,13 @@ public class AttoService  {
 			if (response.getStatus() == 500) {
 
 				atto.setError(response.getEntity(String.class));
-				
+
 			}else if (response.getStatus() != 200) {
-				
+
 				throw new RuntimeException();
-				
+
 			}
-			
+
 			String responseMsg = response.getEntity(String.class);
 			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
 			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
@@ -113,7 +114,7 @@ public class AttoService  {
 						+ response.getStatus());
 			}
 
-            
+
 			//atto= response.getEntity(Atto.class);
 			String responseMsg = response.getEntity(String.class);
 			System.out.println(responseMsg);
@@ -121,13 +122,13 @@ public class AttoService  {
 			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
-			
+
 			//objectMapper.configure(DeserializationConfig.Feature., false);
 			atto =  objectMapper.readValue(responseMsg, Atto.class);
 			//JsonNode root  = objectMapper.readTree(responseMsg);
 			//System.out.println("ROOT::::"+root);
-			
-			
+
+
 		}catch(Exception ex){
 
 			ex.printStackTrace();
@@ -143,28 +144,21 @@ public class AttoService  {
 		return null;
 	}
 
-	
-	public Allegato uploadFile(String url,Atto atto,InputStream stream){
-		
+
+	public Allegato uploadAllegato(String url,Atto atto,InputStream stream, String nomeFile, String tipologia){
+
 		Allegato allegato=null;
-		
+
 		try {
-			
+
 			WebResource webResource = client.resource(url);
 			FormDataMultiPart part = new FormDataMultiPart();
-			part.bodyPart(new StreamDataBodyPart("file", stream));
+			part.bodyPart(new StreamDataBodyPart("file", stream, nomeFile));
 			part.field("id", atto.getId());
-			
-			//part.
-			
-			
-			//MultiPart multiPart = new MultiPart();
-			//multiPart.bodyPart(new BodyPart(stream, MediaType.APPLICATION_OCTET_STREAM_TYPE));
-			//multiPart.bodyPart(new BodyPart(stream, MediaType.APPLICATION_OCTET_STREAM_TYPE));
-			
-			
-			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, part);
-			
+			part.field("tipologia", tipologia);
+
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).header("Accept-Charset", "UTF-8").post(ClientResponse.class, part);
+
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
@@ -182,7 +176,40 @@ public class AttoService  {
 		}
 		return allegato;
 	}
-	
+
+	public AttoRecord uploadTestoAtto(String url,Atto atto,InputStream stream, String nomeFile, String tipologia){
+
+		AttoRecord attoRecord=null;
+
+		try {
+
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream, nomeFile));
+			part.field("id", atto.getId());
+			part.field("tipologia", tipologia);
+
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).header("Accept-Charset", "UTF-8").post(ClientResponse.class, part);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			System.out.println(responseMsg);
+			attoRecord = objectMapper.readValue(responseMsg,
+					AttoRecord.class);
+
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return attoRecord;
+	}
+
 
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti =null;
@@ -215,6 +242,11 @@ public class AttoService  {
 		//System.out.println("size lista: "+listAtti.size());
 		return listAtti;
 
+	}
+
+	public Atto merge(Atto atto, String url) {
+		//TODO
+		return null;
 	}
 
 

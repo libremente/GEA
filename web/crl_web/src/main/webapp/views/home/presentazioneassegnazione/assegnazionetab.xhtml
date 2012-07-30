@@ -24,7 +24,8 @@
 					<p:commandButton id="confirmCommissione" value="Conferma"
 						oncomplete="commissioneDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.removeCommissione}"
-						update="listaCommissioni" />
+						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
+						update="listaCommissioni"/>
 					<p:commandButton id="declineCommissione" value="Annulla"
 						onclick="commissioneDialog.hide()" type="button" />
 
@@ -34,18 +35,18 @@
 					message="Sei sicuro di voler annullare la Commissione?"
 					header="Annullamento Commissione" severity="alert"
 					widgetVar="annullaCommissioneDialog">
-					
+
 					<p>
-					<h:outputLabel for="dataannullo"
-							value="Data annullo: " />
-					<p:calendar size="10" locale="it_IT" id="dataannullo"
-						pattern="dd/MM/yyyy"
-						value="#{presentazioneAssegnazioneAttoController.dataAnnullo}" />
-						</p>
+						<h:outputLabel for="dataannullo" value="Data annullo: " />
+						<p:calendar size="10" locale="it_IT" id="dataannullo"
+							pattern="dd/MM/yyyy"
+							value="#{presentazioneAssegnazioneAttoController.dataAnnullo}" />
+					</p>
 					<p:commandButton id="confirmAnnulCommissione" value="Conferma"
 						oncomplete="annullaCommissioneDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.annulCommissione}"
-						update="listaCommissioni" />
+						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
+						update="listaCommissioni"/>
 					<p:commandButton id="declineAnnullaCommissione" value="Annulla"
 						onclick="annullaCommissioneDialog.hide()" type="button" />
 
@@ -59,7 +60,8 @@
 					<p:commandButton id="confirmOrganismoStatutario" value="Conferma"
 						oncomplete="organismoStatutarioDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.removeOrganismoStatutario}"
-						update="listaOrganismiStatutari" />
+						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
+						update="listaOrganismiStatutari"/>
 					<p:commandButton id="declineOrganismoStatutario" value="Annulla"
 						onclick="organismoStatutarioDialog.hide()" type="button" />
 
@@ -123,8 +125,9 @@
 									<p:column>
 										<p:commandButton value="Aggiungi"
 											action="#{presentazioneAssegnazioneAttoController.addCommissione}"
+											actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
 											id="addCommissione"
-											update="listaCommissioni , assegnazioneMsg" icon="new-icon" />
+											update="listaCommissioni , assegnazioneMsg" icon="new-icon"/>
 									</p:column>
 
 								</p:row>
@@ -183,7 +186,8 @@
 
 								<h:column>
 									<f:facet name="header">Annulla</f:facet>
-									<p:commandButton value="Annulla" oncomplete="annullaCommissioneDialog.show()">
+									<p:commandButton value="Annulla"
+										oncomplete="annullaCommissioneDialog.show()">
 										<f:setPropertyActionListener
 											value="#{commissione.descrizione}"
 											target="#{presentazioneAssegnazioneAttoController.commissioneToAnnul}" />
@@ -262,9 +266,10 @@
 									<p:column>
 										<p:commandButton value="Aggiungi"
 											action="#{presentazioneAssegnazioneAttoController.addOrganismoStatutario}"
+											actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
 											id="addOrganismoStatutario"
 											update="listaOrganismiStatutari , assegnazioneMsg"
-											icon="new-icon" />
+											icon="new-icon"/>
 									</p:column>
 
 								</p:row>
@@ -331,7 +336,8 @@
 		<p:column>
 
 			<p>
-				<p:commandButton value="Conferma selezione" />
+				<p:commandButton value="Conferma selezione" id="confermaassegnazione"
+					action="#{presentazioneAssegnazioneAttoController.confermaAssegnazione}"/>
 			</p>
 
 		</p:column>

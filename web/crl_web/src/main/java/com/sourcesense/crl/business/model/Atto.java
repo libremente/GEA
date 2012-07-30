@@ -73,21 +73,21 @@ import org.springframework.beans.factory.annotation.Configurable;
 @JsonRootName("atto")
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-public class Atto implements Cloneable
-{
-    /**
-	 * 
-	 */
-	
-	public Object clone() {
-		try {
-			return super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-			return null;
+	public class Atto implements Cloneable
+	{
+	    /**
+		 * 
+		 */
+		
+		public Object clone() {
+			try {
+				return super.clone();
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
-	}
-	
+		
 	
 
 	private String id;

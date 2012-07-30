@@ -12,6 +12,7 @@ package com.sourcesense.crl.business.service;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.service.rest.AttoService;
 import com.sourcesense.crl.util.URLBuilder;
@@ -71,10 +72,16 @@ public class AttoServiceManager implements ServiceManager {
 
 	}*/
 
-	public Allegato uploadFile(Atto atto, Allegato allegato,InputStream stream) {
+	public Allegato uploadAllegato(Atto atto, InputStream stream, String nomeFile) {
 
-		return attoService.uploadFile(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_file", new String[] { atto.getId() }),atto, stream);
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, "presentazioneAllegato");
+	}
+	
+	public AttoRecord uploadTesto(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, nomeFile, "testoAtto");
 	}
 
 	@Override
@@ -87,6 +94,26 @@ public class AttoServiceManager implements ServiceManager {
 	public Atto findById(String id) {
 		return attoService.findById(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
+	}
+	
+	public Atto salvaInfoGeneraliPresentazione(Atto atto) {
+		//TODO
+		return attoService.merge(atto, "");
+	}
+	
+	public Atto salvaAmmissibilitaPresentazione(Atto atto) {
+		//TODO
+		return attoService.merge(atto, "");
+	}
+	
+	public Atto salvaAssegnazionePresentazione(Atto atto) {
+		//TODO
+		return attoService.merge(atto, "");
+	}
+	
+	public Atto salvaNoteAllegatiPresentazione(Atto atto) {
+		//TODO
+		return attoService.merge(atto, "");
 	}
 
 	@Override
