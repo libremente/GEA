@@ -147,6 +147,10 @@
 
 	<config evaluator="node-type" condition="crlatti:attoPdl">
 		<property-sheet>
+			<show-property name="crlatti:descrizioneIniziativa"/>
+			<show-property name="crlatti:numeroRepertorio"/>
+			<show-property name="crlatti:dataRepertorio"/>
+			<show-property name="crlatti:classificazione"/>
 			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
@@ -191,6 +195,10 @@
 
 	<config evaluator="node-type" condition="crlatti:atto">
 		<property-sheet>
+			<show-property name="crlatti:descrizioneIniziativa"/>
+			<show-property name="crlatti:numeroRepertorio"/>
+			<show-property name="crlatti:dataRepertorio"/>
+			<show-property name="crlatti:classificazione"/>
 			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />

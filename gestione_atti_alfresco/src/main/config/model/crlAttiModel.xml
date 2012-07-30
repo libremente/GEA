@@ -24,6 +24,22 @@
 			<title>Atto</title>
 			<parent>cm:folder</parent>
 			<properties>
+				<property name="crlatti:descrizioneIniziativa">
+					<title>Descrizione iniziativa</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroRepertorio">
+					<title>Numero repertorio</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataRepertorio">
+					<title>Data repertorio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:classificazione">
+					<title>Classificazione</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:legislatura">
 					<title>Legislatura</title>
 					<type>d:text</type>
