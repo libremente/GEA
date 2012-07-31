@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoRecord;
+import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -204,6 +205,8 @@ public class AttoService  {
 
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			objectMapper.configure(DeserializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, true);
+			objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			listTestiAtto = objectMapper.readValue(responseMsg,
 					new TypeReference<List<AttoRecord>>(){});
 
@@ -234,9 +237,12 @@ public class AttoService  {
 
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			objectMapper.configure(DeserializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, true);
+			objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			
 			listAllegati = objectMapper.readValue(responseMsg,
-					new TypeReference<List<Allegato>>(){});
-
+					new TypeReference<List<Allegato>>() {
+			});
 
 		} catch (Exception ex) {
 

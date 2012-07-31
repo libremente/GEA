@@ -49,21 +49,6 @@ public class RiepilogoAttoController {
 				.getSessionMap().get("attoBean"));
 
 		
-		//TODO riempire liste firmatari
-		
-		//TODO riempire liste abbinamenti
-		
-		//TODO riempire liste testi
-		//attoBean.getAtto().setTestiAtto(attoServiceManager.testiAttoByAtto(attoBean.getAtto()));
-		//TODO riempire liste allegati 
-		attoBean.getAtto().setAllegati(attoServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
-		//TODO riempire liste organi interni
-		
-		//TODO riempire liste altri organi
-		
-		
-		
-		
 		// TODO riempire liste commissioni attoBean =>
 		// attoBean.getAtto().setCommissioni(commissioneServiceManager.findCommissioniByAtto(attoBean.getId()));
 		//

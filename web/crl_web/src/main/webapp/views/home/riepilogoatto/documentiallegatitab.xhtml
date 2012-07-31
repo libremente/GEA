@@ -6,21 +6,48 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <p:panelGrid styleClass="infoTable" id="documentiallegatipanel">
 	<p:row>
 		<p:column colspan="3">
 			<h:dataTable id="listaTestiUfficiali"
-				value="#{attoBean.atto.testiAtto}" var="allegato"
+				value="#{attoBean.atto.testiAtto}" var="testoAtto"
 				styleClass="generalInfoTab">
 
-				<h:column>
-					<f:facet name="header"></f:facet>
-							#{allegato.nome}
-    			       </h:column>
 
 				<h:column>
+					<f:facet name="header">Testo Dell'Atto</f:facet>
+							#{testoAtto.nome}
+						</h:column>
+
+				<h:column>
+					<f:facet name="header">Documento</f:facet>
+					<h:outputText
+						value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" />
+
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Pubblico</f:facet>
+					<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+					<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+					<p:commandButton icon="detail-icon">
+
+						
+					</p:commandButton>
+				</h:column>
+
+
+
+
+				<!-- <h:column>
 					<f:facet name="header">Testi Ufficiali:</f:facet>
 					<h:commandLink>
 						<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
@@ -35,17 +62,18 @@
 
 				<h:column>
 					<f:facet name="header">Emendamenti:</f:facet>
-				
-						<h:commandLink>
-							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
-						</h:commandLink>
-				
-				</h:column>
+
+					<h:commandLink>
+						<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
+					</h:commandLink>
+
+				</h:column> -->
 
 
 			</h:dataTable>
-            <h:outputText value="Nessun Testo Atto" rendered="#{empty attoBean.atto.testiAtto}">
-                 </h:outputText>
+			<h:outputText value="Nessun Testo Atto"
+				rendered="#{empty attoBean.atto.testiAtto}">
+			</h:outputText>
 		</p:column>
 	</p:row>
 	<p:row>
@@ -66,31 +94,35 @@
 
 				<h:column>
 					<f:facet name="header"></f:facet>
-					
-						<h:commandLink>
-						
-						</h:commandLink>
-					
+
+					<h:commandLink>
+
+					</h:commandLink>
+
 				</h:column>
 
 
 			</h:dataTable>
-			
-			<h:outputText value="Nessun allegato" rendered="#{empty attoBean.atto.allegati}">
-                 </h:outputText>
+
+			<h:outputText value="Nessun allegato"
+				rendered="#{empty attoBean.atto.allegati}">
+			</h:outputText>
 		</p:column>
 	</p:row>
 
 	<p:row>
 		<p:column colspan="3">
 			<p>
-				<b><u>Comitato Ristretto:</u></b>
+				<b><u>Comitato Ristretto:</u>
+				</b>
 			</p>
 			<p>
-				<b><u>Consultazioni:</u></b>
+				<b><u>Consultazioni:</u>
+				</b>
 			</p>
 			<p>
-				<b><u>Pareri:</u></b>
+				<b><u>Pareri:</u>
+				</b>
 			</p>
 		</p:column>
 	</p:row>
