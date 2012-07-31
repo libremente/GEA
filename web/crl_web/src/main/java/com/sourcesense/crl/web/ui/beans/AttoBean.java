@@ -531,7 +531,7 @@ public class AttoBean implements Serializable {
 	public void setSospeso(boolean sospeso) {
 		this.atto.setSospeso(sospeso);
 	}
-<<<<<<< .mine
+
 
 	public Date getDataLR() {
 		return atto.getDataLR();
@@ -605,7 +605,6 @@ public class AttoBean implements Serializable {
 		this.atto.setNumeroDCR(numeroDCR);
 	}
 
-}=======
 
 	public String getValutazioneAmmissibilita() {
 		return atto.getValutazioneAmmissibilita();

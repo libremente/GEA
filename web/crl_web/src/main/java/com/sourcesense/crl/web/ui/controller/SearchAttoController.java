@@ -265,10 +265,6 @@ public class SearchAttoController  {
 	
 	public String attoDetail(String idAttoParam){
 		
-		
-		System.out.println("PARAM=="+idAttoParam);
-		
-		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = (AttoBean) context
 				.getApplication()

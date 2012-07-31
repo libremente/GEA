@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneConsultiva;
 import com.sourcesense.crl.business.model.CommissioneReferente;
@@ -42,6 +44,25 @@ public class CommissioneServiceManager implements ServiceManager{
 		return false;
 	}
 
+    public List <Commissione> findCommissioniByAtto(String idAtto) {
+		
+    	List <Commissione> commissioni = new ArrayList<Commissione>();
+    	
+    	List <CommissioneReferente> commissioniRef =  commissioneService.retrieveCommissioniReferenteByAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_new_atto", new String [] {idAtto}));
+		
+    	List <CommissioneConsultiva> commissioniCons =  commissioneService.retrieveCommissioniConsultiveByAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_new_atto", new String [] {idAtto}));
+		
+    	commissioni.addAll(commissioniCons);
+    	commissioni.addAll(commissioniRef);
+    	
+    	return commissioni;
+		
+
+	}
+
+	
 	public Map<String, String> findAllCommissioneReferente() {
 		Map<String, String> commissioniReferenti = new HashMap<String, String>();
 

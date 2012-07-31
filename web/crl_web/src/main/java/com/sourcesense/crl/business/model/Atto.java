@@ -25,42 +25,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Configurable;
 
-/**
- * "id" : "workspace://SpacesStore/b0190a2c-763e-4f29-b3f7-b1476e1ab8b9",
-	"nome" : "777",
-	"numeroAtto" : "777",
-	"tipologia" : "Tipologia1",
-	"legislatura" : "Legislatura1",
-	"stato" : "",
-	"dataIniziativa" : "",
-	"numeroProtocollo" : "",
-	"tipoIniziativa" : "",
-	"numeroDcr" : "",
-	"oggetto" : "",
-	"tipoChiusura" : "",
-	"dataPubblicazione" : "",
-	"esitoVotoCommissioneReferente" : "",
-	"dataSedutaSc" : "",
-	"esitoVotoAula" : "",
-	"dataSedutaCommissione" : "",
-	"commissioneReferente" : "",
-	"dataSedutaAula" : "",
-	"commissioneConsultiva" : "",
-	"redigente" : "",
-	"deliberante" : "",
-	"organismoStatutario" : "",
-	"numeroLcr" : "",
-	"soggettoConsultato" : "",
-	"numeroLr" : "",
-	"anno" : "2012",
-	"emendato" : "",
-	"rinviato" : "",
-	"sospeso" : "",
-	"abbinamento" : "",
-	"stralcio" : "",
-	"primoFirmatario" : "",
-	"relatori" : 	
- *@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+/**@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
  * @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
  * @author uji
  */

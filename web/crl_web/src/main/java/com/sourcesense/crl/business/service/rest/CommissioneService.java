@@ -31,6 +31,68 @@ public class CommissioneService {
 	@Autowired
 	transient ObjectMapper objectMapper;
 
+	
+	public List<CommissioneReferente> retrieveCommissioniReferenteByAtto (String url){
+		
+		List<CommissioneReferente> listCommissioniReferenti =null;
+
+		try {
+			WebResource webResource = client.resource(url);
+
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listCommissioniReferenti = objectMapper.readValue(responseMsg,
+					new TypeReference<List<CommissioneReferente>>() {
+			});
+
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return listCommissioniReferenti;
+	}
+	
+    public List<CommissioneConsultiva> retrieveCommissioniConsultiveByAtto (String url){
+		
+    	List<CommissioneConsultiva> listCommissioniConsultive =null;
+
+		try {
+			WebResource webResource = client.resource(url);
+
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listCommissioniConsultive = objectMapper.readValue(responseMsg,
+					new TypeReference<List<CommissioneConsultiva>>() {
+			});
+
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return listCommissioniConsultive;
+	}
+	
+	
 	public List<CommissioneReferente> getAllCommissioneReferente(String url) {
 		List<CommissioneReferente> listCommissioniReferenti =null;
 

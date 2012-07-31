@@ -10,7 +10,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:form enctype="multipart/form-data">
+
 	<p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
 
 
@@ -28,11 +28,11 @@
 						header="Cancellazione Testo Atto" severity="alert"
 						widgetVar="testoAttoDialog">
 
-						<p:commandButton id="confirmAllegato" value="Conferma"
+						<p:commandButton id="confirmTestoAtto" value="Conferma"
 							oncomplete="testoAttoDialog.hide()"
 							action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
 							update="listaTestiAtto" />
-						<p:commandButton id="declineAllegato" value="Annulla"
+						<p:commandButton id="declineTestoAtto" value="Annulla"
 							onclick="testoAttoDialog.hide()" type="button" />
 
 					</p:confirmDialog>
@@ -83,7 +83,7 @@
 				<p:column>
 					<p:inputText id="inputclassificazione"
 						value="#{presentazioneAssegnazioneAttoController.classificazione}">
-						<p:ajax event="change"
+						<p:ajax event="change" 
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
 					</p:inputText>
 				</p:column>
@@ -450,10 +450,11 @@
 		</p:panelGrid>
 
 	</p:fieldset>
+	
 	<p>
-		<p:commandButton value="Salva" id="salvainfogenerali"
-			action="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}"
-			update="presaCaricoMsg" />
+		<p:commandButton value="Salva" 
+		    update="presaCaricoMsg"
+			actionListener="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}"
+			 />
 	</p>
-</h:form>
 </html>

@@ -7,13 +7,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:form>
+
 
 	<p:panelGrid styleClass="infoTable" id="sedutetab">
 		<p:row>
 			<p:column colspan="3">
 				<h:dataTable id="listaOrganiInterni"
-					value="#{RiepilogoAttoController.organiInterni}" var="organo"
+					value="#{riepilogoAttoController.organiInterni}" var="organo"
 					styleClass="generalInfoTab">
 
 					<h:column>
@@ -48,7 +48,7 @@
 		<p:row>
 			<p:column colspan="3">
 				<h:dataTable id="listaAltriOrgani"
-					value="#{RiepilogoAttoController.altriOrgani}" var="organo"
+					value="#{riepilogoAttoController.altriOrgani}" var="organo"
 					styleClass="generalInfoTab">
 
 					<h:column>
@@ -67,9 +67,4 @@
 	</p:panelGrid>
 
 
-
-
-
-
-</h:form>
 </html>

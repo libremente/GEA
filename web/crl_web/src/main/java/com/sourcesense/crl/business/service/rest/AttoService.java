@@ -113,21 +113,10 @@ public class AttoService  {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
-
-
-			//atto= response.getEntity(Atto.class);
 			String responseMsg = response.getEntity(String.class);
-			System.out.println(responseMsg);
-			//responseMsg;
-			//objectMapper.configure(DeserializationConfig.Feature.AUTO_DETECT_FIELDS, true);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
-
-			//objectMapper.configure(DeserializationConfig.Feature., false);
 			atto =  objectMapper.readValue(responseMsg, Atto.class);
-			//JsonNode root  = objectMapper.readTree(responseMsg);
-			//System.out.println("ROOT::::"+root);
-
 
 		}catch(Exception ex){
 
@@ -166,7 +155,6 @@ public class AttoService  {
 
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			System.out.println(responseMsg);
 			allegato = objectMapper.readValue(responseMsg,
 					Allegato.class);
 

@@ -16,8 +16,6 @@ import com.sourcesense.crl.business.model.Organo;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
-
-
 @ManagedBean(name = "riepilogoAttoController")
 @ViewScoped
 public class RiepilogoAttoController {
@@ -27,55 +25,62 @@ public class RiepilogoAttoController {
 	private List<Organo> organiInterni;
 	private List<Organo> altriOrgani;
 	private String nomeCommissione;
-	
-	
+	private String commissioneSelectedName;
+
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
-	
-	
-	
-	private Commissione commissioneSelected = new Commissione();
-	
-    
 
+	private Commissione commissioneSelected = new Commissione();
 
 	@PostConstruct
 	protected void init() {
-		//setDocumentiAllegati(AllegatoServiceManager.findTestiUfficiali());
-		//setAltriAllegati(AllegatoServiceManager.findAltriAllegati());
-		//setOrganiInterni(OrganoServiceManager.findOrganiInterni());
-		//setAltriOrgani(OrganoServiceManager.findAltriOrgani());
-		
+		// setDocumentiAllegati(AllegatoServiceManager.findTestiUfficiali());
+		// setAltriAllegati(AllegatoServiceManager.findAltriAllegati());
+		// setOrganiInterni(OrganoServiceManager.findOrganiInterni());
+		// setAltriOrgani(OrganoServiceManager.findAltriOrgani());
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
+		// TODO riempire liste commissioni attoBean =>
+		// attoBean.getAtto().setCommissioni(commissioneServiceManager.findCommissioniByAtto(attoBean.getId()));
+		//
 		commissioneSelected = attoBean.getAtto().getCommissioni().get(0);
-		System.out.println("Nome == " + commissioneSelected.getNome());
-		
+		// System.out.println("Nome == " + commissioneSelected.getNome());
+
 	}
-	
-	
-	
-	public void  showCommissioneDetail(){
-		
-	  Commissione commissioneSelected =	(Commissione)commissioneServiceManager.findById(nomeCommissione);
-		
+
+	public void showCommissioneDetail() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		for (Commissione commissioneRec : attoBean.getAtto().getCommissioni()) {
+			
+			if(commissioneRec.getNome().equals(nomeCommissione)){
+				
+			  commissioneSelected =	commissioneRec;
+			  break;
+			}
+
+		}
+
 	}
-	
-	
+
 	public List<Allegato> getTestiUfficiali() {
 		return testiUfficiali;
 	}
 
 	public void setTestiUfficiali(List<Allegato> testiUfficiali) {
 		this.testiUfficiali = testiUfficiali;
-	}	
-	
+	}
+
 	public List<Allegato> getAltriAllegati() {
 		return altriAllegati;
 	}
-	
+
 	public void setAltriAllegati(List<Allegato> altriAllegati) {
 		this.altriAllegati = altriAllegati;
 	}
@@ -104,31 +109,29 @@ public class RiepilogoAttoController {
 		this.nomeCommissione = nomeCommissione;
 	}
 
-
-
 	public CommissioneServiceManager getCommissioneServiceManager() {
 		return commissioneServiceManager;
 	}
 
-
-
-	public void setCommissioneServiceManager(CommissioneServiceManager commissioneServiceManager) {
+	public void setCommissioneServiceManager(
+			CommissioneServiceManager commissioneServiceManager) {
 		this.commissioneServiceManager = commissioneServiceManager;
-	}	
-	
+	}
+
+	public String getCommissioneSelectedName() {
+		return this.commissioneSelected.getClass().getSimpleName();
+	}
+
+	public void setCommissioneSelectedName(String commissioneSelectedName) {
+		this.commissioneSelectedName = commissioneSelectedName;
+	}
+
 	public Commissione getCommissioneSelected() {
 		return commissioneSelected;
 	}
-
-
 
 	public void setCommissioneSelected(Commissione commissioneSelected) {
 		this.commissioneSelected = commissioneSelected;
 	}
 
-
-
-
-	
-	
 }

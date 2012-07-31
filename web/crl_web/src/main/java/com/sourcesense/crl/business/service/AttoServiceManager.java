@@ -14,6 +14,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.service.rest.AttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
@@ -66,12 +67,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 	
 	
-	/*public Atto persist(Object object) {
-		return attoService.create(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_new_atto", null), (Atto) object);
-
-	}*/
-
+	
 	public Allegato uploadAllegato(Atto atto, InputStream stream, String nomeFile) {
 
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(

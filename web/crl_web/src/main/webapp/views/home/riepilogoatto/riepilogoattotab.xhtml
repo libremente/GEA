@@ -6,9 +6,11 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:form>
+
 	<p:fieldset legend="Informazioni Generali" toggleable="true"
 		collapsed="false" toggleSpeed="500">
 
@@ -171,8 +173,8 @@
 		</p:panelGrid>
 	</p:fieldset>
 
-	<p:fieldset legend="Commissioni" toggleable="true" collapsed="false"
-		toggleSpeed="500">
+	<p:fieldset id="fsCommissioni" legend="Commissioni" toggleable="true"
+		collapsed="false" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="infoComm">
 			<p:row>
 				<p:column colspan="2">
@@ -183,11 +185,15 @@
 						<h:column>
 							<f:facet name="header">
 							</f:facet>
-							<p:commandButton action="#{riepilogoAttoController.showCommissioneDetail}"
-								icon="detail-icon"> <!--   update="commDetailPanel"-->
+							<p:commandButton  
+								update=":formRiepilogo:tabView:dettaglioCommissione"
+								id="cmdBtn_#{commissione.nome}"
+								action="#{riepilogoAttoController.showCommissioneDetail}"
+								icon="detail-icon">
 
 								<f:setPropertyActionListener value="#{commissione.nome}"
 									target="#{riepilogoAttoController.nomeCommissione}" />
+
 							</p:commandButton>
 						</h:column>
 
@@ -206,112 +212,130 @@
 						#{commissione.stato}
 							
 					</h:column>
-					</h:dataTable>  
+					</h:dataTable>
+
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:panelGrid styleClass="infoTable" id="dettaglioCommissione">
+
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText style="font-weight: bold;"
+						value="#{riepilogoAttoController.commissioneSelected.nome}: " />
 
 				</p:column>
 			</p:row>
 
 			<p:row>
-			 	<p:column colspan="2">
-					<p:outputPanel id="commDetail">
-					<!--	<p:panelGrid styleClass="infoTable" id="commDetailPanel" >
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Data Assegnazione: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.dataAssegnazione}">
+						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
 
-							<p:row>
-								<p:column colspan="2">
-									<h:outputText style="font-weight: bold;"
-										value="#{riepilogoAttoController.commissioneSelected.nome}: " />
-									
-								</p:column>
-							</p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Data Presa in Carico: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.dataPresaInCarico}">
+						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+					</h:outputText>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data Assegnazione: " />
-								 	  <h:outputText value="#{riepilogoAttoController.commissioneSelected.dataAssegnazione}" /> 
-								</p:column>
+				</p:column>
+			</p:row>
 
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data Presa in Carico: " />
-									<h:outputText value="#{riepilogoAttoController.commissioneSelected.dataPresaInCarico}" />  
-								</p:column>
-							</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Nome Relatore: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.relatori}" />
+				</p:column>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Nome Relatore: " />  
-								 	<h:outputText value="#{riepilogoAttoController.commissioneSelected.relatori}" /> 
-								</p:column>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Data Nomina: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.dataNomina}">
+						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+			</p:row>
 
-								<p:column>
-									<h:outputText style="font-weight: bold;" value="Data Nomina: " />
-								 <h:outputText value="#{riepilogoAttoController.commissioneSelected.dataNomina}" /> 
-								</p:column>
-							</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText style="font-weight: bold;"
+						value="Membri Comitato Ristretto: " />
 
-							<p:row>
-								<p:column colspan="2">
-									<h:outputText style="font-weight: bold;"
-										value="Membri Comitato Ristretto: " />
-									 TODO : check tipo commissione 
-									<h:outputText value="#{riepilogoAttoController.commissioneSelected.membriComitatoRistretto}" />
-								     TODO : check tipo commissione 
-								</p:column>
+					<h:outputText
+						rendered="#{riepilogoAttoController.commissioneSelectedName eq 'CommissioneReferente'}"
+						value="#{riepilogoAttoController.commissioneSelected.membriComitatoRistretto}" />
 
 
-							</p:row>
+				</p:column>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data Apertura Lavori Comitato: " />
-								 <h:outputText value="#{riepilogoAttoController.commissioneSelected.dataAperturaLavoriComitato}" /> 
-								</p:column>
 
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data Chiusura Lavori Comitato: " />
-								 <h:outputText value="#{riepilogoAttoController.commissioneSelected.dataChiusuraLavoriComitato}" /> 
-								</p:column>
-							</p:row>
+			</p:row>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Tipo Votazione: " />
-										                     
-									 <h:outputText value="#{riepilogoAttoController.commissioneSelected.tipoVotazione}" /> 
-								</p:column>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Data Apertura Lavori Comitato: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.dataAperturaLavoriComitato}">
+						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
 
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data Votazione: " />
-									  <h:outputText value="#{riepilogoAttoController.commissioneSelected.dataVotazione}" /> 
-								</p:column>
-							</p:row> 
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Data Chiusura Lavori Comitato: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.dataChiusuraLavoriComitato}">
+						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+			</p:row>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Esito Votazione: " />
-									<h:outputText value="#{riepilogoAttoController.commissioneSelected.esitoVotazione}" /> 
-								</p:column>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
 
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data Trasmissione: " />
-									<h:outputText value="#{riepilogoAttoController.commissioneSelected.dataTrasmissione}" /> 
-								</p:column>
-							</p:row> 
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.tipoVotazione}" />
+				</p:column>
 
-						</p:panelGrid> -->
-					</p:outputPanel>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Data Votazione: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.dataVotazione}">
+						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Esito Votazione: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.esitoVotazione}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Data Trasmissione: " />
+					<h:outputText
+						value="#{riepilogoAttoController.commissioneSelected.dataTrasmissione}">
+						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 			</p:row>
 
 		</p:panelGrid>
+
 	</p:fieldset>
 
 	<p:fieldset legend="Aula" toggleable="true" collapsed="false"
@@ -388,5 +412,5 @@
 			</p:row>
 		</p:panelGrid>
 	</p:fieldset>
-</h:form>
+
 </html>
