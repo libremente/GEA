@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.Legislatura;
 import com.sourcesense.crl.business.model.Personale;
@@ -67,6 +68,10 @@ public class PersonaleServiceManager implements ServiceManager{
 
 		}
 		return relatori;
+	}
+	
+	public List<Firmatario> findFirmatariByAtto(Atto atto) {
+		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_atto", new String[] { atto.getId() }));
 	}
 
 	@Override

@@ -5,6 +5,9 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 
 @JsonRootName("parere")
@@ -24,12 +27,14 @@ public class Parere {
 	public void setOrganismoStatuario(String organismoStatuario) {
 		this.organismoStatuario = organismoStatuario;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRichiesto() {
 		return dataRichiesto;
 	}
 	public void setDataRichiesto(Date dataRichiesto) {
 		this.dataRichiesto = dataRichiesto;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRicevuto() {
 		return dataRicevuto;
 	}
@@ -42,6 +47,7 @@ public class Parere {
 	public void setEsito(String esito) {
 		this.esito = esito;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRicezioneOrgano() {
 		return dataRicezioneOrgano;
 	}

@@ -6,6 +6,9 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 @JsonRootName("organo")
 @JsonTypeName("organo")
@@ -23,6 +26,7 @@ public class Organo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataSeduta() {
 		return dataSeduta;
 	}

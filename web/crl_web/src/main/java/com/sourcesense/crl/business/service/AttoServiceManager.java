@@ -65,15 +65,15 @@ public class AttoServiceManager implements ServiceManager {
 		return searchAtti(attoInit);
 
 	}
-	
-	
-	
+
+
+
 	public Allegato uploadAllegato(Atto atto, InputStream stream, String nomeFile) {
 
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, "presentazioneAllegato");
 	}
-	
+
 	public AttoRecord uploadTesto(Atto atto, InputStream stream, String nomeFile) {
 
 		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
@@ -99,25 +99,25 @@ public class AttoServiceManager implements ServiceManager {
 		return attoService.findById(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
 	}
-	
-	public Atto salvaInfoGeneraliPresentazione(Atto atto) {
-		//TODO
-		return attoService.merge(atto, "");
+
+	public void salvaInfoGeneraliPresentazione(Atto atto) {
+		 attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_info_generali_presentazione_assegnazione", 
+				new String[] { atto.getId() }), atto);
 	}
-	
-	public Atto salvaAmmissibilitaPresentazione(Atto atto) {
+
+	public void salvaAmmissibilitaPresentazione(Atto atto) {
 		//TODO
-		return attoService.merge(atto, "");
+		attoService.merge("", atto);
 	}
-	
-	public Atto salvaAssegnazionePresentazione(Atto atto) {
+
+	public void salvaAssegnazionePresentazione(Atto atto) {
 		//TODO
-		return attoService.merge(atto, "");
+		attoService.merge("", atto);
 	}
-	
-	public Atto salvaNoteAllegatiPresentazione(Atto atto) {
+
+	public void salvaNoteAllegatiPresentazione(Atto atto) {
 		//TODO
-		return attoService.merge(atto, "");
+		attoService.merge("", atto);
 	}
 
 	@Override

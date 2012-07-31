@@ -149,6 +149,7 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
 
+		//TODO this.firmatariList = personaleServiceManager.findFirmatariByAtto(atto);
 		this.firmatariList = new ArrayList<Firmatario>(this.atto.getFirmatari());
 		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
 		this.organismiStatutariList = new ArrayList<OrganismoStatutario>(this.atto.getOrganismiStatutari());

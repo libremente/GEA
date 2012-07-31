@@ -26,6 +26,8 @@ public class Personale {
 	public void setGruppoConsiliare(String gruppoConsiliare) {
 		this.gruppoConsiliare = gruppoConsiliare;
 	}
+
+	
 	
 	
 

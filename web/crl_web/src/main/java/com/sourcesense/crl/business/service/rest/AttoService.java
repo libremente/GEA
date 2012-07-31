@@ -114,6 +114,9 @@ public class AttoService  {
 						+ response.getStatus());
 			}
 			String responseMsg = response.getEntity(String.class);
+			
+			System.out.println(responseMsg);
+			
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
 			atto =  objectMapper.readValue(responseMsg, Atto.class);
@@ -258,9 +261,28 @@ public class AttoService  {
 
 	}
 
-	public Atto merge(Atto atto, String url) {
-		//TODO
-		return null;
+	public void merge(String url, Atto atto) {
+
+		try{
+			WebResource webResource = client
+					.resource(url);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
+			String json =  objectMapper.writeValueAsString(atto);
+
+			//System.out.println(json);
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+		}catch(Exception ex){
+
+			ex.printStackTrace();
+		}
+
 	}
 
 

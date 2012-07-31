@@ -6,6 +6,9 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 
 @JsonRootName("consultazione")
@@ -20,6 +23,8 @@ public class Consultazione {
 	private Date dataSeduta;
 	private String note;
 	private List <Personale> soggettiInvitati;
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataConsultazione() {
 		return dataConsultazione;
 	}
@@ -44,6 +49,8 @@ public class Consultazione {
 	public void setDiscussa(boolean discussa) {
 		this.discussa = discussa;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataSeduta() {
 		return dataSeduta;
 	}

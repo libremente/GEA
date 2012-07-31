@@ -5,6 +5,9 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 @JsonRootName("relatore")
 @JsonTypeName("relatore")
@@ -20,12 +23,14 @@ public class Relatore extends Personale {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataNomina() {
 		return dataNomina;
 	}
 	public void setDataNomina(Date dataNomina) {
 		this.dataNomina = dataNomina;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataUscita() {
 		return dataUscita;
 	}

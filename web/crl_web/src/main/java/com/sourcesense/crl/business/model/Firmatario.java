@@ -5,6 +5,9 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 @JsonRootName("firmatario")
 @JsonTypeName("firmatario")
@@ -28,12 +31,16 @@ public class Firmatario extends Personale {
 	public void setGruppoConsiliare(String gruppoConsiliare) {
 		this.gruppoConsiliare = gruppoConsiliare;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataFirma() {
 		return dataFirma;
 	}
 	public void setDataFirma(Date dataFirma) {
 		this.dataFirma = dataFirma;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRitiro() {
 		return dataRitiro;
 	}

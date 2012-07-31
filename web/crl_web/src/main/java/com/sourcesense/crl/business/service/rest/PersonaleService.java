@@ -91,4 +91,34 @@ public class PersonaleService {
 		return listRelatori;
 	}
 
+
+	public List<Firmatario> findFirmatariById(String url) {
+		List<Firmatario> listFirmatari =null;
+
+		try {
+			WebResource webResource = client.resource(url);
+
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listFirmatari = objectMapper.readValue(responseMsg,
+					new TypeReference<List<Firmatario>>() {
+			});
+
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return listFirmatari;
+	}
+
 }

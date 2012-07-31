@@ -9,6 +9,9 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 
 @JsonRootName("commissione")
@@ -68,6 +71,7 @@ public class Commissione {
 		this.stato = stato;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAssegnazione() {
 		return dataAssegnazione;
 	}
@@ -76,6 +80,7 @@ public class Commissione {
 		this.dataAssegnazione = dataAssegnazione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPresaInCarico() {
 		return dataPresaInCarico;
 	}
@@ -100,6 +105,7 @@ public class Commissione {
 		this.esitoVotazione = esitoVotazione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataVotazione() {
 		return dataVotazione;
 	}
@@ -108,6 +114,7 @@ public class Commissione {
 		this.dataVotazione = dataVotazione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataTrasmissione() {
 		return dataTrasmissione;
 	}
@@ -124,6 +131,7 @@ public class Commissione {
 		this.relatori = relatori;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataProposta() {
 		return dataProposta;
 	}
@@ -132,6 +140,7 @@ public class Commissione {
 		this.dataProposta = dataProposta;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAnnullo() {
 		return dataAnnullo;
 	}
@@ -148,6 +157,7 @@ public class Commissione {
 		this.annullata = annullata;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataChiusuraLavoriComitato() {
 		return dataChiusuraLavoriComitato;
 	}
@@ -156,6 +166,7 @@ public class Commissione {
 		this.dataChiusuraLavoriComitato = dataChiusuraLavoriComitato;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAperturaLavoriComitato() {
 		return dataAperturaLavoriComitato;
 	}
@@ -164,6 +175,7 @@ public class Commissione {
 		this.dataAperturaLavoriComitato = dataAperturaLavoriComitato;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataNomina() {
 		return dataNomina;
 	}

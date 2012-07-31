@@ -25,6 +25,8 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import com.sourcesense.crl.util.JsonDateSerializer;
+
 /**@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
  * @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
  * @author uji
@@ -301,6 +303,7 @@ import org.springframework.beans.factory.annotation.Configurable;
     /**
      * @return the dataPresentazione
      */
+    @JsonSerialize(using=JsonDateSerializer.class)
     public Date getDataPresentazione()
     {
         return dataPresentazione;
@@ -500,7 +503,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.id = id;
 	}
 
-	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPresaInCarico() {
 		return dataPresaInCarico;
 	}
@@ -532,7 +535,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 	public void setNumeroRepertorio(String numeroRepertorio) {
 		this.numeroRepertorio = numeroRepertorio;
 	}
-
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRepertorio() {
 		return dataRepertorio;
 	}
@@ -540,7 +544,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 	public void setDataRepertorio(Date dataRepertorio) {
 		this.dataRepertorio = dataRepertorio;
 	}
-
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataIniziativa() {
 		return dataIniziativa;
 	}
@@ -576,6 +581,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.nRepertorio = nRepertorio;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAssegnazione() {
 		return dataAssegnazione;
 	}
@@ -592,6 +598,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.esitoValidazione = esitoValidazione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataValidazione() {
 		return dataValidazione;
 	}
@@ -600,6 +607,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.dataValidazione = dataValidazione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAssegnazioneCommissioni() {
 		return dataAssegnazioneCommissioni;
 	}
@@ -689,7 +697,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 	}
 
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataLR() {
 		return dataLR;
 	}
@@ -706,6 +714,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.numeroPubblicazioneBURL = numeroPubblicazioneBURL;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPubblicazioneBURL() {
 		return dataPubblicazioneBURL;
 	}
@@ -714,6 +723,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.dataPubblicazioneBURL = dataPubblicazioneBURL;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataChiusura() {
 		return dataChiusura;
 	}
@@ -738,6 +748,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.esitoVotazione = esitoVotazione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataSeduta() {
 		return dataSeduta;
 	}
@@ -772,6 +783,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.error = error;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPubblicazione() {
 		return dataPubblicazione;
 	}
@@ -780,6 +792,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.dataPubblicazione = dataPubblicazione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataSedutaSc() {
 		return dataSedutaSc;
 	}
@@ -788,6 +801,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.dataSedutaSc = dataSedutaSc;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataSedutaCommissione() {
 		return dataSedutaCommissione;
 	}
@@ -796,6 +810,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.dataSedutaCommissione = dataSedutaCommissione;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataSedutaAula() {
 		return dataSedutaAula;
 	}
@@ -812,6 +827,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.numeroDgr = numeroDgr;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataDgr() {
 		return dataDgr;
 	}
@@ -852,6 +868,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.valutazioneAmmissibilita = valutazioneAmmissibilita;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRichiestaInformazioni() {
 		return dataRichiestaInformazioni;
 	}
@@ -860,6 +877,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.dataRichiestaInformazioni = dataRichiestaInformazioni;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRicevimentoInformazioni() {
 		return dataRicevimentoInformazioni;
 	}
@@ -900,6 +918,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 		this.votazioneUrgenza = votazioneUrgenza;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataVotazioneUrgenza() {
 		return dataVotazioneUrgenza;
 	}
