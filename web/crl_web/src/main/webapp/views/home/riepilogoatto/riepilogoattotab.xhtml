@@ -51,14 +51,18 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Repertorio: " />
-				<h:outputText value="#{attoBean.dataRepertorio}" />
+				<h:outputText value="#{attoBean.dataRepertorio}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 		</p:row>
 
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Iniziativa: " />
-				<h:outputText value="#{attoBean.dataIniziativa}" />
+				<h:outputText value="#{attoBean.dataIniziativa}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 
 			<p:column colspan="2">
@@ -157,13 +161,17 @@
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Assegnazione: " />
-				<h:outputText value="#{attoBean.dataAssegnazione}" />
+				<h:outputText value="#{attoBean.dataAssegnazione}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 
 			<p:column>
 				<h:outputText style="font-weight: bold;"
 					value="Data presa in carico: " />
-				<h:outputText value="#{attoBean.dataPresaInCarico}" />
+				<h:outputText value="#{attoBean.dataPresaInCarico}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 		</p:row>
 		<p:row>
@@ -174,14 +182,18 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Validazione: " />
-				<h:outputText value="#{attoBean.dataValidazione}" />
+				<h:outputText value="#{attoBean.dataValidazione}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 		</p:row>
 		<p:row>
 			<p:column colspan="2">
 				<h:outputText style="font-weight: bold;"
 					value="Data Assegnazione Commissioni:  " />
-				<h:outputText value="#{attoBean.dataAssegnazioneCommissioni}" />
+				<h:outputText value="#{attoBean.dataAssegnazioneCommissioni}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 		</p:row>
 	</p:panelGrid>
@@ -372,7 +384,9 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Seduta: " />
-				<h:outputText value="#{attoBean.dataSeduta}" />
+				<h:outputText value="#{attoBean.dataSeduta}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 		</p:row>
 		<p:row>
@@ -395,14 +409,18 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Chiusura: " />
-				<h:outputText value="#{attoBean.dataChiusura}" />
+				<h:outputText value="#{attoBean.dataChiusura}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 		</p:row>
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;"
 					value="Data Pubblicazione BURL: " />
-				<h:outputText value="#{attoBean.dataPubblicazioneBURL}" />
+				<h:outputText value="#{attoBean.dataPubblicazioneBURL}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 
 			<p:column>
@@ -418,7 +436,9 @@
 			</p:column>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data LR:  " />
-				<h:outputText value="#{attoBean.dataLR}" />
+				<h:outputText value="#{attoBean.dataLR}" >
+				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 		</p:row>
 	</p:panelGrid>

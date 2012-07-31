@@ -54,9 +54,9 @@ public class RiepilogoAttoController {
 		//TODO riempire liste abbinamenti
 		
 		//TODO riempire liste testi
-		attoBean.getAtto().setTestiAtto(attoServiceManager.testiAttoByAtto(attoBean.getAtto()));
+		//attoBean.getAtto().setTestiAtto(attoServiceManager.testiAttoByAtto(attoBean.getAtto()));
 		//TODO riempire liste allegati 
-		
+		attoBean.getAtto().setAllegati(attoServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
 		//TODO riempire liste organi interni
 		
 		//TODO riempire liste altri organi

@@ -1,42 +1,27 @@
 package com.sourcesense.crl.business.service.rest;
 
-import java.io.File;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.http.HttpStatus.Series;
 import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoRecord;
-import com.sourcesense.crl.business.model.Legislatura;
-import com.sourcesense.crl.business.model.TipologiaAtto;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.multipart.BodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.MultiPart;
-import com.sun.jersey.multipart.file.FileDataBodyPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 
@@ -231,6 +216,37 @@ public class AttoService  {
 
 	}
 
+	
+	public List<Allegato> retrieveAllegati(String url) {
+		List<Allegato> listAllegati =null;
+
+		try {
+			WebResource webResource = client.resource(url);
+			
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON)
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listAllegati = objectMapper.readValue(responseMsg,
+					new TypeReference<List<Allegato>>(){});
+
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return listAllegati;
+
+	}
+	
+	
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti =null;
 

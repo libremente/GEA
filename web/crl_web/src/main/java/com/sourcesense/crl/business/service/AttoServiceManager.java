@@ -86,6 +86,13 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_list_testi_atto", new String[] { atto.getId() }));
 	}
 	
+	public List <Allegato> allAllegatiAttoByAtto(Atto atto) {
+
+		return attoService.retrieveAllegati(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_list_allegati_atto", new String[] { atto.getId() ,""}));
+	}
+	
+	
 	
 
 	@Override

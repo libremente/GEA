@@ -366,9 +366,11 @@ public class PresentazioneAssegnazioneAttoController {
 		return false;
 	}
 
-	public void ritiraPerMancanzaFirmatari() {
+	public String ritiraPerMancanzaFirmatari() {
 
 		// TODO Service logic
+		
+		return "pretty:chiusuraiter";
 
 	}
 

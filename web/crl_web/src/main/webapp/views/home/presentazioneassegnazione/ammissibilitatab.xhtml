@@ -40,14 +40,12 @@
 									listener="#{presentazioneAssegnazioneAttoController.updateAmmissibilitaHandler}" />
 							</p:selectOneMenu>
 						</p:column>
-
-					</p:row>
-
-					<p:row>
-						<p:column colspan="2">
+                        <p:column colspan="2">
 							<p:commandLink value="Creazione lettera di non ammissibilità" />
 						</p:column>
 					</p:row>
+
+					
 
 					<p:row>
 						<p:column>
@@ -159,7 +157,7 @@
 						</p:column>
 						<p:column colspan="3">
 							<p:inputTextarea id="noteammissibilità" rows="2" cols="75"
-								autoResize="false"
+								
 								value="#{presentazioneAssegnazioneAttoController.noteAmmissibilita}">
 								<p:ajax event="change"
 									listener="#{presentazioneAssegnazioneAttoController.updateAmmissibilitaHandler}" />

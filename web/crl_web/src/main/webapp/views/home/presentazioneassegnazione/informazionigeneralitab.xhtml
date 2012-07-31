@@ -96,7 +96,7 @@
 				<p:column colspan="3">
 					<p:inputTextarea rows="2" cols="82"
 						value="#{presentazioneAssegnazioneAttoController.oggetto}"
-						autoResize="false">
+						>
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
 					</p:inputTextarea>
@@ -175,7 +175,7 @@
 						value="Descrizione iniziativa: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" autoResize="false"
+					<p:inputTextarea rows="2" cols="82" 
 						value="#{presentazioneAssegnazioneAttoController.descrizioneIniziativa}">
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -230,7 +230,7 @@
 
 	</p:fieldset>
 
-	<p:fieldset legend="Testo dell'Atto" collapsed="false"
+	<p:fieldset legend="Testo dell'Atto presentato" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="testoattopanel">
 			<p:row>
@@ -439,7 +439,7 @@
 
 			<p:row>
 				<p:column>
-					<p:commandButton value="Ritira per mancanza firmatari" />
+					<p:commandButton value="Ritira per mancanza firmatari"  action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}"/>
 				</p:column>
 
 				<p:column colspan="5">
