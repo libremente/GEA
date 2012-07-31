@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -107,6 +108,9 @@ public class PersonaleService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
+			
+			System.out.println(responseMsg);
+			
 			objectMapper.configure(
 					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			listFirmatari = objectMapper.readValue(responseMsg,
@@ -120,5 +124,7 @@ public class PersonaleService {
 		}
 		return listFirmatari;
 	}
+
+
 
 }

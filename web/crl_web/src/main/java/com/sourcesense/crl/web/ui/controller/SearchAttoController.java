@@ -22,6 +22,7 @@ import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.business.service.VotazioneServiceManager;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.util.LazyAttoDataModel;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
@@ -271,6 +272,7 @@ public class SearchAttoController {
 		// TODO Ottenere dettaglio atto da Alfresco
 		attoBean.setAtto(attoServiceManager.findById(idAttoParam));
 		// TODO riempire liste firmatari
+		attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
 
 		// TODO riempire liste abbinamenti
 

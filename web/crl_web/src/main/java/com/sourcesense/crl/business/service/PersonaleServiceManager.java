@@ -73,7 +73,7 @@ public class PersonaleServiceManager implements ServiceManager{
 	public List<Firmatario> findFirmatariByAtto(Atto atto) {
 		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_atto", new String[] { atto.getId() }));
 	}
-
+	
 	@Override
 	public Object findById(String id) {
 		// TODO Auto-generated method stub

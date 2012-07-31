@@ -5,6 +5,8 @@ import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 public class Personale {
+	
+	private String id;
 	private String descrizione;
 	private String gruppoConsiliare;
 
@@ -25,6 +27,14 @@ public class Personale {
 
 	public void setGruppoConsiliare(String gruppoConsiliare) {
 		this.gruppoConsiliare = gruppoConsiliare;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	
