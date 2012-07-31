@@ -1,7 +1,8 @@
 {  
-   "List":[
+   "List" : [
    <#list records as record>
-   { "record" : 
+   { 
+   		"attoRecord" : 
 	   {
 	    "id" : "${record.nodeRef}",
 		"nome" : "${record.name}",

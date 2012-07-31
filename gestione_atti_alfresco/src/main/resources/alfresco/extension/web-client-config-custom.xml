@@ -34,6 +34,10 @@
          	<aspect name="crlatti:pubblico" />
          	<aspect name="crlatti:dgr"/>
          	<aspect name="crlatti:firmatariAspect"/>
+         	<aspect name="crlatti:ammissibilitaBaseAspect"/>
+         	<aspect name="crlatti:ammissibilitaAiutiStatoAspect"/>
+         	<aspect name="crlatti:ammissibilitaUrgenzaAspect"/>
+         	<aspect name="crlatti:ammissibilitaNormaFinanziariaAspect"/>
         </aspects>
 	</config>
 
@@ -51,6 +55,35 @@
 			<type name="crlatti:attoRel" />
 			<type name="crlatti:attoEac" />
 		</folder-types>
+	</config>
+	
+	 <config evaluator="aspect-name" condition="crlatti:ammissibilitaBaseAspect">
+		<property-sheet>
+			<show-property name="crlatti:ammissibilitaValutazione" />
+			<show-property name="crlatti:ammissibilitaDataRichiestaInformazioni" />
+			<show-property name="crlatti:ammissibilitaDataRicevimentoInformazioni" />
+			<show-property name="crlatti:ammissibilitaNote" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:ammissibilitaAiutiStatoAspect">
+		<property-sheet>
+			<show-property name="crlatti:ammissibilitaAiutiStato" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:ammissibilitaUrgenzaAspect">
+		<property-sheet>
+			<show-property name="crlatti:ammissibilitaRichiestaUrgenza" />
+			<show-property name="crlatti:ammissibilitaVotazioneUrgenza" />
+			<show-property name="crlatti:ammissibilitaDataVotazioneUrgenza" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:ammissibilitaNormaFinanziariaAspect">
+		<property-sheet>
+			<show-property name="crlatti:ammissibilitaNormaFinanziaria" />
+		</property-sheet>
 	</config>
 
 	<config evaluator="aspect-name" condition="crlatti:tipizzabile">
@@ -147,6 +180,7 @@
 
 	<config evaluator="node-type" condition="crlatti:attoPdl">
 		<property-sheet>
+			<show-property name="crlatti:assegnazione"/>
 			<show-property name="crlatti:descrizioneIniziativa"/>
 			<show-property name="crlatti:numeroRepertorio"/>
 			<show-property name="crlatti:dataRepertorio"/>
@@ -195,6 +229,7 @@
 
 	<config evaluator="node-type" condition="crlatti:atto">
 		<property-sheet>
+			<show-property name="crlatti:assegnazione"/>
 			<show-property name="crlatti:descrizioneIniziativa"/>
 			<show-property name="crlatti:numeroRepertorio"/>
 			<show-property name="crlatti:dataRepertorio"/>
