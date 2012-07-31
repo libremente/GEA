@@ -16,6 +16,7 @@ public class Allegato {
 	private boolean pubblico;
 	private String tipoAllegato;
 	private String id;
+	private String mimetype;
 	
 	
 	
@@ -54,6 +55,12 @@ public class Allegato {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public String getMimetype() {
+		return mimetype;
+	}
+	public void setMimetype(String mimetype) {
+		this.mimetype = mimetype;
 	}
 	
 	

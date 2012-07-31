@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Organo;
+import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
@@ -30,6 +31,10 @@ public class RiepilogoAttoController {
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
 
+	@ManagedProperty(value = "#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager;
+	
+	
 	private Commissione commissioneSelected = new Commissione();
 
 	@PostConstruct
@@ -43,6 +48,22 @@ public class RiepilogoAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
+		
+		//TODO riempire liste firmatari
+		
+		//TODO riempire liste abbinamenti
+		
+		//TODO riempire liste testi
+		attoBean.getAtto().setTestiAtto(attoServiceManager.testiAttoByAtto(attoBean.getAtto()));
+		//TODO riempire liste allegati 
+		
+		//TODO riempire liste organi interni
+		
+		//TODO riempire liste altri organi
+		
+		
+		
+		
 		// TODO riempire liste commissioni attoBean =>
 		// attoBean.getAtto().setCommissioni(commissioneServiceManager.findCommissioniByAtto(attoBean.getId()));
 		//
@@ -133,5 +154,15 @@ public class RiepilogoAttoController {
 	public void setCommissioneSelected(Commissione commissioneSelected) {
 		this.commissioneSelected = commissioneSelected;
 	}
+
+	public AttoServiceManager getAttoServiceManager() {
+		return attoServiceManager;
+	}
+
+	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+		this.attoServiceManager = attoServiceManager;
+	}
+	
+	
 
 }

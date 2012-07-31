@@ -1,12 +1,17 @@
 package com.sourcesense.crl.business.model;
 
+
+
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
-import org.springframework.beans.factory.annotation.Configurable;
 
-@Configurable
+
+
+
 @JsonRootName("attoRecord")
+@JsonTypeName("attoRecord")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class AttoRecord {
 	
 	private String nome;
@@ -15,6 +20,7 @@ public class AttoRecord {
 	private boolean pubblico;
 	private String tipoAllegato;
 	private String id;
+	private String mimetype;
 	
 	
 	
@@ -54,4 +60,12 @@ public class AttoRecord {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public String getMimetype() {
+		return mimetype;
+	}
+	public void setMimetype(String mimetype) {
+		this.mimetype = mimetype;
+	}
+	
+	
 }

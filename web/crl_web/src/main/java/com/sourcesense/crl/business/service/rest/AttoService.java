@@ -198,7 +198,35 @@ public class AttoService  {
 		}
 		return attoRecord;
 	}
+    
+	public List<AttoRecord> retrieveTestiAtto(String url) {
+		List<AttoRecord> listTestiAtto =null;
 
+		try {
+			WebResource webResource = client.resource(url);
+			
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON)
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listTestiAtto = objectMapper.readValue(responseMsg,
+					new TypeReference<List<AttoRecord>>(){});
+
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+		}
+		return listTestiAtto;
+
+	}
 
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti =null;
@@ -206,7 +234,6 @@ public class AttoService  {
 		try {
 			WebResource webResource = client.resource(url);
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
-			//objectMapper.configure(SerializationConfig.Feature.WRITE_NULL_PROPERTIES, false);
 			String json =  objectMapper.writeValueAsString(atto);
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
@@ -217,7 +244,6 @@ public class AttoService  {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			//System.out.println("response==="+responseMsg);
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			listAtti = objectMapper.readValue(responseMsg,
 					new TypeReference<List<Atto>>() {
@@ -228,7 +254,6 @@ public class AttoService  {
 
 			ex.printStackTrace();
 		}
-		//System.out.println("size lista: "+listAtti.size());
 		return listAtti;
 
 	}

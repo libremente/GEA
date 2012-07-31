@@ -12,7 +12,7 @@
 	<p:row>
 		<p:column colspan="3">
 			<h:dataTable id="listaTestiUfficiali"
-				value="#{RiepilogoAttoController.testiUfficiali}" var="allegato"
+				value="#{attoBean.atto.testiAtto}" var="allegato"
 				styleClass="generalInfoTab">
 
 				<h:column>
@@ -44,13 +44,14 @@
 
 
 			</h:dataTable>
-
+            <h:outputText value="Nessun Testo Atto" rendered="#{empty attoBean.atto.testiAtto}">
+                 </h:outputText>
 		</p:column>
 	</p:row>
 	<p:row>
 		<p:column colspan="3">
 			<h:dataTable id="listaAltriAllegati"
-				value="#{RiepilogoAttoController.altriAllegati}" var="allegato"
+				value="#{attoBean.atto.allegati}" var="allegato"
 				styleClass="generalInfoTab">
 
 				<h:column>
@@ -74,6 +75,9 @@
 
 
 			</h:dataTable>
+			
+			<h:outputText value="Nessun allegato" rendered="#{empty attoBean.atto.allegati}">
+                 </h:outputText>
 		</p:column>
 	</p:row>
 

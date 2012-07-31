@@ -9,11 +9,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
+
+<!-- TODO : differenziare organi Interni / Altri -->
 	<p:panelGrid styleClass="infoTable" id="sedutetab">
 		<p:row>
 			<p:column colspan="3">
 				<h:dataTable id="listaOrganiInterni"
-					value="#{riepilogoAttoController.organiInterni}" var="organo"
+					value="#{attoBean.atto.organi}" var="organo"   
 					styleClass="generalInfoTab">
 
 					<h:column>
@@ -39,7 +41,8 @@
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>
-
+                <h:outputText value="Nessun organo" rendered="#{empty attoBean.atto.organi}">
+                 </h:outputText>
 
 
 			</p:column>
@@ -48,7 +51,7 @@
 		<p:row>
 			<p:column colspan="3">
 				<h:dataTable id="listaAltriOrgani"
-					value="#{riepilogoAttoController.altriOrgani}" var="organo"
+					value="#{attoBean.atto.organi}" var="organo"
 					styleClass="generalInfoTab">
 
 					<h:column>
@@ -60,8 +63,11 @@
 						<f:facet name="header">Data Seduta</f:facet>
 					#{organo.dataSeduta}
 				</h:column>
-
+                
 				</h:dataTable>
+				<h:outputText value="Nessun organo" rendered="#{empty attoBean.atto.organi}">
+                 </h:outputText>
+				
 			</p:column>
 		</p:row>
 	</p:panelGrid>

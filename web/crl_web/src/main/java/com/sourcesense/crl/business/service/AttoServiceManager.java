@@ -79,6 +79,14 @@ public class AttoServiceManager implements ServiceManager {
 		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, nomeFile, "testoAtto");
 	}
+	
+	public List <AttoRecord> testiAttoByAtto(Atto atto) {
+
+		return attoService.retrieveTestiAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_list_testi_atto", new String[] { atto.getId() }));
+	}
+	
+	
 
 	@Override
 	public Atto persist(Object object) {
