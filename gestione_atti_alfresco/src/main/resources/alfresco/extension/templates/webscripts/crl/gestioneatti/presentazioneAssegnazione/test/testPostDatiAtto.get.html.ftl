@@ -45,7 +45,27 @@
 			"descrizioneIniziativa" : ""+descrizioneIniziativa+"",
 			"assegnazione" : ""+assegnazione+"",
 			"numeroDgr" : ""+numeroDgr+"",
-			"dataDgr" : ""+dataDgr+""
+			"dataDgr" : ""+dataDgr+"",
+			"firmatari" : [
+				{
+					"firmatario":{
+						"descrizione":"Mario Rossi",
+						"gruppoConsiliare":"PD",
+						"dataFirma":"2009-09-08",
+						"dataRitiro":"",
+						"primoFirmatario":false
+					}
+				},
+				{
+					"firmatario":{
+						"descrizione":"Carlo Verdi",
+						"gruppoConsiliare":"IDV",
+						"dataFirma":"2009-09-08",
+						"dataRitiro":"",
+						"primoFirmatario":true
+					}
+				}
+			]
 			}
 		};
 		
