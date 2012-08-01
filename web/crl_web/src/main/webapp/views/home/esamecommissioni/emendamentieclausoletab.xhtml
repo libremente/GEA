@@ -202,7 +202,7 @@
 						</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="dataPresaInCarico"
-								value="#{esameCommissioni.dataPresaInCaricoProposta}" />
+								value="#{esameCommissioniController.dataPresaInCaricoProposta}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -211,7 +211,7 @@
 						</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="dataIntesa"
-								value="#{esameCommissioni.dataIntesa}" />
+								value="#{esameCommissioniController.dataIntesa}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -220,7 +220,7 @@
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="esitoVotazioneIntesa"
-								value="#{esameCommissioni.esitoVotazioneIntesa}">
+								value="#{esameCommissioniController.esitoVotazioneIntesa}">
 								<f:selectItem itemLabel="Scegli esito" itemValue="" />
 								<f:selectItem itemLabel="Accettata" itemValue="Accettata" />
 								<f:selectItem itemLabel="Accettata con modifiche"
@@ -241,7 +241,7 @@
 
 						<p:column colspan="3">
 							<p:inputTextarea rows="5" cols="80"
-								value="#{esameCommissioni.noteClausolaValutativa}" />
+								value="#{esameCommissioniController.noteClausolaValutativa}" />
 
 
 						</p:column>
