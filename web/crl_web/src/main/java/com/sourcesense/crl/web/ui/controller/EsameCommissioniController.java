@@ -41,7 +41,7 @@ public class EsameCommissioniController {
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 	
-	private Atto atto;
+	private Atto atto = new Atto();
 	
 	private Map <String, String> relatori = new HashMap<String, String>();
 	private Map <String, String> membriComitato = new HashMap<String, String>();
