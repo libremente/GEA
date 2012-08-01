@@ -8,44 +8,51 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
+<h:form id="presAssForm" enctype="multipart/form-data">
+
+	<p:growl id="tabPresAssMsg" showDetail="true" sticky="false" />
+
 	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
 
-		<p:tab id="tab1" title="Relatori e Comitati Ristretti">
-            
+		<p:ajax event="tabChange"
+			listener="#{esameCommissioniController.changeTabHandler}"
+			update=":presAssForm:tabPresAssMsg" />
 
-           <ui:include src="relatoriecomitatiristrettitab.xhtml"/>
-			
+		<p:tab id="tab1" title="Relatori e Comitati Ristretti">
+
+
+			<ui:include src="relatoriecomitatiristrettitab.xhtml" />
+
 
 		</p:tab>
 
 		<p:tab id="tab2" title="Abbinamenti">
-			
-			<ui:include src="abbinamentitab.xhtml"/> 
+
+			<ui:include src="abbinamentitab.xhtml" />
 		</p:tab>
 
 		<p:tab id="tab3" title="Votazione">
-		
-			<ui:include src="votazionetab.xhtml"/>
-			
+
+			<ui:include src="votazionetab.xhtml" />
+
 		</p:tab>
-		
+
 		<p:tab id="tab4" title="Emendamenti e Clausole">
-            
 
-            <ui:include src="./emendamentieclausoletab.xhtml"/>
-		
+
+			<ui:include src="./emendamentieclausoletab.xhtml" />
+
 
 		</p:tab>
-		
+
 		<p:tab id="tab5" title="Note e Allegati">
-            
 
-            <ui:include src="./noteallegatitab.xhtml"/>
-		
+
+			<ui:include src="./noteallegatitab.xhtml" />
+
 
 		</p:tab>
-		
+
 	</p:tabView>
 </h:form>
 </html>
