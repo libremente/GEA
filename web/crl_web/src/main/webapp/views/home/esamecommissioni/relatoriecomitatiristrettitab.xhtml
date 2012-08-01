@@ -47,7 +47,104 @@
 
 	<p:fieldset legend="Gestione Relatori" collapsed="false"
 		toggleable="true" toggleSpeed="500">
-		<p:panelGrid styleClass="infoTable" id="gestionerelatoripanel">
+		
+		
+		<p:panelGrid styleClass="infoTable" id="firmataripanel">
+			<p:row>
+				<p:column colspan="6">
+					<p:panelGrid id="addRelatoriPanel" styleClass="tableAppend">
+
+						<f:facet name="header">
+							<p:row>
+								<p:column>Relatore</p:column>
+								<p:column>Data nomina</p:column>
+								<p:column>Data uscita</p:column>
+								<p:column></p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:selectOneMenu id="relatore"
+									value="#{esameCommisioniController.nomeRelatore}">
+									<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+									<f:selectItems
+										value="#{esameCommisioniController.relatori}" />
+								</p:selectOneMenu>
+							</p:column>
+
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="dataNomina"
+									pattern="dd/MM/yyyy"
+									value="#{esameCommisioniController.dataNomina}" />
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="dataUscita"
+									pattern="dd/MM/yyyy"
+									value="#{esameCommisioniController.dataUscita}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Aggiungi"
+									action="#{esameCommisioniController.addRelatore}"
+									id="addRelatore" update="listaRelatori"
+									icon="new-icon" />
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+
+
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="6">
+
+					<h:dataTable id="listaRelatori"
+						value="#{esameCommisioniController.relatoriList}"
+						var="relatore" styleClass="generalInfoTab">
+
+						<h:column>
+							<f:facet name="header">Relatore</f:facet>
+							#{relatore.nome}
+    			       </h:column>
+
+						<h:column>
+							<f:facet name="header">Data nomina</f:facet>
+                           		<h:outputText value=" #{relatore.dataNomina}">
+                           			 <f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+                           		</h:outputText>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Data uscita</f:facet>
+							<h:outputText value="#{relatore.dataUscita}">
+								<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+							</h:outputText>
+
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+
+							<p:commandButton oncomplete="relatoreDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{relatore.nome}"
+									target="#{esameCommisioniController.relatoreToDelete}" />
+							</p:commandButton>
+						</h:column>
+
+					</h:dataTable>
+				</p:column>
+			</p:row>
+
+
+		</p:panelGrid>
+		
+	<!-- 	<p:panelGrid styleClass="infoTable" id="gestionerelatoripanel">
 			<p:row>
 				<p:column colspan="6">
 					<table class="generalInfoTab" id="relatoritab" style="width: 90%;"
@@ -60,10 +157,10 @@
 							<th>Opzioni</th>
 						</thead>
 
-						<!-- TODO
+						--><!-- TODO
 							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
 
-						<tbody>
+					<!--	<tbody>
 							<tr style="color: red;">
 								<td align="left">1</td>
 								<td align="left">Mario Bianchi</td>
@@ -111,7 +208,9 @@
 					<p:commandButton value="Conferma Relatori" />
 				</p:column>
 			</p:row>
-		</p:panelGrid>
+		</p:panelGrid> -->
+		
+		
 	</p:fieldset>
 	<p:fieldset legend="Gestione Comitati Ristretti" collapsed="false"
 		toggleable="true" toggleSpeed="500">

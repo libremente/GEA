@@ -46,6 +46,11 @@ public class EsameCommissioniController {
 	private Map <String, String> relatori = new HashMap<String, String>();
 	private Map <String, String> membriComitato = new HashMap<String, String>();
 	
+	private String RelatoreToDelete;
+	private Date dataNomina;
+	private Date dataUscita;
+	private String nomeRelatore;
+	
 	private Date dataPresaInCarico;
 	private String materia;
 	private Date dataScadenza;
@@ -1137,6 +1142,38 @@ public class EsameCommissioniController {
 
 	public void setTestoClausolaToDelete(String testoClausolaToDelete) {
 		this.testoClausolaToDelete = testoClausolaToDelete;
+	}
+
+	public String getRelatoreToDelete() {
+		return RelatoreToDelete;
+	}
+
+	public void setRelatoreToDelete(String relatoreToDelete) {
+		RelatoreToDelete = relatoreToDelete;
+	}
+
+	public Date getDataNomina() {
+		return dataNomina;
+	}
+
+	public void setDataNomina(Date dataNomina) {
+		this.dataNomina = dataNomina;
+	}
+
+	public Date getDataUscita() {
+		return dataUscita;
+	}
+
+	public void setDataUscita(Date dataUscita) {
+		this.dataUscita = dataUscita;
+	}
+
+	public String getNomeRelatore() {
+		return nomeRelatore;
+	}
+
+	public void setNomeRelatore(String nomeRelatore) {
+		this.nomeRelatore = nomeRelatore;
 	}
 	
 	
