@@ -6,7 +6,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <p:panelGrid styleClass="infoTable" id="emendamentiPanel">
 	<p:row>
@@ -14,61 +16,93 @@
 			<p:fieldset styleClass="fieldSetTab" legend="Emendamenti:"
 				collapsed="false" toggleable="true" toggleSpeed="500">
 				<p:panelGrid styleClass="infoTable" id="emendamentiClausoleGrid">
+
 					<p:row>
 						<p:column>
-							<table class="generalInfoTab" id="emendamentiPresentati"
-								style="width: 100%;" border="0">
-								<thead>
-									<th>Emendamenti presentati</th>
-									<th>Azioni</th>
-									<th>Pubblico</th>
-									<th>Opzioni</th>
-								</thead>
-								<tbody>
-									<tr>
-										<td align="left">Emendamenti del 15/06</td>
-										<td align="left"><p:commandLink id="downloadEmendamento1"
-												value="Download" ajax="false">
-												<p:fileDownload value="#{fileDownloadController.file}" />
-											</p:commandLink></td>
+							<!-- Messaggio azioni -->
+							<p:growl id="emendamentoMsg" showDetail="true" sticky="false" />
 
-										<td align="left"><p:selectBooleanCheckbox /></td>
-										<td align="left"><h:commandLink>
-												<h:graphicImage alt="Elimina riga"
-													value="/resources/img/delete.png" />
-											</h:commandLink></td>
-									</tr>
 
-									<tr>
-										<td align="left">Emendamenti del 18/06</td>
-										<td align="left"><p:commandLink id="downloadEmendamento2"
-												value="Download" ajax="false">
-												<p:fileDownload value="#{fileDownloadController.file}" />
-											</p:commandLink></td>
-										<td align="left"><p:selectBooleanCheckbox /></td>
-										<td align="left"><h:commandLink>
-												<h:graphicImage alt="Elimina riga"
-													value="/resources/img/delete.png" />
-											</h:commandLink></td>
-									</tr>
 
-								</tbody>
-							</table>
+							<!-- Confirm dialog -->
+							<p:confirmDialog id="confirmEmendamentoDialog"
+								message="Sei sicuro di voler eliminare il File ?"
+								header="Cancellazione Emendamento" severity="alert"
+								widgetVar="emendamentoDialog">
+
+								<p:commandButton id="confirmEmendamento" value="Conferma"
+									oncomplete="emendamentoDialog.hide()"
+									action="#{esameCommissioniController.removeEmendamento}"
+									update="listaEmendamenti" />
+								<p:commandButton id="declineEmendamento" value="Annulla"
+									onclick="emendamentoDialog.hide()" type="button" />
+
+							</p:confirmDialog>
+
+							<p:confirmDialog id="confirmTestiClausoleDialog"
+								message="Sei sicuro di voler eliminare il File ?"
+								header="Cancellazione Testo Clausola" severity="alert"
+								widgetVar="testoClausolaDialog">
+
+								<p:commandButton id="confirmTestoClausole" value="Conferma"
+									oncomplete="testoClausolaDialog.hide()"
+									action="#{esameCommissioniController.removeTestoClausola}"
+									update="listaTestiAtto" />
+								<p:commandButton id="declineTestoClausola" value="Annulla"
+									onclick="testoClausolaDialog.hide()" type="button" />
+
+							</p:confirmDialog>
 						</p:column>
 					</p:row>
-					
 					<p:row>
-						<p:column>
-							<h:commandLink>
-								<h:graphicImage alt="Aggiungi collegamento"
-									value="/resources/img/add.png" />
-							</h:commandLink>
-							
-							<!-- TODO : upload file al click sul pulsante-->
-
+						<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+						<p:column colspan="3">
+							<p:fileUpload label="Carica File"
+								fileUploadListener="#{esameCommissioniController.uploadEmendamento}"
+								mode="advanced" auto="true"
+								update="listaEmendamenti ,emendamentoMsg" />
 						</p:column>
 					</p:row>
-					
+					<p:row>
+						<p:column colspan="4">
+							<h:dataTable id="listaEmendamenti"
+								value="#{esameCommissioniController.emendamentiList}"
+								var="emendamento" styleClass="generalInfoTab">
+
+								<h:column>
+									<f:facet name="header">Emendamento</f:facet>
+							#{emendamento.nome}
+						</h:column>
+
+								<h:column>
+									<f:facet name="header">Documento</f:facet>
+									<h:outputText
+										value="#{fn:substring(emendamento.nome, fn:indexOf(emendamento.nome,'.')+1 ,fn:length(emendamento.nome) )}" />
+
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Pubblico</f:facet>
+									<h:outputText value="si" rendered="#{emendamento.pubblico}" />
+									<h:outputText value="no" rendered="#{!emendamento.pubblico}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Elimina</f:facet>
+									<p:commandButton oncomplete="emendamentoDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener value="#{emendamento.id}"
+											target="#{esameCommissioniController.emendamentoToDelete}" />
+									</p:commandButton>
+								</h:column>
+
+
+							</h:dataTable>
+						</p:column>
+					</p:row>
 					<p:row>
 						<p:column>
 
@@ -108,7 +142,7 @@
 
 						</p:column>
 					</p:row>
-					
+
 				</p:panelGrid>
 				<p:panelGrid styleClass="infoTable" id="nonApprovati">
 					<p:row>
@@ -138,15 +172,19 @@
 							<p:inputText size="5" maxlength="5" />
 						</p:column>
 					</p:row>
+
+					<p:row>
+						<p:column>
+								Note emendamenti: 
+								</p:column>
+
+						<p:column colspan="4">
+							<p:inputTextarea rows="5" cols="101"
+								value="#{esameCommissioniController.noteEmendamenti}" />
+						</p:column>
+					</p:row>
+
 				</p:panelGrid>
-				<br />
-				Note emendamenti: 
-				
-				<br />
-				<p:inputTextarea rows="5" cols="101"  />
-
-
-
 
 			</p:fieldset>
 
@@ -163,8 +201,8 @@
 							Data presa in carico proposta: 
 						</p:column>
 						<p:column>
-							<p:calendar size="10" locale="it"
-								id="dataPresaInCarico" />
+							<p:calendar size="10" locale="it" id="dataPresaInCarico"
+								value="#{esameCommissioni.dataPresaInCaricoProposta}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -172,8 +210,8 @@
 							Data intesa:
 						</p:column>
 						<p:column>
-							<p:calendar size="10" locale="it"
-								id="dataIntesa" />
+							<p:calendar size="10" locale="it" id="dataIntesa"
+								value="#{esameCommissioni.dataIntesa}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -181,81 +219,85 @@
 							Esito votazione intesa: 
 						</p:column>
 						<p:column>
-						<p:selectOneMenu id="esitoVotazioneIntesa">
-						<f:selectItem itemLabel="Accettata" itemValue="1" />
-						<f:selectItem itemLabel="Accettata con modifiche" itemValue="2" />
-						<f:selectItem itemLabel="Non accettata" itemValue="3" />
-					</p:selectOneMenu>
+							<p:selectOneMenu id="esitoVotazioneIntesa"
+								value="#{esameCommissioni.esitoVotazioneIntesa}">
+								<f:selectItem itemLabel="Scegli esito" itemValue="" />
+								<f:selectItem itemLabel="Accettata" itemValue="Accettata" />
+								<f:selectItem itemLabel="Accettata con modifiche"
+									itemValue="Accettata con modifiche" />
+								<f:selectItem itemLabel="Non accettata"
+									itemValue="Non accettata" />
+							</p:selectOneMenu>
 						</p:column>
 					</p:row>
-				</p:panelGrid>
-				
+
+
+					<p:row>
+						<p:column>
 					
 				Note: 
 				
-				<br />
-				<p:inputTextarea rows="5" cols="101"  />
-				<br /><br />
-				
-				<table class="generalInfoTab" id="assegnazionePareri"
-					style="width: 100%;" border="0">
-					<thead>
-						<th>Testi clausola</th>
-						<th>Azioni</th>
-						<th>Pubblico</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">Lettera di proposta</td>
-							<td align="left"><p:commandLink id="downloadTesto1"
-									value="Download" ajax="false">
-									<p:fileDownload value="#{fileDownloadController.file}" />
-								</p:commandLink></td>
+				</p:column>
 
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+						<p:column colspan="3">
+							<p:inputTextarea rows="5" cols="80"
+								value="#{esameCommissioni.noteClausolaValutativa}" />
 
-						<tr>
-							<td align="left">Lettera di comunicazione esito</td>
-							<td align="left"><p:commandLink id="downloadTesto2"
-									value="Download" ajax="false">
-									<p:fileDownload value="#{fileDownloadController.file}" />
-								</p:commandLink></td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
-						
-						<tr>
-							<td align="left">Testo della clausola trasmesso</td>
-							<td align="left"><p:commandLink id="downloadTesto3"
-									value="Download" ajax="false">
-									<p:fileDownload value="#{fileDownloadController.file}" />
-								</p:commandLink></td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
 
-					</tbody>
-				</table>
+						</p:column>
+					</p:row>
 
-				<h:commandLink>
-					<h:graphicImage alt="Aggiungi allegato"
-						value="/resources/img/add.png" />
-				</h:commandLink>
+					<p:row>
+						<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+						<p:column colspan="3">
+							<p:fileUpload label="Carica File"
+								fileUploadListener="#{esameCommissioniController.uploadTestoClausola}"
+								mode="advanced" auto="true"
+								update="listaTestiClausola ,emendamentoMsg" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="4">
+							<h:dataTable id="listaTestiClausola"
+								value="#{esameCommissioniController.testiClausolaList}"
+								var="testoClausola" styleClass="generalInfoTab">
 
-				<!-- TODO : upload file al click sul pulsante-->
+								<h:column>
+									<f:facet name="header">Testo Dell'Atto</f:facet>
+							#{testoClausola.nome}
+						</h:column>
 
+								<h:column>
+									<f:facet name="header">Documento</f:facet>
+									<h:outputText
+										value="#{fn:substring(testoClausola.nome, fn:indexOf(testoClausola.nome,'.')+1 ,fn:length(testoClausola.nome) )}" />
+
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Pubblico</f:facet>
+									<h:outputText value="si" rendered="#{testoClausola.pubblico}" />
+									<h:outputText value="no"
+										rendered="#{!testoClausola.pubblico}" />
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Elimina</f:facet>
+									<p:commandButton oncomplete="testoClausolaDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener value="#{testoClausola.id}"
+											target="#{esameCommissioniController.testoClausolaToDelete}" />
+									</p:commandButton>
+								</h:column>
+
+
+							</h:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 			</p:fieldset>
 			<p>
 				<p:commandButton value="Salva" />

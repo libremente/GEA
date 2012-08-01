@@ -38,17 +38,17 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="tipoatto" value="#{searchBean.tipoatto}" />
+					<p:selectOneMenu id="tipoatto" value="#{searchAttoController.tipoatto}" />
 				</p:column>
 
 				<p:column>
 					<h:outputLabel for="legislatura" value="Legislatura: " />
-					<p:selectOneMenu id="legislatura" value="#{searchBean.legislatura}" />
+					<p:selectOneMenu id="legislatura" value="#{searchAttoController.legislatura}" />
 				</p:column>
 
 				<p:column>
 					<h:outputLabel for="stato" value="Stato: " />
-					<p:selectOneMenu id="stato" value="#{searchBean.stato}" />
+					<p:selectOneMenu id="stato" value="#{searchAttoController.stato}" />
 				</p:column>
 			</p:row>
 
@@ -58,7 +58,7 @@
 				</p:column>
 
 				<p:column>
-					<p:inputText id="numeroatto" value="#{searchBean.numeroAtto}"></p:inputText>
+					<p:inputText id="numeroatto" value="#{searchAttoController.numeroAtto}"></p:inputText>
 				</p:column>
 
 				<p:column colspan="2">
@@ -66,11 +66,11 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<h:outputLabel for="datainiziativa_da" value="da: " />
 					<p:calendar size="10" locale="it" id="datainiziativa_da"
-						value="#{searchBean.dataIniziativaDa}" />
+						value="#{searchAttoController.dataIniziativaDa}" />
 				&nbsp;&nbsp;&nbsp;
 				<h:outputLabel for="datainiziativa_a" value="a: " />
 					<p:calendar size="10" locale="it" id="datainiziativa_a"
-						value="#{searchBean.dataIniziativaA}" />
+						value="#{searchAttoController.dataIniziativaA}" />
 				</p:column>
 			</p:row>
 
@@ -81,7 +81,7 @@
 
 				<p:column>
 					<p:inputText id="numeroprotocollo"
-						value="#{searchBean.numeroprotocollo}"></p:inputText>
+						value="#{searchAttoController.numeroprotocollo}"></p:inputText>
 				</p:column>
 
 				<p:column>
@@ -90,7 +90,7 @@
 
 				<p:column>
 					<p:selectOneMenu id="tipoiniziativa"
-						value="#{searchBean.tipoiniziativa}" />
+						value="#{searchAttoController.tipoiniziativa}" />
 				</p:column>
 			</p:row>
 
@@ -100,7 +100,7 @@
 				</p:column>
 
 				<p:column>
-					<p:inputText id="numerodcr" value="#{searchBean.numerodcr}"></p:inputText>
+					<p:inputText id="numerodcr" value="#{searchAttoController.numerodcr}"></p:inputText>
 				</p:column>
 
 				<p:column>
@@ -109,7 +109,7 @@
 
 				<p:column>
 					<p:selectOneMenu id="primofirmatario"
-						value="#{searchBean.primofirmatario}" />
+						value="#{searchAttoController.primofirmatario}" />
 				</p:column>
 			</p:row>
 
@@ -119,7 +119,7 @@
 				</p:column>
 
 				<p:column>
-					<p:inputText id="oggetto" value="#{searchBean.oggetto}"></p:inputText>
+					<p:inputText id="oggetto" value="#{searchAttoController.oggetto}"></p:inputText>
 				</p:column>
 
 				<p:column>
@@ -127,7 +127,7 @@
 				</p:column>
 
 				<p:column>
-					<p:selectOneMenu id="firmatario" value="#{searchBean.firmatario}" />
+					<p:selectOneMenu id="firmatario" value="#{searchAttoController.firmatario}" />
 				</p:column>
 			</p:row>
 
@@ -138,7 +138,7 @@
 
 					<p:commandButton value="Cerca" update="listaAtti"
 						id="btncercaatto_cerca"
-						actionListener="#{searchBean.searchLazyAttoModel()}" />
+						actionListener="#{searchAttoController.searchLazyAttoModel()}" />
 
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
 						<p:dataExporter type="xls" target="listaAtti"
@@ -170,7 +170,7 @@
 		<h3>Risultati ricerca</h3>
 
 		<p:dataTable id="listaAtti" var="atto"
-			value="#{searchBean.lazyAttoModel}" rows="3" paginator="true"
+			value="#{searchAttoController.lazyAttoModel}" rows="3" paginator="true"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 			paginatorAlwaysVisible="false" paginatorPosition="bottom">
 			<p:column>
@@ -205,8 +205,8 @@
 						<thead>
 							<th>Tipo Atto</th>
 							<th>N.Atto</th>
-							<th>N.Protocollo</th>
-							<th>Oggetto</th>
+							<th>Data abbinamento</th>
+							<th>Data disabbinamento</th>
 							<th>Azioni</th>
 						</thead>
 
@@ -252,7 +252,7 @@
 						<h:outputText style="font-weight: bold;" value="Tipo testo: " />
 					</p:column>
 					<p:column>
-						<p:selectOneMenu>
+						<p:selectOneMenu value="#{esameCommissioniController.tipoTesto}">
 							<f:selectItem itemLabel="Testo base" itemValue="1" />
 							<f:selectItem itemLabel="Testo modificato" itemValue="2" />
 						</p:selectOneMenu>
@@ -265,7 +265,8 @@
 						</b>
 					</p:column>
 					<p:column>
-						<p:calendar size="10" locale="it" id="dataabbinamento" />
+						<p:calendar size="10" locale="it" id="dataabbinamento" 
+						value="#{esameCommissioniController.dataAbbinamento}"/>
 					</p:column>
 					<p:column>
 						<p:commandButton value="Conferma Abbinamento" />
@@ -278,7 +279,8 @@
 						</b>
 					</p:column>
 					<p:column>
-						<p:calendar size="10" locale="it" id="datadisabbinamento" />
+						<p:calendar size="10" locale="it" id="datadisabbinamento" 
+						value="#{esameCommissioniController.dataDisabbinamento}"/>
 					</p:column>
 					<p:column>
 						<p:commandButton value="Conferma Disabbinamento" />
@@ -302,7 +304,8 @@
 						</p>
 					</p:column>
 					<p:column colspan="3">
-						<p:inputTextarea rows="2" cols="82"  />
+						<p:inputTextarea rows="2" cols="82"  
+						value="#{esameCommissioniController.oggettoAttoCorrente}"/>
 					</p:column>
 				</p:row>
 

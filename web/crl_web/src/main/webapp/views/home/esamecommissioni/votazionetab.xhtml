@@ -6,18 +6,48 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:form>
+
 	<p:fieldset legend="Registrazione votazione" toggleable="true"
 		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="registrazionevotazionepanel">
+
+			<p:row>
+				<p:column>
+					<!-- Messaggio azioni -->
+					<p:growl id="votazioneMsg" showDetail="true" sticky="false" />
+
+
+
+					<!-- Confirm dialog -->
+					<p:confirmDialog id="confirmAttoDialog"
+						message="Sei sicuro di voler eliminare il File ?"
+						header="Cancellazione Testo Atto" severity="alert"
+						widgetVar="testoAttoDialog">
+
+						<p:commandButton id="confirmTestoAtto" value="Conferma"
+							oncomplete="testoAttoDialog.hide()"
+							action="#{esameCommissioniController.removeTestoAttoVotato}"
+							update="listaTestiAtto" />
+						<p:commandButton id="declineTestoAtto" value="Annulla"
+							onclick="testoAttoDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+				</p:column>
+			</p:row>
+
+
 			<p:row>
 				<p:column>
 					<h:outputText style="font-weight: bold;" value="Esito votazione: " />
 				</p:column>
 				<p:column>
-					<p:selectOneMenu></p:selectOneMenu>
+					<p:selectOneMenu
+						value="#{esameCommissioniController.esitoVotazione}">
+					</p:selectOneMenu>
 				</p:column>
 			</p:row>
 			<p:row>
@@ -25,7 +55,7 @@
 					<h:outputText style="font-weight: bold;" value="Quorum: " />
 				</p:column>
 				<p:column>
-					<p:selectOneMenu>
+					<p:selectOneMenu value="#{esameCommissioniController.quorum}">
 						<f:selectItem itemLabel="Maggioranza" itemValue="1" />
 						<f:selectItem itemLabel="Unanimità" itemValue="2" />
 					</p:selectOneMenu>
@@ -37,7 +67,8 @@
 					</b>
 				</p:column>
 				<p:column>
-					<p:calendar size="10" locale="it" id="dataseduta1" />
+					<p:calendar size="10" locale="it" id="dataseduta1"
+						value="#{esameCommissioniController.dataSedutaRegistrazioneVotazione}" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -45,7 +76,7 @@
 					<h:outputText style="font-weight: bold;" value="Data scadenza: " />
 				</p:column>
 				<p:column>
-					<p:inputText value="28/5/2011" readonly="true"/>
+					<p:inputText value="28/5/2011" readonly="true" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -59,73 +90,51 @@
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="testoattovotatopanel">
 			<p:row>
-				<p:column colspan="4">
-					<table class="generalInfoTab" id="testitab" style="width: 90%;"
-						border="0">
-						<thead>
-							<th colspan="2">Testo Dell'Atto</th>
-							<th>Documento</th>
-							<th>Pubblico</th>
-							<th>Opzioni</th>
-						</thead>
-
-						<!-- TODO: 
-							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
-							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
-
-						<tbody>
-							<tr>
-								<td align="left" colspan="2"><b>PDF</b></td>
-								<td align="left"><h:commandLink>
-										<h:outputText value="download" />
-									</h:commandLink></td>
-								<td align="left"><p:selectBooleanCheckbox /></td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
-
-							</tr>
-
-							<tr>
-								<td align="left" colspan="2"><b>HTML</b></td>
-								<td align="left"><h:commandLink>
-										<h:outputText value="download" />
-									</h:commandLink></td>
-								<td align="left"><p:selectBooleanCheckbox /></td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
-
-							</tr>
-
-							<tr>
-								<td align="left" colspan="2"><b>DOC</b></td>
-								<td align="left"><h:commandLink>
-										<h:outputText value="download" />
-									</h:commandLink></td>
-								<td align="left"><p:selectBooleanCheckbox /></td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
-
-							</tr>
-
-
-
-							<tr>
-								<td align="left" colspan="2">Selezionare un documento...</td>
-								<td align="left"></td>
-								<td align="left"></td>
-								<td align="left"></td>
-							</tr>
-
-						</tbody>
-					</table>
+				<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+				<p:column colspan="3">
+					<p:fileUpload label="Carica File"
+						fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}"
+						mode="advanced" auto="true" update="listaTestiAtto ,votazioneMsg" />
 				</p:column>
 			</p:row>
 			<p:row>
-				<p:column>
-					<h:graphicImage alt="add" value="/resources/img/add.png" />
-				</p:column>
-				<p:column>
-					<p:fileUpload mode="simple" />
+				<p:column colspan="4">
+					<h:dataTable id="listaTestiAtto"
+						value="#{esameCommissioniController.testiAttoVotatoList}"
+						var="testoAttoVotato" styleClass="generalInfoTab">
+
+						<h:column>
+							<f:facet name="header">Testo Dell'Atto</f:facet>
+							#{testoAttoVotato.nome}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Documento</f:facet>
+							<h:outputText
+								value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
+
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Pubblico</f:facet>
+							<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
+							<h:outputText value="no" rendered="#{!testoAttoVotato.pubblico}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="testoAttoDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{testoAttoVotato.id}"
+									target="#{esameCommissioniController.testoAttoVotatoToDelete}" />
+							</p:commandButton>
+						</h:column>
+
+
+					</h:dataTable>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
@@ -140,7 +149,8 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="dataseduta2" />
+						<p:calendar size="10" locale="it" id="dataseduta2"
+							value="#{esameCommissioniController.dataSedutaContinuazioneLavori}" />
 					</p>
 				</p:column>
 			</p:row>
@@ -149,54 +159,61 @@
 					<h:outputText style="font-weight: bold;" value="Motivazioni: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" />
+					<p:inputTextarea rows="2" cols="82"
+						value="#{esameCommissioniController.motivazioni}" />
 				</p:column>
 			</p:row>
-			<p:row>	
+			<p:row>
 				<p:column>
-					<p:commandButton value="Cambia Ruolo"/>
+					<p:commandButton value="Cambia Ruolo" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
 	</p:fieldset>
-	
-	<p:fieldset legend="Trasmissione"
-		collapsed="false" toggleable="true" toggleSpeed="500">
+
+	<p:fieldset legend="Trasmissione" collapsed="false" toggleable="true"
+		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
 			<p:row>
 				<p:column>
-					<b> <h:outputLabel for="datatrasmissione" value="Data Trasmissione: " />
+					<b> <h:outputLabel for="datatrasmissione"
+							value="Data Trasmissione: " />
 					</b>
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="datatrasmissione" />
+						<p:calendar size="10" locale="it" id="datatrasmissione"
+							value="#{esameCommissioniController.dataTrasmissione}" />
 					</p>
 				</p:column>
 				<p:column>
-					<b> <h:outputLabel for="datarichsiscrzaula" value="Data Richiesta Iscrizione Aula: " />
+					<b> <h:outputLabel for="datarichsiscrzaula"
+							value="Data Richiesta Iscrizione Aula: " />
 					</b>
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="datarichsiscrzaula" />
+						<p:calendar size="10" locale="it" id="datarichsiscrzaula"
+							value="#{esameCommissioniController.dataRichiestaIscrizione}" />
 					</p>
 				</p:column>
 			</p:row>
 			<p:row>
 				<p:column>
-					<h:outputText style="font-weight: bold;" value="Passaggio diretto in Aula: " />
+					<h:outputText style="font-weight: bold;"
+						value="Passaggio diretto in Aula: " />
 				</p:column>
-				<p:column >
-					<p:selectBooleanCheckbox></p:selectBooleanCheckbox>
+				<p:column>
+					<p:selectBooleanCheckbox
+						value="#{esameCommissioniController.passaggioDiretto}">
+					</p:selectBooleanCheckbox>
 				</p:column>
 			</p:row>
-			<p:row>	
+			<p:row>
 				<p:column>
-					<p:commandButton value="Conferma Trasmissione"/>
+					<p:commandButton value="Conferma Trasmissione" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
 	</p:fieldset>
-</h:form>
 </html>

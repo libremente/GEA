@@ -1,5 +1,6 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,15 +14,18 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import com.ocpsoft.pretty.faces.component.Link;
+import org.primefaces.event.FileUploadEvent;
+
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Emendamento;
+import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.TestoAttoVotato;
 import com.sourcesense.crl.business.model.TestoClausola;
 import com.sourcesense.crl.business.model.TestoComitatoRistretto;
+import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -33,6 +37,9 @@ public class EsameCommissioniController {
 	
 	@ManagedProperty(value = "#{personaleServiceManager}")
 	private PersonaleServiceManager personaleServiceManager;
+	
+	@ManagedProperty(value = "#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager;
 	
 	private Atto atto;
 	
@@ -53,7 +60,7 @@ public class EsameCommissioniController {
 	
 	private String tipoTesto;
 	private Date dataAbbinamento;
-	private Date dataDisabbinamneto;
+	private Date dataDisabbinamento;
 	private String noteAbbinamento;
 	private String oggettoAttoCorrente;
 	
@@ -63,6 +70,7 @@ public class EsameCommissioniController {
 	private Date dataSedutaRegistrazioneVotazione;
 	
 	private List <TestoAttoVotato> testiAttoVotatoList = new ArrayList <TestoAttoVotato>();
+	private String testoAttoVotatoToDelete;
 	
 	private Date dataSedutaContinuazioneLavori;
 	private String motivazioni;
@@ -72,6 +80,7 @@ public class EsameCommissioniController {
 	
 	
 	private List <Emendamento> emendamentiList = new ArrayList <Emendamento>();
+	private String emendamentoToDelete;
 	
 	private int numEmendPresentatiMaggior;
 	private int numEmendPresentatiMinor;
@@ -96,12 +105,20 @@ public class EsameCommissioniController {
 	private String noteClausolaValutativa;
 	
 	private List <TestoClausola> testiClausolaList = new ArrayList <TestoClausola>();
+	private String testoClausolaToDelete;
 	
 	
 	private String noteGenerali;
 	
 	private List <Allegato> allegatiList = new ArrayList <Allegato>();
 	private List <Link> linksList = new ArrayList <Link>();
+	
+	private String allegatoToDelete;
+	private String linkToDelete;
+	
+	private String nomeLink;
+	private String urlLink;
+	private boolean pubblico;
 	
 	
 	private String statoCommitRelatoriComitatiRistretti = CRLMessage.COMMIT_DONE;
@@ -200,6 +217,171 @@ public class EsameCommissioniController {
 		}
 
 	}
+	
+	// Votazione****************************************************************
+	
+	public void uploadTestoAttoVotato() {
+		
+	}
+	
+	public void removeTestoAttoVotato() {
+		
+	}
+	
+	
+	
+	// Emendamenti e Clausole*************************************************
+	
+	
+	public void uploadEmendamento() {
+		
+	}
+	
+	
+	public void removeEmendamento() {
+		
+	}
+	
+	public void uploadTestoClausola() {
+		
+	}
+	
+	public void removeTestoClausola() {
+		
+	}
+	
+	
+	// Note e Allegati******************************************************
+		public void uploadAllegato(FileUploadEvent event) {
+
+			// TODO Service logic
+			String fileName = event.getFile().getFileName();
+
+			if (!checkAllegato(fileName)) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+								+ fileName + " è già stato allegato ", ""));
+			} else {
+
+				// TODO Alfresco upload
+				Allegato allegatoRet = null;
+
+				try {
+					//TODO change method
+					allegatoRet = attoServiceManager.uploadAllegato(
+							((AttoBean) FacesContext.getCurrentInstance()
+									.getExternalContext().getSessionMap()
+									.get("attoBean")).getAtto(), event
+									.getFile().getInputstream(), event.getFile().getFileName());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				// TODO aggiungi a bean di sessione
+				FacesContext context = FacesContext.getCurrentInstance();
+				AttoBean attoBean = ((AttoBean) context.getExternalContext()
+						.getSessionMap().get("attoBean"));
+
+				attoBean.getAtto().getAllegati().add(allegatoRet);
+
+				allegatiList.add(allegatoRet);
+			}
+		}
+
+		private boolean checkAllegato(String fileName) {
+
+			for (Allegato element : allegatiList) {
+
+				if (element.getDescrizione().equals(fileName)) {
+
+					return false;
+				}
+
+			}
+
+			return true;
+		}
+
+		public void removeAllegato() {
+
+			for (Allegato element : allegatiList) {
+
+				if (element.getId().equals(allegatoToDelete)) {
+
+					// TODO Alfresco delete
+					allegatiList.remove(element);
+					break;
+				}
+			}
+		}
+
+		public void addLink() {
+
+			if (nomeLink != null && !nomeLink.trim().equals("")) {
+				if (!checkLinks()) {
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR, "Attenzione ! Link "
+									+ nomeLink + " già presente ", ""));
+
+				} else {
+					Link link = new Link();
+					link.setDescrizione(nomeLink);
+					link.setCollegamentoUrl(urlLink);
+					link.setPubblico(pubblico);
+					linksList.add(link);
+					
+					updateNoteHandler();
+				}
+			}
+		}
+
+		public void removeLink() {
+
+			for (Link element : linksList) {
+
+				if (element.getDescrizione().equals(linkToDelete)) {
+
+					linksList.remove(element);
+					break;
+				}
+			}
+		}
+
+		private boolean checkLinks() {
+
+			for (Link element : linksList) {
+
+				if (element.getDescrizione().equals(nomeLink)) {
+
+					return false;
+				}
+
+			}
+
+			return true;
+		}
+
+		public void salvaNoteEAllegati() {
+			this.atto.setLinks(linksList);
+			//attoServiceManager.salvaNoteAllegatiPresentazione(atto);
+
+			// TODO Service logic
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
+			attoBean.getAtto().setLinks(linksList);		
+
+			setStatoCommitNote(CRLMessage.COMMIT_DONE);
+
+			context.addMessage(null, new FacesMessage("Note e Allegati salvati con successo", ""));
+
+		}
+
+		// Getters & Setters******************************************************
 
 
 
@@ -300,19 +482,6 @@ public class EsameCommissioniController {
 	public void setDataAbbinamento(Date dataAbbinamento) {
 		this.dataAbbinamento = dataAbbinamento;
 	}
-
-
-
-	public Date getDataDisabbinamneto() {
-		return dataDisabbinamneto;
-	}
-
-
-
-	public void setDataDisabbinamneto(Date dataDisabbinamneto) {
-		this.dataDisabbinamneto = dataDisabbinamneto;
-	}
-
 
 
 	public String getNoteAbbinamento() {
@@ -889,6 +1058,90 @@ public class EsameCommissioniController {
 	public void setStatoCommitNote(String statoCommitNote) {
 		this.statoCommitNote = statoCommitNote;
 	}
+
+	public Date getDataDisabbinamento() {
+		return dataDisabbinamento;
+	}
+
+	public void setDataDisabbinamento(Date dataDisabbinamento) {
+		this.dataDisabbinamento = dataDisabbinamento;
+	}
+
+	public AttoServiceManager getAttoServiceManager() {
+		return attoServiceManager;
+	}
+
+	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+		this.attoServiceManager = attoServiceManager;
+	}
+
+	public String getAllegatoToDelete() {
+		return allegatoToDelete;
+	}
+
+	public void setAllegatoToDelete(String allegatoToDelete) {
+		this.allegatoToDelete = allegatoToDelete;
+	}
+
+	public String getNomeLink() {
+		return nomeLink;
+	}
+
+	public void setNomeLink(String nomeLink) {
+		this.nomeLink = nomeLink;
+	}
+
+	public String getUrlLink() {
+		return urlLink;
+	}
+
+	public void setUrlLink(String urlLink) {
+		this.urlLink = urlLink;
+	}
+
+	public boolean isPubblico() {
+		return pubblico;
+	}
+
+	public void setPubblico(boolean pubblico) {
+		this.pubblico = pubblico;
+	}
+
+	public String getLinkToDelete() {
+		return linkToDelete;
+	}
+
+	public void setLinkToDelete(String linkToDelete) {
+		this.linkToDelete = linkToDelete;
+	}
+
+	public String getTestoAttoVotatoToDelete() {
+		return testoAttoVotatoToDelete;
+	}
+
+	public void setTestoAttoVotatoToDelete(String testoAttoVotatoToDelete) {
+		this.testoAttoVotatoToDelete = testoAttoVotatoToDelete;
+	}
+
+	public String getEmendamentoToDelete() {
+		return emendamentoToDelete;
+	}
+
+	public void setEmendamentoToDelete(String emendamentoToDelete) {
+		this.emendamentoToDelete = emendamentoToDelete;
+	}
+
+	public String getTestoClausolaToDelete() {
+		return testoClausolaToDelete;
+	}
+
+	public void setTestoClausolaToDelete(String testoClausolaToDelete) {
+		this.testoClausolaToDelete = testoClausolaToDelete;
+	}
+	
+	
+	
+	
 
 
 
