@@ -18,13 +18,9 @@ import org.primefaces.event.FileUploadEvent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.Emendamento;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
-import com.sourcesense.crl.business.model.TestoAttoVotato;
-import com.sourcesense.crl.business.model.TestoClausola;
-import com.sourcesense.crl.business.model.TestoComitatoRistretto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
@@ -58,7 +54,7 @@ public class EsameCommissioniController {
 	
 	private List <Relatore> relatoriList = new ArrayList <Relatore>();
 	private List <Personale> membriComitatoList = new ArrayList <Personale>();
-	private List <TestoComitatoRistretto> testiComitatoRistrettoList = new ArrayList <TestoComitatoRistretto>();
+	private List <Allegato> testiComitatoRistrettoList = new ArrayList <Allegato>();
 	
 	
 	private List <Atto> abbinamenti = new ArrayList<Atto>(); 
@@ -74,7 +70,7 @@ public class EsameCommissioniController {
 	private String quorum;
 	private Date dataSedutaRegistrazioneVotazione;
 	
-	private List <TestoAttoVotato> testiAttoVotatoList = new ArrayList <TestoAttoVotato>();
+	private List <Allegato> testiAttoVotatoList = new ArrayList <Allegato>();
 	private String testoAttoVotatoToDelete;
 	
 	private Date dataSedutaContinuazioneLavori;
@@ -84,7 +80,7 @@ public class EsameCommissioniController {
 	private boolean passaggioDiretto;
 	
 	
-	private List <Emendamento> emendamentiList = new ArrayList <Emendamento>();
+	private List <Allegato> emendamentiList = new ArrayList <Allegato>();
 	private String emendamentoToDelete;
 	
 	private int numEmendPresentatiMaggior;
@@ -109,7 +105,7 @@ public class EsameCommissioniController {
 	private String esitoVotazioneIntesa;
 	private String noteClausolaValutativa;
 	
-	private List <TestoClausola> testiClausolaList = new ArrayList <TestoClausola>();
+	private List <Allegato> testiClausolaList = new ArrayList <Allegato>();
 	private String testoClausolaToDelete;
 	
 	
@@ -415,42 +411,38 @@ public class EsameCommissioniController {
 
 
 	public String getMateria() {
-		return materia;
+		return atto.getMateria();
 	}
 
 
 
 	public void setMateria(String materia) {
-		this.materia = materia;
+		this.atto.setMateria(materia);
 	}
 
 
 
 	public Date getDataScadenza() {
-		return dataScadenza;
+		return atto.getDataScadenzaEsameCommissioni();
 	}
 
 
 
 	public void setDataScadenza(Date dataScadenza) {
-		this.dataScadenza = dataScadenza;
+		this.atto.setDataScadenzaEsameCommissioni(dataScadenza);
 	}
 
 
 
 	public Date getDataFineLavori() {
-		return dataFineLavori;
+		return atto.getDataFineLavoriEsameCommissioni();
 	}
 
 
 
 	public void setDataFineLavori(Date dataFineLavori) {
-		this.dataFineLavori = dataFineLavori;
+		this.atto.setDataFineLavoriEsameCommissioni(dataFineLavori);
 	}
-
-
-
-	
 
 
 
@@ -487,6 +479,15 @@ public class EsameCommissioniController {
 	public void setDataAbbinamento(Date dataAbbinamento) {
 		this.dataAbbinamento = dataAbbinamento;
 	}
+	
+	public Date getDataDisabbinamento() {
+		return dataDisabbinamento;
+	}
+
+	public void setDataDisabbinamento(Date dataDisabbinamento) {
+		this.dataDisabbinamento = dataDisabbinamento;
+	}
+
 
 
 	public String getNoteAbbinamento() {
@@ -502,162 +503,158 @@ public class EsameCommissioniController {
 
 
 	public String getOggettoAttoCorrente() {
-		return oggettoAttoCorrente;
+		return atto.getOggetto();
 	}
 
 
 
 	public void setOggettoAttoCorrente(String oggettoAttoCorrente) {
-		this.oggettoAttoCorrente = oggettoAttoCorrente;
+		this.atto.setOggetto(oggettoAttoCorrente);
 	}
 
 
 
 	public String getEsitoVotazione() {
-		return esitoVotazione;
+		return atto.getEsitoVotoCommissioneReferente();
 	}
 
 
 
 	public void setEsitoVotazione(String esitoVotazione) {
-		this.esitoVotazione = esitoVotazione;
+		this.atto.setEsitoVotoCommissioneReferente(esitoVotazione);
 	}
 
 
 
 	public String getQuorum() {
-		return quorum;
+		return atto.getQuorum();
 	}
 
 
 
 	public void setQuorum(String quorum) {
-		this.quorum = quorum;
+		this.atto.setQuorum(quorum);
 	}
 
 
 
 	public Date getDataSedutaRegistrazioneVotazione() {
-		return dataSedutaRegistrazioneVotazione;
+		return atto.getDataSedutaCommissione();
 	}
 
 
 
 	public void setDataSedutaRegistrazioneVotazione(
 			Date dataSedutaRegistrazioneVotazione) {
-		this.dataSedutaRegistrazioneVotazione = dataSedutaRegistrazioneVotazione;
+		this.atto.setDataSedutaCommissione(dataSedutaRegistrazioneVotazione);
 	}
-
-
-
 	
 
 
 	public Date getDataSedutaContinuazioneLavori() {
-		return dataSedutaContinuazioneLavori;
+		return atto.getDataSedutaContinuazioneInReferente();
 	}
 
 
 
 	public void setDataSedutaContinuazioneLavori(Date dataSedutaContinuazioneLavori) {
-		this.dataSedutaContinuazioneLavori = dataSedutaContinuazioneLavori;
+		this.atto.getDataSedutaContinuazioneInReferente();
 	}
 
 
 
 	public String getMotivazioni() {
-		return motivazioni;
+		return atto.getMotivazioniContinuazioneInReferente();
 	}
 
 
 
 	public void setMotivazioni(String motivazioni) {
-		this.motivazioni = motivazioni;
+		this.atto.setMotivazioniContinuazioneInReferente(motivazioni);
 	}
 
 
 
 	public Date getDataTrasmissione() {
-		return dataTrasmissione;
+		return atto.getDataTrasmissione();
 	}
 
 
 
 	public void setDataTrasmissione(Date dataTrasmissione) {
-		this.dataTrasmissione = dataTrasmissione;
+		this.atto.setDataTrasmissione(dataTrasmissione);
 	}
 
 
 
 	public Date getDataRichiestaIscrizione() {
-		return dataRichiestaIscrizione;
+		return atto.getDataRichiestaIscrizioneAula();
 	}
 
 
 
 	public void setDataRichiestaIscrizione(Date dataRichiestaIscrizione) {
-		this.dataRichiestaIscrizione = dataRichiestaIscrizione;
+		this.atto.setDataRichiestaIscrizioneAula(dataRichiestaIscrizione);
 	}
 
 
 
 	public boolean isPassaggioDiretto() {
-		return passaggioDiretto;
+		return atto.isPassaggioDirettoInAula();
 	}
 
 
 
 	public void setPassaggioDiretto(boolean passaggioDiretto) {
-		this.passaggioDiretto = passaggioDiretto;
+		this.atto.setPassaggioDirettoInAula(passaggioDiretto);
 	}
-
 
 
 	
 	public int getNumEmendPresentatiMaggior() {
-		return numEmendPresentatiMaggior;
+		return atto.getNumEmendPresentatiMaggior();
 	}
 
 
 
 	public void setNumEmendPresentatiMaggior(int numEmendPresentatiMaggior) {
-		this.numEmendPresentatiMaggior = numEmendPresentatiMaggior;
+		this.atto.setNumEmendPresentatiMaggior(numEmendPresentatiMaggior);
 	}
 
 
 
 	public int getNumEmendPresentatiMinor() {
-		return numEmendPresentatiMinor;
+		return atto.getNumEmendPresentatiMinor();
 	}
 
 
 
 	public void setNumEmendPresentatiMinor(int numEmendPresentatiMinor) {
-		this.numEmendPresentatiMinor = numEmendPresentatiMinor;
+		this.atto.setNumEmendPresentatiMinor(numEmendPresentatiMinor);
 	}
 
 
 
 	public int getNumEmendPresentatiGiunta() {
-		return numEmendPresentatiGiunta;
+		return atto.getNumEmendPresentatiGiunta();
 	}
 
 
 
 	public void setNumEmendPresentatiGiunta(int numEmendPresentatiGiunta) {
-		this.numEmendPresentatiGiunta = numEmendPresentatiGiunta;
+		this.atto.setNumEmendPresentatiGiunta(numEmendPresentatiGiunta);
 	}
 
 
 
 	public int getNumEmendPresentatiMisto() {
-		return numEmendPresentatiMisto;
+		return atto.getNumEmendPresentatiMisto();
 	}
 
 
 
 	public void setNumEmendPresentatiMisto(int numEmendPresentatiMisto) {
-		this.numEmendPresentatiMisto = numEmendPresentatiMisto;
+		this.atto.setNumEmendPresentatiMisto(numEmendPresentatiMisto);
 	}
 
 
@@ -675,49 +672,49 @@ public class EsameCommissioniController {
 
 
 	public int getNumEmendApprovatiMaggior() {
-		return numEmendApprovatiMaggior;
+		return atto.getNumEmendApprovatiMaggior();
 	}
 
 
 
 	public void setNumEmendApprovatiMaggior(int numEmendApprovatiMaggior) {
-		this.numEmendApprovatiMaggior = numEmendApprovatiMaggior;
+		this.atto.setNumEmendApprovatiMaggior(numEmendApprovatiMaggior);
 	}
 
 
 
 	public int getNumEmendApprovatiMinor() {
-		return numEmendApprovatiMinor;
+		return atto.getNumEmendApprovatiMinor();
 	}
 
 
 
 	public void setNumEmendApprovatiMinor(int numEmendApprovatiMinor) {
-		this.numEmendApprovatiMinor = numEmendApprovatiMinor;
+		this.atto.setNumEmendApprovatiMinor(numEmendApprovatiMinor);
 	}
 
 
 
 	public int getNumEmendApprovatiGiunta() {
-		return numEmendApprovatiGiunta;
+		return atto.getNumEmendApprovatiGiunta();
 	}
 
 
 
 	public void setNumEmendApprovatiGiunta(int numEmendApprovatiGiunta) {
-		this.numEmendApprovatiGiunta = numEmendApprovatiGiunta;
+		this.atto.setNumEmendApprovatiGiunta(numEmendApprovatiGiunta);
 	}
 
 
 
 	public int getNumEmendApprovatiMisto() {
-		return numEmendApprovatiMisto;
+		return atto.getNumEmendApprovatiMisto();
 	}
 
 
 
 	public void setNumEmendApprovatiMisto(int numEmendApprovatiMisto) {
-		this.numEmendApprovatiMisto = numEmendApprovatiMisto;
+		this.atto.setNumEmendApprovatiMisto(numEmendApprovatiMisto);
 	}
 
 
@@ -735,49 +732,49 @@ public class EsameCommissioniController {
 
 
 	public int getNomiAmmissibili() {
-		return nomiAmmissibili;
+		return atto.getNomiAmmissibili();
 	}
 
 
 
 	public void setNomiAmmissibili(int nomiAmmissibili) {
-		this.nomiAmmissibili = nomiAmmissibili;
+		this.atto.setNomiAmmissibili(nomiAmmissibili);
 	}
 
 
 
 	public int getDecaduti() {
-		return decaduti;
+		return atto.getDecaduti();
 	}
 
 
 
 	public void setDecaduti(int decaduti) {
-		this.decaduti = decaduti;
+		this.atto.setDecaduti(decaduti);
 	}
 
 
 
 	public int getRitirati() {
-		return ritirati;
+		return atto.getRitirati();
 	}
 
 
 
 	public void setRitirati(int ritirati) {
-		this.ritirati = ritirati;
+		this.atto.setRitirati(ritirati);
 	}
 
 
 
 	public int getRespinti() {
-		return respinti;
+		return atto.getRespinti();
 	}
 
 
 
 	public void setRespinti(int respinti) {
-		this.respinti = respinti;
+		this.atto.setRespinti(respinti);
 	}
 
 
@@ -795,77 +792,73 @@ public class EsameCommissioniController {
 
 
 	public String getNoteEmendamenti() {
-		return noteEmendamenti;
+		return atto.getNoteEmendamenti();
 	}
 
 
 
 	public void setNoteEmendamenti(String noteEmendamenti) {
-		this.noteEmendamenti = noteEmendamenti;
+		this.atto.setNoteEmendamenti(noteEmendamenti);
 	}
 
 
 
 	public Date getDataPresaInCaricoProposta() {
-		return dataPresaInCaricoProposta;
+		return atto.getDataPresaInCaricoProposta();
 	}
 
 
 
 	public void setDataPresaInCaricoProposta(Date dataPresaInCaricoProposta) {
-		this.dataPresaInCaricoProposta = dataPresaInCaricoProposta;
+		this.atto.setDataPresaInCaricoProposta(dataPresaInCaricoProposta);
 	}
 
 
 
 	public Date getDataIntesa() {
-		return dataIntesa;
+		return atto.getDataIntesa();
 	}
 
 
 
 	public void setDataIntesa(Date dataIntesa) {
-		this.dataIntesa = dataIntesa;
+		this.atto.setDataIntesa(dataIntesa);
 	}
 
 
 
 	public String getEsitoVotazioneIntesa() {
-		return esitoVotazioneIntesa;
+		return atto.getEsitoVotazioneIntesa();
 	}
 
 
 
 	public void setEsitoVotazioneIntesa(String esitoVotazioneIntesa) {
-		this.esitoVotazioneIntesa = esitoVotazioneIntesa;
+		this.atto.setEsitoVotazioneIntesa(esitoVotazioneIntesa);
 	}
 
 
 
 	public String getNoteClausolaValutativa() {
-		return noteClausolaValutativa;
+		return atto.getNoteClausolaValutativa();
 	}
 
 
 
 	public void setNoteClausolaValutativa(String noteClausolaValutativa) {
-		this.noteClausolaValutativa = noteClausolaValutativa;
-	}
-
-
-
-	
+		this.atto.setNoteClausolaValutativa(noteClausolaValutativa);
+	}	
 
 
 
 	public String getNoteGenerali() {
-		return noteGenerali;
+		return atto.getNoteGeneraliEsameCommissioni();
 	}
 
 
 
 	public void setNoteGenerali(String noteGenerali) {
-		this.noteGenerali = noteGenerali;
+		this.atto.setNoteGeneraliEsameCommissioni(noteGenerali);
 	}
 
 
@@ -915,56 +908,6 @@ public class EsameCommissioniController {
 	public void setMembriComitatoList(List<Personale> membriComitatoList) {
 		this.membriComitatoList = membriComitatoList;
 	}
-
-
-
-	public List<TestoComitatoRistretto> getTestiComitatoRistrettoList() {
-		return testiComitatoRistrettoList;
-	}
-
-
-
-	public void setTestiComitatoRistrettoList(
-			List<TestoComitatoRistretto> testiComitatoRistrettoList) {
-		this.testiComitatoRistrettoList = testiComitatoRistrettoList;
-	}
-
-
-
-	public List<TestoAttoVotato> getTestiAttoVotatoList() {
-		return testiAttoVotatoList;
-	}
-
-
-
-	public void setTestiAttoVotatoList(List<TestoAttoVotato> testiAttoVotatoList) {
-		this.testiAttoVotatoList = testiAttoVotatoList;
-	}
-
-
-
-	public List<Emendamento> getEmendamentiList() {
-		return emendamentiList;
-	}
-
-
-
-	public void setEmendamentiList(List<Emendamento> emendamentiList) {
-		this.emendamentiList = emendamentiList;
-	}
-
-
-
-	public List<TestoClausola> getTestiClausolaList() {
-		return testiClausolaList;
-	}
-
-
-
-	public void setTestiClausolaList(List<TestoClausola> testiClausolaList) {
-		this.testiClausolaList = testiClausolaList;
-	}
-
 
 
 	public List<Allegato> getAllegatiList() {
@@ -1064,13 +1007,6 @@ public class EsameCommissioniController {
 		this.statoCommitNote = statoCommitNote;
 	}
 
-	public Date getDataDisabbinamento() {
-		return dataDisabbinamento;
-	}
-
-	public void setDataDisabbinamento(Date dataDisabbinamento) {
-		this.dataDisabbinamento = dataDisabbinamento;
-	}
 
 	public AttoServiceManager getAttoServiceManager() {
 		return attoServiceManager;
@@ -1175,14 +1111,38 @@ public class EsameCommissioniController {
 	public void setNomeRelatore(String nomeRelatore) {
 		this.nomeRelatore = nomeRelatore;
 	}
-	
-	
-	
-	
 
+	public List<Allegato> getTestiComitatoRistrettoList() {
+		return testiComitatoRistrettoList;
+	}
 
+	public void setTestiComitatoRistrettoList(
+			List<Allegato> testiComitatoRistrettoList) {
+		this.testiComitatoRistrettoList = testiComitatoRistrettoList;
+	}
 
-	
-	
-	
+	public List<Allegato> getTestiAttoVotatoList() {
+		return testiAttoVotatoList;
+	}
+
+	public void setTestiAttoVotatoList(List<Allegato> testiAttoVotatoList) {
+		this.testiAttoVotatoList = testiAttoVotatoList;
+	}
+
+	public List<Allegato> getEmendamentiList() {
+		return emendamentiList;
+	}
+
+	public void setEmendamentiList(List<Allegato> emendamentiList) {
+		this.emendamentiList = emendamentiList;
+	}
+
+	public List<Allegato> getTestiClausolaList() {
+		return testiClausolaList;
+	}
+
+	public void setTestiClausolaList(List<Allegato> testiClausolaList) {
+		this.testiClausolaList = testiClausolaList;
+	}
+
 }

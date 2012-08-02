@@ -40,66 +40,64 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("atto")
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-	public class Atto implements Cloneable
-	{
-	    /**
-		 * 
-		 */
-		
-		public Object clone() {
-			try {
-				return super.clone();
-			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
-				return null;
-			}
+public class Atto implements Cloneable
+{
+	/**
+	 * 
+	 */
+
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
 		}
-		
-	
+	}
+
+
 
 	private String id;
 	private String nome;
 	private String tipo;
-    private String codice;
-    private String oggetto;
-    private String primoFirmatario;
-    private Date   dataPresentazione;
-    private Date   dataPresaInCarico;
-    private Date   dataPubblicazione;
-    private Date   dataSedutaSc;
-    private Date   dataSedutaAula;
-    private String stato;
-    private String numeroAtto;
-    private String tipoAtto;
-    private String tipologia;
-    private String legislatura;
-    private String anno;
-    private String error;
-    
-    private String statoAttuale;
-    private String classificazione;
-    private String nRepertorio;
-    private Date dataRepertorio;
-    private Date dataIniziativa;
-    private String numeroRepertorio;
-    private String descrizioneIniziativa;
-    private String numeroDgr;
-    private Date   dataDgr;
-    private String assegnazione;    
-    private Date dataAssegnazione;
-    private String esitoValidazione;
-    private Date dataValidazione;
+	private String codice;
+	private String oggetto;
+	private String primoFirmatario;
+	private Date   dataPresentazione;
+	private Date   dataPresaInCarico;
+	private Date   dataPubblicazione;
+	private Date   dataSedutaSc;
+	private Date   dataSedutaAula;
+	private String stato;
+	private String numeroAtto;
+	private String tipoAtto;
+	private String tipologia;
+	private String legislatura;
+	private String anno;
+	private String error;
 
-    private Date dataAssegnazioneCommissioni;
-    private Date dataSedutaCommissione;
+	private String statoAttuale;
+	private String classificazione;
+	private String nRepertorio;
+	private Date dataRepertorio;
+	private Date dataIniziativa;
+	private String numeroRepertorio;
+	private String descrizioneIniziativa;
+	private String numeroDgr;
+	private Date   dataDgr;
+	private String assegnazione;    
+	private Date dataAssegnazione;
+	private String esitoValidazione;
+	private Date dataValidazione;
 
-    
+	private Date dataAssegnazioneCommissioni;
+
+
 	private String numeroProtocollo;
 	private String tipoIniziativa;
 	private String numeroDcr;
 	private String firmatario;
 	private String tipoChiusura;
-	private String esitoVotoCommissioneReferente;
 	private String esitoVotoAula;
 	private String commissioneReferente;
 	private String commissioneConsultiva;
@@ -123,10 +121,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	private Date dataSeduta;
 	private String tipoVotazione;
 	private String numeroDCR;
-	
-	
-	
-	
+
 	private List <Commissione> commissioni = new ArrayList<Commissione>();
 	private List <Atto> abbinamenti = new ArrayList<Atto>();
 	private List <Organo> organi = new ArrayList<Organo>();
@@ -137,11 +132,15 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	private List <Atto> collegamenti = new ArrayList<Atto>();
 	private List <Allegato> allegati = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
+	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
 	private List <Link> linksNotePresentazioneAssegnazione = new ArrayList<Link>();
 	private List <Link> linksNoteEsameCommissioni = new ArrayList<Link>();
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
 	private List <AttoRecord> testiAtto = new ArrayList<AttoRecord>();
-	
+	private List <Allegato> testiAttoVotato = new ArrayList<Allegato>();
+	private List <Allegato> emendamenti = new ArrayList<Allegato>();
+	private List <Allegato> testiClausola = new ArrayList<Allegato>();
+
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
 	private Date dataRicevimentoInformazioni;
@@ -150,13 +149,47 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	private boolean richiestaUrgenza;
 	private boolean votazioneUrgenza;
 	private Date dataVotazioneUrgenza;
-	private String noteAmmissibilita;
-	
+	private String noteAmmissibilita;	
 	private String noteNoteAllegatiPresentazioneAssegnazione;
-	
+
+
+	private String materia;
+	private Date dataScadenzaEsameCommissioni;
+	private boolean presenzaComitatoRistretto;
+	private Date dataIstituzioneComitato;
+	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
+	private Date dataFineLavoriEsameCommissioni;
+	private String esitoVotoCommissioneReferente;
+	private String quorum;
+	private Date dataSedutaCommissione;
+	private Date dataSedutaContinuazioneInReferente;
+	private String motivazioniContinuazioneInReferente;
+	private Date dataTrasmissione;
+	private Date dataRichiestaIscrizioneAula;
+	private boolean passaggioDirettoInAula;
+	private int numEmendPresentatiMaggior;
+	private int numEmendPresentatiMinor;
+	private int numEmendPresentatiGiunta;
+	private int numEmendPresentatiMisto;
+	private int numEmendApprovatiMaggior;
+	private int numEmendApprovatiMinor;
+	private int numEmendApprovatiGiunta;
+	private int numEmendApprovatiMisto;
+	private int nomiAmmissibili;
+	private int decaduti;
+	private int ritirati;
+	private int respinti;
+	private String noteEmendamenti;
+	private Date dataPresaInCaricoProposta;
+	private Date dataIntesa;
+	private String esitoVotazioneIntesa;
+	private String noteClausolaValutativa;
+	private String noteGeneraliEsameCommissioni;
+
+
 
 	public Atto(){
-		
+
 		Commissione commissione = new Commissione();
 		commissione.setDescrizione("Descrizione1");
 		commissione.setNome("Commissione 1");
@@ -173,8 +206,8 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 		commissione.setDataNomina(new Date());
 		commissione.setDataProposta(new Date());
 		commissione.setDataAnnullo(new Date());
-		
-		
+
+
 		Commissione commissione2 = new Commissione();
 		commissione2.setDescrizione("Descrizione2");
 		commissione2.setNome("Commissione 2");
@@ -191,22 +224,22 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 		commissione2.setDataNomina(new Date());
 		commissione2.setDataProposta(new Date());
 		commissione2.setDataAnnullo(new Date());
-		
 
-		
+
+
 		List <Commissione> commissioni = new ArrayList<Commissione>();
-		
-		
+
+
 		commissioni.add(commissione);
 		commissioni.add(commissione2);
-		
+
 		this.setCommissioni(commissioni);
-		
+
 	}
 
-    
-    
-    public String getNome() {
+
+
+	public String getNome() {
 		return nome;
 	}
 
@@ -239,101 +272,101 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	}
 
 	/**
-     * @return the tipo
-     */
-    public String getTipo()
-    {
-        return tipo;
-    }
+	 * @return the tipo
+	 */
+	public String getTipo()
+	{
+		return tipo;
+	}
 
-    /**
-     * @param tipo the tipo to set
-     */
-    public void setTipo(String tipo)
-    {
-        this.tipo = tipo;
-    }
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(String tipo)
+	{
+		this.tipo = tipo;
+	}
 
-    /**
-     * @return the codice
-     */
-    public String getCodice()
-    {
-        return codice;
-    }
+	/**
+	 * @return the codice
+	 */
+	public String getCodice()
+	{
+		return codice;
+	}
 
-    /**
-     * @param codice the codice to set
-     */
-    public void setCodice(String codice)
-    {
-        this.codice = codice;
-    }
+	/**
+	 * @param codice the codice to set
+	 */
+	public void setCodice(String codice)
+	{
+		this.codice = codice;
+	}
 
-    /**
-     * @return the oggetto
-     */
-    public String getOggetto()
-    {
-        return oggetto;
-    }
+	/**
+	 * @return the oggetto
+	 */
+	public String getOggetto()
+	{
+		return oggetto;
+	}
 
-    /**
-     * @param oggetto the oggetto to set
-     */
-    public void setOggetto(String oggetto)
-    {
-        this.oggetto = oggetto;
-    }
+	/**
+	 * @param oggetto the oggetto to set
+	 */
+	public void setOggetto(String oggetto)
+	{
+		this.oggetto = oggetto;
+	}
 
-    /**
-     * @return the primoFirmatario
-     */
-    public String getPrimoFirmatario()
-    {
-        return primoFirmatario;
-    }
+	/**
+	 * @return the primoFirmatario
+	 */
+	public String getPrimoFirmatario()
+	{
+		return primoFirmatario;
+	}
 
-    /**
-     * @param primoFirmatario the primoFirmatario to set
-     */
-    public void setPrimoFirmatario(String primoFirmatario)
-    {
-        this.primoFirmatario = primoFirmatario;
-    }
+	/**
+	 * @param primoFirmatario the primoFirmatario to set
+	 */
+	public void setPrimoFirmatario(String primoFirmatario)
+	{
+		this.primoFirmatario = primoFirmatario;
+	}
 
-    /**
-     * @return the dataPresentazione
-     */
-    @JsonSerialize(using=JsonDateSerializer.class)
-    public Date getDataPresentazione()
-    {
-        return dataPresentazione;
-    }
+	/**
+	 * @return the dataPresentazione
+	 */
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresentazione()
+	{
+		return dataPresentazione;
+	}
 
-    /**
-     * @param dataPresentazione the dataPresentazione to set
-     */
-    public void setDataPresentazione(Date dataPresentazione)
-    {
-        this.dataPresentazione = dataPresentazione;
-    }
+	/**
+	 * @param dataPresentazione the dataPresentazione to set
+	 */
+	public void setDataPresentazione(Date dataPresentazione)
+	{
+		this.dataPresentazione = dataPresentazione;
+	}
 
-    /**
-     * @return the stato
-     */
-    public String getStato()
-    {
-        return stato;
-    }
+	/**
+	 * @return the stato
+	 */
+	public String getStato()
+	{
+		return stato;
+	}
 
-    /**
-     * @param stato the stato to set
-     */
-    public void setStato(String stato)
-    {
-        this.stato = stato;
-    }
+	/**
+	 * @param stato the stato to set
+	 */
+	public void setStato(String stato)
+	{
+		this.stato = stato;
+	}
 
 	public String getLegislatura() {
 		return legislatura;
@@ -440,7 +473,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 		this.deliberante = deliberante;
 	}
 
-	
+
 	public boolean isAbbinamento() {
 		return abbinamento;
 	}
@@ -537,7 +570,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	public void setNumeroRepertorio(String numeroRepertorio) {
 		this.numeroRepertorio = numeroRepertorio;
 	}
-	
+
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRepertorio() {
 		return dataRepertorio;
@@ -546,7 +579,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	public void setDataRepertorio(Date dataRepertorio) {
 		this.dataRepertorio = dataRepertorio;
 	}
-	
+
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataIniziativa() {
 		return dataIniziativa;
@@ -556,16 +589,16 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 		this.dataIniziativa = dataIniziativa;
 	}
 
-		
+
 	public String getDescrizioneIniziativa() {
 		return descrizioneIniziativa;
 	}
-	
-    public void setDescrizioneIniziativa(String descrizioneIniziativa) {
+
+	public void setDescrizioneIniziativa(String descrizioneIniziativa) {
 		this.descrizioneIniziativa = descrizioneIniziativa;
 	}
 
-	
+
 
 	public String getAssegnazione() {
 		return assegnazione;
@@ -574,7 +607,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	public void setAssegnazione(String assegnazione) {
 		this.assegnazione = assegnazione;
 	}
-	
+
 	public String getnRepertorio() {
 		return nRepertorio;
 	}
@@ -787,15 +820,6 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataSedutaCommissione() {
-		return dataSedutaCommissione;
-	}
-
-	public void setDataSedutaCommissione(Date dataSedutaCommissione) {
-		this.dataSedutaCommissione = dataSedutaCommissione;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataSedutaAula() {
 		return dataSedutaAula;
 	}
@@ -988,10 +1012,443 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 		this.linksNoteEsameCommissioni = linksNoteEsameCommissioni;
 	}
 
-	
-	
+
+
+	public List<Allegato> getAllegatiNoteEsameCommissioni() {
+		return allegatiNoteEsameCommissioni;
+	}
+
+
+
+	public void setAllegatiNoteEsameCommissioni(
+			List<Allegato> allegatiNoteEsameCommissioni) {
+		this.allegatiNoteEsameCommissioni = allegatiNoteEsameCommissioni;
+	}
+
+
+
+	public List<Allegato> getTestiAttoVotato() {
+		return testiAttoVotato;
+	}
+
+
+
+	public void setTestiAttoVotato(List<Allegato> testiAttoVotato) {
+		this.testiAttoVotato = testiAttoVotato;
+	}
+
+
+
+	public List<Allegato> getEmendamenti() {
+		return emendamenti;
+	}
+
+
+
+	public void setEmendamenti(List<Allegato> emendamenti) {
+		this.emendamenti = emendamenti;
+	}
+
+
+
+	public List<Allegato> getTestiClausola() {
+		return testiClausola;
+	}
+
+
+
+	public void setTestiClausola(List<Allegato> testiClausola) {
+		this.testiClausola = testiClausola;
+	}
+
+
+
+	public String getMateria() {
+		return materia;
+	}
+
+
+
+	public void setMateria(String materia) {
+		this.materia = materia;
+	}
+
+
+
+	public boolean isPresenzaComitatoRistretto() {
+		return presenzaComitatoRistretto;
+	}
+
+
+
+	public void setPresenzaComitatoRistretto(boolean presenzaComitatoRistretto) {
+		this.presenzaComitatoRistretto = presenzaComitatoRistretto;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIstituzioneComitato() {
+		return dataIstituzioneComitato;
+	}
+
+
+
+	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
+		this.dataIstituzioneComitato = dataIstituzioneComitato;
+	}
+
+
+
+	public ComitatoRistretto getComitatoRistretto() {
+		return comitatoRistretto;
+	}
+
+
+
+	public void setComitatoRistretto(ComitatoRistretto comitatoRistretto) {
+		this.comitatoRistretto = comitatoRistretto;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataFineLavoriEsameCommissioni() {
+		return dataFineLavoriEsameCommissioni;
+	}
+
+
+
+	public void setDataFineLavoriEsameCommissioni(
+			Date dataFineLavoriEsameCommissioni) {
+		this.dataFineLavoriEsameCommissioni = dataFineLavoriEsameCommissioni;
+	}
+
+
+
+	public String getQuorum() {
+		return quorum;
+	}
+
+
+
+	public void setQuorum(String quorum) {
+		this.quorum = quorum;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaContinuazioneInReferente() {
+		return dataSedutaContinuazioneInReferente;
+	}
+
+
+
+	public void setDataSedutaContinuazioneInReferente(
+			Date dataSedutaContinuazioneInReferente) {
+		this.dataSedutaContinuazioneInReferente = dataSedutaContinuazioneInReferente;
+	}
+
+
+
+	public String getMotivazioniContinuazioneInReferente() {
+		return motivazioniContinuazioneInReferente;
+	}
+
+
+
+	public void setMotivazioniContinuazioneInReferente(
+			String motivazioniContinuazioneInReferente) {
+		this.motivazioniContinuazioneInReferente = motivazioniContinuazioneInReferente;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataTrasmissione() {
+		return dataTrasmissione;
+	}
+
+
+
+	public void setDataTrasmissione(Date dataTrasmissione) {
+		this.dataTrasmissione = dataTrasmissione;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataRichiestaIscrizioneAula() {
+		return dataRichiestaIscrizioneAula;
+	}
+
+
+
+	public void setDataRichiestaIscrizioneAula(Date dataRichiestaIscrizioneAula) {
+		this.dataRichiestaIscrizioneAula = dataRichiestaIscrizioneAula;
+	}
+
+
+
+	public boolean isPassaggioDirettoInAula() {
+		return passaggioDirettoInAula;
+	}
+
+
+
+	public void setPassaggioDirettoInAula(boolean passaggioDirettoInAula) {
+		this.passaggioDirettoInAula = passaggioDirettoInAula;
+	}
+
+
+
+	public int getNumEmendPresentatiMaggior() {
+		return numEmendPresentatiMaggior;
+	}
+
+
+
+	public void setNumEmendPresentatiMaggior(int numEmendPresentatiMaggior) {
+		this.numEmendPresentatiMaggior = numEmendPresentatiMaggior;
+	}
+
+
+
+	public int getNumEmendPresentatiMinor() {
+		return numEmendPresentatiMinor;
+	}
+
+
+
+	public void setNumEmendPresentatiMinor(int numEmendPresentatiMinor) {
+		this.numEmendPresentatiMinor = numEmendPresentatiMinor;
+	}
+
+
+
+	public int getNumEmendPresentatiGiunta() {
+		return numEmendPresentatiGiunta;
+	}
+
+
+
+	public void setNumEmendPresentatiGiunta(int numEmendPresentatiGiunta) {
+		this.numEmendPresentatiGiunta = numEmendPresentatiGiunta;
+	}
+
+
+
+	public int getNumEmendPresentatiMisto() {
+		return numEmendPresentatiMisto;
+	}
+
+
+
+	public void setNumEmendPresentatiMisto(int numEmendPresentatiMisto) {
+		this.numEmendPresentatiMisto = numEmendPresentatiMisto;
+	}
+
+
+
+	public int getNumEmendApprovatiMaggior() {
+		return numEmendApprovatiMaggior;
+	}
+
+
+
+	public void setNumEmendApprovatiMaggior(int numEmendApprovatiMaggior) {
+		this.numEmendApprovatiMaggior = numEmendApprovatiMaggior;
+	}
+
+
+
+	public int getNumEmendApprovatiMinor() {
+		return numEmendApprovatiMinor;
+	}
+
+
+
+	public void setNumEmendApprovatiMinor(int numEmendApprovatiMinor) {
+		this.numEmendApprovatiMinor = numEmendApprovatiMinor;
+	}
+
+
+
+	public int getNumEmendApprovatiGiunta() {
+		return numEmendApprovatiGiunta;
+	}
+
+
+
+	public void setNumEmendApprovatiGiunta(int numEmendApprovatiGiunta) {
+		this.numEmendApprovatiGiunta = numEmendApprovatiGiunta;
+	}
+
+
+
+	public int getNumEmendApprovatiMisto() {
+		return numEmendApprovatiMisto;
+	}
+
+
+
+	public void setNumEmendApprovatiMisto(int numEmendApprovatiMisto) {
+		this.numEmendApprovatiMisto = numEmendApprovatiMisto;
+	}
+
+
+
+	public int getNomiAmmissibili() {
+		return nomiAmmissibili;
+	}
+
+
+
+	public void setNomiAmmissibili(int nomiAmmissibili) {
+		this.nomiAmmissibili = nomiAmmissibili;
+	}
+
+
+
+	public int getDecaduti() {
+		return decaduti;
+	}
+
+
+
+	public void setDecaduti(int decaduti) {
+		this.decaduti = decaduti;
+	}
+
+
+
+	public int getRitirati() {
+		return ritirati;
+	}
+
+
+
+	public void setRitirati(int ritirati) {
+		this.ritirati = ritirati;
+	}
+
+
+
+	public int getRespinti() {
+		return respinti;
+	}
+
+
+
+	public void setRespinti(int respinti) {
+		this.respinti = respinti;
+	}
+
+
+
+	public String getNoteEmendamenti() {
+		return noteEmendamenti;
+	}
+
+
+
+	public void setNoteEmendamenti(String noteEmendamenti) {
+		this.noteEmendamenti = noteEmendamenti;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresaInCaricoProposta() {
+		return dataPresaInCaricoProposta;
+	}
+
+
+
+	public void setDataPresaInCaricoProposta(Date dataPresaInCaricoProposta) {
+		this.dataPresaInCaricoProposta = dataPresaInCaricoProposta;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIntesa() {
+		return dataIntesa;
+	}
+
+
+
+	public void setDataIntesa(Date dataIntesa) {
+		this.dataIntesa = dataIntesa;
+	}
+
+
+
+	public String getEsitoVotazioneIntesa() {
+		return esitoVotazioneIntesa;
+	}
+
+
+
+	public void setEsitoVotazioneIntesa(String esitoVotazioneIntesa) {
+		this.esitoVotazioneIntesa = esitoVotazioneIntesa;
+	}
+
+
+
+	public String getNoteClausolaValutativa() {
+		return noteClausolaValutativa;
+	}
+
+
+
+	public void setNoteClausolaValutativa(String noteClausolaValutativa) {
+		this.noteClausolaValutativa = noteClausolaValutativa;
+	}
+
+
+
+	public String getNoteGeneraliEsameCommissioni() {
+		return noteGeneraliEsameCommissioni;
+	}
+
+
+
+	public void setNoteGeneraliEsameCommissioni(String noteGeneraliEsameCommissioni) {
+		this.noteGeneraliEsameCommissioni = noteGeneraliEsameCommissioni;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataScadenzaEsameCommissioni() {
+		return dataScadenzaEsameCommissioni;
+	}
+
+
+
+	public void setDataScadenzaEsameCommissioni(Date dataScadenzaEsameCommissioni) {
+		this.dataScadenzaEsameCommissioni = dataScadenzaEsameCommissioni;
+	}
+
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaCommissione() {
+		return dataSedutaCommissione;
+	}
+
+
+
+	public void setDataSedutaCommissione(Date dataSedutaCommissione) {
+		this.dataSedutaCommissione = dataSedutaCommissione;
+	}
+
 
 	
 	
+
+
+
+
+
+
+
+
+
+
+
 }
 
