@@ -151,7 +151,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		this.firmatariList = new ArrayList<Firmatario>(this.atto.getFirmatari());
 		
-		//TODO
+		//TODO caricamento liste attoBean
 		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
 		this.organismiStatutariList = new ArrayList<OrganismoStatutario>(this.atto.getOrganismiStatutari());
 		this.linksList = new ArrayList<Link>(this.atto.getLinksNotePresentazioneAssegnazione());
