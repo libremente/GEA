@@ -136,7 +136,9 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
 	private List <Atto> collegamenti = new ArrayList<Atto>();
 	private List <Allegato> allegati = new ArrayList<Allegato>();
-	private List <Link> links = new ArrayList<Link>();
+	private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
+	private List <Link> linksNotePresentazioneAssegnazione = new ArrayList<Link>();
+	private List <Link> linksNoteEsameCommissioni = new ArrayList<Link>();
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
 	private List <AttoRecord> testiAtto = new ArrayList<AttoRecord>();
 	
@@ -680,23 +682,6 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 		this.collegamenti = collegamenti;
 	}
 
-	public List <Allegato> getAllegati() {
-		return allegati;
-	}
-
-	public void setAllegati(List <Allegato> allegati) {
-		this.allegati = allegati;
-	}
-
-	public List <Link> getLinks() {
-		return links;
-	}
-
-	public void setLinks(List <Link> links) {
-		this.links = links;
-	}
-
-
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataLR() {
 		return dataLR;
@@ -950,6 +935,57 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 
 	public void setTestiAtto(List <AttoRecord> testiAtto) {
 		this.testiAtto = testiAtto;
+	}
+
+
+
+	public List <Allegato> getAllegatiNotePresentazioneAssegnazione() {
+		return allegatiNotePresentazioneAssegnazione;
+	}
+
+
+
+	public void setAllegatiNotePresentazioneAssegnazione(
+			List <Allegato> allegatiNotePresentazioneAssegnazione) {
+		this.allegatiNotePresentazioneAssegnazione = allegatiNotePresentazioneAssegnazione;
+	}
+
+
+
+	public List <Link> getLinksNotePresentazioneAssegnazione() {
+		return linksNotePresentazioneAssegnazione;
+	}
+
+
+
+	public void setLinksNotePresentazioneAssegnazione(
+			List <Link> linksNotePresentazioneAssegnazione) {
+		this.linksNotePresentazioneAssegnazione = linksNotePresentazioneAssegnazione;
+	}
+
+
+
+	public List <Allegato> getAllegati() {
+		return allegati;
+	}
+
+
+
+	public void setAllegati(List <Allegato> allegati) {
+		this.allegati = allegati;
+	}
+
+
+
+	public List <Link> getLinksNoteEsameCommissioni() {
+		return linksNoteEsameCommissioni;
+	}
+
+
+
+	public void setLinksNoteEsameCommissioni(
+			List <Link> linksNoteEsameCommissioni) {
+		this.linksNoteEsameCommissioni = linksNoteEsameCommissioni;
 	}
 
 	

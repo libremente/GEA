@@ -154,7 +154,7 @@ public class PresentazioneAssegnazioneAttoController {
 		//TODO
 		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
 		this.organismiStatutariList = new ArrayList<OrganismoStatutario>(this.atto.getOrganismiStatutari());
-		this.linksList = new ArrayList<Link>(this.atto.getLinks());
+		this.linksList = new ArrayList<Link>(this.atto.getLinksNotePresentazioneAssegnazione());
 
 		//TODO
 		//setAllegatiList(allegatoServiceManager.findByTipo());
@@ -592,7 +592,7 @@ public class PresentazioneAssegnazioneAttoController {
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().getAllegati().add(allegatoRet);
+			attoBean.getAtto().getAllegatiNotePresentazioneAssegnazione().add(allegatoRet);
 
 			allegatiList.add(allegatoRet);
 		}
@@ -673,7 +673,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void salvaNoteEAllegati() {
-		this.atto.setLinks(linksList);
+		this.atto.setLinksNotePresentazioneAssegnazione(linksList);
 		attoServiceManager.salvaNoteAllegatiPresentazione(atto);
 
 		// TODO Service logic
@@ -682,7 +682,7 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 
 		attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
-		attoBean.getAtto().setLinks(linksList);		
+		attoBean.getAtto().setLinksNotePresentazioneAssegnazione(linksList);		
 
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 

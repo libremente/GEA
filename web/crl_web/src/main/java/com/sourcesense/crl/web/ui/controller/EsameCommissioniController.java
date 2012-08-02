@@ -369,7 +369,7 @@ public class EsameCommissioniController {
 		}
 
 		public void salvaNoteEAllegati() {
-			this.atto.setLinks(linksList);
+			this.atto.setLinksNoteEsameCommissioni(linksList);
 			//attoServiceManager.salvaNoteAllegatiPresentazione(atto);
 
 			// TODO Service logic
@@ -378,7 +378,7 @@ public class EsameCommissioniController {
 					.getSessionMap().get("attoBean"));
 
 			attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
-			attoBean.getAtto().setLinks(linksList);		
+			attoBean.getAtto().setLinksNoteEsameCommissioni(linksList);		
 
 			setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
