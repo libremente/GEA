@@ -24,9 +24,6 @@ if(checkIsNotNull(jsonFirmatario)
 	
 	
 	//ricerca firmatario esistente
-//	var firmatarioEsistenteQuery = "TYPE:\"crlatti:firmatario\" " +
-//			"AND @crlatti\\:nomeFirmatario:\""+descrizione+"\" " +
-//			"AND PARENT:\""+firmatariFolderNode.nodeRef+""\"";
 	
 	for each (firmatarioEsistente in firmatariFolderNode.children){
 		var nomeFirmatarioEsistente = firmatarioEsistente.name;

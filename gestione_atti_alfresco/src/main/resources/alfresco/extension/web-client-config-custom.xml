@@ -68,12 +68,21 @@
 	
 	<config evaluator="aspect-name" condition="crlatti:ammissibilitaAiutiStatoAspect">
 		<property-sheet>
+			<show-property name="crlatti:ammissibilitaValutazione" />
+			<show-property name="crlatti:ammissibilitaDataRichiestaInformazioni" />
+			<show-property name="crlatti:ammissibilitaDataRicevimentoInformazioni" />
+			<show-property name="crlatti:ammissibilitaNote" />
 			<show-property name="crlatti:ammissibilitaAiutiStato" />
 		</property-sheet>
 	</config>
 	
 	<config evaluator="aspect-name" condition="crlatti:ammissibilitaUrgenzaAspect">
 		<property-sheet>
+			<show-property name="crlatti:ammissibilitaValutazione" />
+			<show-property name="crlatti:ammissibilitaDataRichiestaInformazioni" />
+			<show-property name="crlatti:ammissibilitaDataRicevimentoInformazioni" />
+			<show-property name="crlatti:ammissibilitaNote" />
+			<show-property name="crlatti:ammissibilitaAiutiStato" />
 			<show-property name="crlatti:ammissibilitaRichiestaUrgenza" />
 			<show-property name="crlatti:ammissibilitaVotazioneUrgenza" />
 			<show-property name="crlatti:ammissibilitaDataVotazioneUrgenza" />
@@ -82,6 +91,14 @@
 	
 	<config evaluator="aspect-name" condition="crlatti:ammissibilitaNormaFinanziariaAspect">
 		<property-sheet>
+			<show-property name="crlatti:ammissibilitaValutazione" />
+			<show-property name="crlatti:ammissibilitaDataRichiestaInformazioni" />
+			<show-property name="crlatti:ammissibilitaDataRicevimentoInformazioni" />
+			<show-property name="crlatti:ammissibilitaNote" />
+			<show-property name="crlatti:ammissibilitaAiutiStato" />
+			<show-property name="crlatti:ammissibilitaRichiestaUrgenza" />
+			<show-property name="crlatti:ammissibilitaVotazioneUrgenza" />
+			<show-property name="crlatti:ammissibilitaDataVotazioneUrgenza" />
 			<show-property name="crlatti:ammissibilitaNormaFinanziaria" />
 		</property-sheet>
 	</config>
@@ -223,7 +240,6 @@
 			<show-property name="crlatti:primoFirmatario" />
 			<show-property name="crlatti:firmatari" />
 
-			<show-child-association name="crlatti:abbinamenti" />
 		</property-sheet>
 	</config>
 
@@ -273,7 +289,6 @@
 			<show-property name="crlatti:primoFirmatario" />
 			<show-property name="crlatti:firmatari" />
 
-			<show-child-association name="crlatti:abbinamenti" />
 		</property-sheet>
 	</config>
 
