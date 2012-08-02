@@ -357,6 +357,7 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+            <show id="crlatti:assegnazione"/>
             <show id="crlatti:descrizioneIniziativa"/>
             <show id="crlatti:numeroRepertorio"/>
             <show id="crlatti:dataRepertorio"/>
@@ -394,7 +395,6 @@
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
             
-            <show id="crlatti:abbinamenti"/>
           </field-visibility>
       </form>
    </forms>
@@ -410,6 +410,7 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+            <show id="crlatti:assegnazione"/>
             <show id="crlatti:descrizioneIniziativa"/>
             <show id="crlatti:numeroRepertorio"/>
             <show id="crlatti:dataRepertorio"/>
@@ -450,7 +451,6 @@
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
             
-            <show id="crlatti:abbinamenti"/>
    			</field-visibility>
    		</form>
    	</forms>
@@ -466,6 +466,7 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+             <show id="crlatti:assegnazione"/>
             <show id="crlatti:descrizioneIniziativa"/>
             <show id="crlatti:numeroRepertorio"/>
             <show id="crlatti:dataRepertorio"/>
@@ -504,7 +505,6 @@
             <show id="crlatti:primoFirmatario" /> 
             <show id="crlatti:firmatari"/>
             
-            <show id="crlatti:abbinamenti"/>
           </field-visibility>
       </form>
    </forms>
@@ -520,6 +520,7 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
+            <show id="crlatti:assegnazione"/>
             <show id="crlatti:descrizioneIniziativa"/>
             <show id="crlatti:numeroRepertorio"/>
             <show id="crlatti:dataRepertorio"/>
@@ -558,7 +559,6 @@
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
             
-            <show id="crlatti:abbinamenti"/>
    			</field-visibility>
    		</form>
    	</forms>
