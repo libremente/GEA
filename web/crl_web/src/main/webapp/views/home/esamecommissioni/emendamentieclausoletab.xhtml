@@ -121,20 +121,66 @@
 
 									<tr>
 										<td align="left">Num. Emend. Presentati</td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendPresentatiMaggior}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendPresentatiMinor}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendPresentatiGiunta}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendPresentatiMisto}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText id="totEmendPresentati"
+												value="#{esameCommissioniController.numEmendPresentatiTotale}"
+												readonly="true" size="5" maxlength="5" /></td>
 									</tr>
 
 									<tr>
 										<td align="left">Num. Emend. Approvati</td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
-										<td align="left"><p:inputText size="5" maxlength="5" /></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendApprovatiMaggior}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendApprovatiMinor}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendApprovatiGiunta}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendApprovatiMisto}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText id="totEmendApprovati"
+												value="#{esameCommissioniController.numEmendApprovatiTotale}"
+												readonly="true" size="5" maxlength="5" /></td>
 									</tr>
 
 								</tbody>
@@ -157,19 +203,41 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:inputText size="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5"
+								value="#{esameCommissioniController.nonAmmissibili}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameCommissioniController.totaleNonApprovati}" />
+							</p:inputText>
 						</p:column>
+
 						<p:column>
-							<p:inputText size="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5"
+								value="#{esameCommissioniController.decaduti}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameCommissioniController.totaleNonApprovati}" />
+							</p:inputText>
 						</p:column>
+
 						<p:column>
-							<p:inputText size="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5"
+								value="#{esameCommissioniController.ritirati}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameCommissioniController.totaleNonApprovati}" />
+							</p:inputText>
 						</p:column>
+
 						<p:column>
-							<p:inputText size="5" maxlength="5" />
+							<p:inputText size="5" maxlength="5"
+								value="#{esameCommissioniController.respinti}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameCommissioniController.totaleNonApprovati}" />
+							</p:inputText>
 						</p:column>
+
 						<p:column>
-							<p:inputText size="5" maxlength="5" />
+							<p:inputText id="totNonApprovati"
+								value="#{esameCommissioniController.totaleNonApprovati}"
+								readonly="true" size="5" maxlength="5" />
 						</p:column>
 					</p:row>
 
@@ -279,8 +347,7 @@
 								<h:column>
 									<f:facet name="header">Pubblico</f:facet>
 									<h:outputText value="si" rendered="#{testoClausola.pubblico}" />
-									<h:outputText value="no"
-										rendered="#{!testoClausola.pubblico}" />
+									<h:outputText value="no" rendered="#{!testoClausola.pubblico}" />
 								</h:column>
 
 								<h:column>

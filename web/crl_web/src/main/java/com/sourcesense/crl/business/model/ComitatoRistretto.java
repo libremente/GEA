@@ -12,12 +12,12 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class ComitatoRistretto {
 	
-	private List<Personale> componenti = new ArrayList<Personale>();
+	private List<MembroComitatoRistretto> componenti = new ArrayList<MembroComitatoRistretto>();
 	private List<Allegato> testi = new ArrayList<Allegato>();
-	public List<Personale> getComponenti() {
+	public List<MembroComitatoRistretto> getComponenti() {
 		return componenti;
 	}
-	public void setComponenti(List<Personale> componenti) {
+	public void setComponenti(List<MembroComitatoRistretto> componenti) {
 		this.componenti = componenti;
 	}
 	public List<Allegato> getTesti() {

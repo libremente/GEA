@@ -285,6 +285,9 @@ public class SearchAttoController {
 		// TODO riempire liste organi interni
 
 		// TODO riempire liste altri organi
+		
+		// TODO riempire liste membri comitato ristretto
+		
 		return "pretty:atto";
 
 	}

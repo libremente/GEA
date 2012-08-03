@@ -123,7 +123,7 @@ public class Atto implements Cloneable
 	private String numeroDCR;
 
 	private List <Commissione> commissioni = new ArrayList<Commissione>();
-	private List <Atto> abbinamenti = new ArrayList<Atto>();
+	private List <Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
 	private List <Organo> organi = new ArrayList<Organo>();
 	private List <Firmatario> firmatari = new ArrayList<Firmatario>();
 	private List <Relatore> relatori = new ArrayList<Relatore>();
@@ -167,18 +167,18 @@ public class Atto implements Cloneable
 	private Date dataTrasmissione;
 	private Date dataRichiestaIscrizioneAula;
 	private boolean passaggioDirettoInAula;
-	private int numEmendPresentatiMaggior;
-	private int numEmendPresentatiMinor;
-	private int numEmendPresentatiGiunta;
-	private int numEmendPresentatiMisto;
-	private int numEmendApprovatiMaggior;
-	private int numEmendApprovatiMinor;
-	private int numEmendApprovatiGiunta;
-	private int numEmendApprovatiMisto;
-	private int nomiAmmissibili;
-	private int decaduti;
-	private int ritirati;
-	private int respinti;
+	private int numEmendPresentatiMaggior = 0;
+	private int numEmendPresentatiMinor = 0;
+	private int numEmendPresentatiGiunta = 0;
+	private int numEmendPresentatiMisto = 0;
+	private int numEmendApprovatiMaggior = 0;
+	private int numEmendApprovatiMinor = 0;
+	private int numEmendApprovatiGiunta = 0;
+	private int numEmendApprovatiMisto = 0;
+	private int nonAmmissibili = 0;
+	private int decaduti = 0;
+	private int ritirati = 0;
+	private int respinti = 0;
 	private String noteEmendamenti;
 	private Date dataPresaInCaricoProposta;
 	private Date dataIntesa;
@@ -659,11 +659,11 @@ public class Atto implements Cloneable
 		this.commissioni = commissioni;
 	}
 
-	public List<Atto> getAbbinamenti() {
+	public List<Abbinamento> getAbbinamenti() {
 		return abbinamenti;
 	}
 
-	public void setAbbinamenti(List<Atto> abbinamenti) {
+	public void setAbbinamenti(List<Abbinamento> abbinamenti) {
 		this.abbinamenti = abbinamenti;
 	}
 
@@ -1294,17 +1294,6 @@ public class Atto implements Cloneable
 
 
 
-	public int getNomiAmmissibili() {
-		return nomiAmmissibili;
-	}
-
-
-
-	public void setNomiAmmissibili(int nomiAmmissibili) {
-		this.nomiAmmissibili = nomiAmmissibili;
-	}
-
-
 
 	public int getDecaduti() {
 		return decaduti;
@@ -1434,6 +1423,18 @@ public class Atto implements Cloneable
 
 	public void setDataSedutaCommissione(Date dataSedutaCommissione) {
 		this.dataSedutaCommissione = dataSedutaCommissione;
+	}
+
+
+
+	public int getNonAmmissibili() {
+		return nonAmmissibili;
+	}
+
+
+
+	public void setNonAmmissibili(int nonAmmissibili) {
+		this.nonAmmissibili = nonAmmissibili;
 	}
 
 

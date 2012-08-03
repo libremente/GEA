@@ -16,9 +16,13 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 
+import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.Link;
+import com.sourcesense.crl.business.model.MembroComitatoRistretto;
+import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.service.AttoServiceManager;
@@ -30,59 +34,67 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 @ManagedBean(name = "esameCommissioniController")
 @ViewScoped
 public class EsameCommissioniController {
-	
+
 	@ManagedProperty(value = "#{personaleServiceManager}")
 	private PersonaleServiceManager personaleServiceManager;
-	
+
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
-	
+
 	private Atto atto = new Atto();
-	
+
 	private Map <String, String> relatori = new HashMap<String, String>();
 	private Map <String, String> membriComitato = new HashMap<String, String>();
-	
-	private String RelatoreToDelete;
-	private Date dataNomina;
-	private Date dataUscita;
+
+	private String relatoreToDelete;
+	private Date dataNominaRelatore;
+	private Date dataUscitaRelatore;
 	private String nomeRelatore;
-	
+
+	private String componenteToDelete;
+	private Date dataNominaComponente;
+	private boolean coordinatore;
+	private Date dataUscitaComponente;
+	private String nomeComponente;
+
 	private Date dataPresaInCarico;
 	private String materia;
 	private Date dataScadenza;
+	private boolean presenzaComitatoRistretto;
+	private Date dataIstituzioneComitato;
 	private Date dataFineLavori;
-	
+
 	private List <Relatore> relatoriList = new ArrayList <Relatore>();
-	private List <Personale> membriComitatoList = new ArrayList <Personale>();
+	private List <MembroComitatoRistretto> membriComitatoList = new ArrayList <MembroComitatoRistretto>();
 	private List <Allegato> testiComitatoRistrettoList = new ArrayList <Allegato>();
-	
-	
-	private List <Atto> abbinamenti = new ArrayList<Atto>(); 
-	
+
+
+	private List <Abbinamento> abbinamentiList = new ArrayList<Abbinamento>(); 
+
 	private String tipoTesto;
 	private Date dataAbbinamento;
 	private Date dataDisabbinamento;
 	private String noteAbbinamento;
 	private String oggettoAttoCorrente;
-	
-	
+
+
 	private String esitoVotazione;
 	private String quorum;
 	private Date dataSedutaRegistrazioneVotazione;
-	
+
 	private List <Allegato> testiAttoVotatoList = new ArrayList <Allegato>();
 	private String testoAttoVotatoToDelete;
-	
+
 	private Date dataSedutaContinuazioneLavori;
 	private String motivazioni;
 	private Date dataTrasmissione;
 	private Date dataRichiestaIscrizione;
 	private boolean passaggioDiretto;
-	
-	
+
+
 	private List <Allegato> emendamentiList = new ArrayList <Allegato>();
 	private String emendamentoToDelete;
-	
+
 	private int numEmendPresentatiMaggior;
 	private int numEmendPresentatiMinor;
 	private int numEmendPresentatiGiunta;
@@ -93,8 +105,8 @@ public class EsameCommissioniController {
 	private int numEmendApprovatiGiunta;
 	private int numEmendApprovatiMisto;
 	private int numEmendApprovatiTotale;
-	
-	private int nomiAmmissibili;
+
+	private int nonAmmissibili;
 	private int decaduti;
 	private int ritirati;
 	private int respinti;
@@ -104,47 +116,64 @@ public class EsameCommissioniController {
 	private Date dataIntesa;
 	private String esitoVotazioneIntesa;
 	private String noteClausolaValutativa;
-	
+
 	private List <Allegato> testiClausolaList = new ArrayList <Allegato>();
 	private String testoClausolaToDelete;
-	
-	
+
+
 	private String noteGenerali;
-	
+
 	private List <Allegato> allegatiList = new ArrayList <Allegato>();
 	private List <Link> linksList = new ArrayList <Link>();
-	
+
 	private String allegatoToDelete;
 	private String linkToDelete;
-	
+
 	private String nomeLink;
 	private String urlLink;
 	private boolean pubblico;
-	
-	
+
+
 	private String statoCommitRelatoriComitatiRistretti = CRLMessage.COMMIT_DONE;
 	private String statoCommitAbbinamenti = CRLMessage.COMMIT_DONE;
 	private String statoCommitVotazione = CRLMessage.COMMIT_DONE;
 	private String statoCommitEmendamentiClausole = CRLMessage.COMMIT_DONE;
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
-	
-	
+
+
 	@PostConstruct
 	protected void init() {
-		
+
 		setRelatori(personaleServiceManager.findAllRelatore());
-		//setMembriComitato(personaleServiceManager.findAll())
-		
+		// TODO setMembriComitato(personaleServiceManager.findAll())
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
 		
+		totaleEmendApprovati();
+		totaleEmendPresentati();
+		totaleNonApprovati();
+
 		//TODO : init liste
-		
-				
+		relatoriList = new ArrayList <Relatore>(atto.getRelatori());
+		membriComitatoList = new ArrayList <MembroComitatoRistretto>(atto.getComitatoRistretto().getComponenti());
+		testiComitatoRistrettoList = new ArrayList <Allegato>(atto.getComitatoRistretto().getTesti());
+		abbinamentiList = new ArrayList<Abbinamento>(atto.getAbbinamenti()); 	
+		testiAttoVotatoList = new ArrayList <Allegato>(atto.getTestiAttoVotato());
+		emendamentiList = new ArrayList <Allegato>(atto.getEmendamenti());
+		testiClausolaList = new ArrayList <Allegato>(atto.getTestiClausola());
+		allegatiList = new ArrayList <Allegato>(atto.getAllegatiNoteEsameCommissioni());
+		linksList = new ArrayList <Link>(atto.getLinksNoteEsameCommissioni());
+
+		//TODO da cancellare
+		membriComitato.put("componente1", "componente1");
+		membriComitato.put("componente2", "componente2");
+		membriComitato.put("componente3", "componente3");
+
 	}
-	
+
 	public void updateRelatoriComitatiRistrettiHandler() {
 		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_UNDONE);
 	}
@@ -156,7 +185,7 @@ public class EsameCommissioniController {
 	public void updateEmendamentiClausoleHandler() {
 		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_UNDONE);
 	}
-	
+
 	public void updateVotazioneHandler() {
 		setStatoCommitVotazione(CRLMessage.COMMIT_UNDONE);
 	}
@@ -206,7 +235,7 @@ public class EsameCommissioniController {
 							"Attenzione ! Le modifiche di Emendamenti e Clausole non sono state salvate ",
 							""));
 		}
-		
+
 		if (statoCommitNote.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
@@ -218,171 +247,305 @@ public class EsameCommissioniController {
 		}
 
 	}
-	
-	// Votazione****************************************************************
-	
-	public void uploadTestoAttoVotato() {
-		
-	}
-	
-	public void removeTestoAttoVotato() {
-		
-	}
-	
-	
-	
-	// Emendamenti e Clausole*************************************************
-	
-	
-	public void uploadEmendamento() {
-		
-	}
-	
-	
-	public void removeEmendamento() {
-		
-	}
-	
-	public void uploadTestoClausola() {
-		
-	}
-	
-	public void removeTestoClausola() {
-		
-	}
-	
-	
-	// Note e Allegati******************************************************
-		public void uploadAllegato(FileUploadEvent event) {
 
-			// TODO Service logic
-			String fileName = event.getFile().getFileName();
 
-			if (!checkAllegato(fileName)) {
+	// Relatori e Comitati ristretti***********************************************
+
+	public void addRelatore() {
+
+		if (nomeRelatore != null
+				&& !nomeRelatore.trim().equals("")) {
+			if (!checkRelatori()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
-								+ fileName + " è già stato allegato ", ""));
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Relatore "
+								+ nomeRelatore + " già presente ",
+						""));
+
 			} else {
+				Relatore relatore = new Relatore();
+				relatore.setDescrizione(nomeRelatore);
+				relatore.setDataNomina(dataNominaRelatore);
+				relatore.setDataUscita(dataUscitaRelatore);
+				relatoriList.add(relatore);
 
-				// TODO Alfresco upload
-				Allegato allegatoRet = null;
+				updateRelatoriComitatiRistrettiHandler();
+			}
+		}
+	}
 
-				try {
-					//TODO change method
-					allegatoRet = attoServiceManager.uploadAllegato(
-							((AttoBean) FacesContext.getCurrentInstance()
-									.getExternalContext().getSessionMap()
-									.get("attoBean")).getAtto(), event
-									.getFile().getInputstream(), event.getFile().getFileName());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	public void removeRelatore() {
 
-				// TODO aggiungi a bean di sessione
+		for (Relatore element : relatoriList) {
+
+			if (element.getDescrizione().equals(relatoreToDelete)) {
+
+				relatoriList.remove(element);
+				break;
+			}
+		}
+	}
+
+	private boolean checkRelatori() {
+
+		for (Relatore element : relatoriList) {
+
+			if (element.getDescrizione().equals(nomeRelatore)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+
+
+	public void addComponente() {
+
+		if (nomeComponente != null && !nomeComponente.trim().equals("")) {
+			if (!checkComponenti()) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				AttoBean attoBean = ((AttoBean) context.getExternalContext()
-						.getSessionMap().get("attoBean"));
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Componente "
+								+ nomeComponente + " già presente ", ""));
 
-				attoBean.getAtto().getAllegati().add(allegatoRet);
+			} else if (coordinatore && checkCoordinatore()){
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Coordinatore già selezionato ", ""));
 
-				allegatiList.add(allegatoRet);
+			} else {
+				MembroComitatoRistretto componente = new MembroComitatoRistretto();
+				componente.setDescrizione(nomeComponente);
+				componente.setDataNomina(dataNominaComponente);
+				componente.setDataUscita(dataUscitaComponente);
+				componente.setCoordinatore(coordinatore);
+				membriComitatoList.add(componente);
+
+				updateRelatoriComitatiRistrettiHandler();
 			}
 		}
+	}
 
-		private boolean checkAllegato(String fileName) {
+	public void removeComponente() {
 
-			for (Allegato element : allegatiList) {
+		for (MembroComitatoRistretto element : membriComitatoList) {
 
-				if (element.getDescrizione().equals(fileName)) {
+			if (element.getDescrizione().equals(componenteToDelete)) {
 
-					return false;
-				}
-
-			}
-
-			return true;
-		}
-
-		public void removeAllegato() {
-
-			for (Allegato element : allegatiList) {
-
-				if (element.getId().equals(allegatoToDelete)) {
-
-					// TODO Alfresco delete
-					allegatiList.remove(element);
-					break;
-				}
+				membriComitatoList.remove(element);
+				break;
 			}
 		}
+	}
 
-		public void addLink() {
+	private boolean checkComponenti() {
 
-			if (nomeLink != null && !nomeLink.trim().equals("")) {
-				if (!checkLinks()) {
-					FacesContext context = FacesContext.getCurrentInstance();
-					context.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_ERROR, "Attenzione ! Link "
-									+ nomeLink + " già presente ", ""));
+		for (MembroComitatoRistretto element : membriComitatoList) {
 
-				} else {
-					Link link = new Link();
-					link.setDescrizione(nomeLink);
-					link.setCollegamentoUrl(urlLink);
-					link.setPubblico(pubblico);
-					linksList.add(link);
-					
-					updateNoteHandler();
-				}
+			if (element.getDescrizione().equals(nomeComponente)) {
+
+				return false;
 			}
 		}
+		return true;
+	}
 
-		public void removeLink() {
+	private boolean checkCoordinatore() {
 
-			for (Link element : linksList) {
+		for (MembroComitatoRistretto element : membriComitatoList) {
 
-				if (element.getDescrizione().equals(linkToDelete)) {
+			if (element.isCoordinatore()) {
 
-					linksList.remove(element);
-					break;
-				}
+				return true;
 			}
 		}
+		return false;
+	}
 
-		private boolean checkLinks() {
 
-			for (Link element : linksList) {
 
-				if (element.getDescrizione().equals(nomeLink)) {
+	// Votazione****************************************************************
 
-					return false;
-				}
+	public void uploadTestoAttoVotato() {
 
+	}
+
+	public void removeTestoAttoVotato() {
+
+	}
+
+
+
+	// Emendamenti e Clausole*************************************************
+
+	public void totaleEmendPresentati() {
+		numEmendPresentatiTotale = getNumEmendPresentatiGiunta() + getNumEmendPresentatiMaggior() + 
+				getNumEmendPresentatiMinor() + getNumEmendPresentatiMisto();
+	}
+	
+	public void totaleEmendApprovati() {
+		numEmendApprovatiTotale = getNumEmendApprovatiGiunta() + getNumEmendApprovatiMaggior() +
+				getNumEmendApprovatiMinor() + getNumEmendApprovatiMisto();
+	}
+	
+	public void totaleNonApprovati() {
+		totaleNonApprovati = getNonAmmissibili() + getDecaduti() + getRitirati() + getRespinti();
+	}
+
+
+	public void uploadEmendamento() {
+
+	}
+
+
+	public void removeEmendamento() {
+
+	}
+
+	public void uploadTestoClausola() {
+
+	}
+
+	public void removeTestoClausola() {
+
+	}
+
+
+	// Note e Allegati******************************************************
+	public void uploadAllegato(FileUploadEvent event) {
+
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkAllegato(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
+
+			// TODO Alfresco upload
+			Allegato allegatoRet = null;
+
+			try {
+				//TODO change method
+				allegatoRet = attoServiceManager.uploadAllegato(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 
-			return true;
-		}
-
-		public void salvaNoteEAllegati() {
-			this.atto.setLinksNoteEsameCommissioni(linksList);
-			//attoServiceManager.salvaNoteAllegatiPresentazione(atto);
-
-			// TODO Service logic
+			// TODO aggiungi a bean di sessione
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
-			attoBean.getAtto().setLinksNoteEsameCommissioni(linksList);		
+			attoBean.getAtto().getAllegati().add(allegatoRet);
 
-			setStatoCommitNote(CRLMessage.COMMIT_DONE);
+			allegatiList.add(allegatoRet);
+		}
+	}
 
-			context.addMessage(null, new FacesMessage("Note e Allegati salvati con successo", ""));
+	private boolean checkAllegato(String fileName) {
+
+		for (Allegato element : allegatiList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
 
 		}
 
-		// Getters & Setters******************************************************
+		return true;
+	}
+
+	public void removeAllegato() {
+
+		for (Allegato element : allegatiList) {
+
+			if (element.getId().equals(allegatoToDelete)) {
+
+				// TODO Alfresco delete
+				allegatiList.remove(element);
+				break;
+			}
+		}
+	}
+
+	public void addLink() {
+
+		if (nomeLink != null && !nomeLink.trim().equals("")) {
+			if (!checkLinks()) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Link "
+								+ nomeLink + " già presente ", ""));
+
+			} else {
+				Link link = new Link();
+				link.setDescrizione(nomeLink);
+				link.setCollegamentoUrl(urlLink);
+				link.setPubblico(pubblico);
+				linksList.add(link);
+
+				updateNoteHandler();
+			}
+		}
+	}
+
+	public void removeLink() {
+
+		for (Link element : linksList) {
+
+			if (element.getDescrizione().equals(linkToDelete)) {
+
+				linksList.remove(element);
+				break;
+			}
+		}
+	}
+
+	private boolean checkLinks() {
+
+		for (Link element : linksList) {
+
+			if (element.getDescrizione().equals(nomeLink)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public void salvaNoteEAllegati() {
+		this.atto.setLinksNoteEsameCommissioni(linksList);
+		//attoServiceManager.salvaNoteAllegatiPresentazione(atto);
+
+		// TODO Service logic
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
+		attoBean.getAtto().setLinksNoteEsameCommissioni(linksList);		
+
+		setStatoCommitNote(CRLMessage.COMMIT_DONE);
+
+		context.addMessage(null, new FacesMessage("Note e Allegati salvati con successo", ""));
+
+	}
+
+	// Getters & Setters******************************************************
 
 
 
@@ -446,18 +609,6 @@ public class EsameCommissioniController {
 
 
 
-	public List<Atto> getAbbinamenti() {
-		return abbinamenti;
-	}
-
-
-
-	public void setAbbinamenti(List<Atto> abbinamenti) {
-		this.abbinamenti = abbinamenti;
-	}
-
-
-
 	public String getTipoTesto() {
 		return tipoTesto;
 	}
@@ -479,7 +630,7 @@ public class EsameCommissioniController {
 	public void setDataAbbinamento(Date dataAbbinamento) {
 		this.dataAbbinamento = dataAbbinamento;
 	}
-	
+
 	public Date getDataDisabbinamento() {
 		return dataDisabbinamento;
 	}
@@ -548,7 +699,7 @@ public class EsameCommissioniController {
 			Date dataSedutaRegistrazioneVotazione) {
 		this.atto.setDataSedutaCommissione(dataSedutaRegistrazioneVotazione);
 	}
-	
+
 
 
 	public Date getDataSedutaContinuazioneLavori() {
@@ -610,7 +761,7 @@ public class EsameCommissioniController {
 	}
 
 
-	
+
 	public int getNumEmendPresentatiMaggior() {
 		return atto.getNumEmendPresentatiMaggior();
 	}
@@ -727,18 +878,6 @@ public class EsameCommissioniController {
 
 	public void setNumEmendApprovatiTotale(int numEmendApprovatiTotale) {
 		this.numEmendApprovatiTotale = numEmendApprovatiTotale;
-	}
-
-
-
-	public int getNomiAmmissibili() {
-		return atto.getNomiAmmissibili();
-	}
-
-
-
-	public void setNomiAmmissibili(int nomiAmmissibili) {
-		this.atto.setNomiAmmissibili(nomiAmmissibili);
 	}
 
 
@@ -899,13 +1038,13 @@ public class EsameCommissioniController {
 
 
 
-	public List<Personale> getMembriComitatoList() {
+	public List<MembroComitatoRistretto> getMembriComitatoList() {
 		return membriComitatoList;
 	}
 
 
 
-	public void setMembriComitatoList(List<Personale> membriComitatoList) {
+	public void setMembriComitatoList(List<MembroComitatoRistretto> membriComitatoList) {
 		this.membriComitatoList = membriComitatoList;
 	}
 
@@ -1081,27 +1220,27 @@ public class EsameCommissioniController {
 	}
 
 	public String getRelatoreToDelete() {
-		return RelatoreToDelete;
+		return relatoreToDelete;
 	}
 
 	public void setRelatoreToDelete(String relatoreToDelete) {
-		RelatoreToDelete = relatoreToDelete;
+		this.relatoreToDelete = relatoreToDelete;
+	}	
+
+	public Date getDataNominaRelatore() {
+		return dataNominaRelatore;
 	}
 
-	public Date getDataNomina() {
-		return dataNomina;
+	public void setDataNominaRelatore(Date dataNominaRelatore) {
+		this.dataNominaRelatore = dataNominaRelatore;
 	}
 
-	public void setDataNomina(Date dataNomina) {
-		this.dataNomina = dataNomina;
+	public Date getDataUscitaRelatore() {
+		return dataUscitaRelatore;
 	}
 
-	public Date getDataUscita() {
-		return dataUscita;
-	}
-
-	public void setDataUscita(Date dataUscita) {
-		this.dataUscita = dataUscita;
+	public void setDataUscitaRelatore(Date dataUscitaRelatore) {
+		this.dataUscitaRelatore = dataUscitaRelatore;
 	}
 
 	public String getNomeRelatore() {
@@ -1143,6 +1282,78 @@ public class EsameCommissioniController {
 
 	public void setTestiClausolaList(List<Allegato> testiClausolaList) {
 		this.testiClausolaList = testiClausolaList;
+	}
+
+	public String getComponenteToDelete() {
+		return componenteToDelete;
+	}
+
+	public void setComponenteToDelete(String componenteToDelete) {
+		this.componenteToDelete = componenteToDelete;
+	}
+
+	public Date getDataNominaComponente() {
+		return dataNominaComponente;
+	}
+
+	public void setDataNominaComponente(Date dataNominaComponente) {
+		this.dataNominaComponente = dataNominaComponente;
+	}
+
+	public boolean isCoordinatore() {
+		return coordinatore;
+	}
+
+	public void setCoordinatore(boolean coordinatore) {
+		this.coordinatore = coordinatore;
+	}
+
+	public Date getDataUscitaComponente() {
+		return dataUscitaComponente;
+	}
+
+	public void setDataUscitaComponente(Date dataUscitaComponente) {
+		this.dataUscitaComponente = dataUscitaComponente;
+	}
+
+	public String getNomeComponente() {
+		return nomeComponente;
+	}
+
+	public void setNomeComponente(String nomeComponente) {
+		this.nomeComponente = nomeComponente;
+	}
+
+	public boolean isPresenzaComitatoRistretto() {
+		return atto.isPresenzaComitatoRistretto();
+	}
+
+	public void setPresenzaComitatoRistretto(boolean presenzaComitatoRistretto) {
+		this.atto.setPresenzaComitatoRistretto(presenzaComitatoRistretto);
+	}
+
+	public Date getDataIstituzioneComitato() {
+		return atto.getDataIstituzioneComitato();
+	}
+
+	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
+		this.atto.setDataIstituzioneComitato(dataIstituzioneComitato);
+	}
+
+	public List <Abbinamento> getAbbinamentiList() {
+		return abbinamentiList;
+	}
+
+	public void setAbbinamentiList(List <Abbinamento> abbinamentiList) {
+		this.abbinamentiList = abbinamentiList;
+	}
+
+	public int getNonAmmissibili() {
+		return atto.getNonAmmissibili();
+	}
+
+	public void setNonAmmissibili(int nonAmmissibili) {
+		this.atto.setNonAmmissibili(nonAmmissibili);
 	}
 
 }

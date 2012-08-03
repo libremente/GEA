@@ -1,8 +1,13 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.Date;
+
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 
 @JsonRootName("allegato")
@@ -17,6 +22,7 @@ public class Allegato {
 	private String tipoAllegato;
 	private String id;
 	private String mimetype;
+	private Date dataSeduta;
 	
 	
 	
@@ -61,6 +67,13 @@ public class Allegato {
 	}
 	public void setMimetype(String mimetype) {
 		this.mimetype = mimetype;
+	}
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSeduta() {
+		return dataSeduta;
+	}
+	public void setDataSeduta(Date dataSeduta) {
+		this.dataSeduta = dataSeduta;
 	}
 	
 	
