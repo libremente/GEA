@@ -70,6 +70,9 @@ public class EsameCommissioniController {
 
 
 	private List <Abbinamento> abbinamentiList = new ArrayList<Abbinamento>(); 
+	private String abbinamentoToDelete;
+	private String idAbbinamentoSelected;
+	private Abbinamento abbinamentoSelected;
 
 	private String tipoTesto;
 	private Date dataAbbinamento;
@@ -150,8 +153,8 @@ public class EsameCommissioniController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		setAtto((Atto) attoBean.getAtto().clone());
-		
+		setAtto((Atto) attoBean.getAtto().clone());		
+
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
@@ -166,6 +169,11 @@ public class EsameCommissioniController {
 		testiClausolaList = new ArrayList <Allegato>(atto.getTestiClausola());
 		allegatiList = new ArrayList <Allegato>(atto.getAllegatiNoteEsameCommissioni());
 		linksList = new ArrayList <Link>(atto.getLinksNoteEsameCommissioni());
+
+		if(!abbinamentiList.isEmpty()) {
+			setIdAbbinamentoSelected(abbinamentiList.get(0).getAtto().getId());
+			showAbbinamentoDetail();
+		}
 
 		//TODO da cancellare
 		membriComitato.put("componente1", "componente1");
@@ -366,6 +374,89 @@ public class EsameCommissioniController {
 		return false;
 	}
 
+	// Abbinamenti***************************************************************
+
+	public void addAbbinamento(String idAbbinamento) {
+
+		if (!idAbbinamento.trim().equals("")) {
+			if (!checkAbbinamenti(idAbbinamento)) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già abbinato ", ""));
+
+			} else {
+				Atto attoDaAbbinare = attoServiceManager.findById(idAbbinamento);
+				Abbinamento abbinamento = new Abbinamento();
+				abbinamento.setAtto(attoDaAbbinare);
+				abbinamentiList.add(abbinamento);
+
+				updateAbbinamentiHandler();
+			}
+		}
+	}
+
+	public void removeAbbinamento() {
+
+		for (Abbinamento element : abbinamentiList) {
+
+			if (element.getAtto().getId().equals(abbinamentoToDelete)) {
+
+				abbinamentiList.remove(element);
+				break;
+			}
+		}
+	}
+
+	private boolean checkAbbinamenti(String idAbbinamento) {
+
+		for (Abbinamento element : abbinamentiList) {
+
+			if (element.getAtto().getId().equals(idAbbinamento)) {
+
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	public void showAbbinamentoDetail() {
+
+		abbinamentoSelected = findAbbinamento(idAbbinamentoSelected);
+
+		if(abbinamentoSelected!=null) {
+			setTipoTesto(abbinamentoSelected.getTipoTesto());
+			setDataAbbinamento(abbinamentoSelected.getDataAbbinamento());
+			setDataDisabbinamento(abbinamentoSelected.getDataDisabbinamento());
+			setNoteAbbinamento(abbinamentoSelected.getNote());
+		}
+	}
+
+	private Abbinamento findAbbinamento(String id) {
+
+		for(Abbinamento element : abbinamentiList) {
+
+			if(element.getAtto().getId().equals(id)) {
+
+				return element;
+
+			}
+
+		}
+
+		return null;
+	}
+	
+	public void salvaAbbinamento() {
+		abbinamentoSelected.setTipoTesto(tipoTesto);
+		abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
+		abbinamentoSelected.setNote(noteAbbinamento);
+		
+		//TODO: alfresco service
+	}
+
+
+
 
 
 	// Votazione****************************************************************
@@ -386,12 +477,12 @@ public class EsameCommissioniController {
 		numEmendPresentatiTotale = getNumEmendPresentatiGiunta() + getNumEmendPresentatiMaggior() + 
 				getNumEmendPresentatiMinor() + getNumEmendPresentatiMisto();
 	}
-	
+
 	public void totaleEmendApprovati() {
 		numEmendApprovatiTotale = getNumEmendApprovatiGiunta() + getNumEmendApprovatiMaggior() +
 				getNumEmendApprovatiMinor() + getNumEmendApprovatiMisto();
 	}
-	
+
 	public void totaleNonApprovati() {
 		totaleNonApprovati = getNonAmmissibili() + getDecaduti() + getRitirati() + getRespinti();
 	}
@@ -1355,5 +1446,33 @@ public class EsameCommissioniController {
 	public void setNonAmmissibili(int nonAmmissibili) {
 		this.atto.setNonAmmissibili(nonAmmissibili);
 	}
+
+	public String getAbbinamentoToDelete() {
+		return abbinamentoToDelete;
+	}
+
+	public void setAbbinamentoToDelete(String abbinamentoToDelete) {
+		this.abbinamentoToDelete = abbinamentoToDelete;
+	}
+
+	public String getIdAbbinamentoSelected() {
+		return idAbbinamentoSelected;
+	}
+
+	public void setIdAbbinamentoSelected(String idAbbinamentoSelected) {
+		this.idAbbinamentoSelected = idAbbinamentoSelected;
+	}
+
+	public Abbinamento getAbbinamentoSelected() {
+		return abbinamentoSelected;
+	}
+
+	public void setAbbinamentoSelected(Abbinamento abbinamentoSelected) {
+		this.abbinamentoSelected = abbinamentoSelected;
+	}
+	
+	
+
+
 
 }
