@@ -9,6 +9,7 @@
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
+			<type name="crlatti:link"/>
 		</content-types>
 	</config>
 
@@ -20,6 +21,7 @@
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
+			<type name="crlatti:link"/>
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
@@ -28,6 +30,7 @@
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
+			<type name="crlatti:link"/>
 		</specialise-types>
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
@@ -128,7 +131,14 @@
 			<show-property name="crlatti:pubblico" />
 		</property-sheet>
 	</config>
-
+	
+	<config evaluator="node-type" condition="crlatti:link">
+		<property-sheet> 
+			<show-property name="crlatti:indirizzoCollegamento"/>
+			<show-property name="crlatti:pubblico"/>
+		</property-sheet>
+	</config>
+	
 	<config evaluator="node-type" condition="crlatti:allegato">
 		<property-sheet> 
 			<show-property name="crlatti:tipologia"/>
@@ -285,9 +295,6 @@
 			<show-property name="crlatti:sospeso" />
 			<show-property name="crlatti:abbinamento" />
 			<show-property name="crlatti:stralcio" />
-
-			<show-property name="crlatti:primoFirmatario" />
-			<show-property name="crlatti:firmatari" />
 
 		</property-sheet>
 	</config>

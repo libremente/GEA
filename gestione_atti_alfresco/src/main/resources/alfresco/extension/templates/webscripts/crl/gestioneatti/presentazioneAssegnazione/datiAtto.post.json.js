@@ -53,8 +53,8 @@ if(checkIsNotNull(id)){
 	var firmatariFolderNode = attoNode.childrenByXPath(firmatariXPathQuery)[0];
 	
 	var numeroFirmatari = firmatari.length();
-	for (var i=0; i<numeroFirmatari; i++){
-		var firmatario = firmatari.get(i).get("firmatario");
+	for (var j=0; j<numeroFirmatari; j++){
+		var firmatario = firmatari.get(j).get("firmatario");
 		var descrizione = filterParam(firmatario.get("descrizione"));
 		var gruppoConsiliare = filterParam(firmatario.get("gruppoConsiliare"));
 		var dataFirma = filterParam(firmatario.get("dataFirma"));
@@ -95,13 +95,13 @@ if(checkIsNotNull(id)){
 	var firmatariNelRepository = firmatariFolderNode.getChildAssocsByType("crlatti:firmatario");
 	
 	//query nel repository per capire se bisogna cancellare dei firmatari
-	for(var j=0; j<firmatariNelRepository.length; j++){
+	for(var z=0; z<firmatariNelRepository.length; z++){
 		var trovato = false;
-		var firmatarioNelRepository = firmatariNelRepository[j];
+		var firmatarioNelRepository = firmatariNelRepository[z];
 		
 		//cerco il nome del firmatario nel repo all'interno del json
-		for (var i=0; i<numeroFirmatari; i++){
-			var firmatario = firmatari.get(i).get("firmatario");
+		for (var q=0; q<numeroFirmatari; q++){
+			var firmatario = firmatari.get(q).get("firmatario");
 			var descrizione = filterParam(firmatario.get("descrizione"));
 			if(""+descrizione+""==""+firmatarioNelRepository.name+""){
 				trovato = true;
@@ -109,7 +109,23 @@ if(checkIsNotNull(id)){
 			}
 		}
 		if(!trovato){
+			var firmatariSpace = firmatarioNelRepository.parent;
 			firmatarioNelRepository.remove();
+			/*
+			 * in eliminazione i firmatari devono essere gestiti manualmente 
+			 * a causa di un bug di Alfresco risolto nella 4.1.1:
+			 * 
+			 * https://issues.alfresco.com/jira/browse/ALF-12711
+			 * 
+			*/
+			var firmatariNelloSpazio = firmatariSpace.getChildAssocsByType("crlatti:firmatario");
+			var firmatariAtto = new Array(firmatariNelloSpazio.length);
+			for (var r=0; r<firmatariNelloSpazio.length; r++) {
+				firmatariAtto[r] = firmatariNelloSpazio[r].name;
+			}
+			var attoNode = firmatariSpace.parent;
+			attoNode.properties["crlatti:firmatari"] = firmatariAtto;
+			attoNode.save();
 		}
 	}
 	

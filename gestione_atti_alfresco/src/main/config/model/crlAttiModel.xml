@@ -24,6 +24,10 @@
 			<title>Atto</title>
 			<parent>cm:folder</parent>
 			<properties>
+				<property name="crlatti:assegnazione">
+					<title>Assegnazione</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:descrizioneIniziativa">
 					<title>Descrizione iniziativa</title>
 					<type>d:text</type>
@@ -450,6 +454,20 @@
 				</property>
 			</properties>
 		</type>
+		
+		<type name="crlatti:link">
+			<title>Link</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:indirizzoCollegamento">
+					<title>Indirizzo collegamento</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:pubblicabile</aspect>
+			</mandatory-aspects>
+		</type>
 
 	</types>
 	
@@ -502,10 +520,20 @@
 					<title>Firmatari</title>
 					<type>d:text</type>
 					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
 				</property>
 				<property name="crlatti:primoFirmatario">
 					<title>Primo firmatario</title>
 					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
 				</property>
 			</properties>
 		</aspect>
