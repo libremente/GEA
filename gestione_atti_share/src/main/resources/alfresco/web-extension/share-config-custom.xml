@@ -641,8 +641,17 @@
    		</form>
    	</forms>
    </config>
-   
-   
+    
+    <config evaluator="node-type" condition="crlatti:link">
+    	<forms>
+    		<form>
+    			<field-visibility>
+    				<show id="crlatti:indirizzoCollegamento"/>
+    				<show id="crlatti:pubblico"/>
+    			</field-visibility>
+    		</form>
+    	</forms>
+    </config>
    
    <config evaluator="node-type" condition="crlatti:firmatario">
    	<forms>
