@@ -382,7 +382,7 @@
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
             <show id="crlatti:deliberante"/>
-            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:numeroLr"/>
@@ -438,7 +438,7 @@
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
             <show id="crlatti:deliberante"/>
-            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:numeroLr"/>
@@ -492,7 +492,7 @@
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
             <show id="crlatti:deliberante"/>
-            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:numeroLr"/>
@@ -546,7 +546,7 @@
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
             <show id="crlatti:deliberante"/>
-            <show id="crlatti:organismoStatutario"/>
+            <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:numeroLr"/>
