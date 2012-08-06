@@ -133,7 +133,7 @@ public class Atto implements Cloneable
 	private List <Allegato> allegati = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
-	private List <Link> linksNotePresentazioneAssegnazione = new ArrayList<Link>();
+	private List <Link> linksPresentazioneAssegnazione = new ArrayList<Link>();
 	private List <Link> linksNoteEsameCommissioni = new ArrayList<Link>();
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
 	private List <AttoRecord> testiAtto = new ArrayList<AttoRecord>();
@@ -150,7 +150,7 @@ public class Atto implements Cloneable
 	private boolean votazioneUrgenza;
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;	
-	private String noteNoteAllegatiPresentazioneAssegnazione;
+	private String notePresentazioneAssegnazione;
 
 
 	private String materia;
@@ -944,15 +944,6 @@ public class Atto implements Cloneable
 		this.noteAmmissibilita = noteAmmissibilita;
 	}
 
-	public String getNoteNoteAllegatiPresentazioneAssegnazione() {
-		return noteNoteAllegatiPresentazioneAssegnazione;
-	}
-
-	public void setNoteNoteAllegatiPresentazioneAssegnazione(
-			String noteNoteAllegatiPresentazioneAssegnazione) {
-		this.noteNoteAllegatiPresentazioneAssegnazione = noteNoteAllegatiPresentazioneAssegnazione;
-	}
-
 	public List <AttoRecord> getTestiAtto() {
 		return testiAtto;
 	}
@@ -972,19 +963,6 @@ public class Atto implements Cloneable
 	public void setAllegatiNotePresentazioneAssegnazione(
 			List <Allegato> allegatiNotePresentazioneAssegnazione) {
 		this.allegatiNotePresentazioneAssegnazione = allegatiNotePresentazioneAssegnazione;
-	}
-
-
-
-	public List <Link> getLinksNotePresentazioneAssegnazione() {
-		return linksNotePresentazioneAssegnazione;
-	}
-
-
-
-	public void setLinksNotePresentazioneAssegnazione(
-			List <Link> linksNotePresentazioneAssegnazione) {
-		this.linksNotePresentazioneAssegnazione = linksNotePresentazioneAssegnazione;
 	}
 
 
@@ -1435,6 +1413,32 @@ public class Atto implements Cloneable
 
 	public void setNonAmmissibili(int nonAmmissibili) {
 		this.nonAmmissibili = nonAmmissibili;
+	}
+
+
+
+	public List <Link> getLinksPresentazioneAssegnazione() {
+		return linksPresentazioneAssegnazione;
+	}
+
+
+
+	public void setLinksPresentazioneAssegnazione(
+			List <Link> linksPresentazioneAssegnazione) {
+		this.linksPresentazioneAssegnazione = linksPresentazioneAssegnazione;
+	}
+
+
+
+	public String getNotePresentazioneAssegnazione() {
+		return notePresentazioneAssegnazione;
+	}
+
+
+
+	public void setNotePresentazioneAssegnazione(
+			String notePresentazioneAssegnazione) {
+		this.notePresentazioneAssegnazione = notePresentazioneAssegnazione;
 	}
 
 

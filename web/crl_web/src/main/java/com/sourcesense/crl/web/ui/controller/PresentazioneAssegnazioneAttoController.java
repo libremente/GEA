@@ -154,7 +154,7 @@ public class PresentazioneAssegnazioneAttoController {
 		//TODO caricamento liste attoBean
 		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
 		this.organismiStatutariList = new ArrayList<OrganismoStatutario>(this.atto.getOrganismiStatutari());
-		this.linksList = new ArrayList<Link>(this.atto.getLinksNotePresentazioneAssegnazione());
+		this.linksList = new ArrayList<Link>(this.atto.getLinksPresentazioneAssegnazione());
 
 		//TODO
 		//setAllegatiList(allegatoServiceManager.findByTipo());
@@ -637,7 +637,7 @@ public class PresentazioneAssegnazioneAttoController {
 			} else {
 				Link link = new Link();
 				link.setDescrizione(nomeLink);
-				link.setCollegamentoUrl(urlLink);
+				link.setIndirizzo(urlLink);
 				link.setPubblico(pubblico);
 				linksList.add(link);
 				
@@ -673,7 +673,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void salvaNoteEAllegati() {
-		this.atto.setLinksNotePresentazioneAssegnazione(linksList);
+		this.atto.setLinksPresentazioneAssegnazione(linksList);
 		attoServiceManager.salvaNoteAllegatiPresentazione(atto);
 
 		// TODO Service logic
@@ -681,8 +681,8 @@ public class PresentazioneAssegnazioneAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
-		attoBean.getAtto().setLinksNotePresentazioneAssegnazione(linksList);		
+		attoBean.getAtto().setNotePresentazioneAssegnazione(atto.getNotePresentazioneAssegnazione());
+		attoBean.getAtto().setLinksPresentazioneAssegnazione(linksList);		
 
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
@@ -1066,11 +1066,11 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public String getNoteNoteAllegati() {
-		return atto.getNoteNoteAllegatiPresentazioneAssegnazione();
+		return atto.getNotePresentazioneAssegnazione();
 	}
 
 	public void setNoteNoteAllegati(String noteNoteAllegati) {
-		this.atto.setNoteNoteAllegatiPresentazioneAssegnazione(noteNoteAllegati);
+		this.atto.setNotePresentazioneAssegnazione(noteNoteAllegati);
 	}
 
 	public Map<String, String> getTipiIniziativa() {

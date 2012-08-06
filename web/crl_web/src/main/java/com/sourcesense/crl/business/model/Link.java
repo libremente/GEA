@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 public class Link {
 	
 	private String descrizione;
-	private String collegamentoUrl;
+	private String indirizzo;
 	private boolean pubblico;
 	
 	
@@ -21,17 +21,17 @@ public class Link {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	public String getCollegamentoUrl() {
-		return collegamentoUrl;
-	}
-	public void setCollegamentoUrl(String collegamentoUrl) {
-		this.collegamentoUrl = collegamentoUrl;
-	}
 	public boolean isPubblico() {
 		return pubblico;
 	}
 	public void setPubblico(boolean pubblico) {
 		this.pubblico = pubblico;
+	}
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
 	}
 	
 	

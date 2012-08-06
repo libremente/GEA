@@ -680,12 +680,12 @@ public class AttoBean implements Serializable {
 	}
 
 	public String getNoteNoteAllegatiPresentazioneAssegnazione() {
-		return atto.getNoteNoteAllegatiPresentazioneAssegnazione();
+		return atto.getNotePresentazioneAssegnazione();
 	}
 
 	public void setNoteNoteAllegatiPresentazioneAssegnazione(
 			String noteNoteAllegatiPresentazioneAssegnazione) {
-		this.atto.setNoteNoteAllegatiPresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
+		this.atto.setNotePresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
 	}
 	
 }

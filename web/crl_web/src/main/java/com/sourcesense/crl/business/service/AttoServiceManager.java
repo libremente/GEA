@@ -113,7 +113,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	public void salvaAmmissibilitaPresentazione(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_ammissibilita_presentazione_assegnazione", new String[] { atto.getId() }), atto);
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_ammissibilita_presentazione_assegnazione", null), atto);
 	}
 
 	public void salvaAssegnazionePresentazione(Atto atto) {
@@ -123,7 +123,7 @@ public class AttoServiceManager implements ServiceManager {
 
 	public void salvaNoteAllegatiPresentazione(Atto atto) {
 		//TODO
-		attoService.merge("", atto);
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_presentazione_assegnazione", null), atto);
 	}
 
 	@Override

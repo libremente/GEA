@@ -599,7 +599,7 @@
 				&nbsp; &nbsp; &nbsp;
 			<p:commandButton value="Abbina" id="addAbbinamento"
 				action="#{esameCommissioniController.addAbbinamento(idAttoParam)}"
-				update=":presAssForm:tabView:listaAbbinamenti, :presAssForm:tabView:abbinamentiMsg"
+				update=":presAssForm:tabView:listaAbbinamenti, :presAssForm:tabView:abbinamentiMsg, :presAssForm:tabView:dettagliabbinamentopanel"
 				icon="new-icon" />
 		</p:column>
 	</p:dataTable>
@@ -674,6 +674,12 @@
 		<p:panelGrid styleClass="infoTable" id="dettagliabbinamentopanel">
 			<p:row>
 				<p:column>
+					<h3>Atto N°
+						#{esameCommissioniController.abbinamentoSelected.atto.numeroAtto}</h3>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
 					<h:outputText style="font-weight: bold;" value="Tipo testo: " />
 				</p:column>
 				<p:column>
@@ -696,9 +702,9 @@
 						value="#{esameCommissioniController.dataAbbinamento}" />
 				</p:column>
 				<p:column>
-					<p:commandButton value="Conferma Abbinamento" 
-						update="listaAbbinamenti"
-						action="#{esameCommissioniController.salvaAbbinamento}"/>
+					<p:commandButton value="Conferma Abbinamento"
+						update="listaAbbinamenti, abbinamentiMsg"
+						action="#{esameCommissioniController.salvaAbbinamento}" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -712,7 +718,9 @@
 						value="#{esameCommissioniController.dataDisabbinamento}" />
 				</p:column>
 				<p:column>
-					<p:commandButton value="Conferma Disabbinamento" />
+					<p:commandButton value="Conferma Disabbinamento"
+						update="listaAbbinamenti"
+						action="#{esameCommissioniController.salvaDisabbinamento}" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -720,7 +728,8 @@
 					<h:outputText style="font-weight: bold;" value="Note: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" value="#{esameCommissioniController.noteAbbinamento}"/>
+					<p:inputTextarea rows="2" cols="82"
+						value="#{esameCommissioniController.noteAbbinamento}" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>

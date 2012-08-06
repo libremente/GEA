@@ -30,7 +30,6 @@
 				<p:commandButton id="confirmRelatore" value="Conferma"
 					oncomplete="relatoreDialog.hide()"
 					action="#{esameCommissioniController.removeRelatore}"
-					actionListener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}"
 					update="listaRelatori" />
 				<p:commandButton id="declineRelatore" value="Annulla"
 					onclick="relatoreDialog.hide()" type="button" />
@@ -45,8 +44,7 @@
 				<p:commandButton id="confirmRelatoreComponente" value="Conferma"
 					oncomplete="componenteDialog.hide()"
 					action="#{esameCommissioniController.removeComponente}"
-					update="listaComponentiComitato"
-					actionListener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+					update="listaComponentiComitato" />
 				<p:commandButton id="declineComponente" value="Annulla"
 					onclick="componenteDialog.hide()" type="button" />
 
@@ -74,6 +72,7 @@
 		</p:column>
 		<p:column>
 			<p:calendar size="10" locale="it" id="datapresaincarico"
+				update="comitatiMsg"
 				value="#{esameCommissioniController.dataPresaInCarico}" />
 					&nbsp;
 					<p:commandButton value="Presa in Carico" />
@@ -88,7 +87,10 @@
 		</p:column>
 		<p:column>
 			<p:inputText id="inputmateria"
-				value="#{esameCommissioniController.materia}" />
+				value="#{esameCommissioniController.materia}">
+				<p:ajax event="change"
+					listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+			</p:inputText>
 		</p:column>
 	</p:row>
 	<p:row>
@@ -98,7 +100,10 @@
 		</p:column>
 		<p:column>
 			<p:calendar size="10" locale="it" id="datascadenza"
-				value="#{esameCommissioniController.dataScadenza}" />
+				value="#{esameCommissioniController.dataScadenza}">
+				<p:ajax event="dateSelect"
+					listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+			</p:calendar>
 		</p:column>
 	</p:row>
 </p:panelGrid>
@@ -195,6 +200,13 @@
 					</h:column>
 
 				</h:dataTable>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:commandButton value="Conferma Relatori"
+					action="#{esameCommissioniController.confermaRelatori}"
+					update="comitatiMsg" />
 			</p:column>
 		</p:row>
 
@@ -334,7 +346,9 @@
 		</p:row>
 		<p:row>
 			<p:column>
-				<p:commandButton value="Conferma Comitato" />
+				<p:commandButton value="Conferma Comitato"
+					action="#{esameCommissioniController.confermaComitatoRistretto}"
+					update="comitatiMsg" />
 			</p:column>
 		</p:row>
 		<p:row>
@@ -405,13 +419,19 @@
 			</p:column>
 			<p:column>
 				<p>
-					<p:calendar size="10" locale="it" id="datafinelavori" />
+					<p:calendar size="10" locale="it" id="datafinelavori"
+						value="#{esameCommissioniController.dataFineLavori}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+					</p:calendar>
 				</p>
 			</p:column>
 		</p:row>
 		<p:row>
 			<p:column>
-				<p:commandButton value="Conferma Fine Lavori" />
+				<p:commandButton value="Conferma Fine Lavori"
+					action="#{esameCommissioniController.confermaFineLavori}"
+					update="comitatiMsg" />
 			</p:column>
 		</p:row>
 	</p:panelGrid>

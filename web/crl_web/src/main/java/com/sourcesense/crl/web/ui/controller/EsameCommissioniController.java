@@ -29,6 +29,7 @@ import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
+import com.sourcesense.crl.web.ui.beans.UserBean;
 
 
 @ManagedBean(name = "esameCommissioniController")
@@ -137,6 +138,8 @@ public class EsameCommissioniController {
 	private boolean pubblico;
 
 
+	private String statoCommitRelatori = CRLMessage.COMMIT_DONE;
+	private String statoCommitComitatoRistretto = CRLMessage.COMMIT_DONE;
 	private String statoCommitRelatoriComitatiRistretti = CRLMessage.COMMIT_DONE;
 	private String statoCommitAbbinamenti = CRLMessage.COMMIT_DONE;
 	private String statoCommitVotazione = CRLMessage.COMMIT_DONE;
@@ -181,6 +184,15 @@ public class EsameCommissioniController {
 		membriComitato.put("componente3", "componente3");
 
 	}
+	
+	
+	public void updateRelatoriHandler() {
+		setStatoCommitRelatori(CRLMessage.COMMIT_UNDONE);
+	}
+	
+	public void updateComitatoRistrettoHandler() {
+		setStatoCommitComitatoRistretto(CRLMessage.COMMIT_UNDONE);
+	}
 
 	public void updateRelatoriComitatiRistrettiHandler() {
 		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_UNDONE);
@@ -203,6 +215,26 @@ public class EsameCommissioniController {
 	}
 
 	public void changeTabHandler() {
+		
+		if (statoCommitRelatori.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche ai Relatori non sono state salvate ",
+							""));
+		}
+		
+		if (statoCommitComitatoRistretto.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche al Comitato Ristretto non sono state salvate ",
+							""));
+		}
 
 		if (statoCommitRelatoriComitatiRistretti.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -258,6 +290,22 @@ public class EsameCommissioniController {
 
 
 	// Relatori e Comitati ristretti***********************************************
+	public void presaInCarico() {
+
+		// TODO Service logic
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		String username = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean")).getUsername();
+
+		String numeroAtto = attoBean.getNumeroAtto();
+
+		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
+				+ " preso in carico con successo dall' utente " + username));
+
+	}
 
 	public void addRelatore() {
 
@@ -278,7 +326,7 @@ public class EsameCommissioniController {
 				relatore.setDataUscita(dataUscitaRelatore);
 				relatoriList.add(relatore);
 
-				updateRelatoriComitatiRistrettiHandler();
+				updateRelatoriHandler();
 			}
 		}
 	}
@@ -290,6 +338,7 @@ public class EsameCommissioniController {
 			if (element.getDescrizione().equals(relatoreToDelete)) {
 
 				relatoriList.remove(element);
+				updateRelatoriHandler();
 				break;
 			}
 		}
@@ -307,6 +356,21 @@ public class EsameCommissioniController {
 		}
 
 		return true;
+	}
+	
+	public void confermaRelatori() {
+		atto.setRelatori(relatoriList);
+		//TODO: alfresco service
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setRelatori(relatoriList);
+		
+		setStatoCommitRelatori(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Relatori salvati con successo", ""));
+		
 	}
 
 
@@ -333,10 +397,10 @@ public class EsameCommissioniController {
 				componente.setCoordinatore(coordinatore);
 				membriComitatoList.add(componente);
 
-				updateRelatoriComitatiRistrettiHandler();
+				updateComitatoRistrettoHandler();
 			}
 		}
-	}
+	}	
 
 	public void removeComponente() {
 
@@ -345,6 +409,7 @@ public class EsameCommissioniController {
 			if (element.getDescrizione().equals(componenteToDelete)) {
 
 				membriComitatoList.remove(element);
+				updateComitatoRistrettoHandler();
 				break;
 			}
 		}
@@ -373,6 +438,35 @@ public class EsameCommissioniController {
 		}
 		return false;
 	}
+	
+	public void confermaComitatoRistretto() {
+		atto.getComitatoRistretto().setComponenti(membriComitatoList);
+		//TODO: alfresco service
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().getComitatoRistretto().setComponenti(membriComitatoList);
+		
+		setStatoCommitComitatoRistretto(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Comitato ristretto salvato con successo", ""));
+		
+	}
+	
+	public void confermaFineLavori() {
+		//TODO: alfresco service
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setDataFineLavoriEsameCommissioni(atto.getDataFineLavoriEsameCommissioni());
+		
+		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Relatori e Comitati Ristretti salvati con successo", ""));
+	}
+	
 
 	// Abbinamenti***************************************************************
 
@@ -390,6 +484,8 @@ public class EsameCommissioniController {
 				abbinamento.setAtto(attoDaAbbinare);
 				abbinamentiList.add(abbinamento);
 
+				setIdAbbinamentoSelected(idAbbinamento);
+				showAbbinamentoDetail();
 				updateAbbinamentiHandler();
 			}
 		}
@@ -402,6 +498,7 @@ public class EsameCommissioniController {
 			if (element.getAtto().getId().equals(abbinamentoToDelete)) {
 
 				abbinamentiList.remove(element);
+				updateAbbinamentiHandler();
 				break;
 			}
 		}
@@ -422,7 +519,7 @@ public class EsameCommissioniController {
 
 	public void showAbbinamentoDetail() {
 
-		abbinamentoSelected = findAbbinamento(idAbbinamentoSelected);
+		setAbbinamentoSelected(findAbbinamento(idAbbinamentoSelected));
 
 		if(abbinamentoSelected!=null) {
 			setTipoTesto(abbinamentoSelected.getTipoTesto());
@@ -450,6 +547,24 @@ public class EsameCommissioniController {
 	public void salvaAbbinamento() {
 		abbinamentoSelected.setTipoTesto(tipoTesto);
 		abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
+		abbinamentoSelected.setNote(noteAbbinamento);
+		
+		atto.setAbbinamenti(abbinamentiList);		
+		//TODO: alfresco service
+		
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setAbbinamenti(abbinamentiList);
+		setStatoCommitAbbinamenti(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Abbinamenti salvati con successo", ""));		
+	}
+	
+	public void salvaDisabbinamento() {
+		abbinamentoSelected.setTipoTesto(tipoTesto);
+		abbinamentoSelected.setDataDisabbinamento(dataDisabbinamento);
 		abbinamentoSelected.setNote(noteAbbinamento);
 		
 		//TODO: alfresco service
@@ -583,7 +698,7 @@ public class EsameCommissioniController {
 			} else {
 				Link link = new Link();
 				link.setDescrizione(nomeLink);
-				link.setCollegamentoUrl(urlLink);
+				link.setIndirizzo(urlLink);
 				link.setPubblico(pubblico);
 				linksList.add(link);
 
@@ -627,7 +742,7 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setNoteNoteAllegatiPresentazioneAssegnazione(atto.getNoteNoteAllegatiPresentazioneAssegnazione());
+		attoBean.getAtto().setNoteGeneraliEsameCommissioni(atto.getNoteGeneraliEsameCommissioni());
 		attoBean.getAtto().setLinksNoteEsameCommissioni(linksList);		
 
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
@@ -1469,6 +1584,25 @@ public class EsameCommissioniController {
 
 	public void setAbbinamentoSelected(Abbinamento abbinamentoSelected) {
 		this.abbinamentoSelected = abbinamentoSelected;
+	}
+
+	public String getStatoCommitRelatori() {
+		return statoCommitRelatori;
+	}
+
+	public void setStatoCommitRelatori(String statoCommitRelatori) {
+		this.statoCommitRelatori = statoCommitRelatori;
+	}
+
+
+	public String getStatoCommitComitatoRistretto() {
+		return statoCommitComitatoRistretto;
+	}
+
+
+	public void setStatoCommitComitatoRistretto(
+			String statoCommitComitatoRistretto) {
+		this.statoCommitComitatoRistretto = statoCommitComitatoRistretto;
 	}
 	
 	
