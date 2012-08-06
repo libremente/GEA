@@ -10,6 +10,7 @@
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
+			<type name="crlatti:parere"/>
 		</content-types>
 	</config>
 
@@ -22,6 +23,7 @@
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
+			<type name="crlatti:parere"/>
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
@@ -31,6 +33,7 @@
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
+			<type name="crlatti:parere"/>
 		</specialise-types>
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
@@ -41,6 +44,7 @@
          	<aspect name="crlatti:ammissibilitaAiutiStatoAspect"/>
          	<aspect name="crlatti:ammissibilitaUrgenzaAspect"/>
          	<aspect name="crlatti:ammissibilitaNormaFinanziariaAspect"/>
+         	<aspect name="crlatti:obbligatorioAspect"/>
         </aspects>
 	</config>
 
@@ -60,12 +64,18 @@
 		</folder-types>
 	</config>
 	
-	 <config evaluator="aspect-name" condition="crlatti:ammissibilitaBaseAspect">
+	<config evaluator="aspect-name" condition="crlatti:ammissibilitaBaseAspect">
 		<property-sheet>
 			<show-property name="crlatti:ammissibilitaValutazione" />
 			<show-property name="crlatti:ammissibilitaDataRichiestaInformazioni" />
 			<show-property name="crlatti:ammissibilitaDataRicevimentoInformazioni" />
 			<show-property name="crlatti:ammissibilitaNote" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:obbligatorioAspect">
+		<property-sheet>
+			<show-property name="crlatti:obbligatorio" />
 		</property-sheet>
 	</config>
 	
@@ -132,6 +142,15 @@
 		</property-sheet>
 	</config>
 	
+	<config evaluator="node-type" condition="crlatti:parere">
+		<property-sheet> 
+			<show-property name="crlatti:organismoStatutarioParere"/>
+			<show-property name="crlatti:dataAnnulloParere"/>
+			<show-property name="crlatti:dataAssegnazioneParere"/>
+		</property-sheet>
+	</config>
+	
+	
 	<config evaluator="node-type" condition="crlatti:link">
 		<property-sheet> 
 			<show-property name="crlatti:indirizzoCollegamento"/>
@@ -179,7 +198,7 @@
 			<show-property name="crlatti:tipoTestoAbbinamento" />
 			<show-property name="crlatti:dataAbbinamento" />
 			<show-property name="crlatti:dataDisabbinamento" />
-			<show-property name="crlatti:attoAssociatoAbbinamento" />
+			<show-child-association name="crlatti:attoAssociatoAbbinamento" />
 		</property-sheet>
 	</config>
 
@@ -207,6 +226,7 @@
 
 	<config evaluator="node-type" condition="crlatti:attoPdl">
 		<property-sheet>
+			<show-property name="crlatti:organismiStatutari"/>
 			<show-property name="crlatti:assegnazione"/>
 			<show-property name="crlatti:descrizioneIniziativa"/>
 			<show-property name="crlatti:numeroRepertorio"/>
@@ -235,7 +255,6 @@
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
 			<show-property name="crlatti:deliberante" />
-			<show-property name="crlatti:organismoStatutario" />
 
 			<show-property name="crlatti:numeroLcr" />
 			<show-property name="crlatti:soggettoConsultato" />
@@ -255,6 +274,7 @@
 
 	<config evaluator="node-type" condition="crlatti:atto">
 		<property-sheet>
+			<show-property name="crlatti:organismiStatutari"/>
 			<show-property name="crlatti:assegnazione"/>
 			<show-property name="crlatti:descrizioneIniziativa"/>
 			<show-property name="crlatti:numeroRepertorio"/>
@@ -283,7 +303,6 @@
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
 			<show-property name="crlatti:deliberante" />
-			<show-property name="crlatti:organismoStatutario" />
 
 			<show-property name="crlatti:numeroLcr" />
 			<show-property name="crlatti:soggettoConsultato" />

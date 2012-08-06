@@ -2,8 +2,8 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
-var noteGenerali = atto.get("noteGenerali");
-var links = atto.get("links");
+var noteGenerali = atto.get("notePresentazioneAssegnazione");
+var links = atto.get("linksPresentazioneAssegnazione");
 
 
 if(checkIsNotNull(id)){

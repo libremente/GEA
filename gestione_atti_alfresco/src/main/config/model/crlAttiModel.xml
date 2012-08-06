@@ -24,6 +24,15 @@
 			<title>Atto</title>
 			<parent>cm:folder</parent>
 			<properties>
+				<property name="crlatti:organismiStatutari">
+					<title>Organismi statutari</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
 				<property name="crlatti:assegnazione">
 					<title>Assegnazione</title>
 					<type>d:text</type>
@@ -128,6 +137,11 @@
 					<title>Relatori</title>
 					<type>d:text</type>
 					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
 				</property>
 				<property name="crlatti:redigente">
 					<title>Redigente</title>
@@ -136,10 +150,6 @@
 				<property name="crlatti:deliberante">
 					<title>Deliberante</title>
 					<type>d:boolean</type>
-				</property>
-				<property name="crlatti:organismoStatutario">
-					<title>Organismo statutario</title>
-					<type>d:text</type>
 				</property>
 				<property name="crlatti:numeroLcr">
 					<title>Numero LCR</title>
@@ -468,10 +478,48 @@
 				<aspect>crlatti:pubblicabile</aspect>
 			</mandatory-aspects>
 		</type>
+		
+		<type name="crlatti:parere">
+			<title>Parere</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:organismoStatutarioParere">
+					<title>Organismo statutario</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:dataAssegnazioneParere">
+					<title>Data assegnazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataAnnulloParere">
+					<title>Data annullo</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:obbligatorioAspect</aspect>
+			</mandatory-aspects>
+		</type>
 
 	</types>
 	
 	<aspects>
+		
+		<aspect name="crlatti:obbligatorioAspect">
+			<title>Obbligatorio</title>
+			<properties>
+				<property name="crlatti:obbligatorio">
+					<title>Obbligatorio</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
 		
 		<aspect name="crlatti:tipizzabile">
 			<title>Tipizzabile</title>

@@ -2,8 +2,8 @@
    "Atto": 
    {
 	"id":"${atto.nodeRef}",
-	"note":"<#if note?exists>${note.content}<#else></#if>",
-	"links":[
+	"notePresentazioneAssegnazione":"<#if note?exists>${note.content}<#else></#if>",
+	"linksPresentazioneAssegnazione":[
 	<#list links as link>
 		{
 			"link" : 
