@@ -126,24 +126,32 @@
 												value="#{esameCommissioniController.numEmendPresentatiMaggior}">
 												<p:ajax event="change" update="totEmendPresentati"
 													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendPresentatiMinor}">
 												<p:ajax event="change" update="totEmendPresentati"
 													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendPresentatiGiunta}">
 												<p:ajax event="change" update="totEmendPresentati"
 													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendPresentatiMisto}">
 												<p:ajax event="change" update="totEmendPresentati"
 													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText id="totEmendPresentati"
@@ -158,24 +166,32 @@
 												value="#{esameCommissioniController.numEmendApprovatiMaggior}">
 												<p:ajax event="change" update="totEmendApprovati"
 													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendApprovatiMinor}">
 												<p:ajax event="change" update="totEmendApprovati"
 													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendApprovatiGiunta}">
 												<p:ajax event="change" update="totEmendApprovati"
 													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendApprovatiMisto}">
 												<p:ajax event="change" update="totEmendApprovati"
 													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 											</p:inputText></td>
 
 										<td align="left"><p:inputText id="totEmendApprovati"
@@ -207,6 +223,8 @@
 								value="#{esameCommissioniController.nonAmmissibili}">
 								<p:ajax event="change" update="totNonApprovati"
 									listener="#{esameCommissioniController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 							</p:inputText>
 						</p:column>
 
@@ -215,6 +233,8 @@
 								value="#{esameCommissioniController.decaduti}">
 								<p:ajax event="change" update="totNonApprovati"
 									listener="#{esameCommissioniController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 							</p:inputText>
 						</p:column>
 
@@ -223,6 +243,8 @@
 								value="#{esameCommissioniController.ritirati}">
 								<p:ajax event="change" update="totNonApprovati"
 									listener="#{esameCommissioniController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 							</p:inputText>
 						</p:column>
 
@@ -231,6 +253,8 @@
 								value="#{esameCommissioniController.respinti}">
 								<p:ajax event="change" update="totNonApprovati"
 									listener="#{esameCommissioniController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 							</p:inputText>
 						</p:column>
 
@@ -248,7 +272,10 @@
 
 						<p:column colspan="4">
 							<p:inputTextarea rows="5" cols="101"
-								value="#{esameCommissioniController.noteEmendamenti}" />
+								value="#{esameCommissioniController.noteEmendamenti}">
+								<p:ajax event="change"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+							</p:inputTextarea>
 						</p:column>
 					</p:row>
 
@@ -270,7 +297,10 @@
 						</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="dataPresaInCarico"
-								value="#{esameCommissioniController.dataPresaInCaricoProposta}" />
+								value="#{esameCommissioniController.dataPresaInCaricoProposta}">
+								<p:ajax event="dateSelect"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+							</p:calendar>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -279,7 +309,10 @@
 						</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="dataIntesa"
-								value="#{esameCommissioniController.dataIntesa}" />
+								value="#{esameCommissioniController.dataIntesa}">
+								<p:ajax event="dateSelect"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+							</p:calendar>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -295,6 +328,8 @@
 									itemValue="Accettata con modifiche" />
 								<f:selectItem itemLabel="Non accettata"
 									itemValue="Non accettata" />
+								<p:ajax event="change"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
 							</p:selectOneMenu>
 						</p:column>
 					</p:row>
@@ -309,7 +344,10 @@
 
 						<p:column colspan="3">
 							<p:inputTextarea rows="5" cols="80"
-								value="#{esameCommissioniController.noteClausolaValutativa}" />
+								value="#{esameCommissioniController.noteClausolaValutativa}">
+								<p:ajax event="change"
+									listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+							</p:inputTextarea>
 
 
 						</p:column>
@@ -367,7 +405,9 @@
 				</p:panelGrid>
 			</p:fieldset>
 			<p>
-				<p:commandButton value="Salva" />
+				<p:commandButton value="Salva" 
+				action="#{esameCommissioniController.salvaEmendamentiClausole}"
+				update="emendamentoMsg"/>
 			</p>
 		</p:column>
 	</p:row>

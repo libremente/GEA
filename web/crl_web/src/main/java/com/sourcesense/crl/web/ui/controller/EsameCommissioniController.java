@@ -142,7 +142,9 @@ public class EsameCommissioniController {
 	private String statoCommitComitatoRistretto = CRLMessage.COMMIT_DONE;
 	private String statoCommitRelatoriComitatiRistretti = CRLMessage.COMMIT_DONE;
 	private String statoCommitAbbinamenti = CRLMessage.COMMIT_DONE;
-	private String statoCommitVotazione = CRLMessage.COMMIT_DONE;
+	private String statoCommitRegistrazioneVotazione = CRLMessage.COMMIT_DONE;
+	private String statoCommitContinuazioneLavori = CRLMessage.COMMIT_DONE;
+	private String statoCommitTrasmissione = CRLMessage.COMMIT_DONE;
 	private String statoCommitEmendamentiClausole = CRLMessage.COMMIT_DONE;
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
 
@@ -184,12 +186,12 @@ public class EsameCommissioniController {
 		membriComitato.put("componente3", "componente3");
 
 	}
-	
-	
+
+
 	public void updateRelatoriHandler() {
 		setStatoCommitRelatori(CRLMessage.COMMIT_UNDONE);
 	}
-	
+
 	public void updateComitatoRistrettoHandler() {
 		setStatoCommitComitatoRistretto(CRLMessage.COMMIT_UNDONE);
 	}
@@ -202,12 +204,20 @@ public class EsameCommissioniController {
 		setStatoCommitAbbinamenti(CRLMessage.COMMIT_UNDONE);
 	}
 
-	public void updateEmendamentiClausoleHandler() {
-		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_UNDONE);
+	public void updateRegistrazioneVotazioneHandler() {
+		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_UNDONE);
 	}
 
-	public void updateVotazioneHandler() {
-		setStatoCommitVotazione(CRLMessage.COMMIT_UNDONE);
+	public void updateContinuazioneLavoriHandler() {
+		setStatoCommitContinuazioneLavori(CRLMessage.COMMIT_UNDONE);
+	}
+
+	public void updateTrasmissioneHandler() {
+		setStatoCommitTrasmissione(CRLMessage.COMMIT_UNDONE);
+	}
+	
+	public void updateEmendamentiClausoleHandler() {
+		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_UNDONE);
 	}
 
 	public void updateNoteHandler() {
@@ -215,7 +225,7 @@ public class EsameCommissioniController {
 	}
 
 	public void changeTabHandler() {
-		
+
 		if (statoCommitRelatori.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
@@ -225,7 +235,7 @@ public class EsameCommissioniController {
 							"Attenzione ! Le modifiche ai Relatori non sono state salvate ",
 							""));
 		}
-		
+
 		if (statoCommitComitatoRistretto.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
@@ -256,17 +266,37 @@ public class EsameCommissioniController {
 							""));
 		}
 
-		if (statoCommitVotazione.equals(CRLMessage.COMMIT_UNDONE)) {
+		if (statoCommitRegistrazioneVotazione.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
 					null,
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Le modifiche di Votazione non sono state salvate ",
+							"Attenzione ! Le modifiche della Registrazione Votazione non sono state salvate ",
 							""));
 		}
 
-		if (statoCommitVotazione.equals(CRLMessage.COMMIT_UNDONE)) {
+		if (statoCommitContinuazioneLavori.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche sulla Continuazione dei lavori in referente non sono state salvate ",
+							""));
+		}
+
+		if (statoCommitTrasmissione.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche sulla Trasmissione non sono state salvate ",
+							""));
+		}
+
+		if (statoCommitEmendamentiClausole.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
 					null,
@@ -357,20 +387,20 @@ public class EsameCommissioniController {
 
 		return true;
 	}
-	
+
 	public void confermaRelatori() {
 		atto.setRelatori(relatoriList);
 		//TODO: alfresco service
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		attoBean.getAtto().setRelatori(relatoriList);
-		
+
 		setStatoCommitRelatori(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Relatori salvati con successo", ""));
-		
+
 	}
 
 
@@ -438,35 +468,35 @@ public class EsameCommissioniController {
 		}
 		return false;
 	}
-	
+
 	public void confermaComitatoRistretto() {
 		atto.getComitatoRistretto().setComponenti(membriComitatoList);
 		//TODO: alfresco service
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		attoBean.getAtto().getComitatoRistretto().setComponenti(membriComitatoList);
-		
+
 		setStatoCommitComitatoRistretto(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Comitato ristretto salvato con successo", ""));
-		
+
 	}
-	
+
 	public void confermaFineLavori() {
 		//TODO: alfresco service
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		attoBean.getAtto().setDataFineLavoriEsameCommissioni(atto.getDataFineLavoriEsameCommissioni());
-		
+
 		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Relatori e Comitati Ristretti salvati con successo", ""));
 	}
-	
+
 
 	// Abbinamenti***************************************************************
 
@@ -543,30 +573,31 @@ public class EsameCommissioniController {
 
 		return null;
 	}
-	
+
 	public void salvaAbbinamento() {
 		abbinamentoSelected.setTipoTesto(tipoTesto);
 		abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
 		abbinamentoSelected.setNote(noteAbbinamento);
-		
+
 		atto.setAbbinamenti(abbinamentiList);		
 		//TODO: alfresco service
-		
+
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		attoBean.getAtto().setAbbinamenti(abbinamentiList);
+
 		setStatoCommitAbbinamenti(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Abbinamenti salvati con successo", ""));		
 	}
-	
+
 	public void salvaDisabbinamento() {
 		abbinamentoSelected.setTipoTesto(tipoTesto);
 		abbinamentoSelected.setDataDisabbinamento(dataDisabbinamento);
 		abbinamentoSelected.setNote(noteAbbinamento);
-		
+
 		//TODO: alfresco service
 	}
 
@@ -576,11 +607,60 @@ public class EsameCommissioniController {
 
 	// Votazione****************************************************************
 
+	public void registraVotazione() {
+		//TODO: alfresco service
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setEsitoVotoCommissioneReferente(atto.getEsitoVotoCommissioneReferente());
+		attoBean.getAtto().setQuorum(atto.getQuorum());
+		attoBean.getAtto().setDataSedutaCommissione(atto.getDataSedutaCommissione());
+
+		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Registrazione Votazione salvata con successo", ""));				
+	}
+
+
+
 	public void uploadTestoAttoVotato() {
 
 	}
 
 	public void removeTestoAttoVotato() {
+
+	}
+
+
+	public void cambiaRuoloInReferente() {
+		//TODO
+
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		//TODO
+
+		setStatoCommitContinuazioneLavori(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Continuazione dei lavori in referente salvata con successo", ""));		
+	}
+
+
+	public void confermaTrasmissione() {
+		//TODO: alfresco service
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setDataTrasmissione(atto.getDataTrasmissione());
+		attoBean.getAtto().setDataRichiestaIscrizioneAula(atto.getDataRichiestaIscrizioneAula());
+		attoBean.getAtto().setPassaggioDirettoInAula(atto.isPassaggioDirettoInAula());
+		
+		setStatoCommitTrasmissione(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Trasmissione salvata con successo", ""));		
 
 	}
 
@@ -618,6 +698,40 @@ public class EsameCommissioniController {
 
 	public void removeTestoClausola() {
 
+	}
+	
+	
+	public void salvaEmendamentiClausole() {
+		//TODO: alfresco service
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setNumEmendPresentatiMaggior(atto.getNumEmendPresentatiMaggior());
+		attoBean.getAtto().setNumEmendPresentatiMinor(atto.getNumEmendPresentatiMinor());
+		attoBean.getAtto().setNumEmendPresentatiGiunta(atto.getNumEmendPresentatiGiunta());
+		attoBean.getAtto().setNumEmendPresentatiMisto(atto.getNumEmendPresentatiMisto());
+		
+		attoBean.getAtto().setNumEmendApprovatiMaggior(atto.getNumEmendApprovatiMaggior());
+		attoBean.getAtto().setNumEmendApprovatiMinor(atto.getNumEmendApprovatiMinor());
+		attoBean.getAtto().setNumEmendApprovatiGiunta(atto.getNumEmendApprovatiGiunta());
+		attoBean.getAtto().setNumEmendApprovatiMisto(atto.getNumEmendApprovatiMisto());
+		
+		attoBean.getAtto().setNonAmmissibili(atto.getNonAmmissibili());
+		attoBean.getAtto().setDecaduti(atto.getDecaduti());
+		attoBean.getAtto().setRitirati(atto.getRitirati());
+		attoBean.getAtto().setRespinti(atto.getRespinti());
+		
+		attoBean.getAtto().setNoteEmendamenti(atto.getNoteEmendamenti());
+		
+		attoBean.getAtto().setDataPresaInCaricoProposta(atto.getDataPresaInCaricoProposta());
+		attoBean.getAtto().setDataIntesa(atto.getDataIntesa());
+		attoBean.getAtto().setEsitoVotazioneIntesa(atto.getEsitoVotazioneIntesa());
+		attoBean.getAtto().setNoteClausolaValutativa(atto.getNoteClausolaValutativa());
+		
+		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Emendamenti e Clausole salvati con successo", ""));
 	}
 
 
@@ -1317,18 +1431,6 @@ public class EsameCommissioniController {
 
 
 
-	public String getStatoCommitVotazione() {
-		return statoCommitVotazione;
-	}
-
-
-
-	public void setStatoCommitVotazione(String statoCommitVotazione) {
-		this.statoCommitVotazione = statoCommitVotazione;
-	}
-
-
-
 	public String getStatoCommitEmendamentiClausole() {
 		return statoCommitEmendamentiClausole;
 	}
@@ -1604,8 +1706,40 @@ public class EsameCommissioniController {
 			String statoCommitComitatoRistretto) {
 		this.statoCommitComitatoRistretto = statoCommitComitatoRistretto;
 	}
-	
-	
+
+
+	public String getStatoCommitRegistrazioneVotazione() {
+		return statoCommitRegistrazioneVotazione;
+	}
+
+
+	public void setStatoCommitRegistrazioneVotazione(
+			String statoCommitRegistrazioneVotazione) {
+		this.statoCommitRegistrazioneVotazione = statoCommitRegistrazioneVotazione;
+	}
+
+
+	public String getStatoCommitContinuazioneLavori() {
+		return statoCommitContinuazioneLavori;
+	}
+
+
+	public void setStatoCommitContinuazioneLavori(
+			String statoCommitContinuazioneLavori) {
+		this.statoCommitContinuazioneLavori = statoCommitContinuazioneLavori;
+	}
+
+
+	public String getStatoCommitTrasmissione() {
+		return statoCommitTrasmissione;
+	}
+
+
+	public void setStatoCommitTrasmissione(String statoCommitTrasmissione) {
+		this.statoCommitTrasmissione = statoCommitTrasmissione;
+	}
+
+
 
 
 
