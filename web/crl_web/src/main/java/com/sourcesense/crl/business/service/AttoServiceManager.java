@@ -118,7 +118,7 @@ public class AttoServiceManager implements ServiceManager {
 
 	public void salvaAssegnazionePresentazione(Atto atto) {
 		//TODO
-		attoService.merge("", atto);
+		//attoService.merge("", atto);
 	}
 
 	public void salvaNoteAllegatiPresentazione(Atto atto) {
