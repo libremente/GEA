@@ -84,8 +84,13 @@
 				<h:outputText style="font-weight: bold;" value="Data scadenza: " />
 			</p:column>
 			<p:column>
-				<p:inputText value="#{esameCommissioniController.dataScadenza}"
-					readonly="true" />
+				<p:inputText id="dataScadenzaReadOnly" value="#{esameCommissioniController.dataScadenza}"
+					readonly="true">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</p:inputText>
+			</p:column>
+			<p:column>
+				<h:outputText id="dataScadenzaMessage" value="#{esameCommissioniController.messaggioGiorniScadenza}" />
 			</p:column>
 		</p:row>
 		<p:row>
@@ -232,15 +237,15 @@
 				<p:selectBooleanCheckbox
 					value="#{esameCommissioniController.passaggioDiretto}">
 					<p:ajax event="change"
-							listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
+						listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
 				</p:selectBooleanCheckbox>
 			</p:column>
 		</p:row>
 		<p:row>
 			<p:column>
-				<p:commandButton value="Salva Trasmissione" 
-				action="#{esameCommissioniController.confermaTrasmissione}"
-				update="votazioneMsg"/>
+				<p:commandButton value="Salva Trasmissione"
+					action="#{esameCommissioniController.confermaTrasmissione}"
+					update="votazioneMsg" />
 			</p:column>
 		</p:row>
 	</p:panelGrid>

@@ -75,7 +75,9 @@
 				update="comitatiMsg"
 				value="#{esameCommissioniController.dataPresaInCarico}" />
 					&nbsp;
-					<p:commandButton value="Presa in Carico" />
+					<p:commandButton value="Presa in Carico"
+				action="#{esameCommissioniController.presaInCarico}"
+				update="dataScadenzaMessage, dataScadenzaReadOnly" />
 		</p:column>
 		<p:column></p:column>
 		<p:column></p:column>

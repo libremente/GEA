@@ -61,6 +61,7 @@ public class EsameCommissioniController {
 	private Date dataPresaInCarico;
 	private String materia;
 	private Date dataScadenza;
+	private String messaggioGiorniScadenza;
 	private boolean presenzaComitatoRistretto;
 	private Date dataIstituzioneComitato;
 	private Date dataFineLavori;
@@ -175,6 +176,8 @@ public class EsameCommissioniController {
 		allegatiList = new ArrayList <Allegato>(atto.getAllegatiNoteEsameCommissioni());
 		linksList = new ArrayList <Link>(atto.getLinksNoteEsameCommissioni());
 
+		confrontaDataScadenza();
+		
 		if(!abbinamentiList.isEmpty()) {
 			setIdAbbinamentoSelected(abbinamentiList.get(0).getAtto().getId());
 			showAbbinamentoDetail();
@@ -334,6 +337,16 @@ public class EsameCommissioniController {
 
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username));
+		
+		attoBean.getAtto().setDataScadenzaEsameCommissioni(atto.getDataScadenzaEsameCommissioni());
+		
+		confrontaDataScadenza();
+		
+		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Presa in Carico salvata con successo", ""));
+		
+		
+		
 
 	}
 
@@ -606,6 +619,26 @@ public class EsameCommissioniController {
 
 
 	// Votazione****************************************************************
+	
+	public void confrontaDataScadenza() {
+		int giorniDifferenza;
+		
+		Date scadenza = getDataScadenza();
+		if(scadenza != null) {
+			long scadenzaLong = scadenza.getTime();
+			long todayLong = (new Date()).getTime();
+			
+			long msDifferenza = (scadenzaLong - todayLong);
+			if(msDifferenza<0) {
+				giorniDifferenza = (int) (msDifferenza/86400000);
+				setMessaggioGiorniScadenza("Attenzione! Ritardo di "+(-giorniDifferenza)+" giorni.");
+				
+			} else {
+				giorniDifferenza = 1 + (int) (msDifferenza/86400000);
+				setMessaggioGiorniScadenza("Mancano "+giorniDifferenza+" giorni alla scadenza.");
+			}		
+		}
+	}
 
 	public void registraVotazione() {
 		//TODO: alfresco service
@@ -1737,6 +1770,16 @@ public class EsameCommissioniController {
 
 	public void setStatoCommitTrasmissione(String statoCommitTrasmissione) {
 		this.statoCommitTrasmissione = statoCommitTrasmissione;
+	}
+
+
+	public String getMessaggioGiorniScadenza() {
+		return messaggioGiorniScadenza;
+	}
+
+
+	public void setMessaggioGiorniScadenza(String messaggioGiorniScadenza) {
+		this.messaggioGiorniScadenza = messaggioGiorniScadenza;
 	}
 
 
