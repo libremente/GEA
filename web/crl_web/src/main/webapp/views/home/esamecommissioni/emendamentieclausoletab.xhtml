@@ -44,10 +44,10 @@
 								header="Cancellazione Testo Clausola" severity="alert"
 								widgetVar="testoClausolaDialog">
 
-								<p:commandButton id="confirmTestoClausole" value="Conferma"
+								<p:commandButton id="confirmTestoClausola" value="Conferma"
 									oncomplete="testoClausolaDialog.hide()"
 									action="#{esameCommissioniController.removeTestoClausola}"
-									update="listaTestiAtto" />
+									update="listaTestiClausola" />
 								<p:commandButton id="declineTestoClausola" value="Annulla"
 									onclick="testoClausolaDialog.hide()" type="button" />
 

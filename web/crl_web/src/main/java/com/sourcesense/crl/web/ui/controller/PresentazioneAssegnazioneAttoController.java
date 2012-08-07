@@ -257,7 +257,7 @@ public class PresentazioneAssegnazioneAttoController {
 			AttoRecord testoAttoRet = null;
 
 			try {
-				testoAttoRet = attoServiceManager.uploadTesto(
+				testoAttoRet = attoServiceManager.uploadTestoAttoPresentazioneAssegnazione(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
@@ -578,7 +578,7 @@ public class PresentazioneAssegnazioneAttoController {
 			Allegato allegatoRet = null;
 
 			try {
-				allegatoRet = attoServiceManager.uploadAllegato(
+				allegatoRet = attoServiceManager.uploadAllegatoNoteAllegatiPresentazioneAssegnazione(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event

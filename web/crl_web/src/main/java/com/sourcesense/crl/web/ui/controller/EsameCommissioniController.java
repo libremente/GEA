@@ -19,6 +19,7 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.MembroComitatoRistretto;
@@ -69,6 +70,8 @@ public class EsameCommissioniController {
 	private List <Relatore> relatoriList = new ArrayList <Relatore>();
 	private List <MembroComitatoRistretto> membriComitatoList = new ArrayList <MembroComitatoRistretto>();
 	private List <Allegato> testiComitatoRistrettoList = new ArrayList <Allegato>();
+
+	private String testoComitatoToDelete;
 
 
 	private List <Abbinamento> abbinamentiList = new ArrayList<Abbinamento>(); 
@@ -177,7 +180,7 @@ public class EsameCommissioniController {
 		linksList = new ArrayList <Link>(atto.getLinksNoteEsameCommissioni());
 
 		confrontaDataScadenza();
-		
+
 		if(!abbinamentiList.isEmpty()) {
 			setIdAbbinamentoSelected(abbinamentiList.get(0).getAtto().getId());
 			showAbbinamentoDetail();
@@ -218,7 +221,7 @@ public class EsameCommissioniController {
 	public void updateTrasmissioneHandler() {
 		setStatoCommitTrasmissione(CRLMessage.COMMIT_UNDONE);
 	}
-	
+
 	public void updateEmendamentiClausoleHandler() {
 		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_UNDONE);
 	}
@@ -337,16 +340,16 @@ public class EsameCommissioniController {
 
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username));
-		
+
 		attoBean.getAtto().setDataScadenzaEsameCommissioni(atto.getDataScadenzaEsameCommissioni());
-		
+
 		confrontaDataScadenza();
-		
+
 		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Presa in Carico salvata con successo", ""));
-		
-		
-		
+
+
+
 
 	}
 
@@ -497,6 +500,70 @@ public class EsameCommissioniController {
 
 	}
 
+	public void uploadTestoComitatoRistretto(FileUploadEvent event) {
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkTestoComitato(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+
+		} else {
+
+			// TODO Alfresco upload
+			Allegato testoComitatoRet = null;
+
+			try {
+				testoComitatoRet = attoServiceManager.uploadTestoComitatoRistretto(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione			
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getComitatoRistretto().getTesti().add(testoComitatoRet);
+
+			testiComitatoRistrettoList.add(testoComitatoRet);
+		}
+	}
+
+	private boolean checkTestoComitato(String fileName) {
+
+		for (Allegato element : testiComitatoRistrettoList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public void removeTestoComitato() {
+
+		for (Allegato element : testiComitatoRistrettoList) {
+
+			if (element.getId().equals(testoComitatoToDelete)) {
+				// TODO Alfresco delete
+				testiComitatoRistrettoList.remove(element);
+				break;
+			}
+		}
+	}
+
+
+
 	public void confermaFineLavori() {
 		//TODO: alfresco service
 
@@ -619,20 +686,20 @@ public class EsameCommissioniController {
 
 
 	// Votazione****************************************************************
-	
+
 	public void confrontaDataScadenza() {
 		int giorniDifferenza;
-		
+
 		Date scadenza = getDataScadenza();
 		if(scadenza != null) {
 			long scadenzaLong = scadenza.getTime();
 			long todayLong = (new Date()).getTime();
-			
+
 			long msDifferenza = (scadenzaLong - todayLong);
 			if(msDifferenza<0) {
 				giorniDifferenza = (int) (msDifferenza/86400000);
 				setMessaggioGiorniScadenza("Attenzione! Ritardo di "+(-giorniDifferenza)+" giorni.");
-				
+
 			} else {
 				giorniDifferenza = 1 + (int) (msDifferenza/86400000);
 				setMessaggioGiorniScadenza("Mancano "+giorniDifferenza+" giorni alla scadenza.");
@@ -656,13 +723,67 @@ public class EsameCommissioniController {
 	}
 
 
+	public void uploadTestoAttoVotato(FileUploadEvent event) {
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
 
-	public void uploadTestoAttoVotato() {
+		if (!checkTestoAttoVotato(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
 
+			// TODO Alfresco upload
+			Allegato allegatoRet = null;
+
+			try {
+				//TODO change method
+				allegatoRet = attoServiceManager.uploadTestoAttoVotatoEsameCommissioni(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getTestiAttoVotato().add(allegatoRet);
+
+			testiAttoVotatoList.add(allegatoRet);
+		}
+	}
+
+	private boolean checkTestoAttoVotato(String fileName) {
+
+		for (Allegato element : testiAttoVotatoList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
 	}
 
 	public void removeTestoAttoVotato() {
 
+		for (Allegato element : testiAttoVotatoList) {
+
+			if (element.getId().equals(testoAttoVotatoToDelete)) {
+
+				// TODO Alfresco delete
+				testiAttoVotatoList.remove(element);
+				break;
+			}
+		}
 	}
 
 
@@ -691,7 +812,7 @@ public class EsameCommissioniController {
 		attoBean.getAtto().setDataTrasmissione(atto.getDataTrasmissione());
 		attoBean.getAtto().setDataRichiestaIscrizioneAula(atto.getDataRichiestaIscrizioneAula());
 		attoBean.getAtto().setPassaggioDirettoInAula(atto.isPassaggioDirettoInAula());
-		
+
 		setStatoCommitTrasmissione(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Trasmissione salvata con successo", ""));		
 
@@ -716,53 +837,163 @@ public class EsameCommissioniController {
 	}
 
 
-	public void uploadEmendamento() {
+	public void uploadEmendamento(FileUploadEvent event) {
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
 
+		if (!checkEmendamenti(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
+
+			// TODO Alfresco upload
+			Allegato emendamentoRet = null;
+
+			try {
+				//TODO change method
+				emendamentoRet = attoServiceManager.uploadEmendamentoEsameCommissioni(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getEmendamenti().add(emendamentoRet);
+
+			emendamentiList.add(emendamentoRet);
+		}
 	}
 
+	private boolean checkEmendamenti(String fileName) {
+
+		for (Allegato element : emendamentiList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
 
 	public void removeEmendamento() {
 
+		for (Allegato element : emendamentiList) {
+
+			if (element.getId().equals(emendamentoToDelete)) {
+
+				// TODO Alfresco delete
+				emendamentiList.remove(element);
+				break;
+			}
+		}
 	}
 
-	public void uploadTestoClausola() {
 
+	public void uploadTestoClausola(FileUploadEvent event) {
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkTestiClausola(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
+
+			// TODO Alfresco upload
+			Allegato testoClausolaRet = null;
+
+			try {
+				//TODO change method
+				testoClausolaRet = attoServiceManager.uploadTestoClausolaEsameCommissioni(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getTestiClausola().add(testoClausolaRet);
+
+			testiClausolaList.add(testoClausolaRet);
+		}
+	}
+
+	private boolean checkTestiClausola(String fileName) {
+
+		for (Allegato element : testiClausolaList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
 	}
 
 	public void removeTestoClausola() {
 
+		for (Allegato element : testiClausolaList) {
+
+			if (element.getId().equals(testoClausolaToDelete)) {
+
+				// TODO Alfresco delete
+				testiClausolaList.remove(element);
+				break;
+			}
+		}
 	}
-	
-	
+
+
 	public void salvaEmendamentiClausole() {
 		//TODO: alfresco service
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		attoBean.getAtto().setNumEmendPresentatiMaggior(atto.getNumEmendPresentatiMaggior());
 		attoBean.getAtto().setNumEmendPresentatiMinor(atto.getNumEmendPresentatiMinor());
 		attoBean.getAtto().setNumEmendPresentatiGiunta(atto.getNumEmendPresentatiGiunta());
 		attoBean.getAtto().setNumEmendPresentatiMisto(atto.getNumEmendPresentatiMisto());
-		
+
 		attoBean.getAtto().setNumEmendApprovatiMaggior(atto.getNumEmendApprovatiMaggior());
 		attoBean.getAtto().setNumEmendApprovatiMinor(atto.getNumEmendApprovatiMinor());
 		attoBean.getAtto().setNumEmendApprovatiGiunta(atto.getNumEmendApprovatiGiunta());
 		attoBean.getAtto().setNumEmendApprovatiMisto(atto.getNumEmendApprovatiMisto());
-		
+
 		attoBean.getAtto().setNonAmmissibili(atto.getNonAmmissibili());
 		attoBean.getAtto().setDecaduti(atto.getDecaduti());
 		attoBean.getAtto().setRitirati(atto.getRitirati());
 		attoBean.getAtto().setRespinti(atto.getRespinti());
-		
+
 		attoBean.getAtto().setNoteEmendamenti(atto.getNoteEmendamenti());
-		
+
 		attoBean.getAtto().setDataPresaInCaricoProposta(atto.getDataPresaInCaricoProposta());
 		attoBean.getAtto().setDataIntesa(atto.getDataIntesa());
 		attoBean.getAtto().setEsitoVotazioneIntesa(atto.getEsitoVotazioneIntesa());
 		attoBean.getAtto().setNoteClausolaValutativa(atto.getNoteClausolaValutativa());
-		
+
 		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Emendamenti e Clausole salvati con successo", ""));
 	}
@@ -786,7 +1017,7 @@ public class EsameCommissioniController {
 
 			try {
 				//TODO change method
-				allegatoRet = attoServiceManager.uploadAllegato(
+				allegatoRet = attoServiceManager.uploadAllegatoNoteAllegatiEsameCommissioni(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
@@ -800,7 +1031,7 @@ public class EsameCommissioniController {
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().getAllegati().add(allegatoRet);
+			attoBean.getAtto().getAllegatiNoteEsameCommissioni().add(allegatoRet);
 
 			allegatiList.add(allegatoRet);
 		}
@@ -1780,6 +2011,16 @@ public class EsameCommissioniController {
 
 	public void setMessaggioGiorniScadenza(String messaggioGiorniScadenza) {
 		this.messaggioGiorniScadenza = messaggioGiorniScadenza;
+	}
+
+
+	public String getTestoComitatoToDelete() {
+		return testoComitatoToDelete;
+	}
+
+
+	public void setTestoComitatoToDelete(String testoComitatoToDelete) {
+		this.testoComitatoToDelete = testoComitatoToDelete;
 	}
 
 

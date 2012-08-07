@@ -16,6 +16,7 @@ import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.service.rest.AttoService;
+import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.URLBuilder;
 
 import java.io.File;
@@ -65,35 +66,68 @@ public class AttoServiceManager implements ServiceManager {
 		return searchAtti(attoInit);
 
 	}
-
-
-
-	public Allegato uploadAllegato(Atto atto, InputStream stream, String nomeFile) {
-
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, "presentazioneAllegato");
-	}
-
-	public AttoRecord uploadTesto(Atto atto, InputStream stream, String nomeFile) {
+	
+	
+	
+	public AttoRecord uploadTestoAttoPresentazioneAssegnazione(Atto atto, InputStream stream, String nomeFile) {
 
 		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, nomeFile, "testoAtto");
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.TESTO_ATTO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
+	
+	public Allegato uploadAllegatoNoteAllegatiPresentazioneAssegnazione(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.ALLEGATO_NOTE_ALLEGATI_PRESENTAZIONE_ASSEGNAZIONE);
+	}
+	
+	public Allegato uploadTestoComitatoRistretto(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.TESTO_COMITATO_RISTRETTO_ESAME_COMMISSIONI);
+	}
+
+	public Allegato uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.TESTO_VOTATO_ESAME_COMMISSIONI);
+	}
+	
+	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.EMENDAMENTO_ESAME_COMMISSIONI);
+	}
+	
+	public Allegato uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.TESTO_CLAUSOLA_ESAME_COMMISSIONI);
+	}	
+	
+	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.ALLEGATO_NOTE_ALLEGATI_ESAME_COMMISSIONI);
+	}	
+	
+	
+	
 	
 	public List <AttoRecord> testiAttoByAtto(Atto atto) {
 
 		return attoService.retrieveTestiAtto(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_list_testi_atto", new String[] { atto.getId() }));
 	}
-	
+
 	public List <Allegato> allAllegatiAttoByAtto(Atto atto) {
 
 		return attoService.retrieveAllegati(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_list_allegati_atto", new String[] { atto.getId() ,""}));
 	}
-	
-	
-	
+
+
+
 
 	@Override
 	public Atto persist(Object object) {
@@ -108,7 +142,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	public void salvaInfoGeneraliPresentazione(Atto atto) {
-		 attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_info_generali_presentazione_assegnazione", 
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_info_generali_presentazione_assegnazione", 
 				new String[] { atto.getId() }), atto);
 	}
 

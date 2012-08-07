@@ -25,7 +25,7 @@
 					header="Cancellazione Allegato" severity="alert"
 					widgetVar="allegatoDialog">
 
-					<p:commandButton id="confirmAllegato" value="Salva"
+					<p:commandButton id="confirmAllegato" value="Conferma"
 						oncomplete="allegatoDialog.hide()"
 						action="#{esameCommissioniController.removeAllegato}"
 						actionListener="#{esameCommissioniController.updateNoteHandler}"
@@ -39,7 +39,7 @@
 					message="Sei sicuro di voler eliminare il Link?"
 					header="Cancellazione Link" severity="alert" widgetVar="linkDialog">
 
-					<p:commandButton id="confirmLink" value="Salva"
+					<p:commandButton id="confirmLink" value="Conferma"
 						oncomplete="linkDialog.hide()"
 						action="#{esameCommissioniController.removeLink}"
 						actionListener="#{esameCommissioniController.updateNoteHandler}"
