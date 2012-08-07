@@ -25,7 +25,7 @@
 					header="Cancellazione Allegato" severity="alert"
 					widgetVar="allegatoDialog">
 
-					<p:commandButton id="confirmAllegato" value="Conferma"
+					<p:commandButton id="confirmAllegato" value="Salva"
 						oncomplete="allegatoDialog.hide()"
 						action="#{esameCommissioniController.removeAllegato}"
 						actionListener="#{esameCommissioniController.updateNoteHandler}"
@@ -39,7 +39,7 @@
 					message="Sei sicuro di voler eliminare il Link?"
 					header="Cancellazione Link" severity="alert" widgetVar="linkDialog">
 
-					<p:commandButton id="confirmLink" value="Conferma"
+					<p:commandButton id="confirmLink" value="Salva"
 						oncomplete="linkDialog.hide()"
 						action="#{esameCommissioniController.removeLink}"
 						actionListener="#{esameCommissioniController.updateNoteHandler}"
@@ -85,7 +85,7 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica File"
+							<p:fileUpload label="Carica allegato"
 								fileUploadListener="#{esameCommissioniController.uploadAllegato}"
 								actionListener="#{esameCommissioniController.updateNoteHandler}"
 								mode="advanced" auto="true"
@@ -97,7 +97,7 @@
 
 							<h:dataTable id="listaAllegati"
 								value="#{esameCommissioniController.allegatiList}"
-								var="allegato" styleClass="generalInfoTab">
+								var="allegato" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Descrizione Allegato</f:facet>
@@ -105,7 +105,7 @@
 						</h:column>
 
 								<h:column>
-									<f:facet name="header">Documento</f:facet>
+									<f:facet name="header">Azioni</f:facet>
 									<h:outputText
 										value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
 
@@ -195,7 +195,7 @@
 
 							<h:dataTable id="listaLinks"
 								value="#{esameCommissioniController.linksList}"
-								var="link" styleClass="generalInfoTab">
+								var="link" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Descrizione collegamento</f:facet>

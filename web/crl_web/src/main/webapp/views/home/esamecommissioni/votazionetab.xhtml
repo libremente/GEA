@@ -28,16 +28,16 @@
 					header="Cancellazione Testo Atto" severity="alert"
 					widgetVar="testoAttoDialog">
 
-					<p:commandButton id="confirmTestoAtto" value="Conferma"
-						oncomplete="testoAttoDialog.hide()"
-						action="#{esameCommissioniController.removeTestoAttoVotato}"
-						update="listaTestiAtto" />
-					<p:commandButton id="declineTestoAtto" value="Annulla"
-						onclick="testoAttoDialog.hide()" type="button" />
+						<p:commandButton id="confirmTestoAtto" value="Salva"
+							oncomplete="testoAttoDialog.hide()"
+							action="#{esameCommissioniController.removeTestoAttoVotato}"
+							update="listaTestiAtto" />
+						<p:commandButton id="declineTestoAtto" value="Annulla"
+							onclick="testoAttoDialog.hide()" type="button" />
 
-				</p:confirmDialog>
-			</p:column>
-		</p:row>
+					</p:confirmDialog>
+				</p:column>
+			</p:row>
 
 
 		<p:row>
@@ -104,45 +104,45 @@
 			<!-- <p:column>
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
-			<p:column colspan="3">
-				<p:fileUpload label="Carica File"
-					fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}"
-					mode="advanced" auto="true" update="listaTestiAtto ,votazioneMsg" />
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column colspan="4">
-				<h:dataTable id="listaTestiAtto"
-					value="#{esameCommissioniController.testiAttoVotatoList}"
-					var="testoAttoVotato" styleClass="generalInfoTab">
+				<p:column colspan="3">
+					<p:fileUpload label="Carica Testo dell'Atto"
+						fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}"
+						mode="advanced" auto="true" update="listaTestiAtto ,votazioneMsg" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
+					<h:dataTable id="listaTestiAtto"
+						value="#{esameCommissioniController.testiAttoVotatoList}"
+						var="testoAttoVotato" styleClass="generalInfoTab grey-text">
 
 					<h:column>
 						<f:facet name="header">Testo Dell'Atto</f:facet>
 							#{testoAttoVotato.nome}
 						</h:column>
 
-					<h:column>
-						<f:facet name="header">Documento</f:facet>
-						<h:outputText
-							value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
+						<h:column>
+							<f:facet name="header">Azioni</f:facet>
+							<h:outputText
+								value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
 
-					</h:column>
+						</h:column>
 
-					<h:column>
-						<f:facet name="header">Pubblico</f:facet>
-						<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
-						<h:outputText value="no" rendered="#{!testoAttoVotato.pubblico}" />
-					</h:column>
+						<h:column>
+							<f:facet name="header">Pubblico</f:facet>
+							<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
+							<h:outputText value="no" rendered="#{!testoAttoVotato.pubblico}" />
+						</h:column>
 
-					<h:column>
-						<f:facet name="header">Elimina</f:facet>
-						<p:commandButton oncomplete="testoAttoDialog.show()"
-							icon="delete-icon">
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="testoAttoDialog.show()"
+								icon="delete-icon">
 
-							<f:setPropertyActionListener value="#{testoAttoVotato.id}"
-								target="#{esameCommissioniController.testoAttoVotatoToDelete}" />
-						</p:commandButton>
-					</h:column>
+								<f:setPropertyActionListener value="#{testoAttoVotato.id}"
+									target="#{esameCommissioniController.testoAttoVotatoToDelete}" />
+							</p:commandButton>
+						</h:column>
 
 
 				</h:dataTable>
@@ -190,7 +190,7 @@
 	</p:panelGrid>
 </p:fieldset>
 
-<p:fieldset legend="Trasmissione" collapsed="false" toggleable="true"
+	<p:fieldset legend="Trasmissione" collapsed="false" toggleable="true"
 	toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
 		<p:row>
@@ -238,7 +238,7 @@
 		</p:row>
 		<p:row>
 			<p:column>
-				<p:commandButton value="Conferma Trasmissione" 
+				<p:commandButton value="Salva Trasmissione" 
 				action="#{esameCommissioniController.confermaTrasmissione}"
 				update="votazioneMsg"/>
 			</p:column>
