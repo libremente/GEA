@@ -21,7 +21,7 @@
 					header="Cancellazione Commissione" severity="alert"
 					widgetVar="commissioneDialog">
 
-					<p:commandButton id="confirmCommissione" value="Conferma"
+					<p:commandButton id="confirmCommissione" value="Salva"
 						oncomplete="commissioneDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.removeCommissione}"
 						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
@@ -42,7 +42,7 @@
 							pattern="dd/MM/yyyy"
 							value="#{presentazioneAssegnazioneAttoController.dataAnnullo}" />
 					</p>
-					<p:commandButton id="confirmAnnulCommissione" value="Conferma"
+					<p:commandButton id="confirmAnnulCommissione" value="Salva"
 						oncomplete="annullaCommissioneDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.annulCommissione}"
 						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
@@ -57,7 +57,7 @@
 					header="Cancellazione Organismo Statutario" severity="alert"
 					widgetVar="organismoStatutarioDialog">
 
-					<p:commandButton id="confirmOrganismoStatutario" value="Conferma"
+					<p:commandButton id="confirmOrganismoStatutario" value="Salva"
 						oncomplete="organismoStatutarioDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.removeOrganismoStatutario}"
 						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
@@ -83,7 +83,7 @@
 										<p:column>Commissione</p:column>
 										<p:column>Data proposta</p:column>
 										<p:column>Data assegnazione</p:column>
-										<p:column>Stato</p:column>
+										<p:column>Competenza</p:column>
 										<p:column></p:column>
 									</p:row>
 								</f:facet>
@@ -141,7 +141,7 @@
 
 							<h:dataTable id="listaCommissioni"
 								value="#{presentazioneAssegnazioneAttoController.commissioniList}"
-								var="commissione" styleClass="generalInfoTab">
+								var="commissione" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Nome</f:facet>
@@ -215,7 +215,7 @@
 	<p:row>
 		<p:column>
 
-			<p:fieldset legend="Ufficio Servizio Segreterie Commissioni"
+			<p:fieldset legend="Assegnazioni Pareri"
 				collapsed="false" toggleable="true" toggleSpeed="500">
 				<p:panelGrid styleClass="infoTable" id="organismistatutaripanel">
 
@@ -282,7 +282,7 @@
 
 							<h:dataTable id="listaOrganismiStatutari"
 								value="#{presentazioneAssegnazioneAttoController.organismiStatutariList}"
-								var="organismoStatutario" styleClass="generalInfoTab">
+								var="organismoStatutario" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Nome</f:facet>
@@ -337,7 +337,7 @@
 		<p:column>
 
 			<p>
-				<p:commandButton value="Conferma selezione"
+				<p:commandButton value="Salva selezione"
 					id="confermaassegnazione"
 					action="#{presentazioneAssegnazioneAttoController.confermaAssegnazione}"
 					update="assegnazioneMsg" />

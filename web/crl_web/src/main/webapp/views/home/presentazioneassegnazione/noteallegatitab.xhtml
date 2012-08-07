@@ -85,7 +85,7 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica File"
+							<p:fileUpload label="Carica Allegato"
 								fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadAllegato}"
 								actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
 								mode="advanced" auto="true"
@@ -97,7 +97,7 @@
 
 							<h:dataTable id="listaAllegati"
 								value="#{presentazioneAssegnazioneAttoController.allegatiList}"
-								var="allegato" styleClass="generalInfoTab">
+								var="allegato" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Descrizione Allegato</f:facet>
@@ -195,7 +195,7 @@
 
 							<h:dataTable id="listaLinks"
 								value="#{presentazioneAssegnazioneAttoController.linksList}"
-								var="link" styleClass="generalInfoTab">
+								var="link" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Descrizione collegamento</f:facet>

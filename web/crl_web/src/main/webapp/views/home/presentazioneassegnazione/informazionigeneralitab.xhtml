@@ -238,7 +238,7 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 				<p:column colspan="3">
-					<p:fileUpload label="Carica File"
+					<p:fileUpload label="Carica Testo dell'Atto"
 						fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}"
 						mode="advanced" auto="true"
 						update="listaTestiAtto ,presaCaricoMsg" />
@@ -249,7 +249,7 @@
 
 					<h:dataTable id="listaTestiAtto"
 						value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
-						var="testoAtto" styleClass="generalInfoTab">
+						var="testoAtto" styleClass="generalInfoTab grey-text">
 
 						<h:column>
 							<f:facet name="header">Testo Dell'Atto</f:facet>
@@ -365,7 +365,7 @@
 
 					<h:dataTable id="listaFirmatari"
 						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
-						var="firmatario" styleClass="generalInfoTab">
+						var="firmatario" styleClass="generalInfoTab grey-text">
 
 						<h:column>
 							<f:facet name="header">Nome</f:facet>
@@ -439,7 +439,7 @@
 
 			<p:row>
 				<p:column>
-					<p:commandButton value="Ritira per mancanza firmatari"  action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}"/>
+					<p:commandButton value="Ritiro per mancanza firmatari"  action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}"/>
 				</p:column>
 
 				<p:column colspan="5">
