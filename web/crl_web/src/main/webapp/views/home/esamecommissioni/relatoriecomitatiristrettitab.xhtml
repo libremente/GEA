@@ -226,7 +226,10 @@
 			</p:column>
 			<p:column>
 				<p:selectBooleanCheckbox
-					value="#{esameCommissioniController.presenzaComitatoRistretto}" />
+					value="#{esameCommissioniController.presenzaComitatoRistretto}">
+					<p:ajax event="change"
+						listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
+				</p:selectBooleanCheckbox>
 			</p:column>
 			<p:column>
 
@@ -237,7 +240,10 @@
 			<p:column>
 				<p>
 					<p:calendar size="10" locale="it" id="dataistituzionecomitato"
-						value="#{esameCommissioniController.dataIstituzioneComitato}" />
+						value="#{esameCommissioniController.dataIstituzioneComitato}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
+					</p:calendar>
 				</p>
 			</p:column>
 

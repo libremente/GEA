@@ -156,9 +156,41 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	public void salvaNoteAllegatiPresentazione(Atto atto) {
-		//TODO
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_presentazione_assegnazione", null), atto);
 	}
+	
+	
+	public void salvaRelatoriEsameCommissioni(Atto atto) {		
+		//TODO: attoService.merge();
+	}
+	
+	public void salvaComitatoRistrettoEsameCommissioni(Atto atto) {
+		//TODO: attoService.merge();
+	}
+	
+	public void salvaFineLavoriEsameCommissioni(Atto atto) {
+		//TODO: attoService.merge();
+	}
+	
+	public void salvaAbbinamentiEsameCommissioni(Atto atto) {
+		//TODO: attoService.merge();
+	}
+	
+	public void salvaVotazioneEsameCommissioni(Atto atto) {
+		//TODO: attoService.merge();
+	}
+	
+	public void salvaEmendamentiClausoleEsameCommissioni(Atto atto) {
+		//TODO: attoService.merge();
+	}
+	
+	public void salvaNoteAllegatiEsameCommissioni(Atto atto) {
+		//TODO: attoService.merge();
+	}
+	
+	
+	
+	
 
 	@Override
 	public Atto merge(Object object) {
