@@ -9,118 +9,116 @@ var firmatari = atto.get("firmatari");
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
-	attoNode.properties["crlatti:classificazione"] = classificazione;
-	attoNode.properties["crlatti:oggetto"] = oggetto;
-	attoNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
 	
-	if(checkIsNotNull(dataRepertorio)){
-		var dataRepertorioSplitted = dataRepertorio.split("-");
-		var dataRepertorioParsed = new Date(dataRepertorioSplitted[0],dataRepertorioSplitted[1]-1,dataRepertorioSplitted[2]);
-		attoNode.properties["crlatti:dataRepertorio"] = dataRepertorioParsed;
-	}
+	//gestione commissioni e ridondanza (in eliminazione) di commissioni referenti e consultive
+	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
+	var commissioniFolderNode = attoNode.childrenByXPath(commissioniXPathQuery)[0];
 	
-	attoNode.properties["crlatti:tipoIniziativa"] = tipoIniziativa;
-	
-	if(checkIsNotNull(dataIniziativa)){
-		var dataIniziativaSplitted = dataIniziativa.split("-");
-		var dataIniziativaParsed = new Date(dataIniziativaSplitted[0],dataIniziativaSplitted[1]-1,dataIniziativaSplitted[2]);
-		attoNode.properties["crlatti:dataIniziativa"] = dataIniziativaParsed;
-	}
-	
-	attoNode.properties["crlatti:descrizioneIniziativa"] = descrizioneIniziativa;
-	attoNode.properties["crlatti:assegnazione"] = assegnazione;
-	
-	if(attoNode.typeShort!="crlatti:attoInp"){
-		//campi DGR non attivi solo per INP
-		attoNode.properties["crlatti:numeroDgr"] = numeroDgr;
-		if(checkIsNotNull(dataDgr)){
-			var dataDgrSplitted = dataDgr.split("-");
-			var dataDgrParsed = new Date(dataDgrSplitted[0],dataDgrSplitted[1]-1,dataDgrSplitted[2]);
-			attoNode.properties["crlatti:dataDgr"] = dataDgrParsed;
-		}
-	}
-	attoNode.save();
-	
-	//gestione firmatari
-	var firmatariXPathQuery = "*[@cm:name='Firmatari']";
-	var firmatariFolderNode = attoNode.childrenByXPath(firmatariXPathQuery)[0];
-	
-	var numeroFirmatari = firmatari.length();
-	for (var j=0; j<numeroFirmatari; j++){
-		var firmatario = firmatari.get(j).get("firmatario");
-		var descrizione = filterParam(firmatario.get("descrizione"));
-		var gruppoConsiliare = filterParam(firmatario.get("gruppoConsiliare"));
-		var dataFirma = filterParam(firmatario.get("dataFirma"));
-		var dataRitiro = filterParam(firmatario.get("dataRitiro"));
-		var primoFirmatario = filterParam(firmatario.get("primoFirmatario"));
+	var numeroCommissioni = commissioni.length();
+	for (var j=0; j<numeroCommissioni; j++){
+		var commissione = commissioni.get(j).get("commissione");
+		var descrizione = filterParam(commissione.get("descrizione"));
+		var dataProposta = filterParam(commissione.get("dataProposta"));
+		var dataAssegnazione = filterParam(commissione.get("dataFirma"));
+		var ruolo = filterParam(commissione.get("dataRitiro"));
+		var stato = filterParam(commissione.get("primoFirmatario"));
+		var dataAnnullo = filterParam(commissione.get("dataAnnullo"));
 		
-		//verifica l'esistenza del firmatario all'interno del folder Firmatari
-		var existFirmatarioXPathQuery = "*[@cm:name='"+descrizione+"']";
-		var firmatarioEsistenteResults = firmatariFolderNode.childrenByXPath(existFirmatarioXPathQuery);
-		var firmatarioNode = null;
-		if(firmatarioEsistenteResults!=null && firmatarioEsistenteResults.length>0){
-			firmatarioNode = firmatarioEsistenteResults[0];
+		//verifica l'esistenza della commissione all'interno del folder Commissioni
+		var existCommissioneXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var commissioneEsistenteResults = commissioniFolderNode.childrenByXPath(existCommissioneXPathQuery);
+		var commissioneNode = null;
+		if(commissioneEsistenteResults!=null && commissioneEsistenteResults.length>0){
+			commissioneNode = commissioneEsistenteResults[0];
 		} else {
-			firmatarioNode = firmatariFolderNode.createNode(descrizione,"crlatti:firmatario");
+			commissioneNode = commissioniFolderNode.createNode(descrizione,"crlatti:commissione");
 		}
 		
-		var dataFirmaParsed = null;
-		if(checkIsNotNull(dataFirma)){
-			var dataFirmaSplitted = dataFirma.split("-");
-			dataFirmaParsed = new Date(dataFirmaSplitted[0],dataFirmaSplitted[1]-1,dataFirmaSplitted[2]);
+		var dataPropostaParsed = null;
+		if(checkIsNotNull(dataProposta)){
+			var dataPropostaSplitted = dataProposta.split("-");
+			dataPropostaParsed = new Date(dataPropostaSplitted[0],dataPropostaSplitted[1]-1,dataPropostaSplitted[2]);
 		}
 		
-		var dataRitiroParsed = null;
-		if(checkIsNotNull(dataRitiro)){
-			var dataRitiroSplitted = dataRitiro.split("-");
-			dataRitiroParsed = new Date(dataRitiroSplitted[0],dataRitiroSplitted[1]-1,dataRitiroSplitted[2]);
+		var dataAssegnazioneParsed = null;
+		if(checkIsNotNull(dataAssegnazione)){
+			var dataAssegnazioneSplitted = dataAssegnazione.split("-");
+			dataAssegnazioneParsed = new Date(dataAssegnazioneSplitted[0],dataAssegnazioneSplitted[1]-1,dataAssegnazioneSplitted[2]);
 		}
 		
-		firmatarioNode.properties["crlatti:nomeFirmatario"] = descrizione;
-		firmatarioNode.properties["crlatti:dataFirma"] = dataFirmaParsed;
-		firmatarioNode.properties["crlatti:dataRitiro"] = dataRitiroParsed;
-		firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
-		firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
-		firmatarioNode.save();
+		var dataAnnulloParsed = null;
+		if(checkIsNotNull(dataAnnullo)){
+			var dataAnnulloSplitted = dataAnnullo.split("-");
+			dataAnnulloParsed = new Date(dataAnnulloSplitted[0],dataAnnulloSplitted[1]-1,dataAnnulloSplitted[2]);
+		}
+		
+		commissioneNode.properties["crlatti:dataAssegnazioneCommissione"] = dataAssegnazioneParsed;
+		commissioneNode.properties["crlatti:dataAnnulloCommissione"] = dataAnnulloParsed;
+		commissioneNode.properties["crlatti:dataPresaInCaricoCommissione"] = dataPropostaParsed;
+		commissioneNode.properties["crlatti:ruoloCommissione"] = ruolo;
+		commissioneNode.properties["crlatti:statoCommissione"] = stato;
+		commissioneNode.save();
 	}
 	
 	//verifica firmatari da cancellare
-	var firmatariNelRepository = firmatariFolderNode.getChildAssocsByType("crlatti:firmatario");
+	var commissioniNelRepository = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
 	
-	//query nel repository per capire se bisogna cancellare dei firmatari
-	for(var z=0; z<firmatariNelRepository.length; z++){
+	//query nel repository per capire se bisogna cancellare delle commissioni
+	for(var z=0; z<commissioniNelRepository.length; z++){
 		var trovato = false;
-		var firmatarioNelRepository = firmatariNelRepository[z];
+		var commissioneNelRepository = commissioniNelRepository[z];
 		
 		//cerco il nome del firmatario nel repo all'interno del json
-		for (var q=0; q<numeroFirmatari; q++){
-			var firmatario = firmatari.get(q).get("firmatario");
-			var descrizione = filterParam(firmatario.get("descrizione"));
-			if(""+descrizione+""==""+firmatarioNelRepository.name+""){
+		for (var q=0; q<numeroCommissioni; q++){
+			var commissione = commissioni.get(q).get("commissione");
+			var descrizione = filterParam(commissione.get("descrizione"));
+			if(""+descrizione+""==""+commissioneNelRepository.name+""){
 				trovato = true;
 				break
 			}
 		}
 		if(!trovato){
-			var firmatariSpace = firmatarioNelRepository.parent;
-			firmatarioNelRepository.remove();
+			var commissioniSpace = commissioneNelRepository.parent;
+			commissioneNelRepository.remove();
 			/*
-			 * in eliminazione i firmatari devono essere gestiti manualmente 
-			 * a causa di un bug di Alfresco risolto nella 4.1.1:
+			 * in eliminazione le commissioni devono essere gestite manualmente 
+			 * a causa di un bug di Alfresco risolto nella 4.1.1 riguardo le regole in outbound:
 			 * 
 			 * https://issues.alfresco.com/jira/browse/ALF-12711
 			 * 
 			*/
-			var firmatariNelloSpazio = firmatariSpace.getChildAssocsByType("crlatti:firmatario");
-			var firmatariAtto = new Array(firmatariNelloSpazio.length);
-			for (var r=0; r<firmatariNelloSpazio.length; r++) {
-				firmatariAtto[r] = firmatariNelloSpazio[r].name;
+			//var commissioniNelloSpazio = commissioniSpace.getChildAssocsByType("crlatti:commissione");
+			
+			//Commissioni referenti
+			var commissioniReferentiLuceneQuery = 
+				"PARENT:\""+commissioneSpace.nodeRef+"\" AND @crlatti\\:ruoloCommissione:\"Referente\"":
+			
+		    var commissioniReferentiResults = search.luceneSearch(commissioniReferentiLuceneQuery);		
+			var commissioniReferentiAtto = new Array(commissioniReferentiResults.length);
+			for (var r=0; r<commissioniReferentiResults.length; r++) {
+				commissioniReferentiAtto[r] = commissioniReferentiResults[r].name;
 			}
-			var attoNode = firmatariSpace.parent;
-			attoNode.properties["crlatti:firmatari"] = firmatariAtto;
+			
+			//Commissioni consultive
+			var commissioniConsultiveLuceneQuery = 
+				"PARENT:\""+commissioneSpace.nodeRef+"\" AND @crlatti\\:ruoloCommissione:\"Consultiva\"":
+			
+		    var commissioniConsultiveResults = search.luceneSearch(commissioniConsultiveLuceneQuery);		
+			var commissioniConsultiveAtto = new Array(commissioniConsultiveResults.length);
+			for (var r=0; r<commissioniConsultiveResults.length; r++) {
+				commissioniConsultiveAtto[r] = commissioniConsultiveResults[r].name;
+			}
+			
+			var attoNode = commissioniSpace.parent;
+			attoNode.properties["crlatti:commReferente"] = commissioniReferentiAtto;
+			attoNode.properties["crlatti:commConsultiva"] = commissioniConsultiveAtto;
 			attoNode.save();
 		}
 	}
+	
+	//gestione pareri e ridondanza (in eliminazione) di organismiStatutari
+	
+	
 	
 	model.atto = attoNode;
 	
