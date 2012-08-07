@@ -59,7 +59,7 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica File"
+							<p:fileUpload label="Carica Emendamento"
 								fileUploadListener="#{esameCommissioniController.uploadEmendamento}"
 								mode="advanced" auto="true"
 								update="listaEmendamenti ,emendamentoMsg" />
@@ -69,7 +69,7 @@
 						<p:column colspan="4">
 							<h:dataTable id="listaEmendamenti"
 								value="#{esameCommissioniController.emendamentiList}"
-								var="emendamento" styleClass="generalInfoTab">
+								var="emendamento" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Emendamento</f:facet>
@@ -77,7 +77,7 @@
 						</h:column>
 
 								<h:column>
-									<f:facet name="header">Documento</f:facet>
+									<f:facet name="header">Azioni</f:facet>
 									<h:outputText
 										value="#{fn:substring(emendamento.nome, fn:indexOf(emendamento.nome,'.')+1 ,fn:length(emendamento.nome) )}" />
 
@@ -358,7 +358,7 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica File"
+							<p:fileUpload label="Carica Clausola"
 								fileUploadListener="#{esameCommissioniController.uploadTestoClausola}"
 								mode="advanced" auto="true"
 								update="listaTestiClausola ,emendamentoMsg" />
@@ -368,7 +368,7 @@
 						<p:column colspan="4">
 							<h:dataTable id="listaTestiClausola"
 								value="#{esameCommissioniController.testiClausolaList}"
-								var="testoClausola" styleClass="generalInfoTab">
+								var="testoClausola" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Testo Dell'Atto</f:facet>
