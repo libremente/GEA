@@ -18,9 +18,7 @@
 	"dataSedutaSc" : "<#if atto.properties["crlatti:dataSedutaSc"]?exists>${atto.properties["crlatti:dataSedutaSc"]?string("yyyy-MM-dd")}<#else></#if>",
 	"esitoVotoAula" : "<#if atto.properties["crlatti:esitoVotoAula"]?exists>${atto.properties["crlatti:esitoVotoAula"]}<#else></#if>",
 	"dataSedutaCommissione" : "<#if atto.properties["crlatti:dataSedutaComm"]?exists>${atto.properties["crlatti:dataSedutaComm"]?string("yyyy-MM-dd")}<#else></#if>",
-	"commissioneReferente" : "<#if atto.properties["crlatti:commReferente"]?exists>${atto.properties["crlatti:commReferente"]}<#else></#if>",
 	"dataSedutaAula" : "<#if atto.properties["crlatti:dataSedutaAula"]?exists>${atto.properties["crlatti:dataSedutaAula"]?string("yyyy-MM-dd")}<#else></#if>",
-	"commissioneConsultiva" : "<#if atto.properties["crlatti:commConsultiva"]?exists>${atto.properties["crlatti:commConsultiva"]}<#else></#if>",
 	"redigente" : "<#if atto.properties["crlatti:redigente"]?exists>${atto.properties["crlatti:redigente"]?string("true","false")}<#else></#if>",
 	"deliberante" : "<#if atto.properties["crlatti:deliberante"]?exists>${atto.properties["crlatti:deliberante"]?string("true","false")}<#else></#if>",
 	"numeroLcr" : "<#if atto.properties["crlatti:numeroLcr"]?exists>${atto.properties["crlatti:numeroLcr"]}<#else></#if>",
@@ -88,6 +86,22 @@
 			    }
 			}
 			<#if parere_has_next>,</#if>
+    	</#list>
+    <#else></#if>],
+    "commissioni" : [<#if commissioni?exists>
+		<#list commissioni as commissione>
+			{
+				"commissione" :
+				{
+			    	"descrizione" : "${commissione.name}",
+			    	"dataPropostaCommissione" : "<#if commissione.properties["crlatti:dataPresaInCaricoCommissione"]?exists>${commissione.properties["crlatti:dataPresaInCaricoCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"dataAnnulloCommissione" : "<#if commissione.properties["crlatti:dataAnnulloCommissione"]?exists>${commissione.properties["crlatti:dataAnnulloCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"dataAssegnazioneCommissione" : "<#if commissione.properties["crlatti:dataAssegnazioneCommissione"]?exists>${commissione.properties["crlatti:dataAssegnazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"ruoloCommissione" : "<#if commissione.properties["crlatti:ruoloCommissione"]?exists>${commissione.properties["crlatti:ruoloCommissione"]}<#else></#if>",
+			    	"statoCommissione" : "<#if commissione.properties["crlatti:statoCommissione"]?exists>${commissione.properties["crlatti:statoCommissione"]}<#else></#if>"
+			    }
+			}
+			<#if commissione_has_next>,</#if>
     	</#list>
     <#else></#if>]
 	

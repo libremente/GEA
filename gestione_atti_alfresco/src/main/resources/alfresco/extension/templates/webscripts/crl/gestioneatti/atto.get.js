@@ -24,6 +24,11 @@ if(checkIsNotNull(id)){
 	var pareriFolderNode = attoFolderNode.childrenByXPath(pareriFolderXPathQuery)[0];
 	pareri = pareriFolderNode.getChildAssocsByType("crlatti:parere");
 	
+	//lettura commissioni
+	var commissioniFolderXPathQuery = "*[@cm:name='Commissioni']";
+	var commissioniFolderNode = attoFolderNode.childrenByXPath(commissioniFolderXPathQuery)[0];
+	commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
+	
 } else {
 	status.code = 400;
 	status.message = "id atto non valorizzato";
@@ -33,4 +38,5 @@ if(checkIsNotNull(id)){
 model.notePresentazioneAssegnazione = notePresentazioneAssegnazioneNode;
 model.links = links;
 model.pareri = pareri;
+model.commissioni = commissioni;
 model.atto = attoFolderNode;
