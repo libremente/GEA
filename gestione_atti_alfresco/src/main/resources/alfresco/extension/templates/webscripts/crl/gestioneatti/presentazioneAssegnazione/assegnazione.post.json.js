@@ -5,8 +5,6 @@ var id = atto.get("id");
 var commissioni = atto.get("commissioni");
 var pareri = atto.get("pareri");
 
-var firmatari = atto.get("firmatari");
-
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
 	
@@ -19,9 +17,9 @@ if(checkIsNotNull(id)){
 		var commissione = commissioni.get(j).get("commissione");
 		var descrizione = filterParam(commissione.get("descrizione"));
 		var dataProposta = filterParam(commissione.get("dataProposta"));
-		var dataAssegnazione = filterParam(commissione.get("dataFirma"));
-		var ruolo = filterParam(commissione.get("dataRitiro"));
-		var stato = filterParam(commissione.get("primoFirmatario"));
+		var dataAssegnazione = filterParam(commissione.get("dataAssegnazione"));
+		var ruolo = filterParam(commissione.get("ruolo"));
+		var stato = filterParam(commissione.get("stato"));
 		var dataAnnullo = filterParam(commissione.get("dataAnnullo"));
 		
 		//verifica l'esistenza della commissione all'interno del folder Commissioni
@@ -60,7 +58,7 @@ if(checkIsNotNull(id)){
 		commissioneNode.save();
 	}
 	
-	//verifica firmatari da cancellare
+	//verifica commissioni da cancellare
 	var commissioniNelRepository = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
 	
 	//query nel repository per capire se bisogna cancellare delle commissioni
@@ -68,7 +66,7 @@ if(checkIsNotNull(id)){
 		var trovato = false;
 		var commissioneNelRepository = commissioniNelRepository[z];
 		
-		//cerco il nome del firmatario nel repo all'interno del json
+		//cerco il nome della commissione nel repo all'interno del json
 		for (var q=0; q<numeroCommissioni; q++){
 			var commissione = commissioni.get(q).get("commissione");
 			var descrizione = filterParam(commissione.get("descrizione"));
@@ -87,11 +85,10 @@ if(checkIsNotNull(id)){
 			 * https://issues.alfresco.com/jira/browse/ALF-12711
 			 * 
 			*/
-			//var commissioniNelloSpazio = commissioniSpace.getChildAssocsByType("crlatti:commissione");
 			
 			//Commissioni referenti
 			var commissioniReferentiLuceneQuery = 
-				"PARENT:\""+commissioneSpace.nodeRef+"\" AND @crlatti\\:ruoloCommissione:\"Referente\"":
+				"PARENT:\""+commissioniSpace.nodeRef+"\" AND @crlatti\\:ruoloCommissione:\"Referente\"";
 			
 		    var commissioniReferentiResults = search.luceneSearch(commissioniReferentiLuceneQuery);		
 			var commissioniReferentiAtto = new Array(commissioniReferentiResults.length);
@@ -101,7 +98,7 @@ if(checkIsNotNull(id)){
 			
 			//Commissioni consultive
 			var commissioniConsultiveLuceneQuery = 
-				"PARENT:\""+commissioneSpace.nodeRef+"\" AND @crlatti\\:ruoloCommissione:\"Consultiva\"":
+				"PARENT:\""+commissioniSpace.nodeRef+"\" AND @crlatti\\:ruoloCommissione:\"Consultiva\"";
 			
 		    var commissioniConsultiveResults = search.luceneSearch(commissioniConsultiveLuceneQuery);		
 			var commissioniConsultiveAtto = new Array(commissioniConsultiveResults.length);
@@ -117,7 +114,87 @@ if(checkIsNotNull(id)){
 	}
 	
 	//gestione pareri e ridondanza (in eliminazione) di organismiStatutari
+	var pareriXPathQuery = "*[@cm:name='Pareri']";
+	var pareriFolderNode = attoNode.childrenByXPath(pareriXPathQuery)[0];
 	
+	var numeroPareri = pareri.length();
+	for (var j=0; j<numeroPareri; j++){
+		var parere = pareri.get(j).get("parere");
+		var descrizione = filterParam(parere.get("descrizione"));
+		var dataAssegnazione = filterParam(parere.get("dataAssegnazione"));
+		var dataAnnullo = filterParam(parere.get("dataAnnullo"));
+		var obbligatorio = filterParam(parere.get("obbligatorio"));
+		
+		//verifica l'esistenza del parere all'interno del folder Pareri
+		var existParereXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var parereEsistenteResults = pareriFolderNode.childrenByXPath(existParereXPathQuery);
+		var parereNode = null;
+		if(parereEsistenteResults!=null && parereEsistenteResults.length>0){
+			parereNode = parereEsistenteResults[0];
+		} else {
+			parereNode = pareriFolderNode.createNode(descrizione,"crlatti:parere");
+		}
+		
+		var dataAssegnazioneParsed = null;
+		if(checkIsNotNull(dataAssegnazione)){
+			var dataAssegnazioneSplitted = dataAssegnazione.split("-");
+			dataAssegnazioneParsed = new Date(dataAssegnazioneSplitted[0],dataAssegnazioneSplitted[1]-1,dataAssegnazioneSplitted[2]);
+		}
+		
+		var dataAnnulloParsed = null;
+		if(checkIsNotNull(dataAnnullo)){
+			var dataAnnulloSplitted = dataAnnullo.split("-");
+			dataAnnulloParsed = new Date(dataAnnulloSplitted[0],dataAnnulloSplitted[1]-1,dataAnnulloSplitted[2]);
+		}
+		
+		parereNode.properties["crlatti:organismoStatutarioParere"] = descrizione;
+		parereNode.properties["crlatti:dataAssegnazioneParere"] = dataAssegnazioneParsed;
+		parereNode.properties["crlatti:dataAnnulloParere"] = dataAnnulloParsed;
+		parereNode.properties["crlatti:obbligatorio"] = obbligatorio;
+		parereNode.save();
+	}
+	
+	//verifica pareri da cancellare
+	var pareriNelRepository = pareriFolderNode.getChildAssocsByType("crlatti:parere");
+	
+	//query nel repository per capire se bisogna cancellare dei pareri
+	for(var z=0; z<pareriNelRepository.length; z++){
+		var trovato = false;
+		var parereNelRepository = pareriNelRepository[z];
+		
+		//cerco il nome del parere nel repo all'interno del json
+		for (var q=0; q<numeroPareri; q++){
+			var parere = pareri.get(q).get("parere");
+			var descrizione = filterParam(parere.get("descrizione"));
+			if(""+descrizione+""==""+parereNelRepository.name+""){
+				trovato = true;
+				break
+			}
+		}
+		if(!trovato){
+			var pareriSpace = parereNelRepository.parent;
+			parereNelRepository.remove();
+			/*
+			 * in eliminazione le commissioni devono essere gestite manualmente 
+			 * a causa di un bug di Alfresco risolto nella 4.1.1 riguardo le regole in outbound:
+			 * 
+			 * https://issues.alfresco.com/jira/browse/ALF-12711
+			 * 
+			*/
+			
+			var pareriLuceneQuery = 
+				"PARENT:\""+pareriSpace.nodeRef+"\" AND TYPE:\"crlatti:parere\"";
+			
+		    var pareriResults = search.luceneSearch(pareriLuceneQuery);		
+			var pareriAtto = new Array(pareriResults.length);
+			for (var r=0; r<pareriResults.length; r++) {
+				pareriAtto[r] = pareriResults[r].name;
+			}
+			
+			attoNode.properties["crlatti:organismiStatutari"] = pareriAtto;
+			attoNode.save();
+		}
+	}
 	
 	
 	model.atto = attoNode;
