@@ -88,6 +88,9 @@ public class EsameAulaController {
 		allegatiList = new ArrayList<Allegato>(atto.getAllegatiEsameAula());
 		linksList = new ArrayList<Link>(atto.getLinksEsameAula());
 		
+		totaleEmendApprovati();
+		totaleEmendPresentati();
+		totaleNonApprovati();
 	}
 	
 	
@@ -166,6 +169,23 @@ public class EsameAulaController {
 		}
 	}
 	
+	
+	// Emendamenti************************************************************
+	
+	public void totaleEmendPresentati() {
+		numEmendPresentatiTotale = getNumEmendPresentatiGiunta() + getNumEmendPresentatiMaggior() + 
+				getNumEmendPresentatiMinor() + getNumEmendPresentatiMisto();
+	}
+
+	public void totaleEmendApprovati() {
+		numEmendApprovatiTotale = getNumEmendApprovatiGiunta() + getNumEmendApprovatiMaggior() +
+				getNumEmendApprovatiMinor() + getNumEmendApprovatiMisto();
+	}
+
+	public void totaleNonApprovati() {
+		totaleNonApprovati = getNonAmmissibili() + getDecaduti() + getRitirati() + getRespinti();
+	}
+
 	
 
 
@@ -402,7 +422,7 @@ public class EsameAulaController {
 
 
 	public int getDecaduti() {
-		return atto.getNonAmmissibiliEsameAula();
+		return atto.getDecadutiEsameAula();
 	}
 
 

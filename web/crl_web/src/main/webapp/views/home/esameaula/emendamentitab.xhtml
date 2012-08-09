@@ -8,142 +8,253 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<p:panelGrid styleClass="infoTable" id="emendamentiGrid">
+<p:panelGrid styleClass="infoTable" id="emendamentiPanel">
 	<p:row>
 		<p:column>
-			<table class="generalInfoTab grey-text" id="emendamenti" style="width: 100%;"
-				border="0">
-				<thead>
-					<th>Emendamenti presentati</th>
-					<th>Azioni</th>
-					<th>Pubblico</th>
-					<th>Opzioni</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td align="left">Emendamenti del 15/06</td>
-						<td align="left"><p:commandLink id="downloadEmendamento1"
-								value="Download" ajax="false">
-								<p:fileDownload value="#{fileDownloadController.file}" />
-							</p:commandLink></td>
+			<p:fieldset styleClass="fieldSetTab" legend="Emendamenti:"
+				collapsed="false" toggleable="true" toggleSpeed="500">
 
-						<td align="left"><p:selectBooleanCheckbox /></td>
-						<td align="left"><h:commandLink>
-								<h:graphicImage alt="Elimina riga"
-									value="/resources/img/delete.png" />
-							</h:commandLink></td>
-					</tr>
+				<p:panelGrid styleClass="infoTable" id="emendamentiGrid">
+					<p:row>
+						<p:column>
+							<table class="generalInfoTab grey-text" id="emendamenti"
+								style="width: 100%;" border="0">
+								<thead>
+									<th>Emendamenti presentati</th>
+									<th>Azioni</th>
+									<th>Pubblico</th>
+									<th>Opzioni</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="left">Emendamenti del 15/06</td>
+										<td align="left"><p:commandLink id="downloadEmendamento1"
+												value="Download" ajax="false">
+												<p:fileDownload value="#{fileDownloadController.file}" />
+											</p:commandLink></td>
 
-					<tr>
-						<td align="left">Emendamenti del 18/06</td>
-						<td align="left"><p:commandLink id="downloadEmendamento2"
-								value="Download" ajax="false">
-								<p:fileDownload value="#{fileDownloadController.file}" />
-							</p:commandLink></td>
-						<td align="left"><p:selectBooleanCheckbox /></td>
-						<td align="left"><h:commandLink>
-								<h:graphicImage alt="Elimina riga"
-									value="/resources/img/delete.png" />
-							</h:commandLink></td>
-					</tr>
+										<td align="left"><p:selectBooleanCheckbox /></td>
+										<td align="left"><h:commandLink>
+												<h:graphicImage alt="Elimina riga"
+													value="/resources/img/delete.png" />
+											</h:commandLink></td>
+									</tr>
 
-				</tbody>
-			</table>
+									<tr>
+										<td align="left">Emendamenti del 18/06</td>
+										<td align="left"><p:commandLink id="downloadEmendamento2"
+												value="Download" ajax="false">
+												<p:fileDownload value="#{fileDownloadController.file}" />
+											</p:commandLink></td>
+										<td align="left"><p:selectBooleanCheckbox /></td>
+										<td align="left"><h:commandLink>
+												<h:graphicImage alt="Elimina riga"
+													value="/resources/img/delete.png" />
+											</h:commandLink></td>
+									</tr>
+
+								</tbody>
+							</table>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:commandLink>
+								<h:graphicImage alt="Aggiungi collegamento"
+									value="/resources/img/add.png" />
+							</h:commandLink>
+
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+
+							<table class="generalInfoTab" id="numEmendamenti"
+								style="width: 100%;" border="0">
+
+								<tbody>
+									<tr>
+										<td align="left"></td>
+										<td align="left">Maggior.</td>
+										<td align="left">Minor.</td>
+										<td align="left">Giunta</td>
+										<td align="left">Misto</td>
+										<td align="left"><b>Totale</b></td>
+									</tr>
+
+									<tr>
+										<td align="left">Num. Emend. Presentati</td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendPresentatiMaggior}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameAulaController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendPresentatiMinor}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameAulaController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendPresentatiGiunta}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameAulaController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendPresentatiMisto}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameAulaController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText id="totEmendPresentati"
+												value="#{esameAulaController.numEmendPresentatiTotale}"
+												readonly="true" size="5" maxlength="5" /></td>
+									</tr>
+
+									<tr>
+										<td align="left">Num. Emend. Approvati</td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendApprovatiMaggior}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameAulaController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendApprovatiMinor}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameAulaController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendApprovatiGiunta}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameAulaController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameAulaController.numEmendApprovatiMisto}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameAulaController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameAulaController.updateEmendamentiHandler}" />
+											</p:inputText></td>
+
+										<td align="left"><p:inputText id="totEmendApprovati"
+												value="#{esameAulaController.numEmendApprovatiTotale}"
+												readonly="true" size="5" maxlength="5" /></td>
+									</tr>
+
+								</tbody>
+							</table>
+
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+				<p:panelGrid styleClass="infoTable" id="nonApprovati">
+					<p:row>
+
+						<p:column>Non ammissibili</p:column>
+						<p:column>Decaduti</p:column>
+						<p:column>Ritirati</p:column>
+						<p:column>Respinti</p:column>
+						<p:column>
+							<b>Totale non approvati</b>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:inputText size="5" maxlength="5"
+								value="#{esameAulaController.nonAmmissibili}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameAulaController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateEmendamentiHandler}" />
+							</p:inputText>
+						</p:column>
+
+						<p:column>
+							<p:inputText size="5" maxlength="5"
+								value="#{esameAulaController.decaduti}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameAulaController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateEmendamentiHandler}" />
+							</p:inputText>
+						</p:column>
+
+						<p:column>
+							<p:inputText size="5" maxlength="5"
+								value="#{esameAulaController.ritirati}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameAulaController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateEmendamentiHandler}" />
+							</p:inputText>
+						</p:column>
+
+						<p:column>
+							<p:inputText size="5" maxlength="5"
+								value="#{esameAulaController.respinti}">
+								<p:ajax event="change" update="totNonApprovati"
+									listener="#{esameAulaController.totaleNonApprovati}" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateEmendamentiHandler}" />
+							</p:inputText>
+						</p:column>
+
+						<p:column>
+							<p:inputText id="totNonApprovati"
+								value="#{esameAulaController.totaleNonApprovati}"
+								readonly="true" size="5" maxlength="5" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+								Note emendamenti: 
+								</p:column>
+
+						<p:column colspan="4">
+							<p:inputTextarea rows="5" cols="101"
+								value="#{esameAulaController.noteEmendamenti}">
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateEmendamentiHandler}" />
+							</p:inputTextarea>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
 		</p:column>
 	</p:row>
 
 	<p:row>
 		<p:column>
-			<h:commandLink>
-				<h:graphicImage alt="Aggiungi collegamento"
-					value="/resources/img/add.png" />
-			</h:commandLink>
-
+			<p>
+				<p:commandButton value="Salva" />
+			</p>
 		</p:column>
+
 	</p:row>
-
-	<p:row>
-		<p:column>
-
-			<table class="generalInfoTab" id="numEmendamenti"
-				style="width: 100%;" border="0">
-
-				<tbody>
-					<tr>
-						<td align="left"></td>
-						<td align="left">Maggior.</td>
-						<td align="left">Minor.</td>
-						<td align="left">Giunta</td>
-						<td align="left">Misto</td>
-						<td align="left"><b>Totale</b></td>
-					</tr>
-
-					<tr>
-						<td align="left">Num. Emend. Presentati</td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-					</tr>
-
-					<tr>
-						<td align="left">Num. Emend. Approvati</td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-						<td align="left"><p:inputText size="5" maxlength="5" /></td>
-					</tr>
-
-				</tbody>
-			</table>
-
-		</p:column>
-	</p:row>
-
 </p:panelGrid>
-<p:panelGrid styleClass="infoTable" id="nonApprovati">
-	<p:row>
-
-		<p:column>Non ammissibili</p:column>
-		<p:column>Decaduti</p:column>
-		<p:column>Ritirati</p:column>
-		<p:column>Respinti</p:column>
-		<p:column>
-			<b>Totale non approvati</b>
-		</p:column>
-	</p:row>
-	<p:row>
-		<p:column>
-			<p:inputText size="5" maxlength="5" />
-		</p:column>
-		<p:column>
-			<p:inputText size="5" maxlength="5" />
-		</p:column>
-		<p:column>
-			<p:inputText size="5" maxlength="5" />
-		</p:column>
-		<p:column>
-			<p:inputText size="5" maxlength="5" />
-		</p:column>
-		<p:column>
-			<p:inputText size="5" maxlength="5" />
-		</p:column>
-	</p:row>
-</p:panelGrid>
-<br /> Note emendamenti:
-
-<br />
-<p:inputTextarea rows="5" cols="101" />
-
-
-
-<p>
-	<p:commandButton value="Salva" />
-</p>
-
-
-
-
 </html>

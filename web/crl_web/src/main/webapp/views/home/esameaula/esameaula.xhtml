@@ -8,43 +8,51 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
-<p:selectOneMenu id="indicatorePassaggio" style="align: right">
-								<f:selectItem itemLabel="Passaggio 1" itemValue="1" />
-								<f:selectItem itemLabel="Passaggio 2" itemValue="2" />
-								<f:selectItem itemLabel="Passaggio 3" itemValue="3" />
-							</p:selectOneMenu><br /><br />
+<h:form id="presAssForm" enctype="multipart/form-data">
+
+	<p:growl id="tabPresAssMsg" showDetail="true" sticky="false" />
+
+
+	<p:selectOneMenu id="indicatorePassaggio" style="align: right">
+		<f:selectItem itemLabel="Passaggio 1" itemValue="1" />
+		<f:selectItem itemLabel="Passaggio 2" itemValue="2" />
+		<f:selectItem itemLabel="Passaggio 3" itemValue="3" />
+	</p:selectOneMenu>
+	<br />
+	<br />
 
 	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
+		<p:ajax event="tabChange"
+			listener="#{esameAulaController.changeTabHandler}"
+			update=":presAssForm:tabPresAssMsg" />
 
-		
 		<p:tab id="tab1" title="Votazione">
-			
-			<ui:include src="./votazionetab.xhtml"/> 
+
+			<ui:include src="./votazionetab.xhtml" />
 		</p:tab>
 
 		<p:tab id="tab2" title="Emendamenti">
-		
-			<ui:include src="./emendamentitab.xhtml"/>
-			
+
+			<ui:include src="./emendamentitab.xhtml" />
+
 		</p:tab>
-		
+
 		<p:tab id="tab3" title="Rinvio e Stralci">
-            
 
-            <ui:include src="./rinvioestralcitab.xhtml"/>
-		
+
+			<ui:include src="./rinvioestralcitab.xhtml" />
+
 
 		</p:tab>
-		
+
 		<p:tab id="tab4" title="Note e Allegati">
-            
 
-            <ui:include src="./noteallegatitab.xhtml"/>
-		
+
+			<ui:include src="./noteallegatitab.xhtml" />
+
 
 		</p:tab>
-		
+
 	</p:tabView>
 </h:form>
 </html>
