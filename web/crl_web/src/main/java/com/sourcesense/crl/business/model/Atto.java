@@ -80,7 +80,6 @@ public class Atto implements Cloneable
 	private String classificazione;
 	private String nRepertorio;
 	private Date dataRepertorio;
-	private Date dataIniziativa;
 	private String numeroRepertorio;
 	private String descrizioneIniziativa;
 	private String numeroDgr;
@@ -95,21 +94,17 @@ public class Atto implements Cloneable
 
 	private String numeroProtocollo;
 	private String tipoIniziativa;
-	private String numeroDcr;
 	private String firmatario;
 	private String tipoChiusura;
-	private String esitoVotoAula;
 	private String commissioneReferente;
 	private String commissioneConsultiva;
 	private boolean redigente;
 	private boolean deliberante;
-	private String numeroLcr;
 	private String numeroLr;
 	private boolean abbinamento;	
 	private boolean stralcio;
 	private String organismoStatutario;	
 	private String soggettoConsultato;	
-	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
 	private Date dataLR;
@@ -120,7 +115,6 @@ public class Atto implements Cloneable
 	private String esitoVotazione;
 	private Date dataSeduta;
 	private String tipoVotazione;
-	private String numeroDCR;
 
 	private List <Commissione> commissioni = new ArrayList<Commissione>();
 	private List <Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
@@ -137,8 +131,8 @@ public class Atto implements Cloneable
 	private List <Link> linksNoteEsameCommissioni = new ArrayList<Link>();
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
 	private List <AttoRecord> testiAtto = new ArrayList<AttoRecord>();
-	private List <Allegato> testiAttoVotato = new ArrayList<Allegato>();
-	private List <Allegato> emendamenti = new ArrayList<Allegato>();
+	private List <Allegato> testiAttoVotatoEsameCommissioni = new ArrayList<Allegato>();
+	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> testiClausola = new ArrayList<Allegato>();
 
 	private String valutazioneAmmissibilita;
@@ -160,26 +154,26 @@ public class Atto implements Cloneable
 	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
 	private Date dataFineLavoriEsameCommissioni;
 	private String esitoVotoCommissioneReferente;
-	private String quorum;
+	private String quorumEsameCommissioni;
 	private Date dataSedutaCommissione;
 	private Date dataSedutaContinuazioneInReferente;
 	private String motivazioniContinuazioneInReferente;
 	private Date dataTrasmissione;
 	private Date dataRichiestaIscrizioneAula;
 	private boolean passaggioDirettoInAula;
-	private int numEmendPresentatiMaggior = 0;
-	private int numEmendPresentatiMinor = 0;
-	private int numEmendPresentatiGiunta = 0;
-	private int numEmendPresentatiMisto = 0;
-	private int numEmendApprovatiMaggior = 0;
-	private int numEmendApprovatiMinor = 0;
-	private int numEmendApprovatiGiunta = 0;
-	private int numEmendApprovatiMisto = 0;
-	private int nonAmmissibili = 0;
-	private int decaduti = 0;
-	private int ritirati = 0;
-	private int respinti = 0;
-	private String noteEmendamenti;
+	private int numEmendPresentatiMaggiorEsameCommissioni = 0;
+	private int numEmendPresentatiMinorEsameCommissioni = 0;
+	private int numEmendPresentatiGiuntaEsameCommissioni = 0;
+	private int numEmendPresentatiMistoEsameCommissioni = 0;
+	private int numEmendApprovatiMaggiorEsameCommissioni = 0;
+	private int numEmendApprovatiMinorEsameCommissioni = 0;
+	private int numEmendApprovatiGiuntaEsameCommissioni = 0;
+	private int numEmendApprovatiMistoEsameCommissioni = 0;
+	private int nonAmmissibiliEsameCommissioni = 0;
+	private int decadutiEsameCommissioni = 0;
+	private int ritiratiEsameCommissioni = 0;
+	private int respintiEsameCommissioni = 0;
+	private String noteEmendamentiEsameCommissioni;
 	private Date dataPresaInCaricoProposta;
 	private Date dataIntesa;
 	private String esitoVotazioneIntesa;
@@ -187,6 +181,48 @@ public class Atto implements Cloneable
 	private String noteGeneraliEsameCommissioni;
 
 
+	private String relazioneScritta;
+	private String esitoVotoAula;
+	private String tipologiaVotazione;
+	private Date dataSedutaVotazione;
+	private String numeroDcr;
+	private String numeroLcr;
+	private boolean emendato;
+	private String noteVotazione;
+	
+	private List<Allegato> testiAttoVotatoEsameAula = new ArrayList<Allegato>();
+	
+	private List<Allegato> emendamentiEsameAula = new ArrayList<Allegato>();
+	
+	private int numEmendPresentatiMaggiorEsameAula;
+	private int numEmendPresentatiMinorEsameAula;
+	private int numEmendPresentatiGiuntaEsameAula;
+	private int numEmendPresentatiMistoEsameAula;
+	private int numEmendApprovatiMaggiorEsameAula;
+	private int numEmendApprovatiMinorEsameAula;
+	private int numEmendApprovatiGiuntaEsameAula;
+	private int numEmendApprovatiMistoEsameAula;
+	private int nonAmmissibiliEsameAula;
+	private int decadutiEsameAula;
+	private int ritiratiEsameAula;
+	private int respintiEsameAula;
+	private int totaleNonApprovatiEsameAula;
+	private String noteEmendamentiEsameAula;
+	
+	private Date dataSedutaRinvio;
+	private Date dataTermineMassimo;
+	private String motivazioneRinvio;
+	private Date dataSedutaStralcio;
+	private Date dataStralcio;
+	private Date dataIniziativa;
+	private String articoli;
+	private String noteStralcio;
+	private String quorumEsameAula;
+	
+	private String noteGeneraliEsameAula;
+	
+	private List<Allegato> allegatiEsameAula = new ArrayList<Allegato>();
+	private List<Link> linksEsameAula = new ArrayList<Link>();
 
 	public Atto(){
 
@@ -237,7 +273,13 @@ public class Atto implements Cloneable
 
 	}
 
+	public String getId() {
+		return id;
+	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -245,6 +287,91 @@ public class Atto implements Cloneable
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getCodice() {
+		return codice;
+	}
+
+	public void setCodice(String codice) {
+		this.codice = codice;
+	}
+
+	public String getOggetto() {
+		return oggetto;
+	}
+
+	public void setOggetto(String oggetto) {
+		this.oggetto = oggetto;
+	}
+
+	public String getPrimoFirmatario() {
+		return primoFirmatario;
+	}
+
+	public void setPrimoFirmatario(String primoFirmatario) {
+		this.primoFirmatario = primoFirmatario;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresentazione() {
+		return dataPresentazione;
+	}
+
+	public void setDataPresentazione(Date dataPresentazione) {
+		this.dataPresentazione = dataPresentazione;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresaInCarico() {
+		return dataPresaInCarico;
+	}
+
+	public void setDataPresaInCarico(Date dataPresaInCarico) {
+		this.dataPresaInCarico = dataPresaInCarico;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPubblicazione() {
+		return dataPubblicazione;
+	}
+
+	public void setDataPubblicazione(Date dataPubblicazione) {
+		this.dataPubblicazione = dataPubblicazione;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaSc() {
+		return dataSedutaSc;
+	}
+
+	public void setDataSedutaSc(Date dataSedutaSc) {
+		this.dataSedutaSc = dataSedutaSc;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaAula() {
+		return dataSedutaAula;
+	}
+
+	public void setDataSedutaAula(Date dataSedutaAula) {
+		this.dataSedutaAula = dataSedutaAula;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 
 	public String getNumeroAtto() {
@@ -271,103 +398,6 @@ public class Atto implements Cloneable
 		this.tipologia = tipologia;
 	}
 
-	/**
-	 * @return the tipo
-	 */
-	public String getTipo()
-	{
-		return tipo;
-	}
-
-	/**
-	 * @param tipo the tipo to set
-	 */
-	public void setTipo(String tipo)
-	{
-		this.tipo = tipo;
-	}
-
-	/**
-	 * @return the codice
-	 */
-	public String getCodice()
-	{
-		return codice;
-	}
-
-	/**
-	 * @param codice the codice to set
-	 */
-	public void setCodice(String codice)
-	{
-		this.codice = codice;
-	}
-
-	/**
-	 * @return the oggetto
-	 */
-	public String getOggetto()
-	{
-		return oggetto;
-	}
-
-	/**
-	 * @param oggetto the oggetto to set
-	 */
-	public void setOggetto(String oggetto)
-	{
-		this.oggetto = oggetto;
-	}
-
-	/**
-	 * @return the primoFirmatario
-	 */
-	public String getPrimoFirmatario()
-	{
-		return primoFirmatario;
-	}
-
-	/**
-	 * @param primoFirmatario the primoFirmatario to set
-	 */
-	public void setPrimoFirmatario(String primoFirmatario)
-	{
-		this.primoFirmatario = primoFirmatario;
-	}
-
-	/**
-	 * @return the dataPresentazione
-	 */
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataPresentazione()
-	{
-		return dataPresentazione;
-	}
-
-	/**
-	 * @param dataPresentazione the dataPresentazione to set
-	 */
-	public void setDataPresentazione(Date dataPresentazione)
-	{
-		this.dataPresentazione = dataPresentazione;
-	}
-
-	/**
-	 * @return the stato
-	 */
-	public String getStato()
-	{
-		return stato;
-	}
-
-	/**
-	 * @param stato the stato to set
-	 */
-	public void setStato(String stato)
-	{
-		this.stato = stato;
-	}
-
 	public String getLegislatura() {
 		return legislatura;
 	}
@@ -384,175 +414,12 @@ public class Atto implements Cloneable
 		this.anno = anno;
 	}
 
-	public String getNumeroProtocollo() {
-		return numeroProtocollo;
+	public String getError() {
+		return error;
 	}
 
-	public void setNumeroProtocollo(String numeroprotocollo) {
-		this.numeroProtocollo = numeroprotocollo;
-	}
-
-	public String getTipoIniziativa() {
-		return tipoIniziativa;
-	}
-
-	public void setTipoIniziativa(String tipoiniziativa) {
-		this.tipoIniziativa = tipoiniziativa;
-	}
-
-	public String getNumeroDcr() {
-		return numeroDcr;
-	}
-
-	public void setNumeroDcr(String numerodcr) {
-		this.numeroDcr = numerodcr;
-	}
-
-	public String getFirmatario() {
-		return firmatario;
-	}
-
-	public void setFirmatario(String firmatario) {
-		this.firmatario = firmatario;
-	}
-
-	public String getTipoChiusura() {
-		return tipoChiusura;
-	}
-
-	public void setTipoChiusura(String tipoChiusura) {
-		this.tipoChiusura = tipoChiusura;
-	}
-
-	public String getEsitoVotoCommissioneReferente() {
-		return esitoVotoCommissioneReferente;
-	}
-
-	public void setEsitoVotoCommissioneReferente(
-			String esitoVotoCommissioneReferente) {
-		this.esitoVotoCommissioneReferente = esitoVotoCommissioneReferente;
-	}
-
-	public String getEsitoVotoAula() {
-		return esitoVotoAula;
-	}
-
-	public void setEsitoVotoAula(String esitoVotoAula) {
-		this.esitoVotoAula = esitoVotoAula;
-	}
-
-	public String getCommissioneReferente() {
-		return commissioneReferente;
-	}
-
-	public void setCommissioneReferente(String commissioneReferente) {
-		this.commissioneReferente = commissioneReferente;
-	}
-
-	public String getCommissioneConsultiva() {
-		return commissioneConsultiva;
-	}
-
-	public void setCommissioneConsultiva(String commissioneConsultiva) {
-		this.commissioneConsultiva = commissioneConsultiva;
-	}
-
-	public boolean isRedigente() {
-		return redigente;
-	}
-
-	public void setRedigente(boolean redigente) {
-		this.redigente = redigente;
-	}
-
-	public boolean isDeliberante() {
-		return deliberante;
-	}
-
-	public void setDeliberante(boolean deliberante) {
-		this.deliberante = deliberante;
-	}
-
-
-	public boolean isAbbinamento() {
-		return abbinamento;
-	}
-
-	public void setAbbinamento(boolean abbinamento) {
-		this.abbinamento = abbinamento;
-	}
-
-	public boolean isStralcio() {
-		return stralcio;
-	}
-
-	public void setStralcio(boolean stralcio) {
-		this.stralcio = stralcio;
-	}
-
-	public String getOrganismoStatutario() {
-		return organismoStatutario;
-	}
-
-	public void setOrganismoStatutario(String organismoStatutario) {
-		this.organismoStatutario = organismoStatutario;
-	}
-
-	public String getSoggettoConsultato() {
-		return soggettoConsultato;
-	}
-
-	public void setSoggettoConsultato(String soggettoConsultato) {
-		this.soggettoConsultato = soggettoConsultato;
-	}
-
-	public boolean isEmendato() {
-		return emendato;
-	}
-
-	public void setEmendato(boolean emendato) {
-		this.emendato = emendato;
-	}
-
-	public boolean isRinviato() {
-		return rinviato;
-	}
-
-	public void setRinviato(boolean rinviato) {
-		this.rinviato = rinviato;
-	}
-
-	public boolean isSospeso() {
-		return sospeso;
-	}
-
-	public void setSospeso(boolean sospeso) {
-		this.sospeso = sospeso;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataPresaInCarico() {
-		return dataPresaInCarico;
-	}
-
-	public void setDataPresaInCarico(Date dataPresaInCarico) {
-		this.dataPresaInCarico = dataPresaInCarico;
-	}
-
-	public String getClassificazione() {
-		return classificazione;
-	}
-
-	public void setClassificazione(String classificazione) {
-		this.classificazione = classificazione;
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	public String getStatoAttuale() {
@@ -563,12 +430,20 @@ public class Atto implements Cloneable
 		this.statoAttuale = statoAttuale;
 	}
 
-	public String getNumeroRepertorio() {
-		return numeroRepertorio;
+	public String getClassificazione() {
+		return classificazione;
 	}
 
-	public void setNumeroRepertorio(String numeroRepertorio) {
-		this.numeroRepertorio = numeroRepertorio;
+	public void setClassificazione(String classificazione) {
+		this.classificazione = classificazione;
+	}
+
+	public String getnRepertorio() {
+		return nRepertorio;
+	}
+
+	public void setnRepertorio(String nRepertorio) {
+		this.nRepertorio = nRepertorio;
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)
@@ -580,15 +455,13 @@ public class Atto implements Cloneable
 		this.dataRepertorio = dataRepertorio;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataIniziativa() {
-		return dataIniziativa;
+	public String getNumeroRepertorio() {
+		return numeroRepertorio;
 	}
 
-	public void setDataIniziativa(Date dataIniziativa) {
-		this.dataIniziativa = dataIniziativa;
+	public void setNumeroRepertorio(String numeroRepertorio) {
+		this.numeroRepertorio = numeroRepertorio;
 	}
-
 
 	public String getDescrizioneIniziativa() {
 		return descrizioneIniziativa;
@@ -598,7 +471,22 @@ public class Atto implements Cloneable
 		this.descrizioneIniziativa = descrizioneIniziativa;
 	}
 
+	public String getNumeroDgr() {
+		return numeroDgr;
+	}
 
+	public void setNumeroDgr(String numeroDgr) {
+		this.numeroDgr = numeroDgr;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataDgr() {
+		return dataDgr;
+	}
+
+	public void setDataDgr(Date dataDgr) {
+		this.dataDgr = dataDgr;
+	}
 
 	public String getAssegnazione() {
 		return assegnazione;
@@ -606,14 +494,6 @@ public class Atto implements Cloneable
 
 	public void setAssegnazione(String assegnazione) {
 		this.assegnazione = assegnazione;
-	}
-
-	public String getnRepertorio() {
-		return nRepertorio;
-	}
-
-	public void setnRepertorio(String nRepertorio) {
-		this.nRepertorio = nRepertorio;
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)
@@ -651,68 +531,124 @@ public class Atto implements Cloneable
 		this.dataAssegnazioneCommissioni = dataAssegnazioneCommissioni;
 	}
 
-	public List<Commissione> getCommissioni() {
-		return commissioni;
+	public String getNumeroProtocollo() {
+		return numeroProtocollo;
 	}
 
-	public void setCommissioni(List<Commissione> commissioni) {
-		this.commissioni = commissioni;
+	public void setNumeroProtocollo(String numeroProtocollo) {
+		this.numeroProtocollo = numeroProtocollo;
 	}
 
-	public List<Abbinamento> getAbbinamenti() {
-		return abbinamenti;
+	public String getTipoIniziativa() {
+		return tipoIniziativa;
 	}
 
-	public void setAbbinamenti(List<Abbinamento> abbinamenti) {
-		this.abbinamenti = abbinamenti;
+	public void setTipoIniziativa(String tipoIniziativa) {
+		this.tipoIniziativa = tipoIniziativa;
 	}
 
-	public List<Organo> getOrgani() {
-		return organi;
+	public String getFirmatario() {
+		return firmatario;
 	}
 
-	public void setOrgani(List<Organo> organi) {
-		this.organi = organi;
+	public void setFirmatario(String firmatario) {
+		this.firmatario = firmatario;
 	}
 
-	public List<Firmatario> getFirmatari() {
-		return firmatari;
+	public String getTipoChiusura() {
+		return tipoChiusura;
 	}
 
-	public void setFirmatari(List<Firmatario> firmatari) {
-		this.firmatari = firmatari;
+	public void setTipoChiusura(String tipoChiusura) {
+		this.tipoChiusura = tipoChiusura;
 	}
 
-	public List <Relatore> getRelatori() {
-		return relatori;
+	public String getCommissioneReferente() {
+		return commissioneReferente;
 	}
 
-	public void setRelatori(List <Relatore> relatori) {
-		this.relatori = relatori;
+	public void setCommissioneReferente(String commissioneReferente) {
+		this.commissioneReferente = commissioneReferente;
 	}
 
-	public List <Parere> getPareri() {
-		return pareri;
+	public String getCommissioneConsultiva() {
+		return commissioneConsultiva;
 	}
 
-	public void setPareri(List <Parere> pareri) {
-		this.pareri = pareri;
+	public void setCommissioneConsultiva(String commissioneConsultiva) {
+		this.commissioneConsultiva = commissioneConsultiva;
 	}
 
-	public List <Consultazione> getConsultazioni() {
-		return consultazioni;
+	public boolean isRedigente() {
+		return redigente;
 	}
 
-	public void setConsultazioni(List <Consultazione> consultazioni) {
-		this.consultazioni = consultazioni;
+	public void setRedigente(boolean redigente) {
+		this.redigente = redigente;
 	}
 
-	public List <Atto> getCollegamenti() {
-		return collegamenti;
+	public boolean isDeliberante() {
+		return deliberante;
 	}
 
-	public void setCollegamenti(List <Atto> collegamenti) {
-		this.collegamenti = collegamenti;
+	public void setDeliberante(boolean deliberante) {
+		this.deliberante = deliberante;
+	}
+
+	public String getNumeroLr() {
+		return numeroLr;
+	}
+
+	public void setNumeroLr(String numeroLr) {
+		this.numeroLr = numeroLr;
+	}
+
+	public boolean isAbbinamento() {
+		return abbinamento;
+	}
+
+	public void setAbbinamento(boolean abbinamento) {
+		this.abbinamento = abbinamento;
+	}
+
+	public boolean isStralcio() {
+		return stralcio;
+	}
+
+	public void setStralcio(boolean stralcio) {
+		this.stralcio = stralcio;
+	}
+
+	public String getOrganismoStatutario() {
+		return organismoStatutario;
+	}
+
+	public void setOrganismoStatutario(String organismoStatutario) {
+		this.organismoStatutario = organismoStatutario;
+	}
+
+	public String getSoggettoConsultato() {
+		return soggettoConsultato;
+	}
+
+	public void setSoggettoConsultato(String soggettoConsultato) {
+		this.soggettoConsultato = soggettoConsultato;
+	}
+
+	public boolean isRinviato() {
+		return rinviato;
+	}
+
+	public void setRinviato(boolean rinviato) {
+		this.rinviato = rinviato;
+	}
+
+	public boolean isSospeso() {
+		return sospeso;
+	}
+
+	public void setSospeso(boolean sospeso) {
+		this.sospeso = sospeso;
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)
@@ -783,90 +719,153 @@ public class Atto implements Cloneable
 		this.tipoVotazione = tipoVotazione;
 	}
 
-	public String getNumeroDCR() {
-		return numeroDCR;
+	public List<Commissione> getCommissioni() {
+		return commissioni;
 	}
 
-	public void setNumeroDCR(String numeroDCR) {
-		this.numeroDCR = numeroDCR;
+	public void setCommissioni(List<Commissione> commissioni) {
+		this.commissioni = commissioni;
 	}
 
-
-
-	public String getError() {
-		return error;
+	public List<Abbinamento> getAbbinamenti() {
+		return abbinamenti;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setAbbinamenti(List<Abbinamento> abbinamenti) {
+		this.abbinamenti = abbinamenti;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataPubblicazione() {
-		return dataPubblicazione;
+	public List<Organo> getOrgani() {
+		return organi;
 	}
 
-	public void setDataPubblicazione(Date dataPubblicazione) {
-		this.dataPubblicazione = dataPubblicazione;
+	public void setOrgani(List<Organo> organi) {
+		this.organi = organi;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataSedutaSc() {
-		return dataSedutaSc;
+	public List<Firmatario> getFirmatari() {
+		return firmatari;
 	}
 
-	public void setDataSedutaSc(Date dataSedutaSc) {
-		this.dataSedutaSc = dataSedutaSc;
+	public void setFirmatari(List<Firmatario> firmatari) {
+		this.firmatari = firmatari;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataSedutaAula() {
-		return dataSedutaAula;
+	public List<Relatore> getRelatori() {
+		return relatori;
 	}
 
-	public void setDataSedutaAula(Date dataSedutaAula) {
-		this.dataSedutaAula = dataSedutaAula;
+	public void setRelatori(List<Relatore> relatori) {
+		this.relatori = relatori;
 	}
 
-	public String getNumeroDgr() {
-		return numeroDgr;
+	public List<Parere> getPareri() {
+		return pareri;
 	}
 
-	public void setNumeroDgr(String numeroDgr) {
-		this.numeroDgr = numeroDgr;
+	public void setPareri(List<Parere> pareri) {
+		this.pareri = pareri;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataDgr() {
-		return dataDgr;
+	public List<Consultazione> getConsultazioni() {
+		return consultazioni;
 	}
 
-	public void setDataDgr(Date dataDgr) {
-		this.dataDgr = dataDgr;
+	public void setConsultazioni(List<Consultazione> consultazioni) {
+		this.consultazioni = consultazioni;
 	}
 
-	public String getNumeroLcr() {
-		return numeroLcr;
+	public List<Atto> getCollegamenti() {
+		return collegamenti;
 	}
 
-	public void setNumeroLcr(String numeroLcr) {
-		this.numeroLcr = numeroLcr;
+	public void setCollegamenti(List<Atto> collegamenti) {
+		this.collegamenti = collegamenti;
 	}
 
-	public String getNumeroLr() {
-		return numeroLr;
+	public List<Allegato> getAllegati() {
+		return allegati;
 	}
 
-	public void setNumeroLr(String numeroLr) {
-		this.numeroLr = numeroLr;
+	public void setAllegati(List<Allegato> allegati) {
+		this.allegati = allegati;
 	}
 
-	public List <OrganismoStatutario> getOrganismiStatutari() {
+	public List<Allegato> getAllegatiNotePresentazioneAssegnazione() {
+		return allegatiNotePresentazioneAssegnazione;
+	}
+
+	public void setAllegatiNotePresentazioneAssegnazione(
+			List<Allegato> allegatiNotePresentazioneAssegnazione) {
+		this.allegatiNotePresentazioneAssegnazione = allegatiNotePresentazioneAssegnazione;
+	}
+
+	public List<Allegato> getAllegatiNoteEsameCommissioni() {
+		return allegatiNoteEsameCommissioni;
+	}
+
+	public void setAllegatiNoteEsameCommissioni(
+			List<Allegato> allegatiNoteEsameCommissioni) {
+		this.allegatiNoteEsameCommissioni = allegatiNoteEsameCommissioni;
+	}
+
+	public List<Link> getLinksPresentazioneAssegnazione() {
+		return linksPresentazioneAssegnazione;
+	}
+
+	public void setLinksPresentazioneAssegnazione(
+			List<Link> linksPresentazioneAssegnazione) {
+		this.linksPresentazioneAssegnazione = linksPresentazioneAssegnazione;
+	}
+
+	public List<Link> getLinksNoteEsameCommissioni() {
+		return linksNoteEsameCommissioni;
+	}
+
+	public void setLinksNoteEsameCommissioni(List<Link> linksNoteEsameCommissioni) {
+		this.linksNoteEsameCommissioni = linksNoteEsameCommissioni;
+	}
+
+	public List<OrganismoStatutario> getOrganismiStatutari() {
 		return organismiStatutari;
 	}
 
-	public void setOrganismiStatutari(List <OrganismoStatutario> organismiStatutari) {
+	public void setOrganismiStatutari(List<OrganismoStatutario> organismiStatutari) {
 		this.organismiStatutari = organismiStatutari;
+	}
+
+	public List<AttoRecord> getTestiAtto() {
+		return testiAtto;
+	}
+
+	public void setTestiAtto(List<AttoRecord> testiAtto) {
+		this.testiAtto = testiAtto;
+	}
+
+	public List<Allegato> getTestiAttoVotatoEsameCommissioni() {
+		return testiAttoVotatoEsameCommissioni;
+	}
+
+	public void setTestiAttoVotatoEsameCommissioni(
+			List<Allegato> testiAttoVotatoEsameCommissioni) {
+		this.testiAttoVotatoEsameCommissioni = testiAttoVotatoEsameCommissioni;
+	}
+
+	public List<Allegato> getEmendamentiEsameCommissioni() {
+		return emendamentiEsameCommissioni;
+	}
+
+	public void setEmendamentiEsameCommissioni(
+			List<Allegato> emendamentiEsameCommissioni) {
+		this.emendamentiEsameCommissioni = emendamentiEsameCommissioni;
+	}
+
+	public List<Allegato> getTestiClausola() {
+		return testiClausola;
+	}
+
+	public void setTestiClausola(List<Allegato> testiClausola) {
+		this.testiClausola = testiClausola;
 	}
 
 	public String getValutazioneAmmissibilita() {
@@ -944,515 +943,594 @@ public class Atto implements Cloneable
 		this.noteAmmissibilita = noteAmmissibilita;
 	}
 
-	public List <AttoRecord> getTestiAtto() {
-		return testiAtto;
-	}
-
-	public void setTestiAtto(List <AttoRecord> testiAtto) {
-		this.testiAtto = testiAtto;
-	}
-
-
-
-	public List <Allegato> getAllegatiNotePresentazioneAssegnazione() {
-		return allegatiNotePresentazioneAssegnazione;
-	}
-
-
-
-	public void setAllegatiNotePresentazioneAssegnazione(
-			List <Allegato> allegatiNotePresentazioneAssegnazione) {
-		this.allegatiNotePresentazioneAssegnazione = allegatiNotePresentazioneAssegnazione;
-	}
-
-
-
-	public List <Allegato> getAllegati() {
-		return allegati;
-	}
-
-
-
-	public void setAllegati(List <Allegato> allegati) {
-		this.allegati = allegati;
-	}
-
-
-
-	public List <Link> getLinksNoteEsameCommissioni() {
-		return linksNoteEsameCommissioni;
-	}
-
-
-
-	public void setLinksNoteEsameCommissioni(
-			List <Link> linksNoteEsameCommissioni) {
-		this.linksNoteEsameCommissioni = linksNoteEsameCommissioni;
-	}
-
-
-
-	public List<Allegato> getAllegatiNoteEsameCommissioni() {
-		return allegatiNoteEsameCommissioni;
-	}
-
-
-
-	public void setAllegatiNoteEsameCommissioni(
-			List<Allegato> allegatiNoteEsameCommissioni) {
-		this.allegatiNoteEsameCommissioni = allegatiNoteEsameCommissioni;
-	}
-
-
-
-	public List<Allegato> getTestiAttoVotato() {
-		return testiAttoVotato;
-	}
-
-
-
-	public void setTestiAttoVotato(List<Allegato> testiAttoVotato) {
-		this.testiAttoVotato = testiAttoVotato;
-	}
-
-
-
-	public List<Allegato> getEmendamenti() {
-		return emendamenti;
-	}
-
-
-
-	public void setEmendamenti(List<Allegato> emendamenti) {
-		this.emendamenti = emendamenti;
-	}
-
-
-
-	public List<Allegato> getTestiClausola() {
-		return testiClausola;
-	}
-
-
-
-	public void setTestiClausola(List<Allegato> testiClausola) {
-		this.testiClausola = testiClausola;
-	}
-
-
-
-	public String getMateria() {
-		return materia;
-	}
-
-
-
-	public void setMateria(String materia) {
-		this.materia = materia;
-	}
-
-
-
-	public boolean isPresenzaComitatoRistretto() {
-		return presenzaComitatoRistretto;
-	}
-
-
-
-	public void setPresenzaComitatoRistretto(boolean presenzaComitatoRistretto) {
-		this.presenzaComitatoRistretto = presenzaComitatoRistretto;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataIstituzioneComitato() {
-		return dataIstituzioneComitato;
-	}
-
-
-
-	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
-		this.dataIstituzioneComitato = dataIstituzioneComitato;
-	}
-
-
-
-	public ComitatoRistretto getComitatoRistretto() {
-		return comitatoRistretto;
-	}
-
-
-
-	public void setComitatoRistretto(ComitatoRistretto comitatoRistretto) {
-		this.comitatoRistretto = comitatoRistretto;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataFineLavoriEsameCommissioni() {
-		return dataFineLavoriEsameCommissioni;
-	}
-
-
-
-	public void setDataFineLavoriEsameCommissioni(
-			Date dataFineLavoriEsameCommissioni) {
-		this.dataFineLavoriEsameCommissioni = dataFineLavoriEsameCommissioni;
-	}
-
-
-
-	public String getQuorum() {
-		return quorum;
-	}
-
-
-
-	public void setQuorum(String quorum) {
-		this.quorum = quorum;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataSedutaContinuazioneInReferente() {
-		return dataSedutaContinuazioneInReferente;
-	}
-
-
-
-	public void setDataSedutaContinuazioneInReferente(
-			Date dataSedutaContinuazioneInReferente) {
-		this.dataSedutaContinuazioneInReferente = dataSedutaContinuazioneInReferente;
-	}
-
-
-
-	public String getMotivazioniContinuazioneInReferente() {
-		return motivazioniContinuazioneInReferente;
-	}
-
-
-
-	public void setMotivazioniContinuazioneInReferente(
-			String motivazioniContinuazioneInReferente) {
-		this.motivazioniContinuazioneInReferente = motivazioniContinuazioneInReferente;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataTrasmissione() {
-		return dataTrasmissione;
-	}
-
-
-
-	public void setDataTrasmissione(Date dataTrasmissione) {
-		this.dataTrasmissione = dataTrasmissione;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataRichiestaIscrizioneAula() {
-		return dataRichiestaIscrizioneAula;
-	}
-
-
-
-	public void setDataRichiestaIscrizioneAula(Date dataRichiestaIscrizioneAula) {
-		this.dataRichiestaIscrizioneAula = dataRichiestaIscrizioneAula;
-	}
-
-
-
-	public boolean isPassaggioDirettoInAula() {
-		return passaggioDirettoInAula;
-	}
-
-
-
-	public void setPassaggioDirettoInAula(boolean passaggioDirettoInAula) {
-		this.passaggioDirettoInAula = passaggioDirettoInAula;
-	}
-
-
-
-	public int getNumEmendPresentatiMaggior() {
-		return numEmendPresentatiMaggior;
-	}
-
-
-
-	public void setNumEmendPresentatiMaggior(int numEmendPresentatiMaggior) {
-		this.numEmendPresentatiMaggior = numEmendPresentatiMaggior;
-	}
-
-
-
-	public int getNumEmendPresentatiMinor() {
-		return numEmendPresentatiMinor;
-	}
-
-
-
-	public void setNumEmendPresentatiMinor(int numEmendPresentatiMinor) {
-		this.numEmendPresentatiMinor = numEmendPresentatiMinor;
-	}
-
-
-
-	public int getNumEmendPresentatiGiunta() {
-		return numEmendPresentatiGiunta;
-	}
-
-
-
-	public void setNumEmendPresentatiGiunta(int numEmendPresentatiGiunta) {
-		this.numEmendPresentatiGiunta = numEmendPresentatiGiunta;
-	}
-
-
-
-	public int getNumEmendPresentatiMisto() {
-		return numEmendPresentatiMisto;
-	}
-
-
-
-	public void setNumEmendPresentatiMisto(int numEmendPresentatiMisto) {
-		this.numEmendPresentatiMisto = numEmendPresentatiMisto;
-	}
-
-
-
-	public int getNumEmendApprovatiMaggior() {
-		return numEmendApprovatiMaggior;
-	}
-
-
-
-	public void setNumEmendApprovatiMaggior(int numEmendApprovatiMaggior) {
-		this.numEmendApprovatiMaggior = numEmendApprovatiMaggior;
-	}
-
-
-
-	public int getNumEmendApprovatiMinor() {
-		return numEmendApprovatiMinor;
-	}
-
-
-
-	public void setNumEmendApprovatiMinor(int numEmendApprovatiMinor) {
-		this.numEmendApprovatiMinor = numEmendApprovatiMinor;
-	}
-
-
-
-	public int getNumEmendApprovatiGiunta() {
-		return numEmendApprovatiGiunta;
-	}
-
-
-
-	public void setNumEmendApprovatiGiunta(int numEmendApprovatiGiunta) {
-		this.numEmendApprovatiGiunta = numEmendApprovatiGiunta;
-	}
-
-
-
-	public int getNumEmendApprovatiMisto() {
-		return numEmendApprovatiMisto;
-	}
-
-
-
-	public void setNumEmendApprovatiMisto(int numEmendApprovatiMisto) {
-		this.numEmendApprovatiMisto = numEmendApprovatiMisto;
-	}
-
-
-
-
-	public int getDecaduti() {
-		return decaduti;
-	}
-
-
-
-	public void setDecaduti(int decaduti) {
-		this.decaduti = decaduti;
-	}
-
-
-
-	public int getRitirati() {
-		return ritirati;
-	}
-
-
-
-	public void setRitirati(int ritirati) {
-		this.ritirati = ritirati;
-	}
-
-
-
-	public int getRespinti() {
-		return respinti;
-	}
-
-
-
-	public void setRespinti(int respinti) {
-		this.respinti = respinti;
-	}
-
-
-
-	public String getNoteEmendamenti() {
-		return noteEmendamenti;
-	}
-
-
-
-	public void setNoteEmendamenti(String noteEmendamenti) {
-		this.noteEmendamenti = noteEmendamenti;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataPresaInCaricoProposta() {
-		return dataPresaInCaricoProposta;
-	}
-
-
-
-	public void setDataPresaInCaricoProposta(Date dataPresaInCaricoProposta) {
-		this.dataPresaInCaricoProposta = dataPresaInCaricoProposta;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataIntesa() {
-		return dataIntesa;
-	}
-
-
-
-	public void setDataIntesa(Date dataIntesa) {
-		this.dataIntesa = dataIntesa;
-	}
-
-
-
-	public String getEsitoVotazioneIntesa() {
-		return esitoVotazioneIntesa;
-	}
-
-
-
-	public void setEsitoVotazioneIntesa(String esitoVotazioneIntesa) {
-		this.esitoVotazioneIntesa = esitoVotazioneIntesa;
-	}
-
-
-
-	public String getNoteClausolaValutativa() {
-		return noteClausolaValutativa;
-	}
-
-
-
-	public void setNoteClausolaValutativa(String noteClausolaValutativa) {
-		this.noteClausolaValutativa = noteClausolaValutativa;
-	}
-
-
-
-	public String getNoteGeneraliEsameCommissioni() {
-		return noteGeneraliEsameCommissioni;
-	}
-
-
-
-	public void setNoteGeneraliEsameCommissioni(String noteGeneraliEsameCommissioni) {
-		this.noteGeneraliEsameCommissioni = noteGeneraliEsameCommissioni;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataScadenzaEsameCommissioni() {
-		return dataScadenzaEsameCommissioni;
-	}
-
-
-
-	public void setDataScadenzaEsameCommissioni(Date dataScadenzaEsameCommissioni) {
-		this.dataScadenzaEsameCommissioni = dataScadenzaEsameCommissioni;
-	}
-
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataSedutaCommissione() {
-		return dataSedutaCommissione;
-	}
-
-
-
-	public void setDataSedutaCommissione(Date dataSedutaCommissione) {
-		this.dataSedutaCommissione = dataSedutaCommissione;
-	}
-
-
-
-	public int getNonAmmissibili() {
-		return nonAmmissibili;
-	}
-
-
-
-	public void setNonAmmissibili(int nonAmmissibili) {
-		this.nonAmmissibili = nonAmmissibili;
-	}
-
-
-
-	public List <Link> getLinksPresentazioneAssegnazione() {
-		return linksPresentazioneAssegnazione;
-	}
-
-
-
-	public void setLinksPresentazioneAssegnazione(
-			List <Link> linksPresentazioneAssegnazione) {
-		this.linksPresentazioneAssegnazione = linksPresentazioneAssegnazione;
-	}
-
-
-
 	public String getNotePresentazioneAssegnazione() {
 		return notePresentazioneAssegnazione;
 	}
-
-
 
 	public void setNotePresentazioneAssegnazione(
 			String notePresentazioneAssegnazione) {
 		this.notePresentazioneAssegnazione = notePresentazioneAssegnazione;
 	}
 
+	public String getMateria() {
+		return materia;
+	}
 
+	public void setMateria(String materia) {
+		this.materia = materia;
+	}
 	
-	
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataScadenzaEsameCommissioni() {
+		return dataScadenzaEsameCommissioni;
+	}
 
+	public void setDataScadenzaEsameCommissioni(Date dataScadenzaEsameCommissioni) {
+		this.dataScadenzaEsameCommissioni = dataScadenzaEsameCommissioni;
+	}
 
+	public boolean isPresenzaComitatoRistretto() {
+		return presenzaComitatoRistretto;
+	}
 
+	public void setPresenzaComitatoRistretto(boolean presenzaComitatoRistretto) {
+		this.presenzaComitatoRistretto = presenzaComitatoRistretto;
+	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIstituzioneComitato() {
+		return dataIstituzioneComitato;
+	}
 
+	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
+		this.dataIstituzioneComitato = dataIstituzioneComitato;
+	}
 
+	public ComitatoRistretto getComitatoRistretto() {
+		return comitatoRistretto;
+	}
 
+	public void setComitatoRistretto(ComitatoRistretto comitatoRistretto) {
+		this.comitatoRistretto = comitatoRistretto;
+	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataFineLavoriEsameCommissioni() {
+		return dataFineLavoriEsameCommissioni;
+	}
 
+	public void setDataFineLavoriEsameCommissioni(
+			Date dataFineLavoriEsameCommissioni) {
+		this.dataFineLavoriEsameCommissioni = dataFineLavoriEsameCommissioni;
+	}
+
+	public String getEsitoVotoCommissioneReferente() {
+		return esitoVotoCommissioneReferente;
+	}
+
+	public void setEsitoVotoCommissioneReferente(
+			String esitoVotoCommissioneReferente) {
+		this.esitoVotoCommissioneReferente = esitoVotoCommissioneReferente;
+	}
+
+	public String getQuorumEsameCommissioni() {
+		return quorumEsameCommissioni;
+	}
+
+	public void setQuorumEsameCommissioni(String quorumEsameCommissioni) {
+		this.quorumEsameCommissioni = quorumEsameCommissioni;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaCommissione() {
+		return dataSedutaCommissione;
+	}
+
+	public void setDataSedutaCommissione(Date dataSedutaCommissione) {
+		this.dataSedutaCommissione = dataSedutaCommissione;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaContinuazioneInReferente() {
+		return dataSedutaContinuazioneInReferente;
+	}
+
+	public void setDataSedutaContinuazioneInReferente(
+			Date dataSedutaContinuazioneInReferente) {
+		this.dataSedutaContinuazioneInReferente = dataSedutaContinuazioneInReferente;
+	}
+
+	public String getMotivazioniContinuazioneInReferente() {
+		return motivazioniContinuazioneInReferente;
+	}
+
+	public void setMotivazioniContinuazioneInReferente(
+			String motivazioniContinuazioneInReferente) {
+		this.motivazioniContinuazioneInReferente = motivazioniContinuazioneInReferente;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataTrasmissione() {
+		return dataTrasmissione;
+	}
+
+	public void setDataTrasmissione(Date dataTrasmissione) {
+		this.dataTrasmissione = dataTrasmissione;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataRichiestaIscrizioneAula() {
+		return dataRichiestaIscrizioneAula;
+	}
+
+	public void setDataRichiestaIscrizioneAula(Date dataRichiestaIscrizioneAula) {
+		this.dataRichiestaIscrizioneAula = dataRichiestaIscrizioneAula;
+	}
+
+	public boolean isPassaggioDirettoInAula() {
+		return passaggioDirettoInAula;
+	}
+
+	public void setPassaggioDirettoInAula(boolean passaggioDirettoInAula) {
+		this.passaggioDirettoInAula = passaggioDirettoInAula;
+	}
+
+	public int getNumEmendPresentatiMaggiorEsameCommissioni() {
+		return numEmendPresentatiMaggiorEsameCommissioni;
+	}
+
+	public void setNumEmendPresentatiMaggiorEsameCommissioni(
+			int numEmendPresentatiMaggiorEsameCommissioni) {
+		this.numEmendPresentatiMaggiorEsameCommissioni = numEmendPresentatiMaggiorEsameCommissioni;
+	}
+
+	public int getNumEmendPresentatiMinorEsameCommissioni() {
+		return numEmendPresentatiMinorEsameCommissioni;
+	}
+
+	public void setNumEmendPresentatiMinorEsameCommissioni(
+			int numEmendPresentatiMinorEsameCommissioni) {
+		this.numEmendPresentatiMinorEsameCommissioni = numEmendPresentatiMinorEsameCommissioni;
+	}
+
+	public int getNumEmendPresentatiGiuntaEsameCommissioni() {
+		return numEmendPresentatiGiuntaEsameCommissioni;
+	}
+
+	public void setNumEmendPresentatiGiuntaEsameCommissioni(
+			int numEmendPresentatiGiuntaEsameCommissioni) {
+		this.numEmendPresentatiGiuntaEsameCommissioni = numEmendPresentatiGiuntaEsameCommissioni;
+	}
+
+	public int getNumEmendPresentatiMistoEsameCommissioni() {
+		return numEmendPresentatiMistoEsameCommissioni;
+	}
+
+	public void setNumEmendPresentatiMistoEsameCommissioni(
+			int numEmendPresentatiMistoEsameCommissioni) {
+		this.numEmendPresentatiMistoEsameCommissioni = numEmendPresentatiMistoEsameCommissioni;
+	}
+
+	public int getNumEmendApprovatiMaggiorEsameCommissioni() {
+		return numEmendApprovatiMaggiorEsameCommissioni;
+	}
+
+	public void setNumEmendApprovatiMaggiorEsameCommissioni(
+			int numEmendApprovatiMaggiorEsameCommissioni) {
+		this.numEmendApprovatiMaggiorEsameCommissioni = numEmendApprovatiMaggiorEsameCommissioni;
+	}
+
+	public int getNumEmendApprovatiMinorEsameCommissioni() {
+		return numEmendApprovatiMinorEsameCommissioni;
+	}
+
+	public void setNumEmendApprovatiMinorEsameCommissioni(
+			int numEmendApprovatiMinorEsameCommissioni) {
+		this.numEmendApprovatiMinorEsameCommissioni = numEmendApprovatiMinorEsameCommissioni;
+	}
+
+	public int getNumEmendApprovatiGiuntaEsameCommissioni() {
+		return numEmendApprovatiGiuntaEsameCommissioni;
+	}
+
+	public void setNumEmendApprovatiGiuntaEsameCommissioni(
+			int numEmendApprovatiGiuntaEsameCommissioni) {
+		this.numEmendApprovatiGiuntaEsameCommissioni = numEmendApprovatiGiuntaEsameCommissioni;
+	}
+
+	public int getNumEmendApprovatiMistoEsameCommissioni() {
+		return numEmendApprovatiMistoEsameCommissioni;
+	}
+
+	public void setNumEmendApprovatiMistoEsameCommissioni(
+			int numEmendApprovatiMistoEsameCommissioni) {
+		this.numEmendApprovatiMistoEsameCommissioni = numEmendApprovatiMistoEsameCommissioni;
+	}
+
+	public int getNonAmmissibiliEsameCommissioni() {
+		return nonAmmissibiliEsameCommissioni;
+	}
+
+	public void setNonAmmissibiliEsameCommissioni(int nonAmmissibiliEsameCommissioni) {
+		this.nonAmmissibiliEsameCommissioni = nonAmmissibiliEsameCommissioni;
+	}
+
+	public int getDecadutiEsameCommissioni() {
+		return decadutiEsameCommissioni;
+	}
+
+	public void setDecadutiEsameCommissioni(int decadutiEsameCommissioni) {
+		this.decadutiEsameCommissioni = decadutiEsameCommissioni;
+	}
+
+	public int getRitiratiEsameCommissioni() {
+		return ritiratiEsameCommissioni;
+	}
+
+	public void setRitiratiEsameCommissioni(int ritiratiEsameCommissioni) {
+		this.ritiratiEsameCommissioni = ritiratiEsameCommissioni;
+	}
+
+	public int getRespintiEsameCommissioni() {
+		return respintiEsameCommissioni;
+	}
+
+	public void setRespintiEsameCommissioni(int respintiEsameCommissioni) {
+		this.respintiEsameCommissioni = respintiEsameCommissioni;
+	}
+
+	public String getNoteEmendamentiEsameCommissioni() {
+		return noteEmendamentiEsameCommissioni;
+	}
+
+	public void setNoteEmendamentiEsameCommissioni(
+			String noteEmendamentiEsameCommissioni) {
+		this.noteEmendamentiEsameCommissioni = noteEmendamentiEsameCommissioni;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresaInCaricoProposta() {
+		return dataPresaInCaricoProposta;
+	}
+
+	public void setDataPresaInCaricoProposta(Date dataPresaInCaricoProposta) {
+		this.dataPresaInCaricoProposta = dataPresaInCaricoProposta;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIntesa() {
+		return dataIntesa;
+	}
+
+	public void setDataIntesa(Date dataIntesa) {
+		this.dataIntesa = dataIntesa;
+	}
+
+	public String getEsitoVotazioneIntesa() {
+		return esitoVotazioneIntesa;
+	}
+
+	public void setEsitoVotazioneIntesa(String esitoVotazioneIntesa) {
+		this.esitoVotazioneIntesa = esitoVotazioneIntesa;
+	}
+
+	public String getNoteClausolaValutativa() {
+		return noteClausolaValutativa;
+	}
+
+	public void setNoteClausolaValutativa(String noteClausolaValutativa) {
+		this.noteClausolaValutativa = noteClausolaValutativa;
+	}
+
+	public String getNoteGeneraliEsameCommissioni() {
+		return noteGeneraliEsameCommissioni;
+	}
+
+	public void setNoteGeneraliEsameCommissioni(String noteGeneraliEsameCommissioni) {
+		this.noteGeneraliEsameCommissioni = noteGeneraliEsameCommissioni;
+	}
+
+	public String getRelazioneScritta() {
+		return relazioneScritta;
+	}
+
+	public void setRelazioneScritta(String relazioneScritta) {
+		this.relazioneScritta = relazioneScritta;
+	}
+
+	public String getEsitoVotoAula() {
+		return esitoVotoAula;
+	}
+
+	public void setEsitoVotoAula(String esitoVotoAula) {
+		this.esitoVotoAula = esitoVotoAula;
+	}
+
+	public String getTipologiaVotazione() {
+		return tipologiaVotazione;
+	}
+
+	public void setTipologiaVotazione(String tipologiaVotazione) {
+		this.tipologiaVotazione = tipologiaVotazione;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaVotazione() {
+		return dataSedutaVotazione;
+	}
+
+	public void setDataSedutaVotazione(Date dataSedutaVotazione) {
+		this.dataSedutaVotazione = dataSedutaVotazione;
+	}
+
+	public String getNumeroDcr() {
+		return numeroDcr;
+	}
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.numeroDcr = numeroDcr;
+	}
+
+	public String getNumeroLcr() {
+		return numeroLcr;
+	}
+
+	public void setNumeroLcr(String numeroLcr) {
+		this.numeroLcr = numeroLcr;
+	}
+
+	public boolean isEmendato() {
+		return emendato;
+	}
+
+	public void setEmendato(boolean emendato) {
+		this.emendato = emendato;
+	}
+
+	public String getNoteVotazione() {
+		return noteVotazione;
+	}
+
+	public void setNoteVotazione(String noteVotazione) {
+		this.noteVotazione = noteVotazione;
+	}
+
+	public List<Allegato> getTestiAttoVotatoEsameAula() {
+		return testiAttoVotatoEsameAula;
+	}
+
+	public void setTestiAttoVotatoEsameAula(List<Allegato> testiAttoVotatoEsameAula) {
+		this.testiAttoVotatoEsameAula = testiAttoVotatoEsameAula;
+	}
+
+	public List<Allegato> getEmendamentiEsameAula() {
+		return emendamentiEsameAula;
+	}
+
+	public void setEmendamentiEsameAula(List<Allegato> emendamentiEsameAula) {
+		this.emendamentiEsameAula = emendamentiEsameAula;
+	}
+
+	public int getNumEmendPresentatiMaggiorEsameAula() {
+		return numEmendPresentatiMaggiorEsameAula;
+	}
+
+	public void setNumEmendPresentatiMaggiorEsameAula(
+			int numEmendPresentatiMaggiorEsameAula) {
+		this.numEmendPresentatiMaggiorEsameAula = numEmendPresentatiMaggiorEsameAula;
+	}
+
+	public int getNumEmendPresentatiMinorEsameAula() {
+		return numEmendPresentatiMinorEsameAula;
+	}
+
+	public void setNumEmendPresentatiMinorEsameAula(
+			int numEmendPresentatiMinorEsameAula) {
+		this.numEmendPresentatiMinorEsameAula = numEmendPresentatiMinorEsameAula;
+	}
+
+	public int getNumEmendPresentatiGiuntaEsameAula() {
+		return numEmendPresentatiGiuntaEsameAula;
+	}
+
+	public void setNumEmendPresentatiGiuntaEsameAula(
+			int numEmendPresentatiGiuntaEsameAula) {
+		this.numEmendPresentatiGiuntaEsameAula = numEmendPresentatiGiuntaEsameAula;
+	}
+
+	public int getNumEmendPresentatiMistoEsameAula() {
+		return numEmendPresentatiMistoEsameAula;
+	}
+
+	public void setNumEmendPresentatiMistoEsameAula(
+			int numEmendPresentatiMistoEsameAula) {
+		this.numEmendPresentatiMistoEsameAula = numEmendPresentatiMistoEsameAula;
+	}
+
+	public int getNumEmendApprovatiMaggiorEsameAula() {
+		return numEmendApprovatiMaggiorEsameAula;
+	}
+
+	public void setNumEmendApprovatiMaggiorEsameAula(
+			int numEmendApprovatiMaggiorEsameAula) {
+		this.numEmendApprovatiMaggiorEsameAula = numEmendApprovatiMaggiorEsameAula;
+	}
+
+	public int getNumEmendApprovatiMinorEsameAula() {
+		return numEmendApprovatiMinorEsameAula;
+	}
+
+	public void setNumEmendApprovatiMinorEsameAula(
+			int numEmendApprovatiMinorEsameAula) {
+		this.numEmendApprovatiMinorEsameAula = numEmendApprovatiMinorEsameAula;
+	}
+
+	public int getNumEmendApprovatiGiuntaEsameAula() {
+		return numEmendApprovatiGiuntaEsameAula;
+	}
+
+	public void setNumEmendApprovatiGiuntaEsameAula(
+			int numEmendApprovatiGiuntaEsameAula) {
+		this.numEmendApprovatiGiuntaEsameAula = numEmendApprovatiGiuntaEsameAula;
+	}
+
+	public int getNumEmendApprovatiMistoEsameAula() {
+		return numEmendApprovatiMistoEsameAula;
+	}
+
+	public void setNumEmendApprovatiMistoEsameAula(
+			int numEmendApprovatiMistoEsameAula) {
+		this.numEmendApprovatiMistoEsameAula = numEmendApprovatiMistoEsameAula;
+	}
+
+	public int getNonAmmissibiliEsameAula() {
+		return nonAmmissibiliEsameAula;
+	}
+
+	public void setNonAmmissibiliEsameAula(int nonAmmissibiliEsameAula) {
+		this.nonAmmissibiliEsameAula = nonAmmissibiliEsameAula;
+	}
+
+	public int getDecadutiEsameAula() {
+		return decadutiEsameAula;
+	}
+
+	public void setDecadutiEsameAula(int decadutiEsameAula) {
+		this.decadutiEsameAula = decadutiEsameAula;
+	}
+
+	public int getRitiratiEsameAula() {
+		return ritiratiEsameAula;
+	}
+
+	public void setRitiratiEsameAula(int ritiratiEsameAula) {
+		this.ritiratiEsameAula = ritiratiEsameAula;
+	}
+
+	public int getRespintiEsameAula() {
+		return respintiEsameAula;
+	}
+
+	public void setRespintiEsameAula(int respintiEsameAula) {
+		this.respintiEsameAula = respintiEsameAula;
+	}
+
+	public int getTotaleNonApprovatiEsameAula() {
+		return totaleNonApprovatiEsameAula;
+	}
+
+	public void setTotaleNonApprovatiEsameAula(int totaleNonApprovatiEsameAula) {
+		this.totaleNonApprovatiEsameAula = totaleNonApprovatiEsameAula;
+	}
+
+	public String getNoteEmendamentiEsameAula() {
+		return noteEmendamentiEsameAula;
+	}
+
+	public void setNoteEmendamentiEsameAula(String noteEmendamentiEsameAula) {
+		this.noteEmendamentiEsameAula = noteEmendamentiEsameAula;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaRinvio() {
+		return dataSedutaRinvio;
+	}
+
+	public void setDataSedutaRinvio(Date dataSedutaRinvio) {
+		this.dataSedutaRinvio = dataSedutaRinvio;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataTermineMassimo() {
+		return dataTermineMassimo;
+	}
+
+	public void setDataTermineMassimo(Date dataTermineMassimo) {
+		this.dataTermineMassimo = dataTermineMassimo;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataSedutaStralcio() {
+		return dataSedutaStralcio;
+	}
+
+	public void setDataSedutaStralcio(Date dataSedutaStralcio) {
+		this.dataSedutaStralcio = dataSedutaStralcio;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataStralcio() {
+		return dataStralcio;
+	}
+
+	public void setDataStralcio(Date dataStralcio) {
+		this.dataStralcio = dataStralcio;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIniziativa() {
+		return dataIniziativa;
+	}
+
+	public void setDataIniziativa(Date dataIniziativa) {
+		this.dataIniziativa = dataIniziativa;
+	}
+
+	public String getArticoli() {
+		return articoli;
+	}
+
+	public void setArticoli(String articoli) {
+		this.articoli = articoli;
+	}
+
+	public String getNoteStralcio() {
+		return noteStralcio;
+	}
+
+	public void setNoteStralcio(String noteStralcio) {
+		this.noteStralcio = noteStralcio;
+	}
+
+	public String getQuorumEsameAula() {
+		return quorumEsameAula;
+	}
+
+	public void setQuorumEsameAula(String quorumEsameAula) {
+		this.quorumEsameAula = quorumEsameAula;
+	}
+
+	public String getNoteGeneraliEsameAula() {
+		return noteGeneraliEsameAula;
+	}
+
+	public void setNoteGeneraliEsameAula(String noteGeneraliEsameAula) {
+		this.noteGeneraliEsameAula = noteGeneraliEsameAula;
+	}
+
+	public List<Allegato> getAllegatiEsameAula() {
+		return allegatiEsameAula;
+	}
+
+	public void setAllegatiEsameAula(List<Allegato> allegatiEsameAula) {
+		this.allegatiEsameAula = allegatiEsameAula;
+	}
+
+	public List<Link> getLinksEsameAula() {
+		return linksEsameAula;
+	}
+
+	public void setLinksEsameAula(List<Link> linksEsameAula) {
+		this.linksEsameAula = linksEsameAula;
+	}
+
+	public String getMotivazioneRinvio() {
+		return motivazioneRinvio;
+	}
+
+	public void setMotivazioneRinvio(String motivazioneRinvio) {
+		this.motivazioneRinvio = motivazioneRinvio;
+	}	
 
 
 }

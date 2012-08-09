@@ -225,7 +225,7 @@
 
 					<h:column>
 						<f:facet name="header">Nome Commissione</f:facet>
-					 #{commissione.nome}
+					 #{commissione.descrizione}
 				</h:column>
 
 					<h:column>
@@ -249,7 +249,7 @@
 		<p:row>
 			<p:column colspan="2">
 				<h:outputText style="font-weight: bold;"
-					value="#{riepilogoAttoController.commissioneSelected.nome}: " />
+					value="#{riepilogoAttoController.commissioneSelected.descrizione}: " />
 
 			</p:column>
 		</p:row>

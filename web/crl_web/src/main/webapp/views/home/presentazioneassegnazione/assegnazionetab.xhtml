@@ -52,18 +52,18 @@
 
 				</p:confirmDialog>
 
-				<p:confirmDialog id="confirmOrganismoStatutarioDialog"
-					message="Sei sicuro di voler eliminare l'Organismo Statutario?"
-					header="Cancellazione Organismo Statutario" severity="alert"
-					widgetVar="organismoStatutarioDialog">
+				<p:confirmDialog id="confirmParereDialog"
+					message="Sei sicuro di voler eliminare il Parere?"
+					header="Cancellazione Parere" severity="alert"
+					widgetVar="parereDialog">
 
-					<p:commandButton id="confirmOrganismoStatutario" value="Salva"
-						oncomplete="organismoStatutarioDialog.hide()"
-						action="#{presentazioneAssegnazioneAttoController.removeOrganismoStatutario}"
+					<p:commandButton id="confirmParere" value="Salva"
+						oncomplete="parereDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.removeParere}"
 						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
-						update="listaOrganismiStatutari" />
-					<p:commandButton id="declineOrganismoStatutario" value="Annulla"
-						onclick="organismoStatutarioDialog.hide()" type="button" />
+						update="listaPareri" />
+					<p:commandButton id="declineParere" value="Annulla"
+						onclick="parereDialog.hide()" type="button" />
 
 				</p:confirmDialog>
 			</p>
@@ -217,12 +217,12 @@
 
 			<p:fieldset legend="Assegnazioni Pareri"
 				collapsed="false" toggleable="true" toggleSpeed="500">
-				<p:panelGrid styleClass="infoTable" id="organismistatutaripanel">
+				<p:panelGrid styleClass="infoTable" id="pareripanel">
 
 
 					<p:row>
 						<p:column colspan="5">
-							<p:panelGrid id="addOrganismoStatutarioPanel"
+							<p:panelGrid id="addParerePanel"
 								styleClass="tableAppend">
 
 								<f:facet name="header">
@@ -248,13 +248,13 @@
 									<p:column>
 										<p:calendar size="10" locale="it_IT"
 											id="dataassegnazioneorganismo" pattern="dd/MM/yyyy"
-											value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneOrganismo}" />
+											value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneParere}" />
 									</p:column>
 
 									<p:column>
 										<p:calendar size="10" locale="it_IT"
 											id="dataannulloorganismostatutario" pattern="dd/MM/yyyy"
-											value="#{presentazioneAssegnazioneAttoController.dataAnnulloOrganismo}" />
+											value="#{presentazioneAssegnazioneAttoController.dataAnnulloParere}" />
 									</p:column>
 
 									<p:column>
@@ -264,9 +264,9 @@
 
 									<p:column>
 										<p:commandButton value="Aggiungi"
-											action="#{presentazioneAssegnazioneAttoController.addOrganismoStatutario}"
-											id="addOrganismoStatutario"
-											update="listaOrganismiStatutari , assegnazioneMsg"
+											action="#{presentazioneAssegnazioneAttoController.addParere}"
+											id="addParere"
+											update="listaPareri , assegnazioneMsg"
 											icon="new-icon" />
 									</p:column>
 
@@ -280,18 +280,18 @@
 					<p:row>
 						<p:column colspan="5">
 
-							<h:dataTable id="listaOrganismiStatutari"
-								value="#{presentazioneAssegnazioneAttoController.organismiStatutariList}"
-								var="organismoStatutario" styleClass="generalInfoTab grey-text">
+							<h:dataTable id="listaPareri"
+								value="#{presentazioneAssegnazioneAttoController.pareriList}"
+								var="parere" styleClass="generalInfoTab grey-text">
 
 								<h:column>
 									<f:facet name="header">Nome</f:facet>
-							#{organismoStatutario.descrizione}
+							#{parere.descrizione}
     			       </h:column>
 
 								<h:column>
 									<f:facet name="header">Data Assegnazione</f:facet>
-									<h:outputText value="#{organismoStatutario.dataAssegnazione}">
+									<h:outputText value="#{parere.dataAssegnazione}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 									</h:outputText>
 
@@ -299,7 +299,7 @@
 
 								<h:column>
 									<f:facet name="header">Data Annullo</f:facet>
-									<h:outputText value="#{organismoStatutario.dataAnnullo}">
+									<h:outputText value="#{parere.dataAnnullo}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 									</h:outputText>
 
@@ -308,20 +308,20 @@
 								<h:column>
 									<f:facet name="header">Obbligatorio</f:facet>
 									<h:outputText value="si"
-										rendered="#{organismoStatutario.obbligatorio}" />
+										rendered="#{parere.obbligatorio}" />
 									<h:outputText value="no"
-										rendered="#{!organismoStatutario.obbligatorio}" />
+										rendered="#{!parere.obbligatorio}" />
 								</h:column>
 
 								<h:column>
 									<f:facet name="header">Elimina</f:facet>
 
-									<p:commandButton oncomplete="organismoStatutarioDialog.show()"
+									<p:commandButton oncomplete="parereDialog.show()"
 										icon="delete-icon">
 
 										<f:setPropertyActionListener
-											value="#{organismoStatutario.descrizione}"
-											target="#{presentazioneAssegnazioneAttoController.organismoStatutarioToDelete}" />
+											value="#{parere.descrizione}"
+											target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
 									</p:commandButton>
 								</h:column>
 

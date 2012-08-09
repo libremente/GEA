@@ -14,19 +14,19 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("parere")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class Parere {
+	private String organismoStatutario;
+	private String descrizione;
+	private Date dataAssegnazione;
+	private Date dataAnnullo;
+	private boolean obbligatorio;
 	
-	private String organismoStatuario;
 	private Date dataRichiesto;
 	private Date dataRicevuto;
 	private String esito;
 	private Date dataRicezioneOrgano;
 	private String note;
-	public String getOrganismoStatuario() {
-		return organismoStatuario;
-	}
-	public void setOrganismoStatuario(String organismoStatuario) {
-		this.organismoStatuario = organismoStatuario;
-	}
+	
+	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRichiesto() {
 		return dataRichiesto;
@@ -60,6 +60,40 @@ public class Parere {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	public String getDescrizione() {
+		return descrizione;
+	}
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataAssegnazione() {
+		return dataAssegnazione;
+	}
+	public void setDataAssegnazione(Date dataAssegnazione) {
+		this.dataAssegnazione = dataAssegnazione;
+	}
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataAnnullo() {
+		return dataAnnullo;
+	}
+	public void setDataAnnullo(Date dataAnnullo) {
+		this.dataAnnullo = dataAnnullo;
+	}
+	public boolean isObbligatorio() {
+		return obbligatorio;
+	}
+	public void setObbligatorio(boolean obbligatorio) {
+		this.obbligatorio = obbligatorio;
+	}
+	public String getOrganismoStatutario() {
+		return organismoStatutario;
+	}
+	public void setOrganismoStatutario(String organismoStatutario) {
+		this.organismoStatutario = organismoStatutario;
+	}
+	
+	
 	
 	
 

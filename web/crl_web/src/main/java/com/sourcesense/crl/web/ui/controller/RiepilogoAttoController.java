@@ -33,8 +33,8 @@ public class RiepilogoAttoController {
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
-	
-	
+
+
 	private Commissione commissioneSelected = new Commissione();
 
 	@PostConstruct
@@ -48,11 +48,13 @@ public class RiepilogoAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		
+
 		// TODO riempire liste commissioni attoBean =>
 		// attoBean.getAtto().setCommissioni(commissioneServiceManager.findCommissioniByAtto(attoBean.getId()));
 		//
-		commissioneSelected = attoBean.getAtto().getCommissioni().get(0);
+		if(!attoBean.getAtto().getCommissioni().isEmpty()) {
+			commissioneSelected = attoBean.getAtto().getCommissioni().get(0);
+		}
 		// System.out.println("Nome == " + commissioneSelected.getNome());
 
 	}
@@ -64,11 +66,11 @@ public class RiepilogoAttoController {
 				.getSessionMap().get("attoBean"));
 
 		for (Commissione commissioneRec : attoBean.getAtto().getCommissioni()) {
-			
+
 			if(commissioneRec.getNome().equals(nomeCommissione)){
-				
-			  commissioneSelected =	commissioneRec;
-			  break;
+
+				commissioneSelected =	commissioneRec;
+				break;
 			}
 
 		}
@@ -147,7 +149,7 @@ public class RiepilogoAttoController {
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
 	}
-	
-	
+
+
 
 }

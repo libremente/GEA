@@ -151,8 +151,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	public void salvaAssegnazionePresentazione(Atto atto) {
-		//TODO
-		//attoService.merge("", atto);
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_assegnazione_presentazione_assegnazione", null), atto);
 	}
 
 	public void salvaNoteAllegatiPresentazione(Atto atto) {

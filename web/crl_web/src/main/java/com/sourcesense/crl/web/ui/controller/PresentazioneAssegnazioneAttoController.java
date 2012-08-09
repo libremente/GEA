@@ -25,6 +25,7 @@ import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoConsiliare;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.OrganismoStatutario;
+import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.service.AttoServiceManager;
@@ -112,14 +113,14 @@ public class PresentazioneAssegnazioneAttoController {
 	private String commissioneToAnnul;
 
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
-	private List<OrganismoStatutario> organismiStatutariList = new ArrayList<OrganismoStatutario>();
+	private List<Parere> pareriList = new ArrayList<Parere>();
 
 	private String nomeOrganismoStatutario;
-	private Date dataAssegnazioneOrganismo;
-	private Date dataAnnulloOrganismo;
+	private Date dataAssegnazioneParere;
+	private Date dataAnnulloParere;
 	private boolean obbligatorio;
 
-	private String organismoStatutarioToDelete;
+	private String parereToDelete;
 
 	private List<Allegato> allegatiList = new ArrayList<Allegato>();
 	private String allegatoToDelete;
@@ -153,7 +154,7 @@ public class PresentazioneAssegnazioneAttoController {
 		
 		//TODO caricamento liste attoBean
 		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
-		this.organismiStatutariList = new ArrayList<OrganismoStatutario>(this.atto.getOrganismiStatutari());
+		this.pareriList = new ArrayList<Parere>(this.atto.getPareri());
 		this.linksList = new ArrayList<Link>(this.atto.getLinksPresentazioneAssegnazione());
 
 		//TODO
@@ -491,47 +492,46 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
-	public void addOrganismoStatutario() {
+	public void addParere() {
 
 		if (nomeOrganismoStatutario != null
 				&& !nomeOrganismoStatutario.trim().equals("")) {
-			if (!checkOrganismiStatutari()) {
+			if (!checkPareri()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Organismo Statutario "
+						"Attenzione ! Parere "
 								+ nomeOrganismoStatutario + " già presente ",
 						""));
 
 			} else {
-				OrganismoStatutario organismoStatutario = new OrganismoStatutario();
-				organismoStatutario.setDescrizione(nomeOrganismoStatutario);
-				organismoStatutario
-				.setDataAssegnazione(dataAssegnazioneOrganismo);
-				organismoStatutario.setDataAnnullo(dataAnnulloOrganismo);
-				organismoStatutario.setObbligatorio(obbligatorio);
-				organismiStatutariList.add(organismoStatutario);
+				Parere parere = new Parere();
+				parere.setDescrizione(nomeOrganismoStatutario);
+				parere.setDataAssegnazione(dataAssegnazioneParere);
+				parere.setDataAnnullo(dataAnnulloParere);
+				parere.setObbligatorio(obbligatorio);
+				pareriList.add(parere);
 				
 				updateAssegnazioneHandler();
 			}
 		}
 	}
 
-	public void removeOrganismoStatutario() {
+	public void removeParere() {
 
-		for (OrganismoStatutario element : organismiStatutariList) {
+		for (Parere element : pareriList) {
 
-			if (element.getDescrizione().equals(organismoStatutarioToDelete)) {
+			if (element.getDescrizione().equals(parereToDelete)) {
 
-				organismiStatutariList.remove(element);
+				pareriList.remove(element);
 				break;
 			}
 		}
 	}
 
-	private boolean checkOrganismiStatutari() {
+	private boolean checkPareri() {
 
-		for (OrganismoStatutario element : organismiStatutariList) {
+		for (Parere element : pareriList) {
 
 			if (element.getDescrizione().equals(nomeOrganismoStatutario)) {
 
@@ -545,7 +545,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void confermaAssegnazione() {
 		this.atto.setCommissioni(commissioniList);
-		this.atto.setOrganismiStatutari(organismiStatutariList);
+		this.atto.setPareri(pareriList);
 		attoServiceManager.salvaAssegnazionePresentazione(atto);
 
 		// TODO Service logic
@@ -554,7 +554,7 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 
 		attoBean.getAtto().setCommissioni(commissioniList);
-		attoBean.getAtto().setOrganismiStatutari(organismiStatutariList);
+		attoBean.getAtto().setPareri(pareriList);
 
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
 
@@ -852,7 +852,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void setOrganismiStatutari(Map<String, String> organismiStatutari) {
 		this.organismiStatutari = organismiStatutari;
-	}
+	}	
 
 	public String getNomeOrganismoStatutario() {
 		return nomeOrganismoStatutario;
@@ -862,20 +862,20 @@ public class PresentazioneAssegnazioneAttoController {
 		this.nomeOrganismoStatutario = nomeOrganismoStatutario;
 	}
 
-	public Date getDataAssegnazioneOrganismo() {
-		return dataAssegnazioneOrganismo;
+	public Date getDataAssegnazioneParere() {
+		return dataAssegnazioneParere;
 	}
 
-	public void setDataAssegnazioneOrganismo(Date dataAssegnazioneOrganismo) {
-		this.dataAssegnazioneOrganismo = dataAssegnazioneOrganismo;
+	public void setDataAssegnazioneParere(Date dataAssegnazioneParere) {
+		this.dataAssegnazioneParere = dataAssegnazioneParere;
 	}
 
-	public Date getDataAnnulloOrganismo() {
-		return dataAnnulloOrganismo;
+	public Date getDataAnnulloParere() {
+		return dataAnnulloParere;
 	}
 
-	public void setDataAnnulloOrganismo(Date dataAnnulloOrganismo) {
-		this.dataAnnulloOrganismo = dataAnnulloOrganismo;
+	public void setDataAnnulloParere(Date dataAnnulloParere) {
+		this.dataAnnulloParere = dataAnnulloParere;
 	}
 
 	public boolean isObbligatorio() {
@@ -884,15 +884,14 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void setObbligatorio(boolean obbligatorio) {
 		this.obbligatorio = obbligatorio;
+	}	
+
+	public String getParereToDelete() {
+		return parereToDelete;
 	}
 
-	public String getOrganismoStatutarioToDelete() {
-		return organismoStatutarioToDelete;
-	}
-
-	public void setOrganismoStatutarioToDelete(
-			String organismoStatutarioToDelete) {
-		this.organismoStatutarioToDelete = organismoStatutarioToDelete;
+	public void setParereToDelete(String parereToDelete) {
+		this.parereToDelete = parereToDelete;
 	}
 
 	public OrganismoStatutarioServiceManager getOrganismoStatutarioServiceManager() {
@@ -1195,14 +1194,6 @@ public class PresentazioneAssegnazioneAttoController {
 		this.commissioniList = commissioniList;
 	}
 
-	public List<OrganismoStatutario> getOrganismiStatutariList() {
-		return organismiStatutariList;
-	}
-
-	public void setOrganismiStatutariList(List<OrganismoStatutario> organismiStatutariList) {
-		this.organismiStatutariList = organismiStatutariList;
-	}
-
 	public List<Link> getLinksList() {
 		return linksList;
 	}
@@ -1226,6 +1217,16 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setAllegatiList(List<Allegato> allegatiList) {
 		this.allegatiList = allegatiList;
 	}
+
+	public List<Parere> getPareriList() {
+		return pareriList;
+	}
+
+	public void setPareriList(List<Parere> pareriList) {
+		this.pareriList = pareriList;
+	}
+	
+	
 
 
 

@@ -598,11 +598,11 @@ public class AttoBean implements Serializable {
 	}
 
 	public String getNumeroDCR() {
-		return atto.getNumeroDCR();
+		return atto.getNumeroDcr();
 	}
 
 	public void setNumeroDCR(String numeroDCR) {
-		this.atto.setNumeroDCR(numeroDCR);
+		this.atto.setNumeroDcr(numeroDCR);
 	}
 
 
