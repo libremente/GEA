@@ -203,6 +203,17 @@
 			</mandatory-aspects>
 		</type>
 		
+		<type name="crlatti:testoComitatoRistretto">
+			<title>Testo del comitato ristretto</title>
+			<parent>crlatti:testo</parent>
+			<properties>
+				<property name="crlatti:dataSedutaTestoCR">
+					<title>Data seduta</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</type>
+		
 		<type name="crlatti:allegato">
 			<title>Allegato</title>
 			<parent>cm:content</parent>
@@ -270,6 +281,7 @@
 			<parent>crlatti:atto</parent>
 			<mandatory-aspects>
 				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+				<aspect>crlatti:dataScadenzaAspect</aspect>
 			</mandatory-aspects>
 		</type>
 
@@ -279,6 +291,7 @@
 			<mandatory-aspects>
 				<aspect>crlatti:dgr</aspect>
 				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+				<aspect>crlatti:dataScadenzaAspect</aspect>
 			</mandatory-aspects>
 		</type>
 
@@ -365,6 +378,61 @@
 				</property>
 			</properties>
 		</type>
+		
+		<type name="crlatti:relatore">
+			<title>Relatore</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:dataNominaRelatore">
+					<title>Data nomina</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataUscitaRelatore">
+					<title>Data uscita</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:membroComitatoRistretto">
+			<title>Membro comitato ristretto</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:dataNominaMCR">
+					<title>Data nomina</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataUscitaMCR">
+					<title>Data uscita</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:coordinatoreMCR">
+					<title>Coordinatore</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:comitatoRistretto">
+			<title>Comitato ristretto</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:presenzaCR">
+					<title>Presenza</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:dataIstituzioneCR">
+					<title>Data istituzione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataFineLavoriCR">
+					<title>Data fine lavori</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</type>
 
 		<!-- anagrafica -->
 
@@ -393,8 +461,12 @@
 
 		<type name="crlatti:commissione">
 			<title>Commissione</title>
-			<parent>cm:content</parent>
+			<parent>cm:folder</parent>
 			<properties>
+				<property name="crlatti:materiaCommissione">
+					<title>Materia</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:relatoriCommissione">
 					<title>Relatori</title>
 					<type>d:text</type>
@@ -402,7 +474,7 @@
 					<index enabled="true">
 						<atomic>true</atomic>
 						<stored>false</stored>
-						<tokenised>both</tokenised>
+						<tokenised>false</tokenised>
 					</index>
 				</property>
 				<property name="crlatti:dataAssegnazioneCommissione">
@@ -424,7 +496,7 @@
 					<index enabled="true">
 						<atomic>true</atomic>
 						<stored>false</stored>
-						<tokenised>both</tokenised>
+						<tokenised>false</tokenised>
 					</index>
 				</property>
 				<property name="crlatti:dataAperturaLavoriComitatoCommissione">
@@ -646,6 +718,16 @@
 				<property name="crlatti:ammissibilitaNormaFinanziaria">
 					<title>Norma finanziaria</title>
 					<type>d:boolean</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:dataScadenzaAspect">
+			<title>Data scadenza aspect</title>
+			<properties>
+				<property name="crlatti:dataScadenza">
+					<title>Data scadenza</title>
+					<type>d:date</type>
 				</property>
 			</properties>
 		</aspect>

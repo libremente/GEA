@@ -79,9 +79,9 @@
 			{
 				"parere" :
 				{
-			    	"organismoStatutarioParere" : "<#if parere.properties["crlatti:organismoStatutarioParere"]?exists>${parere.properties["crlatti:organismoStatutarioParere"]}<#else></#if>",
-			    	"dataAssegnazioneParere" : "<#if parere.properties["crlatti:dataAssegnazioneParere"]?exists>${parere.properties["crlatti:dataAssegnazioneParere"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"dataAnnulloParere" : "<#if parere.properties["crlatti:dataAnnulloParere"]?exists>${parere.properties["crlatti:dataAnnulloParere"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"descrizione" : "<#if parere.properties["crlatti:organismoStatutarioParere"]?exists>${parere.properties["crlatti:organismoStatutarioParere"]}<#else></#if>",
+			    	"dataAssegnazione" : "<#if parere.properties["crlatti:dataAssegnazioneParere"]?exists>${parere.properties["crlatti:dataAssegnazioneParere"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"dataAnnullo" : "<#if parere.properties["crlatti:dataAnnulloParere"]?exists>${parere.properties["crlatti:dataAnnulloParere"]?string("yyyy-MM-dd")}<#else></#if>",
 			    	"obbligatorio" : "<#if parere.properties["crlatti:obbligatorio"]?exists>${parere.properties["crlatti:obbligatorio"]?string("true","false")}<#else></#if>"
 			    }
 			}
@@ -94,11 +94,11 @@
 				"commissione" :
 				{
 			    	"descrizione" : "${commissione.name}",
-			    	"dataPropostaCommissione" : "<#if commissione.properties["crlatti:dataPresaInCaricoCommissione"]?exists>${commissione.properties["crlatti:dataPresaInCaricoCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"dataAnnulloCommissione" : "<#if commissione.properties["crlatti:dataAnnulloCommissione"]?exists>${commissione.properties["crlatti:dataAnnulloCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"dataAssegnazioneCommissione" : "<#if commissione.properties["crlatti:dataAssegnazioneCommissione"]?exists>${commissione.properties["crlatti:dataAssegnazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"ruoloCommissione" : "<#if commissione.properties["crlatti:ruoloCommissione"]?exists>${commissione.properties["crlatti:ruoloCommissione"]}<#else></#if>",
-			    	"statoCommissione" : "<#if commissione.properties["crlatti:statoCommissione"]?exists>${commissione.properties["crlatti:statoCommissione"]}<#else></#if>"
+			    	"dataProposta" : "<#if commissione.properties["crlatti:dataPresaInCaricoCommissione"]?exists>${commissione.properties["crlatti:dataPresaInCaricoCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"dataAnnullo" : "<#if commissione.properties["crlatti:dataAnnulloCommissione"]?exists>${commissione.properties["crlatti:dataAnnulloCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"dataAssegnazione" : "<#if commissione.properties["crlatti:dataAssegnazioneCommissione"]?exists>${commissione.properties["crlatti:dataAssegnazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"ruolo" : "<#if commissione.properties["crlatti:ruoloCommissione"]?exists>${commissione.properties["crlatti:ruoloCommissione"]}<#else></#if>",
+			    	"stato" : "<#if commissione.properties["crlatti:statoCommissione"]?exists>${commissione.properties["crlatti:statoCommissione"]}<#else></#if>"
 			    }
 			}
 			<#if commissione_has_next>,</#if>

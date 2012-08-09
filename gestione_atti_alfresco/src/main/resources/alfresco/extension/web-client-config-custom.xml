@@ -5,12 +5,13 @@
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatarioAnagrafica" />
 			<type name="crlatti:firmatario" />
-			<type name="crlatti:commissione" />
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
 			<type name="crlatti:parere"/>
+			<type name="crlatti:relatore"/>
+			<type name="crlatti:membroComitatoRistretto" />
 		</content-types>
 	</config>
 
@@ -18,22 +19,24 @@
 		<subtypes>
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
-			<type name="crlatti:commissione" />
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
 			<type name="crlatti:parere"/>
+			<type name="crlatti:relatore"/>
+			<type name="crlatti:membroComitatoRistretto" />
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
-			<type name="crlatti:commissione" />
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
 			<type name="crlatti:parere"/>
+			<type name="crlatti:relatore"/>
+			<type name="crlatti:membroComitatoRistretto" />
 		</specialise-types>
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
@@ -61,6 +64,8 @@
 			<type name="crlatti:attoRef" />
 			<type name="crlatti:attoRel" />
 			<type name="crlatti:attoEac" />
+			<type name="crlatti:comitatoRistretto"/>
+			<type name="crlatti:commissione"/>
 		</folder-types>
 	</config>
 	
@@ -142,6 +147,43 @@
 		</property-sheet>
 	</config>
 	
+	<config evaluator="aspect-name" condition="crlatti:dataScadenzaAspect">
+		<property-sheet>
+			<show-property name="crlatti:dataScadenza" />
+		</property-sheet>
+	</config>
+	 
+	 <config evaluator="node-type" condition="crlatti:testoComitatoRistretto">
+		<property-sheet>
+			<show-property name="crlatti:tipologia"/>
+			<show-property name="crlatti:pubblico"/>
+			<show-property name="crlatti:dataSedutaTestoCR"/>
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:membroComitatoRistretto">
+		<property-sheet>
+			<show-property name="crlatti:dataNominaMCR"/>
+			<show-property name="crlatti:dataUscitaMCR"/>
+			<show-property name="crlatti:coordinatoreMCR"/>
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:comitatoRistretto">
+		<property-sheet>
+			<show-property name="crlatti:presenzaCR"/>
+			<show-property name="crlatti:dataIstituzioneCR"/>
+			<show-property name="crlatti:dataFineLavoriCR"/>
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:relatore">
+		<property-sheet>
+			<show-property name="crlatti:dataNominaRelatore"/>
+			<show-property name="crlatti:dataUscitaRelatore"/>
+		</property-sheet>
+	</config>
+	
 	<config evaluator="node-type" condition="crlatti:parere">
 		<property-sheet> 
 			<show-property name="crlatti:organismoStatutarioParere"/>
@@ -174,6 +216,7 @@
 		
 	<config evaluator="node-type" condition="crlatti:commissione">
 		<property-sheet>
+			<show-property name="crlatti:materiaCommissione"/>
 			<show-property name="crlatti:relatoriCommissione" />
 			<show-property name="crlatti:dataAssegnazioneCommissione" />
 			<show-property name="crlatti:dataPresaInCaricoCommissione" />
