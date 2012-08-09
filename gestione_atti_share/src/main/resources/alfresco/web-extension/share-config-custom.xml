@@ -125,14 +125,18 @@
          	<subtype name="crlatti:firmatarioAnagrafica"/>
          	<subtype name="crlatti:legislaturaAnagrafica"/>
          	<subtype name="crlatti:abbinamento"/>
-         	<subtype name="crlatti:commissione"/>
          	<subtype name="crlatti:allegato"/>
          	<subtype name="crlatti:testo"/>
-         	<subtype name="crlatti:parere"/>
+         	<subtype name="crlatti:link"/>
+			<subtype name="crlatti:parere"/>
+			<subtype name="crlatti:relatore"/>
+			<subtype name="crlatti:membroComitatoRistretto" />
+			<subtype name="crlatti:testoComitatoRistretto"/>
          </type>
 
          <type name="cm:folder">
          	<subtype name="crlatti:atto" />
+         	<subtype name="crlatti:attoDoc" />
 			<subtype name="crlatti:attoPdl" />
 			<subtype name="crlatti:attoInp" />
 			<subtype name="crlatti:attoPar" />
@@ -142,6 +146,8 @@
 			<subtype name="crlatti:attoRef" />
 			<subtype name="crlatti:attoRel" />
 			<subtype name="crlatti:attoEac" />
+			<subtype name="crlatti:commissione"/>
+			<subtype name="crlatti:comitatoRistretto"/>
          </type>
       </types>
 
@@ -588,6 +594,31 @@
    	</forms>
    </config>
    
+    <config evaluator="node-type" condition="crlatti:testoComitatoRistretto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:tipologia" />
+   				<show id="crlatti:pubblico" />
+   				<show id="crlatti:dataSedutaTestoCR" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    
+    <config evaluator="node-type" condition="crlatti:membroComitatoRistretto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataNominaMCR" />
+   				<show id="crlatti:dataUscitaMCR" />
+   				<show id="crlatti:coordinatoreMCR"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
    <config evaluator="node-type" condition="crlatti:testo">
    	<forms>
    		<form>
@@ -624,6 +655,7 @@
    	<forms>
    		<form>
    			<field-visibility>
+   				 <show id="crlatti:materiaCommissione"/>
    				 <show id="crlatti:relatoriCommissione" />
 		         <show id="crlatti:dataAssegnazioneCommissione" />
 		         <show id="crlatti:dataPresaInCaricoCommissione" />
@@ -654,6 +686,18 @@
     	</forms>
     </config>
    
+   <config evaluator="node-type" condition="crlatti:comitatoRistretto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:presenzaCR"/>
+   				<show id="crlatti:dataIstituzioneCR" />
+   				<show id="crlatti:dataFineLavoriCR" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
    <config evaluator="node-type" condition="crlatti:firmatario">
    	<forms>
    		<form>
@@ -663,6 +707,17 @@
    				<show id="crlatti:dataFirma" />
          		<show id="crlatti:dataRitiro" />
          		<show id="crlatti:isPrimoFirmatario" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+    
+    <config evaluator="node-type" condition="crlatti:relatore">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataNominaRelatore"/>
+   				<show id="crlatti:dataUscitaRelatore" />
    			</field-visibility>
    		</form>
    	</forms>
