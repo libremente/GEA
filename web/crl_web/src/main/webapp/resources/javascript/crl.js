@@ -49,3 +49,4 @@ function addRowsInTable(idTable) {
 
 	dojo.publish('tabContainer' + '_adjust-Child-Height', []);
 }
+
