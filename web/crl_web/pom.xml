@@ -23,8 +23,8 @@
 
 	<scm>
 		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/trunk/web/crl_web</developerConnection>
-		<connection>https://forge.pronetics.it/svn/manpower</connection>
-		<url>https://forge.pronetics.it/svn/manpower</url>
+		<connection>https://forge.pronetics.it/svn/crl</connection>
+		<url>https://forge.pronetics.it/svn/crl</url>
 	</scm>
 	<dependencies>
 
