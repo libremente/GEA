@@ -1,5 +1,6 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,20 +8,29 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.event.FileUploadEvent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Link;
+import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
+import com.sourcesense.crl.web.ui.beans.UserBean;
 
 @ManagedBean(name = "esameAulaController")
 @ViewScoped
 public class EsameAulaController {
+
+	@ManagedProperty(value = "#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager;
+
 	private Atto atto = new Atto();
-	
+
 	private Date dataPresaInCarico;
 	private String relazioneScritta;
 	private String esitoVotazione;
@@ -30,11 +40,13 @@ public class EsameAulaController {
 	private String numeroLcr;
 	private boolean emendato;
 	private String noteVotazione;
-	
+
 	private List<Allegato> testiAttoVotatoList = new ArrayList<Allegato>();
-	
+	private String testoAttoVotatoToDelete;
+
 	private List<Allegato> emendamentiList = new ArrayList<Allegato>();
-	
+	private String emendamentoToDelete;
+
 	private int numEmendPresentatiMaggior;
 	private int numEmendPresentatiMinor;
 	private int numEmendPresentatiGiunta;
@@ -51,7 +63,7 @@ public class EsameAulaController {
 	private int respinti;
 	private int totaleNonApprovati;
 	private String noteEmendamenti;
-	
+
 	private Date dataSedutaRinvio;
 	private Date dataTermineMassimo;
 	private String motivazioneRinvio;
@@ -61,61 +73,67 @@ public class EsameAulaController {
 	private String articoli;
 	private String noteStralcio;
 	private String quorum;
-	
+
 	private String noteGenerali;
-	
+
 	private List<Allegato> allegatiList = new ArrayList<Allegato>();
+	private String allegatoToDelete;
+
 	private List<Link> linksList = new ArrayList<Link>();
-	
-	
-	
+	private String nomeLink;
+	private String linkToDelete;
+	private String urlLink;
+	private boolean pubblico;
+
+
+
 	private String statoCommitVotazione = CRLMessage.COMMIT_DONE;
 	private String statoCommitEmendamenti = CRLMessage.COMMIT_DONE;
 	private String statoCommitRinvioEsame = CRLMessage.COMMIT_DONE;
 	private String statoCommitStralci = CRLMessage.COMMIT_DONE;
 	private String statoCommitNoteAllegati = CRLMessage.COMMIT_DONE;
-	
+
 	@PostConstruct
 	public void init() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());	
-		
+
 		testiAttoVotatoList = new ArrayList<Allegato>(atto.getTestiAttoVotatoEsameAula());		
 		emendamentiList = new ArrayList<Allegato>(atto.getEmendamentiEsameAula());
 		allegatiList = new ArrayList<Allegato>(atto.getAllegatiEsameAula());
 		linksList = new ArrayList<Link>(atto.getLinksEsameAula());
-		
+
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
 	}
-	
-	
-	
+
+
+
 	public void updateVotazioneHandler() {
 		setStatoCommitVotazione(CRLMessage.COMMIT_UNDONE);
 	}
-	
+
 	public void updateEmendamentiHandler() {
 		setStatoCommitEmendamenti(CRLMessage.COMMIT_UNDONE);
 	}
-	
+
 	public void updateRinvioEsameHandler() {
 		setStatoCommitRinvioEsame(CRLMessage.COMMIT_UNDONE);
 	}
-	
+
 	public void updateStralciHandler() {
 		setStatoCommitStralci(CRLMessage.COMMIT_UNDONE);
 	}
-	
+
 	public void updateNoteAllegatiHandler() {
 		setStatoCommitNoteAllegati(CRLMessage.COMMIT_UNDONE);
 	}
-	
-	
+
+
 	public void changeTabHandler() {
 
 		if (statoCommitVotazione.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -168,10 +186,173 @@ public class EsameAulaController {
 							""));
 		}
 	}
-	
-	
+
+	// Votazione**************************************************************
+	public void presaInCarico() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		String username = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean")).getUsername();
+
+		String numeroAtto = attoBean.getNumeroAtto();
+
+		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
+				+ " preso in carico con successo dall' utente " + username));
+	}
+
+
+	public void uploadTestoAttoVotato(FileUploadEvent event) {
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkTestoAttoVotato(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
+
+			// TODO Alfresco upload
+			Allegato allegatoRet = null;
+
+			try {
+				//TODO change method
+				allegatoRet = attoServiceManager.uploadTestoAttoVotatoEsameAula(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getTestiAttoVotatoEsameAula().add(allegatoRet);
+
+			testiAttoVotatoList.add(allegatoRet);
+		}
+	}
+
+	private boolean checkTestoAttoVotato(String fileName) {
+
+		for (Allegato element : testiAttoVotatoList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public void removeTestoAttoVotato() {
+
+		for (Allegato element : testiAttoVotatoList) {
+
+			if (element.getId().equals(testoAttoVotatoToDelete)) {
+
+				// TODO Alfresco delete
+				testiAttoVotatoList.remove(element);
+				break;
+			}
+		}
+	}
+
+	public void salvaVotazione() {
+		attoServiceManager.salvaVotazioneEsameAula(atto);
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setEsitoVotoAula(atto.getEsitoVotoAula());
+		attoBean.getAtto().setTipologiaVotazione(atto.getTipologiaVotazione());
+		attoBean.getAtto().setDataSedutaVotazione(atto.getDataSedutaVotazione());
+		attoBean.getAtto().setNumeroDcr(atto.getNumeroDcr());
+		attoBean.getAtto().setNumeroLcr(atto.getNumeroLcr());
+		attoBean.getAtto().setEmendato(atto.isEmendato());
+		attoBean.getAtto().setNoteVotazione(atto.getNoteVotazione());
+
+		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Votazione salvata con successo", ""));
+	}
+
+
+
 	// Emendamenti************************************************************
-	
+
+	public void uploadEmendamento(FileUploadEvent event) {
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkEmendamenti(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
+
+			// TODO Alfresco upload
+			Allegato emendamentoRet = null;
+
+			try {
+				//TODO change method
+				emendamentoRet = attoServiceManager.uploadEmendamentoEsameAula(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getEmendamentiEsameAula().add(emendamentoRet);
+
+			emendamentiList.add(emendamentoRet);
+		}
+	}
+
+	private boolean checkEmendamenti(String fileName) {
+
+		for (Allegato element : emendamentiList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public void removeEmendamento() {
+
+		for (Allegato element : emendamentiList) {
+
+			if (element.getId().equals(emendamentoToDelete)) {
+
+				// TODO Alfresco delete
+				emendamentiList.remove(element);
+				break;
+			}
+		}
+	}
+
+
 	public void totaleEmendPresentati() {
 		numEmendPresentatiTotale = getNumEmendPresentatiGiunta() + getNumEmendPresentatiMaggior() + 
 				getNumEmendPresentatiMinor() + getNumEmendPresentatiMisto();
@@ -186,11 +367,203 @@ public class EsameAulaController {
 		totaleNonApprovati = getNonAmmissibili() + getDecaduti() + getRitirati() + getRespinti();
 	}
 
-	
+	public void salvaEmendamenti() {
+		attoServiceManager.salvaEmendamentiEsameAula(atto);
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setNumEmendPresentatiMaggiorEsameAula(atto.getNumEmendPresentatiMaggiorEsameAula());
+		attoBean.getAtto().setNumEmendPresentatiMinorEsameAula(atto.getNumEmendPresentatiMinorEsameAula());
+		attoBean.getAtto().setNumEmendPresentatiGiuntaEsameAula(atto.getNumEmendPresentatiGiuntaEsameAula());
+		attoBean.getAtto().setNumEmendPresentatiMistoEsameAula(atto.getNumEmendPresentatiMistoEsameAula());
+
+		attoBean.getAtto().setNumEmendApprovatiMaggiorEsameAula(atto.getNumEmendApprovatiMaggiorEsameAula());
+		attoBean.getAtto().setNumEmendApprovatiMinorEsameAula(atto.getNumEmendApprovatiMinorEsameAula());
+		attoBean.getAtto().setNumEmendApprovatiGiuntaEsameAula(atto.getNumEmendApprovatiGiuntaEsameAula());
+		attoBean.getAtto().setNumEmendApprovatiMistoEsameAula(atto.getNumEmendApprovatiMistoEsameAula());
+
+		attoBean.getAtto().setNonAmmissibiliEsameAula(atto.getNonAmmissibiliEsameAula());
+		attoBean.getAtto().setDecadutiEsameAula(atto.getDecadutiEsameAula());
+		attoBean.getAtto().setRitiratiEsameAula(atto.getRitiratiEsameAula());
+		attoBean.getAtto().setRespintiEsameAula(atto.getRespintiEsameAula());
+
+		attoBean.getAtto().setNoteEmendamentiEsameAula(atto.getNoteEmendamentiEsameAula());
+		
+		setStatoCommitEmendamenti(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Emendamenti salvati con successo", ""));
+	}
+	
+	// Rinvio e Starlci******************************************************
+	
+	public void salvaRinvioEsame() {
+		attoServiceManager.salvaRinvioEsameEsameAula(atto);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setDataSedutaRinvio(atto.getDataSedutaRinvio());
+		attoBean.getAtto().setDataTermineMassimo(atto.getDataTermineMassimo());
+		attoBean.getAtto().setMotivazioneRinvio(atto.getMotivazioneRinvio());
+		
+		setStatoCommitRinvioEsame(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Rinvio Esame salvato con successo", ""));
+	}
+	
+	
+	public void salvaStralci() {
+		attoServiceManager.salvaStralciEsameAula(atto);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setDataSedutaStralcio(atto.getDataSedutaStralcio());
+		attoBean.getAtto().setDataStralcio(atto.getDataStralcio());
+		attoBean.getAtto().setDataIniziativa(atto.getDataIniziativa());
+		attoBean.getAtto().setArticoli(atto.getArticoli());
+		attoBean.getAtto().setNoteStralcio(atto.getNoteStralcio());
+		attoBean.getAtto().setQuorumEsameAula(atto.getQuorumEsameAula());
+		
+		setStatoCommitStralci(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage("Stralci salvati con successo", ""));
+	}	
+
+	// Note e Allegati********************************************************
+
+	public void uploadAllegato(FileUploadEvent event) {
+
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkAllegato(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
+
+			// TODO Alfresco upload
+			Allegato allegatoRet = null;
+
+			try {
+				//TODO change method
+				allegatoRet = attoServiceManager.uploadAllegatoNoteAllegatiEsameAula(
+						((AttoBean) FacesContext.getCurrentInstance()
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event
+								.getFile().getInputstream(), event.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getAllegatiEsameAula().add(allegatoRet);
+
+			allegatiList.add(allegatoRet);
+		}
+	}
+
+	private boolean checkAllegato(String fileName) {
+
+		for (Allegato element : allegatiList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public void removeAllegato() {
+
+		for (Allegato element : allegatiList) {
+
+			if (element.getId().equals(allegatoToDelete)) {
+
+				// TODO Alfresco delete
+				allegatiList.remove(element);
+				break;
+			}
+		}
+	}
+
+	public void addLink() {
+
+		if (nomeLink != null && !nomeLink.trim().equals("")) {
+			if (!checkLinks()) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Link "
+								+ nomeLink + " già presente ", ""));
+
+			} else {
+				Link link = new Link();
+				link.setDescrizione(nomeLink);
+				link.setIndirizzo(urlLink);
+				link.setPubblico(pubblico);
+				linksList.add(link);
+
+				updateNoteAllegatiHandler();
+			}
+		}
+	}
+
+	public void removeLink() {
+
+		for (Link element : linksList) {
+
+			if (element.getDescrizione().equals(linkToDelete)) {
+
+				linksList.remove(element);
+				break;
+			}
+		}
+	}
+
+	private boolean checkLinks() {
+
+		for (Link element : linksList) {
+
+			if (element.getDescrizione().equals(nomeLink)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+	
+	
+	public void salvaNoteEAllegati() {
+		this.atto.setLinksEsameAula(linksList);
+		attoServiceManager.salvaNoteAllegatiEsameAula(atto);
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setNoteGeneraliEsameAula(atto.getNoteGeneraliEsameAula());
+		attoBean.getAtto().setLinksEsameAula(linksList);		
+
+		setStatoCommitNoteAllegati(CRLMessage.COMMIT_DONE);
+
+		context.addMessage(null, new FacesMessage("Note e Allegati salvati con successo", ""));
+
+	}
 
 	// Getters & Setters******************************************************
-	
+
 	public Atto getAtto() {
 		return atto;
 	}
@@ -639,8 +1012,108 @@ public class EsameAulaController {
 	public void setStatoCommitNoteAllegati(String statoCommitNoteAllegati) {
 		this.statoCommitNoteAllegati = statoCommitNoteAllegati;
 	}
-	
-	
+
+
+
+	public AttoServiceManager getAttoServiceManager() {
+		return attoServiceManager;
+	}
+
+
+
+	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+		this.attoServiceManager = attoServiceManager;
+	}
+
+
+
+	public String getTestoAttoVotatoToDelete() {
+		return testoAttoVotatoToDelete;
+	}
+
+
+
+	public void setTestoAttoVotatoToDelete(String testoAttoVotatoToDelete) {
+		this.testoAttoVotatoToDelete = testoAttoVotatoToDelete;
+	}
+
+
+
+	public String getEmendamentoToDelete() {
+		return emendamentoToDelete;
+	}
+
+
+
+	public void setEmendamentoToDelete(String emendamentoToDelete) {
+		this.emendamentoToDelete = emendamentoToDelete;
+	}
+
+
+
+	public String getAllegatoToDelete() {
+		return allegatoToDelete;
+	}
+
+
+
+	public void setAllegatoToDelete(String allegatoToDelete) {
+		this.allegatoToDelete = allegatoToDelete;
+	}
+
+
+
+	public String getNomeLink() {
+		return nomeLink;
+	}
+
+
+
+	public void setNomeLink(String nomeLink) {
+		this.nomeLink = nomeLink;
+	}
+
+
+
+	public String getLinkToDelete() {
+		return linkToDelete;
+	}
+
+
+
+	public void setLinkToDelete(String linkToDelete) {
+		this.linkToDelete = linkToDelete;
+	}
+
+
+
+	public String getUrlLink() {
+		return urlLink;
+	}
+
+
+
+	public void setUrlLink(String urlLink) {
+		this.urlLink = urlLink;
+	}
+
+
+
+	public boolean isPubblico() {
+		return pubblico;
+	}
+
+
+
+	public void setPubblico(boolean pubblico) {
+		this.pubblico = pubblico;
+	}
+
+
+
+
+
+
 }
 
 

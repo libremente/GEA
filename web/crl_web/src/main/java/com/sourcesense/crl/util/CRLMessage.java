@@ -24,4 +24,8 @@ public class CRLMessage {
 	public static final String TESTO_CLAUSOLA_ESAME_COMMISSIONI = "Testo clausola esame commissioni";
 	public static final String ALLEGATO_NOTE_ALLEGATI_ESAME_COMMISSIONI = "Allegato note e allegati esame commissioni";
 	
+	public static final String TESTO_VOTATO_ESAME_AULA = "Testo votato esame aula";
+	public static final String EMENDAMENTO_ESAME_AULA = "Emendamento esame aula";
+	public static final String ALLEGATO_NOTE_ALLEGATI_ESAME_AULA = "Allegato note e allegati esame aula";
+	
 }

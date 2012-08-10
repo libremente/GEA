@@ -342,7 +342,8 @@ public class EsameCommissioniController {
 				+ " preso in carico con successo dall' utente " + username));
 
 		attoBean.getAtto().setDataScadenzaEsameCommissioni(atto.getDataScadenzaEsameCommissioni());
-
+		
+		//TODO: to complete
 		confrontaDataScadenza();
 
 		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_DONE);

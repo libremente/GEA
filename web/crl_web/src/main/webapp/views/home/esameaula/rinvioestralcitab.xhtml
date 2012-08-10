@@ -17,12 +17,22 @@
 				<p:panelGrid styleClass="infoTable" id="rinvioGrid">
 					<p:row>
 						<p:column>
+							<p:growl id="rinvioStralciMsg" showDetail="true" sticky="false" />
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+						<p:column>
 			Data seduta:
 			
 			</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="dataSeduta"
-								value="#{esameAulaController.dataSedutaRinvio}" />
+								value="#{esameAulaController.dataSedutaRinvio}">
+								<p:ajax event="dateSelect"
+									listener="#{esameAulaController.updateRinvioEsameHandler}" />
+							</p:calendar>
 						</p:column>
 					</p:row>
 
@@ -33,7 +43,10 @@
 			</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="termineMassimo"
-								value="#{esameAulaController.dataTermineMassimo}" />
+								value="#{esameAulaController.dataTermineMassimo}">
+								<p:ajax event="dateSelect"
+									listener="#{esameAulaController.updateRinvioEsameHandler}" />
+							</p:calendar>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -44,14 +57,19 @@
 						</p:column>
 						<p:column>
 							<p:inputTextarea rows="6" cols="65"
-								value="#{esameAulaController.motivazioneRinvio}" />
+								value="#{esameAulaController.motivazioneRinvio}">
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateRinvioEsameHandler}" />
+							</p:inputTextarea>
 
 						</p:column>
 
 
 						<p:column>
 
-							<p:commandButton value="Salva" />
+							<p:commandButton value="Salva"
+								action="#{esameAulaController.salvaRinvioEsame}"
+								update="rinvioStralciMsg" />
 
 						</p:column>
 					</p:row>
@@ -74,7 +92,10 @@
 			</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it"
-								value="#{esameAulaController.dataSedutaStralcio}" />
+								value="#{esameAulaController.dataSedutaStralcio}">
+								<p:ajax event="dateSelect"
+									listener="#{esameAulaController.updateStralciHandler}" />
+							</p:calendar>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -83,7 +104,10 @@
 			</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it"
-								value="#{esameAulaController.dataStralcio}" />
+								value="#{esameAulaController.dataStralcio}">
+								<p:ajax event="dateSelect"
+									listener="#{esameAulaController.updateStralciHandler}" />
+							</p:calendar>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -92,7 +116,10 @@
 			</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it"
-								value="#{esameAulaController.dataIniziativa}" />
+								value="#{esameAulaController.dataIniziativa}">
+								<p:ajax event="dateSelect"
+									listener="#{esameAulaController.updateStralciHandler}" />
+							</p:calendar>
 						</p:column>
 					</p:row>
 
@@ -104,7 +131,10 @@
 						</p:column>
 						<p:column>
 							<p:inputTextarea rows="6" cols="65"
-								value="#{esameAulaController.articoli}" />
+								value="#{esameAulaController.articoli}">
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateStralciHandler}" />
+							</p:inputTextarea>
 
 						</p:column>
 
@@ -119,7 +149,10 @@
 						</p:column>
 						<p:column>
 							<p:inputTextarea rows="6" cols="65"
-								value="#{esameAulaController.noteStralcio}" />
+								value="#{esameAulaController.noteStralcio}">
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateStralciHandler}" />
+							</p:inputTextarea>
 
 						</p:column>
 
@@ -136,13 +169,16 @@
 								<f:selectItem itemLabel="Scegli quorum" itemValue="" />
 								<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
 								<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
-
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateStralciHandler}" />
 							</p:selectOneMenu>
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:commandButton value="Salva" />
+							<p:commandButton value="Salva"
+								action="#{esameAulaController.salvaStralci}"
+								update="rinvioStralciMsg" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
