@@ -64,7 +64,6 @@ public class Atto implements Cloneable
 	private String oggetto;
 	private String primoFirmatario;
 	private Date   dataPresentazione;
-	private Date   dataPresaInCarico;
 	private Date   dataPubblicazione;
 	private Date   dataSedutaSc;
 	private Date   dataSedutaAula;
@@ -135,6 +134,7 @@ public class Atto implements Cloneable
 	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> testiClausola = new ArrayList<Allegato>();
 
+	private Date dataPresaInCarico;
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
 	private Date dataRicevimentoInformazioni;
@@ -147,6 +147,7 @@ public class Atto implements Cloneable
 	private String notePresentazioneAssegnazione;
 
 
+	private Date dataPresaInCaricoEsameCommissioni;
 	private String materia;
 	private Date dataScadenzaEsameCommissioni;
 	private boolean presenzaComitatoRistretto;
@@ -181,6 +182,7 @@ public class Atto implements Cloneable
 	private String noteGeneraliEsameCommissioni;
 
 
+	private Date dataPresaInCaricoEsameAula;
 	private String relazioneScritta;
 	private String esitoVotoAula;
 	private String tipologiaVotazione;
@@ -328,15 +330,6 @@ public class Atto implements Cloneable
 
 	public void setDataPresentazione(Date dataPresentazione) {
 		this.dataPresentazione = dataPresentazione;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataPresaInCarico() {
-		return dataPresaInCarico;
-	}
-
-	public void setDataPresaInCarico(Date dataPresaInCarico) {
-		this.dataPresaInCarico = dataPresaInCarico;
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)
@@ -1530,6 +1523,35 @@ public class Atto implements Cloneable
 
 	public void setMotivazioneRinvio(String motivazioneRinvio) {
 		this.motivazioneRinvio = motivazioneRinvio;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresaInCarico() {
+		return dataPresaInCarico;
+	}
+
+	public void setDataPresaInCarico(
+			Date dataPresaInCarico) {
+		this.dataPresaInCarico = dataPresaInCarico;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresaInCaricoEsameCommissioni() {
+		return dataPresaInCaricoEsameCommissioni;
+	}
+
+	public void setDataPresaInCaricoEsameCommissioni(
+			Date dataPresaInCaricoEsameCommissioni) {
+		this.dataPresaInCaricoEsameCommissioni = dataPresaInCaricoEsameCommissioni;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataPresaInCaricoEsameAula() {
+		return dataPresaInCaricoEsameAula;
+	}
+
+	public void setDataPresaInCaricoEsameAula(Date dataPresaInCaricoEsameAula) {
+		this.dataPresaInCaricoEsameAula = dataPresaInCaricoEsameAula;
 	}	
 
 

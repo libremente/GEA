@@ -144,8 +144,9 @@ public class EsameCommissioniController {
 
 	private String statoCommitRelatori = CRLMessage.COMMIT_DONE;
 	private String statoCommitComitatoRistretto = CRLMessage.COMMIT_DONE;
-	private String statoCommitRelatoriComitatiRistretti = CRLMessage.COMMIT_DONE;
+	private String statoCommitPresaInCarico = CRLMessage.COMMIT_DONE;
 	private String statoCommitAbbinamentieDisabbinamenti = CRLMessage.COMMIT_DONE;
+	private String statoCommitOggettoAttoCorrente = CRLMessage.COMMIT_DONE;
 	private String statoCommitRegistrazioneVotazione = CRLMessage.COMMIT_DONE;
 	private String statoCommitContinuazioneLavori = CRLMessage.COMMIT_DONE;
 	private String statoCommitTrasmissione = CRLMessage.COMMIT_DONE;
@@ -202,12 +203,16 @@ public class EsameCommissioniController {
 		setStatoCommitComitatoRistretto(CRLMessage.COMMIT_UNDONE);
 	}
 
-	public void updateRelatoriComitatiRistrettiHandler() {
-		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_UNDONE);
+	public void updatePresaInCaricoHandler() {
+		setStatoCommitPresaInCarico(CRLMessage.COMMIT_UNDONE);
 	}
 
 	public void updateAbbinamentiHandler() {
 		setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_UNDONE);
+	}
+	
+	public void updateOggettoAttoCorrenteHandler() {
+		setStatoCommitOggettoAttoCorrente(CRLMessage.COMMIT_UNDONE);
 	}
 
 	public void updateRegistrazioneVotazioneHandler() {
@@ -252,13 +257,13 @@ public class EsameCommissioniController {
 							""));
 		}
 
-		if (statoCommitRelatoriComitatiRistretti.equals(CRLMessage.COMMIT_UNDONE)) {
+		if (statoCommitPresaInCarico.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
 					null,
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Le modifiche a Relatori e Comitati Ristretti non sono state salvate ",
+							"Attenzione ! Le modifiche della Presa in Carico non sono state salvate ",
 							""));
 		}
 
@@ -269,6 +274,16 @@ public class EsameCommissioniController {
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR,
 							"Attenzione ! Le modifiche di Abbinamenti e Disabbinamenti non sono state salvate ",
+							""));
+		}
+		
+		if (statoCommitOggettoAttoCorrente.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche all'Oggetto dell'Atto corrente non sono state salvate ",
 							""));
 		}
 
@@ -341,12 +356,14 @@ public class EsameCommissioniController {
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username));
 
+		attoBean.getAtto().setDataPresaInCaricoEsameCommissioni(atto.getDataPresaInCaricoEsameCommissioni());
 		attoBean.getAtto().setDataScadenzaEsameCommissioni(atto.getDataScadenzaEsameCommissioni());
+		attoBean.getAtto().setMateria(atto.getMateria());
 		
 		//TODO: to complete
 		confrontaDataScadenza();
 
-		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_DONE);
+		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Presa in Carico salvata con successo", ""));
 
 
@@ -603,7 +620,7 @@ public class EsameCommissioniController {
 
 		attoBean.getAtto().setDataFineLavoriEsameCommissioni(atto.getDataFineLavoriEsameCommissioni());
 
-		setStatoCommitRelatoriComitatiRistretti(CRLMessage.COMMIT_DONE);
+		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Relatori e Comitati Ristretti salvati con successo", ""));
 	}
 
@@ -622,6 +639,7 @@ public class EsameCommissioniController {
 				Atto attoDaAbbinare = attoServiceManager.findById(idAbbinamento);
 				Abbinamento abbinamento = new Abbinamento();
 				abbinamento.setAtto(attoDaAbbinare);
+				abbinamento.setAbbinato(true);
 				abbinamentiList.add(abbinamento);
 
 				setIdAbbinamentoSelected(idAbbinamento);
@@ -637,8 +655,9 @@ public class EsameCommissioniController {
 
 			if (element.getAtto().getId().equals(abbinamentoToDelete)) {
 
-				abbinamentiList.remove(element);
-				updateAbbinamentiHandler();
+//				abbinamentiList.remove(element);
+//				updateAbbinamentiHandler();
+				element.setAbbinato(false);
 				break;
 			}
 		}
@@ -723,6 +742,19 @@ public class EsameCommissioniController {
 
 	}
 
+	
+	public void salvaOggetto() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setOggetto(atto.getOggetto());
+		
+		setStatoCommitOggettoAttoCorrente(CRLMessage.COMMIT_DONE);
+		
+		context.addMessage(null, new FacesMessage("Oggetto Atto corrente con successo", ""));
+		
+	}
 
 
 
@@ -1187,13 +1219,13 @@ public class EsameCommissioniController {
 
 
 	public Date getDataPresaInCarico() {
-		return dataPresaInCarico;
+		return atto.getDataPresaInCaricoEsameCommissioni();
 	}
 
 
 
 	public void setDataPresaInCarico(Date dataPresaInCarico) {
-		this.dataPresaInCarico = dataPresaInCarico;
+		this.atto.setDataPresaInCaricoEsameCommissioni(dataPresaInCarico);
 	}
 
 
@@ -1711,19 +1743,19 @@ public class EsameCommissioniController {
 
 
 
-	public String getStatoCommitRelatoriComitatiRistretti() {
-		return statoCommitRelatoriComitatiRistretti;
+	public String getStatoCommitPresaInCarico() {
+		return statoCommitPresaInCarico;
 	}
 
 
 
-	public void setStatoCommitRelatoriComitatiRistretti(
-			String statoCommitRelatoriComitatiRistretti) {
-		this.statoCommitRelatoriComitatiRistretti = statoCommitRelatoriComitatiRistretti;
+	public void setStatoCommitPresaInCarico(
+			String statoCommitPresaInCarico) {
+		this.statoCommitPresaInCarico = statoCommitPresaInCarico;
 	}
 
 
-	public String getStatoCommitEmendamentiClausole() {
+	public String getStatoCommitEmendamentiClausole() {		
 		return statoCommitEmendamentiClausole;
 	}
 
@@ -2060,6 +2092,17 @@ public class EsameCommissioniController {
 	public void setStatoCommitAbbinamentieDisabbinamenti(
 			String statoCommitAbbinamentieDisabbinamenti) {
 		this.statoCommitAbbinamentieDisabbinamenti = statoCommitAbbinamentieDisabbinamenti;
+	}
+
+
+	public String getStatoCommitOggettoAttoCorrente() {
+		return statoCommitOggettoAttoCorrente;
+	}
+
+
+	public void setStatoCommitOggettoAttoCorrente(
+			String statoCommitOggettoAttoCorrente) {
+		this.statoCommitOggettoAttoCorrente = statoCommitOggettoAttoCorrente;
 	}
 
 

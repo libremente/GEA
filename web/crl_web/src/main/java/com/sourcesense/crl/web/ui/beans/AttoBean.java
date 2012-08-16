@@ -31,7 +31,7 @@ public class AttoBean implements Serializable {
 	private String tipologia;
 	private String legislatura;
 	private Date dataPresaInCarico;
-	
+
 	private String statoAttuale;
 	private String classificazione;
 	private String numeroRepertorio;
@@ -39,23 +39,23 @@ public class AttoBean implements Serializable {
 	private Date dataIniziativa;
 	private String tipoIniziativa;
 	private String oggetto;
-    private Date dataAssegnazione;
-    private String esitoValidazione;    
-    private Date dataValidazione;
-    private Date dataAssegnazioneCommissioni;
-    
+	private Date dataAssegnazione;
+	private String esitoValidazione;    
+	private Date dataValidazione;
+	private Date dataAssegnazioneCommissioni;
+
 
 	private String descrizioneIniziativa;
-    private String numeroDGR;
-    private Date   dataDGR;
-    private String assegnazione;
-    private String id;
+	private String numeroDGR;
+	private Date   dataDGR;
+	private String assegnazione;
+	private String id;
 	private String tipo;
-    private String primoFirmatario;
-    private Date   dataPresentazione;
-    private String stato;
-    private String anno;
-    
+	private String primoFirmatario;
+	private Date   dataPresentazione;
+	private String stato;
+	private String anno;
+
 	private String numeroProtocollo;
 	private String numeroDcr;
 	private String firmatario;
@@ -77,7 +77,7 @@ public class AttoBean implements Serializable {
 	private boolean rinviato;	
 	private boolean sospeso;
 
-	
+
 	private Date dataLR;
 	private String numeroPubblicazioneBURL;
 	private Date dataPubblicazioneBURL;
@@ -90,7 +90,7 @@ public class AttoBean implements Serializable {
 
 
 
-	
+
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
 	private Date dataRicevimentoInformazioni;
@@ -103,7 +103,7 @@ public class AttoBean implements Serializable {
 	private String noteNoteAllegatiPresentazioneAssegnazione;
 
 
-	
+
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -132,8 +132,8 @@ public class AttoBean implements Serializable {
 	public void setCodice(String codice) {
 		this.codice = codice;
 
-//		if (codice != null)
-//			setAtto(attoServiceManager.get(codice));
+		//		if (codice != null)
+		//			setAtto(attoServiceManager.get(codice));
 	}
 
 	/**
@@ -295,9 +295,9 @@ public class AttoBean implements Serializable {
 	public void setDataAssegnazioneCommissioni(Date dataAssegnazioneCommissioni) {
 		this.atto.setDataAssegnazioneCommissioni(dataAssegnazioneCommissioni);
 	}
-	
-	
-	
+
+
+
 	public String getDescrizioneIniziativa() {
 		return atto.getDescrizioneIniziativa();
 	}
@@ -687,6 +687,6 @@ public class AttoBean implements Serializable {
 			String noteNoteAllegatiPresentazioneAssegnazione) {
 		this.atto.setNotePresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
 	}
-	
+
 }
 

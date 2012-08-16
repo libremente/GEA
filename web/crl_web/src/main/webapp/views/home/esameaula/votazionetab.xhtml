@@ -47,7 +47,9 @@
 			</p:calendar>
 		</p:column>
 		<p:column>
-			<p:commandButton value="Presa in carico" />
+			<p:commandButton value="Presa in carico" 
+			action="#{esameAulaController.presaInCarico}"
+			update="votazioneMsg"/>
 		</p:column>
 	</p:row>
 	<p:row>

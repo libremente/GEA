@@ -73,7 +73,10 @@
 		<p:column>
 			<p:calendar size="10" locale="it" id="datapresaincarico"
 				update="comitatiMsg"
-				value="#{esameCommissioniController.dataPresaInCarico}" />
+				value="#{esameCommissioniController.dataPresaInCarico}">
+				<p:ajax event="dateSelect"
+					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
+			</p:calendar>
 					&nbsp;
 					<p:commandButton value="Presa in Carico"
 				action="#{esameCommissioniController.presaInCarico}"
@@ -91,7 +94,7 @@
 			<p:inputText id="inputmateria"
 				value="#{esameCommissioniController.materia}">
 				<p:ajax event="change"
-					listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:inputText>
 		</p:column>
 	</p:row>
@@ -104,7 +107,7 @@
 			<p:calendar size="10" locale="it" id="datascadenza"
 				value="#{esameCommissioniController.dataScadenza}">
 				<p:ajax event="dateSelect"
-					listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:calendar>
 		</p:column>
 	</p:row>

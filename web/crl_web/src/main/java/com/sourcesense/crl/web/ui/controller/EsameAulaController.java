@@ -192,6 +192,9 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
+		attoBean.getAtto().setDataPresaInCaricoEsameAula(atto.getDataPresaInCaricoEsameAula());
+		attoBean.getAtto().setRelazioneScritta(atto.getRelazioneScritta());
 
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
@@ -200,6 +203,8 @@ public class EsameAulaController {
 
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username));
+		
+		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
 	}
 
 
@@ -575,12 +580,12 @@ public class EsameAulaController {
 
 
 	public Date getDataPresaInCarico() {
-		return dataPresaInCarico;
+		return atto.getDataPresaInCaricoEsameAula();
 	}
 
 
 	public void setDataPresaInCarico(Date dataPresaInCarico) {
-		this.dataPresaInCarico = dataPresaInCarico;
+		this.atto.setDataPresaInCaricoEsameAula(dataPresaInCarico);
 	}
 
 

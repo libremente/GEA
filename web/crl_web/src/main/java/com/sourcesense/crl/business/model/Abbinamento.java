@@ -15,6 +15,8 @@ public class Abbinamento {
 	private Date dataDisabbinamento;
 	private String tipoTesto;
 	private String note;
+	private boolean abbinato;
+	
 	public Atto getAtto() {
 		return atto;
 	}
@@ -44,6 +46,12 @@ public class Abbinamento {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public boolean isAbbinato() {
+		return abbinato;
+	}
+	public void setAbbinato(boolean abbinato) {
+		this.abbinato = abbinato;
 	}
 	
 	

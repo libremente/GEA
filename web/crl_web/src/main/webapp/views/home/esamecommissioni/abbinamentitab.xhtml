@@ -564,6 +564,7 @@
 
 	<!-- Pannello ricerca end -->
 
+	
 	<h3>Risultati ricerca</h3>
 
 	<p:dataTable id="listaAtti" var="atto"
@@ -688,6 +689,8 @@
 						<f:selectItem itemLabel="Testo base" itemValue="Testo base" />
 						<f:selectItem itemLabel="Testo modificato"
 							itemValue="Testo modificato" />
+						<p:ajax event="change"
+							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
 					</p:selectOneMenu>
 				</p:column>
 			</p:row>
@@ -699,7 +702,10 @@
 				</p:column>
 				<p:column>
 					<p:calendar size="10" locale="it" id="dataabbinamento"
-						value="#{esameCommissioniController.dataAbbinamento}" />
+						value="#{esameCommissioniController.dataAbbinamento}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
+					</p:calendar>
 				</p:column>
 				<p:column>
 					<p:commandButton value="Conferma Abbinamento"
@@ -715,7 +721,10 @@
 				</p:column>
 				<p:column>
 					<p:calendar size="10" locale="it" id="datadisabbinamento"
-						value="#{esameCommissioniController.dataDisabbinamento}" />
+						value="#{esameCommissioniController.dataDisabbinamento}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
+					</p:calendar>
 				</p:column>
 				<p:column>
 					<p:commandButton value="Conferma Disabbinamento"
@@ -729,7 +738,10 @@
 				</p:column>
 				<p:column colspan="3">
 					<p:inputTextarea rows="2" cols="82"
-						value="#{esameCommissioniController.noteAbbinamento}" />
+						value="#{esameCommissioniController.noteAbbinamento}">
+						<p:ajax event="change"
+							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
+					</p:inputTextarea>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
@@ -744,7 +756,18 @@
 		</p:column>
 		<p:column colspan="3">
 			<p:inputTextarea rows="2" cols="82"
-				value="#{esameCommissioniController.oggettoAttoCorrente}" />
+				value="#{esameCommissioniController.oggettoAttoCorrente}">
+				<p:ajax event="change"
+					listener="#{esameCommissioniController.updateOggettoAttoCorrenteHandler}" />
+			</p:inputTextarea>
+		</p:column>
+	</p:row>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<p:row>
+		<p:column>
+			<p:commandButton value="Salva oggetto"
+				action="#{esameCommissioniController.salvaOggetto}"
+				update="abbinamentiMsg" />
 		</p:column>
 	</p:row>
 

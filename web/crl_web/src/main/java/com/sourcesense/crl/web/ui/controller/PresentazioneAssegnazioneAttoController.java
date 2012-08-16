@@ -58,6 +58,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private Map<String, String> tipiIniziativa = new HashMap<String, String>();
 
+	private Date dataPresaInCarico;
 	private String numeroAtto;
 	private String classificazione;
 	private String oggetto;
@@ -99,7 +100,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private boolean votazioneUrgenza;
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
-	
+
 	private Map<String, String> commissioni = new HashMap<String, String>();
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 
@@ -151,7 +152,7 @@ public class PresentazioneAssegnazioneAttoController {
 		setAtto((Atto) attoBean.getAtto().clone());
 
 		this.firmatariList = new ArrayList<Firmatario>(this.atto.getFirmatari());
-		
+
 		//TODO caricamento liste attoBean
 		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
 		this.pareriList = new ArrayList<Parere>(this.atto.getPareri());
@@ -230,6 +231,8 @@ public class PresentazioneAssegnazioneAttoController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setDataPresaInCarico(atto.getDataPresaInCarico());
 
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
@@ -326,7 +329,7 @@ public class PresentazioneAssegnazioneAttoController {
 				firmatario.setGruppoConsiliare(gruppoConsiliare);
 				firmatario.setPrimoFirmatario(primoFirmatario);
 				firmatariList.add(firmatario);
-				
+
 				updateInfoGenHandler();
 			}
 		}
@@ -371,7 +374,7 @@ public class PresentazioneAssegnazioneAttoController {
 	public String ritiraPerMancanzaFirmatari() {
 
 		// TODO Service logic
-		
+
 		return "pretty:chiusuraiter";
 
 	}
@@ -448,7 +451,7 @@ public class PresentazioneAssegnazioneAttoController {
 				commissione.setDataProposta(dataProposta);
 				commissione.setRuolo(ruolo);
 				commissioniList.add(commissione);
-				
+
 				updateAssegnazioneHandler();
 			}
 		}
@@ -511,7 +514,7 @@ public class PresentazioneAssegnazioneAttoController {
 				parere.setDataAnnullo(dataAnnulloParere);
 				parere.setObbligatorio(obbligatorio);
 				pareriList.add(parere);
-				
+
 				updateAssegnazioneHandler();
 			}
 		}
@@ -640,7 +643,7 @@ public class PresentazioneAssegnazioneAttoController {
 				link.setIndirizzo(urlLink);
 				link.setPubblico(pubblico);
 				linksList.add(link);
-				
+
 				updateNoteHandler();
 			}
 		}
@@ -1225,8 +1228,16 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setPareriList(List<Parere> pareriList) {
 		this.pareriList = pareriList;
 	}
-	
-	
+
+	public Date getDataPresaInCarico() {
+		return atto.getDataPresaInCarico();
+	}
+
+	public void setDataPresaInCarico(Date dataPresaInCarico) {
+		this.atto.setDataPresaInCarico(dataPresaInCarico);
+	}
+
+
 
 
 
