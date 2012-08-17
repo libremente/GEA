@@ -8,190 +8,213 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
-	<p:fieldset legend="Pareri" toggleable="true" toggleSpeed="500">
 
-		<p:panelGrid styleClass="infoTable" id="pareripanel">
-			<p:row>
-				<p:column colspan="6">
-					<table class="generalInfoTab grey-text" id="pareritab" style="width: 90%;"
-						border="0" type="ordered">
-						<thead>
-							<th>N°</th>
-							<th>Organismo Statuario</th>
-							<th>Richiesto</th>
-							<th>Ricevuto</th>
-							<th>Esito</th>
-							<th>Allegati</th>
-							<th>Opzioni</th>
-						</thead>
+<p:fieldset legend="Pareri" toggleable="true" toggleSpeed="500">
 
-						<!-- TODO
-							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
+	<p:panelGrid styleClass="infoTable" id="pareripanel">
+		<p:row>
+			<p:column colspan="5">
 
-						<tbody>
-							<tr>
-								<td align="left">1</td>
-								<td align="left">CPCV</td>
-								<td align="left">1/5/2011</td>
-								<td align="left">1/7/2011</td>
-								<td align="left">Esito parere 1...</td>
-								<td align="left"></td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+				<p:growl id="pareriMsg" showDetail="true" sticky="false" />
 
-							</tr>
+				<h:dataTable id="listaPareri"
+					value="#{consultazionePareriController.pareriList}" var="parere"
+					styleClass="generalInfoTab grey-text">
 
-							<tr>
-								<td align="left">2</td>
-								<td align="left">CORECOM</td>
-								<td align="left">1/5/2011</td>
-								<td align="left">4/7/2011</td>
-								<td align="left">Esito parere 2...</td>
-								<td align="left"><h:graphicImage alt="txt"
-										value="/resources/img/txt.png" /></td>
-								<td align="left"><h:graphicImage alt="delete"
-										value="/resources/img/delete.png" /></td>
+					<h:column>
+						<f:facet name="header">Mostra dettaglio</f:facet>
+						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
+							action="#{consultazionePareriController.showParereDetail}"
+							update=":consultazioniPareriForm:tabView:dettagliparerepanel">
+							<f:setPropertyActionListener value="#{parere.descrizione}"
+								target="#{consultazionePareriController.descrizioneParereSelected}" />
+						</p:commandButton>
+					</h:column>
 
-							</tr>
+					<h:column>
+						<f:facet name="header">Organismo Statutario</f:facet>
+							#{parere.descrizione}
+    			       </h:column>
+
+					<h:column>
+						<f:facet name="header">Richiesto</f:facet>
+						<h:outputText value="#{parere.dataAssegnazione}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Ricevuto</f:facet>
+						<h:outputText value="#{parere.dataRicezioneOrgano}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Esito</f:facet>
+							#{parere.esito}
+						</h:column>
+
+					<h:column>
+						<f:facet name="header">Allegati</f:facet>
+
+					</h:column>
 
 
 
-						</tbody>
-					</table>
-				</p:column>
-			</p:row>
+				</h:dataTable>
+			</p:column>
+		</p:row>
 
-			<p:row>
-				<p:column>
-					<h:graphicImage alt="add" value="/resources/img/add.png" />
-				</p:column>
-			</p:row>
+		<p:row>
+			<p:column colspan="6">
+				<p:fieldset legend="Dettagli parere" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="dettagliparerepanel">
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;"
+									value="Organismo Statutario: " />
+							</p:column>
+							<p:column>
+								<p:inputText
+									value="#{consultazionePareriController.parereSelected.descrizione}"
+									readonly="true" />
+							</p:column>
+						</p:row>
 
-			<p:row>
-				<p:column colspan="6">
-					<p:fieldset legend="Dettagli parere" collapsed="false"
-						toggleable="true" toggleSpeed="500">
-						<p:panelGrid styleClass="infoTable" id="dettagliparerepanel">
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Organismo Statutario: " />
-								</p:column>
-								<p:column>
-									<p:inputText value="CPCV" readonly="true" />
-								</p:column>
-							</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;"
+									value="Data Assegnazione: " />
+							</p:column>
+							<p:column>
+								<p:inputText size="10"
+									value="#{consultazionePareriController.parereSelected.dataAssegnazione}"
+									readonly="true">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<b> <h:outputLabel for="dataricezioneorgano"
+										value="Data ricezione organo: " />
+								</b>
+							</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataricezioneorgano"
+									value="#{consultazionePareriController.dataRicezioneOrgano}">
+									<p:ajax event="dateSelect"
+										listener="#{consultazionePareriController.updatePareriHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;"
-										value="Data Assegnazione: " />
-								</p:column>
-								<p:column>
-									<p:inputText value="1/5/2011" readonly="true" />
-								</p:column>
-								<p:column>
-									<b> <h:outputLabel for="dataricezioneorgano"
-											value="Data ricezione organo: " />
-									</b>
-								</p:column>
-								<p:column>
-									<p:calendar size="10" locale="it" id="dataricezioneorgano" />
-								</p:column>
-							</p:row>
+						<p:row>
+							<p:column>
+								<b> <h:outputLabel for="dataricezioneparere"
+										value="Data ricezione parere: " />
+								</b>
+							</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataricezioneparere"
+									value="#{consultazionePareriController.dataRicezioneParere}">
+									<p:ajax event="dateSelect"
+										listener="#{consultazionePareriController.updatePareriHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
 
-							<p:row>
-								<p:column>
-									<b> <h:outputLabel for="dataricezioneparere"
-											value="Data ricezione parere: " />
-									</b>
-								</p:column>
-								<p:column>
-									<p:calendar size="10" locale="it" id="dataricezioneparere" />
-								</p:column>
-							</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;" value="Esito: " />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu value="#{consultazionePareriController.esito}">
+									<f:selectItem itemLabel="Scegli esito" itemValue="" />
+									<f:selectItem itemLabel="Positivo" itemValue="Positivo" />
+									<f:selectItem itemLabel="Positivo condizionato"
+										itemValue="Positivo condizionato" />
+									<f:selectItem itemLabel="Negativo" itemValue="Negativo" />
+									<p:ajax event="change"
+										listener="#{consultazionePareriController.updatePareriHandler}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;" value="Esito: " />
-								</p:column>
-								<p:column>
-									<p:selectOneMenu>
-										<f:selectItem itemLabel="Positivo" itemValue="1" />
-										<f:selectItem itemLabel="Positivo condizionato" itemValue="2" />
-										<f:selectItem itemLabel="Negativo" itemValue="3" />
-									</p:selectOneMenu>
-								</p:column>
-							</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;" value="Note: " />
+							</p:column>
+							<p:column colspan="3">
+								<p:inputTextarea rows="2" cols="82"
+									value="#{consultazionePareriController.noteParere}">
+									<p:ajax event="change"
+										listener="#{consultazionePareriController.updatePareriHandler}" />
+								</p:inputTextarea>
+							</p:column>
+						</p:row>
 
-							<p:row>
-								<p:column>
-									<h:outputText style="font-weight: bold;" value="Note: " />
-								</p:column>
-								<p:column colspan="3">
-									<p:inputTextarea rows="2" cols="82" />
-								</p:column>
-							</p:row>
+						<p:row>
+							<p:column colspan="4">
+								<table class="generalInfoTab grey-text"
+									id="documentazioneallegatatab" style="width: 100%;" border="0">
+									<thead>
+										<th colspan="2">Documentazione allegata</th>
+										<th>Documento</th>
+										<th>Pubblico</th>
+									</thead>
 
-							<p:row>
-								<p:column colspan="4">
-									<table class="generalInfoTab grey-text" id="documentazioneallegatatab" style="width: 100%;"
-										border="0">
-										<thead>
-											<th colspan="2">Documentazione allegata</th>
-											<th>Documento</th>
-											<th>Pubblico</th>
-										</thead>
-
-										<!-- TODO: 
+									<!-- TODO: 
 							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
 							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
 
-										<tbody>
-											<tr>
-												<td align="left" colspan="2">Allegato 1</td>
-												<td align="left"><h:commandLink>
-														<h:outputText value="download" />
-													</h:commandLink></td>
-												<td align="left"><p:selectBooleanCheckbox /></td>
+									<tbody>
+										<tr>
+											<td align="left" colspan="2">Allegato 1</td>
+											<td align="left"><h:commandLink>
+													<h:outputText value="download" />
+												</h:commandLink></td>
+											<td align="left"><p:selectBooleanCheckbox /></td>
 
-											</tr>
+										</tr>
 
-											<tr>
-												<td align="left" colspan="2">Allegato 2</td>
-												<td align="left"><h:commandLink>
-														<h:outputText value="download" />
-													</h:commandLink></td>
-												<td align="left"><p:selectBooleanCheckbox /></td>
+										<tr>
+											<td align="left" colspan="2">Allegato 2</td>
+											<td align="left"><h:commandLink>
+													<h:outputText value="download" />
+												</h:commandLink></td>
+											<td align="left"><p:selectBooleanCheckbox /></td>
 
-											</tr>
+										</tr>
 
-										</tbody>
-									</table>
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column>
-									<h:graphicImage alt="add" value="/resources/img/add.png" />
-								</p:column>
-								<p:column>
-									<p:fileUpload mode="simple" />
-								</p:column>
-							</p:row>
-							
-							<p:row>
-								<p:column>
-									<p:commandButton value="Inserisci"/>
-								</p:column>
-							</p:row>
+									</tbody>
+								</table>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:graphicImage alt="add" value="/resources/img/add.png" />
+							</p:column>
+							<p:column>
+								<p:fileUpload mode="simple" />
+							</p:column>
+						</p:row>
 
-						</p:panelGrid>
-					</p:fieldset>
-				</p:column>
-			</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton value="Salva"
+									action="#{consultazionePareriController.salvaParere}"
+									update="pareriMsg, listaPareri" />
+							</p:column>
+						</p:row>
 
-		</p:panelGrid>
-	</p:fieldset>
-</h:form>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:column>
+		</p:row>
+
+	</p:panelGrid>
+</p:fieldset>
 </html>

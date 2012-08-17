@@ -227,6 +227,12 @@ public class AttoServiceManager implements ServiceManager {
 	
 	
 	
+	public void salvaPareri(Atto atto) {
+		//TODO: attoService.merge();
+	}
+	
+	
+	
 	
 
 	@Override

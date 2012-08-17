@@ -1,6 +1,8 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
@@ -20,27 +22,14 @@ public class Parere {
 	private Date dataAnnullo;
 	private boolean obbligatorio;
 	
-	private Date dataRichiesto;
-	private Date dataRicevuto;
+	private Date dataRicezioneParere;
 	private String esito;
 	private Date dataRicezioneOrgano;
 	private String note;
 	
+	private List<Allegato> allegati = new ArrayList<Allegato>();
 	
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataRichiesto() {
-		return dataRichiesto;
-	}
-	public void setDataRichiesto(Date dataRichiesto) {
-		this.dataRichiesto = dataRichiesto;
-	}
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataRicevuto() {
-		return dataRicevuto;
-	}
-	public void setDataRicevuto(Date dataRicevuto) {
-		this.dataRicevuto = dataRicevuto;
-	}
+
 	public String getEsito() {
 		return esito;
 	}
@@ -91,6 +80,19 @@ public class Parere {
 	}
 	public void setOrganismoStatutario(String organismoStatutario) {
 		this.organismoStatutario = organismoStatutario;
+	}
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataRicezioneParere() {
+		return dataRicezioneParere;
+	}
+	public void setDataRicezioneParere(Date dataRicezioneParere) {
+		this.dataRicezioneParere = dataRicezioneParere;
+	}
+	public List<Allegato> getAllegati() {
+		return allegati;
+	}
+	public void setAllegati(List<Allegato> allegati) {
+		this.allegati = allegati;
 	}
 	
 	
