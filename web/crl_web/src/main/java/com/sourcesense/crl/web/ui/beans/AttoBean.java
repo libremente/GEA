@@ -574,27 +574,27 @@ public class AttoBean implements Serializable {
 	}
 
 	public String getEsitoVotazione() {
-		return atto.getEsitoVotazione();
+		return atto.getEsitoVotoAula();
 	}
 
 	public void setEsitoVotazione(String esitoVotazione) {
-		this.atto.setEsitoVotazione(esitoVotazione);
+		this.atto.setEsitoVotoAula(esitoVotazione);
 	}
 
 	public Date getDataSeduta() {
-		return atto.getDataSeduta();
+		return atto.getDataSedutaAula();
 	}
 
 	public void setDataSeduta(Date dataSeduta) {
-		this.atto.setDataSeduta(dataSeduta);
+		this.atto.setDataSedutaAula(dataSeduta);
 	}
 
 	public String getTipoVotazione() {
-		return atto.getTipoVotazione();
+		return atto.getTipologiaVotazione();
 	}
 
 	public void setTipoVotazione(String tipoVotazione) {
-		this.atto.setTipoVotazione(tipoVotazione);
+		this.atto.setTipologiaVotazione(tipoVotazione);
 	}
 
 	public String getNumeroDCR() {

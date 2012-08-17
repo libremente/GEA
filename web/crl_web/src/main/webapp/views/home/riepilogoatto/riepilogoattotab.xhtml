@@ -213,11 +213,11 @@
 						</f:facet>
 						<p:commandButton
 							update=":formRiepilogo:tabView:dettaglioCommissione"
-							id="cmdBtn_#{commissione.nome}"
+							id="cmdBtn_#{commissione.descrizione}"
 							action="#{riepilogoAttoController.showCommissioneDetail}"
 							icon="detail-icon">
 
-							<f:setPropertyActionListener value="#{commissione.nome}"
+							<f:setPropertyActionListener value="#{commissione.descrizione}"
 								target="#{riepilogoAttoController.nomeCommissione}" />
 
 						</p:commandButton>

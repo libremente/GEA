@@ -11,6 +11,11 @@
 <h:form>
 	<p:fieldset legend="Chiudi fascicolo" toggleable="true"
 		toggleSpeed="500">
+		<p:row>
+			<p:column>
+				<p:growl id="chiusuraIterMsg" showDetail="true" sticky="false" />
+			</p:column>
+		</p:row>
 
 		<p:panelGrid styleClass="infoTable" id="chiudifascicolopanel">
 			<p:row>
@@ -20,7 +25,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datachiusura" />
+					<p:calendar size="10" locale="it" id="datachiusura"
+						value="#{chiusuraIterController.dataChiusura}" />
 				</p:column>
 			</p:row>
 
@@ -29,18 +35,23 @@
 					<h:outputText style="font-weight: bold;" value="Tipo chiusura: " />
 				</p:column>
 				<p:column>
-					<p:selectOneMenu>
-						<f:selectItem itemLabel="Pubblicato" itemValue="1" />
+					<p:selectOneMenu value="#{chiusuraIterController.tipoChiusura}">
+						<f:selectItem itemLabel="Scegli tipo chiusura" itemValue="" />
+						<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
 						<f:selectItem itemLabel="Approvato e Trasmesso alla Giunta"
-							itemValue="2" />
+							itemValue="Approvato e Trasmesso alla Giunta" />
 						<f:selectItem itemLabel="Rifiutato e Trasmesso alla Giunta"
-							itemValue="3" />
-						<f:selectItem itemLabel="Per inamissibilità" itemValue="4" />
-						<f:selectItem itemLabel="Ritirato dai promotori" itemValue="5" />
-						<f:selectItem itemLabel="Abbinato ad altro atto" itemValue="6" />
+							itemValue="Rifiutato e Trasmesso alla Giunta" />
+						<f:selectItem itemLabel="Per inamissibilità"
+							itemValue="Per inamissibilità" />
+						<f:selectItem itemLabel="Ritirato dai promotori"
+							itemValue="Ritirato dai promotori" />
+						<f:selectItem itemLabel="Abbinato ad altro atto"
+							itemValue="Abbinato ad altro atto" />
 						<f:selectItem itemLabel="Per decadenza (fine legislatura)"
-							itemValue="7" />
-						<f:selectItem itemLabel="Per motivi diversi" itemValue="8" />
+							itemValue="Per decadenza (fine legislatura)" />
+						<f:selectItem itemLabel="Per motivi diversi"
+							itemValue="Per motivi diversi" />
 					</p:selectOneMenu>
 				</p:column>
 			</p:row>
@@ -50,7 +61,8 @@
 					<h:outputText style="font-weight: bold;" value="Note: " />
 				</p:column>
 				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" />
+					<p:inputTextarea rows="2" cols="82"
+						value="#{chiusuraIterController.note}" />
 				</p:column>
 			</p:row>
 
@@ -66,7 +78,8 @@
 						value="Numero Riferimento BURL: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="inputnumerorifburl" />
+					<p:inputText id="inputnumerorifburl"
+						value="#{chiusuraIterController.numRiferimentoBurl}" />
 				</p:column>
 				<p:column>
 					<b> <h:outputLabel for="databurl" value="Data BURL: " />
@@ -74,7 +87,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="databurl" />
+					<p:calendar size="10" locale="it" id="databurl"
+						value="#{chiusuraIterController.dataBurl}" />
 				</p:column>
 
 			</p:row>
@@ -83,7 +97,8 @@
 					<h:outputText style="font-weight: bold;" value="Numero LR: " />
 				</p:column>
 				<p:column>
-					<p:inputText id="inputnumerolr" />
+					<p:inputText id="inputnumerolr"
+						value="#{chiusuraIterController.numeroLr}" />
 				</p:column>
 				<p:column>
 					<b> <h:outputLabel for="datalr" value="Data LR: " />
@@ -91,7 +106,8 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datalr" />
+					<p:calendar size="10" locale="it" id="datalr"
+						value="#{chiusuraIterController.dataLr}" />
 				</p:column>
 			</p:row>
 
@@ -104,7 +120,9 @@
 		</p:panelGrid>
 	</p:fieldset>
 	<p>
-		<p:commandButton value="Chiusura atto" />
+		<p:commandButton value="Chiusura atto"
+			action="#{chiusuraIterController.chiusuraAtto}"
+			update="chiusuraIterMsg" />
 	</p>
 </h:form>
 </html>

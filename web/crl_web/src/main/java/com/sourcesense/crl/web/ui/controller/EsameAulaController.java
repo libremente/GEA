@@ -280,7 +280,7 @@ public class EsameAulaController {
 
 		attoBean.getAtto().setEsitoVotoAula(atto.getEsitoVotoAula());
 		attoBean.getAtto().setTipologiaVotazione(atto.getTipologiaVotazione());
-		attoBean.getAtto().setDataSedutaVotazione(atto.getDataSedutaVotazione());
+		attoBean.getAtto().setDataSedutaAula(atto.getDataSedutaAula());
 		attoBean.getAtto().setNumeroDcr(atto.getNumeroDcr());
 		attoBean.getAtto().setNumeroLcr(atto.getNumeroLcr());
 		attoBean.getAtto().setEmendato(atto.isEmendato());
@@ -620,12 +620,12 @@ public class EsameAulaController {
 
 
 	public Date getDataSedutaVotazione() {
-		return atto.getDataSedutaVotazione();
+		return atto.getDataSedutaAula();
 	}
 
 
 	public void setDataSedutaVotazione(Date dataSedutaVotazione) {
-		this.atto.setDataSedutaVotazione(dataSedutaVotazione);
+		this.atto.setDataSedutaAula(dataSedutaVotazione);
 	}
 
 

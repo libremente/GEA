@@ -67,7 +67,7 @@ public class RiepilogoAttoController {
 
 		for (Commissione commissioneRec : attoBean.getAtto().getCommissioni()) {
 
-			if(commissioneRec.getNome().equals(nomeCommissione)){
+			if(commissioneRec.getDescrizione().equals(nomeCommissione)){
 
 				commissioneSelected =	commissioneRec;
 				break;

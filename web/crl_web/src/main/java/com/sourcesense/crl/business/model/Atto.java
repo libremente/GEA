@@ -111,9 +111,6 @@ public class Atto implements Cloneable
 	private Date dataPubblicazioneBURL;
 	private Date dataChiusura;
 	private String statoChiusura;
-	private String esitoVotazione;
-	private Date dataSeduta;
-	private String tipoVotazione;
 
 	private List <Commissione> commissioni = new ArrayList<Commissione>();
 	private List <Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
@@ -186,7 +183,6 @@ public class Atto implements Cloneable
 	private String relazioneScritta;
 	private String esitoVotoAula;
 	private String tipologiaVotazione;
-	private Date dataSedutaVotazione;
 	private String numeroDcr;
 	private String numeroLcr;
 	private boolean emendato;
@@ -225,6 +221,8 @@ public class Atto implements Cloneable
 	
 	private List<Allegato> allegatiEsameAula = new ArrayList<Allegato>();
 	private List<Link> linksEsameAula = new ArrayList<Link>();
+	
+	private String noteChiusuraIter;
 
 	public Atto(){
 
@@ -685,31 +683,6 @@ public class Atto implements Cloneable
 
 	public void setStatoChiusura(String statoChiusura) {
 		this.statoChiusura = statoChiusura;
-	}
-
-	public String getEsitoVotazione() {
-		return esitoVotazione;
-	}
-
-	public void setEsitoVotazione(String esitoVotazione) {
-		this.esitoVotazione = esitoVotazione;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataSeduta() {
-		return dataSeduta;
-	}
-
-	public void setDataSeduta(Date dataSeduta) {
-		this.dataSeduta = dataSeduta;
-	}
-
-	public String getTipoVotazione() {
-		return tipoVotazione;
-	}
-
-	public void setTipoVotazione(String tipoVotazione) {
-		this.tipoVotazione = tipoVotazione;
 	}
 
 	public List<Commissione> getCommissioni() {
@@ -1247,15 +1220,6 @@ public class Atto implements Cloneable
 		this.tipologiaVotazione = tipologiaVotazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataSedutaVotazione() {
-		return dataSedutaVotazione;
-	}
-
-	public void setDataSedutaVotazione(Date dataSedutaVotazione) {
-		this.dataSedutaVotazione = dataSedutaVotazione;
-	}
-
 	public String getNumeroDcr() {
 		return numeroDcr;
 	}
@@ -1552,6 +1516,14 @@ public class Atto implements Cloneable
 
 	public void setDataPresaInCaricoEsameAula(Date dataPresaInCaricoEsameAula) {
 		this.dataPresaInCaricoEsameAula = dataPresaInCaricoEsameAula;
+	}
+
+	public String getNoteChiusuraIter() {
+		return noteChiusuraIter;
+	}
+
+	public void setNoteChiusuraIter(String noteChiusuraIter) {
+		this.noteChiusuraIter = noteChiusuraIter;
 	}	
 
 
