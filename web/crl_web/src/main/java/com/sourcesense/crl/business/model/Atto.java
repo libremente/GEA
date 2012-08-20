@@ -119,7 +119,6 @@ public class Atto implements Cloneable
 	private List <Relatore> relatori = new ArrayList<Relatore>();
 	private List <Parere> pareri = new ArrayList<Parere>();
 	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
-	private List <Atto> collegamenti = new ArrayList<Atto>();
 	private List <Allegato> allegati = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
@@ -130,6 +129,7 @@ public class Atto implements Cloneable
 	private List <Allegato> testiAttoVotatoEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> testiClausola = new ArrayList<Allegato>();
+	private List <Collegamento> collegamenti = new ArrayList<Collegamento>();
 
 	private Date dataPresaInCarico;
 	private String valutazioneAmmissibilita;
@@ -739,14 +739,6 @@ public class Atto implements Cloneable
 
 	public void setConsultazioni(List<Consultazione> consultazioni) {
 		this.consultazioni = consultazioni;
-	}
-
-	public List<Atto> getCollegamenti() {
-		return collegamenti;
-	}
-
-	public void setCollegamenti(List<Atto> collegamenti) {
-		this.collegamenti = collegamenti;
 	}
 
 	public List<Allegato> getAllegati() {
@@ -1524,6 +1516,14 @@ public class Atto implements Cloneable
 
 	public void setNoteChiusuraIter(String noteChiusuraIter) {
 		this.noteChiusuraIter = noteChiusuraIter;
+	}
+
+	public List <Collegamento> getCollegamenti() {
+		return collegamenti;
+	}
+
+	public void setCollegamenti(List <Collegamento> collegamenti) {
+		this.collegamenti = collegamenti;
 	}	
 
 
