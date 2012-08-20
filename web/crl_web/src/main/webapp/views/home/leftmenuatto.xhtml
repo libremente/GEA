@@ -2,21 +2,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-    <h:panelGrid style="font-size:12px" columns="1"><!-- begin leftmenu -->
-        <h:outputLink value="#{request.contextPath}/atto"><h:outputText value="Riepilogo Atto" /><f:param name="code" value="#{mgmtBean.atto.codice}"/></h:outputLink>
-        <h:outputLink value="#{request.contextPath}/presentazioneassegnazione"><h:outputText value="Presentazione e Assegnazione" /></h:outputLink>
-        <h:outputLink value="#{request.contextPath}/esamecommissioni"><h:outputText value="Esame Commissioni" /></h:outputLink>
-        <h:outputLink value="#{request.contextPath}/esameaula"><h:outputText value="Esame Aula" /></h:outputLink>
-        <h:outputLink value="#{request.contextPath}/chiusuraiter"><h:outputText value="Chiusura Iter" /></h:outputLink>
-        
-        <h:outputLink value="#{request.contextPath}/consultazioneepareri"><h:outputText value="Consultazioni e Pareri" /></h:outputLink>
-        <h:outputLink value="#{request.contextPath}/collegamenti"><h:outputText value="Collegamenti" /></h:outputLink>
-        <h:outputLink value="#{request.contextPath}/lettereenotifiche"><h:outputText value="Lettere e Notifiche" /></h:outputLink>
-    </h:panelGrid><!-- end leftmenu -->
+<h:form>
+<p:menu>
+	<p:submenu label="Fasi di Processo">
+		<p:menuitem value="Riepilogo Atto" url="/atto" />
+		<p:menuitem value="Presentazione e Assegnazione" url="/presentazioneassegnazione" />
+		<p:menuitem value="Esame Commissioni" url="/esamecommissioni" />
+		<p:menuitem value="Esame Aula" url="/esameaula" />
+		<p:menuitem value="Chiusura Iter" url="/chiusuraiter" />
+		<p:menuitem value="Consultazioni e Pareri" url="/consultazioneepareri" />
+		<p:menuitem value="Collegamenti" url="/collegamenti" />
+		<p:menuitem value="Lettere e Notifiche" url="/lettereenotifiche" />
+		
+	</p:submenu>
+</p:menu>
+</h:form>
+
 </html>

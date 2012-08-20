@@ -33,7 +33,6 @@
 
 #left2 {
     float: left;
-    background-color: #ece3a5; 
     padding: 5px;
     width: 150px;
     margin-bottom: 10px;
@@ -119,11 +118,33 @@ padding: 8px 19px 4px 10px ;
 	
 }
 
+.infoBar {
+	
+	border-radius: 4px 4px 4px 4px;
+    color: white;
+    height: 30px;
+    width: 100%;
+}
+
+.infoBar td,tr {
+	
+	background-color: #045491 ;
+    color: white !important;
+     
+}
+
 .generalInfoTab  {
 	border: solid 1px;
 	background-color: #E6E6FA;
 	width: 90%;
 	
+}
+
+.generalInfoTab td,tr {
+	
+	background-color: #FFFFFF ;
+    color: #4F4F4F !important;
+     
 }
 
 .tableAppend{

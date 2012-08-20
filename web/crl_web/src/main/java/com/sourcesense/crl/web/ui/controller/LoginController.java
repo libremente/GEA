@@ -45,7 +45,7 @@ public class LoginController {
 
 			userBean.setUser(sessionUser);
 			
-			return "pretty:home";
+			return "pretty:Home";
 
 		} else {
 

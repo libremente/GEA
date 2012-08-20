@@ -2,6 +2,8 @@ package com.sourcesense.crl.business.model;
 
 
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -12,14 +14,22 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 @JsonRootName("attoRecord")
 @JsonTypeName("attoRecord")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@JsonIgnoreProperties(ignoreUnknown=true)
+
 public class AttoRecord {
 	
 	private String nome;
+	
 	private String descrizione;
+	
 	private String downloadUrl;
+	
 	private boolean pubblico;
+	
 	private String tipoAllegato;
+	
 	private String id;
+	
 	private String mimetype;
 	
 	

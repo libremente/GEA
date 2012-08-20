@@ -156,7 +156,7 @@ public class PresentazioneAssegnazioneAttoController {
 		//TODO caricamento liste attoBean
 		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
 		this.pareriList = new ArrayList<Parere>(this.atto.getPareri());
-		this.linksList = new ArrayList<Link>(this.atto.getLinksPresentazioneAssegnazione());
+		this.linksList =  new ArrayList<Link>(this.atto.getLinksPresentazioneAssegnazione());
 
 		//TODO
 		//setAllegatiList(allegatoServiceManager.findByTipo());
@@ -375,7 +375,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		// TODO Service logic
 
-		return "pretty:chiusuraiter";
+		return "pretty:Chiusura_Iter";
 
 	}
 

@@ -97,7 +97,7 @@
 								<p:column style="width: 20%;">
 									<h:outputLabel for="datainiziativa_da" value="da: " />
 									<p:calendar size="10" locale="it" id="datainiziativa_da"
-										value="#{searchAttoController.dataIniziativaDa}"/>
+										value="#{searchAttoController.dataIniziativaDa}" />
 								</p:column>
 								<p:column style="width: 20%;">
 									<h:outputLabel for="datainiziativa_a" value="a: " />
@@ -595,7 +595,7 @@
 				<p:commandLink
 					action="#{searchAttoController.attoDetail(idAttoParam)}"
 					update="listaAtti">
-				<h:graphicImage value="/resources/img/show.png" />
+					<h:graphicImage value="/resources/img/show.png" />
 				</p:commandLink>
 			</p:column>
 		</p:dataTable>

@@ -1,7 +1,7 @@
 package com.sourcesense.crl.business.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import java.util.Date;
-
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -13,6 +13,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("allegato")
 @JsonTypeName("allegato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Allegato {
 	
 	private String nome;

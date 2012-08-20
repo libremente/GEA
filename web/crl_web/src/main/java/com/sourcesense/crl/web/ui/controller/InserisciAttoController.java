@@ -107,7 +107,7 @@ public class InserisciAttoController {
 					.getValue(context.getELContext());
 
 			attoBean.setAtto(attoRet);
-			return "pretty:atto";
+			return "pretty:Riepilogo_Atto";
 
 		} else if (attoRet!=null && attoRet.getError()!=null && !attoRet.getError().equals("")) {
 			

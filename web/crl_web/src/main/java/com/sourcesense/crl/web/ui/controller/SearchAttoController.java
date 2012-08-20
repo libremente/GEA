@@ -288,7 +288,7 @@ public class SearchAttoController {
 		
 		// TODO riempire liste membri comitato ristretto
 		
-		return "pretty:atto";
+		return "pretty:Riepilogo_Atto";
 
 	}
 

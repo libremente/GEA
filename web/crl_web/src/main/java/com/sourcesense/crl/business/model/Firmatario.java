@@ -14,11 +14,26 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class Firmatario extends Personale {
 
+	
+	/*
+	 * "firmatario" : 
+	   {
+	    "id" : "workspace://SpacesStore/fb6a588a-186c-4127-8be8-5d91926f8ede",
+		"descrizione" : "Carlo Verdi",
+		"primoFirmatario" : "true",
+		"gruppoConsiliare" : "",
+		"dataFirma" : "2012-07-25",
+		"dataRitiro" : "2012-07-26"
+	   }*/
+	
 	private String nome;
 	private String gruppoConsiliare;
 	private Date dataFirma;
 	private Date dataRitiro;
 	private boolean primoFirmatario;
+	
+	
+	
 	public String getNome() {
 		return nome;
 	}
