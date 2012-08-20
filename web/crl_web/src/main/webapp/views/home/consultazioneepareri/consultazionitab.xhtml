@@ -14,51 +14,123 @@
 <p:fieldset legend="Consultazioni" toggleable="true" toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="consultazionipanel">
 		<p:row>
-			<p:column colspan="6">
-				<table class="generalInfoTab grey-text" id="consultazionitab"
-					style="width: 90%;" border="0" type="ordered">
-					<thead>
-						<th>Data consultazione</th>
-						<th>Soggetti consultati</th>
-						<th>Docum.</th>
-						<th>Opzioni</th>
-					</thead>
+			<p:column>
+				<p:growl id="consultazioneMsg" showDetail="true" sticky="false" />
 
-					<!-- TODO
-							 da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti -->
+				<!-- Confirm dialog -->
+				<p:confirmDialog id="confirmConsultazioneDialog"
+					message="Sei sicuro di voler eliminare la Consultazione ?"
+					header="Cancellazione Consultazione" severity="alert"
+					widgetVar="consultazioneDialog">
 
-					<tbody>
-						<tr>
-							<td align="left">12/3/2011</td>
-							<td align="left">Agenzia delle Entrate</td>
-							<td align="left"><h:graphicImage alt="txt"
-									value="/resources/img/txt.png" /></td>
-							<td align="left"><h:graphicImage alt="delete"
-									value="/resources/img/delete.png" /></td>
+					<p:commandButton id="confirmConsultazione" value="Conferma"
+						oncomplete="consultazioneDialog.hide()"
+						action="#{consultazioniPareriController.removeConsultazione}"
+						update="listaConsultazioni, dettagliconsultazionepanel" />
+					<p:commandButton id="declineConsultazione" value="Annulla"
+						onclick="consultazioneDialog.hide()" type="button" />
 
-						</tr>
+				</p:confirmDialog>
+				<p:confirmDialog id="confirmSoggettoInvitatoDialog"
+					message="Sei sicuro di voler eliminare il Soggetto Invitato ?"
+					header="Cancellazione Soggetto Invitato" severity="alert"
+					widgetVar="soggettoInvitatoDialog">
 
-						<tr>
-							<td align="left">19/3/2011</td>
-							<td align="left">Confindustria, INPS</td>
-							<td align="left"><h:graphicImage alt="txt"
-									value="/resources/img/txt.png" /></td>
-							<td align="left"><h:graphicImage alt="delete"
-									value="/resources/img/delete.png" /></td>
+					<p:commandButton id="confirmSoggettoInvitato" value="Conferma"
+						oncomplete="soggettoInvitatoDialog.hide()"
+						action="#{consultazioniPareriController.removeSoggettoInvitato}"
+						update="listaSoggettiInvitati" />
+					<p:commandButton id="declineSoggettoInvitato" value="Annulla"
+						onclick="soggettoInvitatoDialog.hide()" type="button" />
 
-						</tr>
+				</p:confirmDialog>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="4">
+				<p:panelGrid id="addConsultazionePanel" styleClass="tableAppend">
+					<f:facet name="header">
+						<p:row>
+							<p:column>Data Consultazione</p:column>
+							<p:column>Soggetto Consultato</p:column>
+							<p:column>Documenti</p:column>
+							<p:column></p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column>
+							<p:calendar size="10" locale="it_IT" id="dataConsultazione"
+								pattern="dd/MM/yyyy"
+								value="#{consultazioniPareriController.dataConsultazione}" />
+						</p:column>
 
-					</tbody>
-				</table>
+
+						<p:column>
+							<p:inputText id="nomeSoggettoConsultato"
+								value="#{consultazioniPareriController.soggettoConsultato}" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton value="Aggiungi"
+								action="#{consultazioniPareriController.addConsultazione}"
+								id="addConsultazione"
+								update="listaConsultazioni, consultazioneMsg, dettagliconsultazionepanel"
+								icon="new-icon" />
+						</p:column>
+
+					</p:row>
+
+				</p:panelGrid>
 			</p:column>
 		</p:row>
 
 		<p:row>
-			<p:column>
-				<h:graphicImage alt="add" value="/resources/img/add.png" />
+			<p:column colspan="4">
+
+				<h:dataTable id="listaConsultazioni"
+					value="#{consultazioniPareriController.consultazioniList}"
+					var="consultazione" styleClass="generalInfoTab grey-text">
+
+					<h:column>
+						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
+							action="#{consultazioniPareriController.showConsultazioneDetail}"
+							update=":consultazioniPareriForm:tabView:dettagliconsultazionepanel">
+							<f:setPropertyActionListener value="#{consultazione.descrizione}"
+								target="#{consultazioniPareriController.descrizioneConsultazioneSelected}" />
+						</p:commandButton>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Data Consultazione</f:facet>
+						<h:outputText value="#{consultazione.dataConsultazione}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Soggetti Consultati</f:facet>
+							#{consultazione.descrizione}
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Documenti</f:facet>
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Elimina</f:facet>
+
+						<p:commandButton oncomplete="consultazioneDialog.show()"
+							icon="delete-icon">
+
+							<f:setPropertyActionListener value="#{consultazione.descrizione}"
+								target="#{consultazioniPareriController.consultazioneToDelete}" />
+						</p:commandButton>
+					</h:column>
+
+				</h:dataTable>
 			</p:column>
 		</p:row>
-
 		<p:row>
 			<p:column colspan="6">
 				<p:fieldset legend="Dettagli consultazione" collapsed="false"
@@ -70,20 +142,23 @@
 								</b>
 							</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="dataseduta" />
+								<p:calendar size="10" locale="it" id="dataseduta"
+									value="#{consultazioniPareriController.dataSedutaConsultazione}" />
 							</p:column>
 							<p:column>
 								<h:outputText style="font-weight: bold;" value="Prevista: " />
 							</p:column>
 							<p:column>
-								<p:selectBooleanCheckbox>
+								<p:selectBooleanCheckbox id="prevista"
+									value="#{consultazioniPareriController.prevista}">
 								</p:selectBooleanCheckbox>
 							</p:column>
 							<p:column>
 								<h:outputText style="font-weight: bold;" value="Discussa: " />
 							</p:column>
 							<p:column>
-								<p:selectBooleanCheckbox>
+								<p:selectBooleanCheckbox id="discussa"
+									value="#{consultazioniPareriController.discussa}">
 								</p:selectBooleanCheckbox>
 							</p:column>
 
@@ -96,7 +171,10 @@
 								</b>
 							</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="dataconsultazione" />
+								<p:inputText id="dataconsultazione" readonly="true"
+									value="#{consultazioniPareriController.consultazioneSelected.dataConsultazione}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</p:inputText>
 							</p:column>
 						</p:row>
 
@@ -105,46 +183,82 @@
 								<h:outputText style="font-weight: bold;" value="Note: " />
 							</p:column>
 							<p:column colspan="6">
-								<p:inputTextarea rows="2" cols="82" />
+								<p:inputTextarea rows="2" cols="82" id="noteConsultazione"
+								value="#{consultazioniPareriController.noteConsultazione}"/>
 							</p:column>
 						</p:row>
 
 						<p:row>
-							<p:column colspan="4">
-								<table class="generalInfoTab grey-text" id="soggettiinvitatitab"
-									style="width: 90%;" border="0">
-									<thead>
-										<th colspan="2">Soggetti invitati</th>
-										<th>Intervenuti</th>
-										<th>Opzioni</th>
-									</thead>
+							<p:column colspan="3">
+								<p:panelGrid id="addSoggettoInvitatoPanel"
+									styleClass="tableAppend">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Soggetto Invitato</p:column>
+											<p:column>Intervenuto</p:column>
+											<p:column></p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
 
-									<!-- TODO: 
-							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
-							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+										<p:column>
+											<p:inputText id="nomeSoggettoInvitato"
+												value="#{consultazioniPareriController.nomeSoggettoInvitato}" />
+										</p:column>
 
-									<tbody>
-										<tr>
-											<td align="left" colspan="2">Confindustria</td>
-											<td align="left"><p:selectBooleanCheckbox /></td>
-											<td align="left"><h:graphicImage alt="delete"
-													value="/resources/img/delete.png" /></td>
-										</tr>
+										<p:column>
+											<p:selectBooleanCheckbox id="soggettoInvitatoIntervenuto"
+												value="#{consultazioniPareriController.intervenuto}" />
+										</p:column>
 
-										<tr>
-											<td align="left" colspan="2">INPS</td>
-											<td align="left"><p:selectBooleanCheckbox /></td>
-											<td align="left"><h:graphicImage alt="delete"
-													value="/resources/img/delete.png" /></td>
-										</tr>
+										<p:column>
+											<p:commandButton value="Aggiungi"
+												action="#{consultazioniPareriController.addSoggettoInvitato}"
+												id="addSoggettoInvitato"
+												update="listaSoggettiInvitati, consultazioneMsg"
+												icon="new-icon" />
+										</p:column>
 
-									</tbody>
-								</table>
+									</p:row>
+
+								</p:panelGrid>
 							</p:column>
 						</p:row>
+
 						<p:row>
-							<p:column>
-								<h:graphicImage alt="add" value="/resources/img/add.png" />
+							<p:column colspan="3">
+
+								<h:dataTable id="listaSoggettiInvitati"
+									value="#{consultazioniPareriController.soggettiInvitatiList}"
+									var="soggettoInvitato" styleClass="generalInfoTab grey-text">
+
+									<h:column>
+										<f:facet name="header">Soggetti Invitati</f:facet>
+										#{soggettoInvitato.descrizione}
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Intervenuti</f:facet>
+										<h:outputText value="si"
+											rendered="#{soggettoInvitato.intervenuto}" />
+										<h:outputText value="no"
+											rendered="#{!soggettoInvitato.intervenuto}" />
+
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Elimina</f:facet>
+
+										<p:commandButton oncomplete="soggettoInvitatoDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener
+												value="#{soggettoInvitato.descrizione}"
+												target="#{consultazioniPareriController.soggettoInvitatoToDelete}" />
+										</p:commandButton>
+									</h:column>
+
+								</h:dataTable>
 							</p:column>
 						</p:row>
 
@@ -206,8 +320,10 @@
 						</p:row>
 
 						<p:row>
-							<p:column>
-								<p:commandButton value="Inserisci" />
+							<p:column colspan="2">
+								<p:commandButton value="Salva Consultazioni" 
+								action="#{consultazioniPareriController.salvaConsultazione}" 
+								update="consultazioneMsg"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>

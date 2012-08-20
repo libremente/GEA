@@ -686,6 +686,13 @@ public class EsameCommissioniController {
 			setDataDisabbinamento(abbinamentoSelected.getDataDisabbinamento());
 			setNoteAbbinamento(abbinamentoSelected.getNote());
 		}
+		
+		else {
+			setTipoTesto("");
+			setDataAbbinamento(null);
+			setDataDisabbinamento(null);
+			setNoteAbbinamento("");
+		}
 	}
 
 	private Abbinamento findAbbinamento(String id) {

@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +17,15 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class Consultazione {
 	
+	private String descrizione;
 	private Date dataConsultazione;
-	private String soggettiConsultati;
 	private boolean prevista;
 	private boolean discussa;
 	private Date dataSeduta;
 	private String note;
-	private List <Personale> soggettiInvitati;
+	
+	private List <SoggettoInvitato> soggettiInvitati = new ArrayList<SoggettoInvitato>();
+	private List<Allegato> allegati = new ArrayList<Allegato>();
 	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataConsultazione() {
@@ -30,12 +33,6 @@ public class Consultazione {
 	}
 	public void setDataConsultazione(Date dataConsultazione) {
 		this.dataConsultazione = dataConsultazione;
-	}
-	public String getSoggettiConsultati() {
-		return soggettiConsultati;
-	}
-	public void setSoggettiConsultati(String soggettiConsultati) {
-		this.soggettiConsultati = soggettiConsultati;
 	}
 	public boolean isPrevista() {
 		return prevista;
@@ -63,11 +60,23 @@ public class Consultazione {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public List<Personale> getSoggettiInvitati() {
+	public List<SoggettoInvitato> getSoggettiInvitati() {
 		return soggettiInvitati;
 	}
-	public void setSoggettiInvitati(List<Personale> soggettiInvitati) {
+	public void setSoggettiInvitati(List<SoggettoInvitato> soggettiInvitati) {
 		this.soggettiInvitati = soggettiInvitati;
+	}
+	public List<Allegato> getAllegati() {
+		return allegati;
+	}
+	public void setAllegati(List<Allegato> allegati) {
+		this.allegati = allegati;
+	}
+	public String getDescrizione() {
+		return descrizione;
+	}
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 	
 	

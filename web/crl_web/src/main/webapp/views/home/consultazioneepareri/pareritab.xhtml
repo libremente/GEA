@@ -18,16 +18,15 @@
 				<p:growl id="pareriMsg" showDetail="true" sticky="false" />
 
 				<h:dataTable id="listaPareri"
-					value="#{consultazionePareriController.pareriList}" var="parere"
+					value="#{consultazioniPareriController.pareriList}" var="parere"
 					styleClass="generalInfoTab grey-text">
 
 					<h:column>
-						<f:facet name="header">Mostra dettaglio</f:facet>
 						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
-							action="#{consultazionePareriController.showParereDetail}"
+							action="#{consultazioniPareriController.showParereDetail}"
 							update=":consultazioniPareriForm:tabView:dettagliparerepanel">
 							<f:setPropertyActionListener value="#{parere.descrizione}"
-								target="#{consultazionePareriController.descrizioneParereSelected}" />
+								target="#{consultazioniPareriController.descrizioneParereSelected}" />
 						</p:commandButton>
 					</h:column>
 
@@ -80,7 +79,7 @@
 							</p:column>
 							<p:column>
 								<p:inputText
-									value="#{consultazionePareriController.parereSelected.descrizione}"
+									value="#{consultazioniPareriController.parereSelected.descrizione}"
 									readonly="true" />
 							</p:column>
 						</p:row>
@@ -92,7 +91,7 @@
 							</p:column>
 							<p:column>
 								<p:inputText size="10"
-									value="#{consultazionePareriController.parereSelected.dataAssegnazione}"
+									value="#{consultazioniPareriController.parereSelected.dataAssegnazione}"
 									readonly="true">
 									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 								</p:inputText>
@@ -104,9 +103,9 @@
 							</p:column>
 							<p:column>
 								<p:calendar size="10" locale="it" id="dataricezioneorgano"
-									value="#{consultazionePareriController.dataRicezioneOrgano}">
+									value="#{consultazioniPareriController.dataRicezioneOrgano}">
 									<p:ajax event="dateSelect"
-										listener="#{consultazionePareriController.updatePareriHandler}" />
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
 								</p:calendar>
 							</p:column>
 						</p:row>
@@ -119,9 +118,9 @@
 							</p:column>
 							<p:column>
 								<p:calendar size="10" locale="it" id="dataricezioneparere"
-									value="#{consultazionePareriController.dataRicezioneParere}">
+									value="#{consultazioniPareriController.dataRicezioneParere}">
 									<p:ajax event="dateSelect"
-										listener="#{consultazionePareriController.updatePareriHandler}" />
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
 								</p:calendar>
 							</p:column>
 						</p:row>
@@ -131,14 +130,14 @@
 								<h:outputText style="font-weight: bold;" value="Esito: " />
 							</p:column>
 							<p:column>
-								<p:selectOneMenu value="#{consultazionePareriController.esito}">
+								<p:selectOneMenu value="#{consultazioniPareriController.esito}">
 									<f:selectItem itemLabel="Scegli esito" itemValue="" />
 									<f:selectItem itemLabel="Positivo" itemValue="Positivo" />
 									<f:selectItem itemLabel="Positivo condizionato"
 										itemValue="Positivo condizionato" />
 									<f:selectItem itemLabel="Negativo" itemValue="Negativo" />
 									<p:ajax event="change"
-										listener="#{consultazionePareriController.updatePareriHandler}" />
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
 								</p:selectOneMenu>
 							</p:column>
 						</p:row>
@@ -149,9 +148,9 @@
 							</p:column>
 							<p:column colspan="3">
 								<p:inputTextarea rows="2" cols="82"
-									value="#{consultazionePareriController.noteParere}">
+									value="#{consultazioniPareriController.noteParere}">
 									<p:ajax event="change"
-										listener="#{consultazionePareriController.updatePareriHandler}" />
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
 								</p:inputTextarea>
 							</p:column>
 						</p:row>
@@ -203,9 +202,9 @@
 						</p:row>
 
 						<p:row>
-							<p:column>
-								<p:commandButton value="Salva"
-									action="#{consultazionePareriController.salvaParere}"
+							<p:column colspan="2">
+								<p:commandButton value="Salva Pareri"
+									action="#{consultazioniPareriController.salvaParere}"
 									update="pareriMsg, listaPareri" />
 							</p:column>
 						</p:row>
