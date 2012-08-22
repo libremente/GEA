@@ -130,6 +130,8 @@ public class Atto implements Cloneable
 	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> testiClausola = new ArrayList<Allegato>();
 	private List <Collegamento> collegamenti = new ArrayList<Collegamento>();
+	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali = new ArrayList<CollegamentoLeggiRegionali>();
 
 	private Date dataPresaInCarico;
 	private String valutazioneAmmissibilita;
@@ -1524,6 +1526,24 @@ public class Atto implements Cloneable
 
 	public void setCollegamenti(List <Collegamento> collegamenti) {
 		this.collegamenti = collegamenti;
+	}
+
+	public List<CollegamentoAttiSindacato> getCollegamentiAttiSindacato() {
+		return collegamentiAttiSindacato;
+	}
+
+	public void setCollegamentiAttiSindacato(
+			List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
+		this.collegamentiAttiSindacato = collegamentiAttiSindacato;
+	}
+
+	public List<CollegamentoLeggiRegionali> getCollegamentiLeggiRegionali() {
+		return collegamentiLeggiRegionali;
+	}
+
+	public void setCollegamentiLeggiRegionali(
+			List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali) {
+		this.collegamentiLeggiRegionali = collegamentiLeggiRegionali;
 	}	
 
 

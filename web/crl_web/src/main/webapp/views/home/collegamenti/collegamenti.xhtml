@@ -9,27 +9,32 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form id="collegamentiForm" enctype="multipart/form-data">
+	<p:growl id="tabCollegamentiMsg" showDetail="true" sticky="false" />
+
 	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
+		<p:ajax event="tabChange"
+			listener="#{collegamentiController.changeTabHandler}"
+			update=":collegamentiForm:tabCollegamentiMsg" />
 
 		<p:tab id="tab1" title="Atti interni">
-            
 
-           <ui:include src="attiinternitab.xhtml"/>
-			
+
+			<ui:include src="attiinternitab.xhtml" />
+
 
 		</p:tab>
 
 		<p:tab id="tab2" title="Atti indirizzo e Sindacato Ispettivo">
-			
-			<ui:include src="attiindirizzotab.xhtml"/> 
+
+			<ui:include src="attiindirizzotab.xhtml" />
 		</p:tab>
 
 		<p:tab id="tab3" title="Leggi Regionali">
-		
-			<ui:include src="leggiregionalitab.xhtml"/>
-			
+
+			<ui:include src="leggiregionalitab.xhtml" />
+
 		</p:tab>
-		
+
 	</p:tabView>
 </h:form>
 </html>

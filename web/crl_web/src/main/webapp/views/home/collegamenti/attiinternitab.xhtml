@@ -17,12 +17,10 @@
 
 
 
-<p:fieldset
-	legend="Collegamenti con Atti di Indirizzo e di Sindacato Ispettivo"
-	toggleable="true" toggleSpeed="500">
+<p:fieldset legend="Atti Interni" toggleable="true" toggleSpeed="500">
 
 	<!-- Messaggio azioni -->
-	<p:growl id="collegamentiMsg" showDetail="true" sticky="false" />
+	<p:growl id="attiInterniMsg" showDetail="true" sticky="false" />
 
 
 
@@ -602,7 +600,7 @@
 			<c:set value="#{atto.id}" var="idAttoParam" />
 			<p:commandButton value="Collega" id="addAbbinamento"
 				action="#{collegamentiController.addCollegamento(idAttoParam)}"
-				update=":collegamentiForm:tabView:listaCollegamenti, :collegamentiForm:tabView:collegamentiMsg"
+				update=":collegamentiForm:tabView:listaCollegamenti, :collegamentiForm:tabView:attiInterniMsg"
 				icon="new-icon" />
 		</p:column>
 	</p:dataTable>
@@ -616,10 +614,6 @@
 			<p:dataTable id="listaCollegamenti"
 				value="#{collegamentiController.attiCollegatiList}"
 				var="collegamento" styleClass="generalInfoTab" editable="true">
-
-				<p:column headerText="Opzioni" style="width:50px">
-					<p:rowEditor />
-				</p:column>
 
 				<p:column headerText="Tipo Atto" style="width:125px">
 							#{collegamento.atto.tipoAtto}
@@ -635,7 +629,10 @@
 							<h:outputText value="#{collegamento.note}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:inputText value="#{collegamento.note}" style="width:100%" />
+							<p:inputText value="#{collegamento.note}" style="width:100%">
+								<p:ajax event="change"
+									listener="#{collegamentiController.updateAttiInterniHandler}" />
+							</p:inputText>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -644,10 +641,13 @@
 
 					<p:commandButton oncomplete="collegamentoDialog.show()"
 						icon="delete-icon">
-
 						<f:setPropertyActionListener value="#{collegamento.atto.id}"
 							target="#{collegamentiController.collegamentoToDelete}" />
 					</p:commandButton>
+				</p:column>
+
+				<p:column headerText="Modifica" style="width:50px">
+					<p:rowEditor />
 				</p:column>
 
 			</p:dataTable>
@@ -656,8 +656,10 @@
 
 	<p:row>
 		<p:column>
+			<br />
 			<p:commandButton value="Salva Collegamenti"
-				action="#{collegamentiController.salvaCollegamenti}" />
+				action="#{collegamentiController.salvaCollegamenti}" 
+				update="attiInterniMsg"/>
 		</p:column>
 	</p:row>
 
