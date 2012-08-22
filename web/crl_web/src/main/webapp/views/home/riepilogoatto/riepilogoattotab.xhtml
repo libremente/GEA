@@ -8,12 +8,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
 
 
-<p:fieldset legend="Informazioni Generali" toggleable="true" 
-	collapsed="false" toggleSpeed="500"  >
-   
+<p:fieldset legend="Informazioni Generali" toggleable="true"
+	collapsed="false" toggleSpeed="500">
+
+
 
 	<p:panelGrid styleClass="infoTable" id="infogeneralipane">
 		<p:row>
@@ -52,8 +58,8 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Repertorio: " />
-				<h:outputText value="#{attoBean.dataRepertorio}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataRepertorio}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 		</p:row>
@@ -61,8 +67,8 @@
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Iniziativa: " />
-				<h:outputText value="#{attoBean.dataIniziativa}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataIniziativa}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 
@@ -90,11 +96,10 @@
 
 					<h:column>
 						<f:facet name="header">Primo firmatario</f:facet>
-					
-					<h:outputText value="si" rendered="#{firmatario.primoFirmatario}" />
-							<h:outputText value="no"
-								rendered="#{!firmatario.primoFirmatario}" />
-				    </h:column>
+
+						<h:outputText value="si" rendered="#{firmatario.primoFirmatario}" />
+						<h:outputText value="no" rendered="#{!firmatario.primoFirmatario}" />
+					</h:column>
 
 					<h:column>
 						<f:facet name="header">Nome Firmatario</f:facet>
@@ -107,14 +112,14 @@
 
 						<h:outputText value="#{firmatario.dataFirma}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-						</h:outputText>	
+						</h:outputText>
 					</h:column>
 					<h:column>
 						<f:facet name="header">Data Ritiro</f:facet>
 						<h:outputText value="#{firmatario.dataRitiro}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
-						
+
 					</h:column>
 
 
@@ -164,16 +169,16 @@
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Assegnazione: " />
-				<h:outputText value="#{attoBean.dataAssegnazione}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataAssegnazione}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 
 			<p:column>
 				<h:outputText style="font-weight: bold;"
 					value="Data presa in carico: " />
-				<h:outputText value="#{attoBean.dataPresaInCarico}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataPresaInCarico}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 		</p:row>
@@ -185,8 +190,8 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Validazione: " />
-				<h:outputText value="#{attoBean.dataValidazione}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataValidazione}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 		</p:row>
@@ -194,16 +199,16 @@
 			<p:column colspan="2">
 				<h:outputText style="font-weight: bold;"
 					value="Data Assegnazione Commissioni:  " />
-				<h:outputText value="#{attoBean.dataAssegnazioneCommissioni}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataAssegnazioneCommissioni}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 		</p:row>
 	</p:panelGrid>
 </p:fieldset>
 
-<p:fieldset id="fsCommissioni" legend="Commissioni espandere/comprimere" toggleable="true"
-	collapsed="false" toggleSpeed="500">
+<p:fieldset id="fsCommissioni" legend="Commissioni espandere/comprimere"
+	toggleable="true" collapsed="false" toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="infoComm">
 		<p:row>
 			<p:column colspan="2">
@@ -365,8 +370,8 @@
 
 </p:fieldset>
 
-<p:fieldset legend="Aula espandere/comprimere" toggleable="true" collapsed="false"
-	toggleSpeed="500">
+<p:fieldset legend="Aula espandere/comprimere" toggleable="true"
+	collapsed="false" toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="infoAula">
 		<p:row>
 			<p:column>
@@ -387,8 +392,8 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Seduta: " />
-				<h:outputText value="#{attoBean.dataSeduta}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataSeduta}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 		</p:row>
@@ -401,8 +406,8 @@
 	</p:panelGrid>
 </p:fieldset>
 
-<p:fieldset legend="Chiusura iter espandere/comprimere" toggleable="true" collapsed="false"
-	toggleSpeed="500">
+<p:fieldset legend="Chiusura iter espandere/comprimere"
+	toggleable="true" collapsed="false" toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="infoChiusuraIter">
 		<p:row>
 			<p:column>
@@ -412,8 +417,8 @@
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Chiusura: " />
-				<h:outputText value="#{attoBean.dataChiusura}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataChiusura}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 		</p:row>
@@ -421,8 +426,8 @@
 			<p:column>
 				<h:outputText style="font-weight: bold;"
 					value="Data Pubblicazione BURL: " />
-				<h:outputText value="#{attoBean.dataPubblicazioneBURL}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataPubblicazioneBURL}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 
@@ -439,8 +444,8 @@
 			</p:column>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data LR:  " />
-				<h:outputText value="#{attoBean.dataLR}" >
-				<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				<h:outputText value="#{attoBean.dataLR}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 		</p:row>

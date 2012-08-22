@@ -6,8 +6,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
 
 <p:panelGrid styleClass="infoTable" id="assegnazionePanel">
 	<p:row>
@@ -215,15 +219,14 @@
 	<p:row>
 		<p:column>
 
-			<p:fieldset legend="Assegnazioni Pareri"
-				collapsed="false" toggleable="true" toggleSpeed="500">
+			<p:fieldset legend="Assegnazioni Pareri" collapsed="false"
+				toggleable="true" toggleSpeed="500">
 				<p:panelGrid styleClass="infoTable" id="pareripanel">
 
 
 					<p:row>
 						<p:column colspan="5">
-							<p:panelGrid id="addParerePanel"
-								styleClass="tableAppend">
+							<p:panelGrid id="addParerePanel" styleClass="tableAppend">
 
 								<f:facet name="header">
 									<p:row>
@@ -265,8 +268,7 @@
 									<p:column>
 										<p:commandButton value="Aggiungi"
 											action="#{presentazioneAssegnazioneAttoController.addParere}"
-											id="addParere"
-											update="listaPareri , assegnazioneMsg"
+											id="addParere" update="listaPareri , assegnazioneMsg"
 											icon="new-icon" />
 									</p:column>
 
@@ -307,10 +309,8 @@
 
 								<h:column>
 									<f:facet name="header">Obbligatorio</f:facet>
-									<h:outputText value="si"
-										rendered="#{parere.obbligatorio}" />
-									<h:outputText value="no"
-										rendered="#{!parere.obbligatorio}" />
+									<h:outputText value="si" rendered="#{parere.obbligatorio}" />
+									<h:outputText value="no" rendered="#{!parere.obbligatorio}" />
 								</h:column>
 
 								<h:column>
@@ -319,8 +319,7 @@
 									<p:commandButton oncomplete="parereDialog.show()"
 										icon="delete-icon">
 
-										<f:setPropertyActionListener
-											value="#{parere.descrizione}"
+										<f:setPropertyActionListener value="#{parere.descrizione}"
 											target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
 									</p:commandButton>
 								</h:column>
@@ -337,8 +336,7 @@
 		<p:column>
 
 			<p>
-				<p:commandButton value="Salva selezione"
-					id="confermaassegnazione"
+				<p:commandButton value="Salva selezione" id="confermaassegnazione"
 					action="#{presentazioneAssegnazioneAttoController.confermaAssegnazione}"
 					update="assegnazioneMsg" />
 			</p>
