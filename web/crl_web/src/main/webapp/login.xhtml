@@ -13,7 +13,7 @@
 		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
 		id="loginpanel" >
 
-       <h:outputText value="Your session has been expired" rendered="#{param.reason == 'expired'}" />
+      
 
 		<f:facet name="header">
 			<p:row>
@@ -22,6 +22,14 @@
 			    </p:column>
 			</p:row>
 		</f:facet>
+
+         
+
+        <p:row rendered="#{param.reason == 'expired'}">
+			<p:column colspan="3" >
+				<h:outputText value="Sessione Utente scaduta "  />
+			</p:column>
+		</p:row>
 
 		<p:row>
 			<p:column colspan="3">

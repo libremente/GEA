@@ -26,9 +26,9 @@ public class SessionPhaseListener implements PhaseListener {
         ExternalContext ext = context.getExternalContext();
         HttpSession session = (HttpSession) ext.getSession(false);
         boolean newSession = (session == null) || (session.isNew());
-        boolean postback = !ext.getRequestParameterMap().isEmpty();
-        boolean timedout = postback && newSession;
-        if (timedout) {
+        //boolean postback = !ext.getRequestParameterMap().isEmpty();
+        //boolean timedout = postback && newSession;
+        if (newSession) {
             Application app = context.getApplication();
             ViewHandler viewHandler = app.getViewHandler();
             UIViewRoot view = viewHandler.createView(context, "/" + homepage);
