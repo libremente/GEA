@@ -15,7 +15,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("parere")
 @JsonTypeName("parere")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-public class Parere {
+public class Parere implements Cloneable {
 	private String organismoStatutario;
 	private String descrizione;
 	private Date dataAssegnazione;
@@ -29,6 +29,15 @@ public class Parere {
 	
 	private List<Allegato> allegati = new ArrayList<Allegato>();
 	
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public String getEsito() {
 		return esito;

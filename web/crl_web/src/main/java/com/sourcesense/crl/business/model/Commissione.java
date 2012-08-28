@@ -17,7 +17,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("commissione")
 @JsonTypeName("commissione")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-public class Commissione {
+public class Commissione implements Cloneable {
 	private String descrizione;
 	private String nome;
 	private String ruolo;
@@ -37,6 +37,15 @@ public class Commissione {
 	private Date dataProposta;
 	private Date dataAnnullo;
 	private boolean annullata = false;
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 
 	public String getDescrizione() {

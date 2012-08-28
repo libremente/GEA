@@ -143,62 +143,89 @@
 					<p:row>
 						<p:column colspan="7">
 
-							<h:dataTable id="listaCommissioni"
+							<p:dataTable id="listaCommissioni"
 								value="#{presentazioneAssegnazioneAttoController.commissioniList}"
-								var="commissione" styleClass="generalInfoTab grey-text">
+								var="commissione" styleClass="generalInfoTab grey-text"
+								editable="true">
 
-								<h:column>
-									<f:facet name="header">Nome</f:facet>
-							#{commissione.descrizione}
-    			       </h:column>
 
-								<h:column>
-									<f:facet name="header">Data Proposta</f:facet>
-									<h:outputText value="#{commissione.dataProposta}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
-								</h:column>
+								<p:column headerText="Nome">
+									<h:outputText value="#{commissione.descrizione}" />
+								</p:column>
 
-								<h:column>
-									<f:facet name="header">Data Assegnazione</f:facet>
-									<h:outputText value="#{commissione.dataAssegnazione}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
+								<p:column headerText="Data Proposta" style="width:100px">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{commissione.dataProposta}">
+												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</f:facet>
+										<f:facet name="input">
+											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+												value="#{commissione.dataProposta}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
 
-								</h:column>
+								<p:column headerText="Data Assegn." style="width:100px">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{commissione.dataAssegnazione}">
+												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</f:facet>
+										<f:facet name="input">
+											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+												value="#{commissione.dataAssegnazione}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
 
-								<h:column>
-									<f:facet name="header">Ruolo</f:facet>
-							#{commissione.ruolo}
+								<p:column headerText="Ruolo">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{commissione.ruolo}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectOneMenu value="#{commissione.ruolo}">
+												<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
+												<f:selectItem itemLabel="Referente" itemValue="Referente" />
+												<f:selectItem itemLabel="Co-Referente"
+													itemValue="Co-Referente" />
+												<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
+												<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
+												<f:selectItem itemLabel="Deliberante"
+													itemValue="Deliberante" />
 
-						</h:column>
 
-								<h:column>
-									<f:facet name="header">Stato</f:facet>
-							#{commissione.stato}
+											</p:selectOneMenu>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
 
-						</h:column>
+								<p:column headerText="Stato">
 
-								<h:column>
-									<f:facet name="header">Data Annullo</f:facet>
+								</p:column>
+
+								<p:column headerText="Data Ann." style="width:100px">
+
 									<h:outputText value="#{commissione.dataAnnullo}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 									</h:outputText>
 
-								</h:column>
+								</p:column>
 
-								<h:column>
-									<f:facet name="header">Annulla</f:facet>
-									<p:commandButton value="Annulla"
-										oncomplete="annullaCommissioneDialog.show()">
+								<p:column headerText="Annulla">
+
+									<p:commandButton oncomplete="annullaCommissioneDialog.show()" icon="undo-icon">
 										<f:setPropertyActionListener
 											value="#{commissione.descrizione}"
 											target="#{presentazioneAssegnazioneAttoController.commissioneToAnnul}" />
 									</p:commandButton>
-								</h:column>
+								</p:column>
 
-								<h:column>
-									<f:facet name="header">Elimina</f:facet>
+								<p:column headerText="Elimina" >
+
 
 									<p:commandButton oncomplete="commissioneDialog.show()"
 										icon="delete-icon">
@@ -207,9 +234,13 @@
 											value="#{commissione.descrizione}"
 											target="#{presentazioneAssegnazioneAttoController.commissioneToDelete}" />
 									</p:commandButton>
-								</h:column>
+								</p:column>
 
-							</h:dataTable>
+								<p:column headerText="Modifica">
+									<p:rowEditor />
+								</p:column>
+
+							</p:dataTable>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -282,39 +313,59 @@
 					<p:row>
 						<p:column colspan="5">
 
-							<h:dataTable id="listaPareri"
+							<p:dataTable id="listaPareri"
 								value="#{presentazioneAssegnazioneAttoController.pareriList}"
-								var="parere" styleClass="generalInfoTab grey-text">
+								var="parere" styleClass="generalInfoTab grey-text"
+								editable="true">
 
-								<h:column>
-									<f:facet name="header">Nome</f:facet>
-							#{parere.descrizione}
-    			       </h:column>
+								<p:column headerText="Nome">
+									#{parere.descrizione}
+									</p:column>
 
-								<h:column>
-									<f:facet name="header">Data Assegnazione</f:facet>
-									<h:outputText value="#{parere.dataAssegnazione}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
 
-								</h:column>
+								<p:column headerText="Data Assegnazione">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{parere.dataAssegnazione}">
+												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</f:facet>
+										<f:facet name="input">
+											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+												value="#{parere.dataAssegnazione}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
 
-								<h:column>
-									<f:facet name="header">Data Annullo</f:facet>
-									<h:outputText value="#{parere.dataAnnullo}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
+								<p:column headerText="Data Annullo">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{parere.dataAnnullo}">
+												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</f:facet>
+										<f:facet name="input">
+											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+												value="#{parere.dataAnnullo}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
 
-								</h:column>
 
-								<h:column>
-									<f:facet name="header">Obbligatorio</f:facet>
-									<h:outputText value="si" rendered="#{parere.obbligatorio}" />
-									<h:outputText value="no" rendered="#{!parere.obbligatorio}" />
-								</h:column>
 
-								<h:column>
-									<f:facet name="header">Elimina</f:facet>
+								<p:column headerText="Obbligatorio">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="si" rendered="#{parere.obbligatorio}" />
+											<h:outputText value="no" rendered="#{!parere.obbligatorio}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectBooleanCheckbox value="#{parere.obbligatorio}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+
+								<p:column headerText="Elimina">
 
 									<p:commandButton oncomplete="parereDialog.show()"
 										icon="delete-icon">
@@ -322,9 +373,13 @@
 										<f:setPropertyActionListener value="#{parere.descrizione}"
 											target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
 									</p:commandButton>
-								</h:column>
+								</p:column>
 
-							</h:dataTable>
+								<p:column headerText="Modifica">
+									<p:rowEditor />
+								</p:column>
+
+							</p:dataTable>
 						</p:column>
 					</p:row>
 				</p:panelGrid>

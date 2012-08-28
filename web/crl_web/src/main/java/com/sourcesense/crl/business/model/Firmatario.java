@@ -12,7 +12,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("firmatario")
 @JsonTypeName("firmatario")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-public class Firmatario extends Personale {
+public class Firmatario extends Personale implements Cloneable {
 
 	
 	/*
@@ -32,6 +32,14 @@ public class Firmatario extends Personale {
 	private Date dataRitiro;
 	private boolean primoFirmatario;
 	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	public String getNome() {

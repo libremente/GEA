@@ -11,450 +11,482 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 
-	<p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
+<p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
 
 
+	<p:row>
+		<p:column colspan="3">
+			<p>
+				<!-- Messaggio azioni -->
+				<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
+
+
+
+				<!-- Confirm dialog -->
+				<p:confirmDialog id="confirmAttoDialog"
+					message="Sei sicuro di voler eliminare il File ?"
+					header="Cancellazione Testo Atto" severity="alert"
+					widgetVar="testoAttoDialog">
+
+					<p:commandButton id="confirmTestoAtto" value="Conferma"
+						oncomplete="testoAttoDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
+						update="listaTestiAtto" />
+					<p:commandButton id="declineTestoAtto" value="Annulla"
+						onclick="testoAttoDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<p:confirmDialog id="confirmDialog"
+					message="Sei sicuro di voler eliminare il Firmatario?"
+					header="Cancellazione Firmatario" severity="alert"
+					widgetVar="firmatarioDialog">
+
+					<p:commandButton id="confirm" value="Conferma"
+						oncomplete="firmatarioDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.removeFirmatario}"
+						actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
+						update="listaFirmatari" />
+					<p:commandButton id="decline" value="Annulla"
+						onclick="firmatarioDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<b> <h:outputLabel for="datapresaincarico"
+						value="Data presa in carico: " /> <p:calendar size="10"
+						locale="it_IT" id="datapresaincarico"
+						value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
+				</b>
+				<p:commandButton value="Presa in Carico" update="presaCaricoMsg"
+					actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
+			</p>
+		</p:column>
+	</p:row>
+</p:panelGrid>
+<p:fieldset legend="Dati dell'Atto" collapsed="false" toggleable="true"
+	toggleSpeed="500">
+
+	<p:panelGrid styleClass="infoTable" id="datiattopanel">
 		<p:row>
-			<p:column colspan="3">
-				<p>
-					<!-- Messaggio azioni -->
-					<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero Atto: " />
+			</p:column>
+			<p:column>
+				<p:inputText readonly="true" id="inputnumeroatto"
+					value="#{presentazioneAssegnazioneAttoController.numeroAtto}" />
+			</p:column>
 
 
-
-					<!-- Confirm dialog -->
-					<p:confirmDialog id="confirmAttoDialog"
-						message="Sei sicuro di voler eliminare il File ?"
-						header="Cancellazione Testo Atto" severity="alert"
-						widgetVar="testoAttoDialog">
-
-						<p:commandButton id="confirmTestoAtto" value="Conferma"
-							oncomplete="testoAttoDialog.hide()"
-							action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
-							update="listaTestiAtto" />
-						<p:commandButton id="declineTestoAtto" value="Annulla"
-							onclick="testoAttoDialog.hide()" type="button" />
-
-					</p:confirmDialog>
-
-					<p:confirmDialog id="confirmDialog"
-						message="Sei sicuro di voler eliminare il Firmatario?"
-						header="Cancellazione Firmatario" severity="alert"
-						widgetVar="firmatarioDialog">
-
-						<p:commandButton id="confirm" value="Conferma"
-							oncomplete="firmatarioDialog.hide()"
-							action="#{presentazioneAssegnazioneAttoController.removeFirmatario}"
-							actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
-							update="listaFirmatari" />
-						<p:commandButton id="decline" value="Annulla"
-							onclick="firmatarioDialog.hide()" type="button" />
-
-					</p:confirmDialog>
-
-					<b> <h:outputLabel for="datapresaincarico"
-							value="Data presa in carico: " /> <p:calendar size="10"
-							locale="it_IT" id="datapresaincarico"
-							value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
-					</b>
-					<p:commandButton value="Presa in Carico" update="presaCaricoMsg"
-						actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
-				</p>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Classificazione: " />
+			</p:column>
+			<p:column>
+				<p:inputText id="inputclassificazione"
+					value="#{presentazioneAssegnazioneAttoController.classificazione}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
 			</p:column>
 		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Oggetto: " />
+			</p:column>
+			<p:column colspan="3">
+				<p:inputTextarea rows="2" cols="82"
+					value="#{presentazioneAssegnazioneAttoController.oggetto}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputTextarea>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero repertorio: " />
+			</p:column>
+			<p:column>
+				<p:inputText id="inputnumrepertorio"
+					value="#{presentazioneAssegnazioneAttoController.numeroRepertorio}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
+			</p:column>
+
+			<p:column>
+				<b> <h:outputLabel for="datarepertorio"
+						value="Data Repertorio: " />
+				</b>
+			</p:column>
+
+			<p:column>
+				<p:calendar size="10" locale="it_IT" id="datarepertorio"
+					pattern="dd/MM/yyyy"
+					value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
+					<p:ajax event="dateSelect"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:calendar>
+			</p:column>
+
+
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<b> <h:outputText style="font-weight: bold;"
+						value="Tipo Iniziativa: " />
+				</b>
+			</p:column>
+
+			<p:column>
+				<p:selectOneMenu id="tipoiniziativa"
+					value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
+					<f:selectItem itemLabel="Scegli tipo" itemValue="" />
+					<f:selectItems
+						value="#{presentazioneAssegnazioneAttoController.tipiIniziativa}" />
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column>
+				<b><h:outputLabel for="datainiziativa" value="Data iniziativa: " />
+				</b>
+			</p:column>
+
+			<p:column>
+				<p:calendar size="10" locale="it_IT" id="datainiziativa"
+					pattern="dd/MM/yyyy"
+					value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
+					<p:ajax event="dateSelect"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:calendar>
+			</p:column>
+
+
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="Descrizione iniziativa: " />
+			</p:column>
+			<p:column colspan="3">
+				<p:inputTextarea rows="2" cols="82"
+					value="#{presentazioneAssegnazioneAttoController.descrizioneIniziativa}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputTextarea>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero DGR: " />
+
+			</p:column>
+
+			<p:column>
+				<p:inputText id="inputnumerodgr"
+					value="#{presentazioneAssegnazioneAttoController.numeroDgr}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
+			</p:column>
+
+			<p:column>
+				<b> <h:outputLabel for="datadgr" value="Data DGR: " />
+				</b>
+			</p:column>
+
+			<p:column>
+				<p:calendar size="10" locale="it_IT" id="datadgr"
+					pattern="dd/MM/yyyy"
+					value="#{presentazioneAssegnazioneAttoController.dataDgr}">
+					<p:ajax event="dateSelect"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:calendar>
+			</p:column>
+
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Assegnazione: " />
+			</p:column>
+			<p:column colspan="3">
+				<p:inputText id="inputassegnazione"
+					value="#{presentazioneAssegnazioneAttoController.assegnazione}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
+			</p:column>
+		</p:row>
+
 	</p:panelGrid>
-	<p:fieldset legend="Dati dell'Atto" collapsed="false" toggleable="true"
-		toggleSpeed="500">
 
-		<p:panelGrid styleClass="infoTable" id="datiattopanel">
-			<p:row>
-				<p:column>
-					<h:outputText style="font-weight: bold;" value="Numero Atto: " />
-				</p:column>
-				<p:column>
-					<p:inputText readonly="true" id="inputnumeroatto"
-						value="#{presentazioneAssegnazioneAttoController.numeroAtto}" />
-				</p:column>
+</p:fieldset>
 
-
-				<p:column>
-					<h:outputText style="font-weight: bold;" value="Classificazione: " />
-				</p:column>
-				<p:column>
-					<p:inputText id="inputclassificazione"
-						value="#{presentazioneAssegnazioneAttoController.classificazione}">
-						<p:ajax event="change" 
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:inputText>
-				</p:column>
-			</p:row>
-
-			<p:row>
-				<p:column>
-					<h:outputText style="font-weight: bold;" value="Oggetto: " />
-				</p:column>
-				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82"
-						value="#{presentazioneAssegnazioneAttoController.oggetto}"
-						>
-						<p:ajax event="change"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:inputTextarea>
-				</p:column>
-			</p:row>
-
-			<p:row>
-				<p:column>
-					<h:outputText style="font-weight: bold;"
-						value="Numero repertorio: " />
-				</p:column>
-				<p:column>
-					<p:inputText id="inputnumrepertorio"
-						value="#{presentazioneAssegnazioneAttoController.numeroRepertorio}">
-						<p:ajax event="change"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:inputText>
-				</p:column>
-
-				<p:column>
-					<b> <h:outputLabel for="datarepertorio"
-							value="Data Repertorio: " />
-					</b>
-				</p:column>
-
-				<p:column>
-					<p:calendar size="10" locale="it_IT" id="datarepertorio"
-						pattern="dd/MM/yyyy"
-						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
-						<p:ajax event="dateSelect"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:calendar>
-				</p:column>
-
-
-			</p:row>
-
-			<p:row>
-				<p:column>
-					<b> <h:outputText style="font-weight: bold;"
-							value="Tipo Iniziativa: " />
-					</b>
-				</p:column>
-
-				<p:column>
-					<p:selectOneMenu id="tipoiniziativa"
-						value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
-						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
-						<f:selectItems
-							value="#{presentazioneAssegnazioneAttoController.tipiIniziativa}" />
-						<p:ajax event="change"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:selectOneMenu>
-				</p:column>
-
-				<p:column>
-					<b><h:outputLabel for="datainiziativa"
-							value="Data iniziativa: " /> </b>
-				</p:column>
-
-				<p:column>
-					<p:calendar size="10" locale="it_IT" id="datainiziativa"
-						pattern="dd/MM/yyyy"
-						value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
-						<p:ajax event="dateSelect"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:calendar>
-				</p:column>
-
-
-			</p:row>
-
-			<p:row>
-				<p:column>
-					<h:outputText style="font-weight: bold;"
-						value="Descrizione iniziativa: " />
-				</p:column>
-				<p:column colspan="3">
-					<p:inputTextarea rows="2" cols="82" 
-						value="#{presentazioneAssegnazioneAttoController.descrizioneIniziativa}">
-						<p:ajax event="change"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:inputTextarea>
-				</p:column>
-			</p:row>
-
-			<p:row>
-				<p:column>
-					<h:outputText style="font-weight: bold;" value="Numero DGR: " />
-
-				</p:column>
-
-				<p:column>
-					<p:inputText id="inputnumerodgr"
-						value="#{presentazioneAssegnazioneAttoController.numeroDgr}">
-						<p:ajax event="change"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:inputText>
-				</p:column>
-
-				<p:column>
-					<b> <h:outputLabel for="datadgr" value="Data DGR: " />
-					</b>
-				</p:column>
-
-				<p:column>
-					<p:calendar size="10" locale="it_IT" id="datadgr"
-						pattern="dd/MM/yyyy"
-						value="#{presentazioneAssegnazioneAttoController.dataDgr}">
-						<p:ajax event="dateSelect"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:calendar>
-				</p:column>
-
-			</p:row>
-
-			<p:row>
-				<p:column>
-					<h:outputText style="font-weight: bold;" value="Assegnazione: " />
-				</p:column>
-				<p:column colspan="3">
-					<p:inputText id="inputassegnazione"
-						value="#{presentazioneAssegnazioneAttoController.assegnazione}">
-						<p:ajax event="change"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:inputText>
-				</p:column>
-			</p:row>
-
-		</p:panelGrid>
-
-	</p:fieldset>
-
-	<p:fieldset legend="Testo dell'Atto presentato" collapsed="false"
-		toggleable="true" toggleSpeed="500">
-		<p:panelGrid styleClass="infoTable" id="testoattopanel">
-			<p:row>
-				<!-- <p:column>
+<p:fieldset legend="Testo dell'Atto presentato" collapsed="false"
+	toggleable="true" toggleSpeed="500">
+	<p:panelGrid styleClass="infoTable" id="testoattopanel">
+		<p:row>
+			<!-- <p:column>
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
-				<p:column colspan="3">
-					<p:fileUpload label="Carica Testo dell'Atto"
-						fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}"
-						mode="advanced" auto="true"
-						update="listaTestiAtto ,presaCaricoMsg" />
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column colspan="4">
+			<p:column colspan="3">
+				<p:fileUpload label="Carica Testo dell'Atto"
+					fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}"
+					mode="advanced" auto="true" update="listaTestiAtto ,presaCaricoMsg" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="4">
 
-					<h:dataTable id="listaTestiAtto"
-						value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
-						var="testoAtto" styleClass="generalInfoTab grey-text">
+				<h:dataTable id="listaTestiAtto"
+					value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
+					var="testoAtto" styleClass="generalInfoTab grey-text">
 
-						<h:column>
-							<f:facet name="header">Testo Dell'Atto</f:facet>
+					<h:column>
+						<f:facet name="header">Testo Dell'Atto</f:facet>
 							#{testoAtto.nome}
 						</h:column>
 
-						<h:column>
-							<f:facet name="header">Documento</f:facet>
-							<h:outputText
-								value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" />
+					<h:column>
+						<f:facet name="header">Documento</f:facet>
+						<h:outputText
+							value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" />
 
-						</h:column>
+					</h:column>
 
-						<h:column>
-							<f:facet name="header">Pubblico</f:facet>
-							<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
-							<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
-						</h:column>
+					<h:column>
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</h:column>
 
-						<h:column>
-							<f:facet name="header">Elimina</f:facet>
-							<p:commandButton oncomplete="testoAttoDialog.show()"
-								icon="delete-icon">
+					<h:column>
+						<f:facet name="header">Elimina</f:facet>
+						<p:commandButton oncomplete="testoAttoDialog.show()"
+							icon="delete-icon">
 
-								<f:setPropertyActionListener value="#{testoAtto.id}"
-									target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
-							</p:commandButton>
-						</h:column>
+							<f:setPropertyActionListener value="#{testoAtto.id}"
+								target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
+						</p:commandButton>
+					</h:column>
 
 
-					</h:dataTable>
-				</p:column>
-			</p:row>
+				</h:dataTable>
+			</p:column>
+		</p:row>
 
-		</p:panelGrid>
-	</p:fieldset>
+	</p:panelGrid>
+</p:fieldset>
 
-	<p:fieldset legend="Firmatari" toggleable="true" collapsed="false"
-		toggleSpeed="500">
-		<p:panelGrid styleClass="infoTable" id="firmataripanel">
-			<!-- <p:row>
+<p:fieldset legend="Firmatari" toggleable="true" collapsed="false"
+	toggleSpeed="500">
+	<p:panelGrid styleClass="infoTable" id="firmataripanel">
+		<!-- <p:row>
 				<p:column>
 					<p:commandButton value="Inserimento Multiplo" />
 				</p:column>
 			</p:row>-->
 
-			<p:row>
-				<p:column colspan="6">
-					<p:panelGrid id="addFirmatarioPanel" styleClass="tableAppend">
+		<p:row>
+			<p:column colspan="6">
+				<p:panelGrid id="addFirmatarioPanel" styleClass="tableAppend">
 
-						<f:facet name="header">
-							<p:row>
-								<p:column>Firmatario</p:column>
-								<p:column>Gruppo Cons.</p:column>
-								<p:column>Data Firma</p:column>
-								<p:column>Data Ritiro</p:column>
-								<p:column>Primo Firm.</p:column>
-								<p:column></p:column>
-							</p:row>
-						</f:facet>
+					<f:facet name="header">
 						<p:row>
-							<p:column>
-								<p:selectOneMenu id="firmatario"
-									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
-									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
-									<f:selectItems
-										value="#{presentazioneAssegnazioneAttoController.firmatari}" />
-								</p:selectOneMenu>
-							</p:column>
-
-							<p:column>
-								<p:selectOneMenu id="gruppoconsiliare"
-									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}">
-									<f:selectItem itemLabel="Scegli Gruppo" itemValue="" />
-									<f:selectItems
-										value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
-								</p:selectOneMenu>
-							</p:column>
-
-							<p:column>
-								<p:calendar size="10" locale="it_IT" id="datafirma"
-									pattern="dd/MM/yyyy"
-									value="#{presentazioneAssegnazioneAttoController.dataFirma}" />
-							</p:column>
-
-							<p:column>
-								<p:calendar size="10" locale="it_IT" id="dataritiro"
-									pattern="dd/MM/yyyy"
-									value="#{presentazioneAssegnazioneAttoController.dataRitiro}" />
-							</p:column>
-
-							<p:column>
-								<p:selectBooleanCheckbox id="primofirmatario"
-									value="#{presentazioneAssegnazioneAttoController.primoFirmatario}" />
-							</p:column>
-
-							<p:column>
-								<p:commandButton value="Aggiungi"
-									action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
-									id="addFirmatario" update="listaFirmatari , presaCaricoMsg"
-									icon="new-icon" />
-							</p:column>
-
+							<p:column>Firmatario</p:column>
+							<p:column>Gruppo Cons.</p:column>
+							<p:column>Data Firma</p:column>
+							<p:column>Data Ritiro</p:column>
+							<p:column>Primo Firm.</p:column>
+							<p:column></p:column>
 						</p:row>
-					</p:panelGrid>
+					</f:facet>
+					<p:row>
+						<p:column>
+							<p:selectOneMenu id="firmatario"
+								value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
+								<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+								<f:selectItems
+									value="#{presentazioneAssegnazioneAttoController.firmatari}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column>
+							<p:selectOneMenu id="gruppoconsiliare"
+								value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}">
+								<f:selectItem itemLabel="Scegli Gruppo" itemValue="" />
+								<f:selectItems
+									value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column>
+							<p:calendar size="10" locale="it_IT" id="datafirma"
+								pattern="dd/MM/yyyy"
+								value="#{presentazioneAssegnazioneAttoController.dataFirma}" />
+						</p:column>
+
+						<p:column>
+							<p:calendar size="10" locale="it_IT" id="dataritiro"
+								pattern="dd/MM/yyyy"
+								value="#{presentazioneAssegnazioneAttoController.dataRitiro}" />
+						</p:column>
+
+						<p:column>
+							<p:selectBooleanCheckbox id="primofirmatario"
+								value="#{presentazioneAssegnazioneAttoController.primoFirmatario}" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton value="Aggiungi"
+								action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
+								id="addFirmatario" update="listaFirmatari , presaCaricoMsg"
+								icon="new-icon" />
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
 
 
-				</p:column>
-			</p:row>
+			</p:column>
+		</p:row>
 
-			<p:row>
-				<p:column colspan="6">
+		<p:row>
+			<p:column colspan="6">
 
-					<h:dataTable id="listaFirmatari"
-						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
-						var="firmatario" styleClass="generalInfoTab grey-text">
+				<p:dataTable id="listaFirmatari" 
+					value="#{presentazioneAssegnazioneAttoController.firmatariList}"
+					var="firmatarioAdd" styleClass="generalInfoTab grey-text" 
+					editable="true">
+					
+					<p:column headerText="Nome" style="width:125px">
+					<h:outputText value="#{firmatarioAdd.descrizione}" />
+						<!-- <p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{firmatarioAdd.descrizione}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{firmatarioAdd.descrizione}">
+									<f:selectItems value="#{presentazioneAssegnazioneAttoController.firmatari}"/>
 
-						<h:column>
-							<f:facet name="header">Nome</f:facet>
-							#{firmatario.descrizione}
-    			       </h:column>
+									</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor> -->
+					</p:column>
 
-						<h:column>
-							<f:facet name="header">Gruppo Consiliare</f:facet>
-                            #{firmatario.gruppoConsiliare}
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Data Firma</f:facet>
-							<h:outputText value="#{firmatario.dataFirma}">
-								<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-							</h:outputText>
-
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Data Ritiro</f:facet>
-
-							<h:outputText value="#{firmatario.dataRitiro}">
-								<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-							</h:outputText>
+					<p:column headerText="Gruppo Consiliare" >
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{firmatarioAdd.gruppoConsiliare}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{firmatarioAdd.gruppoConsiliare}" >
+								<f:selectItem itemLabel="aaaaaaaaaaaaaaaaaaaa" itemValue="aaaaaaaaaaaaaaaaaaaa" />
+									<f:selectItems />
 
 
-						</h:column>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 
-						<h:column>
-							<f:facet name="header">1° firm.</f:facet>
-							<h:outputText value="si" rendered="#{firmatario.primoFirmatario}" />
-							<h:outputText value="no"
-								rendered="#{!firmatario.primoFirmatario}" />
-						</h:column>
+					<p:column headerText="Data Firma" style="width:100px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{firmatarioAdd.dataFirma}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									value="#{firmatarioAdd.dataFirma}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 
-						<h:column>
-							<f:facet name="header">Elimina</f:facet>
+					<p:column headerText="Data Ritiro" style="width:100px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{firmatarioAdd.dataRitiro}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									value="#{firmatarioAdd.dataRitiro}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 
-							<p:commandButton oncomplete="firmatarioDialog.show()"
-								icon="delete-icon">
+					<p:column headerText="1° firm." style="width:100px">
 
-								<f:setPropertyActionListener value="#{firmatario.descrizione}"
-									target="#{presentazioneAssegnazioneAttoController.firmatarioToDelete}" />
-							</p:commandButton>
-						</h:column>
+						<h:outputText value="si" rendered="#{firmatarioAdd.primoFirmatario}" />
+						<h:outputText value="no" rendered="#{!firmatarioAdd.primoFirmatario}" />
+					</p:column>
 
-					</h:dataTable>
-				</p:column>
-			</p:row>
+					<p:column headerText="Elimina" style="width:50px">
 
-			<p:row>
-				<p:column>
+						<p:commandButton oncomplete="firmatarioDialog.show()"
+							icon="delete-icon">
 
-				</p:column>
+							<f:setPropertyActionListener value="#{firmatarioAdd.descrizione}"
+								target="#{presentazioneAssegnazioneAttoController.firmatarioToDelete}" />
+						</p:commandButton>
+					</p:column>
 
-				<p:column colspan="5">
-					<p:commandLink value="Creazione lettera di aggiunta firma" />
-				</p:column>
-			</p:row>
+					<p:column headerText="Modifica" style="width:50px">
+						<p:rowEditor />
+					</p:column>
 
-			<p:row>
-				<p:column>
+				</p:dataTable>
+			</p:column>
+		</p:row>
 
-				</p:column>
+		<p:row>
+			<p:column>
 
-				<p:column colspan="5">
-					<p:commandLink value="Creazione lettera di ritiro firma" />
-				</p:column>
-			</p:row>
+			</p:column>
 
-			<p:row>
-				<p:column>
-					<p:commandButton value="Ritiro per mancanza firmatari"  action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}"/>
-				</p:column>
+			<p:column colspan="5">
+				<p:commandLink value="Creazione lettera di aggiunta firma" />
+			</p:column>
+		</p:row>
 
-				<p:column colspan="5">
+		<p:row>
+			<p:column>
 
-				</p:column>
-			</p:row>
+			</p:column>
 
-		</p:panelGrid>
+			<p:column colspan="5">
+				<p:commandLink value="Creazione lettera di ritiro firma" />
+			</p:column>
+		</p:row>
 
-	</p:fieldset>
-	
-	<p>
-		<p:commandButton value="Salva" 
-		    update="presaCaricoMsg"
-			actionListener="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}"
-			 />
-	</p>
+		<p:row>
+			<p:column>
+				<p:commandButton value="Ritiro per mancanza firmatari"
+					action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}" />
+			</p:column>
+
+			<p:column colspan="5">
+
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+</p:fieldset>
+
+<p>
+	<p:commandButton value="Salva" update="presaCaricoMsg"
+		actionListener="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}" />
+		
+</p>
 </html>

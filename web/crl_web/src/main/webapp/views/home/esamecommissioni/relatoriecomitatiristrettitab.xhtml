@@ -175,31 +175,50 @@
 		<p:row>
 			<p:column colspan="6">
 
-				<h:dataTable id="listaRelatori"
+				<p:dataTable id="listaRelatori"
 					value="#{esameCommissioniController.relatoriList}" var="relatore"
-					styleClass="generalInfoTab grey-text">
+					styleClass="generalInfoTab grey-text" editable="true">
 
-					<h:column>
-						<f:facet name="header">Relatore</f:facet>
-							#{relatore.descrizione}
-    			       </h:column>
+					<p:column headerText="Relatore">
 
-					<h:column>
-						<f:facet name="header">Data nomina</f:facet>
-						<h:outputText value="#{relatore.dataNomina}">
-							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</h:column>
+						<h:outputText value="#{relatore.descrizione}" />
+					</p:column>
 
-					<h:column>
-						<f:facet name="header">Data uscita</f:facet>
-						<h:outputText value="#{relatore.dataUscita}">
-							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-						</h:outputText>
+					<p:column headerClass="Data nomina">
 
-					</h:column>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{relatore.dataNomina}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									value="#{relatore.dataNomina}" />
+							</f:facet>
+						</p:cellEditor>
 
-					<h:column>
+					</p:column>
+
+					<p:column headerText="Data uscita">
+
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{relatore.dataUscita}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									value="#{relatore.dataUscita}" />
+							</f:facet>
+						</p:cellEditor>
+
+
+
+					</p:column>
+
+					<p:column headerText="Elimina">
 						<f:facet name="header">Elimina</f:facet>
 
 						<p:commandButton oncomplete="relatoreDialog.show()"
@@ -208,9 +227,13 @@
 							<f:setPropertyActionListener value="#{relatore.descrizione}"
 								target="#{esameCommissioniController.relatoreToDelete}" />
 						</p:commandButton>
-					</h:column>
+					</p:column>
 
-				</h:dataTable>
+					<p:column headerText="Modifica">
+						<p:rowEditor />
+					</p:column>
+
+				</p:dataTable>
 			</p:column>
 		</p:row>
 		<p:row>
@@ -317,38 +340,66 @@
 		<p:row>
 			<p:column colspan="6">
 
-				<h:dataTable id="listaComponentiComitato"
+				<p:dataTable id="listaComponentiComitato"
 					value="#{esameCommissioniController.membriComitatoList}"
-					var="componente" styleClass="generalInfoTab grey-text">
+					var="componente" styleClass="generalInfoTab grey-text"
+					editable="true">
 
-					<h:column>
-						<f:facet name="header">Componenti</f:facet>
+					<p:column headerText="Componenti">
+						
 							#{componente.descrizione}
-    			       </h:column>
+    			       </p:column>
 
-					<h:column>
-						<f:facet name="header">Data nomina</f:facet>
-						<h:outputText value="#{componente.dataNomina}">
-							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</h:column>
+					<p:column headerText="Data nomina">
 
-					<h:column>
-						<f:facet name="header">Coordinatore</f:facet>
-						<h:outputText value="si" rendered="#{componente.coordinatore}" />
-						<h:outputText value="no" rendered="#{!componente.coordinatore}" />
-					</h:column>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{componente.dataNomina}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									value="#{componente.dataNomina}" />
+							</f:facet>
+						</p:cellEditor>
 
-					<h:column>
-						<f:facet name="header">Data uscita</f:facet>
-						<h:outputText value="#{componente.dataUscita}">
-							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-						</h:outputText>
 
-					</h:column>
+					</p:column>
 
-					<h:column>
-						<f:facet name="header">Elimina</f:facet>
+					<p:column headerText="Coordinatore">
+
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="si" rendered="#{componente.coordinatore}" />
+								<h:outputText value="no" rendered="#{!componente.coordinatore}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox value="#{componente.coordinatore}" />
+							</f:facet>
+						</p:cellEditor>
+
+
+					</p:column>
+
+					<p:column headerText="Data uscita">
+
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{componente.dataUscita}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									value="#{componente.dataUscita}" />
+							</f:facet>
+						</p:cellEditor>
+
+					</p:column>
+
+					<p:column headerText="Elimina">
+
 
 						<p:commandButton oncomplete="componenteDialog.show()"
 							icon="delete-icon">
@@ -356,9 +407,13 @@
 							<f:setPropertyActionListener value="#{componente.descrizione}"
 								target="#{esameCommissioniController.componenteToDelete}" />
 						</p:commandButton>
-					</h:column>
+					</p:column>
 
-				</h:dataTable>
+					<p:column headerText="Modifica">
+						<p:rowEditor />
+					</p:column>
+
+				</p:dataTable>
 			</p:column>
 		</p:row>
 		<p:row>

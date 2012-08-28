@@ -184,9 +184,8 @@
 
 									<p:column>
 										<p:commandButton value="Aggiungi"
-											action="#{esameCommissioniController.addLink}"
-											id="addLink" update="listaLinks , noteAllegatiMsg"
-											icon="new-icon" />
+											action="#{esameCommissioniController.addLink}" id="addLink"
+											update="listaLinks , noteAllegatiMsg" icon="new-icon" />
 									</p:column>
 
 								</p:row>
@@ -199,41 +198,70 @@
 					<p:row>
 						<p:column colspan="4">
 
-							<h:dataTable id="listaLinks"
-								value="#{esameCommissioniController.linksList}"
-								var="link" styleClass="generalInfoTab grey-text">
+							<p:dataTable id="listaLinks"
+								value="#{presentazioneAssegnazioneAttoController.linksList}"
+								var="link" styleClass="generalInfoTab grey-text" editable="true">
 
-								<h:column>
-									<f:facet name="header">Descrizione collegamento</f:facet>
-							#{link.descrizione}
-    			       </h:column>
+								<p:column headerText="Descrizione collegamento">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{link.descrizione}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{link.descrizione}" style="width:100%">
 
-								<h:column>
-									<f:facet name="header">Indirizzo collegamento</f:facet>
-									<h:outputLink value="#{link.indirizzo}">
-										<h:outputText value="#{link.indirizzo}" />
-									</h:outputLink>
+											</p:inputText>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
 
-								</h:column>
+								<p:column headerText="Indirizzo collegamento">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputLink value="#{link.indirizzo}">
+												<h:outputText value="#{link.descrizione}" />
+											</h:outputLink>
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{link.indirizzo}" style="width:100%">
 
-								<h:column>
-									<f:facet name="header">Pubblico</f:facet>
-									<h:outputText value="si" rendered="#{link.pubblico}" />
-									<h:outputText value="no" rendered="#{!link.pubblico}" />
-								</h:column>
+											</p:inputText>
+										</f:facet>
+									</p:cellEditor>
 
-								<h:column>
-									<f:facet name="header">Elimina</f:facet>
+
+								</p:column>
+
+								<p:column headerText="Pubblico">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="si" rendered="#{link.pubblico}" />
+											<h:outputText value="no" rendered="#{!link.pubblico}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectBooleanCheckbox value="#{link.pubblico}" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+
+								<p:column headerText="Elimina">
+
 
 									<p:commandButton oncomplete="linkDialog.show()"
 										icon="delete-icon">
 
 										<f:setPropertyActionListener value="#{link.descrizione}"
-											target="#{esameCommissioniController.linkToDelete}" />
+											target="#{presentazioneAssegnazioneAttoController.linkToDelete}" />
 									</p:commandButton>
-								</h:column>
+								</p:column>
 
-							</h:dataTable>
+								<p:column headerText="Modifica" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+
+							</p:dataTable>
+
+
 						</p:column>
 					</p:row>
 				</p:panelGrid>

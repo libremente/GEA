@@ -34,6 +34,7 @@ import com.sourcesense.crl.business.service.OrganismoStatutarioServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
+import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
@@ -73,6 +74,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
 	private Map<String, String> firmatari = new HashMap<String, String>();
+	
 	private String nomeFirmatario;
 
 	private List<AttoRecord> testiAttoList = new ArrayList<AttoRecord>();
@@ -138,6 +140,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private Atto atto = new Atto();
 
+	
+	
 	@PostConstruct
 	protected void init() {
 		setFirmatari(personaleServiceManager.findAllFirmatario());
@@ -151,16 +155,17 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
 
-		this.firmatariList = new ArrayList<Firmatario>(this.atto.getFirmatari());
+		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto.getFirmatari()));
 
 		//TODO caricamento liste attoBean
-		this.commissioniList = new ArrayList<Commissione>(this.atto.getCommissioni());
-		this.pareriList = new ArrayList<Parere>(this.atto.getPareri());
-		this.linksList =  new ArrayList<Link>(this.atto.getLinksPresentazioneAssegnazione());
+		this.commissioniList = new ArrayList<Commissione>(Clonator.cloneList(atto.getCommissioni()));
+		this.pareriList = new ArrayList<Parere>(Clonator.cloneList(atto.getPareri()));
+		this.linksList =  new ArrayList<Link>(Clonator.cloneList(atto.getLinksPresentazioneAssegnazione()));
 
 		//TODO
 		//setAllegatiList(allegatoServiceManager.findByTipo());
 		//setTestiAtto(recordAttoServiceManager.findByTipo());
+
 
 	}
 
@@ -329,7 +334,8 @@ public class PresentazioneAssegnazioneAttoController {
 				firmatario.setGruppoConsiliare(gruppoConsiliare);
 				firmatario.setPrimoFirmatario(primoFirmatario);
 				firmatariList.add(firmatario);
-
+				
+				
 				updateInfoGenHandler();
 			}
 		}
@@ -342,6 +348,8 @@ public class PresentazioneAssegnazioneAttoController {
 			if (element.getDescrizione().equals(firmatarioToDelete)) {
 
 				firmatariList.remove(element);
+				
+				
 				break;
 			}
 		}
@@ -370,6 +378,8 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 		return false;
 	}
+	
+	
 
 	public String ritiraPerMancanzaFirmatari() {
 
@@ -399,7 +409,7 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setDataDgr(atto.getDataDgr());
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
 
-		attoBean.getAtto().setFirmatari(firmatariList);
+		attoBean.getAtto().setFirmatari(Clonator.cloneList(getFirmatariList()));
 
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
@@ -1236,8 +1246,6 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setDataPresaInCarico(Date dataPresaInCarico) {
 		this.atto.setDataPresaInCarico(dataPresaInCarico);
 	}
-
-
 
 
 
