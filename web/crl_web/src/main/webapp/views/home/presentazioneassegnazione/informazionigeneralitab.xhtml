@@ -81,7 +81,7 @@
 				<h:outputText style="font-weight: bold;" value="Classificazione: " />
 			</p:column>
 			<p:column>
-				<p:inputText id="inputclassificazione"
+				<p:inputText readonly="true" id="inputclassificazione"
 					value="#{presentazioneAssegnazioneAttoController.classificazione}">
 					<p:ajax event="change"
 						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -94,7 +94,7 @@
 				<h:outputText style="font-weight: bold;" value="Oggetto: " />
 			</p:column>
 			<p:column colspan="3">
-				<p:inputTextarea rows="2" cols="82"
+				<p:inputTextarea readonly="true" rows="2" cols="82"
 					value="#{presentazioneAssegnazioneAttoController.oggetto}">
 					<p:ajax event="change"
 						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -107,7 +107,7 @@
 				<h:outputText style="font-weight: bold;" value="Numero repertorio: " />
 			</p:column>
 			<p:column>
-				<p:inputText id="inputnumrepertorio"
+				<p:inputText readonly="true" id="inputnumrepertorio"
 					value="#{presentazioneAssegnazioneAttoController.numeroRepertorio}">
 					<p:ajax event="change"
 						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -121,12 +121,16 @@
 			</p:column>
 
 			<p:column>
-				<p:calendar size="10" locale="it_IT" id="datarepertorio"
+			  <p:inputText readonly="true" id="datarepertorio"
+					value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
+				<!-- <p:calendar readonly="true" size="10" locale="it_IT" id="datarepertorio"
 					pattern="dd/MM/yyyy"
 					value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
-					<p:ajax event="dateSelect"
-						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-				</p:calendar>
+					
+				</p:calendar> -->
 			</p:column>
 
 
@@ -140,14 +144,19 @@
 			</p:column>
 
 			<p:column>
-				<p:selectOneMenu id="tipoiniziativa"
+			    <p:inputText readonly="true" id="tipoiniziativa"
+					value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
+				
+				<!-- <p:selectOneMenu id="tipoiniziativa"
 					value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
 					<f:selectItem itemLabel="Scegli tipo" itemValue="" />
 					<f:selectItems
 						value="#{presentazioneAssegnazioneAttoController.tipiIniziativa}" />
-					<p:ajax event="change"
-						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-				</p:selectOneMenu>
+					
+				</p:selectOneMenu> -->
 			</p:column>
 
 			<p:column>
@@ -156,12 +165,17 @@
 			</p:column>
 
 			<p:column>
-				<p:calendar size="10" locale="it_IT" id="datainiziativa"
+			    <p:inputText readonly="true" id="datainiziativa"
+					value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
+				
+				<!-- <p:calendar size="10" locale="it_IT" id="datainiziativa"
 					pattern="dd/MM/yyyy"
 					value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
-					<p:ajax event="dateSelect"
-						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-				</p:calendar>
+					
+				</p:calendar> -->
 			</p:column>
 
 
@@ -173,7 +187,7 @@
 					value="Descrizione iniziativa: " />
 			</p:column>
 			<p:column colspan="3">
-				<p:inputTextarea rows="2" cols="82"
+				<p:inputTextarea readonly="true"  rows="2" cols="82"
 					value="#{presentazioneAssegnazioneAttoController.descrizioneIniziativa}">
 					<p:ajax event="change"
 						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -188,7 +202,7 @@
 			</p:column>
 
 			<p:column>
-				<p:inputText id="inputnumerodgr"
+				<p:inputText readonly="true"  id="inputnumerodgr"
 					value="#{presentazioneAssegnazioneAttoController.numeroDgr}">
 					<p:ajax event="change"
 						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -201,12 +215,16 @@
 			</p:column>
 
 			<p:column>
-				<p:calendar size="10" locale="it_IT" id="datadgr"
+			   <p:inputText readonly="true"  id="datadgr"
+					value="#{presentazioneAssegnazioneAttoController.dataDgr}">
+					<p:ajax event="change"
+						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+				</p:inputText>
+				<!-- <p:calendar size="10" locale="it_IT" id="datadgr"
 					pattern="dd/MM/yyyy"
 					value="#{presentazioneAssegnazioneAttoController.dataDgr}">
-					<p:ajax event="dateSelect"
-						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-				</p:calendar>
+					
+				</p:calendar> -->
 			</p:column>
 
 		</p:row>
@@ -216,7 +234,7 @@
 				<h:outputText style="font-weight: bold;" value="Assegnazione: " />
 			</p:column>
 			<p:column colspan="3">
-				<p:inputText id="inputassegnazione"
+				<p:inputText readonly="true" id="inputassegnazione"
 					value="#{presentazioneAssegnazioneAttoController.assegnazione}">
 					<p:ajax event="change"
 						listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
