@@ -30,6 +30,11 @@ if(checkIsNotNull(id)){
 			commissioneNode = commissioneEsistenteResults[0];
 		} else {
 			commissioneNode = commissioniFolderNode.createNode(descrizione,"crlatti:commissione");
+			
+			// copia la cartella relatori dagli space template
+			var relatoriSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:RelatoriCommissione\"";
+			var relatoriSpaceTemplateNode = search.luceneSearch(relatoriSpaceTemplateQuery)[0];
+			relatoriSpaceTemplateNode.copy(commissioneNode);
 		}
 		
 		var dataPropostaParsed = null;
