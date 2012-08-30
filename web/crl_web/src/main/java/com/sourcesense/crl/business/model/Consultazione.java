@@ -8,6 +8,8 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
@@ -15,6 +17,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("consultazione")
 @JsonTypeName("consultazione")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@AutoProperty
 public class Consultazione {
 	
 	private String descrizione;
@@ -26,6 +29,10 @@ public class Consultazione {
 	
 	private List <SoggettoInvitato> soggettiInvitati = new ArrayList<SoggettoInvitato>();
 	private List<Allegato> allegati = new ArrayList<Allegato>();
+	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	  }
 	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataConsultazione() {

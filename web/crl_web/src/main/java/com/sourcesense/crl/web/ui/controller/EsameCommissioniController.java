@@ -364,9 +364,7 @@ public class EsameCommissioniController {
 		confrontaDataScadenza();
 
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Presa in Carico salvata con successo", ""));
-
-
+		context.addMessage(null, new FacesMessage("Atto Preso in Carico con successo", ""));
 
 
 	}

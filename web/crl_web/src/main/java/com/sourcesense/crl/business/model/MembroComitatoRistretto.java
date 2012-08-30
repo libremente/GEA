@@ -5,15 +5,23 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 @JsonRootName("membroComitatoRistretto")
 @JsonTypeName("membroComitatoRistretto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@AutoProperty
 public class MembroComitatoRistretto extends Personale {
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;
 	private boolean coordinatore;
+	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	  }
+	
 	public String getNome() {
 		return nome;
 	}

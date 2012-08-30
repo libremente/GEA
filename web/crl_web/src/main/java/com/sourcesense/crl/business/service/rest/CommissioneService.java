@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.service.rest;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,9 @@ import java.util.Map;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneConsultiva;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.Legislatura;
+import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -43,8 +47,9 @@ public class CommissioneService {
 					MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
@@ -55,9 +60,18 @@ public class CommissioneService {
 			});
 
 
-		} catch (Exception ex) {
+		}catch (JsonMappingException e) {
 
-			ex.printStackTrace();
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
 		}
 		return listCommissioniReferenti;
 	}
@@ -73,8 +87,9 @@ public class CommissioneService {
 					MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
@@ -85,9 +100,18 @@ public class CommissioneService {
 			});
 
 
-		} catch (Exception ex) {
+		} catch (JsonMappingException e) {
 
-			ex.printStackTrace();
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
 		}
 		return listCommissioniConsultive;
 	}
@@ -103,8 +127,9 @@ public class CommissioneService {
 					MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
@@ -115,9 +140,18 @@ public class CommissioneService {
 			});
 
 
-		} catch (Exception ex) {
+		} catch (JsonMappingException e) {
 
-			ex.printStackTrace();
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
 		}
 		return listCommissioniReferenti;
 	}
@@ -132,8 +166,9 @@ public class CommissioneService {
 					MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ response.getStatus());
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
@@ -144,9 +179,18 @@ public class CommissioneService {
 			});
 
 
-		} catch (Exception ex) {
+		} catch (JsonMappingException e) {
 
-			ex.printStackTrace();
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
 		}
 		return listCommissioniConsultive;
 	}

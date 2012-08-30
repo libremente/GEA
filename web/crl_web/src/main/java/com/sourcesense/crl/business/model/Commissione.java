@@ -10,6 +10,8 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
@@ -17,6 +19,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("commissione")
 @JsonTypeName("commissione")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@AutoProperty
 public class Commissione implements Cloneable {
 	private String descrizione;
 	private String nome;
@@ -37,6 +40,10 @@ public class Commissione implements Cloneable {
 	private Date dataProposta;
 	private Date dataAnnullo;
 	private boolean annullata = false;
+	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	 }
 	
 	public Object clone() {
 		try {

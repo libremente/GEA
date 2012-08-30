@@ -6,6 +6,8 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
@@ -38,6 +40,8 @@ public class AttoSearch extends Atto {
 	
 	private String relatore;
 
+	
+	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPubblicazioneDa() {
 		return dataPubblicazioneDa;

@@ -17,23 +17,20 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 @RequestScoped
 public class LoginController {
 
-	
 	@ManagedProperty(value = "#{userServiceManager}")
 	private UserServiceManager userServiceManager;
-	
+
 	private User user = new User();
 
 	private String username;
 
 	private String password;
 
-	
-
 	public String login() {
-		
+
 		User sessionUser = userServiceManager.authenticate(user);
-		
-		if (sessionUser!=null) {
+
+		if (sessionUser != null) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = (UserBean) context
@@ -42,14 +39,11 @@ public class LoginController {
 					.createValueExpression(context.getELContext(),
 							"#{userBean}", UserBean.class)
 					.getValue(context.getELContext());
-
 			userBean.setUser(sessionUser);
-			
 			return "pretty:Home";
 
 		} else {
 
-			
 			return null;
 
 		}
@@ -80,7 +74,6 @@ public class LoginController {
 		this.user.setPassword(password);
 	}
 
-	
 	public UserServiceManager getUserServiceManager() {
 		return userServiceManager;
 	}
@@ -89,5 +82,4 @@ public class LoginController {
 		this.userServiceManager = userServiceManager;
 	}
 
-	
 }

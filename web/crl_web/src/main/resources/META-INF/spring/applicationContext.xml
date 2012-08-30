@@ -29,7 +29,10 @@
 
 	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
 		<property name="basename" value="/WEB-INF/messages/ext_resources" /> </bean> -->
-
+	
+    <aop:aspectj-autoproxy proxy-target-class="true" >
+    
+    </aop:aspectj-autoproxy>
 
 	<bean
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"

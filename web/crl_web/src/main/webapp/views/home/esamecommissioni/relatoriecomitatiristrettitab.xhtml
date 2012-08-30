@@ -84,9 +84,9 @@
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:calendar>
 					&nbsp;
-					<p:commandButton value="Presa in Carico"
-				action="#{esameCommissioniController.presaInCarico}"
-				update="dataScadenzaMessage, dataScadenzaReadOnly" />
+					<p:commandButton value="Presa in Carico" update="dataScadenzaMessage, dataScadenzaReadOnly"
+				actionListener="#{esameCommissioniController.presaInCarico}"
+				 />
 		</p:column>
 		<p:column></p:column>
 		<p:column></p:column>
@@ -184,7 +184,7 @@
 						<h:outputText value="#{relatore.descrizione}" />
 					</p:column>
 
-					<p:column headerClass="Data nomina">
+					<p:column headerText="Data nomina">
 
 						<p:cellEditor>
 							<f:facet name="output">

@@ -5,10 +5,13 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 @JsonRootName("abbinamento")
 @JsonTypeName("abbinamento")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@AutoProperty
 public class Abbinamento {
 	private Atto atto;
 	private Date dataAbbinamento;
@@ -16,6 +19,10 @@ public class Abbinamento {
 	private String tipoTesto;
 	private String note;
 	private boolean abbinato;
+	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	 }
 	
 	public Atto getAtto() {
 		return atto;

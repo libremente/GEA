@@ -7,6 +7,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 
 
@@ -15,7 +17,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 @JsonTypeName("attoRecord")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @JsonIgnoreProperties(ignoreUnknown=true)
-
+@AutoProperty
 public class AttoRecord {
 	
 	private String nome;
@@ -32,7 +34,9 @@ public class AttoRecord {
 	
 	private String mimetype;
 	
-	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	 }
 	
 	public String getDescrizione() {
 		return descrizione;

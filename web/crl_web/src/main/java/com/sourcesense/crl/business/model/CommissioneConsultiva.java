@@ -7,6 +7,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 @JsonRootName("commissioneConsultiva")
 @JsonTypeName("commissioneConsultiva")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+
 public class CommissioneConsultiva extends Commissione {
 
 }

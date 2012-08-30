@@ -13,4 +13,14 @@
 	<lifecycle>
 		<phase-listener>com.sourcesense.crl.business.security.SessionPhaseListener</phase-listener>
 	</lifecycle>
+	
+	<factory>
+
+	    <exception-handler-factory>
+	        com.sourcesense.crl.util.DefaultExceptionHandlerFactory
+	    </exception-handler-factory>
+
+    </factory>
+	
+	
 </faces-config>

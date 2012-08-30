@@ -23,6 +23,8 @@ import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.annotate.JsonUnwrapped;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
@@ -40,6 +42,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("atto")
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@AutoProperty
 public class Atto implements Cloneable
 {
 	/**
@@ -274,6 +277,10 @@ public class Atto implements Cloneable
 		this.setCommissioni(commissioni);
 
 	}
+	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	  }
 
 	public String getId() {
 		return id;

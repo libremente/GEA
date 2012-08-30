@@ -6,6 +6,8 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
@@ -14,6 +16,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("allegato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @JsonIgnoreProperties(ignoreUnknown=true)
+@AutoProperty
 public class Allegato {
 	
 	private String nome;
@@ -25,7 +28,9 @@ public class Allegato {
 	private String mimetype;
 	private Date dataSeduta;
 	
-	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	 }
 	
 	public String getDescrizione() {
 		return descrizione;

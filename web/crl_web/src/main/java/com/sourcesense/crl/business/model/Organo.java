@@ -7,18 +7,25 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 @JsonRootName("organo")
 @JsonTypeName("organo")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@AutoProperty
 public class Organo {
 	
 	private String nome;
 	private Date dataSeduta;
 	private Allegato ODG;
 	private List<Allegato> risorseEsterne;
+	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	  }
 	
 	public String getNome() {
 		return nome;

@@ -8,6 +8,8 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
@@ -15,6 +17,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonRootName("parere")
 @JsonTypeName("parere")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@AutoProperty
 public class Parere implements Cloneable {
 	private String organismoStatutario;
 	private String descrizione;
@@ -38,6 +41,10 @@ public class Parere implements Cloneable {
 			return null;
 		}
 	}
+	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	  }
 
 	public String getEsito() {
 		return esito;

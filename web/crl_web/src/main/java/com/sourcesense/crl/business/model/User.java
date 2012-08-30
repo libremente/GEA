@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.pojomatic.Pojomatic;
+import org.pojomatic.annotations.AutoProperty;
 import org.springframework.beans.factory.annotation.Configurable;
 
 
 @Configurable
 @XmlRootElement
+@AutoProperty
 public class User {
 
 	private String username ;
@@ -16,6 +19,9 @@ public class User {
 	
 	private List <GruppoUtente> gruppi;
 	
+	@Override public String toString() {
+	    return Pojomatic.toString(this);
+	  }
 	
 	public String getUsername() {
 		return username;
