@@ -22,6 +22,37 @@ if(checkIsNotNull(tipoAtto)){
 	if(tipoAtto == "PDL") {
 		type = "crlatti:attoPdl";	
 	}
+	if(tipoAtto == "INP") {
+		type = "crlatti:attoInp";	
+	}
+	if(tipoAtto == "PAR") {
+		type = "crlatti:attoPar";	
+	}
+	if(tipoAtto == "PDA") {
+		type = "crlatti:attoPda";	
+	}
+	if(tipoAtto == "PLP") {
+		type = "crlatti:attoPlp";	
+	}
+	if(tipoAtto == "PRE") {
+		type = "crlatti:attoPre";	
+	}
+	if(tipoAtto == "REF") {
+		type = "crlatti:attoRef";	
+	}
+	if(tipoAtto == "REL") {
+		type = "crlatti:attoRel";	
+	}
+	if(tipoAtto == "EAC") {
+		type = "crlatti:attoEac";	
+	}
+	if(tipoAtto == "REF") {
+		type = "crlatti:attoRef";	
+	}
+	if(tipoAtto == "DOC") {
+		type = "crlatti:attoDoc";	
+	}
+	
 	luceneQuery += "TYPE:\""+type+"\"";
 }
 
