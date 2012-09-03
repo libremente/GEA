@@ -720,11 +720,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
 					</p:calendar>
 				</p:column>
-				<p:column>
-					<p:commandButton value="Conferma Abbinamento"
-						update="listaAbbinamenti, abbinamentiMsg"
-						action="#{esameCommissioniController.salvaAbbinamento}" />
-				</p:column>
+				
 			</p:row>
 			<p:row>
 				<p:column>
@@ -739,11 +735,6 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
 					</p:calendar>
 				</p:column>
-				<p:column>
-					<p:commandButton value="Conferma Disabbinamento"
-						update="listaAbbinamenti"
-						action="#{esameCommissioniController.salvaDisabbinamento}" />
-				</p:column>
 			</p:row>
 			<p:row>
 				<p:column>
@@ -755,6 +746,13 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 						<p:ajax event="change"
 							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
 					</p:inputTextarea>
+				</p:column>
+			</p:row>
+			<p:row>
+			<p:column>
+					<p:commandButton value="Salva"
+						update="listaAbbinamenti, abbinamentiMsg"
+						action="#{esameCommissioniController.salvaAbbinamentoDisabbinamento}" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>

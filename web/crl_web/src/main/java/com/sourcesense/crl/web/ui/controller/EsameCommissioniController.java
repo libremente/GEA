@@ -708,44 +708,81 @@ public class EsameCommissioniController {
 		return null;
 	}
 
-	public void salvaAbbinamento() {
-		abbinamentoSelected.setTipoTesto(tipoTesto);
-		abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
-		abbinamentoSelected.setNote(noteAbbinamento);
+	public void salvaAbbinamentoDisabbinamento() {
+		
+		if (dataAbbinamento == null && dataDisabbinamento != null){
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+						
+			setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
+			context.addMessage(null, new FacesMessage("Impossibile disabbinare un atto non ancora abbinato", ""));	
+			
+		}
+		
+		else if (dataAbbinamento != null && dataDisabbinamento != null){
+			
+			abbinamentoSelected.setTipoTesto(tipoTesto);
+			abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
+			abbinamentoSelected.setDataDisabbinamento(dataDisabbinamento);
+			abbinamentoSelected.setNote(noteAbbinamento);
 
-		atto.setAbbinamenti(abbinamentiList);		
-		attoServiceManager.salvaAbbinamentiEsameCommissioni(atto);
+			atto.setAbbinamenti(abbinamentiList);		
+			attoServiceManager.salvaAbbinamentiEsameCommissioni(atto);
 
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setAbbinamenti(abbinamentiList);
+			attoBean.getAtto().setAbbinamenti(abbinamentiList);
 
-		setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Abbinamento salvato con successo", ""));		
+			setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
+			context.addMessage(null, new FacesMessage("Disabbinamento salvato con successo", ""));	
+			
+		}
+		
+		else if (dataAbbinamento != null && dataDisabbinamento == null){
+			
+			abbinamentoSelected.setTipoTesto(tipoTesto);
+			abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
+			abbinamentoSelected.setNote(noteAbbinamento);
+
+			atto.setAbbinamenti(abbinamentiList);		
+			attoServiceManager.salvaAbbinamentiEsameCommissioni(atto);
+
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().setAbbinamenti(abbinamentiList);
+
+			setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
+			context.addMessage(null, new FacesMessage("Abbinamento salvato con successo", ""));	
+			
+		}
+		
 	}
 
-	public void salvaDisabbinamento() {
-		abbinamentoSelected.setTipoTesto(tipoTesto);
-		abbinamentoSelected.setDataDisabbinamento(dataDisabbinamento);
-		abbinamentoSelected.setNote(noteAbbinamento);
-
-		atto.setAbbinamenti(abbinamentiList);		
-		//TODO: alfresco service
-
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-
-		attoBean.getAtto().setAbbinamenti(abbinamentiList);
-
-		setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Disabbinamento salvato con successo", ""));		
-
-	}
+//	public void salvaDisabbinamento() {
+//		abbinamentoSelected.setTipoTesto(tipoTesto);
+//		abbinamentoSelected.setDataDisabbinamento(dataDisabbinamento);
+//		abbinamentoSelected.setNote(noteAbbinamento);
+//
+//		atto.setAbbinamenti(abbinamentiList);		
+//		//TODO: alfresco service
+//
+//
+//		FacesContext context = FacesContext.getCurrentInstance();
+//		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+//				.getSessionMap().get("attoBean"));
+//
+//		attoBean.getAtto().setAbbinamenti(abbinamentiList);
+//
+//		setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
+//		context.addMessage(null, new FacesMessage("Disabbinamento salvato con successo", ""));		
+//
+//	}
 
 	
 	public void salvaOggetto() {
