@@ -20,7 +20,7 @@ import com.sourcesense.crl.util.URLBuilder;
 public class PersonaleServiceManager implements ServiceManager{
 
 	@Autowired
-	private transient URLBuilder urlBuilder;	
+	private  URLBuilder urlBuilder;	
 
 	@Autowired
 	private PersonaleService personaleService;

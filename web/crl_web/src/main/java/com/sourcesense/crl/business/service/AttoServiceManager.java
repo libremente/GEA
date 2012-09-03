@@ -43,7 +43,7 @@ import org.springframework.stereotype.Service;
 public class AttoServiceManager implements ServiceManager {
 
 	@Autowired
-	private transient URLBuilder urlBuilder;
+	private  URLBuilder urlBuilder;
 
 	@Autowired
 	private AttoService attoService;
@@ -56,14 +56,16 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	public List<Atto> initListAtti() {
+		
 		AttoSearch attoInit = new AttoSearch();
 		attoInit.setDataIniziativaA(new Date());
-
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.MONTH, -2);
 		attoInit.setDataIniziativaDa(calendar.getTime());
-
-		return searchAtti(attoInit);
+		return attoService
+				.parametricSearch(attoInit, urlBuilder.buildAlfrescoURL(
+						"alfresco_context_url",
+						"alf_list_atto_ricerca_semplice", null));
 
 	}
 	

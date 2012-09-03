@@ -18,10 +18,10 @@ import com.sun.jersey.api.client.Client;
 public class VotazioneService {
 
 	@Autowired
-	transient Client client;
+	 Client client;
 	
 	@Autowired
-	transient ObjectMapper objectMapper;
+	 ObjectMapper objectMapper;
 	
 	//TODO
 	public List<Votazione> getAllEsitoVotoAula() {

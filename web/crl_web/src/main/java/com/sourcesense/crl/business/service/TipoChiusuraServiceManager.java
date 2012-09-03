@@ -17,7 +17,7 @@ import com.sourcesense.crl.util.URLBuilder;
 public class TipoChiusuraServiceManager implements ServiceManager{
 
 	@Autowired
-	private transient URLBuilder urlBuilder;
+	private  URLBuilder urlBuilder;
 	
 	@Autowired
 	private TipoChiusuraService tipoChiusuraService;

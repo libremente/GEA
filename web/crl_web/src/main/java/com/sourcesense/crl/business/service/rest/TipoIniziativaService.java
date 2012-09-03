@@ -28,10 +28,10 @@ import com.sun.jersey.api.client.WebResource;
 public class TipoIniziativaService  {
 
 	@Autowired
-	transient Client client;
+	 Client client;
 	
 	@Autowired
-	transient ObjectMapper objectMapper;
+	 ObjectMapper objectMapper;
 	
 	public List<TipoIniziativa> getAllTipoIniziativa(String url) {
 		List<TipoIniziativa> listTipiIniziativa =null;

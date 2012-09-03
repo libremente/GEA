@@ -31,10 +31,10 @@ import com.sun.jersey.api.client.WebResource;
 public class PersonaleService {
 
 	@Autowired
-	transient Client client;
+	 Client client;
 
 	@Autowired
-	transient ObjectMapper objectMapper;
+	 ObjectMapper objectMapper;
 
 
 	public List<Firmatario> getAllFirmatario(String url) {
@@ -134,7 +134,7 @@ public class PersonaleService {
 
 			String responseMsg = response.getEntity(String.class);
 			
-			System.out.println(responseMsg);
+			
 			
 			objectMapper.configure(
 					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);

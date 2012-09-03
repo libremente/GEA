@@ -35,10 +35,10 @@ public class LegislaturaService {
 	
 
 	@Autowired
-	transient Client client;
+	Client client;
 	
 	@Autowired
-	transient ObjectMapper objectMapper;
+	ObjectMapper objectMapper;
 
 	public List<Legislatura> getAllLegislatura(String url) {
 

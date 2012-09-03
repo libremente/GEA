@@ -28,10 +28,10 @@ import com.sun.jersey.api.client.WebResource;
 public class TipoChiusuraService {
 
 	@Autowired
-	transient Client client;
+	 Client client;
 	
 	@Autowired
-	transient ObjectMapper objectMapper;
+	 ObjectMapper objectMapper;
 
 	public List<TipoChiusura> getAllTipoChiusura(String url) {
 		List<TipoChiusura> listTipiChiusura =null;

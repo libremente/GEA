@@ -28,10 +28,10 @@ import com.sun.jersey.api.client.WebResource;
 public class OrganismoStatutarioService {
 
 	@Autowired
-	transient Client client;
+	Client client;
 	
 	@Autowired
-	transient ObjectMapper objectMapper;
+	ObjectMapper objectMapper;
 	
 	public List<OrganismoStatutario> getAllOrganismoStatutario(String url) {
 		List<OrganismoStatutario> listOrganismiStatutari =null;

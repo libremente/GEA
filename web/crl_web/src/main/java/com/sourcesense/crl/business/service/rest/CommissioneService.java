@@ -30,10 +30,10 @@ import com.sun.jersey.api.client.WebResource;
 public class CommissioneService {
 
 	@Autowired
-	transient Client client;
+	Client client;
 
 	@Autowired
-	transient ObjectMapper objectMapper;
+	ObjectMapper objectMapper;
 
 	
 	public List<CommissioneReferente> retrieveCommissioniReferenteByAtto (String url){

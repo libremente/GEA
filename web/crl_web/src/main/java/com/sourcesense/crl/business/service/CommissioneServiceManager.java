@@ -21,7 +21,7 @@ import com.sourcesense.crl.util.URLBuilder;
 public class CommissioneServiceManager implements ServiceManager{
 
 	@Autowired
-	private transient URLBuilder urlBuilder;
+	private  URLBuilder urlBuilder;
 
 	@Autowired
 	private CommissioneService commissioneService;

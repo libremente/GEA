@@ -21,7 +21,7 @@ public class LegislaturaServiceManager implements ServiceManager {
 
 	
 	@Autowired
-	private transient URLBuilder urlBuilder;
+	private URLBuilder urlBuilder;
 	
 	
 	@Autowired

@@ -18,7 +18,7 @@ import com.sourcesense.crl.util.URLBuilder;
 public class OrganismoStatutarioServiceManager implements ServiceManager{
 	
 	@Autowired
-	private transient URLBuilder urlBuilder;
+	private URLBuilder urlBuilder;
 
 	@Autowired
 	private OrganismoStatutarioService organismoStatutarioService;

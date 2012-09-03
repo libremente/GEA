@@ -242,9 +242,10 @@ public class AttoService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
+			
 			objectMapper.configure(
 					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listTestiAtto = objectMapper.readValue(responseMsg,
+			listTestiAtto = objectMapper.readValue(responseMsg.trim(),
 					new TypeReference<List<AttoRecord>>() {
 					});
 
