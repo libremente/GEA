@@ -1,6 +1,9 @@
 package com.sourcesense.crl.business.service.rest;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.ws.rs.Path;
@@ -21,20 +24,16 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-
-
 @Component(value = "attoRecordService")
 @Path("/attiRecord")
 public class AttoRecordService {
-	
-	
+
 	@Autowired
 	Client client;
 
 	@Autowired
 	ObjectMapper objectMapper;
-	
-	
+
 	public List<TestoAtto> retrieveTestiAtto(String url) {
 		List<TestoAtto> listTestiAtto = null;
 
@@ -48,12 +47,15 @@ public class AttoRecordService {
 				throw new ServiceNotAvailableException("Errore - "
 						+ response.getStatus()
 						+ ": Alfresco non raggiungibile ");
-			} 
+			}
 
 			String responseMsg = response.getEntity(String.class);
-			
-			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listTestiAtto = objectMapper.readValue(responseMsg, new TypeReference<List<TestoAtto>>() {});
+			System.out.println("FILE===" + responseMsg);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listTestiAtto = objectMapper.readValue(responseMsg,
+					new TypeReference<List<TestoAtto>>() {
+					});
 
 		} catch (JsonMappingException e) {
 
@@ -113,7 +115,25 @@ public class AttoRecordService {
 
 	}
 
-	
-	
+	public InputStream getFile(String url) {
+
+		InputStream responseFile = null;
+		
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource.accept(
+				MediaType.MULTIPART_FORM_DATA).get(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException("Errore - "
+					+ response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+
+		responseFile = response.getEntity(InputStream.class);
+
+		
+		return responseFile;
+
+	}
 
 }

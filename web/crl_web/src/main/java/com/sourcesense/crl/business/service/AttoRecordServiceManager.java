@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.service;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoRecordService;
 import com.sourcesense.crl.util.URLBuilder;
 
-
+///alfresco/d/a/workspace/SpacesStore/0000-0000-0000-0000/myfile.pdf?ticket=hu
 @Service("attoRecordServiceManager")
 public class AttoRecordServiceManager implements ServiceManager {
 	
@@ -33,6 +34,18 @@ public class AttoRecordServiceManager implements ServiceManager {
 		return attoRecordService.retrieveAllegati(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_list_allegati_atto", new String[] { atto.getId() ,""}));
 	}
+	
+	public InputStream getFileById(String fileToDownload) {
+
+		return attoRecordService.getFile(urlBuilder.buildAlfrescoDownloadURL(
+				"alfresco_dwnl_direct_context_url", fileToDownload, null));
+	}
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public Object persist(Object object) {

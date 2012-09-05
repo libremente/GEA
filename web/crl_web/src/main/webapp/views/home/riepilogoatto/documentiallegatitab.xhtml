@@ -26,7 +26,7 @@
 				<h:column>
 					<f:facet name="header">Formato</f:facet>
 					<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
-                    <h:outputText value="#{testoAtto.mimetype}" />
+					<h:outputText value="#{testoAtto.mimetype}" />
 				</h:column>
 
 				<h:column>
@@ -37,10 +37,19 @@
 
 				<h:column>
 					<f:facet name="header">Download</f:facet>
-					<p:commandButton icon="detail-icon">
-
-						
+					
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)"
+						>
+						<f:setPropertyActionListener value="#{testoAtto.id}"
+								target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{testoAtto.nome}"
+								target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />				
+						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
+
 				</h:column>
 
 
@@ -112,16 +121,13 @@
 	<p:row>
 		<p:column colspan="3">
 			<p>
-				<b><u>Comitato Ristretto:</u>
-				</b>
+				<b><u>Comitato Ristretto:</u> </b>
 			</p>
 			<p>
-				<b><u>Consultazioni:</u>
-				</b>
+				<b><u>Consultazioni:</u> </b>
 			</p>
 			<p>
-				<b><u>Pareri:</u>
-				</b>
+				<b><u>Pareri:</u> </b>
 			</p>
 		</p:column>
 	</p:row>

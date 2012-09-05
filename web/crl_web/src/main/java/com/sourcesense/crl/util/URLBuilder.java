@@ -11,6 +11,7 @@ public class URLBuilder {
 	
 	
 	public static final String ALFRESCO_TCKT_PARAM_NAME= "alf_ticket=";
+	public static final String ALFRESCO_DWNL_TCKT_PARAM_NAME= "ticket=";
 	
 	@Autowired
 	MessageSource messageSource;
@@ -20,8 +21,24 @@ public class URLBuilder {
 	AlfrescoSessionTicket alfrescoSessionTicket;
 
 	
-	public  String buildAlfrescoURL(String contextPropertyName,String pathPropertyName,String[] paramsValues){
+    public  String buildAlfrescoDownloadURL(String contextPropertyName,String fileName,String[] paramsValues){
 		
+		String url ="";
+		
+		url=messageSource.getMessage(contextPropertyName, null, Locale.ITALY)+
+				fileName;
+		
+		if(url.indexOf("?") == -1){
+			url+="?"+ALFRESCO_DWNL_TCKT_PARAM_NAME+alfrescoSessionTicket.getTicket();	
+		}else{
+		    	
+			url+="&"+ALFRESCO_DWNL_TCKT_PARAM_NAME+alfrescoSessionTicket.getTicket();
+		}
+		
+		return url;
+	}
+	
+	public  String buildAlfrescoURL(String contextPropertyName,String pathPropertyName,String[] paramsValues){
 		
 		String url ="";
 		
@@ -34,9 +51,6 @@ public class URLBuilder {
 		    	
 			url+="&"+ALFRESCO_TCKT_PARAM_NAME+alfrescoSessionTicket.getTicket();
 		}
-		
-	    
-		
 		
 		return url;
 	}
