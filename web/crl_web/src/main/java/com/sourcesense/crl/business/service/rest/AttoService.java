@@ -19,8 +19,8 @@ import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.CommissioneReferente;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -106,10 +106,11 @@ public class AttoService {
 		}
 		String responseMsg = response.getEntity(String.class);
 
-		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE,
-				true);
-		objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS,
-				false);
+		
+		//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE,
+		//		true);
+		//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS,
+		//		false);
 		try {
 			atto = objectMapper.readValue(responseMsg, Atto.class);
 
@@ -181,10 +182,10 @@ public class AttoService {
 		return allegato;
 	}
 
-	public AttoRecord uploadTestoAtto(String url, Atto atto,
+	public TestoAtto uploadTestoAtto(String url, Atto atto,
 			InputStream stream, String nomeFile, String tipologia) {
 
-		AttoRecord attoRecord = null;
+		TestoAtto attoRecord = null;
 
 		try {
 
@@ -208,7 +209,7 @@ public class AttoService {
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(
 					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			attoRecord = objectMapper.readValue(responseMsg, AttoRecord.class);
+			attoRecord = objectMapper.readValue(responseMsg, TestoAtto.class);
 
 		} catch (JsonMappingException e) {
 
@@ -226,86 +227,7 @@ public class AttoService {
 		return attoRecord;
 	}
 
-	public List<AttoRecord> retrieveTestiAtto(String url) {
-		List<AttoRecord> listTestiAtto = null;
-
-		try {
-			WebResource webResource = client.resource(url);
-
-			ClientResponse response = webResource.accept(
-					MediaType.APPLICATION_JSON).get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
-			}
-
-			String responseMsg = response.getEntity(String.class);
-			
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listTestiAtto = objectMapper.readValue(responseMsg.trim(),
-					new TypeReference<List<AttoRecord>>() {
-					});
-
-		} catch (JsonMappingException e) {
-
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
-
-		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
-
-		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
-		}
-		return listTestiAtto;
-
-	}
-
-	public List<Allegato> retrieveAllegati(String url) {
-		List<Allegato> listAllegati = null;
-
-		try {
-			WebResource webResource = client.resource(url);
-
-			ClientResponse response = webResource.accept(
-					MediaType.APPLICATION_JSON).get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
-			}
-
-			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-
-			listAllegati = objectMapper.readValue(responseMsg,
-					new TypeReference<List<Allegato>>() {
-					});
-
-		} catch (JsonMappingException e) {
-
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
-
-		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
-
-		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
-		}
-		return listAllegati;
-
-	}
-
+	
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti = null;
 
@@ -325,8 +247,8 @@ public class AttoService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			listAtti = objectMapper.readValue(responseMsg,
 					new TypeReference<List<Atto>>() {
 					});

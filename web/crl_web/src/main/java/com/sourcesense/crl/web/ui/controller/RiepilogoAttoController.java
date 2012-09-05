@@ -55,7 +55,7 @@ public class RiepilogoAttoController {
 		if(!attoBean.getAtto().getCommissioni().isEmpty()) {
 			commissioneSelected = attoBean.getAtto().getCommissioni().get(0);
 		}
-		// System.out.println("Nome == " + commissioneSelected.getNome());
+		
 
 	}
 

@@ -19,7 +19,6 @@ import org.primefaces.event.FileUploadEvent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoConsiliare;
@@ -28,6 +27,7 @@ import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.OrganismoStatutarioServiceManager;
@@ -77,7 +77,7 @@ public class PresentazioneAssegnazioneAttoController {
 	
 	private String nomeFirmatario;
 
-	private List<AttoRecord> testiAttoList = new ArrayList<AttoRecord>();
+	private List<TestoAtto> testiAttoList = new ArrayList<TestoAtto>();
 	private String gruppoConsiliare;
 	private List<GruppoConsiliare> gruppiConsiliari = new ArrayList<GruppoConsiliare>();
 
@@ -263,7 +263,7 @@ public class PresentazioneAssegnazioneAttoController {
 		} else {
 
 			// TODO Alfresco upload
-			AttoRecord testoAttoRet = null;
+			TestoAtto testoAttoRet = null;
 
 			try {
 				testoAttoRet = attoServiceManager.uploadTestoAttoPresentazioneAssegnazione(
@@ -288,21 +288,21 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private boolean checkTestoAtto(String fileName) {
 
-		for (AttoRecord element : testiAttoList) {
+		/*for (AttoRecord element : testiAttoList) {
 
 			if (element.getDescrizione().equals(fileName)) {
 
 				return false;
 			}
 
-		}
+		}*/
 
 		return true;
 	}
 
 	public void removeTestoAtto() {
 
-		for (AttoRecord element : testiAttoList) {
+		for (TestoAtto element : testiAttoList) {
 
 			if (element.getId().equals(testoAttoToDelete)) {
 				// TODO Alfresco delete
@@ -1215,11 +1215,11 @@ public class PresentazioneAssegnazioneAttoController {
 		this.linksList = linksList;
 	}
 
-	public List<AttoRecord> getTestiAttoList() {
+	public List<TestoAtto> getTestiAttoList() {
 		return testiAttoList;
 	}
 
-	public void setTestiAttoList(List<AttoRecord> testiAttoList) {
+	public void setTestiAttoList(List<TestoAtto> testiAttoList) {
 		this.testiAttoList = testiAttoList;
 	}
 

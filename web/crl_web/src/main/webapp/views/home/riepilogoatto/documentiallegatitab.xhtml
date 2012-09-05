@@ -25,9 +25,8 @@
 
 				<h:column>
 					<f:facet name="header">Formato</f:facet>
-					<h:outputText
-						value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" />
-
+					<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
+                    <h:outputText value="#{testoAtto.mimetype}" />
 				</h:column>
 
 				<h:column>

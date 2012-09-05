@@ -10,6 +10,7 @@
  */
 package com.sourcesense.crl.web.ui.controller;
 
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
@@ -83,6 +84,9 @@ public class SearchAttoController {
 
 	@ManagedProperty(value = "#{organismoStatutarioServiceManager}")
 	private OrganismoStatutarioServiceManager organismoStatutarioServiceManager;
+	
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
 
 	private LazyDataModel<Atto> lazyAttoModel;
 
@@ -278,10 +282,10 @@ public class SearchAttoController {
 
 		// TODO riempire liste testi
 		attoBean.getAtto().setTestiAtto(
-				attoServiceManager.testiAttoByAtto(attoBean.getAtto()));
+				attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
 		// TODO riempire liste allegati
 		attoBean.getAtto().setAllegati(
-				attoServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+				attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
 		// TODO riempire liste organi interni
 
 		// TODO riempire liste altri organi
@@ -394,6 +398,17 @@ public class SearchAttoController {
 
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
+	}
+	
+	
+
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
 	public AttoSearch getAtto() {

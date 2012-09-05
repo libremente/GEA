@@ -128,7 +128,7 @@ public class Atto implements Cloneable
 	private List <Link> linksPresentazioneAssegnazione = new ArrayList<Link>();
 	private List <Link> linksNoteEsameCommissioni = new ArrayList<Link>();
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
-	private List <AttoRecord> testiAtto = new ArrayList<AttoRecord>();
+	private List <TestoAtto> testiAtto = new ArrayList<TestoAtto>();
 	private List <Allegato> testiAttoVotatoEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> testiClausola = new ArrayList<Allegato>();
@@ -801,11 +801,11 @@ public class Atto implements Cloneable
 		this.organismiStatutari = organismiStatutari;
 	}
 
-	public List<AttoRecord> getTestiAtto() {
+	public List<TestoAtto> getTestiAtto() {
 		return testiAtto;
 	}
 
-	public void setTestiAtto(List<AttoRecord> testiAtto) {
+	public void setTestiAtto(List<TestoAtto> testiAtto) {
 		this.testiAtto = testiAtto;
 	}
 

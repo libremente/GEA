@@ -19,7 +19,6 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.MembroComitatoRistretto;

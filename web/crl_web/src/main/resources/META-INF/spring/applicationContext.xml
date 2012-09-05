@@ -44,7 +44,8 @@
 		id="client">
 	</bean>
 
-	<bean class="org.codehaus.jackson.map.ObjectMapper" id="objectMapper">
+	<bean class="org.codehaus.jackson.map.ObjectMapper" id="objectMapper" scope="request" >
+	<aop:scoped-proxy />
 	</bean>
 
 

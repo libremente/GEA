@@ -12,9 +12,9 @@ package com.sourcesense.crl.business.service;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoRecord;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoService;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.URLBuilder;
@@ -71,7 +71,7 @@ public class AttoServiceManager implements ServiceManager {
 	
 	
 	
-	public AttoRecord uploadTestoAttoPresentazioneAssegnazione(Atto atto, InputStream stream, String nomeFile) {
+	public TestoAtto uploadTestoAttoPresentazioneAssegnazione(Atto atto, InputStream stream, String nomeFile) {
 
 		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.TESTO_ATTO_PRESENTAZIONE_ASSEGNAZIONE);
@@ -131,23 +131,6 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, CRLMessage.ALLEGATO_NOTE_ALLEGATI_ESAME_AULA);
 	}	
 	
-	
-	
-	
-	public List <AttoRecord> testiAttoByAtto(Atto atto) {
-
-		return attoService.retrieveTestiAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_list_testi_atto", new String[] { atto.getId() }));
-	}
-
-	public List <Allegato> allAllegatiAttoByAtto(Atto atto) {
-
-		return attoService.retrieveAllegati(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_list_allegati_atto", new String[] { atto.getId() ,""}));
-	}
-
-
-
 
 	@Override
 	public Atto persist(Object object) {

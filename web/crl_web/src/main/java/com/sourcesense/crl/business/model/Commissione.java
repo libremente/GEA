@@ -21,6 +21,8 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class Commissione implements Cloneable {
+	
+	private String commissione;
 	private String descrizione;
 	private String nome;
 	private String ruolo;
@@ -54,6 +56,16 @@ public class Commissione implements Cloneable {
 		}
 	}
 	
+
+	
+	
+	public String getCommissione() {
+		return commissione;
+	}
+
+	public void setCommissione(String commissione) {
+		this.commissione = commissione;
+	}
 
 	public String getDescrizione() {
 		return descrizione;
