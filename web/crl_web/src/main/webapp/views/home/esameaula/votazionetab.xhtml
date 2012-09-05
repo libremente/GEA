@@ -81,24 +81,7 @@
 				collapsed="false" toggleable="true" toggleSpeed="500">
 				<p:panelGrid styleClass="infoTable" id="esameinassemblea">
 					<p:row>
-						<p:column>
-					Esito votazione:</p:column>
-						<p:column>
-							<p:selectOneMenu id="esitoVotazione"
-								value="#{esameAulaController.esitoVotazione}">
-								<f:selectItem itemLabel="Scegli votazione" itemValue="" />
-								<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
-								<f:selectItem itemLabel="Approvato con passaggio all'esame"
-									itemValue="Approvato con passaggio all'esame" />
-								<f:selectItem itemLabel="Respinto dall'aula"
-									itemValue="Respinto dall'aula" />
-								<p:ajax event="change"
-									listener="#{esameAulaController.updateVotazioneHandler}" />
-							</p:selectOneMenu>
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
+					<p:column>
 
 					Tipologia votazione: 
 
@@ -117,6 +100,26 @@
 									listener="#{esameAulaController.updateVotazioneHandler}" />
 							</p:selectOneMenu>
 						</p:column>
+					
+					</p:row>
+					<p:row>
+						<p:column>
+					Esito votazione:</p:column>
+						<p:column>
+							<p:selectOneMenu id="esitoVotazione"
+								value="#{esameAulaController.esitoVotazione}">
+								<f:selectItem itemLabel="Scegli votazione" itemValue="" />
+								<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
+								<f:selectItem itemLabel="Approvato con passaggio all'esame"
+									itemValue="Approvato con passaggio all'esame" />
+								<f:selectItem itemLabel="Respinto dall'aula"
+									itemValue="Respinto dall'aula" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:selectOneMenu>
+						</p:column>
+					
+						
 					</p:row>
 
 					<p:row>

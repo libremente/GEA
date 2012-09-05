@@ -652,8 +652,8 @@ public class EsameCommissioniController {
 
 			if (element.getAtto().getId().equals(abbinamentoToDelete)) {
 
-//				abbinamentiList.remove(element);
-//				updateAbbinamentiHandler();
+				abbinamentiList.remove(element);
+				updateAbbinamentiHandler();
 				element.setAbbinato(false);
 				break;
 			}
