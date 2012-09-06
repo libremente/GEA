@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,13 +17,15 @@ public class User {
 
 	private String username ;
 	private String password ;
-	
-	private List <GruppoUtente> gruppi;
-	
+
+	private List <GruppoUtente> gruppi = new ArrayList<GruppoUtente>();
+
+	private List <Seduta> sedute = new ArrayList<Seduta>();
+
 	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+		return Pojomatic.toString(this);
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -41,9 +44,17 @@ public class User {
 	public void setGruppi(List<GruppoUtente> gruppi) {
 		this.gruppi = gruppi;
 	}
-	
-	
-	
-	
-	
+
+	public List <Seduta> getSedute() {
+		return sedute;
+	}
+
+	public void setSedute(List <Seduta> sedute) {
+		this.sedute = sedute;
+	}
+
+
+
+
+
 }

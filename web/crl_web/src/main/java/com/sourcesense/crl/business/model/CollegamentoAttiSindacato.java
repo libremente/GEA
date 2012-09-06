@@ -1,5 +1,8 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -16,6 +19,9 @@ public class CollegamentoAttiSindacato implements Cloneable{
 	private String tipoAtto;
 	private String numeroAtto;
 	private String link;
+	private String oggettoAtto;
+	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
+	
 	
 	public Object clone() {
 		try {
@@ -60,6 +66,22 @@ public class CollegamentoAttiSindacato implements Cloneable{
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public String getOggettoAtto() {
+		return oggettoAtto;
+	}
+
+	public void setOggettoAtto(String oggettoAtto) {
+		this.oggettoAtto = oggettoAtto;
+	}
+
+	public List<Firmatario> getFirmatari() {
+		return firmatari;
+	}
+
+	public void setFirmatari(List<Firmatario> firmatari) {
+		this.firmatari = firmatari;
 	}
 	
 	

@@ -5,6 +5,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
 import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 import com.sourcesense.crl.business.service.AttoServiceManager;
@@ -31,7 +32,7 @@ public class LoginController {
 		User sessionUser = userServiceManager.authenticate(user);
 
 		if (sessionUser != null) {
-
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = (UserBean) context
 					.getApplication()

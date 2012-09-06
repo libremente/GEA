@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
 import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 import com.sourcesense.crl.business.service.rest.UserService;
@@ -20,31 +21,36 @@ public class UserServiceManager implements ServiceManager {
 
 	@Autowired
 	private  URLBuilder urlBuilder;
-	
+
 	@Autowired
 	private UserService userService;
-	
-	
-	
+
+
+
 	public User authenticate(User user) {
-		
+
 		urlBuilder.setAlfrescoSessionTicket(userService.getAuthenticationToken(urlBuilder.buildURL("alfresco_context_url","alfresco_authentication"),user));
-		
+
 		User sessionUser = userService.completeAuthentication(urlBuilder.buildAlfrescoURL("alfresco_context_url","alf_gruppi_utente",null),user);
-		
-		
+
+		// MOCK
+		GruppoUtente g = new GruppoUtente();
+		g.setNome("commissione");
+		sessionUser.getGruppi().add(g);
+
+
 		if(urlBuilder.getAlfrescoSessionTicket()!=null){
 			return sessionUser;
 		}else{
 			return null;
 		}
-		
+
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	@Override
 	public User persist(Object object) {
 		// TODO Auto-generated method stub

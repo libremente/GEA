@@ -11,7 +11,7 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("link")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Link {
+public class Link implements Cloneable{
 	
 	private String descrizione;
 	private String indirizzo;
@@ -20,6 +20,15 @@ public class Link {
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	  }
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public String getDescrizione() {
 		return descrizione;

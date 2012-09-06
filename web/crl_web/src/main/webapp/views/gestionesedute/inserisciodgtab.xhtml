@@ -6,18 +6,43 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
-<script> hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton') </script>
+<script>
+	hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')
+</script>
 
 <p:panelGrid styleClass="infoTable" id="inserisciODGGrid">
 	<p:row>
 		<p:column>
 
+			<!-- Messaggio azioni -->
+			<p:growl id="inserisciOdgMsg" showDetail="true" sticky="false" />
+
+			<!-- Confirm dialog -->
+			<p:confirmDialog id="confirmAttoTrattatoDialog"
+				message="Sei sicuro di voler eliminare l'atto trattato ?"
+				header="Cancellazione Atto Trattato" severity="alert"
+				widgetVar="attoTrattatoDialog">
+
+				<p:commandButton id="confirmAttoTrattato" value="Conferma"
+					oncomplete="attoTrattatoDialog.hide()"
+					action="#{gestioneSeduteController.removeAttoTrattato}"
+					update="listaAttiTrattati" />
+				<p:commandButton id="declineAttoTrattato" value="Annulla"
+					onclick="attoTrattatoDialog.hide()" type="button" />
+
+			</p:confirmDialog>
+
+
+			<!-- Pannello ricerca -->
 
 			<p:panelGrid
 				style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;"
-				id="globalPanel">
+				id="serchPanel">
+
 
 				<f:facet name="header">
 					<p:row>
@@ -46,18 +71,32 @@
 									</p:column>
 
 									<p:column style="width: 20%;">
-										<p:selectOneMenu id="tipoatto" value="#{searchBean.tipoatto}" />
+										<p:selectOneMenu id="tipoatto"
+											value="#{searchAttoController.tipoatto}">
+											<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
+											<f:selectItems value="#{searchAttoController.tipiAtto}" />
+										</p:selectOneMenu>
 									</p:column>
 
 									<p:column style="width: 20%;">
 										<h:outputLabel for="legislatura" value="Legislatura: " />
+									</p:column>
+
+									<p:column style="width: 20%;">
 										<p:selectOneMenu id="legislatura"
-											value="#{searchBean.legislatura}" />
+											value="#{searchAttoController.legislatura}">
+											<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
+											<f:selectItems value="#{searchAttoController.legislature}" />
+										</p:selectOneMenu>
 									</p:column>
 
 									<p:column style="width: 20%;">
 										<h:outputLabel for="stato" value="Stato: " />
-										<p:selectOneMenu id="stato" />
+										<p:selectOneMenu id="stato"
+											value="#{searchAttoController.stato}">
+											<f:selectItem itemLabel="Scegli Stato" itemValue="" />
+											<f:selectItems value="#{searchAttoController.stati}" />
+										</p:selectOneMenu>
 									</p:column>
 								</p:row>
 
@@ -67,7 +106,8 @@
 									</p:column>
 
 									<p:column style="width: 20%;">
-										<p:inputText id="numeroatto"></p:inputText>
+										<p:inputText id="numeroatto"
+											value="#{searchAttoController.numeroAtto}"></p:inputText>
 									</p:column>
 
 									<p:column style="width: 20%;">
@@ -75,11 +115,13 @@
 									</p:column>
 									<p:column style="width: 20%;">
 										<h:outputLabel for="datainiziativa_da" value="da: " />
-										<p:calendar size="10" locale="it" id="datainiziativa_da" />
+										<p:calendar size="10" locale="it" id="datainiziativa_da"
+											value="#{searchAttoController.dataIniziativaDa}" />
 									</p:column>
 									<p:column style="width: 20%;">
 										<h:outputLabel for="datainiziativa_a" value="a: " />
-										<p:calendar size="10" locale="it" id="datainiziativa_a" />
+										<p:calendar size="10" locale="it" id="datainiziativa_a"
+											value="#{searchAttoController.dataIniziativaA}" />
 									</p:column>
 								</p:row>
 
@@ -91,7 +133,7 @@
 
 									<p:column>
 										<p:inputText id="numeroprotocollo"
-											value="#{searchBean.numeroprotocollo}"></p:inputText>
+											value="#{searchAttoController.numeroprotocollo}"></p:inputText>
 									</p:column>
 
 									<p:column>
@@ -99,7 +141,11 @@
 									</p:column>
 
 									<p:column>
-										<p:selectOneMenu id="tipoiniziativa" />
+										<p:selectOneMenu id="tipoiniziativa"
+											value="#{searchAttoController.tipoiniziativa}">
+											<f:selectItem itemLabel="Scegli Tipo Iniziativa" itemValue="" />
+											<f:selectItems value="#{searchAttoController.tipiIniziative}" />
+										</p:selectOneMenu>
 									</p:column>
 								</p:row>
 
@@ -109,7 +155,8 @@
 									</p:column>
 
 									<p:column>
-										<p:inputText id="numerodcr"></p:inputText>
+										<p:inputText id="numerodcr"
+											value="#{searchAttoController.numerodcr}"></p:inputText>
 									</p:column>
 
 									<p:column>
@@ -117,17 +164,23 @@
 									</p:column>
 
 									<p:column>
-										<p:selectOneMenu id="primofirmatario" />
+										<p:selectOneMenu id="primofirmatario"
+											value="#{searchAttoController.primofirmatario}">
+											<f:selectItem itemLabel="Scegli Primo Firmatario"
+												itemValue="" />
+											<f:selectItems value="#{searchAttoController.firmatari}" />
+										</p:selectOneMenu>
 									</p:column>
 								</p:row>
 
 								<p:row>
 									<p:column>
-										<h:outputLabel for="oggetto" />
+										<h:outputLabel for="oggetto" value="Oggetto: " />
 									</p:column>
 
 									<p:column>
-										<p:inputText id="oggetto"></p:inputText>
+										<p:inputText id="oggetto"
+											value="#{searchAttoController.oggetto}"></p:inputText>
 									</p:column>
 
 									<p:column>
@@ -135,13 +188,18 @@
 									</p:column>
 
 									<p:column>
-										<p:selectOneMenu id="firmatario" />
+										<p:selectOneMenu id="firmatario"
+											value="#{searchAttoController.firmatario}">
+											<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+											<f:selectItems value="#{searchAttoController.firmatari}" />
+										</p:selectOneMenu>
 									</p:column>
 								</p:row>
 
 							</p:panelGrid>
 
 						</div>
+
 
 						<div id="ricercaAvanzataDiv">
 
@@ -157,7 +215,10 @@
 									</p:column>
 									<p:column style="width: 20%;">
 
-										<p:selectOneMenu id="tipoChiusura" />
+										<p:selectOneMenu id="tipoChiusura">
+											<f:selectItem itemLabel="Scegli Tipo Chiusura" itemValue="" />
+											<f:selectItems value="#{searchAttoController.tipiChiusura}" />
+										</p:selectOneMenu>
 
 									</p:column>
 									<p:column style="width: 20%;">
@@ -187,7 +248,13 @@
 									</p:column>
 									<p:column>
 
-										<p:selectOneMenu id="esitoVotoComRef" />
+										<p:selectOneMenu id="esitoVotoComRef">
+											<f:selectItem
+												itemLabel="Scegli Esito Voto Commissione Referente"
+												itemValue="" />
+											<f:selectItems
+												value="#{searchAttoController.esitiVotoCommissioneReferente}" />
+										</p:selectOneMenu>
 
 									</p:column>
 									<p:column>
@@ -216,7 +283,10 @@
 									</p:column>
 									<p:column>
 
-										<p:selectOneMenu id="esitoVotoAula" />
+										<p:selectOneMenu id="esitoVotoAula">
+											<f:selectItem itemLabel="Scegli Esito Voto Aula" itemValue="" />
+											<f:selectItems value="#{searchAttoController.esitiVotoAula}" />
+										</p:selectOneMenu>
 
 									</p:column>
 									<p:column>
@@ -246,7 +316,12 @@
 									</p:column>
 									<p:column>
 
-										<p:selectOneMenu id="commissioneReferente" />
+										<p:selectOneMenu id="commissioneReferente">
+											<f:selectItem itemLabel="Scegli Commissione Referente"
+												itemValue="" />
+											<f:selectItems
+												value="#{searchAttoController.commissioniReferenti}" />
+										</p:selectOneMenu>
 
 									</p:column>
 									<p:column>
@@ -276,7 +351,12 @@
 									</p:column>
 									<p:column>
 
-										<p:selectOneMenu id="commissioneConsultiva" />
+										<p:selectOneMenu id="commissioneConsultiva">
+											<f:selectItem itemLabel="Scegli Commissione Consultiva"
+												itemValue="" />
+											<f:selectItems
+												value="#{searchAttoController.commissioniConsultive}" />
+										</p:selectOneMenu>
 
 									</p:column>
 									<p:column>
@@ -286,7 +366,10 @@
 									</p:column>
 									<p:column>
 
-										<p:inputText id="relatore" />
+										<p:selectOneMenu id="relatore">
+											<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+											<f:selectItems value="#{searchAttoController.relatori}" />
+										</p:selectOneMenu>
 
 									</p:column>
 								</p:row>
@@ -307,13 +390,18 @@
 									</p:column>
 									<p:column>
 
-										<h:outputLabel for="organismoStatuario"
-											value="Organismo Statuario: " />
+										<h:outputLabel for="organismoStatutario"
+											value="Organismo Statutario: " />
 
 									</p:column>
 									<p:column>
 
-										<p:inputText id="organismoStatuario" />
+										<p:selectOneMenu id="organismoStatutario">
+											<f:selectItem itemLabel="Scegli Organismo Statutario"
+												itemValue="" />
+											<f:selectItems
+												value="#{searchAttoController.organismiStatutari}" />
+										</p:selectOneMenu>
 
 									</p:column>
 								</p:row>
@@ -411,7 +499,10 @@
 
 						</div>
 
-
+						<script type="javascript">
+                    //hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
+                    $("#ricercaAvanzataDiv").hide();
+                </script>
 						<p:panelGrid>
 
 
@@ -432,7 +523,7 @@
 
 									<p:commandButton value="Cerca" update="listaAtti"
 										id="btncercaatto_cerca"
-										actionListener="#{searchBean.searchAtti()}" />
+										actionListener="#{searchAttoController.searchAtti()}" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
 										<p:dataExporter type="xls" target="listaAtti"
@@ -444,7 +535,13 @@
 
 
 
-
+									<!-- 
+					 
+             <p:commandButton value="Ricerca Avanzata" update="listaAtti" id="btncercaatto_ricavnz"  actionListener="" />  
+              
+              <p:commandButton value="Reimposta" update="searchPanel" id="btncercaatto_reset" actionListener="" />
+              
+-->
 
 
 
@@ -466,42 +563,52 @@
 							</p:row>
 
 
-
+							<!-- <h:outputText style="color: #BBBB">Qui Maschera di ricerca</h:outputText> -->
 
 						</p:panelGrid>
 					</p:column>
 				</p:row>
-				<p:row>
-					<p:column>
-						<p:dataTable id="listaAtti" var="atto"
-							value="#{searchBean.lazyAttoModel}" rows="10" paginator="true"
-							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
-							paginatorAlwaysVisible="false" paginatorPosition="bottom">
-							<p:column>
-								<f:facet name="header">Tipo Atto</f:facet>
-								<h:outputText value="#{atto.tipo}" />
-							</p:column>
-
-							<p:column headerText="N.Atto">
-								<h:outputLink value="#{request.contextPath}/atto">
-									<h:outputText value="#{atto.numeroAtto}" />
-									<f:param name="numeroatto" value="#{atto.numeroAtto}" />
-								</h:outputLink>
-							</p:column>
-							<p:column headerText="N. Protocollo">
-								<h:outputText value="#{atto.oggetto}" />
-							</p:column>
-							<p:column headerText=" Oggetto">
-								<h:outputText value="#{atto.primoFirmatario}" />
-							</p:column>
-							<p:column headerText="Azioni">
-								<h:outputText value="" />
-							</p:column>
-						</p:dataTable>
-
-					</p:column>
-				</p:row>
 			</p:panelGrid>
+
+			<!-- Pannello ricerca end -->
+
+
+			<h3>Risultati ricerca</h3>
+
+			<p:dataTable id="listaAtti" var="atto"
+				value="#{searchAttoController.lazyAttoModel}" rows="10"
+				paginator="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<p:column>
+					<f:facet name="header">Tipo</f:facet>
+					<h:outputText value="#{atto.tipo}" />
+				</p:column>
+
+				<p:column headerText="N.Atto">
+					<c:set value="#{atto.id}" var="idAttoParam" />
+					<p:commandLink
+						action="#{searchAttoController.attoDetail(idAttoParam)}"
+						update="listaAtti">
+						<h:outputText value="#{atto.numeroAtto}" />
+						<!-- <f:param name="numeroatto" value="#{atto.numeroAtto}" /> -->
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="N° Protocollo">
+					<h:outputText value="#{atto.numeroProtocollo}" />
+				</p:column>
+				<p:column headerText="Oggetto">
+					<h:outputText value="#{atto.oggetto}" />
+				</p:column>
+				<p:column headerText="Azioni">
+					<c:set value="#{atto.id}" var="idAttoParam" />
+					<p:commandButton value="Aggiungi a Trattati" id="addAttoTrattato"
+						action="#{gestioneSeduteController.addAttoTrattato(idAttoParam)}"
+						update=":gestioneSeduteForm:gestioneSedute:listaAttiTrattati, :gestioneSeduteForm:gestioneSedute:inserisciOdgMsg"
+						icon="new-icon" />	
+					&nbsp; &nbsp; &nbsp;
+				</p:column>
+			</p:dataTable>
 
 
 
@@ -510,8 +617,18 @@
 					<p:column>
 
 						<h:outputLabel for="selezioneSeduta" value="Selezione seduta:  " />
+						
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<p:selectOneMenu id="selezioneSeduta" />
+					
+						<p:selectOneMenu id="selezioneSeduta"
+							value="#{gestioneSeduteController.dataSedutaSelected}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+							<f:selectItems value="#{gestioneSeduteController.dateSedute}" />
+
+							<p:ajax event="change"
+								listener="#{gestioneSeduteController.showSedutaDetail}"
+								update="inserisciODGGrid" />
+						</p:selectOneMenu>
 					</p:column>
 					<p:column>
 						<h:commandLink value="Stampa ODG" id="stampaODG">
@@ -525,7 +642,10 @@
 						<table class="generalInfoTab" id="ordineDelGiorno"
 							style="width: 100%;" border="0">
 							<thead>
-								<th>Ordine del Giorno per la seduta del 07-03-2011</th>
+								<th>Ordine del Giorno per la seduta del <h:outputText
+										value="#{gestioneSeduteController.dataSedutaSelected}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText></th>
 
 							</thead>
 						</table>
@@ -536,195 +656,105 @@
 			</p:panelGrid>
 			<p:fieldset styleClass="fieldSetTab" legend="Atti trattati "
 				collapsed="false" toggleable="false">
-				<table class="generalInfoTab" id="attiTrattati" style="width: 100%;"
-					border="0">
-					<thead>
-						<th>N°</th>
-						<th>Tipo</th>
-						<th>Num. Atto</th>
-						<th>Oggetto dell'atto</th>
-						<th>Previsto</th>
-						<th>Discusso</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">1</td>
-							<td align="left">PDL</td>
+				<p:dataTable id="listaAttiTrattati"
+					value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato"
+					styleClass="generalInfoTab grey-text" editable="true">
 
-							<td align="left"><h:outputLink>521</h:outputLink></td>
-							<td align="left">Oggetto dell'atto 1</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
+					<p:column headerText="Tipo Atto" style="width:125px">
+							#{attoTrattato.atto.tipoAtto}
+    			</p:column>
 
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/uparrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/downarrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+					<p:column headerText="N.Atto" style="width:125px">
+					#{attoTrattato.atto.numeroAtto}
+				</p:column>
 
-						<tr>
-							<td align="left">2</td>
-							<td align="left">PSA</td>
+					<p:column headerText="Oggetto" style="width:125px">
+					#{attoTrattato.atto.oggetto}
+				</p:column>
 
-							<td align="left"><h:outputLink>529</h:outputLink></td>
-							<td align="left">Oggetto dell'atto 2</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
+					<p:column headerText="Previsto" style="width:125px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="si" rendered="#{attoTrattato.previsto}" />
+								<h:outputText value="no" rendered="#{!attoTrattato.previsto}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox value="#{attoTrattato.previsto}">
+									<p:ajax event="change"
+										listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
+								</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/uparrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/downarrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
-						<tr>
-							<td align="left">3</td>
-							<td align="left">REL</td>
+					<p:column headerText="Discusso" style="width:125px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="si" rendered="#{attoTrattato.discusso}" />
+								<h:outputText value="no" rendered="#{!attoTrattato.discusso}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox value="#{attoTrattato.discusso}">
+									<p:ajax event="change"
+										listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
+								</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
 
-							<td align="left"><h:outputLink>525</h:outputLink></td>
-							<td align="left">Oggetto dell'atto 3</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
+					<p:column headerText="Azioni" style="width:125px">
+						<p:commandButton oncomplete="attoTrattatoDialog.show()"
+							icon="delete-icon">
+							<f:setPropertyActionListener value="#{attoTrattato.atto.id}"
+								target="#{gestioneSeduteController.idAttoTrattatoToDelete}" />
+						</p:commandButton>
+						
+						&nbsp; &nbsp; &nbsp;
+						
+						<c:set value="#{attoTrattato.atto.id}" var="idAttoParam" />
+						<p:commandButton id="addConsultazioneAtto"
+							rendered="#{navigationBean.gestioneSeduteConsultazioniCommissione()}"
+							action="#{gestioneSeduteController.addConsultazioneAtto(idAttoParam)}"
+							update=":gestioneSeduteForm:gestioneSedute:listaConsultazioniAtti, :gestioneSeduteForm:gestioneSedute:inserisciOdgMsg"
+							icon="new-icon" />
+					</p:column>
 
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/uparrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/downarrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
-					</tbody>
-				</table>
+					<p:column headerText="Modifica" style="width:50px">
+						<p:rowEditor />
+					</p:column>
+
+				</p:dataTable>
+
 			</p:fieldset>
 		</p:column>
 	</p:row>
 	<p:row>
 		<p:column>
-			<p:fieldset styleClass="fieldSetTab"
-				legend="Consultazioni / Audizioni sugli atti " collapsed="false"
-				toggleable="false">
-				<table class="generalInfoTab" id="consultazioniAudizio"
-					style="width: 100%;" border="0">
-					<thead>
-						<th>N°</th>
-						<th>Tipo</th>
-						<th>Num. Atto</th>
-						<th>Soggetto consultato</th>
-						<th>Previsto</th>
-						<th>Discusso</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">1</td>
-							<td align="left">PDL</td>
 
-							<td align="left"><h:outputLink>521</h:outputLink></td>
-							<td align="left">Soggetto consultato 1</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
+			<c:if
+				test="#{navigationBean.gestioneSeduteConsultazioniCommissione()}">
+				<ui:include src="./inserisciodgcommissionetab.xhtml" />
+			</c:if>
 
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/uparrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/downarrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
+		</p:column>
+	</p:row>
+	
+	<p:row>
+		<p:column>
 
-						<tr>
-							<td align="left">2</td>
-							<td align="left">PSA</td>
-
-							<td align="left"><h:outputLink>529</h:outputLink></td>
-							<td align="left">Soggetto consultato 1</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/uparrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/downarrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
-
-					</tbody>
-				</table>
-			</p:fieldset>
+			<c:if
+				test="#{navigationBean.gestioneSeduteConsultazioniAula()}">
+				<ui:include src="./inserisciodgaulatab.xhtml" />
+			</c:if>
 
 		</p:column>
 	</p:row>
 
 	<p:row>
 		<p:column>
-			<p:fieldset styleClass="fieldSetTab"
-				legend="Consultazioni / Audizioni generali " collapsed="false"
-				toggleable="false">
-				<table class="generalInfoTab" id="consultazioniAudizioniGenerali"
-					style="width: 100%;" border="0">
-					<thead>
-						<th>N°</th>
-						<th>Soggetto partecipante</th>
-
-						<th>Previsto</th>
-						<th>Discusso</th>
-						<th>Opzioni</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td align="left">1</td>
-							<td align="left">Soggetto partecipante 1</td>
-							<td align="left"><p:selectBooleanCheckbox /></td>
-
-
-							<td align="left"><p:selectBooleanCheckbox /></td>
-							<td align="left"><h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/uparrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/downarrow.png" />
-								</h:commandLink> <h:commandLink>
-									<h:graphicImage alt="Elimina riga"
-										value="/resources/img/delete.png" />
-								</h:commandLink></td>
-						</tr>
-
-
-
-					</tbody>
-				</table>
-				<h:commandLink>
-					<h:graphicImage alt="Aggiungi allegato"
-						value="/resources/img/add.png" />
-				</h:commandLink>
-			</p:fieldset>
-
+			<p:commandButton value="Salva"
+				action="#{gestioneSeduteController.salvaInserisciOdg}"
+				update="inserisciOdgMsg" />
 		</p:column>
 	</p:row>
 </p:panelGrid>

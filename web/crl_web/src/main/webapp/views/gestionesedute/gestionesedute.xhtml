@@ -8,24 +8,33 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
-	<p:tabView id="gestioneSedute" dynamic="true" cache="true" effect="slide">
-	
-	<p:tab id="tab1" title="Inserisci Seduta">
-            
+<h:form id="gestioneSeduteForm" enctype="multipart/form-data">
+	<p:growl id="tabGestioneSeduteMsg" showDetail="true" sticky="false" />
 
-           <ui:include src="./inseriscisedutatab.xhtml" />
-			
+	<p:tabView id="gestioneSedute" dynamic="true" cache="true"
+		effect="slide">
+		<p:ajax event="tabChange"
+			listener="#{gestioneSeduteController.changeTabHandler}"
+			update=":gestioneSeduteForm:tabGestioneSeduteMsg" />
+		<p:ajax event="tabChange"
+			listener="#{gestioneSeduteController.updateSedutaInserisciOdg}"
+			update=":gestioneSeduteForm:gestioneSedute:inserisciODGGrid" />
+
+		<p:tab id="tab1" title="Inserisci Seduta">
+
+
+			<ui:include src="./inseriscisedutatab.xhtml" />
+
 
 		</p:tab>
-	
-	<p:tab id="tab2" title="Inserisci ODG">
-			
-			<ui:include src="./inserisciodgtab.xhtml" /> 
-			
+
+		<p:tab id="tab2" title="Inserisci ODG">
+
+			<ui:include src="./inserisciodgtab.xhtml" />
+
 		</p:tab>
 
- 			
+
 	</p:tabView>
 </h:form>
 </html>
