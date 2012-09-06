@@ -27,6 +27,7 @@ import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
@@ -232,13 +233,16 @@ public class PresentazioneAssegnazioneAttoController {
 	// Info Generali******************************************************
 	public void presaInCarico() {
 
-		// TODO Service logic
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
 		attoBean.getAtto().setDataPresaInCarico(atto.getDataPresaInCarico());
-
+		attoBean.getAtto().setStato(StatoAtto.PRESO_CARICO_SC);
+		// TODO Service logic
+		
+		
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
 

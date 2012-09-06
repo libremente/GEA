@@ -11,6 +11,33 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class StatoAtto {
+	
+	//USSC
+	public static final String PROTOCOLLATO="Protocollato";
+	public static final String PRESO_CARICO_SC="Preso in carico da S.C.";
+	public static final String VERIFICATA_AMMISSIBILITA="Verificata ammissibilità";
+	public static final String PROPOSTA_ASSEGNAZIONE="Proposta assegnazione";
+	
+	
+	//COMMISSIONI
+	public static final String ASSEGNATO_COMMISSIONE="Assegnato a Commissione";
+	public static final String PRESO_CARICO_COMMISSIONE_REFERENTE="Preso in carico da Commissione Referente";
+	public static final String PRESO_CARICO_COMMISSIONE_CONSULTIVA="Preso in carico da Commissione Consultiva";
+	public static final String PRESO_CARICO_COMMISSIONE_REDIGENTE="Preso in carico da Commissione Redigente";
+	public static final String NOMINATO_RELATORE="Nominato Relatore";
+	public static final String VOTATO_COMMISSIONE="Votato in Commissione";
+	public static final String TRASMESSO_COMMISSIONE="Trasmesso da Commissione";
+	public static final String LAVORI_COMITATO_RISTRETTO="Lavori Comitato Ristretto";
+	
+	
+	//AULA
+	public static final String TRASMESSO_AULA="Trasmesso ad Aula";
+	public static final String PRESO_CARICO_AULA="Preso in carico da Aula";
+	public static final String VOTATO_AULA="Votato in Aula";
+	public static final String PUBBLICATO="Pubblicato";
+	public static final String CHIUSO="Chiuso";
+	
+	
 	private String descrizione;
 
 	@Override public String toString() {

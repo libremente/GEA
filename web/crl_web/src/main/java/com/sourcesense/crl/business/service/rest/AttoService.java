@@ -207,8 +207,7 @@ public class AttoService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			attoRecord = objectMapper.readValue(responseMsg, TestoAtto.class);
 
 		} catch (JsonMappingException e) {
