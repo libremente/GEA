@@ -16,40 +16,41 @@ var dataIniziativaDa = atto.get("dataIniziativaDa");
 var dataIniziativaA = atto.get("dataIniziativaA");
 
 var luceneQuery = "";
+var tipoAttoString = ""+tipoAtto+"";
 
-if(checkIsNotNull(tipoAtto)){
+if(checkIsNotNull(tipoAttoString)){
 	var type = "crlatti:atto";
-	if(tipoAtto == "PDL") {
+	if(tipoAttoString == "PDL") {
 		type = "crlatti:attoPdl";	
 	}
-	if(tipoAtto == "INP") {
+	if(tipoAttoString == "INP") {
 		type = "crlatti:attoInp";	
 	}
-	if(tipoAtto == "PAR") {
+	if(tipoAttoString == "PAR") {
 		type = "crlatti:attoPar";	
 	}
-	if(tipoAtto == "PDA") {
+	if(tipoAttoString == "PDA") {
 		type = "crlatti:attoPda";	
 	}
-	if(tipoAtto == "PLP") {
+	if(tipoAttoString == "PLP") {
 		type = "crlatti:attoPlp";	
 	}
-	if(tipoAtto == "PRE") {
+	if(tipoAttoString == "PRE") {
 		type = "crlatti:attoPre";	
 	}
-	if(tipoAtto == "REF") {
+	if(tipoAttoString == "REF") {
 		type = "crlatti:attoRef";	
 	}
-	if(tipoAtto == "REL") {
+	if(tipoAttoString == "REL") {
 		type = "crlatti:attoRel";	
 	}
-	if(tipoAtto == "EAC") {
+	if(tipoAttoString == "EAC") {
 		type = "crlatti:attoEac";	
 	}
-	if(tipoAtto == "REF") {
+	if(tipoAttoString == "REF") {
 		type = "crlatti:attoRef";	
 	}
-	if(tipoAtto == "DOC") {
+	if(tipoAttoString == "DOC") {
 		type = "crlatti:attoDoc";	
 	}
 	
