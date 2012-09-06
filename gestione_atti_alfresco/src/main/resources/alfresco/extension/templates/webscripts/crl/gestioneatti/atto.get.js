@@ -35,8 +35,13 @@ if(checkIsNotNull(id)){
 	status.redirect = true;
 }
 
+//reperimento tipoAtto
+var typeQName = attoFolderNode.typeShort;
+var tipoAtto = typeQName.substring(12).toUpperCase();
+
 model.notePresentazioneAssegnazione = notePresentazioneAssegnazioneNode;
 model.links = links;
 model.pareri = pareri;
 model.commissioni = commissioni;
 model.atto = attoFolderNode;
+model.tipoAtto = tipoAtto;

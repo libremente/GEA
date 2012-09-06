@@ -1,8 +1,9 @@
 {
-   "Atto": 
+   "atto": 
    {
 	"id" : "${atto.nodeRef}",
 	"nome" : "${atto.name}",
+	"tipoAtto" : "${tipoAtto}",
 	"numeroAtto" : "<#if atto.properties["crlatti:numeroAtto"]?exists>${atto.properties["crlatti:numeroAtto"]}<#else></#if>",
 	"tipologia" : "<#if atto.properties["crlatti:tipologia"]?exists>${atto.properties["crlatti:tipologia"]}<#else></#if>",
 	"legislatura" : "<#if atto.properties["crlatti:legislatura"]?exists>${atto.properties["crlatti:legislatura"]}<#else></#if>",
