@@ -241,7 +241,7 @@
 				</property>
 			</properties>
 			<associations>
-				<child-association name="crlatti:attoAssociatoAbbinamento">
+				<association name="crlatti:attoAssociatoAbbinamento">
 				<title>Atto associato</title>
 				<source>
 					<mandatory>false</mandatory>
@@ -252,7 +252,7 @@
 					<mandatory>false</mandatory>
 					<many>false</many>
 				</target>
-				</child-association>
+				</association>
 			</associations>
 		</type>
 

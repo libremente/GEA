@@ -239,7 +239,7 @@
 			<show-property name="crlatti:tipoTestoAbbinamento" />
 			<show-property name="crlatti:dataAbbinamento" />
 			<show-property name="crlatti:dataDisabbinamento" />
-			<show-child-association name="crlatti:attoAssociatoAbbinamento" />
+			<show-association name="crlatti:attoAssociatoAbbinamento" />
 		</property-sheet>
 	</config>
 
