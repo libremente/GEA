@@ -217,11 +217,9 @@
 	<config evaluator="node-type" condition="crlatti:commissione">
 		<property-sheet>
 			<show-property name="crlatti:materiaCommissione"/>
-			<show-property name="crlatti:relatoriCommissione" />
 			<show-property name="crlatti:dataAssegnazioneCommissione" />
 			<show-property name="crlatti:dataPresaInCaricoCommissione" />
 			<show-property name="crlatti:dataNominaCommissione" />
-			<show-property name="crlatti:membriComitatoRistrettoCommissione" />
 			<show-property name="crlatti:dataAperturaLavoriComitatoCommissione" />
 			<show-property name="crlatti:dataChiusuraLavoriComitatoCommissione" />
 			<show-property name="crlatti:tipoVotazioneCommissione" />

@@ -203,17 +203,6 @@
 			</mandatory-aspects>
 		</type>
 		
-		<type name="crlatti:testoComitatoRistretto">
-			<title>Testo del comitato ristretto</title>
-			<parent>crlatti:testo</parent>
-			<properties>
-				<property name="crlatti:dataSedutaTestoCR">
-					<title>Data seduta</title>
-					<type>d:date</type>
-				</property>
-			</properties>
-		</type>
-		
 		<type name="crlatti:allegato">
 			<title>Allegato</title>
 			<parent>cm:content</parent>
@@ -221,6 +210,17 @@
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:pubblicabile</aspect>
 			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:testoComitatoRistretto">
+			<title>Testo del comitato ristretto</title>
+			<parent>crlatti:allegato</parent>
+			<properties>
+				<property name="crlatti:dataSedutaTestoCR">
+					<title>Data seduta</title>
+					<type>d:date</type>
+				</property>
+			</properties>
 		</type>
 
 		<type name="crlatti:abbinamento">
@@ -467,16 +467,6 @@
 					<title>Materia</title>
 					<type>d:text</type>
 				</property>
-<!-- 				<property name="crlatti:relatoriCommissione"> -->
-<!-- 					<title>Relatori</title> -->
-<!-- 					<type>d:text</type> -->
-<!-- 					<multiple>true</multiple> -->
-<!-- 					<index enabled="true"> -->
-<!-- 						<atomic>true</atomic> -->
-<!-- 						<stored>false</stored> -->
-<!-- 						<tokenised>false</tokenised> -->
-<!-- 					</index> -->
-<!-- 				</property> -->
 				<property name="crlatti:dataAssegnazioneCommissione">
 					<title>Data assegnazione</title>
 					<type>d:date</type>
@@ -488,16 +478,6 @@
 				<property name="crlatti:dataNominaCommissione">
 					<title>Data nomina</title>
 					<type>d:date</type>
-				</property>
-				<property name="crlatti:membriComitatoRistrettoCommissione">
-					<title>Membri comitato ristretto</title>
-					<type>d:text</type>
-					<multiple>true</multiple>
-					<index enabled="true">
-						<atomic>true</atomic>
-						<stored>false</stored>
-						<tokenised>false</tokenised>
-					</index>
 				</property>
 				<property name="crlatti:dataAperturaLavoriComitatoCommissione">
 					<title>Data apertura lavori comitato</title>

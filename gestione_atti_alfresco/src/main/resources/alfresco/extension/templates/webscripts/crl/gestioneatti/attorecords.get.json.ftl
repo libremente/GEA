@@ -6,7 +6,9 @@
 	   {
 	    "id" : "${record.nodeRef}",
 		"nome" : "${record.name}",
-		"mimetype" : "${record.mimetype}"
+		"mimetype" : "${record.mimetype}",
+		"tipologia" : "<#if record.properties["crlatti:tipologia"]?exists>${record.properties["crlatti:tipologia"]}<#else></#if>",
+		"pubblico" : "<#if record.properties["crlatti:pubblico"]?exists>${record.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>"
 	  }
    }<#if record_has_next>,</#if>
    </#list>

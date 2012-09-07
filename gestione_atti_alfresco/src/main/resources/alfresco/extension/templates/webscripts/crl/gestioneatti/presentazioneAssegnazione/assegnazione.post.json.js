@@ -29,12 +29,23 @@ if(checkIsNotNull(id)){
 		if(commissioneEsistenteResults!=null && commissioneEsistenteResults.length>0){
 			commissioneNode = commissioneEsistenteResults[0];
 		} else {
-			commissioneNode = commissioniFolderNode.createNode(descrizione,"crlatti:commissione");
 			
-			// copia la cartella relatori dagli space template
-			var relatoriSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:RelatoriCommissione\"";
-			var relatoriSpaceTemplateNode = search.luceneSearch(relatoriSpaceTemplateQuery)[0];
-			relatoriSpaceTemplateNode.copy(commissioneNode);
+
+			//commissioneNode = commissioniFolderNode.createNode(descrizione,"crlatti:commissione");
+			
+			// copia la cartella commissione dagli space template e la rinomina
+			
+			var commissioneSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Commissione\"";
+			var commissioneSpaceTemplateNode = search.luceneSearch(commissioneSpaceTemplateQuery)[0];
+			
+			logger.log(commissioneSpaceTemplateNode);
+			
+			// deep copy con secondo argomento = true
+			commissioneSpaceTemplateNode.copy(commissioniFolderNode, true);
+			
+			var commissioneXPathQuery = "*[@cm:name='Commissione']";
+			commissioneNode = commissioniFolderNode.childrenByXPath(commissioneXPathQuery)[0];
+			commissioneNode.properties["cm:name"] = descrizione;
 		}
 		
 		var dataPropostaParsed = null;

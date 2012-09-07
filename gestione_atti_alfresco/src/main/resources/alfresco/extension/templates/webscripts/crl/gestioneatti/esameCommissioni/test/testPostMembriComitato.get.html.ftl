@@ -1,7 +1,7 @@
 <html>
 <head>
 <script type="text/javascript">
-	function creaRelatore(atto) {
+	function creaMembroComitato(atto) {
 		var xmlhttp;
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp = new XMLHttpRequest();
@@ -13,39 +13,43 @@
 				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/esamecommissioni/relatori?alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/esamecommissioni/membricomitato?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(atto);
 	}
 	
-	function creaRelatoreCommissione(){
+	function creaMembroComitatoCommissione(){
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.value;
 		var commissione = currentForm.commissione.options[currentForm.commissione.selectedIndex].value;
-		var relatore1 = currentForm.relatore1.options[currentForm.relatore1.selectedIndex].value;
+		var membro1 = currentForm.membro1.options[currentForm.membro1.selectedIndex].value;
 		var dataNomina1 = currentForm.dataNomina1.value;
 		var dataUscita1 = currentForm.dataUscita1.value;
-		var relatore2 = currentForm.relatore2.options[currentForm.relatore2.selectedIndex].value;
+		var coordinatore1 = currentForm.coordinatore1.options[currentForm.coordinatore1.selectedIndex].value;
+		var membro2 = currentForm.membro2.options[currentForm.membro2.selectedIndex].value;
 		var dataNomina2 = currentForm.dataNomina2.value;
 		var dataUscita2 = currentForm.dataUscita2.value;
+		var coordinatore2 = currentForm.coordinatore2.options[currentForm.coordinatore2.selectedIndex].value;
 		
 		var attoCustom = {
 		"atto": {
 			"id": ""+idAtto+"",
 			"commissione": ""+commissione+"",
-			"relatori" : [
-				{"relatore":
+			"membriComitatoRistretto" : [
+				{"membro":
 				 	{
-						"descrizione" : ""+relatore1+"",
+						"descrizione" : ""+membro1+"",
 						"dataNomina" : ""+dataNomina1+"",
-						"dataUscita" : ""+dataUscita1+""
+						"dataUscita" : ""+dataUscita1+"",
+						"coordinatore" : ""+coordinatore1+""
 					}
 				},
-				{"relatore":
+				{"membro":
 				 	{
-						"descrizione" : ""+relatore2+"",
+						"descrizione" : ""+membro2+"",
 						"dataNomina" : ""+dataNomina2+"",
-						"dataUscita" : ""+dataUscita2+""
+						"dataUscita" : ""+dataUscita2+"",
+						"coordinatore" : ""+coordinatore2+""
 					}
 				}
 			]
@@ -54,7 +58,7 @@
 		
 	
 		
-		creaRelatore(JSON.stringify(attoCustom));
+		creaMembroComitato(JSON.stringify(attoCustom));
 
 	}
 	
@@ -62,10 +66,10 @@
 </head>
 <body>
 	<div>
-		<h1>Test creazione modifica relatore in commissione atto</h1>
+		<h1>Test creazione modifica membri comitato in commissione atto</h1>
 	</div>
 	
-	<form action="javascript:creaRelatoreCommissione()">
+	<form action="javascript:creaMembroComitatoCommissione()">
 	<table>
 		<tr>
 			<td>Atto:</td>
@@ -84,11 +88,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Relatore 1:</td>
+			<td>Membro 1:</td>
 			<td>
-				<select name="relatore1">
-				<#list relatori as relatore>
-					<option value="${relatore.name}">${relatore.name}</option>
+				<select name="membro1">
+				<#list membri as membro>
+					<option value="${membro.name}">${membro.name}</option>
 				</#list>
 				</select>
 			</td>
@@ -105,29 +109,48 @@
 				<input type="text" name="dataUscita1">
 			</td>
 		</tr>
+		<tr>
+			<td>Coordinatore:</td>
+			<td>
+				<select name="coordinatore1">
+					<option value="true">SI</option>
+					<option value="false">NO</option>
+				</select>
+			</td>
+		</tr>
 		
 		<tr>
-			<td>Relatore 2:</td>
+			<td>Membro 2:</td>
 			<td>
-				<select name="relatore2">
-				<#list relatori as relatore>
-					<option value="${relatore.name}">${relatore.name}</option>
+				<select name="membro2">
+				<#list membri as membro>
+					<option value="${membro.name}">${membro.name}</option>
 				</#list>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td>Data nomina (relatore 2):</td>
+			<td>Data nomina:</td>
 			<td>
 				<input type="text" name="dataNomina2">
 			</td>
 		</tr>
 		<tr>
-			<td>Data uscita (relatore 2):</td>
+			<td>Data uscita:</td>
 			<td>
 				<input type="text" name="dataUscita2">
 			</td>
 		</tr>
+		<tr>
+			<td>Coordinatore:</td>
+			<td>
+				<select name="coordinatore2">
+					<option value="true">SI</option>
+					<option value="false">NO</option>
+				</select>
+			</td>
+		</tr>
+		
 		
 		<tr>
 		<td></td>

@@ -14,7 +14,7 @@ for(var i=0; i<numeroCommissioni; i++) {
 	
 	var commissioneTempNode = commissioniFolderNode[i];
 	
-	var relatoriCommissioneXPathQuery = "*[@cm:name='RelatoriCommissione']";
+	var relatoriCommissioneXPathQuery = "*[@cm:name='Relatori']";
 	var relatoriCommissioneFolderNode = commissioneTempNode.childrenByXPath(relatoriCommissioneXPathQuery)[0];
 	
 	

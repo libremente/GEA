@@ -33,26 +33,28 @@ if(checkIsNotNull(id)){
 			status.message = "commissione utente non trovata";
 			status.redirect = true;
 		}
-	} else {
-		
-		//stiamo presupponendo che il relatore sia la persona che puÔøΩ salvare i dati per tutta la commissione
-		//stiamo inoltre presupponendo che nessun consigliere possa fare da relatore per piÔøΩ di una commissione
-		var commissioneUtenteLuceneQuery = 
-			"PARENT:\""+commissioniFolderNode.nodeRef+"\" AND @crlatti\\:relatoriCommissione:\""+fullName+"\"";
-		
-		var commissioneNodeResults = search.luceneSearch(commissioneUtenteLuceneQuery);
-		if(commissioneNodeResults!=null && commissioneNodeResults.length>0){
-			commissioneFolderNode = commissioneNodeResults[0];
-		} else {
-			status.code = 400;
-			status.message = "commissione utente non trovata";
-			status.redirect = true;
-		}
-	}
+	} 
+	
+//	else {
+//		
+//		//stiamo presupponendo che il relatore sia la persona che puÔøΩ salvare i dati per tutta la commissione
+//		//stiamo inoltre presupponendo che nessun consigliere possa fare da relatore per piÔøΩ di una commissione
+//		var commissioneUtenteLuceneQuery = 
+//			"PARENT:\""+commissioniFolderNode.nodeRef+"\" AND @crlatti\\:relatore:\""+fullName+"\"";
+//		
+//		var commissioneNodeResults = search.luceneSearch(commissioneUtenteLuceneQuery);
+//		if(commissioneNodeResults!=null && commissioneNodeResults.length>0){
+//			commissioneFolderNode = commissioneNodeResults[0];
+//		} else {
+//			status.code = 400;
+//			status.message = "commissione utente non trovata";
+//			status.redirect = true;
+//		}
+//	}
 	
 	
 	
-	var relatoriXPathQuery = "*[@cm:name='RelatoriCommissione']";
+	var relatoriXPathQuery = "*[@cm:name='Relatori']";
 	var relatoriFolderNode = commissioneFolderNode.childrenByXPath(relatoriXPathQuery)[0];
 	
 	var numeroRelatori = relatori.length();
@@ -74,6 +76,7 @@ if(checkIsNotNull(id)){
 			relatoreNode = relatoreEsistenteResults[0];
 		} else {
 			relatoreNode = relatoriFolderNode.createNode(descrizione,"crlatti:relatore");
+			relatoreNode.content = descrizione;
 		}
 		
 		var dataNominaParsed = null;
@@ -97,10 +100,7 @@ if(checkIsNotNull(id)){
 	//verifica relatori da cancellare
 	var relatoriNelRepository = relatoriFolderNode.getChildAssocsByType("crlatti:relatore");
 	
-	
-	// TODO capire bene come ciclare i relatori per permettere la cancellazione di quelli non più presenti
-	// e capire come è possibile aggiornare la proprietà relatori dell'atto una sola volta
-	
+		
 	//query nel repository per capire se bisogna cancellare alcuni relatori
 	for(var z=0; z<relatoriNelRepository.length; z++){
 		var trovato = false;
@@ -118,16 +118,19 @@ if(checkIsNotNull(id)){
 		if(!trovato){
 			var relatoriSpace = relatoreNelRepository.parent;
 			relatoreNelRepository.remove();
-			/*
-			 * in eliminazione devono essere gestite manualmente 
-			 * a causa di un bug di Alfresco risolto nella 4.1.1 riguardo le regole in outbound:
-			 * 
-			 * https://issues.alfresco.com/jira/browse/ALF-12711
-			 * 
-			*/
+			
 			
 		}
 	}
+	
+	
+	/*
+	 * in eliminazione devono essere gestite manualmente 
+	 * a causa di un bug di Alfresco risolto nella 4.1.1 riguardo le regole in outbound:
+	 * 
+	 * https://issues.alfresco.com/jira/browse/ALF-12711
+	 * 
+	*/
 	
 	// modifico la propriet√† relatori dell'atto riciclando tutte le commissioni e i relativi relatori
 	
@@ -139,7 +142,7 @@ if(checkIsNotNull(id)){
 	for(var i=0; i<numeroCommissioni; i++) {
 		
 		var commissioneTempNode = commissioniNodes[i];
-		var relatoriCommissioneXPathQuery = "*[@cm:name='RelatoriCommissione']";
+		var relatoriCommissioneXPathQuery = "*[@cm:name='Relatori']";
 		var relatoriCommissioneFolderNode = commissioneTempNode.childrenByXPath(relatoriCommissioneXPathQuery)[0];
 		
 		var relatoriNode = relatoriCommissioneFolderNode.getChildAssocsByType("crlatti:relatore");
@@ -156,6 +159,8 @@ if(checkIsNotNull(id)){
 	
 	
 	model.atto = attoNode;
+	model.commissione = commissioneFolderNode;
+	model.relatori = relatoriFolderNode.getChildAssocsByType("crlatti:relatore");
 	
 } else {
 	status.code = 400;
