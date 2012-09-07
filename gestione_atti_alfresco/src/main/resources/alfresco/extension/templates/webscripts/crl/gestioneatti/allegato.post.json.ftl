@@ -1,5 +1,5 @@
 {
-   "Allegato": 
+   "allegato": 
    {
 	"id":"${allegato.nodeRef}",
 	"nome":"${allegato.name}",
