@@ -33,7 +33,7 @@ public class GestioneSeduteController {
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
-	
+
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
 	private List<Seduta> seduteList = new ArrayList<Seduta>();
@@ -50,31 +50,31 @@ public class GestioneSeduteController {
 	private String nomeLink;
 	private String urlLink;
 
-	
+
 	private Map<Date, Date> dateSedute = new HashMap<Date, Date>();
-	
+
 	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();
 	private String idAttoTrattatoToDelete;
-	
+
 	private List<ConsultazioneAtto> consultazioniAtti = new ArrayList<ConsultazioneAtto>();
 	private String idConsultazioneToDelete;
-	
+
 	private List<Audizione> audizioni = new ArrayList<Audizione>();
 	private String soggettoPartecipante;
 	private boolean previsto;
 	private boolean discusso;
 	private String audizioneToDelete;
-	
+
 	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private String tipoAttoSindacato;
 	private String numeroAttoSindacato;
 	private String descrizioneCollegamento;
 	private String attoSindacatoToDelete;
-	
-	
+
+
 	private Map<String, String> tipiAttoSindacato = new HashMap<String, String>();
 	private Map<String, String> numeriAttoSindacato = new HashMap<String, String>();
-	
+
 	private String statoCommitInserisciSeduta = CRLMessage.COMMIT_DONE;
 	private String statoCommitInserisciOdg = CRLMessage.COMMIT_DONE;
 
@@ -90,7 +90,7 @@ public class GestioneSeduteController {
 		if(!seduteList.isEmpty()) {
 			setDataSedutaSelected(seduteList.get(0).getDataSeduta());
 			showSedutaDetail();
-			
+
 			fillDateSeduteMap();
 		}
 
@@ -170,7 +170,7 @@ public class GestioneSeduteController {
 
 				seduteList.remove(element);
 				updateInserisciSedutaHandler();
-				
+
 				if(!seduteList.isEmpty()) {
 					setDataSedutaSelected(seduteList.get(0).getDataSeduta());
 				}
@@ -179,7 +179,7 @@ public class GestioneSeduteController {
 			}
 		}
 	}
-	
+
 	public String dettaglioOdg() {
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 		//TODO: ritorno alla pagina di inserimento ODG
@@ -256,39 +256,39 @@ public class GestioneSeduteController {
 			updateInserisciSedutaHandler();
 		}
 	}
-	
+
 	public void salvaInserisciSedute() {
 		// TODO: alfresco service
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
-		
+
 		userBean.getUser().setSedute(Clonator.cloneList(getSeduteList()));
-		
+
 		fillDateSeduteMap();
 
 		setStatoCommitInserisciSeduta(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Sedute salvate con successo", ""));
 	}
 
-	
+
 	// Inserisci ODG***************************************
-	
+
 	public void fillDateSeduteMap() {
 		dateSedute = new HashMap<Date, Date>();
 		for(Seduta element : seduteList) {			
 			dateSedute.put(element.getDataSeduta(), element.getDataSeduta());
 		}
 	}
-	
+
 	public void updateSedutaInserisciOdg() {
 		if(!seduteList.isEmpty()) {
 			setDataSedutaSelected(seduteList.get(0).getDataSeduta());
 		}
 		showSedutaDetail();
 	}
-	
+
 	public void addAttoTrattato(String idAttoTrattatoToAdd) {
 
 		if (!idAttoTrattatoToAdd.trim().equals("")) {
@@ -302,12 +302,12 @@ public class GestioneSeduteController {
 				AttoTrattato attoTrattato = new AttoTrattato();
 				attoTrattato.setAtto(attoDaCollegare);
 				attiTrattati.add(attoTrattato);
-				
+
 				updateInserisciOdgHandler();
 			}
 		}
 	}
-	
+
 	public void removeAttoTrattato() {
 
 		for (AttoTrattato element : attiTrattati) {
@@ -332,7 +332,7 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-	
+
 	public void addConsultazioneAtto(String idAttoConsultatoToAdd) {
 
 		if (!idAttoConsultatoToAdd.trim().equals("")) {
@@ -346,12 +346,12 @@ public class GestioneSeduteController {
 				ConsultazioneAtto attoConsultato = new ConsultazioneAtto();
 				attoConsultato.setAtto(attoDaCollegare);
 				consultazioniAtti.add(attoConsultato);
-				
+
 				updateInserisciOdgHandler();
 			}
 		}
 	}
-	
+
 	public void removeAttoConsultato() {
 
 		for (ConsultazioneAtto element : consultazioniAtti) {
@@ -376,7 +376,7 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-	
+
 	public void addAudizione() {
 
 		if (!soggettoPartecipante.trim().equals("")) {
@@ -391,12 +391,12 @@ public class GestioneSeduteController {
 				audizione.setDiscusso(isDiscusso());
 				audizione.setPrevisto(isPrevisto());
 				audizioni.add(audizione);
-				
+
 				updateInserisciOdgHandler();
 			}
 		}
 	}
-	
+
 	public void removeAudizione() {
 
 		for (Audizione element : audizioni) {
@@ -421,7 +421,7 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-	
+
 	public void addCollegamentoAttoSindacato() {
 
 		if (!numeroAttoSindacato.trim().equals("")) {
@@ -436,7 +436,7 @@ public class GestioneSeduteController {
 				collegamento.setNumeroAtto(getNumeroAttoSindacato());
 				collegamento.setTipoAtto(getTipoAttoSindacato());
 				attiSindacato.add(collegamento);
-				
+
 				updateInserisciOdgHandler();
 			}
 		}
@@ -466,26 +466,30 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-	
+
 	public void salvaInserisciOdg() {
 		//TODO: alfresco service
-		
-		sedutaSelected.setAttiSindacato(Clonator.cloneList(getAttiSindacato()));
-		sedutaSelected.setAttiTrattati(Clonator.cloneList(getAttiTrattati()));
-		sedutaSelected.setAudizioni(Clonator.cloneList(getAudizioni()));
-		sedutaSelected.setConsultazioniAtti(Clonator.cloneList(getConsultazioniAtti()));
-		
+
+		if (sedutaSelected!=null) {
+			sedutaSelected.setAttiSindacato(Clonator
+					.cloneList(getAttiSindacato()));
+			sedutaSelected.setAttiTrattati(Clonator
+					.cloneList(getAttiTrattati()));
+			sedutaSelected.setAudizioni(Clonator.cloneList(getAudizioni()));
+			sedutaSelected.setConsultazioniAtti(Clonator
+					.cloneList(getConsultazioniAtti()));
+		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
-		
+
 		userBean.getUser().setSedute(Clonator.cloneList(getSeduteList()));
-		
+
 		setStatoCommitInserisciOdg(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("ODG salvato con successo", ""));
 	}
-	
-	
+
+
 
 
 	// Getters & Setters***********************************
@@ -778,16 +782,16 @@ public class GestioneSeduteController {
 	public void setAttoSindacatoToDelete(String attoSindacatoToDelete) {
 		this.attoSindacatoToDelete = attoSindacatoToDelete;
 	}
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
+
+
+
+
+
+
+
+
+
 
 
 
