@@ -1,5 +1,5 @@
 {
-   "AttoRecord": 
+   "attoRecord": 
    {
 	"id":"${attoRecord.nodeRef}",
 	"nome":"${attoRecord.name}",
