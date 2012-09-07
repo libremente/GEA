@@ -163,57 +163,55 @@ public class AttoServiceManager implements ServiceManager {
 	
 	
 	public void salvaRelatoriEsameCommissioni(Atto atto) {		
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_relatori_esame_commissioni", null), atto);
 	}
 	
 	public void salvaComitatoRistrettoEsameCommissioni(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_comitato_ristretto_esame_commissioni", null), atto);
 	}
 	
 	public void salvaFineLavoriEsameCommissioni(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_fine_lavori_esame_commissioni", null), atto);
 	}
 	
 	public void salvaAbbinamentiEsameCommissioni(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_abbinamenti_esame_commissioni", null), atto);
 	}
 	
 	public void salvaVotazioneEsameCommissioni(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_commissioni", null), atto);
 	}
 	
 	public void salvaEmendamentiClausoleEsameCommissioni(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_clausole_esame_commissioni", null), atto);
 	}
 	
 	public void salvaNoteAllegatiEsameCommissioni(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_commissioni", null), atto);
 	}
 	
 	public void salvaVotazioneEsameAula(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_aula", null), atto);
 	}
 	
 	public void salvaEmendamentiEsameAula(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_esame_aula", null), atto);
 	}
 	
 	public void salvaRinvioEsameEsameAula(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_rinvio_esame_esame_aula", null), atto);
 	}
 	
 	public void salvaStralciEsameAula(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_stralci_esame_aula", null), atto);
 	}
 	
 	public void salvaNoteAllegatiEsameAula(Atto atto) {
-		//TODO: attoService.merge();
-	}
-	
-	
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_aula", null), atto);
+	}	
 	
 	public void salvaPareri(Atto atto) {
-		//TODO: attoService.merge();
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_pareri", null), atto);
 	}
 	
 	

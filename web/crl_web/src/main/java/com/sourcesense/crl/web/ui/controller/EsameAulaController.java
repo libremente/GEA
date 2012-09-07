@@ -17,6 +17,7 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Link;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -189,12 +190,14 @@ public class EsameAulaController {
 
 	// Votazione**************************************************************
 	public void presaInCarico() {
+		//TODO: alfresco service
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		
 		attoBean.getAtto().setDataPresaInCaricoEsameAula(atto.getDataPresaInCaricoEsameAula());
 		attoBean.getAtto().setRelazioneScritta(atto.getRelazioneScritta());
+		attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
 
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
