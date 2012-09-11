@@ -37,9 +37,9 @@ public class UserServiceManager implements ServiceManager {
 		GruppoUtente g1 = new GruppoUtente();
 		g1.setNome("Commissione Referente");
 		GruppoUtente g2 = new GruppoUtente();
-		g2.setNome("commissione");
+		//g2.setNome("Aula");
 		sessionUser.getGruppi().add(g1);
-		sessionUser.getGruppi().add(g2);
+		//sessionUser.getGruppi().add(g2);
 
 
 		if(urlBuilder.getAlfrescoSessionTicket()!=null){

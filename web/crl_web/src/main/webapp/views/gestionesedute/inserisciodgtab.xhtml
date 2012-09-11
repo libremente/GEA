@@ -732,7 +732,7 @@
 		<p:column>
 
 			<c:if
-				test="#{navigationBean.gestioneSeduteConsultazioniCommissione()}">
+				test="#{!navigationBean.gestioneSeduteConsultazioniAula()}">
 				<ui:include src="./inserisciodgcommissionetab.xhtml" />
 			</c:if>
 

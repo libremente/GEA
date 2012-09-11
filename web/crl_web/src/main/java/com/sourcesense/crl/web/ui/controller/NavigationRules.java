@@ -43,11 +43,11 @@ public class NavigationRules {
 
 
 	public boolean gestioneSeduteConsultazioniCommissione (){		
-		return checkGruppiUtente("commissione");
+		return checkGruppiUtente("Commissione");
 	} 
 	
 	public boolean gestioneSeduteConsultazioniAula () {
-		return checkGruppiUtente("aula");
+		return checkGruppiUtente("Aula");
 	}
 
 
