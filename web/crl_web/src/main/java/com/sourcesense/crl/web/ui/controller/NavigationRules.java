@@ -43,26 +43,11 @@ public class NavigationRules {
 
 
 	public boolean gestioneSeduteConsultazioniCommissione (){		
-		return checkGruppiUtente("Commissione");
+		return userBean.getUser().getSessionGroup().getNome().equals("Commissione");
 	} 
 	
 	public boolean gestioneSeduteConsultazioniAula () {
-		return checkGruppiUtente("Aula");
+		return userBean.getUser().getSessionGroup().getNome().equals("Aula");
 	}
-
-
-	private boolean checkGruppiUtente(String gruppoUtente) {
-		for(GruppoUtente element: userBean.getUser().getGruppi()) {
-
-			if(element.getNome().equals(gruppoUtente)) {
-
-				return true;
-			}
-
-		}
-
-		return false;
-	}
-
 
 }

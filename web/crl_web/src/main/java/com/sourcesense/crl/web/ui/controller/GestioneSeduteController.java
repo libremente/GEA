@@ -20,6 +20,7 @@ import com.sourcesense.crl.business.model.Collegamento;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.Consultazione;
 import com.sourcesense.crl.business.model.ConsultazioneAtto;
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.Seduta;
 import com.sourcesense.crl.business.service.AttoServiceManager;

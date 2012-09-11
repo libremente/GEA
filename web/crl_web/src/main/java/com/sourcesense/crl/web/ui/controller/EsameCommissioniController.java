@@ -181,6 +181,8 @@ public class EsameCommissioniController {
 		userBean.getUser().setSessionGroup(g1);
 		
 		setCommissioneUser(findCommissione(userBean.getUser().getSessionGroup().getNome()));
+		setMateria(commissioneUser.getMateria());
+		setDataScadenza(commissioneUser.getDataScadenza());
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
@@ -368,7 +370,9 @@ public class EsameCommissioniController {
 
 	// Relatori e Comitati ristretti***********************************************
 	public void presaInCarico() {
-
+		commissioneUser.setMateria(materia);
+		commissioneUser.setDataScadenza(dataScadenza);
+		
 		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -380,14 +384,14 @@ public class EsameCommissioniController {
 		String numeroAtto = attoBean.getNumeroAtto();
 
 		attoBean.getAtto().setDataPresaInCaricoEsameCommissioni(atto.getDataPresaInCaricoEsameCommissioni());
-		attoBean.getAtto().setDataScadenzaEsameCommissioni(atto.getDataScadenzaEsameCommissioni());
-		attoBean.getAtto().setMateria(atto.getMateria());
+		attoBean.getAtto().setCommissioni(commissioniList);
 
-		if(userBean.getUser().getGruppi().get(2).getNome().equals("Commissione Referente")) {
+		//TODO
+		if(userBean.getUser().getSessionGroup().getNome().equals("Commissione Referente")) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE_REFERENTE);
-		} else if(userBean.getUser().getGruppi().get(2).getNome().equals("Commissione Consultiva")) {
+		} else if(userBean.getUser().getSessionGroup().getNome().equals("Commissione Consultiva")) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE_CONSULTIVA);
-		} else if(userBean.getUser().getGruppi().get(2).getNome().equals("Commissione Redigente")) {
+		} else if(userBean.getUser().getSessionGroup().getNome().equals("Commissione Redigente")) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE_REDIGENTE);
 		}
 
@@ -1342,25 +1346,25 @@ public class EsameCommissioniController {
 
 
 	public String getMateria() {
-		return atto.getMateria();
+		return this.materia;
 	}
 
 
 
 	public void setMateria(String materia) {
-		this.atto.setMateria(materia);
+		this.materia = materia;
 	}
 
 
 
 	public Date getDataScadenza() {
-		return atto.getDataScadenzaEsameCommissioni();
+		return dataScadenza;
 	}
 
 
 
 	public void setDataScadenza(Date dataScadenza) {
-		this.atto.setDataScadenzaEsameCommissioni(dataScadenza);
+		this.dataScadenza = dataScadenza;
 	}
 
 
