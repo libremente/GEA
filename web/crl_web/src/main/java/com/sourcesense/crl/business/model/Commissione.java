@@ -43,6 +43,8 @@ public class Commissione implements Cloneable {
 	private Date dataAnnullo;
 	private boolean annullata = false;
 	
+	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
+	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	 }
@@ -210,6 +212,14 @@ public class Commissione implements Cloneable {
 
 	public void setDataNomina(Date dataNomina) {
 		this.dataNomina = dataNomina;
+	}
+
+	public ComitatoRistretto getComitatoRistretto() {
+		return comitatoRistretto;
+	}
+
+	public void setComitatoRistretto(ComitatoRistretto comitatoRistretto) {
+		this.comitatoRistretto = comitatoRistretto;
 	}
 	
 	

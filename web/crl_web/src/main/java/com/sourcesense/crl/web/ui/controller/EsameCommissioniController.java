@@ -19,7 +19,9 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Firmatario;
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.MembroComitatoRistretto;
 import com.sourcesense.crl.business.model.OrganismoStatutario;
@@ -29,6 +31,7 @@ import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
+import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
@@ -44,6 +47,9 @@ public class EsameCommissioniController {
 	private AttoServiceManager attoServiceManager;
 
 	private Atto atto = new Atto();
+	
+	private List<Commissione> commissioniList = new ArrayList<Commissione>();
+	private Commissione commissioneUser = new Commissione();
 
 	private Map <String, String> relatori = new HashMap<String, String>();
 	private Map <String, String> membriComitato = new HashMap<String, String>();
@@ -156,29 +162,40 @@ public class EsameCommissioniController {
 
 	@PostConstruct
 	protected void init() {
-
+		
 		setRelatori(personaleServiceManager.findAllRelatore());
 		// TODO setMembriComitato(personaleServiceManager.findAll())
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		setAtto((Atto) attoBean.getAtto().clone());		
+		setAtto((Atto) attoBean.getAtto().clone());	
+		
+		setCommissioniList(Clonator.cloneList(atto.getCommissioni()));
+		
+		UserBean userBean = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean"));
+		//MOCK
+		GruppoUtente g1 = new GruppoUtente();
+		g1.setNome("Commissione2");
+		userBean.getUser().setSessionGroup(g1);
+		
+		setCommissioneUser(findCommissione(userBean.getUser().getSessionGroup().getNome()));
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
 
 		//TODO : init liste
-		relatoriList = new ArrayList <Relatore>(atto.getRelatori());
-		membriComitatoList = new ArrayList <MembroComitatoRistretto>(atto.getComitatoRistretto().getComponenti());
-		testiComitatoRistrettoList = new ArrayList <Allegato>(atto.getComitatoRistretto().getTesti());
-		abbinamentiList = new ArrayList<Abbinamento>(atto.getAbbinamenti()); 	
-		testiAttoVotatoList = new ArrayList <Allegato>(atto.getTestiAttoVotatoEsameCommissioni());
-		emendamentiList = new ArrayList <Allegato>(atto.getEmendamentiEsameCommissioni());
-		testiClausolaList = new ArrayList <Allegato>(atto.getTestiClausola());
-		allegatiList = new ArrayList <Allegato>(atto.getAllegatiNoteEsameCommissioni());
-		linksList = new ArrayList <Link>(atto.getLinksNoteEsameCommissioni());
+		relatoriList = Clonator.cloneList(commissioneUser.getRelatori());
+		membriComitatoList = Clonator.cloneList(commissioneUser.getComitatoRistretto().getComponenti());
+		testiComitatoRistrettoList = Clonator.cloneList(commissioneUser.getComitatoRistretto().getTesti());
+		abbinamentiList = Clonator.cloneList(atto.getAbbinamenti()); 	
+		testiAttoVotatoList = Clonator.cloneList(atto.getTestiAttoVotatoEsameCommissioni());
+		emendamentiList = Clonator.cloneList(atto.getEmendamentiEsameCommissioni());
+		testiClausolaList = Clonator.cloneList(atto.getTestiClausola());
+		allegatiList = Clonator.cloneList(atto.getAllegatiNoteEsameCommissioni());
+		linksList = Clonator.cloneList(atto.getLinksNoteEsameCommissioni());
 
 		confrontaDataScadenza();
 
@@ -192,6 +209,15 @@ public class EsameCommissioniController {
 		membriComitato.put("componente2", "componente2");
 		membriComitato.put("componente3", "componente3");
 
+	}
+	
+	private Commissione findCommissione(String nome) {
+		for(Commissione element : commissioniList) {
+			if(element.getDescrizione().equals(nome)) {
+				return element;
+			}
+		}
+		return null;
 	}
 
 
@@ -425,14 +451,15 @@ public class EsameCommissioniController {
 	}
 
 	public void confermaRelatori() {
-		atto.setRelatori(relatoriList);
+		commissioneUser.setRelatori(relatoriList);
+		atto.setCommissioni(commissioniList);
 		attoServiceManager.salvaRelatoriEsameCommissioni(atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setRelatori(relatoriList);
+		attoBean.getAtto().setCommissioni(Clonator.cloneList(commissioniList));
 
 		if(isNominatoRelatore()) {
 			attoBean.setStato(StatoAtto.NOMINATO_RELATORE);
@@ -538,13 +565,14 @@ public class EsameCommissioniController {
 
 		if((isPresenzaComitatoRistretto() && isOneMembroAttivo) || 
 				(!isPresenzaComitatoRistretto() && !isOneMembroAttivo)) {
-			atto.getComitatoRistretto().setComponenti(membriComitatoList);
+			commissioneUser.getComitatoRistretto().setComponenti(membriComitatoList);
+			atto.setCommissioni(commissioniList);
 			attoServiceManager.salvaComitatoRistrettoEsameCommissioni(atto);
 
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().getComitatoRistretto().setComponenti(membriComitatoList);
+			attoBean.getAtto().setCommissioni(Clonator.cloneList(commissioniList));
 			attoBean.getAtto().setPresenzaComitatoRistretto(atto.isPresenzaComitatoRistretto());
 			attoBean.getAtto().setDataIstituzioneComitato(atto.getDataIstituzioneComitato());
 
@@ -594,7 +622,8 @@ public class EsameCommissioniController {
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().getComitatoRistretto().getTesti().add(testoComitatoRet);
+			commissioneUser.getComitatoRistretto().getTesti().add(testoComitatoRet);
+			attoBean.getAtto().setCommissioni(getCommissioniList());
 
 			testiComitatoRistrettoList.add(testoComitatoRet);
 		}
@@ -2185,6 +2214,24 @@ public class EsameCommissioniController {
 	public void setStatoCommitOggettoAttoCorrente(
 			String statoCommitOggettoAttoCorrente) {
 		this.statoCommitOggettoAttoCorrente = statoCommitOggettoAttoCorrente;
+	}
+
+
+	public Commissione getCommissioneUser() {
+		return commissioneUser;
+	}
+
+
+	public void setCommissioneUser(Commissione commissioneUser) {
+		this.commissioneUser = commissioneUser;
+	}
+
+	public List<Commissione> getCommissioniList() {
+		return commissioniList;
+	}
+
+	public void setCommissioniList(List<Commissione> commissioniList) {
+		this.commissioniList = commissioniList;
 	}
 
 

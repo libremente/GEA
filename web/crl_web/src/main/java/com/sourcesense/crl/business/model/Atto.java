@@ -154,7 +154,6 @@ public class Atto implements Cloneable
 	private Date dataScadenzaEsameCommissioni;
 	private boolean presenzaComitatoRistretto;
 	private Date dataIstituzioneComitato;
-	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
 	private Date dataFineLavoriEsameCommissioni;
 	private String esitoVotoCommissioneReferente;
 	private String quorumEsameCommissioni;
@@ -951,14 +950,6 @@ public class Atto implements Cloneable
 
 	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
 		this.dataIstituzioneComitato = dataIstituzioneComitato;
-	}
-
-	public ComitatoRistretto getComitatoRistretto() {
-		return comitatoRistretto;
-	}
-
-	public void setComitatoRistretto(ComitatoRistretto comitatoRistretto) {
-		this.comitatoRistretto = comitatoRistretto;
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)

@@ -21,6 +21,8 @@ public class User {
 	private List <GruppoUtente> gruppi = new ArrayList<GruppoUtente>();
 
 	private List <Seduta> sedute = new ArrayList<Seduta>();
+	
+	private GruppoUtente sessionGroup = new GruppoUtente();
 
 	@Override public String toString() {
 		return Pojomatic.toString(this);
@@ -51,6 +53,14 @@ public class User {
 
 	public void setSedute(List <Seduta> sedute) {
 		this.sedute = sedute;
+	}
+
+	public GruppoUtente getSessionGroup() {
+		return sessionGroup;
+	}
+
+	public void setSessionGroup(GruppoUtente sessionGroup) {
+		this.sessionGroup = sessionGroup;
 	}
 
 

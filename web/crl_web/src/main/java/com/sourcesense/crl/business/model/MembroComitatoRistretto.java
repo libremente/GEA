@@ -12,11 +12,20 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("membroComitatoRistretto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class MembroComitatoRistretto extends Personale {
+public class MembroComitatoRistretto extends Personale implements Cloneable {
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;
 	private boolean coordinatore;
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
