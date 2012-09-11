@@ -19,6 +19,17 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @AutoProperty
 public class Allegato {
 	
+	public static final String TIPO_PRESENTAZIONE_ASSEGNAZIONE = "allegato_atto";
+	public static final String TIPO_ESAME_COMMISSIONE_COMITATO = "testo_comitato_ristretto";
+	public static final String TIPO_ESAME_COMMISSIONE_EMENDAMENTO = "emendamento_commissione";
+	public static final String TIPO_ESAME_COMMISSIONE_CLAUSOLA = "clausola_commissione";
+	public static final String TIPO_ESAME_COMMISSIONE_ALLEGATO = "allegato_commissione";
+	public static final String TIPO_ESAME_AULA_EMENDAMENTO = "emendamento_aula";
+	public static final String TIPO_ESAME_AULA_ALLEGATO = "allegato_aula";
+	public static final String TIPO_PARERE = "allegato_parere";
+	public static final String TIPO_CONSULTAZIONE = "allegato_consultazione";
+	
+	
 	private String nome;
 	private String descrizione;
 	private String downloadUrl;
@@ -27,11 +38,21 @@ public class Allegato {
 	private String id;
 	private String mimetype;
 	private Date dataSeduta;
+	private String tipologia;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	 }
 	
+	
+	public String getTipologia() {
+		return tipologia;
+	}
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
+	}
+
 	public String getDescrizione() {
 		return descrizione;
 	}

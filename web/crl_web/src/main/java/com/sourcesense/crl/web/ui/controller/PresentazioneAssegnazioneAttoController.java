@@ -48,7 +48,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
-
+	
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
 
@@ -101,6 +101,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private boolean normaFinanziaria;
 	private boolean richiestaUrgenza;
 	private boolean votazioneUrgenza;
+	private boolean currentFilePubblico;
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
 
@@ -164,8 +165,8 @@ public class PresentazioneAssegnazioneAttoController {
 		this.linksList =  new ArrayList<Link>(Clonator.cloneList(atto.getLinksPresentazioneAssegnazione()));
 
 		//TODO
-		//setAllegatiList(allegatoServiceManager.findByTipo());
-		//setTestiAtto(recordAttoServiceManager.findByTipo());
+		//setAllegatiList(attoRecordServiceManager.findAllegatiByTipo(Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE));
+		//setTestiAtto(attoRecordServiceManager.findTestoByTipo());
 
 
 	}
@@ -241,7 +242,7 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setDataPresaInCarico(atto.getDataPresaInCarico());
 		attoBean.getAtto().setStato(StatoAtto.PRESO_CARICO_SC);
 		// TODO Service logic
-		
+		attoServiceManager.presaInCaricoSC(attoBean.getAtto());
 		
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
@@ -267,14 +268,19 @@ public class PresentazioneAssegnazioneAttoController {
 		} else {
 
 			// TODO Alfresco upload
-			TestoAtto testoAttoRet = null;
+			TestoAtto testoAttoRet = new TestoAtto();
 
+			
+			testoAttoRet.setNome(event.getFile().getFileName());
+			testoAttoRet.setPubblico(currentFilePubblico);
+			
+			
 			try {
 				testoAttoRet = attoServiceManager.uploadTestoAttoPresentazioneAssegnazione(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(), testoAttoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -287,6 +293,8 @@ public class PresentazioneAssegnazioneAttoController {
 			attoBean.getAtto().getTestiAtto().add(testoAttoRet);
 
 			testiAttoList.add(testoAttoRet);
+			
+			currentFilePubblico=false;
 		}
 	}
 
@@ -1251,6 +1259,15 @@ public class PresentazioneAssegnazioneAttoController {
 		this.atto.setDataPresaInCarico(dataPresaInCarico);
 	}
 
+	public boolean isCurrentFilePubblico() {
+		return currentFilePubblico;
+	}
+
+	public void setCurrentFilePubblico(boolean currentFilePubblico) {
+		this.currentFilePubblico = currentFilePubblico;
+	}
+
+	
 
 
 }

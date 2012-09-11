@@ -64,8 +64,7 @@ public class AttoService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.USE_ANNOTATIONS, false);
+			//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
 
 			attoRet = objectMapper.readValue(responseMsg, Atto.class);
 			atto.setId(attoRet.getId());
@@ -162,8 +161,7 @@ public class AttoService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {
@@ -183,7 +181,7 @@ public class AttoService {
 	}
 
 	public TestoAtto uploadTestoAtto(String url, Atto atto,
-			InputStream stream, String nomeFile, String tipologia) {
+			InputStream stream, TestoAtto testoAtto, String tipologia) {
 
 		TestoAtto attoRecord = null;
 
@@ -191,9 +189,10 @@ public class AttoService {
 
 			WebResource webResource = client.resource(url);
 			FormDataMultiPart part = new FormDataMultiPart();
-			part.bodyPart(new StreamDataBodyPart("file", stream, nomeFile));
+			part.bodyPart(new StreamDataBodyPart("file", stream, testoAtto.getNome()));
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
+			part.field("pubblico", ""+testoAtto.isPubblico());
 
 			ClientResponse response = webResource
 					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
@@ -207,7 +206,6 @@ public class AttoService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			attoRecord = objectMapper.readValue(responseMsg, TestoAtto.class);
 
 		} catch (JsonMappingException e) {
@@ -276,6 +274,7 @@ public class AttoService {
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
 					false);
 			String json = objectMapper.writeValueAsString(atto);
+			System.out.println("JSON ATTO=="+json);
 			ClientResponse response = webResource.type(
 					MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);

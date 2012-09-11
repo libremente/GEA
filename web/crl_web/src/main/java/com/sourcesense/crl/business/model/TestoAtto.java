@@ -12,6 +12,11 @@ import org.pojomatic.annotations.AutoProperty;
 @AutoProperty
 public class TestoAtto {
 
+	
+	public static final String TESTO_PRESENTAZIONE_ASSEGNAZIONE = "testo_atto";
+	public static final String TESTO_ESAME_COMMISSIONE_VOTAZIONE = "testo_atto_votato_commissione";
+	public static final String TESTO_ESAME_AULA_VOTAZIONE = "testo_atto_votato_aula";
+	
 	private String id;
 	private String nome;
 	private String mimetype;
@@ -19,9 +24,15 @@ public class TestoAtto {
 	private String downloadUrl;
 	private boolean pubblico;
 	private String tipoAllegato;
+	private String tipologia;
 	
-	
-	
+	public String getTipologia() {
+		return tipologia;
+	}
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
+	}
 	
 	public String getDescrizione() {
 		return descrizione;
