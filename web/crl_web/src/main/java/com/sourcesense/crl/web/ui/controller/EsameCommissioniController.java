@@ -375,6 +375,8 @@ public class EsameCommissioniController {
 	public void presaInCarico() {
 		commissioneUser.setMateria(materia);
 		commissioneUser.setDataScadenza(dataScadenza);
+		
+		atto.setCommissioni(getCommissioniList());
 
 		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
