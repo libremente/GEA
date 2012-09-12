@@ -47,7 +47,7 @@ public class EsameCommissioniController {
 	private AttoServiceManager attoServiceManager;
 
 	private Atto atto = new Atto();
-	
+
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 	private Commissione commissioneUser = new Commissione();
 
@@ -162,7 +162,7 @@ public class EsameCommissioniController {
 
 	@PostConstruct
 	protected void init() {
-		
+
 		setRelatori(personaleServiceManager.findAllRelatore());
 		// TODO setMembriComitato(personaleServiceManager.findAll())
 
@@ -170,16 +170,16 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());	
-		
+
 		setCommissioniList(Clonator.cloneList(atto.getCommissioni()));
-		
+
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 		//MOCK
 		GruppoUtente g1 = new GruppoUtente();
 		g1.setNome("Commissione2");
 		userBean.getUser().setSessionGroup(g1);
-		
+
 		setCommissioneUser(findCommissione(userBean.getUser().getSessionGroup().getNome()));
 		setMateria(commissioneUser.getMateria());
 		setDataScadenza(commissioneUser.getDataScadenza());
@@ -212,7 +212,7 @@ public class EsameCommissioniController {
 		membriComitato.put("componente3", "componente3");
 
 	}
-	
+
 	private Commissione findCommissione(String nome) {
 		for(Commissione element : commissioniList) {
 			if(element.getDescrizione().equals(nome)) {
@@ -372,7 +372,7 @@ public class EsameCommissioniController {
 	public void presaInCarico() {
 		commissioneUser.setMateria(materia);
 		commissioneUser.setDataScadenza(dataScadenza);
-		
+
 		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -386,14 +386,9 @@ public class EsameCommissioniController {
 		attoBean.getAtto().setDataPresaInCaricoEsameCommissioni(atto.getDataPresaInCaricoEsameCommissioni());
 		attoBean.getAtto().setCommissioni(commissioniList);
 
-		//TODO
-		if(userBean.getUser().getSessionGroup().getNome().equals("Commissione Referente")) {
-			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE_REFERENTE);
-		} else if(userBean.getUser().getSessionGroup().getNome().equals("Commissione Consultiva")) {
-			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE_CONSULTIVA);
-		} else if(userBean.getUser().getSessionGroup().getNome().equals("Commissione Redigente")) {
-			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE_REDIGENTE);
-		}
+
+		attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+
 
 		confrontaDataScadenza();
 
@@ -993,7 +988,7 @@ public class EsameCommissioniController {
 			attoBean.getAtto().setDataTrasmissione(atto.getDataTrasmissione());
 			attoBean.getAtto().setDataRichiestaIscrizioneAula(atto.getDataRichiestaIscrizioneAula());
 			attoBean.getAtto().setPassaggioDirettoInAula(atto.isPassaggioDirettoInAula());
-			
+
 			if(attoBean.getAtto().isPassaggioDirettoInAula()) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 			} else if(attoBean.getAtto().getEsitoVotoCommissioneReferente()!=null && 
