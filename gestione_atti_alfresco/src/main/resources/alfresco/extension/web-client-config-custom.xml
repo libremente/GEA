@@ -158,6 +158,7 @@
 			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:pubblico"/>
 			<show-property name="crlatti:dataSedutaTestoCR"/>
+			<show-property name="crlatti:commissioneCR"/>
 		</property-sheet>
 	</config>
 	
@@ -219,9 +220,8 @@
 			<show-property name="crlatti:materiaCommissione"/>
 			<show-property name="crlatti:dataAssegnazioneCommissione" />
 			<show-property name="crlatti:dataPresaInCaricoCommissione" />
+			<show-property name="crlatti:dataScadenzaCommissione" />
 			<show-property name="crlatti:dataNominaCommissione" />
-			<show-property name="crlatti:dataAperturaLavoriComitatoCommissione" />
-			<show-property name="crlatti:dataChiusuraLavoriComitatoCommissione" />
 			<show-property name="crlatti:tipoVotazioneCommissione" />
 			<show-property name="crlatti:esitoVotazioneCommissione" />
 			<show-property name="crlatti:dataVotazioneCommissione" />

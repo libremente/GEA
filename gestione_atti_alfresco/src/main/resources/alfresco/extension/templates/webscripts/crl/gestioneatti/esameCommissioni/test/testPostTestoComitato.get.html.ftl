@@ -3,10 +3,10 @@
 </head>
 <body>
 	<div>
-		<h1>Test upload allegato</h1>
+		<h1>Test upload testo comitato</h1>
 	</div>
 	
-	<form action="/alfresco/service/crl/atto/allegato?alf_ticket=${session.ticket}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+	<form action="/alfresco/service/crl/atto/esamecommissioni/testocomitato?alf_ticket=${session.ticket}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 	<table>
 		<tr>
 			<td>
@@ -33,6 +33,14 @@
 		</tr>
 		<tr>
 			<td>
+				Commissione:
+			</td>
+			<td>
+				<input name="commissione"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				Pubblico:
 			</td>
 			<td>
@@ -43,6 +51,14 @@
 			</td>
 		</tr>
 		<tr>
+			<td>
+				Data Seduta:
+			</td>
+			<td>
+				<input name="dataSeduta" value="2012-06-01"/>
+			</td>
+		</tr>
+		<tr>
 			<td>File:</td>
 			<td>
 				<input type="file" name="file">
@@ -50,7 +66,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td><input type="submit" value="Salva record"></td>
+			<td><input type="submit" value="Salva"></td>
 		</tr>
 	</table>
 	</form>

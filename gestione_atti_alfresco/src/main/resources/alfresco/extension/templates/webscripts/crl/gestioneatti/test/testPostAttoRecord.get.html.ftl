@@ -21,6 +21,28 @@
 			</td>
 		</tr>
 		<tr>
+			<td>
+				Tipologia:
+			</td>
+			<td>
+				<select name="tipologia">
+					<option value="Tipologia1">Tipologia1</option>
+					<option value="Tipologia2">Tipologia2</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Pubblico:
+			</td>
+			<td>
+				<select name="pubblico">
+					<option value="true">Si</option>
+					<option value="false">NO</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
 			<td>File:</td>
 			<td>
 				<input type="file" name="file">

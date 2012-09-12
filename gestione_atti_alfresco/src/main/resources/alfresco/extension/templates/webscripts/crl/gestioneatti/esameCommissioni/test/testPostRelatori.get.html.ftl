@@ -10,7 +10,7 @@
 		}
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+				document.getElementById("myDiv").innerHTML = "status: "+xmlhttp.status;
 			}
 		}
 		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/esamecommissioni/relatori?alf_ticket=${session.ticket}", true);
@@ -30,26 +30,46 @@
 		var dataUscita2 = currentForm.dataUscita2.value;
 		
 		var attoCustom = {
-		"atto": {
-			"id": ""+idAtto+"",
-			"commissione": ""+commissione+"",
-			"relatori" : [
-				{"relatore":
-				 	{
-						"descrizione" : ""+relatore1+"",
-						"dataNomina" : ""+dataNomina1+"",
-						"dataUscita" : ""+dataUscita1+""
+			"target":{
+				"commissione": ""+commissione+""
+			},
+			"atto": {
+				"id": ""+idAtto+"",
+				"stato": "nominato relatore",
+				"commissioni": [
+					{"commissione":
+				 		{
+				 			"descrizione": ""+commissione+"",
+							"relatori":[
+								{"relatore":
+									{
+										"descrizione" : ""+relatore1+"",
+										"dataNomina" : ""+dataNomina1+"",
+										"dataUscita" : ""+dataUscita1+""
+									}
+								},
+								{"relatore":
+								 	{
+								 		"descrizione" : ""+relatore2+"",
+										"dataNomina" : ""+dataNomina2+"",
+										"dataUscita" : ""+dataUscita2+""
+								 	}
+								}
+							],
+							"stato": "nominato relatore"
+						}	
+					},
+					{"commissione":
+				 		{
+				 			"descrizione": "commissioneStaticaTest",
+							"relatori":[],
+							"stato": "nominato relatore"
+						}
 					}
-				},
-				{"relatore":
-				 	{
-						"descrizione" : ""+relatore2+"",
-						"dataNomina" : ""+dataNomina2+"",
-						"dataUscita" : ""+dataUscita2+""
-					}
+				
+				]
+				 
 				}
-			]
-			}
 		};
 		
 	

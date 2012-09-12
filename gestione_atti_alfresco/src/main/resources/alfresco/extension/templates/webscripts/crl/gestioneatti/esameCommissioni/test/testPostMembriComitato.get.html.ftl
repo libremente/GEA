@@ -10,7 +10,7 @@
 		}
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+				document.getElementById("myDiv").innerHTML = "status: "+xmlhttp.status;
 			}
 		}
 		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/esamecommissioni/membricomitato?alf_ticket=${session.ticket}", true);
@@ -30,31 +30,60 @@
 		var dataNomina2 = currentForm.dataNomina2.value;
 		var dataUscita2 = currentForm.dataUscita2.value;
 		var coordinatore2 = currentForm.coordinatore2.options[currentForm.coordinatore2.selectedIndex].value;
+		var presenzaComitato = currentForm.presenzaComitato.options[currentForm.presenzaComitato.selectedIndex].value;
+		var dataIstituzioneComitato = currentForm.dataIstituzioneComitato.value;
 		
 		var attoCustom = {
-		"atto": {
-			"id": ""+idAtto+"",
-			"commissione": ""+commissione+"",
-			"membriComitatoRistretto" : [
-				{"membro":
-				 	{
-						"descrizione" : ""+membro1+"",
-						"dataNomina" : ""+dataNomina1+"",
-						"dataUscita" : ""+dataUscita1+"",
-						"coordinatore" : ""+coordinatore1+""
+			"target":{
+				"commissione": ""+commissione+""
+			},
+			"atto": {
+				"id": ""+idAtto+"",
+				"stato": "comitato ristretto",
+				"commissioni": [
+					{"commissione":
+				 		{
+				 			"descrizione": ""+commissione+"",
+				 			"presenzaComitatoRistretto": ""+presenzaComitato+"",
+				 			"dataIstituzioneComitato": ""+dataIstituzioneComitato+"",
+							"comitatoRistretto": {
+								"comitatoRistretto":{
+										"componenti":[
+											{"componente": 
+												{
+												"descrizione" : ""+membro1+"",
+												"dataNomina" : ""+dataNomina1+"",
+												"dataUscita" : ""+dataUscita1+"",
+												"coordinatore" : ""+coordinatore1+""
+												}
+											},
+											{"componente": 
+												{
+												"descrizione" : ""+membro2+"",
+												"dataNomina" : ""+dataNomina2+"",
+												"dataUscita" : ""+dataUscita2+"",
+												"coordinatore" : ""+coordinatore2+""
+												}
+											}	
+										]
+									}
+								},
+							"stato": "comitato ristretto"
+						}	
+					},
+					{"commissione":
+				 		{
+				 			"descrizione": "commissioneStaticaTest",
+							"comitatoRistretto": "",
+							"stato": "comitato ristretto"
+						}
 					}
-				},
-				{"membro":
-				 	{
-						"descrizione" : ""+membro2+"",
-						"dataNomina" : ""+dataNomina2+"",
-						"dataUscita" : ""+dataUscita2+"",
-						"coordinatore" : ""+coordinatore2+""
-					}
+				
+				]
+				 
 				}
-			]
-			}
 		};
+		
 		
 	
 		
@@ -85,6 +114,21 @@
 					<option value="${commissione.name}">${commissione.name}</option>
 				</#list>
 				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Presenza Comitato:</td>
+			<td>
+				<select name="presenzaComitato">
+					<option value="true">SI</option>
+					<option value="false">NO</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Data Istituzione Comitato:</td>
+			<td>
+				<input type="text" name="dataIstituzioneComitato">
 			</td>
 		</tr>
 		<tr>

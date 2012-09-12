@@ -2,17 +2,25 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
-var commissioneUtente = atto.get("commissione");
+var statoAtto = atto.get("stato");
+var commissioni = atto.get("commissioni");
 
-//vettori
-var relatori = atto.get("relatori");
+var commissioneUtente = json.get("target").get("commissione");
 
-//reperimento informazioni commissione dell'utente che sta effettuando l'operazione?
-//devo prelevare a quale commissione appartiente l'utente corrente?
-//Oppure esiste un utente speciale che potrï¿½ selezionare la commissione?
-var firstName = person.properties["cm:firstName"];
-var lastName = person.properties["cm:lastName"];
-var fullName = firstName + " " + lastName;
+var relatori;
+var statoCommissione;
+
+// prendo i valori delle proprietˆ dalla commissione target
+for(var i=0; i<commissioni.length(); i++) {
+	var commissioneTemp = commissioni.get(i).get("commissione");
+	
+	if(""+commissioneTemp.get("descrizione")+"" == ""+commissioneUtente+"") {
+		relatori = commissioneTemp.get("relatori");
+		statoCommissione = commissioneTemp.get("stato");
+	}
+	
+}
+
 
 
 if(checkIsNotNull(id)){
@@ -28,29 +36,16 @@ if(checkIsNotNull(id)){
 		var commissioneUtenteResults = commissioniFolderNode.childrenByXPath(commissioneUtenteXPathQuery);
 		if(commissioneUtenteResults!=null && commissioneUtenteResults.length>0){
 			commissioneFolderNode = commissioneUtenteResults[0];
+			
+			// stato della commissione
+			commissioneFolderNode.properties["crlatti:statoCommissione"] = statoCommissione;	
+			commissioneFolderNode.save();
 		} else {
 			status.code = 400;
 			status.message = "commissione utente non trovata";
 			status.redirect = true;
 		}
 	} 
-	
-//	else {
-//		
-//		//stiamo presupponendo che il relatore sia la persona che puï¿½ salvare i dati per tutta la commissione
-//		//stiamo inoltre presupponendo che nessun consigliere possa fare da relatore per piï¿½ di una commissione
-//		var commissioneUtenteLuceneQuery = 
-//			"PARENT:\""+commissioniFolderNode.nodeRef+"\" AND @crlatti\\:relatore:\""+fullName+"\"";
-//		
-//		var commissioneNodeResults = search.luceneSearch(commissioneUtenteLuceneQuery);
-//		if(commissioneNodeResults!=null && commissioneNodeResults.length>0){
-//			commissioneFolderNode = commissioneNodeResults[0];
-//		} else {
-//			status.code = 400;
-//			status.message = "commissione utente non trovata";
-//			status.redirect = true;
-//		}
-//	}
 	
 	
 	
@@ -155,6 +150,11 @@ if(checkIsNotNull(id)){
 	}
 
 	attoNode.properties["crlatti:relatori"] = commRelatoriCommissioni;
+	
+	
+	
+	// stato dell'atto
+	attoNode.properties["crlatti:statoAtto"] = statoAtto;
 	attoNode.save();
 	
 	

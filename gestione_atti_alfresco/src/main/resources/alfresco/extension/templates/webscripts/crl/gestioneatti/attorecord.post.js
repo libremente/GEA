@@ -1,15 +1,18 @@
 var nodeRefAtto = "";
+var tipologia = "";
+var pubblico = false;
 var filename = "";
 var content = null;
 
 for each (field in formdata.fields)
 {
-  if (field.name == "id")
-  {
+  if (field.name == "id"){
     nodeRefAtto = field.value;
-  }
-  else if (field.name == "file" && field.isFile)
-  {
+  } else if(field.name == "tipologia"){
+	tipologia = field.value;
+  } else if(field.name == "pubblico"){
+	pubblico = field.value;
+  } else if (field.name == "file" && field.isFile){
     filename = field.filename;
     content = field.content;
   }
@@ -45,6 +48,8 @@ if(nodeRefAtto == ""){
 		// creazione binario
 		attoRecordNode = testiFolderNode.createFile(filename);
 		attoRecordNode.specializeType("crlatti:testo");
+		attoRecordNode.properties["crlatti:tipologia"] = tipologia;
+		attoRecordNode.properties["crlatti:pubblico"] = pubblico;
 		attoRecordNode.properties.content.write(content);
 		attoRecordNode.properties.content.setEncoding("UTF-8");
 		attoRecordNode.properties.content.guessMimetype(filename);

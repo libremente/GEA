@@ -1,7 +1,11 @@
+<import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
+
 var nodeRefAtto = "";
 var tipologia = "";
 var pubblico = false;
 var filename = "";
+var dataSeduta = "";
+var commissione = "";
 var content = null;
 
 for each (field in formdata.fields) {
@@ -11,6 +15,10 @@ for each (field in formdata.fields) {
 	tipologia = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
+  } else if(field.name == "commissione"){
+	commissione = field.value;
+  } else if(field.name == "dataSeduta"){
+	dataSeduta = field.value;
   } else if (field.name == "file" && field.isFile) {
     filename = field.filename;
     content = field.content;
@@ -42,9 +50,19 @@ if(nodeRefAtto == ""){
 	if(allegatoNode == null) {
 		// creazione binario
 		allegatoNode = allegatiSpace.createFile(filename);
-		allegatoNode.specializeType("crlatti:allegato");
+		allegatoNode.specializeType("crlatti:testoComitatoRistretto");
 		allegatoNode.properties["crlatti:tipologia"] = tipologia;
 		allegatoNode.properties["crlatti:pubblico"] = pubblico;
+		
+		var dataSedutaParsed = null;
+		if(checkIsNotNull(dataSeduta)){
+			var dataSedutaSplitted = dataSeduta.split("-");
+			dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);
+			allegatoNode.properties["crlatti:dataSedutaTestoCR"] = dataSedutaParsed;
+		}
+
+		allegatoNode.properties["crlatti:commissioneCR"] = commissione;
+		
 		allegatoNode.properties.content.write(content);
 		allegatoNode.properties.content.setEncoding("UTF-8");
 		allegatoNode.properties.content.guessMimetype(filename);

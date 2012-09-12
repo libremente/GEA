@@ -1,6 +1,8 @@
 {  
    "idAtto": "${atto.nodeRef}",
    "commissione": "${commissione.name}",
+   "presenzaComitato" : "<#if presenzaComitato?exists>${presenzaComitato?string("true","false")}<#else></#if>",
+   "dataIstituzioneComitato" : "<#if dataIstituzioneComitato?exists>${dataIstituzioneComitato?string("yyyy-MM-dd")}<#else></#if>",
    "List":[
    <#list membriComitato as membro>
    { "membro" : 
