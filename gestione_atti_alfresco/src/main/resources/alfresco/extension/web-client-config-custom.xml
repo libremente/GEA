@@ -276,6 +276,7 @@
 			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
+			<show-property name="crlatti:dataPresaInCarico"/>
 			<show-property name="crlatti:numeroAtto" />
 			<show-property name="crlatti:dataIniziativa" />
 			<show-property name="crlatti:numeroProtocollo" />

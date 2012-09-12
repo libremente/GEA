@@ -188,6 +188,10 @@
 					<title>Stralcio</title>
 					<type>d:boolean</type>
 				</property>
+				<property name="crlatti:dataPresaInCarico">
+					<title>Data presa in carico</title>
+					<type>d:date</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:tipizzabile</aspect>
