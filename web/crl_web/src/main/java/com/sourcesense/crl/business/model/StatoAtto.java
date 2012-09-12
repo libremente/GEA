@@ -21,9 +21,7 @@ public class StatoAtto {
 	
 	//COMMISSIONI
 	public static final String ASSEGNATO_COMMISSIONE="Assegnato a Commissione";
-	public static final String PRESO_CARICO_COMMISSIONE_REFERENTE="Preso in carico da Commissione Referente";
-	public static final String PRESO_CARICO_COMMISSIONE_CONSULTIVA="Preso in carico da Commissione Consultiva";
-	public static final String PRESO_CARICO_COMMISSIONE_REDIGENTE="Preso in carico da Commissione Redigente";
+	public static final String PRESO_CARICO_COMMISSIONE="Preso in carico da Commissioni";
 	public static final String NOMINATO_RELATORE="Nominato Relatore";
 	public static final String VOTATO_COMMISSIONE="Votato in Commissione";
 	public static final String TRASMESSO_COMMISSIONE="Trasmesso da Commissione";
