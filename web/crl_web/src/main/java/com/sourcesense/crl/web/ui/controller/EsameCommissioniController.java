@@ -565,6 +565,8 @@ public class EsameCommissioniController {
 		if((isPresenzaComitatoRistretto() && isOneMembroAttivo) || 
 				(!isPresenzaComitatoRistretto() && !isOneMembroAttivo)) {
 			commissioneUser.getComitatoRistretto().setComponenti(membriComitatoList);
+			commissioneUser.getComitatoRistretto().setPresenzaComitatoRistretto(isPresenzaComitatoRistretto());
+			commissioneUser.getComitatoRistretto().setDataIstituzioneComitato(getDataIstituzioneComitato());
 			atto.setCommissioni(commissioniList);
 			attoServiceManager.salvaComitatoRistrettoEsameCommissioni(atto);
 
@@ -572,8 +574,6 @@ public class EsameCommissioniController {
 					.getSessionMap().get("attoBean"));
 
 			attoBean.getAtto().setCommissioni(Clonator.cloneList(commissioniList));
-			attoBean.getAtto().setPresenzaComitatoRistretto(atto.isPresenzaComitatoRistretto());
-			attoBean.getAtto().setDataIstituzioneComitato(atto.getDataIstituzioneComitato());
 
 			setStatoCommitComitatoRistretto(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage("Comitato ristretto salvato con successo", ""));			
@@ -2067,19 +2067,19 @@ public class EsameCommissioniController {
 	}
 
 	public boolean isPresenzaComitatoRistretto() {
-		return atto.isPresenzaComitatoRistretto();
+		return presenzaComitatoRistretto;
 	}
 
 	public void setPresenzaComitatoRistretto(boolean presenzaComitatoRistretto) {
-		this.atto.setPresenzaComitatoRistretto(presenzaComitatoRistretto);
+		this.presenzaComitatoRistretto = presenzaComitatoRistretto;
 	}
 
 	public Date getDataIstituzioneComitato() {
-		return atto.getDataIstituzioneComitato();
+		return dataIstituzioneComitato;
 	}
 
 	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
-		this.atto.setDataIstituzioneComitato(dataIstituzioneComitato);
+		this.dataIstituzioneComitato = dataIstituzioneComitato;
 	}
 
 	public List <Abbinamento> getAbbinamentiList() {
