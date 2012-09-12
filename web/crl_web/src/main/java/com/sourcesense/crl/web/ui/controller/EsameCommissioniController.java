@@ -183,6 +183,8 @@ public class EsameCommissioniController {
 		setCommissioneUser(findCommissione(userBean.getUser().getSessionGroup().getNome()));
 		setMateria(commissioneUser.getMateria());
 		setDataScadenza(commissioneUser.getDataScadenza());
+		setPresenzaComitatoRistretto(commissioneUser.getComitatoRistretto().isPresenzaComitatoRistretto());
+		setDataIstituzioneComitato(commissioneUser.getComitatoRistretto().getDataIstituzioneComitato());
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
