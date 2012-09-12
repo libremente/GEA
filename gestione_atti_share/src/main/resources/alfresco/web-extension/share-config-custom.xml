@@ -371,6 +371,7 @@
             <show id="crlatti:tipologia"/>
             <show id="crlatti:legislatura"/>
             <show id="crlatti:statoAtto"/>
+            <show id="crlatti:dataPresaInCarico"/>
             <show id="crlatti:numeroAtto"/>
             <show id="crlatti:dataIniziativa"/>
             <show id="crlatti:numeroProtocollo"/>
