@@ -11,6 +11,7 @@ var richiestaUrgenza = atto.get("richiestaUrgenza");
 var votazioneUrgenza = atto.get("votazioneUrgenza");
 var dataVotazioneUrgenza = atto.get("dataVotazioneUrgenza");
 var note = atto.get("noteAmmissibilita");
+var stato = atto.get("stato");
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
@@ -60,6 +61,7 @@ if(checkIsNotNull(id)){
 		attoNode.properties["crlatti:ammissibilitaNormaFinanziaria"] = normaFinanziaria;
 	}
 
+	attoNode.properties["crlatti:statoAtto"] = stato;
 	attoNode.save();	
 	model.atto = attoNode;
 	
