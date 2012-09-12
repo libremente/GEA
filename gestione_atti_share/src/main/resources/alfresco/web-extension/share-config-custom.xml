@@ -602,6 +602,7 @@
    				<show id="crlatti:tipologia" />
    				<show id="crlatti:pubblico" />
    				<show id="crlatti:dataSedutaTestoCR" />
+   				<show id="crlatti:commissioneCR" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -660,10 +661,9 @@
    				 <show id="crlatti:relatoriCommissione" />
 		         <show id="crlatti:dataAssegnazioneCommissione" />
 		         <show id="crlatti:dataPresaInCaricoCommissione" />
+		         <show id="crlatti:dataScadenzaCommissione" />
 		         <show id="crlatti:dataNominaCommissione" />
 		         <show id="crlatti:membriComitatoRistrettoCommissione" />
-		         <show id="crlatti:dataAperturaLavoriComitatoCommissione" />
-		         <show id="crlatti:dataChiusuraLavoriComitatoCommissione" />
 		         <show id="crlatti:tipoVotazioneCommissione" />
 		         <show id="crlatti:esitoVotazioneCommissione" />
 		         <show id="crlatti:dataVotazioneCommissione" />
