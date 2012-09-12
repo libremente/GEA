@@ -34,9 +34,9 @@ public class Commissione implements Cloneable {
 	private Date dataVotazione;
 	private Date dataTrasmissione;
 	
-	private Date dataChiusuraLavoriComitato;
-	private Date dataAperturaLavoriComitato;
 	private Date dataNomina;
+	
+	private Date dataFineLavoriEsameComitato;
 	
 	private List <Relatore> relatori = new ArrayList<Relatore>();
 	private Date dataProposta;
@@ -191,24 +191,6 @@ public class Commissione implements Cloneable {
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataChiusuraLavoriComitato() {
-		return dataChiusuraLavoriComitato;
-	}
-
-	public void setDataChiusuraLavoriComitato(Date dataChiusuraLavoriComitato) {
-		this.dataChiusuraLavoriComitato = dataChiusuraLavoriComitato;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataAperturaLavoriComitato() {
-		return dataAperturaLavoriComitato;
-	}
-
-	public void setDataAperturaLavoriComitato(Date dataAperturaLavoriComitato) {
-		this.dataAperturaLavoriComitato = dataAperturaLavoriComitato;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataNomina() {
 		return dataNomina;
 	}
@@ -233,12 +215,23 @@ public class Commissione implements Cloneable {
 		this.materia = materia;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataScadenza() {
 		return dataScadenza;
 	}
 
 	public void setDataScadenza(Date dataScadenza) {
 		this.dataScadenza = dataScadenza;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataFineLavoriEsameComitato() {
+		return dataFineLavoriEsameComitato;
+	}
+
+	public void setDataFineLavoriEsameComitato(
+			Date dataFineLavoriEsameComitato) {
+		this.dataFineLavoriEsameComitato = dataFineLavoriEsameComitato;
 	}
 	
 	

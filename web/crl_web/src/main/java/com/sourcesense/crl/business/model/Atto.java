@@ -152,7 +152,6 @@ public class Atto implements Cloneable
 	private Date dataPresaInCaricoEsameCommissioni;
 	private String materia;
 	private Date dataScadenzaEsameCommissioni;
-	private Date dataFineLavoriEsameCommissioni;
 	private String esitoVotoCommissioneReferente;
 	private String quorumEsameCommissioni;
 	private Date dataSedutaCommissione;
@@ -239,8 +238,6 @@ public class Atto implements Cloneable
 		commissione.setEsitoVotazione("Esito votazione 1");
 		commissione.setDataVotazione(new Date());
 		commissione.setDataTrasmissione(new Date());
-		commissione.setDataChiusuraLavoriComitato(new Date());
-		commissione.setDataAperturaLavoriComitato(new Date());
 		commissione.setDataNomina(new Date());
 		commissione.setDataProposta(new Date());
 		commissione.setDataAnnullo(new Date());
@@ -257,8 +254,6 @@ public class Atto implements Cloneable
 		commissione2.setEsitoVotazione("Esito votazione 2");
 		commissione2.setDataVotazione(new Date());
 		commissione2.setDataTrasmissione(new Date());
-		commissione2.setDataChiusuraLavoriComitato(new Date());
-		commissione2.setDataAperturaLavoriComitato(new Date());
 		commissione2.setDataNomina(new Date());
 		commissione2.setDataProposta(new Date());
 		commissione2.setDataAnnullo(new Date());
@@ -933,15 +928,6 @@ public class Atto implements Cloneable
 		this.dataScadenzaEsameCommissioni = dataScadenzaEsameCommissioni;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataFineLavoriEsameCommissioni() {
-		return dataFineLavoriEsameCommissioni;
-	}
-
-	public void setDataFineLavoriEsameCommissioni(
-			Date dataFineLavoriEsameCommissioni) {
-		this.dataFineLavoriEsameCommissioni = dataFineLavoriEsameCommissioni;
-	}
 
 	public String getEsitoVotoCommissioneReferente() {
 		return esitoVotoCommissioneReferente;

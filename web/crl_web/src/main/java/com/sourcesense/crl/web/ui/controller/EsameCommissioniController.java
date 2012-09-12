@@ -185,6 +185,7 @@ public class EsameCommissioniController {
 		setDataScadenza(commissioneUser.getDataScadenza());
 		setPresenzaComitatoRistretto(commissioneUser.getComitatoRistretto().isPresenzaComitatoRistretto());
 		setDataIstituzioneComitato(commissioneUser.getComitatoRistretto().getDataIstituzioneComitato());
+		setDataFineLavori(commissioneUser.getDataFineLavoriEsameComitato());
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
@@ -659,13 +660,15 @@ public class EsameCommissioniController {
 
 
 	public void confermaFineLavori() {
+		commissioneUser.setDataFineLavoriEsameComitato(getDataFineLavori());
+		atto.setCommissioni(getCommissioniList());
 		attoServiceManager.salvaFineLavoriEsameCommissioni(atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setDataFineLavoriEsameCommissioni(atto.getDataFineLavoriEsameCommissioni());
+		attoBean.getAtto().setCommissioni(Clonator.cloneList(getCommissioniList()));
 
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Relatori e Comitati Ristretti salvati con successo", ""));
@@ -1367,13 +1370,13 @@ public class EsameCommissioniController {
 
 
 	public Date getDataFineLavori() {
-		return atto.getDataFineLavoriEsameCommissioni();
+		return dataFineLavori;
 	}
 
 
 
 	public void setDataFineLavori(Date dataFineLavori) {
-		this.atto.setDataFineLavoriEsameCommissioni(dataFineLavori);
+		this.dataFineLavori = dataFineLavori;
 	}
 
 
