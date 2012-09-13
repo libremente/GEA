@@ -22,6 +22,12 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @AutoProperty
 public class Commissione implements Cloneable {
 	
+	public static final String STATO_PROPOSTO = "Proposto";
+	public static final String STATO_ASSEGNATO = "Assegnato";
+	public static final String STATO_IN_CARICO = "In Carico";
+	public static final String STATO_ANNULLATO = "Annullato";
+	
+	
 	private String commissione;
 	private String descrizione;
 	private String nome;

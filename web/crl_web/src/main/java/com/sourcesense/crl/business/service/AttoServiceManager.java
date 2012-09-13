@@ -14,6 +14,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoService;
 import com.sourcesense.crl.util.CRLMessage;
@@ -69,6 +70,12 @@ public class AttoServiceManager implements ServiceManager {
 
 	}
 	
+	
+	public void removeFirmatario(Firmatario firmatario){
+		
+		attoService.removeFirmatario(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_remove_firmatario", new String[]{firmatario.getId()}));
+	}
 	
 	
 	public TestoAtto uploadTestoAttoPresentazioneAssegnazione(Atto atto, InputStream stream, TestoAtto testoAtto) {
@@ -131,6 +138,8 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_AULA_ALLEGATO);
 	}	
 	
+	
+	
 
 	@Override
 	public Atto persist(Object object) {
@@ -148,7 +157,7 @@ public class AttoServiceManager implements ServiceManager {
 
 	public void presaInCaricoSC(Atto atto) {
 		
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_info_generali_presentazione_assegnazione", 
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_presa_carico_presentazione_assegnazione", 
 				new String[] { atto.getId() }), atto);
 	
 	}

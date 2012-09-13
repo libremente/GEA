@@ -14,8 +14,7 @@
 	<p:menuitem value="Home" url="/home" />
 	
 	
-	<p:menuitem
-		value=" #{fn: replace (prettyContext.getCurrentInstance().currentMapping.id  ,'_', ' '   )  }"
+	<p:menuitem value=" #{fn: replace (prettyContext.getCurrentInstance().currentMapping.id  ,'_', ' '   )  }"
 		url="#{prettyContext.getCurrentInstance().currentMapping.pattern}" />
     
 </p:breadCrumb>

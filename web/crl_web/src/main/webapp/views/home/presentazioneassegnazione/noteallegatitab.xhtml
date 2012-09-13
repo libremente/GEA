@@ -54,6 +54,37 @@
 						onclick="linkDialog.hide()" type="button" />
 
 				</p:confirmDialog>
+
+
+				<p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
+					widgetVar="uploadAllegatoAttributesDialog" style="width:450px" message="Allega file">
+					<p:panelGrid id="uploadpanelalleg">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="isPubblico" value="Pubblico: " />
+								<p:selectBooleanCheckbox id="isPubblicoAllegato"
+									value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true"></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:fileUpload label="Carica Allegato"
+									oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
+									update="listaAllegati ,noteAllegatiMsg"
+									fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadAllegato}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton id="declineUploadAllegato" value="Annulla"
+									onclick="uploadAllegatoAttributesDialog.hide()" type="button" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:confirmDialog>
+                   	
 			</p>
 		</p:column>
 	</p:row>
@@ -91,11 +122,12 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica Allegato"
-								fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadAllegato}"
-								actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
-								mode="advanced" auto="true"
-								update="listaAllegati ,noteAllegatiMsg" />
+						
+
+							<p:commandButton value="Carica Allegato"
+								oncomplete="uploadAllegatoAttributesDialog.show()">
+							</p:commandButton>
+
 						</p:column>
 					</p:row>
 					<p:row>
@@ -219,8 +251,8 @@
 								<p:column headerText="Indirizzo collegamento">
 									<p:cellEditor>
 										<f:facet name="output">
-										<h:outputLink value="#{link.indirizzo}">
-											<h:outputText value="#{link.descrizione}" />
+											<h:outputLink value="#{link.indirizzo}">
+												<h:outputText value="#{link.descrizione}" />
 											</h:outputLink>
 										</f:facet>
 										<f:facet name="input">
@@ -229,10 +261,10 @@
 											</p:inputText>
 										</f:facet>
 									</p:cellEditor>
-									
-										
+
+
 								</p:column>
-								
+
 								<p:column headerText="Pubblico">
 									<p:cellEditor>
 										<f:facet name="output">
@@ -246,7 +278,7 @@
 								</p:column>
 
 								<p:column headerText="Elimina">
-									
+
 
 									<p:commandButton oncomplete="linkDialog.show()"
 										icon="delete-icon">
@@ -255,10 +287,10 @@
 											target="#{presentazioneAssegnazioneAttoController.linkToDelete}" />
 									</p:commandButton>
 								</p:column>
-								
+
 								<p:column headerText="Modifica" style="width:50px">
-					<p:rowEditor />
-				</p:column>
+									<p:rowEditor />
+								</p:column>
 
 							</p:dataTable>
 						</p:column>

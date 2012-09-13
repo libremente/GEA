@@ -181,7 +181,7 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="Ruolo">
+								<p:column headerText="Competenza">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{commissione.ruolo}" />
@@ -204,7 +204,7 @@
 								</p:column>
 
 								<p:column headerText="Stato">
-
+                                    <h:outputText value="#{commissione.stato}" />
 								</p:column>
 
 								<p:column headerText="Data Ann." style="width:100px">
@@ -224,7 +224,7 @@
 									</p:commandButton>
 								</p:column>
 
-								<p:column headerText="Elimina" >
+								<!-- <p:column headerText="Elimina" >
 
 
 									<p:commandButton oncomplete="commissioneDialog.show()"
@@ -234,7 +234,7 @@
 											value="#{commissione.descrizione}"
 											target="#{presentazioneAssegnazioneAttoController.commissioneToDelete}" />
 									</p:commandButton>
-								</p:column>
+								</p:column>-->
 
 								<p:column headerText="Modifica">
 									<p:rowEditor />

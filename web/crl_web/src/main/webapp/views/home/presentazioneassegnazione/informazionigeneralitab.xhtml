@@ -54,7 +54,7 @@
 
 
 				<p:confirmDialog id="uploadFileAttributes" header="Caricamento"
-					widgetVar="uploadFileAttributesDialog" style="width:450px">
+					widgetVar="uploadFileAttributesDialog" style="width:450px" message="Allega Testo">
 					<p:panelGrid id="uploadpanel">
 						<p:row>
 							<p:column>
@@ -87,8 +87,8 @@
 						locale="it_IT" id="datapresaincarico"
 						value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
 				</b>
-				<p:commandButton value="Presa in Carico" update="presaCaricoMsg"
-					actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" />
+				<p:commandButton value="Presa in Carico" update="presaCaricoMsg ,:informationForm:informationBar"
+					actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}"  />
 			</p>
 		</p:column>
 	</p:row>
