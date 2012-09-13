@@ -33,19 +33,17 @@
 				"id": ""+idAtto+"",
 				"stato": "fine lavori comitato",
 				"commissioni": [
-					{"commissione":
-				 		{
+					{
 				 			"descrizione": ""+commissione+"",
 							"dataFineLavoriComitato": ""+dataFineLavoriComitato+"",
 							"stato": "fine lavori comitato"
-						}
+						
 					},
-					{"commissione":
-				 		{
+					{
 				 			"descrizione": "commissioneStaticaTest",
 							"dataFineLavoriComitato": "2012-08-09",
 							"stato": "fine lavori comitato"
-						}
+						
 					}
 				
 				]

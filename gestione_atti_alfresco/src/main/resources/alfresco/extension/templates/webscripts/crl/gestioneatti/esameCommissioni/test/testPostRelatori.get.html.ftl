@@ -37,8 +37,8 @@
 				"id": ""+idAtto+"",
 				"stato": "nominato relatore",
 				"commissioni": [
-					{"commissione":
-				 		{
+					{
+				 		
 				 			"descrizione": ""+commissione+"",
 							"relatori":[
 								{"relatore":
@@ -57,14 +57,14 @@
 								}
 							],
 							"stato": "nominato relatore"
-						}	
+							
 					},
-					{"commissione":
-				 		{
+					{
+				 		
 				 			"descrizione": "commissioneStaticaTest",
 							"relatori":[],
 							"stato": "nominato relatore"
-						}
+						
 					}
 				
 				]

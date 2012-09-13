@@ -10,9 +10,9 @@ var commissioneUtente = json.get("target").get("commissione");
 var relatori;
 var statoCommissione;
 
-// prendo i valori delle proprietˆ dalla commissione target
+// prendo i valori delle proprietï¿½ dalla commissione target
 for(var i=0; i<commissioni.length(); i++) {
-	var commissioneTemp = commissioni.get(i).get("commissione");
+	var commissioneTemp = commissioni.get(i);
 	
 	if(""+commissioneTemp.get("descrizione")+"" == ""+commissioneUtente+"") {
 		relatori = commissioneTemp.get("relatori");

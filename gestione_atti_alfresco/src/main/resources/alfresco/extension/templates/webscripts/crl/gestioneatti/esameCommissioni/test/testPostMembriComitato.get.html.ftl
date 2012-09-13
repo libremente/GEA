@@ -41,8 +41,7 @@
 				"id": ""+idAtto+"",
 				"stato": "comitato ristretto",
 				"commissioni": [
-					{"commissione":
-				 		{
+					{
 				 			"descrizione": ""+commissione+"",
 				 			"presenzaComitatoRistretto": ""+presenzaComitato+"",
 				 			"dataIstituzioneComitato": ""+dataIstituzioneComitato+"",
@@ -69,14 +68,13 @@
 									}
 								},
 							"stato": "comitato ristretto"
-						}	
+							
 					},
-					{"commissione":
-				 		{
+					{
 				 			"descrizione": "commissioneStaticaTest",
 							"comitatoRistretto": "",
 							"stato": "comitato ristretto"
-						}
+						
 					}
 				
 				]

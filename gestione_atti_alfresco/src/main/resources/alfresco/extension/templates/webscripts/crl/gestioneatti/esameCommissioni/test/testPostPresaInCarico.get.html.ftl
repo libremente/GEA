@@ -34,23 +34,21 @@
 				"id": ""+idAtto+"",
 				"stato": "Preso in carico da Commissione",
 				"commissioni": [
-					{"commissione":
-				 		{
+					{
 				 			"descrizione": ""+commissione+"",
 							"dataPresaInCarico": ""+dataPresaInCarico+"",
 							"materia": ""+materia+"",
 							"dataScadenza": ""+dataScadenza+"",
 							"stato": "In carico"
-						}
+						
 					},
-					{"commissione":
-				 		{
+					{
 				 			"descrizione": "commissioneStaticaTest",
 							"dataPresaInCarico": "2012-08-08",
 							"materia": "materiaTest",
 							"dataScadenza": "2012-09-08",
 							"stato": "In carico"
-						}
+						
 					}
 				
 				]

@@ -12,9 +12,9 @@ var dataIstituzioneComitato;
 var membri;
 var statoCommissione;
 
-// prendo i valori delle proprietˆ dalla commissione target
+// prendo i valori delle proprietï¿½ dalla commissione target
 for(var i=0; i<commissioni.length(); i++) {
-	var commissioneTemp = commissioni.get(i).get("commissione");
+	var commissioneTemp = commissioni.get(i);
 	
 	if(""+commissioneTemp.get("descrizione")+"" == ""+commissioneUtente+"") {
 		presenzaComitato = commissioneTemp.get("presenzaComitatoRistretto");
@@ -55,7 +55,7 @@ if(checkIsNotNull(id)){
 	var comitatoXPathQuery = "*[@cm:name='ComitatoRistretto']";
 	var comitatoFolderNode = commissioneFolderNode.childrenByXPath(comitatoXPathQuery)[0];
 	
-	// setting delle proprietˆ del comitato ristretto
+	// setting delle proprietï¿½ del comitato ristretto
 	
 	comitatoFolderNode.properties["crlatti:presenzaCR"] = presenzaComitato;
 	
