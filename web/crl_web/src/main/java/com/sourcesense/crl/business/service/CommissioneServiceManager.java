@@ -13,6 +13,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneConsultiva;
 import com.sourcesense.crl.business.model.CommissioneReferente;
+import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Legislatura;
 import com.sourcesense.crl.business.service.rest.CommissioneService;
 import com.sourcesense.crl.util.URLBuilder;
@@ -43,6 +44,23 @@ public class CommissioneServiceManager implements ServiceManager{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public void salvaPresaInCaricoEsameCommissioni(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_presa_in_carico_esame_commissioni", null), esameCommissione);
+	}
+	
+	public void salvaRelatoriEsameCommissioni(EsameCommissione esameCommissione) {		
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_relatori_esame_commissioni", null), esameCommissione);
+	}
+	
+	public void salvaComitatoRistrettoEsameCommissioni(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_comitato_ristretto_esame_commissioni", null), esameCommissione);
+	}
+	
+	public void salvaFineLavoriEsameCommissioni(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_fine_lavori_esame_commissioni", null), esameCommissione);
+	}
+	
 
     public List <Commissione> findCommissioniByAtto(String idAtto) {
 		

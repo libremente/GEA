@@ -20,6 +20,7 @@ import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.Link;
@@ -28,7 +29,9 @@ import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
+import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.service.AttoServiceManager;
+import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
@@ -45,6 +48,9 @@ public class EsameCommissioniController {
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
+	
+	@ManagedProperty(value = "#{commissioneServiceManager}")
+	private CommissioneServiceManager commissioneServiceManager;
 
 	private Atto atto = new Atto();
 
@@ -181,6 +187,7 @@ public class EsameCommissioniController {
 		userBean.getUser().setSessionGroup(g1);
 
 		setCommissioneUser(findCommissione(userBean.getUser().getSessionGroup().getNome()));
+		setDataPresaInCarico(commissioneUser.getDataPresaInCarico());
 		setMateria(commissioneUser.getMateria());
 		setDataScadenza(commissioneUser.getDataScadenza());
 		setPresenzaComitatoRistretto(commissioneUser.getComitatoRistretto().isPresenzaComitatoRistretto());
@@ -373,32 +380,37 @@ public class EsameCommissioniController {
 
 	// Relatori e Comitati ristretti***********************************************
 	public void presaInCarico() {
+		commissioneUser.setDataPresaInCarico(getDataPresaInCarico());
 		commissioneUser.setMateria(materia);
 		commissioneUser.setDataScadenza(dataScadenza);
+		commissioneUser.setStato(Commissione.STATO_IN_CARICO);		
 		
 		atto.setCommissioni(getCommissioniList());
-
-		// TODO Service logic
+		atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+		
+		Target target = new Target();
+		target.setCommissione(commissioneUser.getDescrizione());
+		EsameCommissione esameCommissione = new EsameCommissione();
+		esameCommissione.setAtto(atto);
+		esameCommissione.setTarget(target);
+		
+		commissioneServiceManager.salvaPresaInCaricoEsameCommissioni(esameCommissione);		
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
 		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
-
-		String numeroAtto = attoBean.getNumeroAtto();
+				.getSessionMap().get("userBean"));		
 
 		attoBean.getAtto().setDataPresaInCaricoEsameCommissioni(atto.getDataPresaInCaricoEsameCommissioni());
 		attoBean.getAtto().setCommissioni(commissioniList);
-
-
 		attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
-
 
 		confrontaDataScadenza();
 
+		String numeroAtto = attoBean.getNumeroAtto();
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
-
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + userBean.getUser().getUsername()));
 	}
@@ -457,7 +469,7 @@ public class EsameCommissioniController {
 	public void confermaRelatori() {
 		commissioneUser.setRelatori(relatoriList);
 		atto.setCommissioni(commissioniList);
-		attoServiceManager.salvaRelatoriEsameCommissioni(atto);
+		//TODO: attoServiceManager.salvaRelatoriEsameCommissioni(atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -573,7 +585,7 @@ public class EsameCommissioniController {
 			commissioneUser.getComitatoRistretto().setPresenzaComitatoRistretto(isPresenzaComitatoRistretto());
 			commissioneUser.getComitatoRistretto().setDataIstituzioneComitato(getDataIstituzioneComitato());
 			atto.setCommissioni(commissioniList);
-			attoServiceManager.salvaComitatoRistrettoEsameCommissioni(atto);
+			//TODO: attoServiceManager.salvaComitatoRistrettoEsameCommissioni(atto);
 
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
@@ -664,7 +676,7 @@ public class EsameCommissioniController {
 	public void confermaFineLavori() {
 		commissioneUser.setDataFineLavoriEsameComitato(getDataFineLavori());
 		atto.setCommissioni(getCommissioniList());
-		attoServiceManager.salvaFineLavoriEsameCommissioni(atto);
+		// TODO: attoServiceManager.salvaFineLavoriEsameCommissioni(atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -1336,13 +1348,13 @@ public class EsameCommissioniController {
 
 
 	public Date getDataPresaInCarico() {
-		return atto.getDataPresaInCaricoEsameCommissioni();
+		return dataPresaInCarico;
 	}
 
 
 
 	public void setDataPresaInCarico(Date dataPresaInCarico) {
-		this.atto.setDataPresaInCaricoEsameCommissioni(dataPresaInCarico);
+		this.dataPresaInCarico = dataPresaInCarico;
 	}
 
 
@@ -2239,6 +2251,17 @@ public class EsameCommissioniController {
 	public void setCommissioniList(List<Commissione> commissioniList) {
 		this.commissioniList = commissioniList;
 	}
+
+	public CommissioneServiceManager getCommissioneServiceManager() {
+		return commissioneServiceManager;
+	}
+
+	public void setCommissioneServiceManager(
+			CommissioneServiceManager commissioneServiceManager) {
+		this.commissioneServiceManager = commissioneServiceManager;
+	}
+	
+	
 
 
 

@@ -84,9 +84,10 @@
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:calendar>
 					&nbsp;
-					<p:commandButton value="Presa in Carico" update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg"
-				actionListener="#{esameCommissioniController.presaInCarico}"
-				 />
+					<p:commandButton id="presaincaricoesamecommissione"
+				value="Presa in Carico"
+				update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg"
+				actionListener="#{esameCommissioniController.presaInCarico}" />
 		</p:column>
 		<p:column></p:column>
 		<p:column></p:column>
