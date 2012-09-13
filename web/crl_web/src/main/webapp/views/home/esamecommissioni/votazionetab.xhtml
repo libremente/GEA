@@ -104,7 +104,7 @@
 			<p:column>
 				<p:commandButton value="Registra"
 					action="#{esameCommissioniController.registraVotazione}"
-					update="votazioneMsg" />
+					update="votazioneMsg, :informationForm:informationBar" />
 			</p:column>
 		</p:row>
 	</p:panelGrid>
@@ -252,7 +252,7 @@
 			<p:column>
 				<p:commandButton value="Salva Trasmissione"
 					action="#{esameCommissioniController.confermaTrasmissione}"
-					update="votazioneMsg" />
+					update="votazioneMsg, :informationForm:informationBar" />
 			</p:column>
 		</p:row>
 	</p:panelGrid>

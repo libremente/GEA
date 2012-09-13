@@ -8,11 +8,11 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
-@JsonRootName("membroComitatoRistretto")
-@JsonTypeName("membroComitatoRistretto")
+@JsonRootName("componente")
+@JsonTypeName("componente")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class MembroComitatoRistretto extends Personale implements Cloneable {
+public class Componente extends Personale implements Cloneable {
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;

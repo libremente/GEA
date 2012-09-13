@@ -19,18 +19,16 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @AutoProperty
 public class ComitatoRistretto {
 	
-	private List<MembroComitatoRistretto> componenti = new ArrayList<MembroComitatoRistretto>();
+	private List<Componente> componenti = new ArrayList<Componente>();
 	private List<Allegato> testi = new ArrayList<Allegato>();
-	private boolean presenzaComitatoRistretto;
-	private Date dataIstituzioneComitato;
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	 }
 	
-	public List<MembroComitatoRistretto> getComponenti() {
+	public List<Componente> getComponenti() {
 		return componenti;
 	}
-	public void setComponenti(List<MembroComitatoRistretto> componenti) {
+	public void setComponenti(List<Componente> componenti) {
 		this.componenti = componenti;
 	}
 	public List<Allegato> getTesti() {
@@ -39,24 +37,6 @@ public class ComitatoRistretto {
 	public void setTesti(List<Allegato> testi) {
 		this.testi = testi;
 	}
-
-	public boolean isPresenzaComitatoRistretto() {
-		return presenzaComitatoRistretto;
-	}
-
-	public void setPresenzaComitatoRistretto(boolean presenzaComitatoRistretto) {
-		this.presenzaComitatoRistretto = presenzaComitatoRistretto;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataIstituzioneComitato() {
-		return dataIstituzioneComitato;
-	}
-
-	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
-		this.dataIstituzioneComitato = dataIstituzioneComitato;
-	}
-	
 	
 	
 

@@ -24,7 +24,7 @@ import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.Link;
-import com.sourcesense.crl.business.model.MembroComitatoRistretto;
+import com.sourcesense.crl.business.model.Componente;
 import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
@@ -80,7 +80,7 @@ public class EsameCommissioniController {
 	private Date dataFineLavori;
 
 	private List <Relatore> relatoriList = new ArrayList <Relatore>();
-	private List <MembroComitatoRistretto> membriComitatoList = new ArrayList <MembroComitatoRistretto>();
+	private List <Componente> membriComitatoList = new ArrayList <Componente>();
 	private List <Allegato> testiComitatoRistrettoList = new ArrayList <Allegato>();
 
 	private String testoComitatoToDelete;
@@ -190,8 +190,8 @@ public class EsameCommissioniController {
 		setDataPresaInCarico(commissioneUser.getDataPresaInCarico());
 		setMateria(commissioneUser.getMateria());
 		setDataScadenza(commissioneUser.getDataScadenza());
-		setPresenzaComitatoRistretto(commissioneUser.getComitatoRistretto().isPresenzaComitatoRistretto());
-		setDataIstituzioneComitato(commissioneUser.getComitatoRistretto().getDataIstituzioneComitato());
+		setPresenzaComitatoRistretto(commissioneUser.isPresenzaComitatoRistretto());
+		setDataIstituzioneComitato(commissioneUser.getDataIstituzioneComitato());
 		setDataFineLavori(commissioneUser.getDataFineLavoriEsameComitato());
 
 		totaleEmendApprovati();
@@ -469,7 +469,14 @@ public class EsameCommissioniController {
 	public void confermaRelatori() {
 		commissioneUser.setRelatori(relatoriList);
 		atto.setCommissioni(commissioniList);
-		//TODO: attoServiceManager.salvaRelatoriEsameCommissioni(atto);
+		
+		Target target = new Target();
+		target.setCommissione(commissioneUser.getDescrizione());
+		EsameCommissione esameCommissione = new EsameCommissione();
+		esameCommissione.setAtto(atto);
+		esameCommissione.setTarget(target);
+		
+		commissioneServiceManager.salvaRelatoriEsameCommissioni(esameCommissione);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -514,7 +521,7 @@ public class EsameCommissioniController {
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Coordinatore già selezionato ", ""));
 
 			} else {
-				MembroComitatoRistretto componente = new MembroComitatoRistretto();
+				Componente componente = new Componente();
 				componente.setDescrizione(nomeComponente);
 				componente.setDataNomina(dataNominaComponente);
 				componente.setDataUscita(dataUscitaComponente);
@@ -528,7 +535,7 @@ public class EsameCommissioniController {
 
 	public void removeComponente() {
 
-		for (MembroComitatoRistretto element : membriComitatoList) {
+		for (Componente element : membriComitatoList) {
 
 			if (element.getDescrizione().equals(componenteToDelete)) {
 
@@ -541,7 +548,7 @@ public class EsameCommissioniController {
 
 	private boolean checkComponenti() {
 
-		for (MembroComitatoRistretto element : membriComitatoList) {
+		for (Componente element : membriComitatoList) {
 
 			if (element.getDescrizione().equals(nomeComponente)) {
 
@@ -553,7 +560,7 @@ public class EsameCommissioniController {
 
 	private boolean checkCoordinatore() {
 
-		for (MembroComitatoRistretto element : membriComitatoList) {
+		for (Componente element : membriComitatoList) {
 
 			if (element.isCoordinatore()) {
 
@@ -565,7 +572,7 @@ public class EsameCommissioniController {
 
 	private boolean checkOneMembroAttivo() {
 
-		for (MembroComitatoRistretto element : membriComitatoList) {
+		for (Componente element : membriComitatoList) {
 
 			if (element.getDataUscita()==null) {
 
@@ -582,10 +589,16 @@ public class EsameCommissioniController {
 		if((isPresenzaComitatoRistretto() && isOneMembroAttivo) || 
 				(!isPresenzaComitatoRistretto() && !isOneMembroAttivo)) {
 			commissioneUser.getComitatoRistretto().setComponenti(membriComitatoList);
-			commissioneUser.getComitatoRistretto().setPresenzaComitatoRistretto(isPresenzaComitatoRistretto());
-			commissioneUser.getComitatoRistretto().setDataIstituzioneComitato(getDataIstituzioneComitato());
+			commissioneUser.setPresenzaComitatoRistretto(isPresenzaComitatoRistretto());
+			commissioneUser.setDataIstituzioneComitato(getDataIstituzioneComitato());
 			atto.setCommissioni(commissioniList);
-			//TODO: attoServiceManager.salvaComitatoRistrettoEsameCommissioni(atto);
+			
+			Target target = new Target();
+			target.setCommissione(commissioneUser.getDescrizione());
+			EsameCommissione esameCommissione = new EsameCommissione();
+			esameCommissione.setAtto(atto);
+			esameCommissione.setTarget(target);
+			commissioneServiceManager.salvaComitatoRistrettoEsameCommissioni(esameCommissione);
 
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
@@ -900,7 +913,8 @@ public class EsameCommissioniController {
 		attoBean.getAtto().setQuorumEsameCommissioni(atto.getQuorumEsameCommissioni());
 		attoBean.getAtto().setDataSedutaCommissione(atto.getDataSedutaCommissione());
 
-		if(attoBean.getAtto().getEsitoVotoCommissioneReferente()!=null) {
+		if(attoBean.getAtto().getEsitoVotoCommissioneReferente()!=null &&
+				!attoBean.getAtto().getEsitoVotoCommissioneReferente().trim().equals("")) {
 			attoBean.getAtto().setStato(StatoAtto.VOTATO_COMMISSIONE);
 		}
 
@@ -1011,7 +1025,7 @@ public class EsameCommissioniController {
 			if(attoBean.getAtto().isPassaggioDirettoInAula()) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 			} else if(attoBean.getAtto().getEsitoVotoCommissioneReferente()!=null && 
-					attoBean.getAtto().getEsitoVotoCommissioneReferente().trim().equals("")) {
+					!attoBean.getAtto().getEsitoVotoCommissioneReferente().trim().equals("")) {
 				attoBean.setStato(StatoAtto.TRASMESSO_COMMISSIONE);
 			}
 
@@ -1824,13 +1838,13 @@ public class EsameCommissioniController {
 
 
 
-	public List<MembroComitatoRistretto> getMembriComitatoList() {
+	public List<Componente> getMembriComitatoList() {
 		return membriComitatoList;
 	}
 
 
 
-	public void setMembriComitatoList(List<MembroComitatoRistretto> membriComitatoList) {
+	public void setMembriComitatoList(List<Componente> membriComitatoList) {
 		this.membriComitatoList = membriComitatoList;
 	}
 

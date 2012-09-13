@@ -51,6 +51,8 @@ public class Commissione implements Cloneable {
 	
 	private String materia;
 	private Date dataScadenza;
+	private boolean presenzaComitatoRistretto;
+	private Date dataIstituzioneComitato;
 	
 	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
 	
@@ -238,6 +240,23 @@ public class Commissione implements Cloneable {
 	public void setDataFineLavoriEsameComitato(
 			Date dataFineLavoriEsameComitato) {
 		this.dataFineLavoriEsameComitato = dataFineLavoriEsameComitato;
+	}
+
+	public boolean isPresenzaComitatoRistretto() {
+		return presenzaComitatoRistretto;
+	}
+
+	public void setPresenzaComitatoRistretto(boolean presenzaComitatoRistretto) {
+		this.presenzaComitatoRistretto = presenzaComitatoRistretto;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataIstituzioneComitato() {
+		return dataIstituzioneComitato;
+	}
+
+	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
+		this.dataIstituzioneComitato = dataIstituzioneComitato;
 	}
 	
 	
