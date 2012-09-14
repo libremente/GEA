@@ -15,7 +15,7 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-
+<div id="blockedVotazione">
 
 <p:fieldset legend="Registrazione votazione" toggleable="true"
 	toggleSpeed="500">
@@ -257,4 +257,16 @@
 		</p:row>
 	</p:panelGrid>
 </p:fieldset>
+</div>
+<script>
+
+
+if (! ("#{esameCommissioniController.dataPresaInCarico}").length) {
+$('#blockedVotazione').block({ message: null });
+
+
+
+};
+
+</script>
 </html>

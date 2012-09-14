@@ -14,7 +14,7 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-
+<div id="blockedNote">
 
 <p:panelGrid styleClass="infoTable" id="notePanel">
 	<p:row>
@@ -283,4 +283,17 @@
 	</p:row>
 
 </p:panelGrid>
+
+</div>
+<script>
+
+
+if (! ("#{esameCommissioniController.dataPresaInCarico}").length) {
+$('#blockedNote').block({ message: null });
+
+
+
+};
+
+</script>
 </html>

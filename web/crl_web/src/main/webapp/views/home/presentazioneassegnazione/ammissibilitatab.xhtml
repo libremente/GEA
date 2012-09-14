@@ -10,7 +10,7 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <pe:tooltip value="Click per Espandere / Comprimere" forSelector="legend" shared="true" targetPosition="top center" position="left center"/> 
-
+<div id="blockedAmmissibilita">
 <p:panelGrid styleClass="infoTable" id="ammissibilitàattopanel">
 	<p:row>
 		<p:column>
@@ -180,5 +180,18 @@
 		</p:column>
 	</p:row>
 </p:panelGrid>
+</div>
+<script>
+
+
+if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
+$('#blockedAmmissibilita').block({ message: null });
+
+
+
+};
+
+</script>
+
 
 </html>

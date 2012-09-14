@@ -11,10 +11,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
+
+
 <pe:tooltip value="Click per Espandere / Comprimere"
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
-
 
 
 <p:panelGrid styleClass="infoTable" id="relatoriecomitatiristrettipanel">
@@ -84,10 +85,18 @@
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:calendar>
 					&nbsp;
+
 					<p:commandButton id="presaincaricoesamecommissione"
 				value="Presa in Carico"
 				update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg, :informationForm:informationBar"
+				actionListener="#{esameCommissioniController.presaInCarico}"
+				oncomplete="unblockDiv()" />
+
+			<p:commandButton id="presaincaricoesamecommissione"
+				value="Presa in Carico"
+				update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg, :informationForm:informationBar"
 				actionListener="#{esameCommissioniController.presaInCarico}" />
+
 		</p:column>
 		<p:column></p:column>
 		<p:column></p:column>
@@ -119,394 +128,416 @@
 		</p:column>
 	</p:row>
 </p:panelGrid>
+<div id="blockedRelatori">
+	<p:fieldset legend="Gestione Relatori" collapsed="false"
+		toggleable="true" toggleSpeed="500">
 
-<p:fieldset legend="Gestione Relatori" collapsed="false"
-	toggleable="true" toggleSpeed="500">
 
+		<p:panelGrid styleClass="infoTable" id="firmataripanel">
+			<p:row>
+				<p:column colspan="6">
+					<p:panelGrid id="addRelatoriPanel" styleClass="tableAppend">
 
-	<p:panelGrid styleClass="infoTable" id="firmataripanel">
-		<p:row>
-			<p:column colspan="6">
-				<p:panelGrid id="addRelatoriPanel" styleClass="tableAppend">
-
-					<f:facet name="header">
+						<f:facet name="header">
+							<p:row>
+								<p:column>Relatore</p:column>
+								<p:column>Data nomina</p:column>
+								<p:column>Data uscita</p:column>
+								<p:column></p:column>
+							</p:row>
+						</f:facet>
 						<p:row>
-							<p:column>Relatore</p:column>
-							<p:column>Data nomina</p:column>
-							<p:column>Data uscita</p:column>
-							<p:column></p:column>
+							<p:column>
+								<p:selectOneMenu id="relatore"
+									value="#{esameCommissioniController.nomeRelatore}">
+									<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+									<f:selectItems value="#{esameCommissioniController.relatori}" />
+								</p:selectOneMenu>
+							</p:column>
+
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="dataNominaRelatore"
+									pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataNominaRelatore}" />
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="dataUscitaRelatore"
+									pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataUscitaRelatore}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Aggiungi"
+									action="#{esameCommissioniController.addRelatore}"
+									id="addRelatore" update="listaRelatori, comitatiMsg"
+									icon="new-icon" />
+							</p:column>
+
 						</p:row>
-					</f:facet>
-					<p:row>
-						<p:column>
-							<p:selectOneMenu id="relatore"
-								value="#{esameCommissioniController.nomeRelatore}">
-								<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
-								<f:selectItems value="#{esameCommissioniController.relatori}" />
-							</p:selectOneMenu>
+					</p:panelGrid>
+
+
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="6">
+
+					<p:dataTable id="listaRelatori"
+						value="#{esameCommissioniController.relatoriList}" var="relatore"
+						styleClass="generalInfoTab grey-text" editable="true">
+
+						<p:column headerText="Relatore">
+
+							<h:outputText value="#{relatore.descrizione}" />
 						</p:column>
 
+						<p:column headerText="Data nomina">
 
-						<p:column>
-							<p:calendar size="10" locale="it_IT" id="dataNominaRelatore"
-								pattern="dd/MM/yyyy"
-								value="#{esameCommissioniController.dataNominaRelatore}" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{relatore.dataNomina}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+										value="#{relatore.dataNomina}" />
+								</f:facet>
+							</p:cellEditor>
+
 						</p:column>
 
-						<p:column>
-							<p:calendar size="10" locale="it_IT" id="dataUscitaRelatore"
-								pattern="dd/MM/yyyy"
-								value="#{esameCommissioniController.dataUscitaRelatore}" />
+						<p:column headerText="Data uscita">
+
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{relatore.dataUscita}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+										value="#{relatore.dataUscita}" />
+								</f:facet>
+							</p:cellEditor>
+
+
+
 						</p:column>
 
-						<p:column>
-							<p:commandButton value="Aggiungi"
-								action="#{esameCommissioniController.addRelatore}"
-								id="addRelatore" update="listaRelatori, comitatiMsg"
-								icon="new-icon" />
+						<p:column headerText="Elimina">
+							<f:facet name="header">Elimina</f:facet>
+
+							<p:commandButton oncomplete="relatoreDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{relatore.descrizione}"
+									target="#{esameCommissioniController.relatoreToDelete}" />
+							</p:commandButton>
 						</p:column>
 
-					</p:row>
-				</p:panelGrid>
+						<p:column headerText="Modifica">
+							<p:rowEditor />
+						</p:column>
+
+					</p:dataTable>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Conferma Relatori"
+						action="#{esameCommissioniController.confermaRelatori}"
+						update="comitatiMsg, :informationForm:informationBar" />
+				</p:column>
+			</p:row>
 
 
-			</p:column>
-		</p:row>
+		</p:panelGrid>
 
-		<p:row>
-			<p:column colspan="6">
-
-				<p:dataTable id="listaRelatori"
-					value="#{esameCommissioniController.relatoriList}" var="relatore"
-					styleClass="generalInfoTab grey-text" editable="true">
-
-					<p:column headerText="Relatore">
-
-						<h:outputText value="#{relatore.descrizione}" />
-					</p:column>
-
-					<p:column headerText="Data nomina">
-
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{relatore.dataNomina}">
-									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</f:facet>
-							<f:facet name="input">
-								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-									value="#{relatore.dataNomina}" />
-							</f:facet>
-						</p:cellEditor>
-
-					</p:column>
-
-					<p:column headerText="Data uscita">
-
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{relatore.dataUscita}">
-									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</f:facet>
-							<f:facet name="input">
-								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-									value="#{relatore.dataUscita}" />
-							</f:facet>
-						</p:cellEditor>
-
-
-
-					</p:column>
-
-					<p:column headerText="Elimina">
-						<f:facet name="header">Elimina</f:facet>
-
-						<p:commandButton oncomplete="relatoreDialog.show()"
-							icon="delete-icon">
-
-							<f:setPropertyActionListener value="#{relatore.descrizione}"
-								target="#{esameCommissioniController.relatoreToDelete}" />
-						</p:commandButton>
-					</p:column>
-
-					<p:column headerText="Modifica">
-						<p:rowEditor />
-					</p:column>
-
-				</p:dataTable>
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
-				<p:commandButton value="Conferma Relatori"
-					action="#{esameCommissioniController.confermaRelatori}"
-					update="comitatiMsg, :informationForm:informationBar" />
-			</p:column>
-		</p:row>
-
-
-	</p:panelGrid>
-
-</p:fieldset>
-<p:fieldset legend="Gestione Comitati Ristretti" collapsed="false"
-	toggleable="true" toggleSpeed="500">
-	<p:panelGrid styleClass="infoTable" id="gestionecomitatiristrettipanel">
-		<p:row>
-			<p:column>
-				<h:outputText style="font-weight: bold;"
-					value="Presenza Comitato Ristretto: " />
-			</p:column>
-			<p:column>
-				<p:selectBooleanCheckbox
-					value="#{esameCommissioniController.presenzaComitatoRistretto}">
-					<p:ajax event="change"
-						listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
-				</p:selectBooleanCheckbox>
-			</p:column>
-			<p:column>
-
-				<b> <h:outputLabel for="dataistituzionecomitato"
-						value="Data istituzione Comitato: " />
-				</b>
-			</p:column>
-			<p:column>
-				<p>
-					<p:calendar size="10" locale="it" id="dataistituzionecomitato"
-						value="#{esameCommissioniController.dataIstituzioneComitato}">
-						<p:ajax event="dateSelect"
+	</p:fieldset>
+	<p:fieldset legend="Gestione Comitati Ristretti" collapsed="false"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable"
+			id="gestionecomitatiristrettipanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Presenza Comitato Ristretto: " />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox
+						value="#{esameCommissioniController.presenzaComitatoRistretto}">
+						<p:ajax event="change"
 							listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
-					</p:calendar>
-				</p>
-			</p:column>
+					</p:selectBooleanCheckbox>
+				</p:column>
+				<p:column>
 
-		</p:row>
-		<p:row>
-			<p:column colspan="6">
-				<p:panelGrid id="addComponentiComitatoPanel"
-					styleClass="tableAppend">
+					<b> <h:outputLabel for="dataistituzionecomitato"
+							value="Data istituzione Comitato: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="dataistituzionecomitato"
+							value="#{esameCommissioniController.dataIstituzioneComitato}">
+							<p:ajax event="dateSelect"
+								listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
+						</p:calendar>
+					</p>
+				</p:column>
 
-					<f:facet name="header">
+			</p:row>
+			<p:row>
+				<p:column colspan="6">
+					<p:panelGrid id="addComponentiComitatoPanel"
+						styleClass="tableAppend">
+
+						<f:facet name="header">
+							<p:row>
+								<p:column>Componente</p:column>
+								<p:column>Data nomina</p:column>
+								<p:column>Coordinatore</p:column>
+								<p:column>Data uscita</p:column>
+								<p:column></p:column>
+							</p:row>
+						</f:facet>
 						<p:row>
-							<p:column>Componente</p:column>
-							<p:column>Data nomina</p:column>
-							<p:column>Coordinatore</p:column>
-							<p:column>Data uscita</p:column>
-							<p:column></p:column>
+							<p:column>
+								<p:selectOneMenu id="componente"
+									value="#{esameCommissioniController.nomeComponente}">
+									<f:selectItem itemLabel="Scegli Componente" itemValue="" />
+									<f:selectItems
+										value="#{esameCommissioniController.membriComitato}" />
+								</p:selectOneMenu>
+							</p:column>
+
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="dataNominaComponente"
+									pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataNominaComponente}" />
+							</p:column>
+
+							<p:column>
+								<p:selectBooleanCheckbox
+									value="#{esameCommissioniController.coordinatore}">
+								</p:selectBooleanCheckbox>
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it_IT" id="dataUscitaComponente"
+									pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataUscitaComponente}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Aggiungi"
+									action="#{esameCommissioniController.addComponente}"
+									id="addComponente"
+									update="listaComponentiComitato, comitatiMsg" icon="new-icon" />
+							</p:column>
+
 						</p:row>
-					</f:facet>
-					<p:row>
-						<p:column>
-							<p:selectOneMenu id="componente"
-								value="#{esameCommissioniController.nomeComponente}">
-								<f:selectItem itemLabel="Scegli Componente" itemValue="" />
-								<f:selectItems
-									value="#{esameCommissioniController.membriComitato}" />
-							</p:selectOneMenu>
-						</p:column>
+					</p:panelGrid>
 
 
-						<p:column>
-							<p:calendar size="10" locale="it_IT" id="dataNominaComponente"
-								pattern="dd/MM/yyyy"
-								value="#{esameCommissioniController.dataNominaComponente}" />
-						</p:column>
+				</p:column>
+			</p:row>
 
-						<p:column>
-							<p:selectBooleanCheckbox
-								value="#{esameCommissioniController.coordinatore}">
-							</p:selectBooleanCheckbox>
-						</p:column>
+			<p:row>
+				<p:column colspan="6">
 
-						<p:column>
-							<p:calendar size="10" locale="it_IT" id="dataUscitaComponente"
-								pattern="dd/MM/yyyy"
-								value="#{esameCommissioniController.dataUscitaComponente}" />
-						</p:column>
+					<p:dataTable id="listaComponentiComitato"
+						value="#{esameCommissioniController.membriComitatoList}"
+						var="componente" styleClass="generalInfoTab grey-text"
+						editable="true">
 
-						<p:column>
-							<p:commandButton value="Aggiungi"
-								action="#{esameCommissioniController.addComponente}"
-								id="addComponente" update="listaComponentiComitato, comitatiMsg"
-								icon="new-icon" />
-						</p:column>
-
-					</p:row>
-				</p:panelGrid>
-
-
-			</p:column>
-		</p:row>
-
-		<p:row>
-			<p:column colspan="6">
-
-				<p:dataTable id="listaComponentiComitato"
-					value="#{esameCommissioniController.membriComitatoList}"
-					var="componente" styleClass="generalInfoTab grey-text"
-					editable="true">
-
-					<p:column headerText="Componenti">
+						<p:column headerText="Componenti">
 						
 							#{componente.descrizione}
     			       </p:column>
 
-					<p:column headerText="Data nomina">
+						<p:column headerText="Data nomina">
 
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{componente.dataNomina}">
-									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</f:facet>
-							<f:facet name="input">
-								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-									value="#{componente.dataNomina}" />
-							</f:facet>
-						</p:cellEditor>
-
-
-					</p:column>
-
-					<p:column headerText="Coordinatore">
-
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="si" rendered="#{componente.coordinatore}" />
-								<h:outputText value="no" rendered="#{!componente.coordinatore}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:selectBooleanCheckbox value="#{componente.coordinatore}" />
-							</f:facet>
-						</p:cellEditor>
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{componente.dataNomina}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+										value="#{componente.dataNomina}" />
+								</f:facet>
+							</p:cellEditor>
 
 
-					</p:column>
+						</p:column>
 
-					<p:column headerText="Data uscita">
+						<p:column headerText="Coordinatore">
 
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{componente.dataUscita}">
-									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-								</h:outputText>
-							</f:facet>
-							<f:facet name="input">
-								<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-									value="#{componente.dataUscita}" />
-							</f:facet>
-						</p:cellEditor>
-
-					</p:column>
-
-					<p:column headerText="Elimina">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="si" rendered="#{componente.coordinatore}" />
+									<h:outputText value="no" rendered="#{!componente.coordinatore}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{componente.coordinatore}" />
+								</f:facet>
+							</p:cellEditor>
 
 
-						<p:commandButton oncomplete="componenteDialog.show()"
-							icon="delete-icon">
+						</p:column>
 
-							<f:setPropertyActionListener value="#{componente.descrizione}"
-								target="#{esameCommissioniController.componenteToDelete}" />
-						</p:commandButton>
-					</p:column>
+						<p:column headerText="Data uscita">
 
-					<p:column headerText="Modifica">
-						<p:rowEditor />
-					</p:column>
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{componente.dataUscita}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+										value="#{componente.dataUscita}" />
+								</f:facet>
+							</p:cellEditor>
 
-				</p:dataTable>
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
-				<p:commandButton value="Conferma Comitato"
-					action="#{esameCommissioniController.confermaComitatoRistretto}"
-					update="comitatiMsg" />
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
+						</p:column>
+
+						<p:column headerText="Elimina">
+
+
+							<p:commandButton oncomplete="componenteDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{componente.descrizione}"
+									target="#{esameCommissioniController.componenteToDelete}" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Modifica">
+							<p:rowEditor />
+						</p:column>
+
+					</p:dataTable>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Conferma Comitato"
+						action="#{esameCommissioniController.confermaComitatoRistretto}"
+						update="comitatiMsg" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
 					&nbsp;
 				</p:column>
-		</p:row>
-		<p:row>
-			<!-- <p:column>
+			</p:row>
+			<p:row>
+				<!-- <p:column>
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
-			<p:column colspan="3">
-				<p:fileUpload label="Carica File"
-					fileUploadListener="#{esameCommissioniController.uploadTestoComitatoRistretto}"
-					mode="advanced" auto="true"
-					update="listaTestiComitatoRistretto ,comitatiMsg" />
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column colspan="4">
+				<p:column colspan="3">
+					<p:fileUpload label="Carica File"
+						fileUploadListener="#{esameCommissioniController.uploadTestoComitatoRistretto}"
+						mode="advanced" auto="true"
+						update="listaTestiComitatoRistretto ,comitatiMsg" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
 
-				<h:dataTable id="listaTestiComitatoRistretto"
-					value="#{esameCommissioniController.testiComitatoRistrettoList}"
-					var="testoComitato" styleClass="generalInfoTab grey-text">
+					<h:dataTable id="listaTestiComitatoRistretto"
+						value="#{esameCommissioniController.testiComitatoRistrettoList}"
+						var="testoComitato" styleClass="generalInfoTab grey-text">
 
-					<h:column>
-						<f:facet name="header">Data Seduta</f:facet>
+						<h:column>
+							<f:facet name="header">Data Seduta</f:facet>
 							#{testoComitato.dataSeduta}
 						</h:column>
 
-					<h:column>
-						<f:facet name="header">Testo Dell'Atto</f:facet>
+						<h:column>
+							<f:facet name="header">Testo Dell'Atto</f:facet>
 							#{testoComitato.nome}
 						</h:column>
 
-					<h:column>
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText
-							value="#{fn:substring(testoComitato.nome, fn:indexOf(testoComitato.nome,'.')+1 ,fn:length(testoComitato.nome) )}" />
+						<h:column>
+							<f:facet name="header">Formato</f:facet>
+							<h:outputText
+								value="#{fn:substring(testoComitato.nome, fn:indexOf(testoComitato.nome,'.')+1 ,fn:length(testoComitato.nome) )}" />
 
-					</h:column>
+						</h:column>
 
-					<h:column>
-						<f:facet name="header">Pubblico</f:facet>
-						<h:outputText value="si" rendered="#{testoComitato.pubblico}" />
-						<h:outputText value="no" rendered="#{!testoComitato.pubblico}" />
-					</h:column>
+						<h:column>
+							<f:facet name="header">Pubblico</f:facet>
+							<h:outputText value="si" rendered="#{testoComitato.pubblico}" />
+							<h:outputText value="no" rendered="#{!testoComitato.pubblico}" />
+						</h:column>
 
-					<h:column>
-						<f:facet name="header">Elimina</f:facet>
-						<p:commandButton oncomplete="testoComitatoDialog.show()"
-							icon="delete-icon">
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="testoComitatoDialog.show()"
+								icon="delete-icon">
 
-							<f:setPropertyActionListener value="#{testoComitato.id}"
-								target="#{esameCommissioniController.testoComitatoToDelete}" />
-						</p:commandButton>
-					</h:column>
+								<f:setPropertyActionListener value="#{testoComitato.id}"
+									target="#{esameCommissioniController.testoComitatoToDelete}" />
+							</p:commandButton>
+						</h:column>
 
 
-				</h:dataTable>
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
-				<b> <h:outputLabel for="datafinelavori"
-						value="Data Fine Lavori: " />
-				</b>
-			</p:column>
-			<p:column>
-				<p>
-					<p:calendar size="10" locale="it" id="datafinelavori"
-						value="#{esameCommissioniController.dataFineLavori}">
-						<p:ajax event="dateSelect"
-							listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
-					</p:calendar>
-				</p>
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
-				<p:commandButton value="Conferma Fine Lavori"
-					action="#{esameCommissioniController.confermaFineLavori}"
-					update="comitatiMsg" />
-			</p:column>
-		</p:row>
-	</p:panelGrid>
-</p:fieldset>
+					</h:dataTable>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="datafinelavori"
+							value="Data Fine Lavori: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="datafinelavori"
+							value="#{esameCommissioniController.dataFineLavori}">
+							<p:ajax event="dateSelect"
+								listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+						</p:calendar>
+					</p>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Conferma Fine Lavori"
+						action="#{esameCommissioniController.confermaFineLavori}"
+						update="comitatiMsg" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+	if (!("#{esameCommissioniController.dataPresaInCarico}").length) {
+		$('#blockedRelatori').block({
+			message : null
+		});
+
+		$.growlUI(null, 'Pagina bloccata! Prendere in carico per sbloccare.',
+				10000);
+	};
+
+	function unblockDiv() {
+		$('#blockedRelatori').unblock();
+		$('#blockedAbbinamenti').unblock();
+		$('#blockedVotazione').unblock();
+		$('#blockedEmendamenti').unblock();
+		$('#blockedNote').unblock();
+	};
+</script>
+
 </html>

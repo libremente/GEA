@@ -202,7 +202,8 @@ padding: 8px 19px 4px 10px ;
 	width: 160px;
 }
 
-.ui-tabs-nav  { height: 33px }=======
+.ui-tabs-nav  {
+	height: 33px 
 }
 
 .ui-datatable table {
@@ -220,3 +221,5 @@ padding: 8px 19px 4px 10px ;
 	
 	border: 1px #A8A8A8 solid !important;
 }
+
+

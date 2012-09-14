@@ -55,7 +55,7 @@
 		<p:column>
 			<p:commandButton value="Presa in carico" 
 			action="#{esameAulaController.presaInCarico}"
-			update="votazioneMsg"/>
+			update="votazioneMsg" oncomplete="unblockDiv()"/>
 		</p:column>
 	</p:row>
 	<p:row>
@@ -73,10 +73,11 @@
 		</p:column>
 	</p:row>
 </p:panelGrid>
-
+<div  id="blockedVotazione">
 <p:panelGrid styleClass="infoTable" id="votazionePanel2">
 	<p:row>
 		<p:column>
+		
 			<p:fieldset styleClass="fieldSetTab" legend="Esame in assemblea: "
 				collapsed="false" toggleable="true" toggleSpeed="500">
 				<p:panelGrid styleClass="infoTable" id="esameinassemblea">
@@ -266,6 +267,23 @@
 </p:panelGrid>
 
 
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
 
+
+if (! ("#{esameAulaController.dataPresaInCarico}").length) {
+$('#blockedVotazione').block({ message: null });
+
+$.growlUI(null , 'Pagina bloccata! Prendere in carico per sbloccare.', 10000);};
+
+function unblockDiv() { 
+    $('#blockedVotazione').unblock(); 
+    $('#blockedEmendamenti').unblock(); 
+    $('#blockedRinvioStralci').unblock(); 
+    $('#blockedNote').unblock(); 
+   };
+
+</script>
 
 </html>

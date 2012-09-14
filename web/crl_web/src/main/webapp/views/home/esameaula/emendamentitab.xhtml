@@ -15,7 +15,7 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-
+<div id="blockedEmendamenti">
 <p:panelGrid styleClass="infoTable" id="emendamentiPanel">
 	<p:row>
 		<p:column>
@@ -287,4 +287,16 @@
 
 	</p:row>
 </p:panelGrid>
+</div>
+<script>
+
+
+if (! ("#{esameAulaController.dataPresaInCarico}").length) {
+$('#blockedEmendamenti').block({ message: null });
+
+
+
+};
+
+</script>
 </html>

@@ -15,7 +15,7 @@
 	position="left center" />
 
 
-
+<div id="blockedNote">
 <p:panelGrid styleClass="infoTable" id="notePanel">
 	<p:row>
 		<p:column>
@@ -281,4 +281,17 @@
 	</p:row>
 
 </p:panelGrid>
+
+</div>
+<script>
+
+
+if (! ("#{esameAulaController.dataPresaInCarico}").length) {
+$('#blockedNote').block({ message: null });
+
+
+
+};
+
+</script>
 </html>

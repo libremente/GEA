@@ -18,7 +18,7 @@
 window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 </script>
 
-
+<div id="blockedAbbinamenti">
 
 
 <p:fieldset legend="Abbinamenti e disabbinamenti" toggleable="true"
@@ -783,5 +783,17 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 	</p:row>
 
 </p:fieldset>
+</div>
+<script>
+
+
+if (! ("#{esameCommissioniController.dataPresaInCarico}").length) {
+$('#blockedAbbinamenti').block({ message: null });
+
+
+
+};
+
+</script>
 <!-- -->
 </html>

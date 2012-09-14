@@ -88,11 +88,12 @@
 						value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
 				</b>
 				<p:commandButton value="Presa in Carico" update="presaCaricoMsg ,:informationForm:informationBar"
-					actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}"  />
+					actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" oncomplete="unblockDiv()" />
 			</p>
 		</p:column>
 	</p:row>
 </p:panelGrid>
+<div id="blockedInfoGen">
 <p:fieldset legend="Dati dell'Atto" collapsed="false" toggleable="true"
 	toggleSpeed="500">
 
@@ -543,4 +544,22 @@
 		actionListener="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}" />
 
 </p>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+
+
+if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
+$('#blockedInfoGen').block({ message: null });
+
+$.growlUI(null , 'Pagina bloccata! Prendere in carico per sbloccare.', 10000);};
+
+function unblockDiv() { 
+    $('#blockedInfoGen').unblock(); 
+    $('#blockedAmmissibilita').unblock(); 
+    $('#blockedAssegnazione').unblock(); 
+    $('#blockedNote').unblock(); 
+   };
+
+</script>
 </html>

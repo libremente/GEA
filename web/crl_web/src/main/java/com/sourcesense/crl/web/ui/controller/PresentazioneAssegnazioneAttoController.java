@@ -166,9 +166,11 @@ public class PresentazioneAssegnazioneAttoController {
 		this.linksList = new ArrayList<Link>(Clonator.cloneList(atto
 				.getLinksPresentazioneAssegnazione()));
 
+
 		// TODO
 		// setAllegatiList(attoRecordServiceManager.findAllegatiByTipo(Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE));
 		// setTestiAtto(attoRecordServiceManager.findTestoByTipo());
+
 
 	}
 
@@ -251,6 +253,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username));
+		
 
 	}
 
@@ -1297,6 +1300,7 @@ public class PresentazioneAssegnazioneAttoController {
 	public boolean isCurrentFilePubblico() {
 		return currentFilePubblico;
 	}
+
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;

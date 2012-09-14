@@ -13,7 +13,7 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-
+<div id="blockedRinvioStralci">
 <p:panelGrid styleClass="infoTable" id="rinviostralciPanel">
 	<p:row>
 		<p:column>
@@ -194,7 +194,18 @@
 		</p:column>
 	</p:row>
 </p:panelGrid>
+</div>
+<script>
 
+
+if (! ("#{esameAulaController.dataPresaInCarico}").length) {
+$('#blockedRinvioStralci').block({ message: null });
+
+
+
+};
+
+</script>
 
 
 </html>

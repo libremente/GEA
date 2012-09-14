@@ -13,6 +13,7 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
+<div id="blockedAssegnazione">
 <p:panelGrid styleClass="infoTable" id="assegnazionePanel">
 	<p:row>
 		<p:column>
@@ -399,4 +400,16 @@
 		</p:column>
 	</p:row>
 </p:panelGrid>
+</div>
+<script>
+
+
+if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
+$('#blockedAssegnazione').block({ message: null });
+
+
+
+};
+
+</script>
 </html>
