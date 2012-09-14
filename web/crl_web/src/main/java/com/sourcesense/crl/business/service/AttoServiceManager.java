@@ -179,10 +179,6 @@ public class AttoServiceManager implements ServiceManager {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_presentazione_assegnazione", null), atto);
 	}
 	
-	public void salvaAbbinamentiEsameCommissioni(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_abbinamenti_esame_commissioni", null), atto);
-	}
-	
 	public void salvaVotazioneEsameCommissioni(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_commissioni", null), atto);
 	}

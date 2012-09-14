@@ -633,10 +633,10 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 					<p:commandButton
 						update=":presAssForm:tabView:dettagliabbinamentopanel"
-						id="cmdBtn_#{abbinamento.atto.id}" icon="detail-icon"
+						id="cmdBtn_#{abbinamento.idAttoAbbinato}" icon="detail-icon"
 						action="#{esameCommissioniController.showAbbinamentoDetail}">
 
-						<f:setPropertyActionListener value="#{abbinamento.atto.id}"
+						<f:setPropertyActionListener value="#{abbinamento.idAttoAbbinato}"
 							target="#{esameCommissioniController.idAbbinamentoSelected}" />
 					</p:commandButton>
 				</h:column>
@@ -673,7 +673,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 					<p:commandButton oncomplete="abbinamentoDialog.show()"
 						icon="delete-icon">
 
-						<f:setPropertyActionListener value="#{abbinamento.atto.id}"
+						<f:setPropertyActionListener value="#{abbinamento.idAttoAbbinato}"
 							target="#{esameCommissioniController.abbinamentoToDelete}" />
 					</p:commandButton>
 				</h:column>

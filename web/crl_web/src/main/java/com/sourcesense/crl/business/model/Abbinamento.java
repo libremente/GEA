@@ -5,24 +5,38 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
 
 @JsonRootName("abbinamento")
 @JsonTypeName("abbinamento")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Abbinamento {
-	private Atto atto;
+public class Abbinamento implements Cloneable{
+	private String idAtto;
+	private String idAttoAbbinato;
+	private String tipoTesto;
 	private Date dataAbbinamento;
 	private Date dataDisabbinamento;
-	private String tipoTesto;
 	private String note;
 	private boolean abbinato;
+	private Atto atto;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	 }
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public Atto getAtto() {
 		return atto;
@@ -30,12 +44,14 @@ public class Abbinamento {
 	public void setAtto(Atto atto) {
 		this.atto = atto;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAbbinamento() {
 		return dataAbbinamento;
 	}
 	public void setDataAbbinamento(Date dataAbbinamento) {
 		this.dataAbbinamento = dataAbbinamento;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataDisabbinamento() {
 		return dataDisabbinamento;
 	}
@@ -59,6 +75,22 @@ public class Abbinamento {
 	}
 	public void setAbbinato(boolean abbinato) {
 		this.abbinato = abbinato;
+	}
+
+	public String getIdAtto() {
+		return idAtto;
+	}
+
+	public void setIdAtto(String idAtto) {
+		this.idAtto = idAtto;
+	}
+
+	public String getIdAttoAbbinato() {
+		return idAttoAbbinato;
+	}
+
+	public void setIdAttoAbbinato(String idAttoAbbinato) {
+		this.idAttoAbbinato = idAttoAbbinato;
 	}
 	
 	

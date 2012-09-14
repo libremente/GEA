@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.model.Target;
+import com.sourcesense.crl.business.service.AbbinamentoServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
@@ -51,6 +53,9 @@ public class EsameCommissioniController {
 	
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
+	
+	@ManagedProperty(value = "#{abbinamentoServiceManager}")
+	private AbbinamentoServiceManager abbinamentoServiceManager;
 
 	private Atto atto = new Atto();
 
@@ -157,6 +162,7 @@ public class EsameCommissioniController {
 	private String statoCommitRelatori = CRLMessage.COMMIT_DONE;
 	private String statoCommitComitatoRistretto = CRLMessage.COMMIT_DONE;
 	private String statoCommitPresaInCarico = CRLMessage.COMMIT_DONE;
+	private String statoCommitFineLavori = CRLMessage.COMMIT_DONE;
 	private String statoCommitAbbinamentieDisabbinamenti = CRLMessage.COMMIT_DONE;
 	private String statoCommitOggettoAttoCorrente = CRLMessage.COMMIT_DONE;
 	private String statoCommitRegistrazioneVotazione = CRLMessage.COMMIT_DONE;
@@ -192,7 +198,10 @@ public class EsameCommissioniController {
 		setDataScadenza(commissioneUser.getDataScadenza());
 		setPresenzaComitatoRistretto(commissioneUser.isPresenzaComitatoRistretto());
 		setDataIstituzioneComitato(commissioneUser.getDataIstituzioneComitato());
-		setDataFineLavori(commissioneUser.getDataFineLavoriEsameComitato());
+		setDataFineLavori(commissioneUser.getDataFineLavoriComitato());
+		setDataTrasmissione(commissioneUser.getDataTrasmissione());
+		setDataRichiestaIscrizione(commissioneUser.getDataTrasmissione());
+		setPassaggioDiretto(commissioneUser.isPassaggioDirettoInAula());
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
@@ -211,10 +220,10 @@ public class EsameCommissioniController {
 
 		confrontaDataScadenza();
 
-		if(!abbinamentiList.isEmpty()) {
-			setIdAbbinamentoSelected(abbinamentiList.get(0).getAtto().getId());
-			showAbbinamentoDetail();
-		}
+//		if(!abbinamentiList.isEmpty()) {
+//			setIdAbbinamentoSelected(abbinamentiList.get(0).getIdAttoAbbinato());
+//			showAbbinamentoDetail();
+//		}
 
 		//TODO da cancellare
 		membriComitato.put("componente1", "componente1");
@@ -243,6 +252,10 @@ public class EsameCommissioniController {
 
 	public void updatePresaInCaricoHandler() {
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_UNDONE);
+	}
+	
+	public void updateFineLavoriHandler() {
+		setStatoCommitFineLavori(CRLMessage.COMMIT_DONE);
 	}
 
 	public void updateAbbinamentiHandler() {
@@ -302,6 +315,16 @@ public class EsameCommissioniController {
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR,
 							"Attenzione ! Le modifiche della Presa in Carico non sono state salvate ",
+							""));
+		}
+		
+		if (statoCommitFineLavori.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche relative alla Fine dei Lavori non sono state salvate ",
 							""));
 		}
 
@@ -687,9 +710,16 @@ public class EsameCommissioniController {
 
 
 	public void confermaFineLavori() {
-		commissioneUser.setDataFineLavoriEsameComitato(getDataFineLavori());
+		commissioneUser.setDataFineLavoriComitato(getDataFineLavori());
+		commissioneUser.setStato(Commissione.STATO_ANNULLATO);
 		atto.setCommissioni(getCommissioniList());
-		// TODO: attoServiceManager.salvaFineLavoriEsameCommissioni(atto);
+		
+		Target target = new Target();
+		target.setCommissione(commissioneUser.getDescrizione());
+		EsameCommissione esameCommissione = new EsameCommissione();
+		esameCommissione.setAtto(atto);
+		esameCommissione.setTarget(target);
+		commissioneServiceManager.salvaFineLavoriEsameCommissioni(esameCommissione);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -713,9 +743,9 @@ public class EsameCommissioniController {
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già abbinato ", ""));
 
 			} else {
-				Atto attoDaAbbinare = attoServiceManager.findById(idAbbinamento);
 				Abbinamento abbinamento = new Abbinamento();
-				abbinamento.setAtto(attoDaAbbinare);
+				abbinamento.setIdAtto(atto.getId());
+				abbinamento.setIdAttoAbbinato(idAbbinamento);
 				abbinamento.setAbbinato(true);
 				abbinamentiList.add(abbinamento);
 
@@ -730,7 +760,7 @@ public class EsameCommissioniController {
 
 		for (Abbinamento element : abbinamentiList) {
 
-			if (element.getAtto().getId().equals(abbinamentoToDelete)) {
+			if (element.getIdAttoAbbinato().equals(abbinamentoToDelete)) {
 
 				abbinamentiList.remove(element);
 				updateAbbinamentiHandler();
@@ -744,7 +774,7 @@ public class EsameCommissioniController {
 
 		for (Abbinamento element : abbinamentiList) {
 
-			if (element.getAtto().getId().equals(idAbbinamento)) {
+			if (element.getIdAttoAbbinato().equals(idAbbinamento)) {
 
 				return false;
 			}
@@ -758,6 +788,8 @@ public class EsameCommissioniController {
 		setAbbinamentoSelected(findAbbinamento(idAbbinamentoSelected));
 
 		if(abbinamentoSelected!=null) {
+			Atto attoDaAbbinare = attoServiceManager.findById(abbinamentoSelected.getIdAttoAbbinato());
+			abbinamentoSelected.setAtto(attoDaAbbinare);
 			setTipoTesto(abbinamentoSelected.getTipoTesto());
 			setDataAbbinamento(abbinamentoSelected.getDataAbbinamento());
 			setDataDisabbinamento(abbinamentoSelected.getDataDisabbinamento());
@@ -776,7 +808,7 @@ public class EsameCommissioniController {
 
 		for(Abbinamento element : abbinamentiList) {
 
-			if(element.getAtto().getId().equals(id)) {
+			if(element.getIdAttoAbbinato().equals(id)) {
 
 				return element;
 
@@ -805,15 +837,13 @@ public class EsameCommissioniController {
 			abbinamentoSelected.setDataDisabbinamento(dataDisabbinamento);
 			abbinamentoSelected.setNote(noteAbbinamento);
 
-			atto.setAbbinamenti(abbinamentiList);		
-			attoServiceManager.salvaAbbinamentiEsameCommissioni(atto);
-
-
+			abbinamentoServiceManager.salvaAbbinamento(abbinamentoSelected);
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().setAbbinamenti(abbinamentiList);
+			mergeAbbinamento(abbinamentoSelected, attoBean.getAtto().getAbbinamenti());
 
 			setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage("Disabbinamento salvato con successo", ""));	
@@ -826,22 +856,35 @@ public class EsameCommissioniController {
 			abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
 			abbinamentoSelected.setNote(noteAbbinamento);
 
-			atto.setAbbinamenti(abbinamentiList);		
-			attoServiceManager.salvaAbbinamentiEsameCommissioni(atto);
-
+			abbinamentoServiceManager.salvaAbbinamento(abbinamentoSelected);
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().setAbbinamenti(abbinamentiList);
+			mergeAbbinamento(abbinamentoSelected, attoBean.getAtto().getAbbinamenti());
 
 			setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage("Abbinamento salvato con successo", ""));	
 
 		}
-
+		
 	}
+	
+	private void mergeAbbinamento(Abbinamento abbinamento, List<Abbinamento> abbinamentiSession) {
+		for(Abbinamento element : abbinamentiSession) {
+			if(element.getIdAttoAbbinato().equals(abbinamento.getIdAttoAbbinato())) {
+				element.setTipoTesto(getTipoTesto());
+				element.setDataAbbinamento(getDataAbbinamento());
+				element.setDataDisabbinamento(getDataDisabbinamento());
+				element.setNote(getNoteAbbinamento());
+				return;
+			}
+		}
+		
+		abbinamentiSession.add(abbinamento);
+	}
+
 
 	//	public void salvaDisabbinamento() {
 	//		abbinamentoSelected.setTipoTesto(tipoTesto);
@@ -1003,7 +1046,6 @@ public class EsameCommissioniController {
 
 
 	public void confermaTrasmissione() {
-		//TODO: alfresco service
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -1017,17 +1059,23 @@ public class EsameCommissioniController {
 		}
 
 		else {
+			commissioneUser.setDataTrasmissione(getDataTrasmissione());
+			commissioneUser.setPassaggioDirettoInAula(isPassaggioDiretto());
+			commissioneUser.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
+			atto.setCommissioni(getCommissioniList());
+			
+			attoBean.getAtto().setCommissioni(Clonator.cloneList(getCommissioniList()));
 
-			attoBean.getAtto().setDataTrasmissione(atto.getDataTrasmissione());
-			attoBean.getAtto().setDataRichiestaIscrizioneAula(atto.getDataRichiestaIscrizioneAula());
-			attoBean.getAtto().setPassaggioDirettoInAula(atto.isPassaggioDirettoInAula());
-
-			if(attoBean.getAtto().isPassaggioDirettoInAula()) {
+			if(commissioneUser.isPassaggioDirettoInAula()) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
+				atto.setStato(StatoAtto.TRASMESSO_AULA);
 			} else if(attoBean.getAtto().getEsitoVotoCommissioneReferente()!=null && 
 					!attoBean.getAtto().getEsitoVotoCommissioneReferente().trim().equals("")) {
+				atto.setStato(StatoAtto.TRASMESSO_COMMISSIONE);
 				attoBean.setStato(StatoAtto.TRASMESSO_COMMISSIONE);
 			}
+			
+			//TODO: alfresco service
 
 			setStatoCommitTrasmissione(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage("Trasmissione salvata con successo", ""));		
@@ -1527,37 +1575,37 @@ public class EsameCommissioniController {
 
 
 	public Date getDataTrasmissione() {
-		return atto.getDataTrasmissione();
+		return dataTrasmissione;
 	}
 
 
 
 	public void setDataTrasmissione(Date dataTrasmissione) {
-		this.atto.setDataTrasmissione(dataTrasmissione);
+		this.dataTrasmissione = dataTrasmissione;
 	}
 
 
 
 	public Date getDataRichiestaIscrizione() {
-		return atto.getDataRichiestaIscrizioneAula();
+		return dataRichiestaIscrizione;
 	}
 
 
 
 	public void setDataRichiestaIscrizione(Date dataRichiestaIscrizione) {
-		this.atto.setDataRichiestaIscrizioneAula(dataRichiestaIscrizione);
+		this.dataRichiestaIscrizione = dataRichiestaIscrizione;
 	}
 
 
 
 	public boolean isPassaggioDiretto() {
-		return atto.isPassaggioDirettoInAula();
+		return passaggioDiretto;
 	}
 
 
 
 	public void setPassaggioDiretto(boolean passaggioDiretto) {
-		this.atto.setPassaggioDirettoInAula(passaggioDiretto);
+		this.passaggioDiretto = passaggioDiretto;
 	}
 
 
@@ -2273,6 +2321,22 @@ public class EsameCommissioniController {
 	public void setCommissioneServiceManager(
 			CommissioneServiceManager commissioneServiceManager) {
 		this.commissioneServiceManager = commissioneServiceManager;
+	}
+
+	public String getStatoCommitFineLavori() {
+		return statoCommitFineLavori;
+	}
+
+	public void setStatoCommitFineLavori(String statoCommitFineLavori) {
+		this.statoCommitFineLavori = statoCommitFineLavori;
+	}
+
+	public AbbinamentoServiceManager getAbbinamentoServiceManager() {
+		return abbinamentoServiceManager;
+	}
+
+	public void setAbbinamentoServiceManager(AbbinamentoServiceManager abbinamentoServiceManager) {
+		this.abbinamentoServiceManager = abbinamentoServiceManager;
 	}
 	
 	

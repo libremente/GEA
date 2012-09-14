@@ -157,9 +157,6 @@ public class Atto implements Cloneable
 	private Date dataSedutaCommissione;
 	private Date dataSedutaContinuazioneInReferente;
 	private String motivazioniContinuazioneInReferente;
-	private Date dataTrasmissione;
-	private Date dataRichiestaIscrizioneAula;
-	private boolean passaggioDirettoInAula;
 	private int numEmendPresentatiMaggiorEsameCommissioni = 0;
 	private int numEmendPresentatiMinorEsameCommissioni = 0;
 	private int numEmendPresentatiGiuntaEsameCommissioni = 0;
@@ -972,32 +969,6 @@ public class Atto implements Cloneable
 	public void setMotivazioniContinuazioneInReferente(
 			String motivazioniContinuazioneInReferente) {
 		this.motivazioniContinuazioneInReferente = motivazioniContinuazioneInReferente;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataTrasmissione() {
-		return dataTrasmissione;
-	}
-
-	public void setDataTrasmissione(Date dataTrasmissione) {
-		this.dataTrasmissione = dataTrasmissione;
-	}
-
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataRichiestaIscrizioneAula() {
-		return dataRichiestaIscrizioneAula;
-	}
-
-	public void setDataRichiestaIscrizioneAula(Date dataRichiestaIscrizioneAula) {
-		this.dataRichiestaIscrizioneAula = dataRichiestaIscrizioneAula;
-	}
-
-	public boolean isPassaggioDirettoInAula() {
-		return passaggioDirettoInAula;
-	}
-
-	public void setPassaggioDirettoInAula(boolean passaggioDirettoInAula) {
-		this.passaggioDirettoInAula = passaggioDirettoInAula;
 	}
 
 	public int getNumEmendPresentatiMaggiorEsameCommissioni() {

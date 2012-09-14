@@ -42,7 +42,7 @@ public class Commissione implements Cloneable {
 	
 	private Date dataNomina;
 	
-	private Date dataFineLavoriEsameComitato;
+	private Date dataFineLavoriComitato;
 	
 	private List <Relatore> relatori = new ArrayList<Relatore>();
 	private Date dataProposta;
@@ -55,6 +55,9 @@ public class Commissione implements Cloneable {
 	private Date dataIstituzioneComitato;
 	
 	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
+	
+	private Date dataRichiestaIscrizioneAula;
+	private boolean passaggioDirettoInAula;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -232,15 +235,6 @@ public class Commissione implements Cloneable {
 		this.dataScadenza = dataScadenza;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
-	public Date getDataFineLavoriEsameComitato() {
-		return dataFineLavoriEsameComitato;
-	}
-
-	public void setDataFineLavoriEsameComitato(
-			Date dataFineLavoriEsameComitato) {
-		this.dataFineLavoriEsameComitato = dataFineLavoriEsameComitato;
-	}
 
 	public boolean isPresenzaComitatoRistretto() {
 		return presenzaComitatoRistretto;
@@ -257,6 +251,33 @@ public class Commissione implements Cloneable {
 
 	public void setDataIstituzioneComitato(Date dataIstituzioneComitato) {
 		this.dataIstituzioneComitato = dataIstituzioneComitato;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataFineLavoriComitato() {
+		return dataFineLavoriComitato;
+	}
+
+	public void setDataFineLavoriComitato(Date dataFineLavoriComitato) {
+		this.dataFineLavoriComitato = dataFineLavoriComitato;
+	}
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataRichiestaIscrizioneAula() {
+		return dataRichiestaIscrizioneAula;
+	}
+
+	public void setDataRichiestaIscrizioneAula(
+			Date dataRichiestaIscrizioneAula) {
+		this.dataRichiestaIscrizioneAula = dataRichiestaIscrizioneAula;
+	}
+
+	public boolean isPassaggioDirettoInAula() {
+		return passaggioDirettoInAula;
+	}
+
+	public void setPassaggioDirettoInAula(boolean passaggioDirettoInAula) {
+		this.passaggioDirettoInAula = passaggioDirettoInAula;
 	}
 	
 	
