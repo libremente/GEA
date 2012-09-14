@@ -57,7 +57,7 @@ if(checkIsNotNull(id)){
 	
 	for(var k=0; k<numeroRelatori; k++) {
 		
-		var relatore = relatori.get(k).get("relatore");
+		var relatore = relatori.get(k);
 	
 		var descrizione = filterParam(relatore.get("descrizione"));
 		var dataNomina = filterParam(relatore.get("dataNomina"));
@@ -103,7 +103,7 @@ if(checkIsNotNull(id)){
 		
 		//cerco il nome del relatore nel repo all'interno del json
 		for (var q=0; q<relatori.length(); q++){
-			var relatore = relatori.get(q).get("relatore");
+			var relatore = relatori.get(q);
 			var descrizione = filterParam(relatore.get("descrizione"));
 			if(""+descrizione+""==""+relatoreNelRepository.name+""){
 				trovato = true;

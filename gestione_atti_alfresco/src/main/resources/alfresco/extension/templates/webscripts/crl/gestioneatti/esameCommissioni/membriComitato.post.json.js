@@ -19,7 +19,7 @@ for(var i=0; i<commissioni.length(); i++) {
 	if(""+commissioneTemp.get("descrizione")+"" == ""+commissioneUtente+"") {
 		presenzaComitato = commissioneTemp.get("presenzaComitatoRistretto");
 		dataIstituzioneComitato = commissioneTemp.get("dataIstituzioneComitato");
-		membri = commissioneTemp.get("comitatoRistretto").get("comitatoRistretto").get("componenti");
+		membri = commissioneTemp.get("comitatoRistretto").get("componenti");
 		statoCommissione = commissioneTemp.get("stato");
 	}	
 }
@@ -74,7 +74,7 @@ if(checkIsNotNull(id)){
 	
 	for(var k=0; k<numeroMembri; k++) {
 		
-		var membro = membri.get(k).get("componente");
+		var membro = membri.get(k);
 	
 		var descrizione = filterParam(membro.get("descrizione"));
 		var dataNomina = filterParam(membro.get("dataNomina"));
@@ -122,7 +122,7 @@ if(checkIsNotNull(id)){
 		
 		//cerco il nome del memebro nel repo all'interno del json
 		for (var q=0; q<membri.length(); q++){
-			var membro = membri.get(q).get("componente");
+			var membro = membri.get(q);
 			var descrizione = filterParam(membro.get("descrizione"));
 			if(""+descrizione+""==""+membroNelRepository.name+""){
 				trovato = true;

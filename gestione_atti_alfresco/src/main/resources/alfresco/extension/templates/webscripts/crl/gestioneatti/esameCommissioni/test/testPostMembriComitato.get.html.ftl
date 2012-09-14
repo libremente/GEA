@@ -46,26 +46,24 @@
 				 			"presenzaComitatoRistretto": ""+presenzaComitato+"",
 				 			"dataIstituzioneComitato": ""+dataIstituzioneComitato+"",
 							"comitatoRistretto": {
-								"comitatoRistretto":{
+								
 										"componenti":[
-											{"componente": 
-												{
+											{
 												"descrizione" : ""+membro1+"",
 												"dataNomina" : ""+dataNomina1+"",
 												"dataUscita" : ""+dataUscita1+"",
 												"coordinatore" : ""+coordinatore1+""
-												}
+												
 											},
-											{"componente": 
-												{
+											{
 												"descrizione" : ""+membro2+"",
 												"dataNomina" : ""+dataNomina2+"",
 												"dataUscita" : ""+dataUscita2+"",
 												"coordinatore" : ""+coordinatore2+""
-												}
+												
 											}	
 										]
-									}
+									
 								},
 							"stato": "comitato ristretto"
 							

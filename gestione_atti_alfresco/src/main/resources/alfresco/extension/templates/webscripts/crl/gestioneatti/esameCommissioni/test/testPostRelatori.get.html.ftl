@@ -41,19 +41,17 @@
 				 		
 				 			"descrizione": ""+commissione+"",
 							"relatori":[
-								{"relatore":
-									{
+								{
 										"descrizione" : ""+relatore1+"",
 										"dataNomina" : ""+dataNomina1+"",
 										"dataUscita" : ""+dataUscita1+""
-									}
+									
 								},
-								{"relatore":
-								 	{
+								{
 								 		"descrizione" : ""+relatore2+"",
 										"dataNomina" : ""+dataNomina2+"",
 										"dataUscita" : ""+dataUscita2+""
-								 	}
+								 	
 								}
 							],
 							"stato": "nominato relatore"
