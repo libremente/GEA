@@ -21,6 +21,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.annotate.JsonUnwrapped;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.pojomatic.Pojomatic;
@@ -28,6 +29,7 @@ import org.pojomatic.annotations.AutoProperty;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
+import com.sourcesense.crl.util.JsonNoteDeserializer;
 
 /**@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
  * @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
@@ -224,46 +226,7 @@ public class Atto implements Cloneable
 
 	public Atto(){
 
-		Commissione commissione = new Commissione();
-		commissione.setDescrizione("Descrizione1");
-		commissione.setNome("Commissione 1");
-		commissione.setRuolo("Ruolo commissione 1");
-		commissione.setStato("Stato comm 1");
-		commissione.setDataAssegnazione(new Date());
-		commissione.setDataPresaInCarico(new Date());
-		commissione.setTipoVotazione("tipo lavorazione 1");
-		commissione.setEsitoVotazione("Esito votazione 1");
-		commissione.setDataVotazione(new Date());
-		commissione.setDataTrasmissione(new Date());
-		commissione.setDataNomina(new Date());
-		commissione.setDataProposta(new Date());
-		commissione.setDataAnnullo(new Date());
-
-
-		Commissione commissione2 = new Commissione();
-		commissione2.setDescrizione("Descrizione2");
-		commissione2.setNome("Commissione 2");
-		commissione2.setRuolo("Ruolo commissione 2");
-		commissione2.setStato("Stato comm 2");
-		commissione2.setDataAssegnazione(new Date());
-		commissione2.setDataPresaInCarico(new Date());
-		commissione2.setTipoVotazione("tipo lavorazione 2");
-		commissione2.setEsitoVotazione("Esito votazione 2");
-		commissione2.setDataVotazione(new Date());
-		commissione2.setDataTrasmissione(new Date());
-		commissione2.setDataNomina(new Date());
-		commissione2.setDataProposta(new Date());
-		commissione2.setDataAnnullo(new Date());
-
-
-
-		List <Commissione> commissioni = new ArrayList<Commissione>();
-
-
-		commissioni.add(commissione);
-		commissioni.add(commissione2);
-
-		this.setCommissioni(commissioni);
+		
 
 	}
 	
@@ -666,6 +629,7 @@ public class Atto implements Cloneable
 		this.dataPubblicazioneBURL = dataPubblicazioneBURL;
 	}
 
+	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataChiusura() {
 		return dataChiusura;
@@ -778,6 +742,7 @@ public class Atto implements Cloneable
 		return linksNoteEsameCommissioni;
 	}
 
+	
 	public void setLinksNoteEsameCommissioni(List<Link> linksNoteEsameCommissioni) {
 		this.linksNoteEsameCommissioni = linksNoteEsameCommissioni;
 	}
@@ -895,6 +860,7 @@ public class Atto implements Cloneable
 		return noteAmmissibilita;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteAmmissibilita(String noteAmmissibilita) {
 		this.noteAmmissibilita = noteAmmissibilita;
 	}
@@ -903,6 +869,7 @@ public class Atto implements Cloneable
 		return notePresentazioneAssegnazione;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNotePresentazioneAssegnazione(
 			String notePresentazioneAssegnazione) {
 		this.notePresentazioneAssegnazione = notePresentazioneAssegnazione;
@@ -1079,6 +1046,7 @@ public class Atto implements Cloneable
 		return noteEmendamentiEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteEmendamentiEsameCommissioni(
 			String noteEmendamentiEsameCommissioni) {
 		this.noteEmendamentiEsameCommissioni = noteEmendamentiEsameCommissioni;
@@ -1114,6 +1082,7 @@ public class Atto implements Cloneable
 		return noteClausolaValutativa;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteClausolaValutativa(String noteClausolaValutativa) {
 		this.noteClausolaValutativa = noteClausolaValutativa;
 	}
@@ -1122,6 +1091,7 @@ public class Atto implements Cloneable
 		return noteGeneraliEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteGeneraliEsameCommissioni(String noteGeneraliEsameCommissioni) {
 		this.noteGeneraliEsameCommissioni = noteGeneraliEsameCommissioni;
 	}
@@ -1178,6 +1148,7 @@ public class Atto implements Cloneable
 		return noteVotazione;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteVotazione(String noteVotazione) {
 		this.noteVotazione = noteVotazione;
 	}
@@ -1314,6 +1285,7 @@ public class Atto implements Cloneable
 		return noteEmendamentiEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteEmendamentiEsameAula(String noteEmendamentiEsameAula) {
 		this.noteEmendamentiEsameAula = noteEmendamentiEsameAula;
 	}
@@ -1375,6 +1347,7 @@ public class Atto implements Cloneable
 		return noteStralcio;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteStralcio(String noteStralcio) {
 		this.noteStralcio = noteStralcio;
 	}
@@ -1391,6 +1364,7 @@ public class Atto implements Cloneable
 		return noteGeneraliEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteGeneraliEsameAula(String noteGeneraliEsameAula) {
 		this.noteGeneraliEsameAula = noteGeneraliEsameAula;
 	}
@@ -1452,6 +1426,7 @@ public class Atto implements Cloneable
 		return noteChiusuraIter;
 	}
 
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
 	public void setNoteChiusuraIter(String noteChiusuraIter) {
 		this.noteChiusuraIter = noteChiusuraIter;
 	}

@@ -50,7 +50,6 @@ public class AttoRecordService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			System.out.println("FILE===" + responseMsg);
 			objectMapper.configure(
 					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			listTestiAtto = objectMapper.readValue(responseMsg,

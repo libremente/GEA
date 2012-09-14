@@ -252,9 +252,9 @@ public class PresentazioneAssegnazioneAttoController {
 		String numeroAtto = attoBean.getNumeroAtto();
 
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
-				+ " preso in carico con successo dall' utente " + username));
-		
+				+ " preso in carico con successo dall' utente " + username , ""));
 
+		
 	}
 
 	public void uploadTestoAtto(FileUploadEvent event) {
@@ -1300,7 +1300,6 @@ public class PresentazioneAssegnazioneAttoController {
 	public boolean isCurrentFilePubblico() {
 		return currentFilePubblico;
 	}
-
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
