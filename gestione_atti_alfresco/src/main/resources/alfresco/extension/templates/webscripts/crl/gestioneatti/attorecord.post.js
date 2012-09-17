@@ -2,6 +2,7 @@ var nodeRefAtto = "";
 var tipologia = "";
 var pubblico = false;
 var filename = "";
+var provenienza = "";
 var content = null;
 
 for each (field in formdata.fields)
@@ -12,6 +13,8 @@ for each (field in formdata.fields)
 	tipologia = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
+  } else if(field.name == "provenienza"){
+	provenienza = field.value;
   } else if (field.name == "file" && field.isFile){
     filename = field.filename;
     content = field.content;
@@ -50,6 +53,7 @@ if(nodeRefAtto == ""){
 		attoRecordNode.specializeType("crlatti:testo");
 		attoRecordNode.properties["crlatti:tipologia"] = tipologia;
 		attoRecordNode.properties["crlatti:pubblico"] = pubblico;
+		attoRecordNode.properties["crlatti:provenienza"] = provenienza;
 		attoRecordNode.properties.content.write(content);
 		attoRecordNode.properties.content.setEncoding("UTF-8");
 		attoRecordNode.properties.content.guessMimetype(filename);

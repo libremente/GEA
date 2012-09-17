@@ -153,6 +153,12 @@
 		</property-sheet>
 	</config>
 	
+	<config evaluator="aspect-name" condition="crlatti:provenienzaAspect">
+		<property-sheet>
+			<show-property name="crlatti:provenienza" />
+		</property-sheet>
+	</config>
+	
 	<config evaluator="aspect-name" condition="crlatti:emendamentiAspect">
 		<property-sheet>
 			<show-property name="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
@@ -184,8 +190,8 @@
 		<property-sheet>
 			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:pubblico"/>
+			<show-property name="crlatti:provenienza"/>
 			<show-property name="crlatti:dataSedutaTestoCR"/>
-			<show-property name="crlatti:commissioneCR"/>
 		</property-sheet>
 	</config>
 	
@@ -232,6 +238,7 @@
 		<property-sheet> 
 			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:pubblico"/>
+			<show-property name="crlatti:provenienza"/>
 		</property-sheet>
 	</config>
 	
@@ -239,6 +246,7 @@
 		<property-sheet> 
 			<show-property name="crlatti:tipologia"/>
 			<show-property name="crlatti:pubblico"/>
+			<show-property name="crlatti:provenienza"/>
 		</property-sheet>
 	</config>
 		

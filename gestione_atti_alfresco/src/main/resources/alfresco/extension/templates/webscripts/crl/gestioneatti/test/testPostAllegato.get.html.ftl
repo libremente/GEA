@@ -43,6 +43,14 @@
 			</td>
 		</tr>
 		<tr>
+			<td>
+				Provenienza:
+			</td>
+			<td>
+				<input type="text" name="provenienza"/>
+			</td>
+		</tr>
+		<tr>
 			<td>File:</td>
 			<td>
 				<input type="file" name="file">

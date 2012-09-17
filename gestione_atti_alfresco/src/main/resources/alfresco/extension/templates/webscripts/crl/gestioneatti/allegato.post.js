@@ -2,6 +2,7 @@ var nodeRefAtto = "";
 var tipologia = "";
 var pubblico = false;
 var filename = "";
+var provenienza = "";
 var content = null;
 
 for each (field in formdata.fields) {
@@ -11,6 +12,8 @@ for each (field in formdata.fields) {
 	tipologia = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
+  } else if(field.name == "provenienza"){
+	provenienza = field.value;
   } else if (field.name == "file" && field.isFile) {
     filename = field.filename;
     content = field.content;
@@ -45,6 +48,7 @@ if(nodeRefAtto == ""){
 		allegatoNode.specializeType("crlatti:allegato");
 		allegatoNode.properties["crlatti:tipologia"] = tipologia;
 		allegatoNode.properties["crlatti:pubblico"] = pubblico;
+		allegatoNode.properties["crlatti:provenienza"] = provenienza;
 		allegatoNode.properties.content.write(content);
 		allegatoNode.properties.content.setEncoding("UTF-8");
 		allegatoNode.properties.content.guessMimetype(filename);

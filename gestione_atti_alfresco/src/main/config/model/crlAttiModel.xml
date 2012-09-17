@@ -205,6 +205,7 @@
 			<mandatory-aspects>
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:pubblicabile</aspect>
+				<aspect>crlatti:provenienzaAspect</aspect>
 			</mandatory-aspects>
 		</type>
 		
@@ -214,6 +215,7 @@
 			<mandatory-aspects>
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:pubblicabile</aspect>
+				<aspect>crlatti:provenienzaAspect</aspect>
 			</mandatory-aspects>
 		</type>
 		
@@ -224,10 +226,6 @@
 				<property name="crlatti:dataSedutaTestoCR">
 					<title>Data seduta</title>
 					<type>d:date</type>
-				</property>
-				<property name="crlatti:commissioneCR">
-					<title>Commissione</title>
-					<type>d:text</type>
 				</property>
 			</properties>
 		</type>
@@ -732,6 +730,16 @@
 				<property name="crlatti:dataScadenza">
 					<title>Data scadenza</title>
 					<type>d:date</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:provenienzaAspect">
+			<title>Provenienza aspect</title>
+			<properties>
+				<property name="crlatti:provenienza">
+					<title>Provenienza</title>
+					<type>d:text</type>
 				</property>
 			</properties>
 		</aspect>

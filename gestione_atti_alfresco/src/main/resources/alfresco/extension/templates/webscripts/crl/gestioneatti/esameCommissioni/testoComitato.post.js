@@ -5,7 +5,7 @@ var tipologia = "";
 var pubblico = false;
 var filename = "";
 var dataSeduta = "";
-var commissione = "";
+var provenienza = "";
 var content = null;
 
 for each (field in formdata.fields) {
@@ -15,8 +15,8 @@ for each (field in formdata.fields) {
 	tipologia = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
-  } else if(field.name == "commissione"){
-	commissione = field.value;
+  } else if(field.name == "provenienza"){
+	provenienza = field.value;
   } else if(field.name == "dataSeduta"){
 	dataSeduta = field.value;
   } else if (field.name == "file" && field.isFile) {
@@ -61,7 +61,7 @@ if(nodeRefAtto == ""){
 			allegatoNode.properties["crlatti:dataSedutaTestoCR"] = dataSedutaParsed;
 		}
 
-		allegatoNode.properties["crlatti:commissioneCR"] = commissione;
+		allegatoNode.properties["crlatti:provenienza"] = provenienza;
 		
 		allegatoNode.properties.content.write(content);
 		allegatoNode.properties.content.setEncoding("UTF-8");
