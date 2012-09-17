@@ -15,47 +15,38 @@ var firmatario = atto.get("firmatario");
 var dataIniziativaDa = atto.get("dataIniziativaDa");
 var dataIniziativaA = atto.get("dataIniziativaA");
 
-var luceneQuery = "";
+var luceneQuery = "PATH:\"/app:company_home/cm:CRL//*\" ";
+
 var tipoAttoString = ""+tipoAtto+"";
+var type = "crlatti:atto";
 
 if(checkIsNotNull(tipoAttoString)){
-	var type = "crlatti:atto";
 	if(tipoAttoString == "PDL") {
 		type = "crlatti:attoPdl";	
-	}
-	if(tipoAttoString == "INP") {
+	} else if(tipoAttoString == "INP") {
 		type = "crlatti:attoInp";	
-	}
-	if(tipoAttoString == "PAR") {
+	} else if(tipoAttoString == "PAR") {
 		type = "crlatti:attoPar";	
-	}
-	if(tipoAttoString == "PDA") {
+	} else if(tipoAttoString == "PDA") {
 		type = "crlatti:attoPda";	
-	}
-	if(tipoAttoString == "PLP") {
+	} else if(tipoAttoString == "PLP") {
 		type = "crlatti:attoPlp";	
-	}
-	if(tipoAttoString == "PRE") {
+	} else if(tipoAttoString == "PRE") {
 		type = "crlatti:attoPre";	
-	}
-	if(tipoAttoString == "REF") {
+	} else if(tipoAttoString == "REF") {
 		type = "crlatti:attoRef";	
-	}
-	if(tipoAttoString == "REL") {
+	} else if(tipoAttoString == "REL") {
 		type = "crlatti:attoRel";	
-	}
-	if(tipoAttoString == "EAC") {
+	} else if(tipoAttoString == "EAC") {
 		type = "crlatti:attoEac";	
-	}
-	if(tipoAttoString == "REF") {
+	} else if(tipoAttoString == "REF") {
 		type = "crlatti:attoRef";	
-	}
-	if(tipoAttoString == "DOC") {
+	} else if(tipoAttoString == "DOC") {
 		type = "crlatti:attoDoc";	
 	}
-	
-	luceneQuery += "TYPE:\""+type+"\"";
 }
+
+luceneQuery += "AND TYPE:\""+type+"\"";
 
 if(checkIsNotNull(legislatura)){
 	luceneQuery = verifyAND(luceneQuery);

@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {  
    "List" : [
 	   <#list atti as atto>
@@ -19,3 +20,4 @@
 	   </#list>
    ]
 }
+</#escape>
