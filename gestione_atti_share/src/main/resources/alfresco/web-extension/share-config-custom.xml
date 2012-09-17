@@ -513,6 +513,25 @@
             <show id="crlatti:primoFirmatario" /> 
             <show id="crlatti:firmatari"/>
             
+            <show id="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
+			<show id="crlatti:numEmendPresentatiMinorEsameCommissioni" />
+			<show id="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
+			<show id="crlatti:numEmendPresentatiMistoEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiMinorEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiMistoEsameCommissioni" />
+			<show id="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
+			<show id="crlatti:numEmendDecadutiEsameCommissioni" />
+			<show id="crlatti:numEmendRitiratiEsameCommissioni" />
+			<show id="crlatti:numEmendRespintiEsameCommissioni" />
+			<show id="crlatti:noteEmendamentiEsameCommissioni" />
+			
+			<show id="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
+			<show id="crlatti:dataIntesaClausolaValutEsameCommissioni" />
+			<show id="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
+			<show id="crlatti:noteClausolaValutativaEsameCommissioni" />
+            
           </field-visibility>
       </form>
    </forms>
@@ -567,6 +586,26 @@
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
             
+            <show id="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
+			<show id="crlatti:numEmendPresentatiMinorEsameCommissioni" />
+			<show id="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
+			<show id="crlatti:numEmendPresentatiMistoEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiMinorEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
+			<show id="crlatti:numEmendApprovatiMistoEsameCommissioni" />
+			<show id="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
+			<show id="crlatti:numEmendDecadutiEsameCommissioni" />
+			<show id="crlatti:numEmendRitiratiEsameCommissioni" />
+			<show id="crlatti:numEmendRespintiEsameCommissioni" />
+			<show id="crlatti:noteEmendamentiEsameCommissioni" />
+			
+			<show id="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
+			<show id="crlatti:dataIntesaClausolaValutEsameCommissioni" />
+			<show id="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
+			<show id="crlatti:noteClausolaValutativaEsameCommissioni" />
+            
+            
    			</field-visibility>
    		</form>
    	</forms>
@@ -590,6 +629,7 @@
    			<field-visibility>
    				<show id="crlatti:tipologia" />
    				<show id="crlatti:pubblico" />
+   				<show id="crlatti:provenienza"/>
    			</field-visibility>
    		</form>
    	</forms>
@@ -601,8 +641,8 @@
    			<field-visibility>
    				<show id="crlatti:tipologia" />
    				<show id="crlatti:pubblico" />
+   				<show id="crlatti:provenienza"/>
    				<show id="crlatti:dataSedutaTestoCR" />
-   				<show id="crlatti:commissioneCR" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -627,6 +667,7 @@
    			<field-visibility>
    				<show id="crlatti:tipologia" />
    				<show id="crlatti:pubblico" />
+   				<show id="crlatti:provenienza"/>
    			</field-visibility>
    		</form>
    	</forms>
@@ -668,6 +709,10 @@
 		         <show id="crlatti:esitoVotazioneCommissione" />
 		         <show id="crlatti:dataVotazioneCommissione" />
 		         <show id="crlatti:dataTrasmissioneCommissione" />
+		         <show id="crlatti:dataRichiestaIscrizioneAulaCommissione" />
+				 <show id="crlatti:passaggioDirettoInAulaCommissione" />
+				 <show id="crlatti:motivazioniContinuazioneInReferente" />
+				 <show id="crlatti:dataSedutaContinuazioneInReferente" />
 		         <show id="crlatti:dataAnnulloCommissione" />
 		         <show id="crlatti:ruoloCommissione" />
 		         <show id="crlatti:statoCommissione" />
