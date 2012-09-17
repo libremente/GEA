@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {  
    "List":[
    <#list allegati as allegato>
@@ -14,3 +15,4 @@
    </#list>
    ]
 }
+</#escape>

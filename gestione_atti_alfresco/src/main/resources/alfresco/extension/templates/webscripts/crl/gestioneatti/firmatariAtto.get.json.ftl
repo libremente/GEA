@@ -1,5 +1,7 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {  
    "List":[
+   <#if firmatari?exists>
    <#list firmatari as firmatario>
    { "firmatario" : 
 	   {
@@ -12,5 +14,7 @@
 	   }
    }<#if firmatario_has_next>,</#if>
    </#list>
+   </#if>
    ]
 }
+</#escape>

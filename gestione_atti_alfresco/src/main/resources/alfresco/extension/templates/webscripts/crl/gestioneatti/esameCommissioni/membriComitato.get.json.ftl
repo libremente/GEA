@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {  
    "idAtto": "${atto.nodeRef}",
    "commissione": "${commissione.name}",
@@ -17,3 +18,4 @@
    </#list>
    ]
 }
+</#escape>

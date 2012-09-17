@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {
    "firmatario": 
    {
@@ -5,3 +6,4 @@
 	"descrizione":"${firmatario.name}"
    }
 }
+</#escape>

@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {
    "atto": 
    {
@@ -109,3 +110,4 @@
 	
    }
 }
+</#escape>

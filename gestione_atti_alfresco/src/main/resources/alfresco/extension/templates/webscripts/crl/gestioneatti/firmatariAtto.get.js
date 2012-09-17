@@ -5,14 +5,11 @@ var firmatari = null;
 
 if(checkIsNotNull(id)){
 	var attoFolderNode = utils.getNodeFromString(id);
-	var children = attoFolderNode.getChildAssocsByType("cm:folder");
-	var firmatariFolderNode = null;
-	for each (child in children){
-		if(child.name=="Firmatari"){
-			firmatariFolderNode = child;
-		}
+	if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){
+		var childrenXPathQuery = "*[@cm:name='Firmatari']";
+		var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
+		firmatari = firmatariFolderNode.getChildAssocsByType("crlatti:firmatario");
 	}
-	firmatari = firmatariFolderNode.getChildAssocsByType("crlatti:firmatario");
 } else {
 	status.code = 400;
 	status.message = "id atto non valorizzato";

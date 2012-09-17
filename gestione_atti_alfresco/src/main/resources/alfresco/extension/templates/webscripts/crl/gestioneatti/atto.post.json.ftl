@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {
    "atto": 
    {
@@ -5,3 +6,4 @@
 	"numeroAtto":"${atto.properties["crlatti:numeroAtto"]}"
    }
 }
+</#escape>

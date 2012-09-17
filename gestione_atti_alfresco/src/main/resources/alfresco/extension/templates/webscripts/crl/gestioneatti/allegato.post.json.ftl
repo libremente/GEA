@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {
    "allegato": 
    {
@@ -6,3 +7,4 @@
 	"downloadUrl":"${allegato.downloadUrl}"
    }
 }
+</#escape>

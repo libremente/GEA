@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {  
    "List" : [
    <#list records as record>
@@ -15,3 +16,4 @@
    </#list>
    ]
 }
+</#escape>

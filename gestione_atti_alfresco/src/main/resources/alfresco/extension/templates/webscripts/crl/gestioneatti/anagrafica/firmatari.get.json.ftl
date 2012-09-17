@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {
 	"List": [
 	   <#list firmatari as firmatario>
@@ -11,3 +12,4 @@
 	   </#list>
 	]
 }
+</#escape>

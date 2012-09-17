@@ -1,3 +1,4 @@
+<#escape x as jsonUtils.encodeJSONString(x)>
 {
    "attoRecord": 
    {
@@ -6,3 +7,4 @@
 	"downloadUrl":"${attoRecord.downloadUrl}"
    }
 }
+</#escape>
