@@ -48,7 +48,9 @@ public class NavigationRules {
         
 		//if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
 		
-        	return "pretty : Presentazione_e_Assegnazione";
+		
+		return "pretty:Presentazione_e_Assegnazione";
+        	//return "/views/home/presentazioneassegnazione/presentazioneassegnazione_base.xhtml";
        /* }else{
         	
         	//Message
@@ -72,10 +74,10 @@ public class NavigationRules {
 				.createValueExpression(context.getELContext(), "#{attoBean}",
 						AttoBean.class).getValue(context.getELContext());
         
-		//if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
+		if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
 		
-        	return "pretty : Esame_Commissioni";
-        /*}else{
+			return "pretty:Esame_Commissioni";
+        }else{
         	
         	//Message
         	context.addMessage(
@@ -85,7 +87,7 @@ public class NavigationRules {
 							"Attenzione ! Utenza non autorizzata per la fase di processo Esame Commissioni ",
 							""));
         	return "";
-        }*/
+        }
 	}
 	
 	public String esameAulaEnabled(){
@@ -100,7 +102,7 @@ public class NavigationRules {
         
 		//if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
 		
-        	return "pretty : Esame_Aula";
+		return "pretty:Esame_Aula";
         /*}else{
         	
         	//Message
@@ -127,7 +129,7 @@ public class NavigationRules {
         
 		//if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
 		
-        	return "pretty : Chiusura_Iter";
+		return "pretty:Chiusura_Iter";
         /*}else{
         	
         	//Message
