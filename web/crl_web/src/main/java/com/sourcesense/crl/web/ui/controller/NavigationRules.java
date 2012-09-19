@@ -3,6 +3,7 @@ package com.sourcesense.crl.web.ui.controller;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -12,7 +13,7 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 
 
 @ManagedBean(name = "navigationBean")
-@SessionScoped
+@RequestScoped
 public class NavigationRules {
 
 
@@ -30,117 +31,46 @@ public class NavigationRules {
 				.getExpressionFactory()
 				.createValueExpression(context.getELContext(), "#{userBean}",
 						UserBean.class).getValue(context.getELContext());
+		
+		attoBean = (AttoBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{attoBean}",
+						AttoBean.class).getValue(context.getELContext());
+        
 
 	}
 
 	
 	
 	
-	public String presentazioneAssegnazioneEnabled(){
+	public boolean presentazioneAssegnazioneDisabled(){
 		   
-		FacesContext context = FacesContext.getCurrentInstance();
-		
-		attoBean = (AttoBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{attoBean}",
-						AttoBean.class).getValue(context.getELContext());
+		return false;
         
-		//if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
-		
-		
-		return "pretty:Presentazione_e_Assegnazione";
-        	//return "/views/home/presentazioneassegnazione/presentazioneassegnazione_base.xhtml";
-       /* }else{
-        	
-        	//Message
-        	context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Utenza non autorizzata per la fase di processo Esame Commissioni ",
-							""));
-        	return "";
-        }*/
 	}
 	
-	public String esameCommissioniEnabled(){
+	public boolean esameCommissioniDisabled(){
 		   
-		FacesContext context = FacesContext.getCurrentInstance();
 		
-		attoBean = (AttoBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{attoBean}",
-						AttoBean.class).getValue(context.getELContext());
-        
-		if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
+		return !attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome());
 		
-			return "pretty:Esame_Commissioni";
-        }else{
-        	
-        	//Message
-        	context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Utenza non autorizzata per la fase di processo Esame Commissioni ",
-							""));
-        	return "";
-        }
 	}
 	
-	public String esameAulaEnabled(){
+	public boolean esameAulaDisabled(){
 		   
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		attoBean = (AttoBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{attoBean}",
-						AttoBean.class).getValue(context.getELContext());
-        
-		//if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
-		
-		return "pretty:Esame_Aula";
-        /*}else{
-        	
-        	//Message
-        	context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Utenza non autorizzata per la fase di processo Esame Commissioni ",
-							""));
-        	return "";
-        }*/
+		return false;
+    
 	}
 	
 	
-	public String chiusuraIterEnabled(){
+	public boolean chiusuraIterDisabled(){
 		   
-		FacesContext context = FacesContext.getCurrentInstance();
 		
-		attoBean = (AttoBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{attoBean}",
-						AttoBean.class).getValue(context.getELContext());
-        
-		//if(attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome())){
-		
-		return "pretty:Chiusura_Iter";
-        /*}else{
-        	
-        	//Message
-        	context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Utenza non autorizzata per la fase di processo Esame Commissioni ",
-							""));
-        	return "";
-        }*/
+		return false;
+    
 	}
 	
 	public boolean isSessionAttoPAR (){		

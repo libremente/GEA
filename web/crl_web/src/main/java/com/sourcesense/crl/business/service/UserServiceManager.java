@@ -35,7 +35,7 @@ public class UserServiceManager implements ServiceManager {
 
 		//TODO: MOCK
 		GruppoUtente g1 = new GruppoUtente();
-		g1.setNome("Commissione");
+		g1.setNome("Commissione2");
 		sessionUser.setSessionGroup(g1);
 
 		if(urlBuilder.getAlfrescoSessionTicket()!=null){

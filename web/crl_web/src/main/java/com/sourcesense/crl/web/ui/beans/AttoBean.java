@@ -113,7 +113,7 @@ public class AttoBean implements Serializable {
 		
 		for (Commissione commissioneRec : this.atto.getCommissioni()) {
 			
-			if(commissioneRec.getNome().equalsIgnoreCase(commissione)){
+			if(commissioneRec.getDescrizione().equalsIgnoreCase(commissione)){
 				
 				return true;
 			}
