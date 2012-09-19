@@ -603,8 +603,11 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void confermaAssegnazione() {
+		
+		changeStatoCommissioni(Commissione.STATO_ASSEGNATO);
 		this.atto.setCommissioni(commissioniList);
 		this.atto.setPareri(pareriList);
+		
 		attoServiceManager.salvaAssegnazionePresentazione(atto);
 
 		// TODO Service logic
@@ -621,6 +624,20 @@ public class PresentazioneAssegnazioneAttoController {
 				"Assegnazione salvata con successo", ""));
 	}
 
+	
+	public void changeStatoCommissioni(String stato){
+		
+		for (Commissione element : atto.getCommissioni()) {
+
+			if (!element.getStato().equals(Commissione.STATO_ANNULLATO)) {
+
+				element.setStato(stato);
+			}
+
+		}
+		
+	}
+	
 	// Note e Allegati******************************************************
 	public void uploadAllegato(FileUploadEvent event) {
 

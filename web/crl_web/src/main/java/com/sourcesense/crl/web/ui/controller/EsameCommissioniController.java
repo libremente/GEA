@@ -188,9 +188,7 @@ public class EsameCommissioniController {
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 		//MOCK
-		GruppoUtente g1 = new GruppoUtente();
-		g1.setNome("Commissione2");
-		userBean.getUser().setSessionGroup(g1);
+		
 
 		setCommissioneUser(findCommissione(userBean.getUser().getSessionGroup().getNome()));
 		setDataPresaInCarico(commissioneUser.getDataPresaInCarico());
@@ -216,7 +214,7 @@ public class EsameCommissioniController {
 		emendamentiList = Clonator.cloneList(atto.getEmendamentiEsameCommissioni());
 		testiClausolaList = Clonator.cloneList(atto.getTestiClausola());
 		allegatiList = Clonator.cloneList(atto.getAllegatiNoteEsameCommissioni());
-		linksList = Clonator.cloneList(atto.getLinksNoteEsameCommissioni());
+		linksList = Clonator.cloneList(commissioneUser.getLinksNoteEsameCommissione());
 
 		confrontaDataScadenza();
 
@@ -435,7 +433,7 @@ public class EsameCommissioniController {
 		String numeroAtto = attoBean.getNumeroAtto();
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
-				+ " preso in carico con successo dall' utente " + userBean.getUser().getUsername()));
+				+ " preso in carico con successo dall' utente " + userBean.getUser().getUsername(),""));
 	}
 
 	public void addRelatore() {
@@ -1377,16 +1375,16 @@ public class EsameCommissioniController {
 	}
 
 	public void salvaNoteEAllegati() {
-		this.atto.setLinksNoteEsameCommissioni(linksList);
+		this.commissioneUser.setLinksNoteEsameCommissione(linksList);
+		
 		attoServiceManager.salvaNoteAllegatiEsameCommissioni(atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setNoteGeneraliEsameCommissioni(atto.getNoteGeneraliEsameCommissioni());
-		attoBean.getAtto().setLinksNoteEsameCommissioni(linksList);		
-
+		attoBean.getAtto().setCommissioni(Clonator.cloneList(getCommissioniList()));
+		
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage("Note e Allegati salvati con successo", ""));
@@ -1839,13 +1837,13 @@ public class EsameCommissioniController {
 
 
 	public String getNoteGenerali() {
-		return atto.getNoteGeneraliEsameCommissioni();
+		return commissioneUser.getNoteGeneraliEsameCommissione();
 	}
 
 
 
 	public void setNoteGenerali(String noteGenerali) {
-		this.atto.setNoteGeneraliEsameCommissioni(noteGenerali);
+		this.commissioneUser.setNoteGeneraliEsameCommissione(noteGenerali);
 	}
 
 

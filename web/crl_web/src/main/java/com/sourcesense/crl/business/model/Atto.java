@@ -128,7 +128,7 @@ public class Atto implements Cloneable
 	private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
 	private List <Link> linksPresentazioneAssegnazione = new ArrayList<Link>();
-	private List <Link> linksNoteEsameCommissioni = new ArrayList<Link>();
+	
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
 	private List <TestoAtto> testiAtto = new ArrayList<TestoAtto>();
 	private List <Allegato> testiAttoVotatoEsameCommissioni = new ArrayList<Allegato>();
@@ -176,7 +176,7 @@ public class Atto implements Cloneable
 	private Date dataIntesa;
 	private String esitoVotazioneIntesa;
 	private String noteClausolaValutativa;
-	private String noteGeneraliEsameCommissioni;
+	
 
 
 	private Date dataPresaInCaricoEsameAula;
@@ -738,14 +738,7 @@ public class Atto implements Cloneable
 		this.linksPresentazioneAssegnazione = linksPresentazioneAssegnazione;
 	}
 
-	public List<Link> getLinksNoteEsameCommissioni() {
-		return linksNoteEsameCommissioni;
-	}
-
 	
-	public void setLinksNoteEsameCommissioni(List<Link> linksNoteEsameCommissioni) {
-		this.linksNoteEsameCommissioni = linksNoteEsameCommissioni;
-	}
 
 	public List<OrganismoStatutario> getOrganismiStatutari() {
 		return organismiStatutari;
@@ -1087,14 +1080,7 @@ public class Atto implements Cloneable
 		this.noteClausolaValutativa = noteClausolaValutativa;
 	}
 
-	public String getNoteGeneraliEsameCommissioni() {
-		return noteGeneraliEsameCommissioni;
-	}
-
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
-	public void setNoteGeneraliEsameCommissioni(String noteGeneraliEsameCommissioni) {
-		this.noteGeneraliEsameCommissioni = noteGeneraliEsameCommissioni;
-	}
+	
 
 	public String getRelazioneScritta() {
 		return relazioneScritta;

@@ -17,6 +17,7 @@
     </url-mapping>
     
     <url-mapping id="Inserimento_Atto"> 
+        
         <pattern value="/inserisciatto" /> 
         <view-id value="views/inserisciatto/inserisciatto_base.xhtml" />
         
@@ -40,9 +41,10 @@
     </url-mapping> 
     
      <url-mapping id="Esame_Commissioni"> 
+        
         <pattern value="/esamecommissioni" /> 
         <view-id value="views/home/esamecommissioni/esamecommissioni_base.xhtml" />      
-          
+        <action ></action>
     </url-mapping> 
     
     <url-mapping id="Chiusura_Iter"> 

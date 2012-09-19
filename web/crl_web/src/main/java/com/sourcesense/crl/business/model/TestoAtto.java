@@ -25,6 +25,7 @@ public class TestoAtto {
 	private boolean pubblico;
 	private String tipoAllegato;
 	private String tipologia;
+	private String provenienza;
 	
 	public String getTipologia() {
 		return tipologia;
@@ -76,6 +77,15 @@ public class TestoAtto {
 	public void setMimetype(String mimetype) {
 		this.mimetype = mimetype;
 	}
+
+	public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+	
 	
 	
 	

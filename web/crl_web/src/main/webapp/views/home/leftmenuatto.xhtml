@@ -9,13 +9,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form>
+
+<p:growl id="menuMsg" showDetail="true" sticky="false" />
+
 <p:menu>
 	<p:submenu label="Fasi di Processo">
 		<p:menuitem value="Riepilogo Atto" url="/atto" />
-		<p:menuitem value="Presentazione e Assegnazione" url="/presentazioneassegnazione" />
-		<p:menuitem value="Esame Commissioni" url="/esamecommissioni" />
-		<p:menuitem value="Esame Aula" url="/esameaula" />
-		<p:menuitem value="Chiusura Iter" url="/chiusuraiter" />
+		<p:menuitem value="Presentazione e Assegnazione" action="#{navigationBean.presentazioneAssegnazioneEnabled}" update="menuMsg" />
+		<p:menuitem value="Esame Commissioni" action="#{navigationBean.esameCommissioniEnabled}" update="menuMsg" />
+		<p:menuitem value="Esame Aula" action="#{navigationBean.esameAulaEnabled}" update="menuMsg" />
+		<p:menuitem value="Chiusura Iter" action="#{navigationBean.chiusuraIterEnabled}" update="menuMsg" />
 		<p:menuitem value="Consultazioni e Pareri" url="/consultazioneepareri" />
 		<p:menuitem value="Collegamenti" url="/collegamenti" />
 		<p:menuitem value="Lettere e Notifiche" url="/lettereenotifiche" />

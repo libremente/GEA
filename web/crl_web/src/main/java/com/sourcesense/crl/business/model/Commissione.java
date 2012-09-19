@@ -8,12 +8,14 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
+import com.sourcesense.crl.util.JsonNoteDeserializer;
 
 
 @JsonRootName("commissione")
@@ -45,6 +47,7 @@ public class Commissione implements Cloneable {
 	private Date dataFineLavoriComitato;
 	
 	private List <Relatore> relatori = new ArrayList<Relatore>();
+	private List <Link> linksNoteEsameCommissione = new ArrayList<Link>();
 	private Date dataProposta;
 	private Date dataAnnullo;
 	private boolean annullata = false;
@@ -58,6 +61,9 @@ public class Commissione implements Cloneable {
 	
 	private Date dataRichiestaIscrizioneAula;
 	private boolean passaggioDirettoInAula;
+	
+	private String noteGeneraliEsameCommissione;
+	
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -280,6 +286,23 @@ public class Commissione implements Cloneable {
 		this.passaggioDirettoInAula = passaggioDirettoInAula;
 	}
 	
+	public List<Link> getLinksNoteEsameCommissione() {
+		return linksNoteEsameCommissione;
+	}
+
 	
+	public void setLinksNoteEsameCommissione(List<Link> linksNoteEsameCommissione) {
+		this.linksNoteEsameCommissione = linksNoteEsameCommissione;
+	}
+	
+	
+	public String getNoteGeneraliEsameCommissione() {
+		return noteGeneraliEsameCommissione;
+	}
+
+	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	public void setNoteGeneraliEsameCommissione(String noteGeneraliEsameCommissione) {
+		this.noteGeneraliEsameCommissione = noteGeneraliEsameCommissione;
+	}
 
 }

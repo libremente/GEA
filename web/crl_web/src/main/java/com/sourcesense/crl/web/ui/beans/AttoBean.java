@@ -108,6 +108,20 @@ public class AttoBean implements Serializable {
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 
+	
+	public boolean containCommissione (String commissione){
+		
+		for (Commissione commissioneRec : this.atto.getCommissioni()) {
+			
+			if(commissioneRec.getNome().equalsIgnoreCase(commissione)){
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	/* Services */
 	public AttoServiceManager getAttoServiceManager() {
 		return attoServiceManager;

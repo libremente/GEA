@@ -2,9 +2,11 @@ package com.sourcesense.crl.web.ui.beans;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
 
 
@@ -29,6 +31,14 @@ public class UserBean implements Serializable{
 	
 	private String sessionToken;
 
+	
+	@PostConstruct
+	public void init(){
+		
+		GruppoUtente g1 = new GruppoUtente();
+		g1.setNome("Commissione2");
+		this.getUser().setSessionGroup(g1);
+	}
 	
 	
 	

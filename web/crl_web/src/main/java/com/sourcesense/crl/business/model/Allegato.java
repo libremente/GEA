@@ -39,6 +39,7 @@ public class Allegato {
 	private String mimetype;
 	private Date dataSeduta;
 	private String tipologia;
+	private String provenienza;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -102,6 +103,17 @@ public class Allegato {
 	public void setDataSeduta(Date dataSeduta) {
 		this.dataSeduta = dataSeduta;
 	}
+
+
+	public String getProvenienza() {
+		return provenienza;
+	}
+
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
+	}
+	
 	
 	
 	

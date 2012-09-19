@@ -85,7 +85,6 @@
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:calendar>
 					&nbsp;
-
 					<p:commandButton id="presaincaricoesamecommissione"
 				value="Presa in Carico"
 				update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg, :informationForm:informationBar"
@@ -109,14 +108,14 @@
 			</p:inputText>
 		</p:column>
 	</p:row>
-	<p:row>
+	<p:row rendered="#{navigationBean.isSessionAttoPAR()}">
 		<p:column>
 			<b> <h:outputLabel for="datascadenza" value="Data scadenza: " />
 			</b>
 		</p:column>
 		<p:column>
 			<p:calendar size="10" locale="it" id="datascadenza"
-				value="#{esameCommissioniController.dataScadenza}">
+				value="#{esameCommissioniController.dataScadenza}" >
 				<p:ajax event="dateSelect"
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:calendar>
