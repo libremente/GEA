@@ -65,7 +65,6 @@
 		var organismoStatutario = currentForm.organismoStatutario.value;
 		var soggettoConsultato = currentForm.soggettoConsultato.value;
 		var emendato = currentForm.emendato.value;
-		var consultato = currentForm.consultato.value;
 		var sospeso = currentForm.sospeso.value;
 		
 		var jsonRicerca = {
@@ -98,13 +97,14 @@
 			"dataPubblicazioneA" : ""+dataPubblicazioneA+"",
 			"dataSedutaScDa" : ""+dataSedutaScDa+"",
 			"dataSedutaScA" : ""+dataSedutaScA+"",
+			"dataSedutaCommDa" : ""+dataSedutaCommDa+"",
+			"dataSedutaCommA" : ""+dataSedutaCommA+"",
 			"dataSedutaAulaDa" : ""+dataSedutaAulaDa+"",
 			"dataSedutaAulaA" : ""+dataSedutaAulaA+"",
 			"relatore" : ""+relatore+"",
 			"organismoStatutario" : ""+organismoStatutario+"",
 			"soggettoConsultato" : ""+soggettoConsultato+"",
 			"emendato" : ""+emendato+"",
-			"consultato" : ""+consultato+"",
 			"sospeso" : ""+sospeso+""
 			}
 		};
@@ -189,41 +189,6 @@
 		<tr>
 			<td>Inizio campi ricerca avanzata</td>
 		</tr>
-		<!-- 
-		//pannello sinistra
-var tipoChiusura = atto.get("tipoChiusura");
-var esitoVotoComRef = atto.get("esitoVotoComRef");
-var esitoVotoAula = atto.get("esitoVotoAula");
-var commReferente = atto.get("commReferente");
-var commConsultiva = atto.get("commConsultiva");
-var redigente = atto.get("redigente");
-var deliberante = atto.get("deliberante");
-var numeroLcr = atto.get("numeroLcr");
-var numeroLr = atto.get("numeroLr");
-var anno = atto.get("anno");
-var abbinamento = atto.get("abbinamento");
-var stralcio = atto.get("stralcio");
-
-//pannello destra
-var dataPubblicazioneDa = atto.get("dataPubblicazioneDa");
-var dataPubblicazioneA = atto.get("dataPubblicazioneA");
-
-var dataSedutaScDa = atto.get("dataSedutaScDa");
-var dataSedutaScA = atto.get("dataSedutaScA");
-
-var dataSedutaCommDa = atto.get("dataSedutaCommDa");
-var dataSedutaCommA = atto.get("dataSedutaCommA");
-
-var dataSedutaAulaDa = atto.get("dataSeduraAulaDa");
-var dataSedutaAulaA = atto.get("dataSeduraAulaA");
-
-var relatore = atto.get("relatore");
-var organismoStatutario = atto.get("organismoStatutario");
-var soggettoConsultato = atto.get("soggettoConsultato");
-var emendato = atto.get("emendato");
-var consultato = atto.get("consultato");
-var sospeso = atto.get("sospeso");
-		 -->
 		<tr>
 			<td>Tipo chiusura:</td>
 			<td><input type="text" name="tipoChiusura"></td>
@@ -319,10 +284,6 @@ var sospeso = atto.get("sospeso");
 		<tr>
 			<td>emendato:</td>
 			<td><input type="text" name="emendato"></td>
-		</tr>
-		<tr>
-			<td>consultato:</td>
-			<td><input type="text" name="consultato"></td>
 		</tr>
 		<tr>
 			<td>sospeso:</td>

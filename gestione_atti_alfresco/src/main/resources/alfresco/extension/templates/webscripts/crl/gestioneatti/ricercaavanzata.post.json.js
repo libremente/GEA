@@ -41,14 +41,13 @@ var dataSedutaScA = atto.get("dataSedutaScA");
 var dataSedutaCommDa = atto.get("dataSedutaCommDa");
 var dataSedutaCommA = atto.get("dataSedutaCommA");
 
-var dataSedutaAulaDa = atto.get("dataSeduraAulaDa");
-var dataSedutaAulaA = atto.get("dataSeduraAulaA");
+var dataSedutaAulaDa = atto.get("dataSedutaAulaDa");
+var dataSedutaAulaA = atto.get("dataSedutaAulaA");
 
 var relatore = atto.get("relatore");
 var organismoStatutario = atto.get("organismoStatutario");
 var soggettoConsultato = atto.get("soggettoConsultato");
 var emendato = atto.get("emendato");
-var consultato = atto.get("consultato");
 var sospeso = atto.get("sospeso");
 
 
@@ -149,62 +148,62 @@ if(checkIsNotNull(dataIniziativaDa)
 
 //pannello sinistro
 if(checkIsNotNull(tipoChiusura)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:tipoChiusura:\""+tipoChiusura+"\"";
 }
 
 if(checkIsNotNull(esitoVotoComRef)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:esitoVotoComRef:\""+esitoVotoComRef+"\"";
 }
 
 if(checkIsNotNull(esitoVotoAula)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:esitoVotoAula:\""+esitoVotoAula+"\"";
 }
 
 if(checkIsNotNull(commReferente)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:commReferente:\""+commReferente+"\"";
 }
 
 if(checkIsNotNull(commConsultiva)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:commConsultiva:\""+commConsultiva+"\"";
 }
 
 if(checkIsNotNull(redigente)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:redigente:\""+redigente+"\"";
 }
 
 if(checkIsNotNull(deliberante)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:deliberante:\""+deliberante+"\"";
 }
 
 if(checkIsNotNull(numeroLcr)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:numeroLcr:\""+numeroLcr+"\"";
 }
 
 if(checkIsNotNull(numeroLr)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:numeroLr:\""+numeroLr+"\"";
 }
 
 if(checkIsNotNull(anno)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:anno:\""+anno+"\"";
 }
 
 if(checkIsNotNull(abbinamento)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:abbinamento:\""+abbinamento+"\"";
 }
 
 if(checkIsNotNull(stralcio)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:stralcio:\""+stralcio+"\"";
 }
 
@@ -271,32 +270,27 @@ if(checkIsNotNull(dataSedutaAulaDa)
 }
 
 if(checkIsNotNull(relatore)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:relatori:\""+relatore+"\"";
 }
 
 if(checkIsNotNull(organismoStatutario)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:organismiStatutari:\""+organismoStatutario+"\"";
 }
 
 if(checkIsNotNull(soggettoConsultato)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:soggettoConsultato:\""+soggettoConsultato+"\"";
 }
 
 if(checkIsNotNull(emendato)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:emendato:\""+emendato+"\"";
 }
 
-if(checkIsNotNull(consultato)){
-	verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:consultato:\""+consultato+"\"";
-}
-
 if(checkIsNotNull(sospeso)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:sospeso:\""+sospeso+"\"";
 }
 
