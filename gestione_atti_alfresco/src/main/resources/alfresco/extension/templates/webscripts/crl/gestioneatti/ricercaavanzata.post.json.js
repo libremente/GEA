@@ -49,7 +49,7 @@ var organismoStatutario = atto.get("organismoStatutario");
 var soggettoConsultato = atto.get("soggettoConsultato");
 var emendato = atto.get("emendato");
 var sospeso = atto.get("sospeso");
-
+var numeroDgr = atto.get("numeroDgr");
 
 var luceneQuery = "PATH:\"/app:company_home/cm:CRL//*\" ";
 
@@ -292,6 +292,11 @@ if(checkIsNotNull(emendato)){
 if(checkIsNotNull(sospeso)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:sospeso:\""+sospeso+"\"";
+}
+
+if(checkIsNotNull(numeroDgr)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:numeroDgr:\""+numeroDgr+"\"";
 }
 
 var attiResults = search.luceneSearch(luceneQuery);

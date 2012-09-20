@@ -66,6 +66,7 @@
 		var soggettoConsultato = currentForm.soggettoConsultato.value;
 		var emendato = currentForm.emendato.value;
 		var sospeso = currentForm.sospeso.value;
+		var numeroDgr = currentForm.numeroDgr.value;
 		
 		var jsonRicerca = {
 		"atto" : {
@@ -105,7 +106,8 @@
 			"organismoStatutario" : ""+organismoStatutario+"",
 			"soggettoConsultato" : ""+soggettoConsultato+"",
 			"emendato" : ""+emendato+"",
-			"sospeso" : ""+sospeso+""
+			"sospeso" : ""+sospeso+"",
+			"numeroDgr" : ""+numeroDgr+""
 			}
 		};
 		
@@ -288,6 +290,10 @@
 		<tr>
 			<td>sospeso:</td>
 			<td><input type="text" name="sospeso"></td>
+		</tr>
+		<tr>
+			<td>numeroDgr:</td>
+			<td><input type="text" name="numeroDgr"></td>
 		</tr>
 		<tr>
 			<td></td>
