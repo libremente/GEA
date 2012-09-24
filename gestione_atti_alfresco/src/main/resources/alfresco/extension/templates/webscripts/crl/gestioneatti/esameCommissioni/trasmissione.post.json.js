@@ -3,37 +3,33 @@
 var atto = json.get("atto");
 var id = atto.get("id");
 var statoAtto = atto.get("stato");
-var commissioni = atto.get("commissioni");
-
 var commissioneUtente = json.get("target").get("commissione");
+var passaggio = json.get("target").get("passaggio");
 
-var passaggioDirettoInAula = false;
-var dataRichiestaIscrizioneAula = "";
-var dataTrasmissione = "";
-var statoCommissione = "";
+//selezione della commissione e del passaggio corrente
+var commissioneTarget = getCommissioneTarget(json, passaggio, commissioneUtente);
 
-
-// prendo i valori delle proprietˆ dalla commissione target
-
-for(var i=0; i<commissioni.length(); i++) {
-	var commissioneTemp = commissioni.get(i);
-	
-	if(""+commissioneTemp.get("descrizione")+"" == ""+commissioneUtente+"") {
-		passaggioDirettoInAula = commissioneTemp.get("passaggioDirettoInAula");
-		dataRichiestaIscrizioneAula = commissioneTemp.get("dataRichiestaIscrizioneAula");
-		dataTrasmissione = commissioneTemp.get("dataTrasmissione");
-		statoCommissione = commissioneTemp.get("stato");
-	}
-	
-}
+var passaggioDirettoInAula = filterParam(commissioneTarget.get("passaggioDirettoInAula"));
+var dataRichiestaIscrizioneAula = filterParam(commissioneTarget.get("dataRichiestaIscrizioneAula"));
+var dataTrasmissione = filterParam(commissioneTarget.get("dataTrasmissione"));
+var statoCommissione = filterParam(commissioneTarget.get("stato"));
+var ruoloCommissione = filterParam(commissioneTarget.get("ruolo"));
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
+	
+	// gestione passaggi
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoNode.childrenByXPath(passaggiXPathQuery)[0];
+	
+	var passaggioXPathQuery = "*[@cm:name='"+passaggio+"']";
+	var passaggioFolderNode = passaggiFolderNode.childrenByXPath(passaggioXPathQuery)[0];
+	
 	var commissioneFolderNode = null;
 	
 	//cerco la commissione di riferimento dell'utente corrente
 	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
-	var commissioniFolderNode = attoNode.childrenByXPath(commissioniXPathQuery)[0];
+	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
 	if(checkIsNotNull(commissioneUtente)){
 		var commissioneUtenteXPathQuery = "*[@cm:name='"+commissioneUtente+"']";
@@ -57,19 +53,20 @@ if(checkIsNotNull(id)){
 				commissioneFolderNode.properties["crlatti:dataRichiestaIscrizioneAulaCommissione"] = dataRichiestaIscrizioneAulaParsed;
 			}
 			
-			
 
 			// passaggio di stato per la commissione: votato in Commissione
 			commissioneFolderNode.properties["crlatti:statoCommissione"] = statoCommissione;
 			commissioneFolderNode.save();
-			
-			// passaggio di stato per l'atto: votato in Commissione
-			attoNode.properties["crlatti:statoAtto"] = statoAtto;
-			attoNode.save();
+
+			// passaggio di stato per l'atto in caso di commissione Referente
+			if(""+ruoloCommissione+""=="Referente") {
+				attoNode.properties["crlatti:statoAtto"] = statoAtto;
+				attoNode.save();
+			}
 			
 		} else {
 			status.code = 400;
-			status.message = "commissione utente non trovata";
+			status.message = "commissione utente non valorizzata";
 			status.redirect = true;
 		}
 	} 

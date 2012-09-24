@@ -23,6 +23,9 @@
 	function creaEmendamentiClausoleCommissione(){
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
+		var passaggio = currentForm.passaggio.value;
+		var commissione = currentForm.commissione.value;
+		
 		
 		var numEmendPresentatiMaggiorEsameCommissioni = currentForm.numEmendPresentatiMaggiorEsameCommissioni.value;
 		var numEmendPresentatiMinorEsameCommissioni = currentForm.numEmendPresentatiMinorEsameCommissioni.value;
@@ -45,32 +48,57 @@
 		var esitoVotazioneIntesa = currentForm.esitoVotazioneIntesa.value;
 		var noteClausolaValutativa = currentForm.noteClausolaValutativa.value;
 		
-		var attoCustom = {
-			
+		var attoCustom = {	
+			"target":{
+				"commissione": ""+commissione+"",
+				"passaggio": ""+passaggio+""
+			},
 			"atto": {
 				"id": ""+idAtto+"",
 				"stato": "emendamenti e clausole",
-				"numEmendPresentatiMaggiorEsameCommissioni": ""+numEmendPresentatiMaggiorEsameCommissioni+"",
-				"numEmendPresentatiMinorEsameCommissioni": ""+numEmendPresentatiMinorEsameCommissioni+"",
-				"numEmendPresentatiGiuntaEsameCommissioni": ""+numEmendPresentatiGiuntaEsameCommissioni+"",
-				"numEmendPresentatiMistoEsameCommissioni": ""+numEmendPresentatiMistoEsameCommissioni+"",
-				
-				"numEmendApprovatiMaggiorEsameCommissioni": ""+numEmendApprovatiMaggiorEsameCommissioni+"",
-				"numEmendApprovatiMinorEsameCommissioni": ""+numEmendApprovatiMinorEsameCommissioni+"",
-				"numEmendApprovatiGiuntaEsameCommissioni": ""+numEmendApprovatiGiuntaEsameCommissioni+"",
-				"numEmendApprovatiMistoEsameCommissioni": ""+numEmendApprovatiMistoEsameCommissioni+"",
-				
-				"nonAmmissibiliEsameCommissioni": ""+nonAmmissibiliEsameCommissioni+"",
-				"decadutiEsameCommissioni": ""+decadutiEsameCommissioni+"",
-				"ritiratiEsameCommissioni": ""+ritiratiEsameCommissioni+"",
-				"respintiEsameCommissioni": ""+respintiEsameCommissioni+"",
-				"noteEmendamentiEsameCommissioni": ""+noteEmendamentiEsameCommissioni+"",
-				
-				"dataPresaInCaricoProposta": ""+dataPresaInCaricoProposta+"",
-				"dataIntesa": ""+dataIntesa+"",
-				"esitoVotazioneIntesa": ""+esitoVotazioneIntesa+"",
-				"noteClausolaValutativa": ""+noteClausolaValutativa+""
-				}
+				"passaggi": [
+					{
+						"passaggio": {
+							"nome" : "Passaggio1",
+							"commissioni": [
+								{
+							 			"descrizione": ""+commissione+"",
+										"stato": "fine lavori comitato",
+										"ruolo": "Referente",
+										"numEmendPresentatiMaggiorEsameCommissioni": ""+numEmendPresentatiMaggiorEsameCommissioni+"",
+										"numEmendPresentatiMinorEsameCommissioni": ""+numEmendPresentatiMinorEsameCommissioni+"",
+										"numEmendPresentatiGiuntaEsameCommissioni": ""+numEmendPresentatiGiuntaEsameCommissioni+"",
+										"numEmendPresentatiMistoEsameCommissioni": ""+numEmendPresentatiMistoEsameCommissioni+"",
+										
+										"numEmendApprovatiMaggiorEsameCommissioni": ""+numEmendApprovatiMaggiorEsameCommissioni+"",
+										"numEmendApprovatiMinorEsameCommissioni": ""+numEmendApprovatiMinorEsameCommissioni+"",
+										"numEmendApprovatiGiuntaEsameCommissioni": ""+numEmendApprovatiGiuntaEsameCommissioni+"",
+										"numEmendApprovatiMistoEsameCommissioni": ""+numEmendApprovatiMistoEsameCommissioni+"",
+										
+										"nonAmmissibiliEsameCommissioni": ""+nonAmmissibiliEsameCommissioni+"",
+										"decadutiEsameCommissioni": ""+decadutiEsameCommissioni+"",
+										"ritiratiEsameCommissioni": ""+ritiratiEsameCommissioni+"",
+										"respintiEsameCommissioni": ""+respintiEsameCommissioni+"",
+										"noteEmendamentiEsameCommissioni": ""+noteEmendamentiEsameCommissioni+"",
+										
+										"dataPresaInCaricoProposta": ""+dataPresaInCaricoProposta+"",
+										"dataIntesa": ""+dataIntesa+"",
+										"esitoVotazioneIntesa": ""+esitoVotazioneIntesa+"",
+										"noteClausolaValutativa": ""+noteClausolaValutativa+""
+									
+								},
+								{
+							 			"descrizione": "commissioneStaticaTest"
+										
+									
+								}
+							]
+							
+						}
+					}
+				]
+		
+			}
 		};
 		
 	
@@ -100,7 +128,18 @@
 				</select>
 			</td>
 		</tr>
-		
+		<tr>
+			<td>Commissione</td>
+			<td>
+				<input type="text" name="commissione"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio</td>
+			<td>
+				<input type="text" name="passaggio"/>
+			</td>
+		</tr>
 			
 		<tr>
 			<td>Num Emend Presentati Maggior</td>

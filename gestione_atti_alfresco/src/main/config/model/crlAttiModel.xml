@@ -538,6 +538,10 @@
 					<type>d:text</type>
 				</property>
 			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:emendamentiAspect</aspect>
+				<aspect>crlatti:clausolaValutativaAspect</aspect>
+			</mandatory-aspects>
 		</type>
 		
 		<type name="crlatti:link">
@@ -580,7 +584,8 @@
 				<aspect>crlatti:obbligatorioAspect</aspect>
 			</mandatory-aspects>
 		</type>
-
+		
+		
 	</types>
 	
 	<aspects>

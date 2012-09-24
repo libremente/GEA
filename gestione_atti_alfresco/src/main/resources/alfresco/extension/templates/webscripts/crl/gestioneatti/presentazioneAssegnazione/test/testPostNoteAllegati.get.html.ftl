@@ -14,7 +14,7 @@
 				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("POST", "http://localhost:8080/alfresco/wcservice/crl/atto/noteallegati?alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/noteallegati?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(atto);
 	}
@@ -27,12 +27,12 @@
 		var attoCustom = {
 		"atto" : {
 			"id" : ""+id+"",
-			"noteGenerali" : ""+note+"",
-			"links" : [
+			"notePresentazioneAssegnazione" : ""+note+"",
+			"linksPresentazioneAssegnazione" : [
 				{
 					"link":{
-						"descrizione":"Sourcesense",
-						"indirizzo":"http://www.sourcesense.com",
+						"descrizione":"Yahoo",
+						"indirizzo":"http://www.yahoo.it",
 						"pubblico":true
 					}
 				},

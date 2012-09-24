@@ -2,6 +2,7 @@
 {  
    "idAtto": "${atto.nodeRef}",
    "commissione": "${commissione.name}",
+   "passaggio": "${passaggio.name}",
    "List":[
    <#list relatori as relatore>
    { "relatore" : 

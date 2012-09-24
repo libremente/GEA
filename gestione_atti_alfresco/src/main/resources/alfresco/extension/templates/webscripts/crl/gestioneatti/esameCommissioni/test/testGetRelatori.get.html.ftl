@@ -20,10 +20,16 @@
 				</select>
 			</td>
 			<td>
-				Nome commissione:
+				Commissione:
 			</td>
 			<td>
 				<input type="text" name="commissione" />
+			</td>
+			<td>
+				Passaggio:
+			</td>
+			<td>
+				<input type="text" name="passaggio" />
 			</td>
 		</tr>
 		<tr>

@@ -24,10 +24,17 @@ if(checkIsNotNull(id)){
 	var pareriFolderNode = attoFolderNode.childrenByXPath(pareriFolderXPathQuery)[0];
 	pareri = pareriFolderNode.getChildAssocsByType("crlatti:parere");
 	
-	//lettura commissioni
-	var commissioniFolderXPathQuery = "*[@cm:name='Commissioni']";
-	var commissioniFolderNode = attoFolderNode.childrenByXPath(commissioniFolderXPathQuery)[0];
-	commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
+//	//lettura commissioni
+//	var commissioniFolderXPathQuery = "*[@cm:name='Commissioni']";
+//	var commissioniFolderNode = attoFolderNode.childrenByXPath(commissioniFolderXPathQuery)[0];
+//	commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
+	
+
+	// gestione passaggi
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoFolderNode.childrenByXPath(passaggiXPathQuery)[0];
+	var passaggi = passaggiFolderNode.getChildAssocsByType("cm:folder");
+	
 	
 } else {
 	status.code = 400;
@@ -42,6 +49,6 @@ var tipoAtto = typeQName.substring(12).toUpperCase();
 model.notePresentazioneAssegnazione = notePresentazioneAssegnazioneNode;
 model.links = links;
 model.pareri = pareri;
-model.commissioni = commissioni;
+model.passaggi = passaggi;
 model.atto = attoFolderNode;
 model.tipoAtto = tipoAtto;

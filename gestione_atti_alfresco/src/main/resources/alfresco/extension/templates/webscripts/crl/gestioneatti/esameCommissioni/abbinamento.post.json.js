@@ -7,18 +7,31 @@ var tipoTesto = filterParam(jsonAbbinamento.get("tipoTesto"));
 var dataAbbinamento = filterParam(jsonAbbinamento.get("dataAbbinamento"));
 var dataDisabbinamento = filterParam(jsonAbbinamento.get("dataDisabbinamento"));
 
+var passaggio = json.get("target").get("passaggio");
+
 var abbinamentoNode = null;
 
 if(checkIsNotNull(jsonAbbinamento)
 		&& checkIsNotNull(idAtto)
-		&& checkIsNotNull(idAttoAbbinato)){
+		&& checkIsNotNull(idAttoAbbinato)
+		&& checkIsNotNull(passaggio)){
+	
+	
 	
 	//reperimento dei nodi degli atti coinvolti nell'abbinamento
 	var attoFolderNode = utils.getNodeFromString(idAtto);
 	var attoAbbinatoFolderNode = utils.getNodeFromString(idAttoAbbinato);
 	
+	// gestione passaggi
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoFolderNode.childrenByXPath(passaggiXPathQuery)[0];
+	
+	var passaggioXPathQuery = "*[@cm:name='"+passaggio+"']";
+	var passaggioFolderNode = passaggiFolderNode.childrenByXPath(passaggioXPathQuery)[0];
+	
+	
 	var xPathQueryAbbinamenti = "*[@cm:name='Abbinamenti']";
-	var abbinamentiFolderNode = attoFolderNode.childrenByXPath(xPathQueryAbbinamenti)[0];
+	var abbinamentiFolderNode = passaggioFolderNode.childrenByXPath(xPathQueryAbbinamenti)[0];
 	
 	//verifica esistenza abbinamento preesistente
 	var esisteAbbinamentoXPathQuery = "*[@cm:name='"+attoAbbinatoFolderNode.name+"']";
@@ -56,7 +69,7 @@ if(checkIsNotNull(jsonAbbinamento)
 	
 } else {
 	status.code = 400;
-	status.message = "abbinamento non valorizzato correttamente: idAtto e idAttoAbbinato sono obbligatori";
+	status.message = "abbinamento non valorizzato correttamente: idAtto, idAttoAbbinato e passaggio sono obbligatori";
 	status.redirect = true;
 }
 

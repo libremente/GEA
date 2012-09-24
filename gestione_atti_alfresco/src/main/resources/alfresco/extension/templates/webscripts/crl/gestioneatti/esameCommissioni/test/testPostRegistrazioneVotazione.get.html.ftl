@@ -22,6 +22,7 @@
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
 		var commissione = currentForm.commissione.value;
+		var passaggio = currentForm.passaggio.value;
 		var tipoVotazione = currentForm.tipoVotazione.value;
 		var esitoVotazione = currentForm.esitoVotazione.value;
 		var dataVotazione = currentForm.dataVotazione.value;
@@ -29,32 +30,42 @@
 		
 		var attoCustom = {
 			"target":{
-				"commissione": ""+commissione+""
+				"commissione": ""+commissione+"",
+				"passaggio": ""+passaggio+""
 			},
 			"atto": {
 				"id": ""+idAtto+"",
 				"stato": "votazione comissione",
-				"commissioni": [
+				"passaggi": [
 					{
-				 			"descrizione": ""+commissione+"",
-				 			"tipoVotazione": ""+tipoVotazione+"",
-				 			"esitoVotazione": ""+esitoVotazione+"",
-							"dataVotazione": ""+dataVotazione+"",
-							"stato": "votazione comissione"
-						
-					},
-					{
-				 			"descrizione": "commissioneStaticaTest",
-							"tipoVotazione": "tipo",
-				 			"esitoVotazione": "esito",
-							"dataVotazione": "2012-09-09",
-							"stato": "votazione comissione"
-						
-					}
+						"passaggio": {
+							"nome" : "Passaggio1",
+							"commissioni": [
+								{
+							 			"descrizione": ""+commissione+"",
+							 			"tipoVotazione": ""+tipoVotazione+"",
+							 			"esitoVotazione": ""+esitoVotazione+"",
+										"dataVotazione": ""+dataVotazione+"",
+										"stato": "votazione comissione",
+										"ruolo": "Referente"
+									
+								},
+								{
+							 			"descrizione": "commissioneStaticaTest",
+										"tipoVotazione": "tipo",
+							 			"esitoVotazione": "esito",
+										"dataVotazione": "2012-09-09",
+										"stato": "votazione comissione",
+										"ruolo": "Referente"
+									
+								}
 				
+							]
+						}
+					}
 				]
 				 
-				}
+			}
 		};
 		
 	
@@ -88,6 +99,12 @@
 			<td>Commissione:</td>
 			<td>
 				<input type="text" name="commissione"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input type="text" name="passaggio"/>
 			</td>
 		</tr>
 		<tr>

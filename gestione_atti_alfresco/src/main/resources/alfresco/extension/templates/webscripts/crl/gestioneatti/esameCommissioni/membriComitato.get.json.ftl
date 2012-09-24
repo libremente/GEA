@@ -2,6 +2,7 @@
 {  
    "idAtto": "${atto.nodeRef}",
    "commissione": "${commissione.name}",
+   "passaggio": "${passaggio.name}",
    "presenzaComitato" : "<#if presenzaComitato?exists>${presenzaComitato?string("true","false")}<#else></#if>",
    "dataIstituzioneComitato" : "<#if dataIstituzioneComitato?exists>${dataIstituzioneComitato?string("yyyy-MM-dd")}<#else></#if>",
    "List":[

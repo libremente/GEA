@@ -1,23 +1,7 @@
-var luceneQueryAtti = "TYPE:\"crlatti:attoPdl\"";
-
-
-var atti = search.luceneSearch(luceneQueryAtti);
-var atto;
-var commissioni;
-
-// seleziono il primo atto disponibile e le relative commissioni
-if(atti.length > 0) {
-	atto = atti[0];
+var luceneQueryAtti = "TYPE:\"crlatti:atto\"";
+var attiResults = search.luceneSearch(luceneQueryAtti);
+model.atti = attiResults;
 	
-	// space commissioni
-	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
-	var commissioniFolderNode = atto.childrenByXPath(commissioniXPathQuery)[0];
-	
-	commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
-}
-	
-model.atto = atto;
-model.commissioni = commissioni;
 
 
 var membriComitatoPath = "/app:company_home" +

@@ -16,7 +16,9 @@ for (var i=0; i<commissioni.length; i++) {
 		
 }
 
-var attoNode = space.parent;
+var passaggioNode = space.parent;
+var passaggiNode = passaggioNode.parent;
+var attoNode = passaggiNode.parent;
 attoNode.properties["crlatti:commConsultiva"] = commConsultivaAtto;
 attoNode.properties["crlatti:commReferente"] = commReferenteAtto;
 

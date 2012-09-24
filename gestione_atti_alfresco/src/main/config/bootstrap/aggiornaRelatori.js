@@ -1,6 +1,9 @@
 var commissioneNode = space.parent;
 var commissioniNode = commissioneNode.parent;
-var attoNode = commissioniNode.parent;
+var passaggioNode = commissioniNode.parent;
+var passaggiNode =  passaggioNode.parent;
+var attoNode = passaggiNode.parent;
+
 
 
 var commRelatoriCommissioni = new Array()

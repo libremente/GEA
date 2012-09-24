@@ -21,7 +21,8 @@
 	function creaMembroComitatoCommissione(){
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.value;
-		var commissione = currentForm.commissione.options[currentForm.commissione.selectedIndex].value;
+		var commissione = currentForm.commissione.value;
+		var passaggio = currentForm.passaggio.value;
 		var membro1 = currentForm.membro1.options[currentForm.membro1.selectedIndex].value;
 		var dataNomina1 = currentForm.dataNomina1.value;
 		var dataUscita1 = currentForm.dataUscita1.value;
@@ -35,49 +36,58 @@
 		
 		var attoCustom = {
 			"target":{
-				"commissione": ""+commissione+""
+				"commissione": ""+commissione+"",
+				"passaggio": ""+passaggio+""
 			},
 			"atto": {
 				"id": ""+idAtto+"",
 				"stato": "comitato ristretto",
-				"commissioni": [
+				"passaggi": [
 					{
-				 			"descrizione": ""+commissione+"",
-				 			"presenzaComitatoRistretto": ""+presenzaComitato+"",
-				 			"dataIstituzioneComitato": ""+dataIstituzioneComitato+"",
-							"comitatoRistretto": {
-								
-										"componenti":[
-											{
-												"descrizione" : ""+membro1+"",
-												"dataNomina" : ""+dataNomina1+"",
-												"dataUscita" : ""+dataUscita1+"",
-												"coordinatore" : ""+coordinatore1+""
+						"passaggio": {
+							"nome" : "Passaggio1",
+							"commissioni": [
+								{
+							 			"descrizione": ""+commissione+"",
+							 			"presenzaComitatoRistretto": ""+presenzaComitato+"",
+							 			"dataIstituzioneComitato": ""+dataIstituzioneComitato+"",
+										"comitatoRistretto": {
+											
+													"componenti":[
+														{
+															"descrizione" : ""+membro1+"",
+															"dataNomina" : ""+dataNomina1+"",
+															"dataUscita" : ""+dataUscita1+"",
+															"coordinatore" : ""+coordinatore1+""
+															
+														},
+														{
+															"descrizione" : ""+membro2+"",
+															"dataNomina" : ""+dataNomina2+"",
+															"dataUscita" : ""+dataUscita2+"",
+															"coordinatore" : ""+coordinatore2+""
+															
+														}	
+													]
 												
 											},
-											{
-												"descrizione" : ""+membro2+"",
-												"dataNomina" : ""+dataNomina2+"",
-												"dataUscita" : ""+dataUscita2+"",
-												"coordinatore" : ""+coordinatore2+""
-												
-											}	
-										]
-									
+										"stato": "comitato ristretto",
+										"ruolo": "Referente"
+										
 								},
-							"stato": "comitato ristretto"
-							
-					},
-					{
-				 			"descrizione": "commissioneStaticaTest",
-							"comitatoRistretto": "",
-							"stato": "comitato ristretto"
-						
+								{
+							 			"descrizione": "commissioneStaticaTest",
+										"comitatoRistretto": "",
+										"stato": "comitato ristretto",
+										"ruolo": "Consultiva"
+									
+								}
+							]
+						}
 					}
-				
 				]
 				 
-				}
+			}
 		};
 		
 		
@@ -99,17 +109,23 @@
 		<tr>
 			<td>Atto:</td>
 			<td>
-				<input type="text" name="idAtto" value="${atto.nodeRef}" readonly="readonly"/>
+				<select name="idAtto">
+					<#list atti as atto>
+						<option value="${atto.nodeRef}">${atto.name}</option>
+					</#list>
+				</select>
 			</td>
 		</tr>
 		<tr>
-			<td>Commissioni:</td>
+			<td>Commissione:</td>
 			<td>
-				<select name="commissione">
-				<#list commissioni as commissione>
-					<option value="${commissione.name}">${commissione.name}</option>
-				</#list>
-				</select>
+				<input type="text" name="commissione">
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input type="text" name="passaggio">
 			</td>
 		</tr>
 		<tr>

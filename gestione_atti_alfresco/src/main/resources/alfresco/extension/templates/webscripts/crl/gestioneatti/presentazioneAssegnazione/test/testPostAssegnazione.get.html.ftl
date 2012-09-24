@@ -11,7 +11,7 @@
 		}
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+				document.getElementById("myDiv").innerHTML = xmlhttp.status + " " + xmlhttp.responseText;
 			}
 		}
 		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/assegnazione?alf_ticket=${session.ticket}", true);
@@ -38,25 +38,32 @@
 		var attoCustom = {
 		"atto" : {
 			"id" : ""+id+"",
-			"commissioni" : [
+			"passaggi": [
 				{
-					"commissione":{
-						"descrizione":""+descrizione+"",
-						"dataProposta":""+dataProposta+"",
-						"dataAssegnazione":""+dataAssegnazione+"",
-						"ruolo" : ""+ruolo+"",
-						"stato" : ""+stato+"",
-						"dataAnnullo":""+dataAnnullo+""
-					}
-				},
-				{
-					"commissione":{
-						"descrizione":"Commissione statica",
-						"dataProposta":""+dataProposta+"",
-						"dataAssegnazione":""+dataAssegnazione+"",
-						"ruolo" : ""+ruolo+"",
-						"stato" : ""+stato+"",
-						"dataAnnullo":""+dataAnnullo+""
+					"passaggio": {
+					    "descrizione": "Passaggio1",
+						"commissioni" : [
+							{
+								"commissione":{
+									"descrizione":""+descrizione+"",
+									"dataProposta":""+dataProposta+"",
+									"dataAssegnazione":""+dataAssegnazione+"",
+									"ruolo" : ""+ruolo+"",
+									"stato" : ""+stato+"",
+									"dataAnnullo":""+dataAnnullo+""
+								}
+							},
+							{
+								"commissione":{
+									"descrizione":"Commissione statica",
+									"dataProposta":""+dataProposta+"",
+									"dataAssegnazione":""+dataAssegnazione+"",
+									"ruolo" : ""+ruolo+"",
+									"stato" : ""+stato+"",
+									"dataAnnullo":""+dataAnnullo+""
+								}
+							}
+						]
 					}
 				}
 			],

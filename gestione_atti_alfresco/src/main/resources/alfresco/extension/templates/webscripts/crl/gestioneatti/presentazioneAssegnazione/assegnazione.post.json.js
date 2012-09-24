@@ -2,15 +2,23 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
-var commissioni = atto.get("commissioni");
+// suppongo che ci sia solo un passaggio essendo la fase di assegnazione antecedente all'esame commissioni e all'esame aula
+var commissioni = atto.get("passaggi").get(0).get("passaggio").get("commissioni");
 var pareri = atto.get("pareri");
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
 	
+	// gestione passaggi
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoNode.childrenByXPath(passaggiXPathQuery)[0];
+	
+	var passaggioXPathQuery = "*[@cm:name='Passaggio1']";
+	var passaggioFolderNode = passaggiFolderNode.childrenByXPath(passaggioXPathQuery)[0];
+	
 	//gestione commissioni e ridondanza (in eliminazione) di commissioni referenti e consultive
 	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
-	var commissioniFolderNode = attoNode.childrenByXPath(commissioniXPathQuery)[0];
+	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
 	var numeroCommissioni = commissioni.length();
 	for (var j=0; j<numeroCommissioni; j++){
@@ -122,7 +130,6 @@ if(checkIsNotNull(id)){
 				commissioniConsultiveAtto[r] = commissioniConsultiveResults[r].name;
 			}
 			
-			var attoNode = commissioniSpace.parent;
 			attoNode.properties["crlatti:commReferente"] = commissioniReferentiAtto;
 			attoNode.properties["crlatti:commConsultiva"] = commissioniConsultiveAtto;
 			attoNode.save();

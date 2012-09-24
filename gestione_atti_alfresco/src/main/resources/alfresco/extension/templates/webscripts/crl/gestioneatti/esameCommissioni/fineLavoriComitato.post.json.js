@@ -3,33 +3,32 @@
 var atto = json.get("atto");
 var id = atto.get("id");
 var statoAtto = atto.get("stato");
-var commissioni = atto.get("commissioni");
-
 var commissioneUtente = json.get("target").get("commissione");
+var passaggio = json.get("target").get("passaggio");
 
-var dataFineLavoriComitato = "";
+//selezione della commissione e del passaggio corrente
+var commissioneTarget = getCommissioneTarget(json, passaggio, commissioneUtente);
 
-//prendo i valori delle propriet� dalla commissione target
 
-var statoCommissione;
-
-for(var i=0; i<commissioni.length(); i++) {
-	var commissioneTemp = commissioni.get(i);
-	
-	if(""+commissioneTemp.get("descrizione")+"" == ""+commissioneUtente+"") {
-		dataFineLavoriComitato = commissioneTemp.get("dataFineLavoriComitato");
-		statoCommissione = commissioneTemp.get("stato");
-	}
-	
-}
+var dataFineLavoriComitato = filterParam(commissioneTarget.get("dataFineLavoriComitato"));
+var statoCommissione = filterParam(commissioneTarget.get("stato"));
+var ruoloCommissione = filterParam(commissioneTarget.get("ruolo"));
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
+	
+	// gestione passaggi
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoNode.childrenByXPath(passaggiXPathQuery)[0];
+	
+	var passaggioXPathQuery = "*[@cm:name='"+passaggio+"']";
+	var passaggioFolderNode = passaggiFolderNode.childrenByXPath(passaggioXPathQuery)[0];
+	
 	var commissioneFolderNode = null;
 	
 	//cerco la commissione di riferimento dell'utente corrente
 	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
-	var commissioniFolderNode = attoNode.childrenByXPath(commissioniXPathQuery)[0];
+	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
 	if(checkIsNotNull(commissioneUtente)){
 		var commissioneUtenteXPathQuery = "*[@cm:name='"+commissioneUtente+"']";
@@ -42,7 +41,7 @@ if(checkIsNotNull(id)){
 			commissioneFolderNode.save();
 		} else {
 			status.code = 400;
-			status.message = "commissione utente non trovata";
+			status.message = "commissione utente non valorizzata";
 			status.redirect = true;
 		}
 	} 
@@ -50,7 +49,7 @@ if(checkIsNotNull(id)){
 	var comitatoXPathQuery = "*[@cm:name='ComitatoRistretto']";
 	var comitatoFolderNode = commissioneFolderNode.childrenByXPath(comitatoXPathQuery)[0];
 	
-	// setting delle propriet� del comitato ristretto
+	// setting delle proprietà del comitato ristretto
 	
 	var dataFineLavoriComitatoParsed = null;
 	if(checkIsNotNull(dataFineLavoriComitato)){

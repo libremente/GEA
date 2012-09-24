@@ -23,6 +23,12 @@
 			</td>
 		</tr>
 		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input name="passaggio" />
+			</td>
+		</tr>
+		<tr>
 			<td></td>
 			<td><input type="submit" value="Get abbinamenti Atto"></td>
 		</tr>

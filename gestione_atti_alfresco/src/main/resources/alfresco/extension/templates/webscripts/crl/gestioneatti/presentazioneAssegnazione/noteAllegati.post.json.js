@@ -50,6 +50,30 @@ if(checkIsNotNull(id)){
 		linkNode.save();
 	}
 	
+	
+
+	//verifica link da cancellare
+	var linksNelRepository = linksFolderNode.getChildAssocsByType("crlatti:link");
+	
+	//query nel repository per capire se bisogna cancellare alcuni link
+	for(var z=0; z<linksNelRepository.length; z++){
+		var trovato = false;
+		var linkNelRepository = linksNelRepository[z];
+		
+		//cerco il nome del link nel repo all'interno del json
+		for (var q=0; q<links.length(); q++){
+			var link = links.get(q);
+			var descrizione = filterParam(link.get("link").get("descrizione"));
+			if(""+descrizione+""==""+linkNelRepository.name+""){
+				trovato = true;
+				break
+			}
+		}
+		if(!trovato){
+			linkNelRepository.remove();
+		}
+	}
+	
 } else {
 	status.code = 400;
 	status.message = "id atto non valorizzato";

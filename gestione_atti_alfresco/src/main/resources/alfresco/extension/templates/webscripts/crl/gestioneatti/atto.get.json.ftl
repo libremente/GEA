@@ -91,22 +91,36 @@
 			<#if parere_has_next>,</#if>
     	</#list>
     <#else></#if>],
-    "commissioni" : [<#if commissioni?exists>
-		<#list commissioni as commissione>
+    
+    "passaggi" : [<#if passaggi?exists>
+		<#list passaggi as passaggio>
 			{
-				"commissione" :
+				"passaggio" :
 				{
-			    	"descrizione" : "${commissione.name}",
-			    	"dataProposta" : "<#if commissione.properties["crlatti:dataPresaInCaricoCommissione"]?exists>${commissione.properties["crlatti:dataPresaInCaricoCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"dataAnnullo" : "<#if commissione.properties["crlatti:dataAnnulloCommissione"]?exists>${commissione.properties["crlatti:dataAnnulloCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"dataAssegnazione" : "<#if commissione.properties["crlatti:dataAssegnazioneCommissione"]?exists>${commissione.properties["crlatti:dataAssegnazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"ruolo" : "<#if commissione.properties["crlatti:ruoloCommissione"]?exists>${commissione.properties["crlatti:ruoloCommissione"]}<#else></#if>",
-			    	"stato" : "<#if commissione.properties["crlatti:statoCommissione"]?exists>${commissione.properties["crlatti:statoCommissione"]}<#else></#if>"
-			    }
+			    	"nome" : "${passaggio.name}",
+			    	"commissioni" :  [
+			    		<#assign commissioni = passaggio.childrenByXPath["*[@cm:name='Commissioni']"][0]>
+			    		<#list commissioni.childrenByXPath["*[starts-with(@cm:name, 'Commissione')]"] as commissione>
+						   {
+						   	"descrizione" : "${commissione.name}",
+					    	"dataProposta" : "<#if commissione.properties["crlatti:dataPresaInCaricoCommissione"]?exists>${commissione.properties["crlatti:dataPresaInCaricoCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+					    	"dataAnnullo" : "<#if commissione.properties["crlatti:dataAnnulloCommissione"]?exists>${commissione.properties["crlatti:dataAnnulloCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+					    	"dataAssegnazione" : "<#if commissione.properties["crlatti:dataAssegnazioneCommissione"]?exists>${commissione.properties["crlatti:dataAssegnazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+					    	"dataPresaInCarico" : "<#if commissione.properties["crlatti:dataPresaInCaricoCommissione"]?exists>${commissione.properties["crlatti:dataPresaInCaricoCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+					    	"ruolo" : "<#if commissione.properties["crlatti:ruoloCommissione"]?exists>${commissione.properties["crlatti:ruoloCommissione"]}<#else></#if>",
+					    	"stato" : "<#if commissione.properties["crlatti:statoCommissione"]?exists>${commissione.properties["crlatti:statoCommissione"]}<#else></#if>"	   	
+						   }
+						   <#if commissione_has_next>,</#if>
+						</#list>
+			    	]
+			   }
+			   <#if passaggio_has_next>,</#if>
 			}
-			<#if commissione_has_next>,</#if>
+			
     	</#list>
     <#else></#if>]
+    
+   
 	
    }
 }

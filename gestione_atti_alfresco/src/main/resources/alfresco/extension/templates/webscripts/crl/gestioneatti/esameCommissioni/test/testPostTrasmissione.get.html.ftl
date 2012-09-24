@@ -24,6 +24,7 @@
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
 		var commissione = currentForm.commissione.value;
+		var passaggio = currentForm.passaggio.value;
 		var passaggioDirettoInAula = currentForm.passaggioDirettoInAula.value;
 		var dataRichiestaIscrizioneAula = currentForm.dataRichiestaIscrizioneAula.value;
 		var dataTrasmissione = currentForm.dataTrasmissione.value;
@@ -31,32 +32,41 @@
 		
 		var attoCustom = {
 			"target":{
-				"commissione": ""+commissione+""
+				"commissione": ""+commissione+"",
+				"passaggio": ""+passaggio+""
 			},
 			"atto": {
 				"id": ""+idAtto+"",
 				"stato": "trasmissione",
-				"commissioni": [
+				"passaggi": [
 					{
-				 			"descrizione": ""+commissione+"",
-				 			"passaggioDirettoInAula": ""+passaggioDirettoInAula+"",
-				 			"dataRichiestaIscrizioneAula": ""+dataRichiestaIscrizioneAula+"",
-							"dataTrasmissione": ""+dataTrasmissione+"",
-							"stato": "trasmissione"
-						
-					},
-					{
-				 			"descrizione": "commissioneStaticaTest",
-							"passaggioDirettoInAula": "true",
-				 			"dataRichiestaIscrizioneAula": "2012-09-09",
-							"dataTrasmissione": "2012-09-09",
-							"stato": "trasmissione"
-						
+						"passaggio": {
+							"nome" : "Passaggio1",
+							"commissioni" : [
+								{
+							 			"descrizione": ""+commissione+"",
+							 			"passaggioDirettoInAula": ""+passaggioDirettoInAula+"",
+							 			"dataRichiestaIscrizioneAula": ""+dataRichiestaIscrizioneAula+"",
+										"dataTrasmissione": ""+dataTrasmissione+"",
+										"stato": "trasmissione",
+										"ruolo": "Referente"
+									
+								},
+								{
+							 			"descrizione": "commissioneStaticaTest",
+										"passaggioDirettoInAula": "true",
+							 			"dataRichiestaIscrizioneAula": "2012-09-09",
+										"dataTrasmissione": "2012-09-09",
+										"stato": "trasmissione",
+										"ruolo": "Consultiva"
+									
+								}
+							]
+						}
 					}
-				
 				]
 				 
-				}
+			}
 		};
 		
 	
@@ -90,6 +100,12 @@
 			<td>Commissione:</td>
 			<td>
 				<input type="text" name="commissione"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input type="text" name="passaggio"/>
 			</td>
 		</tr>
 		<tr>

@@ -22,38 +22,46 @@
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
 		var commissione = currentForm.commissione.value;
+		var passaggio = currentForm.passaggio.value;
 		var dataPresaInCarico = currentForm.dataPresaInCarico.value;
 		var materia = currentForm.materia.value;
 		var dataScadenza = currentForm.dataScadenza.value;
 		
 		var attoCustom = {
 			"target":{
-				"commissione": ""+commissione+""
+				"commissione": ""+commissione+"",
+				"passaggio": ""+passaggio+""
 			},
 			"atto": {
 				"id": ""+idAtto+"",
 				"stato": "Preso in carico da Commissione",
-				"commissioni": [
+				"passaggi": [
 					{
-				 			"descrizione": ""+commissione+"",
-							"dataPresaInCarico": ""+dataPresaInCarico+"",
-							"materia": ""+materia+"",
-							"dataScadenza": ""+dataScadenza+"",
-							"stato": "In carico"
-						
-					},
-					{
-				 			"descrizione": "commissioneStaticaTest",
-							"dataPresaInCarico": "2012-08-08",
-							"materia": "materiaTest",
-							"dataScadenza": "2012-09-08",
-							"stato": "In carico"
-						
+						"passaggio": {
+							"nome" : "Passaggio1",
+							"commissioni" : [
+								{
+						 			"descrizione": ""+commissione+"",
+									"dataPresaInCarico": ""+dataPresaInCarico+"",
+									"materia": ""+materia+"",
+									"ruolo": "Referente",
+									"dataScadenza": ""+dataScadenza+"",
+									"stato": "In carico"
+								},
+								{
+						 			"descrizione": "commissioneStaticaTest",
+									"dataPresaInCarico": "2012-08-08",
+									"materia": "materiaTest",
+									"ruolo": "Consultiva",
+									"dataScadenza": "2012-09-08",
+									"stato": "In carico"
+								}
+							]
+						}
 					}
-				
 				]
 				 
-				}
+			}
 		};
 		
 	
@@ -87,6 +95,12 @@
 			<td>Commissione:</td>
 			<td>
 				<input type="text" name="commissione"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input type="text" name="passaggio"/>
 			</td>
 		</tr>
 		<tr>

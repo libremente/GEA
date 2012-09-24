@@ -21,7 +21,8 @@
 	function creaRelatoreCommissione(){
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.value;
-		var commissione = currentForm.commissione.options[currentForm.commissione.selectedIndex].value;
+		var commissione = currentForm.commissione.value;
+		var passaggio = currentForm.passaggio.value;
 		var relatore1 = currentForm.relatore1.options[currentForm.relatore1.selectedIndex].value;
 		var dataNomina1 = currentForm.dataNomina1.value;
 		var dataUscita1 = currentForm.dataUscita1.value;
@@ -31,43 +32,50 @@
 		
 		var attoCustom = {
 			"target":{
-				"commissione": ""+commissione+""
+				"commissione": ""+commissione+"",
+				"passaggio": ""+passaggio+""
 			},
 			"atto": {
 				"id": ""+idAtto+"",
 				"stato": "nominato relatore",
-				"commissioni": [
+				"passaggi": [
 					{
-				 		
-				 			"descrizione": ""+commissione+"",
-							"relatori":[
+						"passaggio": {
+							"nome" : "Passaggio1",
+							"commissioni" : [
 								{
-										"descrizione" : ""+relatore1+"",
-										"dataNomina" : ""+dataNomina1+"",
-										"dataUscita" : ""+dataUscita1+""
-									
+							 		
+							 			"descrizione": ""+commissione+"",
+										"relatori":[
+											{
+													"descrizione" : ""+relatore1+"",
+													"dataNomina" : ""+dataNomina1+"",
+													"dataUscita" : ""+dataUscita1+""
+												
+											},
+											{
+											 		"descrizione" : ""+relatore2+"",
+													"dataNomina" : ""+dataNomina2+"",
+													"dataUscita" : ""+dataUscita2+""
+											 	
+											}
+										],
+										"stato": "nominato relatore",
+										"ruolo": "Referente"
+										
 								},
 								{
-								 		"descrizione" : ""+relatore2+"",
-										"dataNomina" : ""+dataNomina2+"",
-										"dataUscita" : ""+dataUscita2+""
-								 	
+							 			"descrizione": "commissioneStaticaTest",
+										"relatori":[],
+										"stato": "nominato relatore",
+										"ruolo": "Consultiva"	
 								}
-							],
-							"stato": "nominato relatore"
-							
-					},
-					{
-				 		
-				 			"descrizione": "commissioneStaticaTest",
-							"relatori":[],
-							"stato": "nominato relatore"
-						
-					}
 				
-				]
-				 
-				}
+							]
+						}
+					}
+				]	 
+			}
 		};
 		
 	
@@ -86,19 +94,27 @@
 	<form action="javascript:creaRelatoreCommissione()">
 	<table>
 		<tr>
-			<td>Atto:</td>
 			<td>
-				<input type="text" name="idAtto" value="${atto.nodeRef}" readonly="readonly"/>
+				Atto:
+			</td>
+			<td>
+				<select name="idAtto">
+					<#list atti as atto>
+						<option value="${atto.nodeRef}">${atto.name}</option>
+					</#list>
+				</select>
 			</td>
 		</tr>
 		<tr>
-			<td>Commissioni:</td>
+			<td>Commissione:</td>
 			<td>
-				<select name="commissione">
-				<#list commissioni as commissione>
-					<option value="${commissione.name}">${commissione.name}</option>
-				</#list>
-				</select>
+				<input type="text" name="commissione">
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input type="text" name="passaggio">
 			</td>
 		</tr>
 		<tr>

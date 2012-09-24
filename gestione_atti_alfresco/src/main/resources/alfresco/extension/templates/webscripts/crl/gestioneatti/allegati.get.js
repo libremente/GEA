@@ -9,7 +9,7 @@ if(checkIsNotNull(idAtto)){
 	var allegatiFolderNode = attoFolderNode.childrenByXPath(allegatiFolderXpathQuery)[0];
 	
 	if(checkIsNotNull(tipologiaAllegati)){
-		var allegatiDiUnaTipologiaXPathQuery = "*[@crlatti:tipologiaAllegato='"+tipologiaAllegati+"']";
+		var allegatiDiUnaTipologiaXPathQuery = "*[@crlatti:tipologia='"+tipologiaAllegati+"']";
 		allegati = allegatiFolderNode.childrenByXPath(allegatiDiUnaTipologiaXPathQuery);
 	} else {
 		allegati = allegatiFolderNode.getChildAssocsByType("crlatti:allegato");

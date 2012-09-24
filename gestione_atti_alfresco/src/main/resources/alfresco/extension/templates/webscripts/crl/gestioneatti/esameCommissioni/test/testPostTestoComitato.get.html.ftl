@@ -33,10 +33,18 @@
 		</tr>
 		<tr>
 			<td>
-				Commissione:
+				Provenienza:
 			</td>
 			<td>
-				<input name="commissione"/>
+				<input name="provenienza"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Passaggio:
+			</td>
+			<td>
+				<input name="passaggio"/>
 			</td>
 		</tr>
 		<tr>

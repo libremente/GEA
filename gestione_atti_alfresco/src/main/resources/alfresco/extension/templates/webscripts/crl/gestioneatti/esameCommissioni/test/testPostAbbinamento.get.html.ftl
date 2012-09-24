@@ -26,8 +26,12 @@
 		var dataAbbinamento = currentForm.dataAbbinamento.value;
 		var dataDisabbinamento = currentForm.dataDisabbinamento.value;
 		var tipoTesto = currentForm.tipoTesto.value;
+		var passaggio = currentForm.passaggio.value;
 
 		var attoCustom = {
+		"target" : {
+			"passaggio" : ""+passaggio+""
+		},
 		"abbinamento" : {
 			"idAtto" : ""+idAtto+"",
 			"idAttoAbbinato" : ""+idAttoAbbinato+"",
@@ -90,6 +94,12 @@
 			<td>Tipo testo:</td>
 			<td>
 				<input name="tipoTesto" value="referenza"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input name="passaggio" />
 			</td>
 		</tr>
 		<tr>

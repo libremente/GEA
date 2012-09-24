@@ -249,6 +249,9 @@
 			<show-property name="crlatti:provenienza"/>
 		</property-sheet>
 	</config>
+	
+	
+	
 		
 	<config evaluator="node-type" condition="crlatti:commissione">
 		<property-sheet>
@@ -268,6 +271,25 @@
 			<show-property name="crlatti:dataAnnulloCommissione" />
 			<show-property name="crlatti:ruoloCommissione" />
 			<show-property name="crlatti:statoCommissione" />
+			
+			<show-property name="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
+			<show-property name="crlatti:numEmendPresentatiMinorEsameCommissioni" />
+			<show-property name="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
+			<show-property name="crlatti:numEmendPresentatiMistoEsameCommissioni" />
+			<show-property name="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
+			<show-property name="crlatti:numEmendApprovatiMinorEsameCommissioni" />
+			<show-property name="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
+			<show-property name="crlatti:numEmendApprovatiMistoEsameCommissioni" />
+			<show-property name="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
+			<show-property name="crlatti:numEmendDecadutiEsameCommissioni" />
+			<show-property name="crlatti:numEmendRitiratiEsameCommissioni" />
+			<show-property name="crlatti:numEmendRespintiEsameCommissioni" />
+			<show-property name="crlatti:noteEmendamentiEsameCommissioni" />
+			
+			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
+			<show-property name="crlatti:dataIntesaClausolaValutEsameCommissioni" />
+			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
+			<show-property name="crlatti:noteClausolaValutativaEsameCommissioni" />	
 		</property-sheet>
 	</config>
 
@@ -350,25 +372,6 @@
 			<show-property name="crlatti:primoFirmatario" />
 			<show-property name="crlatti:firmatari" />
 			
-			<show-property name="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiMinorEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiMistoEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMinorEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMistoEsameCommissioni" />
-			<show-property name="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
-			<show-property name="crlatti:numEmendDecadutiEsameCommissioni" />
-			<show-property name="crlatti:numEmendRitiratiEsameCommissioni" />
-			<show-property name="crlatti:numEmendRespintiEsameCommissioni" />
-			<show-property name="crlatti:noteEmendamentiEsameCommissioni" />
-			
-			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:dataIntesaClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:noteClausolaValutativaEsameCommissioni" />
-
 		</property-sheet>
 	</config>
 

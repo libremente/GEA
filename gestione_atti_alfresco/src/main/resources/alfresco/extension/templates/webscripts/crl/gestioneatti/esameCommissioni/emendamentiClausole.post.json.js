@@ -3,77 +3,108 @@
 var atto = filterParam(json.get("atto"));
 var id = filterParam(atto.get("id"));
 var statoAtto = filterParam(atto.get("stato"));
+var commissioneUtente = json.get("target").get("commissione");
+var passaggio = json.get("target").get("passaggio");
 
-var numEmendPresentatiMaggiorEsameCommissioni = filterParam(atto.get("numEmendPresentatiMaggiorEsameCommissioni"));
-var numEmendPresentatiMinorEsameCommissioni = filterParam(atto.get("numEmendPresentatiMinorEsameCommissioni"));
-var numEmendPresentatiGiuntaEsameCommissioni = filterParam(atto.get("numEmendPresentatiGiuntaEsameCommissioni"));
-var numEmendPresentatiMistoEsameCommissioni = filterParam(atto.get("numEmendPresentatiMistoEsameCommissioni"));
+//selezione della commissione e del passaggio corrente
+var commissioneTarget = getCommissioneTarget(json, passaggio, commissioneUtente);
 
-var numEmendApprovatiMaggiorEsameCommissioni = filterParam(atto.get("numEmendApprovatiMaggiorEsameCommissioni"));
-var numEmendApprovatiMinorEsameCommissioni = filterParam(atto.get("numEmendApprovatiMinorEsameCommissioni"));
-var numEmendApprovatiGiuntaEsameCommissioni = filterParam(atto.get("numEmendApprovatiGiuntaEsameCommissioni"));
-var numEmendApprovatiMistoEsameCommissioni = filterParam(atto.get("numEmendApprovatiMistoEsameCommissioni"));
 
-var nonAmmissibiliEsameCommissioni = filterParam(atto.get("nonAmmissibiliEsameCommissioni"));
-var decadutiEsameCommissioni = filterParam(atto.get("decadutiEsameCommissioni"));
-var ritiratiEsameCommissioni = filterParam(atto.get("ritiratiEsameCommissioni"));
-var respintiEsameCommissioni = filterParam(atto.get("respintiEsameCommissioni"));
-var noteEmendamentiEsameCommissioni = filterParam(atto.get("noteEmendamentiEsameCommissioni"));
+var numEmendPresentatiMaggiorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMaggiorEsameCommissioni"));
+var numEmendPresentatiMinorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMinorEsameCommissioni"));
+var numEmendPresentatiGiuntaEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiGiuntaEsameCommissioni"));
+var numEmendPresentatiMistoEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMistoEsameCommissioni"));
 
-var dataPresaInCaricoProposta = filterParam(atto.get("dataPresaInCaricoProposta"));
-var dataIntesa = filterParam(atto.get("dataIntesa"));
-var esitoVotazioneIntesa = filterParam(atto.get("esitoVotazioneIntesa"));
-var noteClausolaValutativa = filterParam(atto.get("noteClausolaValutativa"));
+var numEmendApprovatiMaggiorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMaggiorEsameCommissioni"));
+var numEmendApprovatiMinorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMinorEsameCommissioni"));
+var numEmendApprovatiGiuntaEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiGiuntaEsameCommissioni"));
+var numEmendApprovatiMistoEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMistoEsameCommissioni"));
+
+var nonAmmissibiliEsameCommissioni = filterNumericParam(commissioneTarget.get("nonAmmissibiliEsameCommissioni"));
+var decadutiEsameCommissioni = filterNumericParam(commissioneTarget.get("decadutiEsameCommissioni"));
+var ritiratiEsameCommissioni = filterNumericParam(commissioneTarget.get("ritiratiEsameCommissioni"));
+var respintiEsameCommissioni = filterNumericParam(commissioneTarget.get("respintiEsameCommissioni"));
+var noteEmendamentiEsameCommissioni = filterParam(commissioneTarget.get("noteEmendamentiEsameCommissioni"));
+
+var dataPresaInCaricoProposta = filterParam(commissioneTarget.get("dataPresaInCaricoProposta"));
+var dataIntesa = filterParam(commissioneTarget.get("dataIntesa"));
+var esitoVotazioneIntesa = filterParam(commissioneTarget.get("esitoVotazioneIntesa"));
+var noteClausolaValutativa = filterParam(commissioneTarget.get("noteClausolaValutativa"));
 
 
 if(checkIsNotNull(id)){
 	
 	var attoNode = utils.getNodeFromString(id);
 	
-	attoNode.properties["crlatti:numEmendPresentatiMaggiorEsameCommissioni"] = numEmendPresentatiMaggiorEsameCommissioni;
-
-	attoNode.properties["crlatti:numEmendPresentatiMaggiorEsameCommissioni"] = numEmendPresentatiMaggiorEsameCommissioni;
-	attoNode.properties["crlatti:numEmendPresentatiMinorEsameCommissioni"] = numEmendPresentatiMinorEsameCommissioni;
-	attoNode.properties["crlatti:numEmendPresentatiGiuntaEsameCommissioni"] = numEmendPresentatiGiuntaEsameCommissioni;
-	attoNode.properties["crlatti:numEmendPresentatiMistoEsameCommissioni"] = numEmendPresentatiMistoEsameCommissioni;
+	// gestione passaggi
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoNode.childrenByXPath(passaggiXPathQuery)[0];
 	
-	attoNode.properties["crlatti:numEmendApprovatiMaggiorEsameCommissioni"] = numEmendApprovatiMaggiorEsameCommissioni;
-	attoNode.properties["crlatti:numEmendApprovatiMinorEsameCommissioni"] = numEmendApprovatiMinorEsameCommissioni;
-	attoNode.properties["crlatti:numEmendApprovatiGiuntaEsameCommissioni"] = numEmendApprovatiGiuntaEsameCommissioni;
-	attoNode.properties["crlatti:numEmendApprovatiMistoEsameCommissioni"] = numEmendApprovatiMistoEsameCommissioni;
+	var passaggioXPathQuery = "*[@cm:name='"+passaggio+"']";
+	var passaggioFolderNode = passaggiFolderNode.childrenByXPath(passaggioXPathQuery)[0];
 	
-	attoNode.properties["crlatti:numEmendNonAmmissibiliEsameCommissioni"] = nonAmmissibiliEsameCommissioni;
-	attoNode.properties["crlatti:numEmendDecadutiEsameCommissioni"] = decadutiEsameCommissioni;
-	attoNode.properties["crlatti:numEmendRitiratiEsameCommissioni"] = ritiratiEsameCommissioni;
-	attoNode.properties["crlatti:numEmendRespintiEsameCommissioni"] = respintiEsameCommissioni;
-	attoNode.properties["crlatti:noteEmendamentiEsameCommissioni"] = noteEmendamentiEsameCommissioni;
+	var commissioneFolderNode = null;
 	
-	var dataPresaInCaricoPropostaParsed= null;
-	if(checkIsNotNull(dataPresaInCaricoProposta)){
-		var dataPresaInCaricoPropostaSplitted = dataPresaInCaricoProposta.split("-");
-		dataPresaInCaricoPropostaParsed = new Date(dataPresaInCaricoPropostaSplitted[0],dataPresaInCaricoPropostaSplitted[1]-1,dataPresaInCaricoPropostaSplitted[2]);
-	}
+	//cerco la commissione di riferimento dell'utente corrente
+	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
+	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
-	var dataIntesaParsed= null;
-	if(checkIsNotNull(dataIntesa)){
-		var dataIntesaSplitted = dataIntesa.split("-");
-		dataIntesaParsed = new Date(dataIntesaSplitted[0],dataIntesaSplitted[1]-1,dataIntesaSplitted[2]);
-	}
-	
-	attoNode.properties["crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni"] = dataPresaInCaricoPropostaParsed;
-	attoNode.properties["crlatti:dataIntesaClausolaValutEsameCommissioni"] = dataIntesaParsed;
-	attoNode.properties["crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni"] = esitoVotazioneIntesa;
-	attoNode.properties["crlatti:noteClausolaValutativaEsameCommissioni"] = noteClausolaValutativa;
-	
-
+	if(checkIsNotNull(commissioneUtente)){
+		var commissioneUtenteXPathQuery = "*[@cm:name='"+commissioneUtente+"']";
+		var commissioneUtenteResults = commissioniFolderNode.childrenByXPath(commissioneUtenteXPathQuery);
+		if(commissioneUtenteResults!=null && commissioneUtenteResults.length>0){
+			commissioneFolderNode = commissioneUtenteResults[0];
 	
 	
-	attoNode.save();
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsameCommissioni"] = numEmendPresentatiMaggiorEsameCommissioni;
+		
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsameCommissioni"] = numEmendPresentatiMaggiorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMinorEsameCommissioni"] = numEmendPresentatiMinorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiGiuntaEsameCommissioni"] = numEmendPresentatiGiuntaEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMistoEsameCommissioni"] = numEmendPresentatiMistoEsameCommissioni;
+			
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiMaggiorEsameCommissioni"] = numEmendApprovatiMaggiorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiMinorEsameCommissioni"] = numEmendApprovatiMinorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiGiuntaEsameCommissioni"] = numEmendApprovatiGiuntaEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiMistoEsameCommissioni"] = numEmendApprovatiMistoEsameCommissioni;
+			
+			commissioneFolderNode.properties["crlatti:numEmendNonAmmissibiliEsameCommissioni"] = nonAmmissibiliEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendDecadutiEsameCommissioni"] = decadutiEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendRitiratiEsameCommissioni"] = ritiratiEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendRespintiEsameCommissioni"] = respintiEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:noteEmendamentiEsameCommissioni"] = noteEmendamentiEsameCommissioni;
+	
+			var dataPresaInCaricoPropostaParsed= null;
+			if(checkIsNotNull(dataPresaInCaricoProposta)){
+				var dataPresaInCaricoPropostaSplitted = dataPresaInCaricoProposta.split("-");
+				dataPresaInCaricoPropostaParsed = new Date(dataPresaInCaricoPropostaSplitted[0],dataPresaInCaricoPropostaSplitted[1]-1,dataPresaInCaricoPropostaSplitted[2]);
+			}
+			
+			var dataIntesaParsed= null;
+			if(checkIsNotNull(dataIntesa)){
+				var dataIntesaSplitted = dataIntesa.split("-");
+				dataIntesaParsed = new Date(dataIntesaSplitted[0],dataIntesaSplitted[1]-1,dataIntesaSplitted[2]);
+			}
+	
+			commissioneFolderNode.properties["crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni"] = dataPresaInCaricoPropostaParsed;
+			commissioneFolderNode.properties["crlatti:dataIntesaClausolaValutEsameCommissioni"] = dataIntesaParsed;
+			commissioneFolderNode.properties["crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni"] = esitoVotazioneIntesa;
+			commissioneFolderNode.properties["crlatti:noteClausolaValutativaEsameCommissioni"] = noteClausolaValutativa;
+	
+			commissioneFolderNode.save();
+	
+		} else {
+			status.code = 400;
+			status.message = "commissione utente non valorizzata";
+			status.redirect = true;
+		}
+	} 
 	
 	model.atto = attoNode;
+	model.commissione = commissioneFolderNode;
 	
 } else {
 	status.code = 400;
-	status.message = "id atto non valorizzato";
+	status.message = "id atto, passaggio e commissione non valorizzato";
 	status.redirect = true;
 }

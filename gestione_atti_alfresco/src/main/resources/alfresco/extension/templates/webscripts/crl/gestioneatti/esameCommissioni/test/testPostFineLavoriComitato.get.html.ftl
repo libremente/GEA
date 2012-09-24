@@ -22,33 +22,44 @@
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
 		var commissione = currentForm.commissione.value;
+		var passaggio = currentForm.passaggio.value;
 		var dataFineLavoriComitato = currentForm.dataFineLavoriComitato.value;
 	
 		
 		var attoCustom = {
 			"target":{
-				"commissione": ""+commissione+""
+				"commissione": ""+commissione+"",
+				"passaggio": ""+passaggio+""
 			},
 			"atto": {
 				"id": ""+idAtto+"",
 				"stato": "fine lavori comitato",
-				"commissioni": [
+				"passaggi": [
 					{
-				 			"descrizione": ""+commissione+"",
-							"dataFineLavoriComitato": ""+dataFineLavoriComitato+"",
-							"stato": "fine lavori comitato"
-						
-					},
-					{
-				 			"descrizione": "commissioneStaticaTest",
-							"dataFineLavoriComitato": "2012-08-09",
-							"stato": "fine lavori comitato"
-						
+						"passaggio": {
+							"nome" : "Passaggio1",
+							"commissioni": [
+								{
+							 			"descrizione": ""+commissione+"",
+										"dataFineLavoriComitato": ""+dataFineLavoriComitato+"",
+										"stato": "fine lavori comitato",
+										"ruolo": "Referente"
+									
+								},
+								{
+							 			"descrizione": "commissioneStaticaTest",
+										"dataFineLavoriComitato": "2012-08-09",
+										"stato": "fine lavori comitato",
+										"ruolo": "Consultiva"
+									
+								}
+							]
+						}
 					}
 				
 				]
 				 
-				}
+			}
 		};
 		
 	
@@ -82,6 +93,12 @@
 			<td>Commissione:</td>
 			<td>
 				<input type="text" name="commissione"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Passaggio:</td>
+			<td>
+				<input type="text" name="passaggio"/>
 			</td>
 		</tr>
 		<tr>
