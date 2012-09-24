@@ -38,6 +38,36 @@
 					onclick="testoAttoDialog.hide()" type="button" />
 
 			</p:confirmDialog>
+			
+			<p:confirmDialog id="uploadFileAttributesVotazione" header="Caricamento"
+				widgetVar="uploadFileAttributesVotazioneDialog" style="width:450px"
+				message="Allega Testo">
+				<p:panelGrid id="uploadpanelVotazione">
+					<p:row>
+						<p:column>
+							<h:outputLabel for="isPubblicoVotazione" value="Pubblico: " />
+							<p:selectBooleanCheckbox id="isPubblicoVotazione"
+								value="#{esameAulaController.currentFilePubblico}">
+								<p:ajax event="change" immediate="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:fileUpload label="Carica Testo dell'Atto"
+								oncomplete="uploadFileAttributesVotazioneDialog.hide()" auto="false"
+								update="listaTestiAtto ,votazioneMsg"
+								fileUploadListener="#{esameAulaController.uploadTestoAttoVotato}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton id="declineUploadFileVotazione" value="Annulla"
+								onclick="uploadFileAttributesVotazioneDialog.hide()" type="button" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:confirmDialog>
 		</p:column>
 	</p:row>
 	<p:row>
@@ -217,9 +247,10 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 					<p:column colspan="3">
-						<p:fileUpload label="Carica Testo dell'Atto"
-							fileUploadListener="#{esameAulaController.uploadTestoAttoVotato}"
-							mode="advanced" auto="true" update="listaTestiAtto ,votazioneMsg" />
+						
+							<p:commandButton value="Carica Testo dell'Atto"
+						oncomplete="uploadFileAttributesVotazioneDialog.show()">
+					</p:commandButton>
 					</p:column>
 				</p:row>
 				<p:row>

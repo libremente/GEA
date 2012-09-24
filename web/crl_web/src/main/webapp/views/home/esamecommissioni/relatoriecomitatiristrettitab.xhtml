@@ -71,6 +71,47 @@
 
 			</p:confirmDialog>
 
+			<p:confirmDialog id="uploadFileAttributes" header="Caricamento"
+				widgetVar="uploadFileAttributesDialog" style="width:450px"
+				message="Allega Testo">
+				<p:panelGrid id="uploadpanel">
+					<p:row>
+						<p:column>
+							<h:outputLabel for="DataSeduta" value="Data seduta: " />
+							<p:calendar size="10" locale="it_IT" id="DataSeduta"
+								value="#{esameCommissioniController.currentDataSeduta}">
+								<p:ajax event="change" immediate="true">
+								</p:ajax>
+							</p:calendar>
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="isPubblico" value="Pubblico: " />
+							<p:selectBooleanCheckbox id="isPubblico"
+								value="#{esameCommissioniController.currentFilePubblico}">
+								<p:ajax event="change" immediate="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:fileUpload label="Carica Testo del Comitato Ristretto"
+								oncomplete="uploadFileAttributesDialog.hide()" auto="false"
+								update="listaTestiComitatoRistretto ,comitatiMsg"
+								fileUploadListener="#{esameCommissioniController.uploadTestoComitatoRistretto}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton id="declineUploadFile" value="Annulla"
+								onclick="uploadFileAttributesDialog.hide()" type="button" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:confirmDialog>
+
 
 
 			<b> <h:outputLabel for="datapresaincarico"
@@ -90,6 +131,7 @@
 				update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg, :informationForm:informationBar"
 				actionListener="#{esameCommissioniController.presaInCarico}"
 				oncomplete="unblockDiv()" />
+
 
 		</p:column>
 		<p:column></p:column>
@@ -115,7 +157,7 @@
 		</p:column>
 		<p:column>
 			<p:calendar size="10" locale="it" id="datascadenza"
-				value="#{esameCommissioniController.dataScadenza}" >
+				value="#{esameCommissioniController.dataScadenza}">
 				<p:ajax event="dateSelect"
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
 			</p:calendar>
@@ -438,10 +480,9 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 				<p:column colspan="3">
-					<p:fileUpload label="Carica File"
-						fileUploadListener="#{esameCommissioniController.uploadTestoComitatoRistretto}"
-						mode="advanced" auto="true"
-						update="listaTestiComitatoRistretto ,comitatiMsg" />
+					<p:commandButton value="Carica Testo del Comitato Ristretto"
+						oncomplete="uploadFileAttributesDialog.show()">
+					</p:commandButton>
 				</p:column>
 			</p:row>
 			<p:row>
@@ -482,6 +523,21 @@
 								<f:setPropertyActionListener value="#{testoComitato.id}"
 									target="#{esameCommissioniController.testoComitatoToDelete}" />
 							</p:commandButton>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Download</f:facet>
+
+							<p:commandButton id="downloadLink" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{testoComitato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{testoComitato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{testoComitato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
 						</h:column>
 
 

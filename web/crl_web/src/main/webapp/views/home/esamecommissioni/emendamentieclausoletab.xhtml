@@ -58,6 +58,64 @@
 									onclick="testoClausolaDialog.hide()" type="button" />
 
 							</p:confirmDialog>
+							
+							<p:confirmDialog id="uploadEmendamentoAttributes" header="Caricamento"
+					widgetVar="uploadEmendamentoAttributesDialog" style="width:450px" message="Allega file">
+					<p:panelGrid id="uploadpanelEmendamento">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="isPubblicoEmendamento" value="Pubblico: " />
+								<p:selectBooleanCheckbox id="isPubblicoEmendamentoAllegato"
+									value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true"></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:fileUpload label="Carica Emendamento"
+									oncomplete="uploadEmendamentoAttributesDialog.hide()" auto="false"
+									update="listaEmendamenti ,emendamentoMsg"
+									fileUploadListener="#{esameCommissioniController.uploadEmendamento}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton id="declineuploadEmendamento" value="Annulla"
+									onclick="uploadEmendamentoAttributesDialog.hide()" type="button" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:confirmDialog>
+				
+				<p:confirmDialog id="uploadClausolaAttributes" header="Caricamento"
+					widgetVar="uploadClausolaAttributesDialog" style="width:450px" message="Allega file">
+					<p:panelGrid id="uploadpanelClausola">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="isPubblicoClausola" value="Pubblico: " />
+								<p:selectBooleanCheckbox id="isPubblicoClausolaAllegato"
+									value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true"></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:fileUpload label="Carica Clausola"
+									oncomplete="uploadClausolaAttributesDialog.hide()" auto="false"
+									update="listaTestiClausola ,emendamentoMsg"
+									fileUploadListener="#{esameCommissioniController.uploadTestoClausola}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton id="declineUploadClausola" value="Annulla"
+									onclick="uploadClausolaAttributesDialog.hide()" type="button" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:confirmDialog>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -65,10 +123,10 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica Emendamento"
-								fileUploadListener="#{esameCommissioniController.uploadEmendamento}"
-								mode="advanced" auto="true"
-								update="listaEmendamenti ,emendamentoMsg" />
+															
+								<p:commandButton value="Carica Emendamento"
+								oncomplete="uploadEmendamentoAttributesDialog.show()">
+							</p:commandButton>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -104,6 +162,21 @@
 											target="#{esameCommissioniController.emendamentoToDelete}" />
 									</p:commandButton>
 								</h:column>
+								<h:column>
+							<f:facet name="header">Download</f:facet>
+
+							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{emendamento.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{emendamento.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{emendamento.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</h:column>
 
 
 							</h:dataTable>
@@ -364,10 +437,11 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica Clausola"
-								fileUploadListener="#{esameCommissioniController.uploadTestoClausola}"
-								mode="advanced" auto="true"
-								update="listaTestiClausola ,emendamentoMsg" />
+							
+							<p:commandButton value="Carica Clausola"
+								oncomplete="uploadClausolaAttributesDialog.show()">
+							</p:commandButton>
+								
 						</p:column>
 					</p:row>
 					<p:row>
@@ -403,6 +477,21 @@
 											target="#{esameCommissioniController.testoClausolaToDelete}" />
 									</p:commandButton>
 								</h:column>
+								<h:column>
+							<f:facet name="header">Download</f:facet>
+
+							<p:commandButton id="downloadLinkestoClausola" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{testoClausola.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{testoClausola.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{testoClausola.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</h:column>
 
 
 							</h:dataTable>

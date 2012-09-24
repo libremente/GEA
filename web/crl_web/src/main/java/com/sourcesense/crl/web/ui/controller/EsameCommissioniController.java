@@ -32,6 +32,7 @@ import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.model.Target;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AbbinamentoServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
@@ -51,14 +52,13 @@ public class EsameCommissioniController {
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
-	
+
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
-	
+
 	@ManagedProperty(value = "#{abbinamentoServiceManager}")
 	private AbbinamentoServiceManager abbinamentoServiceManager;
-    
-	
+
 	private Atto atto = new Atto();
 
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
@@ -74,6 +74,9 @@ public class EsameCommissioniController {
 	private Date dataNominaRelatore;
 	private Date dataUscitaRelatore;
 	private String nomeRelatore;
+
+	private boolean currentFilePubblico;
+	private String currentDataSeduta;
 
 	private String componenteToDelete;
 	private Date dataNominaComponente;
@@ -91,7 +94,7 @@ public class EsameCommissioniController {
 
 	private List <Relatore> relatoriList = new ArrayList <Relatore>();
 	private List <Componente> membriComitatoList = new ArrayList <Componente>();
-	private List <Allegato> testiComitatoRistrettoList = new ArrayList <Allegato>();
+	private List <TestoAtto> testiComitatoRistrettoList = new ArrayList <TestoAtto>();
 
 	private String testoComitatoToDelete;
 
@@ -112,7 +115,7 @@ public class EsameCommissioniController {
 	private String quorum;
 	private Date dataSedutaRegistrazioneVotazione;
 
-	private List <Allegato> testiAttoVotatoList = new ArrayList <Allegato>();
+	private List <TestoAtto> testiAttoVotatoList = new ArrayList <TestoAtto>();
 	private String testoAttoVotatoToDelete;
 
 	private Date dataSedutaContinuazioneLavori;
@@ -122,7 +125,7 @@ public class EsameCommissioniController {
 	private boolean passaggioDiretto;
 
 
-	private List <Allegato> emendamentiList = new ArrayList <Allegato>();
+	private List <TestoAtto> emendamentiList = new ArrayList <TestoAtto>();
 	private String emendamentoToDelete;
 
 	private int numEmendPresentatiMaggior;
@@ -147,7 +150,7 @@ public class EsameCommissioniController {
 	private String esitoVotazioneIntesa;
 	private String noteClausolaValutativa;
 
-	private List <Allegato> testiClausolaList = new ArrayList <Allegato>();
+	private List <TestoAtto> testiClausolaList = new ArrayList <TestoAtto>();
 	private String testoClausolaToDelete;
 
 
@@ -704,14 +707,19 @@ public class EsameCommissioniController {
 		} else {
 
 			// TODO Alfresco upload
-			Allegato testoComitatoRet = null;
+			TestoAtto testoComitatoRet = new TestoAtto();
+
+			testoComitatoRet.setNome(event.getFile().getFileName());
+			testoComitatoRet.setPubblico(currentFilePubblico);
+			testoComitatoRet.setDataSeduta(currentDataSeduta);
 
 			try {
 				testoComitatoRet = attoServiceManager.uploadTestoComitatoRistretto(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(), 
+								testoComitatoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -721,8 +729,11 @@ public class EsameCommissioniController {
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			commissioneUser.getComitatoRistretto().getTesti().add(testoComitatoRet);
-			attoBean.getLastPassaggio().setCommissioni(getCommissioniList());
+			attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).getTestiAttoVotatoEsameCommissioni().add(testoComitatoRet);
+
+			attoBean.getAtto().getTestiAtto().add(testoComitatoRet);
+
+
 
 			testiComitatoRistrettoList.add(testoComitatoRet);
 		}
@@ -730,21 +741,21 @@ public class EsameCommissioniController {
 
 	private boolean checkTestoComitato(String fileName) {
 
-		for (Allegato element : testiComitatoRistrettoList) {
-
-			if (element.getDescrizione().equals(fileName)) {
-
-				return false;
-			}
-
-		}
+		//		for (TestoAtto element : testiComitatoRistrettoList) {
+		//
+		//			if (element.getDescrizione().equals(fileName)) {
+		//
+		//				return false;
+		//			}
+		//
+		//		}
 
 		return true;
 	}
 
 	public void removeTestoComitato() {
 
-		for (Allegato element : testiComitatoRistrettoList) {
+		for (TestoAtto element : testiComitatoRistrettoList) {
 
 			if (element.getId().equals(testoComitatoToDelete)) {
 				// TODO Alfresco delete
@@ -1022,15 +1033,19 @@ public class EsameCommissioniController {
 		} else {
 
 			// TODO Alfresco upload
-			Allegato allegatoRet = null;
+			TestoAtto testoVotatoRet = new TestoAtto();
+
+			testoVotatoRet.setNome(event.getFile().getFileName());
+			testoVotatoRet.setPubblico(currentFilePubblico);
 
 			try {
 				//TODO change method
-				allegatoRet = attoServiceManager.uploadTestoAttoVotatoEsameCommissioni(
+				testoVotatoRet = attoServiceManager.uploadTestoAttoVotatoEsameCommissioni(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(),
+								testoVotatoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1040,29 +1055,29 @@ public class EsameCommissioniController {
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).getTestiAttoVotatoEsameCommissioni().add(allegatoRet);
+			attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).getTestiAttoVotatoEsameCommissioni().add(testoVotatoRet);
 
-			testiAttoVotatoList.add(allegatoRet);
+			testiAttoVotatoList.add(testoVotatoRet);
 		}
 	}
 
 	private boolean checkTestoAttoVotato(String fileName) {
 
-		for (Allegato element : testiAttoVotatoList) {
-
-			if (element.getDescrizione().equals(fileName)) {
-
-				return false;
-			}
-
-		}
+		//		for (Allegato element : testiAttoVotatoList) {
+		//
+		//			if (element.getDescrizione().equals(fileName)) {
+		//
+		//				return false;
+		//			}
+		//
+		//		}
 
 		return true;
 	}
 
 	public void removeTestoAttoVotato() {
 
-		for (Allegato element : testiAttoVotatoList) {
+		for (TestoAtto element : testiAttoVotatoList) {
 
 			if (element.getId().equals(testoAttoVotatoToDelete)) {
 
@@ -1169,7 +1184,7 @@ public class EsameCommissioniController {
 		} else {
 
 			// TODO Alfresco upload
-			Allegato emendamentoRet = null;
+			TestoAtto emendamentoRet = new TestoAtto();
 
 			try {
 				//TODO change method
@@ -1177,7 +1192,7 @@ public class EsameCommissioniController {
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(), emendamentoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1195,21 +1210,21 @@ public class EsameCommissioniController {
 
 	private boolean checkEmendamenti(String fileName) {
 
-		for (Allegato element : emendamentiList) {
-
-			if (element.getDescrizione().equals(fileName)) {
-
-				return false;
-			}
-
-		}
+//		for (TestoAtto element : emendamentiList) {
+//
+//			if (element.getDescrizione().equals(fileName)) {
+//
+//				return false;
+//			}
+//
+//		}
 
 		return true;
 	}
 
 	public void removeEmendamento() {
 
-		for (Allegato element : emendamentiList) {
+		for (TestoAtto element : emendamentiList) {
 
 			if (element.getId().equals(emendamentoToDelete)) {
 
@@ -1233,7 +1248,10 @@ public class EsameCommissioniController {
 		} else {
 
 			// TODO Alfresco upload
-			Allegato testoClausolaRet = null;
+			TestoAtto testoClausolaRet = new TestoAtto();
+			
+			testoClausolaRet.setNome(event.getFile().getFileName());
+			testoClausolaRet.setPubblico(currentFilePubblico);
 
 			try {
 				//TODO change method
@@ -1241,7 +1259,7 @@ public class EsameCommissioniController {
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(), testoClausolaRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1258,22 +1276,22 @@ public class EsameCommissioniController {
 	}
 
 	private boolean checkTestiClausola(String fileName) {
-
-		for (Allegato element : testiClausolaList) {
-
-			if (element.getDescrizione().equals(fileName)) {
-
-				return false;
-			}
-
-		}
+//
+//		for (TestoAtto element : testiClausolaList) {
+//
+//			if (element.getDescrizione().equals(fileName)) {
+//
+//				return false;
+//			}
+//
+//		}
 
 		return true;
 	}
 
 	public void removeTestoClausola() {
 
-		for (Allegato element : testiClausolaList) {
+		for (TestoAtto element : testiClausolaList) {
 
 			if (element.getId().equals(testoClausolaToDelete)) {
 
@@ -2129,36 +2147,36 @@ public class EsameCommissioniController {
 		this.nomeRelatore = nomeRelatore;
 	}
 
-	public List<Allegato> getTestiComitatoRistrettoList() {
+	public List<TestoAtto> getTestiComitatoRistrettoList() {
 		return testiComitatoRistrettoList;
 	}
 
 	public void setTestiComitatoRistrettoList(
-			List<Allegato> testiComitatoRistrettoList) {
+			List<TestoAtto> testiComitatoRistrettoList) {
 		this.testiComitatoRistrettoList = testiComitatoRistrettoList;
 	}
 
-	public List<Allegato> getTestiAttoVotatoList() {
+	public List<TestoAtto> getTestiAttoVotatoList() {
 		return testiAttoVotatoList;
 	}
 
-	public void setTestiAttoVotatoList(List<Allegato> testiAttoVotatoList) {
+	public void setTestiAttoVotatoList(List<TestoAtto> testiAttoVotatoList) {
 		this.testiAttoVotatoList = testiAttoVotatoList;
 	}
 
-	public List<Allegato> getEmendamentiList() {
+	public List<TestoAtto> getEmendamentiList() {
 		return emendamentiList;
 	}
 
-	public void setEmendamentiList(List<Allegato> emendamentiList) {
+	public void setEmendamentiList(List<TestoAtto> emendamentiList) {
 		this.emendamentiList = emendamentiList;
 	}
 
-	public List<Allegato> getTestiClausolaList() {
+	public List<TestoAtto> getTestiClausolaList() {
 		return testiClausolaList;
 	}
 
-	public void setTestiClausolaList(List<Allegato> testiClausolaList) {
+	public void setTestiClausolaList(List<TestoAtto> testiClausolaList) {
 		this.testiClausolaList = testiClausolaList;
 	}
 
@@ -2394,14 +2412,28 @@ public class EsameCommissioniController {
 		this.abbinamentoServiceManager = abbinamentoServiceManager;
 	}
 
+	public String getCurrentDataSeduta() {
+		return currentDataSeduta;
+	}
+	
+	public void setCurrentDataSeduta(String currentDataSeduta) {
+		this.currentDataSeduta = currentDataSeduta;
+	}
 
 	public String getPassaggio() {
 		return passaggio;
 	}
 
-
 	public void setPassaggio(String passaggio) {
 		this.passaggio = passaggio;
+	}
+
+	public boolean isCurrentFilePubblico() {
+		return currentFilePubblico;
+	}
+
+public void setCurrentFilePubblico(boolean currentFilePubblico) {
+		this.currentFilePubblico = currentFilePubblico;
 	}
 	
 	

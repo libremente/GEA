@@ -20,11 +20,11 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 public class Allegato {
 	
 	public static final String TIPO_PRESENTAZIONE_ASSEGNAZIONE = "allegato_atto";
-	public static final String TIPO_ESAME_COMMISSIONE_COMITATO = "testo_comitato_ristretto";
+//	public static final String TIPO_ESAME_COMMISSIONE_COMITATO = "testo_comitato_ristretto";
 	public static final String TIPO_ESAME_COMMISSIONE_EMENDAMENTO = "emendamento_commissione";
-	public static final String TIPO_ESAME_COMMISSIONE_CLAUSOLA = "clausola_commissione";
+//	public static final String TIPO_ESAME_COMMISSIONE_CLAUSOLA = "clausola_commissione";
 	public static final String TIPO_ESAME_COMMISSIONE_ALLEGATO = "allegato_commissione";
-	public static final String TIPO_ESAME_AULA_EMENDAMENTO = "emendamento_aula";
+//	public static final String TIPO_ESAME_AULA_EMENDAMENTO = "emendamento_aula";
 	public static final String TIPO_ESAME_AULA_ALLEGATO = "allegato_aula";
 	public static final String TIPO_PARERE = "allegato_parere";
 	public static final String TIPO_CONSULTAZIONE = "allegato_consultazione";

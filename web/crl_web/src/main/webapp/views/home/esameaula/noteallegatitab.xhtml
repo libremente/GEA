@@ -53,6 +53,35 @@
 						onclick="linkDialog.hide()" type="button" />
 
 				</p:confirmDialog>
+				
+				<p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
+					widgetVar="uploadAllegatoAttributesDialog" style="width:450px" message="Allega file">
+					<p:panelGrid id="uploadpanelalleg">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="isPubblico" value="Pubblico: " />
+								<p:selectBooleanCheckbox id="isPubblicoAllegato"
+									value="#{esameAulaController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true"></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:fileUpload label="Carica Allegato"
+									oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
+									update="listaAllegati ,noteAllegatiMsg"
+									fileUploadListener="#{esameAulaController.uploadAllegato}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton id="declineUploadAllegato" value="Annulla"
+									onclick="uploadAllegatoAttributesDialog.hide()" type="button" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:confirmDialog>
 			</p>
 		</p:column>
 	</p:row>
@@ -90,11 +119,10 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica allegato"
-								fileUploadListener="#{esameAulaController.uploadAllegato}"
-								actionListener="#{esameAulaController.updateNoteHandler}"
-								mode="advanced" auto="true"
-								update="listaAllegati ,noteAllegatiMsg" />
+							
+								<p:commandButton value="Carica Allegato"
+								oncomplete="uploadAllegatoAttributesDialog.show()">
+							</p:commandButton>
 						</p:column>
 					</p:row>
 					<p:row>

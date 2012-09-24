@@ -43,6 +43,36 @@
 									onclick="emendamentoDialog.hide()" type="button" />
 
 							</p:confirmDialog>
+							
+							<p:confirmDialog id="uploadFileAttributesEmendamenti" header="Caricamento"
+				widgetVar="uploadFileAttributesEmendamentiDialog" style="width:450px"
+				message="Allega Testo">
+				<p:panelGrid id="uploadpanelPanel">
+					<p:row>
+						<p:column>
+							<h:outputLabel for="isPubblicoEmendamenti" value="Pubblico: " />
+							<p:selectBooleanCheckbox id="isPubblicoEmendamenti"
+								value="#{esameAulaController.currentFilePubblico}">
+								<p:ajax event="change" immediate="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:fileUpload label="Carica Emendamento"
+								oncomplete="uploadFileAttributesEmendamentiDialog.hide()" auto="false"
+								update="listaEmendamenti ,emendamentoMsg"
+								fileUploadListener="#{esameAulaController.uploadEmendamento}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton id="declineUploadFileEmendamenti" value="Annulla"
+								onclick="uploadFileAttributesEmendamentiDialog.hide()" type="button" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:confirmDialog>
 						</p:column>
 					</p:row>
 
@@ -52,10 +82,10 @@
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
 						<p:column colspan="3">
-							<p:fileUpload label="Carica Emendamento"
-								fileUploadListener="#{esameAulaController.uploadEmendamento}"
-								mode="advanced" auto="true"
-								update="listaEmendamenti ,emendamentoMsg" />
+														
+								<p:commandButton value="Carica Testo dell'Atto"
+						oncomplete="uploadFileAttributesEmendamentiDialog.show()">
+					</p:commandButton>	
 						</p:column>
 					</p:row>
 					<p:row>

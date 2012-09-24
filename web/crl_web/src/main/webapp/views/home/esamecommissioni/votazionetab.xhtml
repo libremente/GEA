@@ -42,6 +42,36 @@
 						onclick="testoAttoDialog.hide()" type="button" />
 
 				</p:confirmDialog>
+				<p:confirmDialog id="uploadFileAttributesVotazione" header="Caricamento"
+				widgetVar="uploadFileAttributesVotazioneDialog" style="width:450px"
+				message="Allega Testo">
+				<p:panelGrid id="uploadpanelPanelVotazione">
+					<p:row>
+						<p:column>
+							<h:outputLabel for="isPubblicoVotazione" value="Pubblico: " />
+							<p:selectBooleanCheckbox id="isPubblicoVotazione"
+								value="#{esameCommissioniController.currentFilePubblico}">
+								<p:ajax event="change" immediate="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:fileUpload label="Carica Testo dell'Atto"
+								oncomplete="uploadFileAttributesVotazioneDialog.hide()" auto="false"
+								update="listaTestiAtto ,votazioneMsg"
+								fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton id="declineUploadFileVotazione" value="Annulla"
+								onclick="uploadFileAttributesVotazioneDialog.hide()" type="button" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:confirmDialog>
+				
 			</p:column>
 		</p:row>
 		<p:row>
@@ -116,10 +146,11 @@
 			<!-- <p:column>
 					<h:graphicImage alt="add" value="/resources/img/add.png" />
 				</p:column>-->
-			<p:column colspan="3">
-				<p:fileUpload label="Carica Testo dell'Atto"
-					fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}"
-					mode="advanced" auto="true" update="listaTestiAtto ,votazioneMsg" />
+			<p:column>
+				<p:commandButton value="Carica Testo dell'Atto"
+						oncomplete="uploadFileAttributesVotazioneDialog.show()">
+					</p:commandButton>					
+					
 			</p:column>
 		</p:row>
 		<p:row>
@@ -155,6 +186,22 @@
 								target="#{esameCommissioniController.testoAttoVotatoToDelete}" />
 						</p:commandButton>
 					</h:column>
+					<h:column>
+					<f:facet name="header">Download</f:facet>
+					
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)"
+						>
+						<f:setPropertyActionListener value="#{testoAttoVotato.id}"
+								target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{testoAttoVotato.nome}"
+								target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{testoAttoVotato.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />				
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
 
 
 				</h:dataTable>

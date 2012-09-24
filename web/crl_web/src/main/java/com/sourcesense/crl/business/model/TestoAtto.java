@@ -16,6 +16,11 @@ public class TestoAtto {
 	public static final String TESTO_PRESENTAZIONE_ASSEGNAZIONE = "testo_atto";
 	public static final String TESTO_ESAME_COMMISSIONE_VOTAZIONE = "testo_atto_votato_commissione";
 	public static final String TESTO_ESAME_AULA_VOTAZIONE = "testo_atto_votato_aula";
+	public static final String TESTO_ESAME_COMMISSIONE_COMITATO = "testo_atto_comitato_ristretto";
+	public static final String TESTO_ESAME_COMMISSIONE_CLAUSOLA = "clausola_commissione";
+	public static final String TESTO_ESAME_AULA_EMENDAMENTO = "emendamento_aula";
+	
+	
 	
 	private String id;
 	private String nome;
@@ -26,6 +31,7 @@ public class TestoAtto {
 	private String tipoAllegato;
 	private String tipologia;
 	private String provenienza;
+	private String dataSeduta;
 	
 	public String getTipologia() {
 		return tipologia;
@@ -84,6 +90,14 @@ public class TestoAtto {
 
 	public void setProvenienza(String provenienza) {
 		this.provenienza = provenienza;
+	}
+
+	public String getDataSeduta() {
+		return dataSeduta;
+	}
+
+	public void setDataSeduta(String dataSeduta) {
+		this.dataSeduta = dataSeduta;
 	}
 	
 	

@@ -19,6 +19,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.StatoAtto;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -42,11 +43,13 @@ public class EsameAulaController {
 	private String numeroLcr;
 	private boolean emendato;
 	private String noteVotazione;
+	boolean currentFilePubblico;
 
-	private List<Allegato> testiAttoVotatoList = new ArrayList<Allegato>();
+	
+	private List<TestoAtto> testiAttoVotatoList = new ArrayList<TestoAtto>();
 	private String testoAttoVotatoToDelete;
 
-	private List<Allegato> emendamentiList = new ArrayList<Allegato>();
+	private List<TestoAtto> emendamentiList = new ArrayList<TestoAtto>();
 	private String emendamentoToDelete;
 
 	private int numEmendPresentatiMaggior;
@@ -104,8 +107,8 @@ public class EsameAulaController {
 		setAtto((Atto) attoBean.getAtto().clone());	
 
 		aulaUser = (Aula)attoBean.getLastPassaggio().getAula().clone();
-		testiAttoVotatoList = new ArrayList<Allegato>(aulaUser.getTestiAttoVotatoEsameAula());		
-		emendamentiList = new ArrayList<Allegato>(aulaUser.getEmendamentiEsameAula());
+		testiAttoVotatoList = new ArrayList<TestoAtto>(aulaUser.getTestiAttoVotatoEsameAula());		
+		emendamentiList = new ArrayList<TestoAtto>(aulaUser.getEmendamentiEsameAula());
 		allegatiList = new ArrayList<Allegato>(aulaUser.getAllegatiEsameAula());
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
 
@@ -225,7 +228,11 @@ public class EsameAulaController {
 		} else {
 
 			// TODO Alfresco upload
-			Allegato allegatoRet = null;
+			TestoAtto allegatoRet = new TestoAtto();
+			
+			allegatoRet.setNome(event.getFile().getFileName());
+			allegatoRet.setPubblico(currentFilePubblico);
+			
 
 			try {
 				//TODO change method
@@ -233,7 +240,8 @@ public class EsameAulaController {
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(),
+							allegatoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -251,21 +259,21 @@ public class EsameAulaController {
 
 	private boolean checkTestoAttoVotato(String fileName) {
 
-		for (Allegato element : testiAttoVotatoList) {
-
-			if (element.getDescrizione().equals(fileName)) {
-
-				return false;
-			}
-
-		}
+//		for (TestoAtto element : testiAttoVotatoList) {
+//
+//			if (element.getDescrizione().equals(fileName)) {
+//
+//				return false;
+//			}
+//
+//		}
 
 		return true;
 	}
 
 	public void removeTestoAttoVotato() {
 
-		for (Allegato element : testiAttoVotatoList) {
+		for (TestoAtto element : testiAttoVotatoList) {
 
 			if (element.getId().equals(testoAttoVotatoToDelete)) {
 
@@ -311,7 +319,10 @@ public class EsameAulaController {
 		} else {
 
 			// TODO Alfresco upload
-			Allegato emendamentoRet = null;
+			TestoAtto emendamentoRet = new TestoAtto();
+			
+			emendamentoRet.setNome(event.getFile().getFileName());
+			emendamentoRet.setPubblico(currentFilePubblico);
 
 			try {
 				//TODO change method
@@ -319,7 +330,8 @@ public class EsameAulaController {
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(),
+								emendamentoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -337,21 +349,21 @@ public class EsameAulaController {
 
 	private boolean checkEmendamenti(String fileName) {
 
-		for (Allegato element : emendamentiList) {
-
-			if (element.getDescrizione().equals(fileName)) {
-
-				return false;
-			}
-
-		}
+//		for (TestoAtto element : emendamentiList) {
+//
+//			if (element.getDescrizione().equals(fileName)) {
+//
+//				return false;
+//			}
+//
+//		}
 
 		return true;
 	}
 
 	public void removeEmendamento() {
 
-		for (Allegato element : emendamentiList) {
+		for (TestoAtto element : emendamentiList) {
 
 			if (element.getId().equals(emendamentoToDelete)) {
 
@@ -674,22 +686,22 @@ public class EsameAulaController {
 	}
 
 
-	public List<Allegato> getTestiAttoVotatoList() {
+	public List<TestoAtto> getTestiAttoVotatoList() {
 		return testiAttoVotatoList;
 	}
 
 
-	public void setTestiAttoVotatoList(List<Allegato> testiAttoVotatoList) {
+	public void setTestiAttoVotatoList(List<TestoAtto> testiAttoVotatoList) {
 		this.testiAttoVotatoList = testiAttoVotatoList;
 	}
 
 
-	public List<Allegato> getEmendamentiList() {
+	public List<TestoAtto> getEmendamentiList() {
 		return emendamentiList;
 	}
 
 
-	public void setEmendamentiList(List<Allegato> emendamentiList) {
+	public void setEmendamentiList(List<TestoAtto> emendamentiList) {
 		this.emendamentiList = emendamentiList;
 	}
 
@@ -1120,6 +1132,15 @@ public class EsameAulaController {
 	}
 
 
+	public boolean isCurrentFilePubblico() {
+		return currentFilePubblico;
+	}
+
+
+
+	public void setCurrentFilePubblico(boolean currentFilePubblico) {
+		this.currentFilePubblico = currentFilePubblico;
+	}
 
 
 

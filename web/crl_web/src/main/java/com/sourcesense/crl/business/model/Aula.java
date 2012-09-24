@@ -23,8 +23,8 @@ public class Aula implements Cloneable{
 	private boolean emendato;
 	private String noteVotazione;
 	
-	private List<Allegato> testiAttoVotatoEsameAula = new ArrayList<Allegato>();
-	private List<Allegato> emendamentiEsameAula = new ArrayList<Allegato>();
+	private List<TestoAtto> testiAttoVotatoEsameAula = new ArrayList<TestoAtto>();
+	private List<TestoAtto> emendamentiEsameAula = new ArrayList<TestoAtto>();
 	
 	private int numEmendPresentatiMaggiorEsameAula;
 	private int numEmendPresentatiMinorEsameAula;
@@ -133,19 +133,19 @@ public class Aula implements Cloneable{
 		this.noteVotazione = noteVotazione;
 	}
 
-	public List<Allegato> getTestiAttoVotatoEsameAula() {
+	public List<TestoAtto> getTestiAttoVotatoEsameAula() {
 		return testiAttoVotatoEsameAula;
 	}
 
-	public void setTestiAttoVotatoEsameAula(List<Allegato> testiAttoVotatoEsameAula) {
+	public void setTestiAttoVotatoEsameAula(List<TestoAtto> testiAttoVotatoEsameAula) {
 		this.testiAttoVotatoEsameAula = testiAttoVotatoEsameAula;
 	}
 
-	public List<Allegato> getEmendamentiEsameAula() {
+	public List<TestoAtto> getEmendamentiEsameAula() {
 		return emendamentiEsameAula;
 	}
 
-	public void setEmendamentiEsameAula(List<Allegato> emendamentiEsameAula) {
+	public void setEmendamentiEsameAula(List<TestoAtto> emendamentiEsameAula) {
 		this.emendamentiEsameAula = emendamentiEsameAula;
 	}
 

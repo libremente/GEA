@@ -71,10 +71,10 @@ public class Commissione implements Cloneable {
 	
 	private List <Relatore> relatori = new ArrayList<Relatore>();
 	private List <Link> linksNoteEsameCommissione = new ArrayList<Link>();
-	private List <Allegato> testiAttoVotatoEsameCommissioni = new ArrayList<Allegato>();
-	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
+	private List <TestoAtto> testiAttoVotatoEsameCommissioni = new ArrayList<TestoAtto>();
+	private List <TestoAtto> emendamentiEsameCommissioni = new ArrayList<TestoAtto>();
 	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
-	private List <Allegato> testiClausola = new ArrayList<Allegato>();
+	private List <TestoAtto> testiClausola = new ArrayList<TestoAtto>();
 	
 	private boolean annullata = false;
 	private boolean presenzaComitatoRistretto;
@@ -121,21 +121,21 @@ public class Commissione implements Cloneable {
 		this.dataScadenzaEsameCommissioni = dataScadenzaEsameCommissioni;
 	}
 
-	public List<Allegato> getTestiAttoVotatoEsameCommissioni() {
+	public List<TestoAtto> getTestiAttoVotatoEsameCommissioni() {
 		return testiAttoVotatoEsameCommissioni;
 	}
 
 	public void setTestiAttoVotatoEsameCommissioni(
-			List<Allegato> testiAttoVotatoEsameCommissioni) {
+			List<TestoAtto> testiAttoVotatoEsameCommissioni) {
 		this.testiAttoVotatoEsameCommissioni = testiAttoVotatoEsameCommissioni;
 	}
 
-	public List<Allegato> getEmendamentiEsameCommissioni() {
+	public List<TestoAtto> getEmendamentiEsameCommissioni() {
 		return emendamentiEsameCommissioni;
 	}
 
 	public void setEmendamentiEsameCommissioni(
-			List<Allegato> emendamentiEsameCommissioni) {
+			List<TestoAtto> emendamentiEsameCommissioni) {
 		this.emendamentiEsameCommissioni = emendamentiEsameCommissioni;
 	}
 
@@ -530,11 +530,11 @@ public class Commissione implements Cloneable {
 		this.noteGeneraliEsameCommissione = noteGeneraliEsameCommissione;
 	}
 	
-	public List<Allegato> getTestiClausola() {
+	public List<TestoAtto> getTestiClausola() {
 		return testiClausola;
 	}
 
-	public void setTestiClausola(List<Allegato> testiClausola) {
+	public void setTestiClausola(List<TestoAtto> testiClausola) {
 		this.testiClausola = testiClausola;
 	}
 

@@ -247,7 +247,7 @@ public class PresentazioneAssegnazioneAttoController {
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username , ""));
 
-		
+
 	}
 
 	public void uploadTestoAtto(FileUploadEvent event) {
@@ -276,7 +276,7 @@ public class PresentazioneAssegnazioneAttoController {
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
-								testoAttoRet);
+										testoAttoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -453,10 +453,10 @@ public class PresentazioneAssegnazioneAttoController {
 			attoBean.getAtto().setDataVotazioneUrgenza(
 					atto.getDataVotazioneUrgenza());
 			attoBean.getAtto()
-					.setNoteAmmissibilita(atto.getNoteAmmissibilita());
+			.setNoteAmmissibilita(atto.getNoteAmmissibilita());
 			attoBean.getAtto()
 			.setStato(atto.getStato());
-			
+
 			setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
 
 			context.addMessage(null, new FacesMessage(
@@ -479,7 +479,7 @@ public class PresentazioneAssegnazioneAttoController {
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Commissione " + nomeCommissione
-								+ " già presente ", ""));
+						+ " già presente ", ""));
 
 			}else if(!checkCommissioniRuolo()){ 
 				
@@ -629,11 +629,11 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void confermaAssegnazione() {
-		
+
 		changeStatoCommissioni(Commissione.STATO_ASSEGNATO);
 		this.atto.getPassaggi().get(0).setCommissioni(commissioniList);
 		this.atto.setPareri(pareriList);
-		
+
 		attoServiceManager.salvaAssegnazionePresentazione(atto);
 
 		// TODO Service logic
@@ -650,9 +650,9 @@ public class PresentazioneAssegnazioneAttoController {
 				"Assegnazione salvata con successo", ""));
 	}
 
-	
+
 	public void changeStatoCommissioni(String stato){
-		
+
 		for (Commissione element : atto.getPassaggi().get(0).getCommissioni()) {
 
 			if (!element.getStato().equals(Commissione.STATO_ANNULLATO)) {
@@ -661,9 +661,9 @@ public class PresentazioneAssegnazioneAttoController {
 			}
 
 		}
-		
+
 	}
-	
+
 	// Note e Allegati******************************************************
 	public void uploadAllegato(FileUploadEvent event) {
 
@@ -698,7 +698,7 @@ public class PresentazioneAssegnazioneAttoController {
 					.getSessionMap().get("attoBean"));
 
 			attoBean.getAtto().getAllegatiNotePresentazioneAssegnazione()
-					.add(allegatoRet);
+			.add(allegatoRet);
 
 			allegatiList.add(allegatoRet);
 		}

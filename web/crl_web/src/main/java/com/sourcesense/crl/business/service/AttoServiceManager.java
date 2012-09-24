@@ -90,28 +90,28 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 	
-	public Allegato uploadTestoComitatoRistretto(Atto atto, InputStream stream, String nomeFile) {
+	public TestoAtto uploadTestoComitatoRistretto(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_COMMISSIONE_COMITATO);
+		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_COMITATO);
 	}
 
-	public Allegato uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
+	public TestoAtto uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
-	}
-	
-	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
-
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_AULA_EMENDAMENTO);
+		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
 	}
 	
-	public Allegato uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
+	public TestoAtto uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_COMMISSIONE_CLAUSOLA);
+		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_EMENDAMENTO);
+	}
+	
+	public TestoAtto uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
+
+		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
 	}	
 	
 	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, String nomeFile) {
@@ -120,16 +120,16 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
 	}	
 	
-	public Allegato uploadTestoAttoVotatoEsameAula(Atto atto, InputStream stream, String nomeFile) {
+	public TestoAtto uploadTestoAttoVotatoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, TestoAtto.TESTO_ESAME_AULA_VOTAZIONE);
+		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_VOTAZIONE);
 	}	
 	
-	public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, String nomeFile) {
+	public TestoAtto uploadEmendamentoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_AULA_EMENDAMENTO);
+		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_EMENDAMENTO);
 	}	
 	
 	public Allegato uploadAllegatoNoteAllegatiEsameAula(Atto atto, InputStream stream, String nomeFile) {
