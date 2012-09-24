@@ -13,16 +13,16 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.sourcesense.crl.business.security.SessionPhaseListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 
 	private static final String errorpage = "/exception.xhtml";
 	
-	private static final Log LOG = LogFactory.getLog(DefaultExceptionHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
 	/** key for session scoped message detail */
 

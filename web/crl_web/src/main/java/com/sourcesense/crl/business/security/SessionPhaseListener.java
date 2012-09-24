@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import javax.faces.FacesException;
 import javax.faces.FactoryFinder;
-import javax.faces.application.Application;
-import javax.faces.application.ViewHandler;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -17,18 +14,15 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.primefaces.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SessionPhaseListener implements PhaseListener {
 
 	private static final String homepage = "authenticate.xhtml?reason=expired";
 
-	private static final Log LOG = LogFactory
-			.getLog(SessionPhaseListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SessionPhaseListener.class);
 
 	public void afterPhase(PhaseEvent event) {
 		;

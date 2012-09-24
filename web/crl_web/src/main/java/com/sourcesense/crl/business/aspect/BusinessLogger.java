@@ -1,24 +1,22 @@
 package com.sourcesense.crl.business.aspect;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.codehaus.jackson.map.annotate.JsonRootName;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @Aspect
 public class BusinessLogger {
 
-	private Logger log = Logger.getLogger(BusinessLogger.class);
+
+	private Logger log = LoggerFactory.getLogger(BusinessLogger.class);
 	
 	
 
