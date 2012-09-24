@@ -52,8 +52,8 @@ public class RiepilogoAttoController {
 		// TODO riempire liste commissioni attoBean =>
 		// attoBean.getAtto().setCommissioni(commissioneServiceManager.findCommissioniByAtto(attoBean.getId()));
 		//
-		if(!attoBean.getAtto().getCommissioni().isEmpty()) {
-			commissioneSelected = attoBean.getAtto().getCommissioni().get(0);
+		if(!attoBean.getAtto().getPassaggi().get(0).getCommissioni().isEmpty()) {
+			commissioneSelected = attoBean.getAtto().getPassaggi().get(0).getCommissioni().get(0);
 		}
 		
 
@@ -65,7 +65,7 @@ public class RiepilogoAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		for (Commissione commissioneRec : attoBean.getAtto().getCommissioni()) {
+		for (Commissione commissioneRec : attoBean.getAtto().getPassaggi().get(0).getCommissioni()) {
 
 			if(commissioneRec.getDescrizione().equals(nomeCommissione)){
 

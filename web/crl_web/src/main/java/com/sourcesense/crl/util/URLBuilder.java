@@ -45,6 +45,8 @@ public class URLBuilder {
 		url=messageSource.getMessage(contextPropertyName, null, Locale.ITALY)+
 	        messageSource.getMessage(pathPropertyName, paramsValues, Locale.ITALY);
 		
+		url = url.trim();
+		
 		if(url.indexOf("?") == -1){
 			url+="?"+ALFRESCO_TCKT_PARAM_NAME+alfrescoSessionTicket.getTicket();	
 		}else{

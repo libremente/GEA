@@ -80,8 +80,24 @@ public class CommissioneServiceManager implements ServiceManager{
 
 	}
 
+    
+    
+    @Override
+	public Map<String, String> findAll() {
+		Map<String, String> commissioni = new HashMap<String, String>();
+
+		List<Commissione> listCommissioni = commissioneService.getAllCommissioni(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_commissioni",null));
+
+		for (Commissione commissione : listCommissioni) {
+
+			commissioni.put(commissione.getDescrizione(), commissione.getDescrizione());
+
+		}
+		return commissioni;
+		
+	}
 	
-	public Map<String, String> findAllCommissioneReferente() {
+	/*public Map<String, String> findAllCommissioneReferente() {
 		Map<String, String> commissioniReferenti = new HashMap<String, String>();
 
 		List<CommissioneReferente> listCommissioniReferenti = commissioneService.getAllCommissioneReferente(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_commissioni_referenti",null));
@@ -105,7 +121,9 @@ public class CommissioneServiceManager implements ServiceManager{
 			commissioniConsultive.put(commissioneConsultiva.getDescrizione(), commissioneConsultiva.getDescrizione());
 		
 		return commissioniConsultive;
-	}
+	}*/
+	
+	
 	
 
 	@Override
@@ -114,11 +132,7 @@ public class CommissioneServiceManager implements ServiceManager{
 		return null;
 	}
 
-	@Override
-	public Map<String, String> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public List<Object> retrieveAll() {

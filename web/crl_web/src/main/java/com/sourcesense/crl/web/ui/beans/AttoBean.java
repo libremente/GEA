@@ -10,8 +10,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
 @ManagedBean(name = "attoBean")
@@ -42,8 +45,6 @@ public class AttoBean implements Serializable {
 	private Date dataAssegnazione;
 	private String esitoValidazione;    
 	private Date dataValidazione;
-	private Date dataAssegnazioneCommissioni;
-
 
 	private String descrizioneIniziativa;
 	private String numeroDGR;
@@ -57,27 +58,20 @@ public class AttoBean implements Serializable {
 	private String anno;
 
 	private String numeroProtocollo;
-	private String numeroDcr;
 	private String firmatario;
 	private String tipoChiusura;
-	private String esitoVotoCommissioneReferente;
-	private String esitoVotoAula;
-	private String commissioneReferente;
-	private String commissioneConsultiva;
 	private boolean redigente;
 	private boolean deliberante;
-	private String numeroLCR;
 	private String numeroLR;
 	private boolean abbinamento;	
 	private boolean stralcio;
 	private String relatore;	
 	private String organismoStatutario;	
 	private String soggettoConsultato;	
-	private boolean emendato;	
 	private boolean rinviato;	
 	private boolean sospeso;
 
-
+	private Date dataAssegnazioneCommissioni;
 	private Date dataLR;
 	private String numeroPubblicazioneBURL;
 	private Date dataPubblicazioneBURL;
@@ -86,10 +80,6 @@ public class AttoBean implements Serializable {
 	private String esitoVotazione;
 	private Date dataSeduta;
 	private String tipoVotazione;
-	private String numeroDCR;
-
-
-
 
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
@@ -102,8 +92,9 @@ public class AttoBean implements Serializable {
 	private String noteAmmissibilita;
 	private String noteNoteAllegatiPresentazioneAssegnazione;
 
-
-
+	private List <Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
+	private List <Commissione> commissioni = new ArrayList<Commissione>();
+	
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -111,7 +102,8 @@ public class AttoBean implements Serializable {
 	
 	public boolean containCommissione (String commissione){
 		
-		for (Commissione commissioneRec : this.atto.getCommissioni()) {
+		//le commissioni sono definite nel primo passaggio
+		for (Commissione commissioneRec : this.atto.getPassaggi().get(0).getCommissioni()) {
 			
 			if(commissioneRec.getDescrizione().equalsIgnoreCase(commissione)){
 				
@@ -121,6 +113,52 @@ public class AttoBean implements Serializable {
 		
 		return false;
 	}
+	
+	
+    public Commissione getWorkingCommissione(String descrizione){
+		
+    	Commissione commissioneRet=null;
+    	
+		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
+			
+			if(commissioneRec.getDescrizione().equalsIgnoreCase(descrizione)){
+				
+				commissioneRet=commissioneRec;
+			}
+		}
+		
+		return commissioneRet;
+	}
+	
+    public Aula getWorkingAula(){
+		
+		return atto.getPassaggi().get(atto.getPassaggi().size()-1).getAula();
+		
+	}
+    
+	public Passaggio getLastPassaggio(){
+		
+		return atto.getPassaggi().get(atto.getPassaggi().size()-1);
+		
+	}
+	
+    public Passaggio getPassaggio(String pass){
+	   
+    	Passaggio passaggioSelected = null;
+    	
+       for (Passaggio passaggioRec : this.atto.getPassaggi()) {
+			
+    		if(passaggioRec.getNome().equalsIgnoreCase(pass)){
+    			
+    			passaggioSelected=passaggioRec;
+    		}
+		}
+       
+       return passaggioSelected;
+		
+	}
+	
+	
 	
 	/* Services */
 	public AttoServiceManager getAttoServiceManager() {
@@ -302,13 +340,7 @@ public class AttoBean implements Serializable {
 		this.atto.setDataValidazione(dataValidazione);
 	}
 
-	public Date getDataAssegnazioneCommissioni() {
-		return atto.getDataAssegnazioneCommissioni();
-	}
-
-	public void setDataAssegnazioneCommissioni(Date dataAssegnazioneCommissioni) {
-		this.atto.setDataAssegnazioneCommissioni(dataAssegnazioneCommissioni);
-	}
+	
 
 
 
@@ -400,14 +432,7 @@ public class AttoBean implements Serializable {
 		this.atto.setNumeroProtocollo(numeroProtocollo);
 	}
 
-	public String getNumeroDcr() {
-		return atto.getNumeroDcr();
-	}
-
-	public void setNumeroDcr(String numeroDcr) {
-		this.atto.setNumeroDcr(numeroDcr);
-	}
-
+	
 	public String getFirmatario() {
 		return atto.getFirmatario();
 	}
@@ -424,39 +449,7 @@ public class AttoBean implements Serializable {
 		this.atto.setTipoChiusura(tipoChiusura);
 	}
 
-	public String getEsitoVotoCommissioneReferente() {
-		return atto.getEsitoVotoCommissioneReferente();
-	}
-
-	public void setEsitoVotoCommissioneReferente(
-			String esitoVotoCommissioneReferente) {
-		this.atto.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
-	}
-
-	public String getEsitoVotoAula() {
-		return atto.getEsitoVotoAula();
-	}
-
-	public void setEsitoVotoAula(String esitoVotoAula) {
-		this.atto.setEsitoVotoAula(esitoVotoAula);
-	}
-
-	public String getCommissioneReferente() {
-		return atto.getCommissioneReferente();
-	}
-
-	public void setCommissioneReferente(String commissioneReferente) {
-		this.atto.setCommissioneReferente(commissioneReferente);
-	}
-
-	public String getCommissioneConsultiva() {
-		return atto.getCommissioneConsultiva();
-	}
-
-	public void setCommissioneConsultiva(String commissioneConsultiva) {
-		this.atto.setCommissioneConsultiva(commissioneConsultiva);
-	}
-
+	
 	public boolean isRedigente() {
 		return atto.isRedigente();
 	}
@@ -472,14 +465,7 @@ public class AttoBean implements Serializable {
 	public void setDeliberante(boolean deliberante) {
 		this.atto.setDeliberante(deliberante);
 	}
-
-	public String getNumeroLCR() {
-		return atto.getNumeroLcr();
-	}
-
-	public void setNumeroLCR(String numeroLCR) {
-		this.atto.setNumeroLcr(numeroLCR);
-	}
+	
 
 	public String getNumeroLR() {
 		return atto.getNumeroLr();
@@ -522,13 +508,7 @@ public class AttoBean implements Serializable {
 		this.atto.setSoggettoConsultato(soggettoConsultato);
 	}
 
-	public boolean isEmendato() {
-		return atto.isEmendato();
-	}
-
-	public void setEmendato(boolean emendato) {
-		this.atto.setEmendato(emendato);
-	}
+	
 
 	public boolean isRinviato() {
 		return atto.isRinviato();
@@ -587,39 +567,7 @@ public class AttoBean implements Serializable {
 		this.atto.setStatoChiusura(statoChiusura);
 	}
 
-	public String getEsitoVotazione() {
-		return atto.getEsitoVotoAula();
-	}
-
-	public void setEsitoVotazione(String esitoVotazione) {
-		this.atto.setEsitoVotoAula(esitoVotazione);
-	}
-
-	public Date getDataSeduta() {
-		return atto.getDataSedutaAula();
-	}
-
-	public void setDataSeduta(Date dataSeduta) {
-		this.atto.setDataSedutaAula(dataSeduta);
-	}
-
-	public String getTipoVotazione() {
-		return atto.getTipologiaVotazione();
-	}
-
-	public void setTipoVotazione(String tipoVotazione) {
-		this.atto.setTipologiaVotazione(tipoVotazione);
-	}
-
-	public String getNumeroDCR() {
-		return atto.getNumeroDcr();
-	}
-
-	public void setNumeroDCR(String numeroDCR) {
-		this.atto.setNumeroDcr(numeroDCR);
-	}
-
-
+	
 	public String getValutazioneAmmissibilita() {
 		return atto.getValutazioneAmmissibilita();
 	}
@@ -702,5 +650,27 @@ public class AttoBean implements Serializable {
 		this.atto.setNotePresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
 	}
 
+	public Date getDataAssegnazioneCommissioni() {
+		return atto.getDataAssegnazioneCommissioni();
+	}
+
+	public void setDataAssegnazioneCommissioni(Date dataAssegnazioneCommissioni) {
+		this.atto.setDataAssegnazioneCommissioni(dataAssegnazioneCommissioni);
+	}
+	
+	
+	
+	public List<Abbinamento> getAbbinamenti() {
+		return getLastPassaggio().getAbbinamenti();
+	}
+
+
+	public List<Commissione> getCommissioni() {
+		return getLastPassaggio().getCommissioni();
+	}
+	
+	
+	
+	
 }
 

@@ -191,14 +191,10 @@
 											<p:selectOneMenu value="#{commissione.ruolo}">
 												<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
 												<f:selectItem itemLabel="Referente" itemValue="Referente" />
-												<f:selectItem itemLabel="Co-Referente"
-													itemValue="Co-Referente" />
+												<f:selectItem itemLabel="Co-Referente" itemValue="Co-Referente" />
 												<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
 												<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
-												<f:selectItem itemLabel="Deliberante"
-													itemValue="Deliberante" />
-
-
+												<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
 											</p:selectOneMenu>
 										</f:facet>
 									</p:cellEditor>
@@ -238,7 +234,7 @@
 								</p:column>-->
 
 								<p:column headerText="Modifica">
-									<p:rowEditor />
+									<p:rowEditor rendered="#{commissione.stato not eq 'Assegnato'}" />
 								</p:column>
 
 							</p:dataTable>

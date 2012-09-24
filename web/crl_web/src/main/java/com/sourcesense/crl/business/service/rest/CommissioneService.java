@@ -165,8 +165,47 @@ public class CommissioneService {
 		return listCommissioniConsultive;
 	}
 
+	
+	public List<Commissione> getAllCommissioni(String url) {
+		List<Commissione> listCommissioni =null;
 
-	public List<CommissioneReferente> getAllCommissioneReferente(String url) {
+		try {
+			WebResource webResource = client.resource(url);
+
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listCommissioni = objectMapper.readValue(responseMsg,
+					new TypeReference<List<Commissione>>() {
+			});
+
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return listCommissioni;
+	}
+
+	/*public List<CommissioneReferente> getAllCommissioneReferente(String url) {
 		List<CommissioneReferente> listCommissioniReferenti =null;
 
 		try {
@@ -242,6 +281,6 @@ public class CommissioneService {
 					.getSimpleName(), e);
 		}
 		return listCommissioniConsultive;
-	}
+	}*/
 
 }

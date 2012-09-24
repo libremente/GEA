@@ -205,9 +205,9 @@ public class SearchAttoController {
 	protected void initLazyModel() {
 
 		setCommissioniReferenti(commissioneServiceManager
-				.findAllCommissioneReferente());
+				.findAll());
 		setCommissioniConsultive(commissioneServiceManager
-				.findAllCommissioneConsultiva());
+				.findAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setFirmatari(personaleServiceManager.findAllFirmatario());
 		setRelatori(personaleServiceManager.findAllRelatore());
@@ -433,8 +433,7 @@ public class SearchAttoController {
 
 	public void setEsitoVotoCommissioneReferente(
 			String esitoVotoCommissioneReferente) {
-		this.atto
-				.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
+		this.atto.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
 	}
 
 	public String getEsitoVotoAula() {

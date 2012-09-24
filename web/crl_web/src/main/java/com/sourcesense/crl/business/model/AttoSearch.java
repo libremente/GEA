@@ -15,32 +15,26 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class AttoSearch extends Atto {
-
 	
 	
 	private Date dataPubblicazioneDa;
-	
 	private Date dataPubblicazioneA;
-	
 	private Date dataSedutaSCDa;
-	
 	private Date dataSedutaSCA;
-	
 	private Date dataSedutaCommissioneDa;
-	
 	private Date dataSedutaCommissioneA;
-	
 	private Date dataSedutaAulaDa;
-	
 	private Date dataSedutaAulaA;
-	
 	private Date dataIniziativaDa;
-
 	private Date dataIniziativaA;
-	
-	private String relatore;
-
-	
+	private String relatore;	
+	private String numeroDcr;
+	private String esitoVotoCommissioneReferente;
+	private String esitoVotoAula;
+	private String commissioneReferente;
+	private String commissioneConsultiva;
+	private String numeroLcr;
+	private boolean emendato;
 	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPubblicazioneDa() {
@@ -139,6 +133,64 @@ public class AttoSearch extends Atto {
 	public void setRelatore(String relatore) {
 		this.relatore = relatore;
 	}
+
+	public String getNumeroDcr() {
+		return numeroDcr;
+	}
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.numeroDcr = numeroDcr;
+	}
+
+	public String getEsitoVotoCommissioneReferente() {
+		return esitoVotoCommissioneReferente;
+	}
+
+	public void setEsitoVotoCommissioneReferente(
+			String esitoVotoCommissioneReferente) {
+		this.esitoVotoCommissioneReferente = esitoVotoCommissioneReferente;
+	}
+
+	public String getEsitoVotoAula() {
+		return esitoVotoAula;
+	}
+
+	public void setEsitoVotoAula(String esitoVotoAula) {
+		this.esitoVotoAula = esitoVotoAula;
+	}
+
+	public String getCommissioneReferente() {
+		return commissioneReferente;
+	}
+
+	public void setCommissioneReferente(String commissioneReferente) {
+		this.commissioneReferente = commissioneReferente;
+	}
+
+	public String getCommissioneConsultiva() {
+		return commissioneConsultiva;
+	}
+
+	public void setCommissioneConsultiva(String commissioneConsultiva) {
+		this.commissioneConsultiva = commissioneConsultiva;
+	}
+
+	public String getNumeroLcr() {
+		return numeroLcr;
+	}
+
+	public void setNumeroLcr(String numeroLcr) {
+		this.numeroLcr = numeroLcr;
+	}
+
+	public boolean isEmendato() {
+		return emendato;
+	}
+
+	public void setEmendato(boolean emendato) {
+		this.emendato = emendato;
+	}
+	
 	
 	
 	
