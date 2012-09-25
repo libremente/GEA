@@ -788,7 +788,21 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 
 if (! ("#{esameCommissioniController.dataPresaInCarico}").length) {
-$('#blockedAbbinamenti').block({ { message: '<h1>Pagina bloccata!<br />Prendere in carico per sbloccare.</h1>' } });
+$('#blockedAbbinamenti').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
+	width:		'350px',
+	top:		'10px',
+	left:		'',
+	right:		'10px',
+	border:		'none',
+	padding:	'5px',
+	opacity:	0.6,
+	cursor:		'default',
+	color:		'#fff',
+	backgroundColor: '#000',
+	'-webkit-border-radius':'10px',
+	'-moz-border-radius':	'10px',
+	'border-radius':		'10px'
+}, } );
 
 
 

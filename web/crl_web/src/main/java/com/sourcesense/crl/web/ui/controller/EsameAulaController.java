@@ -39,6 +39,7 @@ public class EsameAulaController {
 	private String esitoVotazione;
 	private String tipologiaVotazione;
 	private Date dataSedutaVotazione;
+	private Date dataIniziativa;
 	private String numeroDcr;
 	private String numeroLcr;
 	private boolean emendato;
@@ -1140,6 +1141,18 @@ public class EsameAulaController {
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
+	}
+
+
+
+	public Date getDataIniziativa() {
+		return dataIniziativa;
+	}
+
+
+
+	public void setDataIniziativa(Date dataIniziativa) {
+		this.dataIniziativa = dataIniziativa;
 	}
 
 
