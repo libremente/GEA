@@ -550,9 +550,9 @@
 
 
 if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
-$('#blockedInfoGen').block({ message: null });
+$('#blockedInfoGen').block({ message: '<h1>Pagina bloccata!<br />Prendere in carico per sbloccare.</h1>' });
 
-$.growlUI(null , 'Pagina bloccata! Prendere in carico per sbloccare.', 10000);};
+};
 
 function unblockDiv() { 
     $('#blockedInfoGen').unblock(); 

@@ -573,12 +573,9 @@
 <script type="text/javascript" src="resources/javascript/blockUI.js"></script>
 <script>
 	if (!("#{esameCommissioniController.dataPresaInCarico}").length) {
-		$('#blockedRelatori').block({
-			message : null
-		});
+		$('#blockedRelatori').block({ message: '<h1>Pagina bloccata!<br />Prendere in carico per sbloccare.</h1>' });
 
-		$.growlUI(null, 'Pagina bloccata! Prendere in carico per sbloccare.',
-				10000);
+		
 	};
 
 	function unblockDiv() {
