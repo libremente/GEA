@@ -461,18 +461,20 @@ public class EsameCommissioniController {
 		//Puo essere modificato solo l'ultimo passaggio
 		atto.getPassaggi().get(atto.getPassaggi().size()-1).setCommissioni(getCommissioniList());
 		atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
 		
 		Target target = new Target();
 		target.setCommissione(commissioneUser.getDescrizione());
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		EsameCommissione esameCommissione = new EsameCommissione();
 		esameCommissione.setAtto(atto);
 		esameCommissione.setTarget(target);
 		
 		commissioneServiceManager.salvaPresaInCaricoEsameCommissioni(esameCommissione);		
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		
 
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));		
@@ -542,18 +544,21 @@ public class EsameCommissioniController {
 	public void confermaRelatori() {
 		commissioneUser.setRelatori(relatoriList);
 		atto.getPassaggi().get(atto.getPassaggi().size()-1).setCommissioni(commissioniList);
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
 		
 		Target target = new Target();
 		target.setCommissione(commissioneUser.getDescrizione());
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		EsameCommissione esameCommissione = new EsameCommissione();
 		esameCommissione.setAtto(atto);
 		esameCommissione.setTarget(target);
 		
 		commissioneServiceManager.salvaRelatoriEsameCommissioni(esameCommissione);
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		
+		
 
 		attoBean.getLastPassaggio().setCommissioni(Clonator.cloneList(commissioniList));
 
@@ -666,15 +671,18 @@ public class EsameCommissioniController {
 			commissioneUser.setDataIstituzioneComitato(getDataIstituzioneComitato());
 			atto.getPassaggi().get(atto.getPassaggi().size()-1).setCommissioni(commissioniList);
 			
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+			
 			Target target = new Target();
 			target.setCommissione(commissioneUser.getDescrizione());
+			target.setPassaggio(attoBean.getLastPassaggio().getNome());
 			EsameCommissione esameCommissione = new EsameCommissione();
 			esameCommissione.setAtto(atto);
 			esameCommissione.setTarget(target);
 			commissioneServiceManager.salvaComitatoRistrettoEsameCommissioni(esameCommissione);
 
-			AttoBean attoBean = ((AttoBean) context.getExternalContext()
-					.getSessionMap().get("attoBean"));
+			
 
 			attoBean.getLastPassaggio().setCommissioni(Clonator.cloneList(commissioniList));
 
@@ -771,17 +779,20 @@ public class EsameCommissioniController {
 		commissioneUser.setDataFineLavoriComitato(getDataFineLavori());
 		commissioneUser.setStato(Commissione.STATO_ANNULLATO);
 		atto.getPassaggi().get(atto.getPassaggi().size()-1).setCommissioni(getCommissioniList());
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
 		
 		Target target = new Target();
 		target.setCommissione(commissioneUser.getDescrizione());
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		EsameCommissione esameCommissione = new EsameCommissione();
 		esameCommissione.setAtto(atto);
 		esameCommissione.setTarget(target);
 		commissioneServiceManager.salvaFineLavoriEsameCommissioni(esameCommissione);
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		
+		
 
 		attoBean.getLastPassaggio().setCommissioni(Clonator.cloneList(getCommissioniList()));
 

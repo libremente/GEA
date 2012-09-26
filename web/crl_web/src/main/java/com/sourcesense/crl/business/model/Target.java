@@ -13,6 +13,8 @@ import org.pojomatic.annotations.AutoProperty;
 public class Target {
 	
 	private String commissione;
+	private String passaggio;
+	
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -25,4 +27,14 @@ public class Target {
 	public void setCommissione(String commissione) {
 		this.commissione = commissione;
 	}
+
+	public String getPassaggio() {
+		return passaggio;
+	}
+
+	public void setPassaggio(String passaggio) {
+		this.passaggio = passaggio;
+	}
+	
+	
 }

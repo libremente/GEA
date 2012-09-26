@@ -127,7 +127,7 @@ public class Atto implements Cloneable
 	
 	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
 	private List <TestoAtto> testiAtto = new ArrayList<TestoAtto>();
-
+	
 	private List <Collegamento> collegamenti = new ArrayList<Collegamento>();
 	private List <CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private List <CollegamentoLeggiRegionali> collegamentiLeggiRegionali = new ArrayList<CollegamentoLeggiRegionali>();
@@ -144,11 +144,13 @@ public class Atto implements Cloneable
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;	
 	private String notePresentazioneAssegnazione;
-		
+	
+	
 	private String noteChiusuraIter;
 
 	public Atto(){
         Passaggio passaggio = new Passaggio();
+        passaggio.setNome("Passaggio 1");
 		passaggi.add(passaggio);
 	}
 	

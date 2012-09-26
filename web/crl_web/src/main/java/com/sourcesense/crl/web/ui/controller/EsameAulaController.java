@@ -17,11 +17,15 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Aula;
+import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.StatoAtto;
+import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
+import com.sourcesense.crl.business.service.AulaServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
+import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
@@ -32,6 +36,12 @@ public class EsameAulaController {
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 
+	
+	@ManagedProperty(value = "#{aulaServiceManager}")
+	private AulaServiceManager aulaServiceManager;
+	
+	
+	
 	private Atto atto = new Atto();
 
 	private Date dataPresaInCarico;
@@ -39,7 +49,6 @@ public class EsameAulaController {
 	private String esitoVotazione;
 	private String tipologiaVotazione;
 	private Date dataSedutaVotazione;
-	private Date dataIniziativa;
 	private String numeroDcr;
 	private String numeroLcr;
 	private boolean emendato;
@@ -50,7 +59,7 @@ public class EsameAulaController {
 	private List<TestoAtto> testiAttoVotatoList = new ArrayList<TestoAtto>();
 	private String testoAttoVotatoToDelete;
 
-	private List<TestoAtto> emendamentiList = new ArrayList<TestoAtto>();
+	private List<Allegato> emendamentiList = new ArrayList<Allegato>();
 	private String emendamentoToDelete;
 
 	private int numEmendPresentatiMaggior;
@@ -109,7 +118,7 @@ public class EsameAulaController {
 
 		aulaUser = (Aula)attoBean.getLastPassaggio().getAula().clone();
 		testiAttoVotatoList = new ArrayList<TestoAtto>(aulaUser.getTestiAttoVotatoEsameAula());		
-		emendamentiList = new ArrayList<TestoAtto>(aulaUser.getEmendamentiEsameAula());
+		emendamentiList = new ArrayList<Allegato>(aulaUser.getEmendamentiEsameAula());
 		allegatiList = new ArrayList<Allegato>(aulaUser.getAllegatiEsameAula());
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
 
@@ -207,11 +216,19 @@ public class EsameAulaController {
 
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
-
+		
+		
+		Target target = new Target();
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		
+		EsameAula esameAula = new EsameAula();
+		esameAula.setTarget(target);
+		esameAula.setAtto(attoBean.getAtto());
+		aulaServiceManager.presaInCarico(esameAula);
+		
 		String numeroAtto = attoBean.getNumeroAtto();
-
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
-				+ " preso in carico con successo dall' utente " + username));
+				+ " preso in carico con successo dall' utente " + username,""));
 		
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
 	}
@@ -285,13 +302,31 @@ public class EsameAulaController {
 		}
 	}
 
-	public void salvaVotazione() {
-		attoServiceManager.salvaVotazioneEsameAula(atto);
-
+	public String salvaVotazione() {
+		
+		String navigation ="" ;
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-
+		
+		if(getEsitoVotazione().equals(Aula.ESITO_VOTO_APPROVATO)){
+		
+		    atto.setStato(StatoAtto.VOTATO_AULA);
+		    attoBean.setStato(StatoAtto.VOTATO_AULA);
+		}else{
+			
+			navigation ="pretty:Chiusura_Iter" ;			
+		}
+		
+		Target target = new Target();
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		EsameAula esameAula = new EsameAula();
+		esameAula.setTarget(target);
+		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+		esameAula.setAtto(atto);
+		
+		aulaServiceManager.salvaVotazioneEsameAula(esameAula);
+		
 		attoBean.getWorkingAula().setEsitoVotoAula(aulaUser.getEsitoVotoAula());
 		attoBean.getWorkingAula().setTipologiaVotazione(aulaUser.getTipologiaVotazione());
 		attoBean.getWorkingAula().setDataSedutaAula(aulaUser.getDataSedutaAula());
@@ -299,9 +334,10 @@ public class EsameAulaController {
 		attoBean.getWorkingAula().setNumeroLcr(aulaUser.getNumeroLcr());
 		attoBean.getWorkingAula().setEmendato(aulaUser.isEmendato());
 		attoBean.getWorkingAula().setNoteVotazione(aulaUser.getNoteVotazione());
-
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Votazione salvata con successo", ""));
+		
+		return navigation;
 	}
 
 
@@ -320,7 +356,7 @@ public class EsameAulaController {
 		} else {
 
 			// TODO Alfresco upload
-			TestoAtto emendamentoRet = new TestoAtto();
+			Allegato emendamentoRet = new Allegato();
 			
 			emendamentoRet.setNome(event.getFile().getFileName());
 			emendamentoRet.setPubblico(currentFilePubblico);
@@ -329,7 +365,7 @@ public class EsameAulaController {
 				//TODO change method
 				emendamentoRet = attoServiceManager.uploadEmendamentoEsameAula(
 						((AttoBean) FacesContext.getCurrentInstance()
-								.getExternalContext().getSessionMap()
+								.getExternalContext().getSessionMap() 
 								.get("attoBean")).getAtto(), event
 								.getFile().getInputstream(),
 								emendamentoRet);
@@ -364,7 +400,7 @@ public class EsameAulaController {
 
 	public void removeEmendamento() {
 
-		for (TestoAtto element : emendamentiList) {
+		for (Allegato element : emendamentiList) {
 
 			if (element.getId().equals(emendamentoToDelete)) {
 
@@ -697,12 +733,12 @@ public class EsameAulaController {
 	}
 
 
-	public List<TestoAtto> getEmendamentiList() {
+	public List<Allegato> getEmendamentiList() {
 		return emendamentiList;
 	}
 
 
-	public void setEmendamentiList(List<TestoAtto> emendamentiList) {
+	public void setEmendamentiList(List<Allegato> emendamentiList) {
 		this.emendamentiList = emendamentiList;
 	}
 
@@ -1145,17 +1181,30 @@ public class EsameAulaController {
 
 
 
-	public Date getDataIniziativa() {
-		return dataIniziativa;
+	public AulaServiceManager getAulaServiceManager() {
+		return aulaServiceManager;
 	}
 
 
 
-	public void setDataIniziativa(Date dataIniziativa) {
-		this.dataIniziativa = dataIniziativa;
+	public void setAulaServiceManager(AulaServiceManager aulaServiceManager) {
+		this.aulaServiceManager = aulaServiceManager;
 	}
 
 
+
+	public Aula getAulaUser() {
+		return aulaUser;
+	}
+
+
+
+	public void setAulaUser(Aula aulaUser) {
+		this.aulaUser = aulaUser;
+	}
+
+
+	
 
 
 }

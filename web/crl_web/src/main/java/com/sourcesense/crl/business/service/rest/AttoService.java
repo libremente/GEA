@@ -105,11 +105,6 @@ public class AttoService {
 		}
 		String responseMsg = response.getEntity(String.class);
 
-		
-		//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE,
-		//		true);
-		//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS,
-		//		false);
 		try {
 			atto = objectMapper.readValue(responseMsg, Atto.class);
 

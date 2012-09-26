@@ -13,6 +13,14 @@ import com.sourcesense.crl.util.JsonNoteDeserializer;
 public class Aula implements Cloneable{
 	
 	
+	public final static String ESITO_VOTO_APPROVATO = "Approvato";
+	public final static String ESITO_VOTO_APPROVATO_NON_PASSAGGIO = "Approvato non passaggio all' esame";
+	public final static String ESITO_VOTO_RESPINTO = "Respinto dall'Aula";
+	
+	public final static String TIPO_VOTO_PALESE_ALZATA_MANO = "Palese per alzata di mano";
+	public final static String TIPO_VOTO_PALESE_APPELLO_NOMINALE = "Palese per appello nominale";
+	public final static String TIPO_VOTO_SEGRETA = "Segreta";
+	
 	private Date dataPresaInCaricoEsameAula;
 	private String relazioneScritta;
 	private String esitoVotoAula;
@@ -24,7 +32,7 @@ public class Aula implements Cloneable{
 	private String noteVotazione;
 	
 	private List<TestoAtto> testiAttoVotatoEsameAula = new ArrayList<TestoAtto>();
-	private List<TestoAtto> emendamentiEsameAula = new ArrayList<TestoAtto>();
+	private List<Allegato> emendamentiEsameAula = new ArrayList<Allegato>();
 	
 	private int numEmendPresentatiMaggiorEsameAula;
 	private int numEmendPresentatiMinorEsameAula;
@@ -141,11 +149,11 @@ public class Aula implements Cloneable{
 		this.testiAttoVotatoEsameAula = testiAttoVotatoEsameAula;
 	}
 
-	public List<TestoAtto> getEmendamentiEsameAula() {
+	public List<Allegato> getEmendamentiEsameAula() {
 		return emendamentiEsameAula;
 	}
 
-	public void setEmendamentiEsameAula(List<TestoAtto> emendamentiEsameAula) {
+	public void setEmendamentiEsameAula(List<Allegato> emendamentiEsameAula) {
 		this.emendamentiEsameAula = emendamentiEsameAula;
 	}
 

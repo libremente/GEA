@@ -126,10 +126,10 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_VOTAZIONE);
 	}	
 	
-	public TestoAtto uploadEmendamentoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
+	public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, Allegato allegato) {
 
-		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_EMENDAMENTO);
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, allegato.getNome(), TestoAtto.TESTO_ESAME_AULA_EMENDAMENTO);
 	}	
 	
 	public Allegato uploadAllegatoNoteAllegatiEsameAula(Atto atto, InputStream stream, String nomeFile) {
@@ -191,9 +191,7 @@ public class AttoServiceManager implements ServiceManager {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_commissioni", null), atto);
 	}
 	
-	public void salvaVotazioneEsameAula(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_aula", null), atto);
-	}
+	
 	
 	public void salvaEmendamentiEsameAula(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_esame_aula", null), atto);
