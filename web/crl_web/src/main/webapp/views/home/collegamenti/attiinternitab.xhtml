@@ -43,7 +43,8 @@
 
 	<p:panelGrid
 		style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;"
-		id="serchPanel">
+                id="serchPanel"
+                rendered="#{not navigationBean.isCommissioneConsultiva()}">
 
 
 		<f:facet name="header">
@@ -568,14 +569,16 @@
 
 	<!-- Pannello ricerca end -->
 
-
-	<h3>Risultati ricerca</h3>
+        <c:if test="#{not navigationBean.isCommissioneConsultiva()}">
+            <h3>Risultati ricerca</h3>
+        </c:if>
 
 	<p:dataTable id="listaAtti" var="atto"
 		value="#{searchAttoController.lazyAttoModel}" rows="10"
 		paginator="true"
 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
-		paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		paginatorAlwaysVisible="false" paginatorPosition="bottom" 
+                rendered="#{not navigationBean.isCommissioneConsultiva()}">
 		<p:column>
 			<f:facet name="header">Tipo</f:facet>
 			<h:outputText value="#{atto.tipo}" />
@@ -640,21 +643,22 @@
 				<p:column headerText="Azioni" style="width:125px">
 
 					<p:commandButton oncomplete="collegamentoDialog.show()"
-						icon="delete-icon">
+						icon="delete-icon" 
+                                                rendered="#{not navigationBean.isCommissioneConsultiva()}">
 						<f:setPropertyActionListener value="#{collegamento.atto.id}"
 							target="#{collegamentiController.collegamentoToDelete}" />
 					</p:commandButton>
 				</p:column>
 
 				<p:column headerText="Modifica" style="width:50px">
-					<p:rowEditor />
+					<p:rowEditor rendered="#{not navigationBean.isCommissioneConsultiva()}"/>
 				</p:column>
 
 			</p:dataTable>
 		</p:column>
 	</p:row>
 
-	<p:row>
+	<p:row rendered="#{not navigationBean.isCommissioneConsultiva()}">
 		<p:column>
 			<br />
 			<p:commandButton value="Salva Collegamenti"

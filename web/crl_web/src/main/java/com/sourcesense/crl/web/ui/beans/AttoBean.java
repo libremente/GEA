@@ -121,7 +121,7 @@ public class AttoBean implements Serializable {
     	
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
 			
-			if(commissioneRec.getDescrizione().equalsIgnoreCase(descrizione)){
+			if(commissioneRec.getDescrizione().equalsIgnoreCase(descrizione) && !commissioneRec.isAnnullata()){
 				
 				commissioneRet=commissioneRec;
 			}

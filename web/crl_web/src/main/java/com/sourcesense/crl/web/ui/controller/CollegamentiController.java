@@ -166,6 +166,7 @@ public class CollegamentiController {
 	public void salvaCollegamenti() {
 		atto.setCollegamenti(getAttiCollegatiList());
 		//TODO: alfresco service
+                attoServiceManager.salvaCollegamenti(atto);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
