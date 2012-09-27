@@ -33,9 +33,7 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 @ViewScoped
 public class EsameAulaController {
 
-	@ManagedProperty(value = "#{attoServiceManager}")
-	private AttoServiceManager attoServiceManager;
-
+	
 	
 	@ManagedProperty(value = "#{aulaServiceManager}")
 	private AulaServiceManager aulaServiceManager;
@@ -83,6 +81,7 @@ public class EsameAulaController {
 	private Date dataTermineMassimo;
 	private String motivazioneRinvio;
 	private Date dataSedutaStralcio;
+	private Date dataIniziativaStralcio;
 	private Date dataStralcio;
 	private String articoli;
 	private String noteStralcio;
@@ -247,14 +246,13 @@ public class EsameAulaController {
 
 			// TODO Alfresco upload
 			TestoAtto allegatoRet = new TestoAtto();
-			
 			allegatoRet.setNome(event.getFile().getFileName());
 			allegatoRet.setPubblico(currentFilePubblico);
 			
 
 			try {
 				//TODO change method
-				allegatoRet = attoServiceManager.uploadTestoAttoVotatoEsameAula(
+				allegatoRet = aulaServiceManager.uploadTestoAttoVotatoEsameAula(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
@@ -363,7 +361,7 @@ public class EsameAulaController {
 
 			try {
 				//TODO change method
-				emendamentoRet = attoServiceManager.uploadEmendamentoEsameAula(
+				emendamentoRet = aulaServiceManager.uploadEmendamentoEsameAula(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap() 
 								.get("attoBean")).getAtto(), event
@@ -427,11 +425,21 @@ public class EsameAulaController {
 	}
 
 	public void salvaEmendamenti() {
-		attoServiceManager.salvaEmendamentiEsameAula(atto);
-
+		
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		Target target = new Target();
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		
+		EsameAula esameAula = new EsameAula();
+		esameAula.setTarget(target);
+		esameAula.setAtto(attoBean.getAtto());
+		
+		aulaServiceManager.salvaEmendamentiEsameAula(esameAula);
+
+		
 
 		attoBean.getWorkingAula().setNumEmendPresentatiMaggiorEsameAula(aulaUser.getNumEmendPresentatiMaggiorEsameAula());
 		attoBean.getWorkingAula().setNumEmendPresentatiMinorEsameAula(aulaUser.getNumEmendPresentatiMinorEsameAula());
@@ -457,11 +465,20 @@ public class EsameAulaController {
 	// Rinvio e Starlci******************************************************
 	
 	public void salvaRinvioEsame() {
-		attoServiceManager.salvaRinvioEsameEsameAula(atto);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		Target target = new Target();
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		
+		EsameAula esameAula = new EsameAula();
+		esameAula.setTarget(target);
+		esameAula.setAtto(attoBean.getAtto());
+		
+		
+		aulaServiceManager.salvaRinvioEsameEsameAula(esameAula);
+		
 		
 		attoBean.getWorkingAula().setDataSedutaRinvio(aulaUser.getDataSedutaRinvio());
 		attoBean.getWorkingAula().setDataTermineMassimo(aulaUser.getDataTermineMassimo());
@@ -473,11 +490,20 @@ public class EsameAulaController {
 	
 	
 	public void salvaStralci() {
-		attoServiceManager.salvaStralciEsameAula(atto);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		Target target = new Target();
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		
+		EsameAula esameAula = new EsameAula();
+		esameAula.setTarget(target);
+		esameAula.setAtto(attoBean.getAtto());
+		
+		//TODO Check commissioni
+		//TODO Return passaggio da aggiungere a session bean
+		aulaServiceManager.salvaStralciEsameAula(esameAula);
 		
 		attoBean.getWorkingAula().setDataSedutaStralcio(aulaUser.getDataSedutaStralcio());
 		attoBean.getWorkingAula().setDataStralcio(aulaUser.getDataStralcio());
@@ -509,7 +535,7 @@ public class EsameAulaController {
 
 			try {
 				//TODO change method
-				allegatoRet = attoServiceManager.uploadAllegatoNoteAllegatiEsameAula(
+				allegatoRet = aulaServiceManager.uploadAllegatoNoteAllegatiEsameAula(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
@@ -605,13 +631,22 @@ public class EsameAulaController {
 	
 	
 	public void salvaNoteEAllegati() {
-		this.aulaUser.setLinksEsameAula(linksList);
-		attoServiceManager.salvaNoteAllegatiEsameAula(atto);
-
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		Target target = new Target();
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		
+		EsameAula esameAula = new EsameAula();
+		esameAula.setTarget(target);
+		esameAula.setAtto(attoBean.getAtto());
+		
+		
+		this.aulaUser.setLinksEsameAula(linksList);
+		aulaServiceManager.salvaNoteAllegatiEsameAula(esameAula);
 
+		
 		attoBean.getWorkingAula().setNoteGeneraliEsameAula(aulaUser.getNoteGeneraliEsameAula());
 		attoBean.getWorkingAula().setLinksEsameAula(linksList);		
 
@@ -983,6 +1018,8 @@ public class EsameAulaController {
 	}
 
 
+	
+	
 	public String getQuorum() {
 		return aulaUser.getQuorumEsameAula();
 	}
@@ -1071,19 +1108,6 @@ public class EsameAulaController {
 	public void setStatoCommitNoteAllegati(String statoCommitNoteAllegati) {
 		this.statoCommitNoteAllegati = statoCommitNoteAllegati;
 	}
-
-
-
-	public AttoServiceManager getAttoServiceManager() {
-		return attoServiceManager;
-	}
-
-
-
-	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
-		this.attoServiceManager = attoServiceManager;
-	}
-
 
 
 	public String getTestoAttoVotatoToDelete() {

@@ -1,13 +1,16 @@
 package com.sourcesense.crl.business.service;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.EsameAula;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoService;
 import com.sourcesense.crl.business.service.rest.AulaService;
 import com.sourcesense.crl.util.URLBuilder;
@@ -34,6 +37,43 @@ public class AulaServiceManager implements ServiceManager {
     	aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_aula", null), esameAula);
 	}
 	
+    public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, Allegato allegato) {
+
+		return aulaService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato.getNome(), TestoAtto.TESTO_ESAME_AULA_EMENDAMENTO);
+	}	
+    
+    public TestoAtto uploadTestoAttoVotatoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
+
+		return aulaService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_VOTAZIONE);
+	}	
+    
+    
+    public Allegato uploadAllegatoNoteAllegatiEsameAula(Atto atto, InputStream stream, String nomeFile) {
+
+		return aulaService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_AULA_ALLEGATO);
+	}	
+    
+    public void salvaEmendamentiEsameAula(EsameAula esameAula) {
+    	aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_esame_aula", null), esameAula);
+	}
+	
+	public void salvaRinvioEsameEsameAula(EsameAula esameAula) {
+		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_rinvio_esame_esame_aula", null), esameAula);
+	}
+	
+	public void salvaStralciEsameAula(EsameAula esameAula) {
+		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_stralci_esame_aula", null), esameAula);
+	}
+	
+	public void salvaNoteAllegatiEsameAula(EsameAula esameAula) {
+		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_aula", null), esameAula);
+	}	
+	
+	
+    
 	@Override
 	public Object persist(Object object) {
 		// TODO Auto-generated method stub

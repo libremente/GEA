@@ -120,24 +120,6 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
 	}	
 	
-	public TestoAtto uploadTestoAttoVotatoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
-
-		return attoService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_VOTAZIONE);
-	}	
-	
-	public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, Allegato allegato) {
-
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, allegato.getNome(), TestoAtto.TESTO_ESAME_AULA_EMENDAMENTO);
-	}	
-	
-	public Allegato uploadAllegatoNoteAllegatiEsameAula(Atto atto, InputStream stream, String nomeFile) {
-
-		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_AULA_ALLEGATO);
-	}	
-	
 	
 	
 
@@ -193,21 +175,6 @@ public class AttoServiceManager implements ServiceManager {
 	
 	
 	
-	public void salvaEmendamentiEsameAula(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_esame_aula", null), atto);
-	}
-	
-	public void salvaRinvioEsameEsameAula(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_rinvio_esame_esame_aula", null), atto);
-	}
-	
-	public void salvaStralciEsameAula(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_stralci_esame_aula", null), atto);
-	}
-	
-	public void salvaNoteAllegatiEsameAula(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_aula", null), atto);
-	}	
 	
 	public void salvaPareri(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_pareri", null), atto);
