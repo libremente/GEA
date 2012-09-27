@@ -148,6 +148,7 @@
 			<subtype name="crlatti:attoEac" />
 			<subtype name="crlatti:commissione"/>
 			<subtype name="crlatti:comitatoRistretto"/>
+			<subtype name="crlatti:aula"/>
          </type>
       </types>
 
@@ -513,25 +514,6 @@
             <show id="crlatti:primoFirmatario" /> 
             <show id="crlatti:firmatari"/>
             
-            <show id="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
-			<show id="crlatti:numEmendPresentatiMinorEsameCommissioni" />
-			<show id="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
-			<show id="crlatti:numEmendPresentatiMistoEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiMinorEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiMistoEsameCommissioni" />
-			<show id="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
-			<show id="crlatti:numEmendDecadutiEsameCommissioni" />
-			<show id="crlatti:numEmendRitiratiEsameCommissioni" />
-			<show id="crlatti:numEmendRespintiEsameCommissioni" />
-			<show id="crlatti:noteEmendamentiEsameCommissioni" />
-			
-			<show id="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
-			<show id="crlatti:dataIntesaClausolaValutEsameCommissioni" />
-			<show id="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
-			<show id="crlatti:noteClausolaValutativaEsameCommissioni" />
-            
           </field-visibility>
       </form>
    </forms>
@@ -585,26 +567,6 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
-            
-            <show id="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
-			<show id="crlatti:numEmendPresentatiMinorEsameCommissioni" />
-			<show id="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
-			<show id="crlatti:numEmendPresentatiMistoEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiMinorEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
-			<show id="crlatti:numEmendApprovatiMistoEsameCommissioni" />
-			<show id="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
-			<show id="crlatti:numEmendDecadutiEsameCommissioni" />
-			<show id="crlatti:numEmendRitiratiEsameCommissioni" />
-			<show id="crlatti:numEmendRespintiEsameCommissioni" />
-			<show id="crlatti:noteEmendamentiEsameCommissioni" />
-			
-			<show id="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
-			<show id="crlatti:dataIntesaClausolaValutEsameCommissioni" />
-			<show id="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
-			<show id="crlatti:noteClausolaValutativaEsameCommissioni" />
-            
             
    			</field-visibility>
    		</form>
@@ -693,7 +655,9 @@
    		</form>
    	</forms>
    </config>
-   
+ 
+    	   
+	   
    <config evaluator="node-type" condition="crlatti:commissione">
    	<forms>
    		<form>
@@ -716,6 +680,74 @@
 		         <show id="crlatti:dataAnnulloCommissione" />
 		         <show id="crlatti:ruoloCommissione" />
 		         <show id="crlatti:statoCommissione" />
+		         
+		        <show id="crlatti:numEmendPresentatiMaggiorEsame" />
+				<show id="crlatti:numEmendPresentatiMinorEsame" />
+				<show id="crlatti:numEmendPresentatiGiuntaEsame" />
+				<show id="crlatti:numEmendPresentatiMistoEsame" />
+				<show id="crlatti:numEmendApprovatiMaggiorEsame" />
+				<show id="crlatti:numEmendApprovatiMinorEsame" />
+				<show id="crlatti:numEmendApprovatiGiuntaEsame" />
+				<show id="crlatti:numEmendApprovatiMistoEsame" />
+				<show id="crlatti:numEmendNonAmmissibiliEsame" />
+				<show id="crlatti:numEmendDecadutiEsame" />
+				<show id="crlatti:numEmendRitiratiEsame" />
+				<show id="crlatti:numEmendRespintiEsame" />
+				<show id="crlatti:noteEmendamentiEsame" />
+				
+				<show id="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
+				<show id="crlatti:dataIntesaClausolaValutEsame" />
+				<show id="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
+				<show id="crlatti:noteClausolaValutativaEsame" />
+	 
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:aula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataPresaInCaricoEsameAula" />
+				<show id="crlatti:relazioneScrittaAula" />
+				<show id="crlatti:tipologiaVotazioneAula" />
+				
+				<show id="crlatti:esitoVotoPassaggioAula" />
+				<show id="crlatti:dataSedutaPassaggioAula" />
+				<show id="crlatti:numeroDcrPassaggioAula" />
+				<show id="crlatti:numeroLcrPassaggioAula" />
+				<show id="crlatti:emendatoAula" />
+				<show id="crlatti:noteVotazioneAula" />
+				<show id="crlatti:dataSedutaRinvioAula" />
+				<show id="crlatti:dataTermineMassimoAula" />
+				<show id="crlatti:motivazioneRinvioAula" />
+				<show id="crlatti:dataSedutaStralcioAula" />
+				<show id="crlatti:dataStralcioAula" />
+				<show id="crlatti:dataIniziativaStralcioAula" />
+				<show id="crlatti:articoliAula" />
+				<show id="crlatti:noteStralcioAula" />
+				<show id="crlatti:dataStralcioAula" />
+				<show id="crlatti:quorumEsameAula" />
+				
+				<show id="crlatti:numEmendPresentatiMaggiorEsame" />
+				<show id="crlatti:numEmendPresentatiMinorEsame" />
+				<show id="crlatti:numEmendPresentatiGiuntaEsame" />
+				<show id="crlatti:numEmendPresentatiMistoEsame" />
+				<show id="crlatti:numEmendApprovatiMaggiorEsame" />
+				<show id="crlatti:numEmendApprovatiMinorEsame" />
+				<show id="crlatti:numEmendApprovatiGiuntaEsame" />
+				<show id="crlatti:numEmendApprovatiMistoEsame" />
+				<show id="crlatti:numEmendNonAmmissibiliEsame" />
+				<show id="crlatti:numEmendDecadutiEsame" />
+				<show id="crlatti:numEmendRitiratiEsame" />
+				<show id="crlatti:numEmendRespintiEsame" />
+				<show id="crlatti:noteEmendamentiEsame" />
+				
+				<show id="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
+				<show id="crlatti:dataIntesaClausolaValutEsame" />
+				<show id="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
+				<show id="crlatti:noteClausolaValutativaEsame" />	
    			</field-visibility>
    		</form>
    	</forms>
@@ -788,6 +820,7 @@
             <form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
             <form label="Abbinamento" description="Cerca tra tutti gli abbinamenti">crlatti:abbinamento</form>
             <form label="Commissione" description="Cerca tra tutte le commissioni">crlatti:commissione</form>
+            <form label="Aula" description="Cerca tra tutte le aula">crlatti:aula</form>
             <form label="Firmatario" description="Cerca tra tutti i firmatari">crlatti:firmatario</form>
             <form label="Allegato" description="Cerca tra tutti gli allegati">crlatti:allegato</form>
             <form label="Testo" description="Cerca tra tutti i testi degli atti">crlatti:testo</form>
