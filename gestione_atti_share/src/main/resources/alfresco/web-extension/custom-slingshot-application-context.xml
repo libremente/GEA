@@ -3,6 +3,14 @@
 
 <beans>
    
+   <bean id="sopModel.resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+      <property name="resourceBundles">
+         <list>
+            <value>alfresco.messages.gestioneAtti</value>
+         </list>
+      </property>
+   </bean>
+   
    <!-- Web-tier cluster configuration -->
    <!-- Enable this section if you are clustering or load balancing the share.war i.e. multiple web-tiers behind a proxy -->
    <!-- If you have a single web-tier running against an Alfresco cluster via a reverse proxy you don't need this -->
