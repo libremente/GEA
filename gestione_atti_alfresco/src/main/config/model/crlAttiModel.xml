@@ -196,6 +196,7 @@
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:tipizzabile</aspect>
+				<aspect>crlatti:protocollato</aspect>
 			</mandatory-aspects>
 		</type>
 		
@@ -206,6 +207,7 @@
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:pubblicabile</aspect>
 				<aspect>crlatti:provenienzaAspect</aspect>
+				<aspect>crlatti:protocollato</aspect>
 			</mandatory-aspects>
 		</type>
 		
@@ -216,6 +218,7 @@
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:pubblicabile</aspect>
 				<aspect>crlatti:provenienzaAspect</aspect>
+				<aspect>crlatti:protocollato</aspect>
 			</mandatory-aspects>
 		</type>
 		
@@ -910,6 +913,21 @@
 				<property name="crlatti:noteClausolaValutativaEsame">
 					<title>Note clausola valutativa</title>
 					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:protocollato">
+			<title>Protocollato</title>
+			<properties>
+				<property name="crlatti:idProtocollo">
+					<title>ID protocollo</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
 				</property>
 			</properties>
 		</aspect>

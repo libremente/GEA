@@ -48,6 +48,7 @@
          	<aspect name="crlatti:ammissibilitaUrgenzaAspect"/>
          	<aspect name="crlatti:ammissibilitaNormaFinanziariaAspect"/>
          	<aspect name="crlatti:obbligatorioAspect"/>
+         	<aspect name="crlatti:protocollatoAspect"/>
         </aspects>
 	</config>
 
@@ -68,6 +69,12 @@
 			<type name="crlatti:commissione"/>
 			<type name="crlatti:aula"/>
 		</folder-types>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:protocollato">
+		<property-sheet>
+			<show-property name="crlatti:idProtocollo" />
+		</property-sheet>
 	</config>
 	
 	<config evaluator="aspect-name" condition="crlatti:ammissibilitaBaseAspect">
