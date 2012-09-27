@@ -13,6 +13,15 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 @RequestScoped
 public class NavigationRules {
 
+	
+	/**
+	 * Gruppi 
+	 * ADMINISTRATORS
+	 * servizioCommissioni
+	 * CommissioneN
+	 * Aula
+	 */
+	
     AttoBean attoBean;
     UserBean userBean;
 
@@ -69,6 +78,7 @@ public class NavigationRules {
     }
 
     public boolean gestioneSeduteConsultazioniCommissione() {
+    	//TODO
         return userBean.getUser().getSessionGroup().getNome().equals("Commissione");
     }
 
