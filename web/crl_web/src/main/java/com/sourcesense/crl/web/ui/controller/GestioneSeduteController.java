@@ -86,7 +86,7 @@ public class GestioneSeduteController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
-		setSeduteList(Clonator.cloneList(userBean.getUser().getSedute()));
+		setSeduteList(Clonator.cloneList(userBean.getUser().getSessionGroup().getSedute()));
 
 		if(!seduteList.isEmpty()) {
 			setDataSedutaSelected(seduteList.get(0).getDataSeduta());
@@ -265,7 +265,7 @@ public class GestioneSeduteController {
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
-		userBean.getUser().setSedute(Clonator.cloneList(getSeduteList()));
+		userBean.getUser().getSessionGroup().setSedute(Clonator.cloneList(getSeduteList()));
 
 		fillDateSeduteMap();
 
@@ -484,7 +484,7 @@ public class GestioneSeduteController {
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
-		userBean.getUser().setSedute(Clonator.cloneList(getSeduteList()));
+		userBean.getUser().getSessionGroup().setSedute(Clonator.cloneList(getSeduteList()));
 
 		setStatoCommitInserisciOdg(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("ODG salvato con successo", ""));

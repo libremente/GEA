@@ -1,5 +1,7 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
@@ -9,7 +11,6 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 import org.springframework.beans.factory.annotation.Configurable;
 
-
 @Configurable
 @XmlRootElement
 @JsonRootName("gruppoUtente")
@@ -18,23 +19,27 @@ import org.springframework.beans.factory.annotation.Configurable;
 @AutoProperty
 public class GruppoUtente {
 
-	
-	private String nome;
+    private List<Seduta> sedute = new ArrayList<Seduta>();
+    private String nome;
 
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
-	public String getNome() {
-		return nome;
-	}
+    @Override
+    public String toString() {
+        return Pojomatic.toString(this);
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	
-	
-	
-	
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<Seduta> getSedute() {
+        return sedute;
+    }
+
+    public void setSedute(List<Seduta> sedute) {
+        this.sedute = sedute;
+    }
 }

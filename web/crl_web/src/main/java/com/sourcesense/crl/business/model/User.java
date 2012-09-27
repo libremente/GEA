@@ -20,8 +20,6 @@ public class User {
 
 	private List <GruppoUtente> gruppi = new ArrayList<GruppoUtente>();
 
-	private List <Seduta> sedute = new ArrayList<Seduta>();
-	
 	private GruppoUtente sessionGroup = new GruppoUtente();
 
 	@Override public String toString() {
@@ -47,14 +45,6 @@ public class User {
 		this.gruppi = gruppi;
 	}
 
-	public List <Seduta> getSedute() {
-		return sedute;
-	}
-
-	public void setSedute(List <Seduta> sedute) {
-		this.sedute = sedute;
-	}
-
 	public GruppoUtente getSessionGroup() {
 		return sessionGroup;
 	}
@@ -62,9 +52,5 @@ public class User {
 	public void setSessionGroup(GruppoUtente sessionGroup) {
 		this.sessionGroup = sessionGroup;
 	}
-
-
-
-
 
 }
