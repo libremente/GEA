@@ -8,6 +8,8 @@
 	<packaging>war</packaging>
 	<description>SHARE customization meant to be the main Alfresco UI, which enables collaboration and easy ReST based remotable customization.</description>
 
+	<!-- Repo Maven Alfresco -->
+	<!-- 
 	<repositories>
 		<repository>
 			<id>alfresco-release</id>
@@ -42,11 +44,12 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
+	-->
   <!-- Configuration point for the build time properties -->
 	<properties>
 		<env>local</env><!-- dev per la macchina di sviluppo interna | local per locale -->
-		<alfresco.version>4.0.2</alfresco.version>
+		<webapp.name>share</webapp.name>
+		<alfresco.version>4.0.2.9</alfresco.version>
         <alfresco.edition>enterprise</alfresco.edition>
 		<share.log.level>debug</share.log.level>
 		<share.servlet.port>8081</share.servlet.port>
@@ -154,6 +157,7 @@
 						<artifactId>maven-jetty-plugin</artifactId>
                         <version>6.1.21</version>
 						<configuration>
+							<contextPath>/${webapp.name}</contextPath>
 							<connectors>
 								<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
 									<port>${share.servlet.port}</port>
