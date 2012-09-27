@@ -56,23 +56,23 @@ if(checkIsNotNull(id)){
 			commissioneFolderNode = commissioneUtenteResults[0];
 	
 	
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsameCommissioni"] = numEmendPresentatiMaggiorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsame"] = numEmendPresentatiMaggiorEsameCommissioni;
 		
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsameCommissioni"] = numEmendPresentatiMaggiorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMinorEsameCommissioni"] = numEmendPresentatiMinorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiGiuntaEsameCommissioni"] = numEmendPresentatiGiuntaEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMistoEsameCommissioni"] = numEmendPresentatiMistoEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsame"] = numEmendPresentatiMaggiorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMinorEsame"] = numEmendPresentatiMinorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiGiuntaEsame"] = numEmendPresentatiGiuntaEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendPresentatiMistoEsame"] = numEmendPresentatiMistoEsameCommissioni;
 			
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiMaggiorEsameCommissioni"] = numEmendApprovatiMaggiorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiMinorEsameCommissioni"] = numEmendApprovatiMinorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiGiuntaEsameCommissioni"] = numEmendApprovatiGiuntaEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiMistoEsameCommissioni"] = numEmendApprovatiMistoEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiMaggiorEsame"] = numEmendApprovatiMaggiorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiMinorEsame"] = numEmendApprovatiMinorEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiGiuntaEsame"] = numEmendApprovatiGiuntaEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendApprovatiMistoEsame"] = numEmendApprovatiMistoEsameCommissioni;
 			
-			commissioneFolderNode.properties["crlatti:numEmendNonAmmissibiliEsameCommissioni"] = nonAmmissibiliEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendDecadutiEsameCommissioni"] = decadutiEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendRitiratiEsameCommissioni"] = ritiratiEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendRespintiEsameCommissioni"] = respintiEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:noteEmendamentiEsameCommissioni"] = noteEmendamentiEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendNonAmmissibiliEsame"] = nonAmmissibiliEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendDecadutiEsame"] = decadutiEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendRitiratiEsame"] = ritiratiEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:numEmendRespintiEsame"] = respintiEsameCommissioni;
+			commissioneFolderNode.properties["crlatti:noteEmendamentiEsame"] = noteEmendamentiEsameCommissioni;
 	
 			var dataPresaInCaricoPropostaParsed= null;
 			if(checkIsNotNull(dataPresaInCaricoProposta)){
@@ -86,10 +86,10 @@ if(checkIsNotNull(id)){
 				dataIntesaParsed = new Date(dataIntesaSplitted[0],dataIntesaSplitted[1]-1,dataIntesaSplitted[2]);
 			}
 	
-			commissioneFolderNode.properties["crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni"] = dataPresaInCaricoPropostaParsed;
-			commissioneFolderNode.properties["crlatti:dataIntesaClausolaValutEsameCommissioni"] = dataIntesaParsed;
-			commissioneFolderNode.properties["crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni"] = esitoVotazioneIntesa;
-			commissioneFolderNode.properties["crlatti:noteClausolaValutativaEsameCommissioni"] = noteClausolaValutativa;
+			commissioneFolderNode.properties["crlatti:dataPresaInCaricoPropClausolaValutEsame"] = dataPresaInCaricoPropostaParsed;
+			commissioneFolderNode.properties["crlatti:dataIntesaClausolaValutEsame"] = dataIntesaParsed;
+			commissioneFolderNode.properties["crlatti:esitoVotazioneIntesaClausolaValutEsame"] = esitoVotazioneIntesa;
+			commissioneFolderNode.properties["crlatti:noteClausolaValutativaEsame"] = noteClausolaValutativa;
 	
 			commissioneFolderNode.save();
 	

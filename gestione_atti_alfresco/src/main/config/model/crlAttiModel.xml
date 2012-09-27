@@ -544,6 +544,90 @@
 			</mandatory-aspects>
 		</type>
 		
+		<type name="crlatti:aula">
+			<title>Aula</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:dataPresaInCaricoEsameAula">
+					<title>Data Presa in Carico</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:relazioneScrittaAula">
+					<title>Relazione Scritta</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoVotoPassaggioAula">
+					<title>Esito Voto Aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipologiaVotazioneAula">
+					<title>Tipologia Votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaPassaggioAula">
+					<title>Data Seduta Aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numeroDcrPassaggioAula">
+					<title>Numero DCR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroLcrPassaggioAula">
+					<title>Numero LCR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:emendatoAula">
+					<title>Emendato</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:noteVotazioneAula">
+					<title>Note Votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaRinvioAula">
+					<title>Data Seduta Rinvio Aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataTermineMassimoAula">
+					<title>Data Termine Massimo Aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:motivazioneRinvioAula">
+					<title>Motivazione Rinvio Aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaStralcioAula">
+					<title>Data Seduta Stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataStralcioAula">
+					<title>Data Stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataIniziativaStralcioAula">
+					<title>Data Iniziativa Stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:articoliAula">
+					<title>Artcoli Aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteStralcioAula">
+					<title>Note Stralcio</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:quorumEsameAula">
+					<title>Quorum</title>
+					<type>d:text</type>
+				</property>			
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:emendamentiAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		
 		<type name="crlatti:link">
 			<title>Link</title>
 			<parent>cm:content</parent>
@@ -752,55 +836,55 @@
 		<aspect name="crlatti:emendamentiAspect">
 			<title>Emendamenti aspect</title>
 			<properties>
-				<property name="crlatti:numEmendPresentatiMaggiorEsameCommissioni">
+				<property name="crlatti:numEmendPresentatiMaggiorEsame">
 					<title>Numero emendamenti presentati maggioranza</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendPresentatiMinorEsameCommissioni">
+				<property name="crlatti:numEmendPresentatiMinorEsame">
 					<title>Numero emendamenti presentati minoranza</title>
 					<type>d:int</type>
 				</property>				
-				<property name="crlatti:numEmendPresentatiGiuntaEsameCommissioni">
+				<property name="crlatti:numEmendPresentatiGiuntaEsame">
 					<title>Numero emendamenti presentati maggioranza</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendPresentatiMistoEsameCommissioni">
+				<property name="crlatti:numEmendPresentatiMistoEsame">
 					<title>Numero emendamenti presentati misto</title>
 					<type>d:int</type>
 				</property>	
-				<property name="crlatti:numEmendApprovatiMaggiorEsameCommissioni">
+				<property name="crlatti:numEmendApprovatiMaggiorEsame">
 					<title>Numero emendamenti approvati maggioranza</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendApprovatiMinorEsameCommissioni">
+				<property name="crlatti:numEmendApprovatiMinorEsame">
 					<title>Numero emendamenti approvati minoranza</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendApprovatiGiuntaEsameCommissioni">
+				<property name="crlatti:numEmendApprovatiGiuntaEsame">
 					<title>Numero emendamenti approvati giunta</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendApprovatiMistoEsameCommissioni">
+				<property name="crlatti:numEmendApprovatiMistoEsame">
 					<title>Numero emendamenti approvati misto</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendNonAmmissibiliEsameCommissioni">
+				<property name="crlatti:numEmendNonAmmissibiliEsame">
 					<title>Numero emendamenti non ammissibili</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendDecadutiEsameCommissioni">
+				<property name="crlatti:numEmendDecadutiEsame">
 					<title>Numero emendamenti decaduti</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendRitiratiEsameCommissioni">
+				<property name="crlatti:numEmendRitiratiEsame">
 					<title>Numero emendamenti ritirati</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:numEmendRespintiEsameCommissioni">
+				<property name="crlatti:numEmendRespintiEsame">
 					<title>Numero emendamenti respinti</title>
 					<type>d:int</type>
 				</property>
-				<property name="crlatti:noteEmendamentiEsameCommissioni">
+				<property name="crlatti:noteEmendamentiEsame">
 					<title>Note emendamenti</title>
 					<type>d:text</type>
 				</property>
@@ -811,19 +895,19 @@
 		<aspect name="crlatti:clausolaValutativaAspect">
 			<title>Emendamenti aspect</title>
 			<properties>
-				<property name="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni">
+				<property name="crlatti:dataPresaInCaricoPropClausolaValutEsame">
 					<title>Data presa in carico proposta clausola valutativa</title>
 					<type>d:date</type>
 				</property>
-				<property name="crlatti:dataIntesaClausolaValutEsameCommissioni">
+				<property name="crlatti:dataIntesaClausolaValutEsame">
 					<title>Data intesa clausola valutativa</title>
 					<type>d:date</type>
 				</property>
-				<property name="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni">
+				<property name="crlatti:esitoVotazioneIntesaClausolaValutEsame">
 					<title>Esito votazione intesa clausola valutativa</title>
 					<type>d:text</type>
 				</property>
-				<property name="crlatti:noteClausolaValutativaEsameCommissioni">
+				<property name="crlatti:noteClausolaValutativaEsame">
 					<title>Note clausola valutativa</title>
 					<type>d:text</type>
 				</property>

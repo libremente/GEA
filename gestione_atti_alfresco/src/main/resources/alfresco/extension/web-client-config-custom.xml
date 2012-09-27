@@ -66,6 +66,7 @@
 			<type name="crlatti:attoEac" />
 			<type name="crlatti:comitatoRistretto"/>
 			<type name="crlatti:commissione"/>
+			<type name="crlatti:aula"/>
 		</folder-types>
 	</config>
 	
@@ -161,28 +162,28 @@
 	
 	<config evaluator="aspect-name" condition="crlatti:emendamentiAspect">
 		<property-sheet>
-			<show-property name="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiMinorEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiMistoEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMinorEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMistoEsameCommissioni" />
-			<show-property name="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
-			<show-property name="crlatti:numEmendDecadutiEsameCommissioni" />
-			<show-property name="crlatti:numEmendRitiratiEsameCommissioni" />
-			<show-property name="crlatti:numEmendRespintiEsameCommissioni" />
-			<show-property name="crlatti:noteEmendamentiEsameCommissioni" />
+			<show-property name="crlatti:numEmendPresentatiMaggiorEsame" />
+			<show-property name="crlatti:numEmendPresentatiMinorEsame" />
+			<show-property name="crlatti:numEmendPresentatiGiuntaEsame" />
+			<show-property name="crlatti:numEmendPresentatiMistoEsame" />
+			<show-property name="crlatti:numEmendApprovatiMaggiorEsame" />
+			<show-property name="crlatti:numEmendApprovatiMinorEsame" />
+			<show-property name="crlatti:numEmendApprovatiGiuntaEsame" />
+			<show-property name="crlatti:numEmendApprovatiMistoEsame" />
+			<show-property name="crlatti:numEmendNonAmmissibiliEsame" />
+			<show-property name="crlatti:numEmendDecadutiEsame" />
+			<show-property name="crlatti:numEmendRitiratiEsame" />
+			<show-property name="crlatti:numEmendRespintiEsame" />
+			<show-property name="crlatti:noteEmendamentiEsame" />
 		</property-sheet>
 	</config>
 	
 	<config evaluator="aspect-name" condition="crlatti:clausolaValutativaAspect">
 		<property-sheet>
-			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:dataIntesaClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:noteClausolaValutativaEsameCommissioni" />
+			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
+			<show-property name="crlatti:dataIntesaClausolaValutEsame" />
+			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
+			<show-property name="crlatti:noteClausolaValutativaEsame" />
 		</property-sheet>
 	</config>
 	 
@@ -272,27 +273,71 @@
 			<show-property name="crlatti:ruoloCommissione" />
 			<show-property name="crlatti:statoCommissione" />
 			
-			<show-property name="crlatti:numEmendPresentatiMaggiorEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiMinorEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiGiuntaEsameCommissioni" />
-			<show-property name="crlatti:numEmendPresentatiMistoEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMaggiorEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMinorEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiGiuntaEsameCommissioni" />
-			<show-property name="crlatti:numEmendApprovatiMistoEsameCommissioni" />
-			<show-property name="crlatti:numEmendNonAmmissibiliEsameCommissioni" />
-			<show-property name="crlatti:numEmendDecadutiEsameCommissioni" />
-			<show-property name="crlatti:numEmendRitiratiEsameCommissioni" />
-			<show-property name="crlatti:numEmendRespintiEsameCommissioni" />
-			<show-property name="crlatti:noteEmendamentiEsameCommissioni" />
+			<show-property name="crlatti:numEmendPresentatiMaggiorEsame" />
+			<show-property name="crlatti:numEmendPresentatiMinorEsame" />
+			<show-property name="crlatti:numEmendPresentatiGiuntaEsame" />
+			<show-property name="crlatti:numEmendPresentatiMistoEsame" />
+			<show-property name="crlatti:numEmendApprovatiMaggiorEsame" />
+			<show-property name="crlatti:numEmendApprovatiMinorEsame" />
+			<show-property name="crlatti:numEmendApprovatiGiuntaEsame" />
+			<show-property name="crlatti:numEmendApprovatiMistoEsame" />
+			<show-property name="crlatti:numEmendNonAmmissibiliEsame" />
+			<show-property name="crlatti:numEmendDecadutiEsame" />
+			<show-property name="crlatti:numEmendRitiratiEsame" />
+			<show-property name="crlatti:numEmendRespintiEsame" />
+			<show-property name="crlatti:noteEmendamentiEsame" />
 			
-			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:dataIntesaClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsameCommissioni" />
-			<show-property name="crlatti:noteClausolaValutativaEsameCommissioni" />	
+			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
+			<show-property name="crlatti:dataIntesaClausolaValutEsame" />
+			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
+			<show-property name="crlatti:noteClausolaValutativaEsame" />	
 		</property-sheet>
 	</config>
 
+
+	<config evaluator="node-type" condition="crlatti:aula">
+		<property-sheet>
+			<show-property name="crlatti:dataPresaInCaricoEsameAula" />
+			<show-property name="crlatti:relazioneScrittaAula" />
+			<show-property name="crlatti:tipologiaVotazioneAula" />
+			<show-property name="crlatti:quorumEsameAula" />
+			<show-property name="crlatti:esitoVotoPassaggioAula" />
+			<show-property name="crlatti:dataSedutaPassaggioAula" />
+			<show-property name="crlatti:numeroDcrPassaggioAula" />
+			<show-property name="crlatti:numeroLcrPassaggioAula" />
+			<show-property name="crlatti:emendatoAula" />
+			<show-property name="crlatti:noteVotazioneAula" />
+			<show-property name="crlatti:dataSedutaRinvioAula" />
+			<show-property name="crlatti:dataTermineMassimoAula" />
+			<show-property name="crlatti:motivazioneRinvioAula" />
+			<show-property name="crlatti:dataSedutaStralcioAula" />
+			<show-property name="crlatti:dataStralcioAula" />
+			<show-property name="crlatti:dataIniziativaStralcioAula" />
+			<show-property name="crlatti:articoliAula" />
+			<show-property name="crlatti:noteStralcioAula" />
+			<show-property name="crlatti:dataStralcioAula" />
+			
+			<show-property name="crlatti:numEmendPresentatiMaggiorEsame" />
+			<show-property name="crlatti:numEmendPresentatiMinorEsame" />
+			<show-property name="crlatti:numEmendPresentatiGiuntaEsame" />
+			<show-property name="crlatti:numEmendPresentatiMistoEsame" />
+			<show-property name="crlatti:numEmendApprovatiMaggiorEsame" />
+			<show-property name="crlatti:numEmendApprovatiMinorEsame" />
+			<show-property name="crlatti:numEmendApprovatiGiuntaEsame" />
+			<show-property name="crlatti:numEmendApprovatiMistoEsame" />
+			<show-property name="crlatti:numEmendNonAmmissibiliEsame" />
+			<show-property name="crlatti:numEmendDecadutiEsame" />
+			<show-property name="crlatti:numEmendRitiratiEsame" />
+			<show-property name="crlatti:numEmendRespintiEsame" />
+			<show-property name="crlatti:noteEmendamentiEsame" />
+			
+			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
+			<show-property name="crlatti:dataIntesaClausolaValutEsame" />
+			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
+			<show-property name="crlatti:noteClausolaValutativaEsame" />	
+
+		</property-sheet>
+	</config>
 
 
 	<config evaluator="node-type" condition="crlatti:abbinamento">
@@ -429,6 +474,7 @@
 				<type name="crlatti:firmatarioAnagrafica" />
 				<type name="crlatti:legislaturaAnagrafica" />
 				<type name="crlatti:commissione" />
+				<type name="crlatti:aula" />
 				<type name="crlatti:abbinamento" />
 				<type name="crlatti:allegato" />
 				<type name="crlatti:testo" />
