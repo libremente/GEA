@@ -123,6 +123,27 @@ public class AttoServiceManager implements ServiceManager {
 	
 	
 
+	public Allegato uploadAllegatoNoteAllegatiEsameAula(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_ESAME_AULA_ALLEGATO);
+	}	
+	
+	public Allegato uploadAllegatoParereConsultazioniPareri(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PARERE);
+	}
+	public Allegato uploadAllegatoConultaioneConsultazioniPareri(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_CONSULTAZIONE);
+	}
+	
+	
+	
+
+
 	@Override
 	public Atto persist(Object object) {
 		return attoService.create(urlBuilder.buildAlfrescoURL(
@@ -173,9 +194,10 @@ public class AttoServiceManager implements ServiceManager {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_commissioni", null), atto);
 	}
 	
-	
-	
-	
+	public void salvaConsultazioni(Atto atto) {
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_consultazioni", null), atto);
+	}
+		
 	public void salvaPareri(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_pareri", null), atto);
 	}

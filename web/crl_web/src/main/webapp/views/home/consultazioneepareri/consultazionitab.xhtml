@@ -7,6 +7,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <pe:tooltip value="Click per Espandere / Comprimere"
@@ -49,6 +50,49 @@
 					<p:commandButton id="declineSoggettoInvitato" value="Annulla"
 						onclick="soggettoInvitatoDialog.hide()" type="button" />
 
+				</p:confirmDialog>
+				
+				<p:confirmDialog id="confirmAllegatoConsultazioneDialog"
+				message="Sei sicuro di voler eliminare l'allegato ?"
+				header="Cancellazione Allegato" severity="alert"
+				widgetVar="allegatoConsultazioneDialog">
+				
+				<p:commandButton id="confirmAllegatoConsultazioneComponente"
+					value="Conferma" oncomplete="allegatoConsultazioneDialog.hide()"
+					action="#{consultazioniPareriController.removeAllegatoConsultazione}"
+					update="listaDocumentazioneConsultazione" />
+				<p:commandButton id="declineAllegatoConsultazione" value="Annulla"
+					onclick="allegatoConsultazioneDialog.hide()" type="button" />
+
+			</p:confirmDialog>
+				
+				<p:confirmDialog id="uploadFileConsultazioneAttributes" header="Caricamento"
+					widgetVar="uploadFileConsultazioneAttributesDialog" style="width:450px" message="Allega Testo">
+					<p:panelGrid id="uploadpanelConsultazione">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="ispubblicoConsultazione" value="Pubblico: " />
+								<p:selectBooleanCheckbox id="ispubblicoConsultazione" 
+									value="#{consultazioniPareriController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true" ></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+							</p:row>
+							<p:row>
+							<p:column>
+								<p:fileUpload label="Carica Testo dell'Atto"
+									oncomplete="uploadFileConsultazioneAttributesDialog.hide()" auto="false"
+									update="listaDocumentazioneConsultazione pareriMsg"
+									fileUploadListener="#{consultazioniPareriController.uploadAllegatoConsultazione}" />
+							</p:column>
+							</p:row>
+							<p:row>
+							<p:column>
+								<p:commandButton id="declineUploadFileConsultazione" value="Annulla"
+									onclick="uploadFileConsultazioneAttributesDialog.hide()" type="button" />
+							</p:column>
+							</p:row>
+					</p:panelGrid>
 				</p:confirmDialog>
 			</p:column>
 		</p:row>
@@ -274,7 +318,7 @@
 								</p:column>
 						</p:row>
 
-						<p:row>
+						<!-- <p:row>
 							<p:column colspan="4">
 								<table class="generalInfoTab grey-text"
 									id="documentazioneallegatatab" style="width: 100%;" border="0">
@@ -285,9 +329,9 @@
 										<th>Opzioni</th>
 									</thead>
 
-									<!-- TODO: 
+									TODO: 
 							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
-							il campo "download" è da implementare con l'opportuno tag <p:filedownload/> -->
+							il campo "download" è da implementare con l'opportuno tag <p:filedownload/>
 
 									<tbody>
 										<tr>
@@ -315,16 +359,80 @@
 									</tbody>
 								</table>
 							</p:column>
-						</p:row>
+						</p:row> -->
+						
 						<p:row>
-							<p:column>
-								<h:graphicImage alt="add" value="/resources/img/add.png" />
-							</p:column>
-							<p:column>
-								<p:fileUpload mode="simple" />
+							<p:column colspan="4">
+							
+							
+							<p:commandButton value="Carica Allegato"
+					oncomplete="uploadFileConsultazioneAttributesDialog.show()">
+				</p:commandButton>
+				
+				
+				</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="4">
+
+				<h:dataTable id="listaDocumentazioneConsultazione"
+					value="#{consultazioniPareriController.allegatiConsultazioneList}"
+					var="allegato" styleClass="generalInfoTab grey-text">
+
+					<h:column>
+						<f:facet name="header">Documentazione allegata</f:facet>
+							#{allegato.nome}
+						</h:column>
+
+					<h:column>
+						<f:facet name="header">Documento</f:facet>
+						<h:outputText
+							value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
+
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{allegato.pubblico}" />
+						<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Elimina</f:facet>
+						<p:commandButton oncomplete="allegatoConsultazioneDialog.show()"
+							icon="delete-icon">
+
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{consultazioniPareriController.allegatoConsultazioneToDelete}" />
+						</p:commandButton>
+					</h:column>
+					
+					<h:column>
+							<f:facet name="header">Download</f:facet>
+
+							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{allegato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{allegato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{allegato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</h:column>
+
+
+				</h:dataTable>
+			
+							
+								
+								
 							</p:column>
 						</p:row>
-
+						
+						
 						<p:row>
 							<p:column colspan="2">
 								<p:commandButton value="Salva Consultazioni" 

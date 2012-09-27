@@ -1,5 +1,6 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,11 +44,13 @@ public class ConsultazioniPareriController {
 
 	private List<Allegato> allegatiParereList = new ArrayList<Allegato>();
 	private String allegatoParereToDelete;
+	private boolean currentFilePubblico;
 
 
 	private List<Consultazione> consultazioniList = new ArrayList<Consultazione>();
 	private String soggettoConsultato;
 	private String consultazioneToDelete;
+	private String allegatoConsultazioneToDelete;
 
 	private Consultazione consultazioneSelected;
 	private String descrizioneConsultazioneSelected;
@@ -64,6 +67,7 @@ public class ConsultazioniPareriController {
 	private String soggettoInvitatoToDelete;
 
 	private List<Allegato> allegatiConsultazioneList = new ArrayList<Allegato>();
+
 
 
 	private String statoCommitPareri = CRLMessage.COMMIT_DONE;
@@ -154,8 +158,71 @@ public class ConsultazioniPareriController {
 		return null;
 	}
 
+	
 	public void uploadAllegatoParere(FileUploadEvent event) {
-		//TODO
+
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+
+		if (!checkAllegatoParere(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+		} else {
+
+			// TODO Alfresco upload
+			Allegato allegatoParereRet = null;
+
+			try {
+				allegatoParereRet = attoServiceManager
+						.uploadAllegatoConultaioneConsultazioniPareri(
+								((AttoBean) FacesContext.getCurrentInstance()
+										.getExternalContext().getSessionMap()
+										.get("attoBean")).getAtto(), event
+										.getFile().getInputstream(), event
+										.getFile().getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// TODO aggiungi a bean di sessione
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getAllegatiNotePresentazioneAssegnazione()
+			.add(allegatoParereRet);
+
+			allegatiParereList.add(allegatoParereRet);
+		}
+	}
+
+	private boolean checkAllegatoParere(String fileName) {
+
+		for (Allegato element : allegatiParereList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}
+
+	public void removeAllegatoParere() {
+
+		for (Allegato element : allegatiParereList) {
+
+			if (element.getId().equals(allegatoParereToDelete)) {
+
+				// TODO Alfresco delete
+				allegatiParereList.remove(element);
+				break;
+			}
+		}
 	}
 
 
@@ -332,6 +399,7 @@ public class ConsultazioniPareriController {
 		consultazioneSelected.setNote(getNoteConsultazione());
 
 		atto.setConsultazioni(getConsultazioniList());
+		attoServiceManager.salvaAmmissibilitaPresentazione(atto);
 
 		//TODO: alfresco service
 
@@ -345,9 +413,72 @@ public class ConsultazioniPareriController {
 		context.addMessage(null, new FacesMessage("Consultazioni salvati con successo", ""));
 	}
 	
-	public void uploadAllegatoConsultazione(FileUploadEvent event) {
-		//TODO
-	}
+	
+		public void uploadAllegatoConsultazione(FileUploadEvent event) {
+
+			// TODO Service logic
+			String fileName = event.getFile().getFileName();
+
+			if (!checkAllegatoConsultazione(fileName)) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+								+ fileName + " è già stato allegato ", ""));
+			} else {
+
+				// TODO Alfresco upload
+				Allegato allegatoConsultazioneRet = null;
+
+				try {
+					allegatoConsultazioneRet = attoServiceManager
+							.uploadAllegatoParereConsultazioniPareri(
+									((AttoBean) FacesContext.getCurrentInstance()
+											.getExternalContext().getSessionMap()
+											.get("attoBean")).getAtto(), event
+											.getFile().getInputstream(), event
+											.getFile().getFileName());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				// TODO aggiungi a bean di sessione
+				FacesContext context = FacesContext.getCurrentInstance();
+				AttoBean attoBean = ((AttoBean) context.getExternalContext()
+						.getSessionMap().get("attoBean"));
+
+				attoBean.getAtto().getAllegatiNotePresentazioneAssegnazione()
+				.add(allegatoConsultazioneRet);
+
+				allegatiConsultazioneList.add(allegatoConsultazioneRet);
+			}
+		}
+
+		private boolean checkAllegatoConsultazione(String fileName) {
+
+			for (Allegato element : allegatiConsultazioneList) {
+
+				if (element.getDescrizione().equals(fileName)) {
+
+					return false;
+				}
+
+			}
+
+			return true;
+		}
+
+		public void removeAllegatoConsultazione() {
+
+			for (Allegato element : allegatiConsultazioneList) {
+
+				if (element.getId().equals(allegatoConsultazioneToDelete)) {
+
+					// TODO Alfresco delete
+					allegatiConsultazioneList.remove(element);
+					break;
+				}
+			}
+		}
 
 
 	// Getters & Setters**********************************************
@@ -568,8 +699,23 @@ public class ConsultazioniPareriController {
 		this.intervenuto = intervenuto;
 	}
 
+	public boolean isCurrentFilePubblico() {
+		return currentFilePubblico;
+	}
+
+	public void setCurrentFilePubblico(boolean currentFilePubblico) {
+		this.currentFilePubblico = currentFilePubblico;
+	}
 
 
+	public String getAllegatoConsultazioneToDelete() {
+		return allegatoConsultazioneToDelete;
+	}
+
+	public void setAllegatoConsultazioneToDelete(
+			String allegatoConsultazioneToDelete) {
+		this.allegatoConsultazioneToDelete = allegatoConsultazioneToDelete;
+	}
 
 
 

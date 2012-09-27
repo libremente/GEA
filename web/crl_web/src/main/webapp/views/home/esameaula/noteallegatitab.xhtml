@@ -159,6 +159,22 @@
 											target="#{esameAulaController.allegatoToDelete}" />
 									</p:commandButton>
 								</h:column>
+								
+								<h:column>
+							<f:facet name="header">Download</f:facet>
+
+							<p:commandButton id="downloadLink" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{allegato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{allegato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{allegato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</h:column>
 
 
 							</h:dataTable>
