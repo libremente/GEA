@@ -79,7 +79,7 @@ public class NavigationRules {
 
     public boolean gestioneSeduteConsultazioniCommissione() {
     	//TODO
-        return userBean.getUser().getSessionGroup().getNome().equals("Commissione");
+        return userBean.getUser().getSessionGroup().getNome().startsWith("Commissione");
     }
 
     public boolean gestioneSeduteConsultazioniAula() {
