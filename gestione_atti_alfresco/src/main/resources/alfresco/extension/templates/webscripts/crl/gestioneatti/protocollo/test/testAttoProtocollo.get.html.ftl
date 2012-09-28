@@ -26,6 +26,20 @@
 		var tipoAtto = currentForm.tipoAtto.options[currentForm.tipoAtto.selectedIndex].value;
 		var legislatura = currentForm.legislatura.options[currentForm.legislatura.selectedIndex].value;
 		var idProtocollo = currentForm.idProtocollo.value;
+		var numeroProtocollo = currentForm.numeroProtocollo.value;
+		var numeroRepertorio = currentForm.numeroRepertorio.value;
+		var dataRepertorio = currentForm.dataRepertorio.value;
+		var classificazione = currentForm.classificazione.value;
+		var oggetto = currentForm.oggetto.value;
+		
+		var tipoIniziativa = currentForm.tipoIniziativa.value;
+		var dataIniziativa = currentForm.dataIniziativa.value;
+		var descrizioneIniziativa = currentForm.descrizioneIniziativa.value;
+		
+		var numeroDgr = currentForm.numeroDgr.value;
+		var dataDgr = currentForm.dataDgr.value;
+		
+		var assegnazione = currentForm.assegnazione.value;
 		
 		var attoCustom = {
 		"atto" : {
@@ -33,7 +47,18 @@
 			"tipoAtto" : ""+tipoAtto+"",
 			"tipologia" : ""+tipologia+"",
 			"legislatura" : ""+legislatura+"",
-			"idProtocollo" : ""+idProtocollo+""
+			"idProtocollo" : ""+idProtocollo+"",
+			"numeroProtocollo" : ""+numeroProtocollo+"",
+			"numeroRepertorio" : ""+numeroRepertorio+"",
+			"dataRepertorio" : ""+dataRepertorio+"",
+			"classificazione" : ""+classificazione+"",
+			"oggetto" : ""+oggetto+"",
+			"tipoIniziativa" : ""+tipoIniziativa+"",
+			"dataIniziativa" : ""+dataIniziativa+"",
+			"descrizioneIniziativa" : ""+descrizioneIniziativa+"",
+			"numeroDgr" : ""+numeroDgr+"",
+			"dataDgr" : ""+dataDgr+"",
+			"assegnazione" : ""+assegnazione+""
 			}
 		};
 		
@@ -57,6 +82,12 @@
 			</td>
 		</tr>
 		<tr>
+			<td>Numero protocollo:</td>
+			<td>
+				<input type="text" name="numeroProtocollo">
+			</td>
+		</tr>
+		<tr>
 			<td>Numero atto:</td>
 			<td>
 				<input type="text" name="numeroAtto">
@@ -74,7 +105,7 @@
 		</tr>
 		<tr>
 			<td>Tipologia:</td>
-			<td><input type="text" name="tipologia"></td>
+			<td><input type="text" name="tipologia" value="Tipo1"></td>
 		</tr>
 		<tr>
 			<td>Legislatura:</td>
@@ -85,6 +116,46 @@
 				</#list>
 				</select>
 			</td>
+		</tr>
+		<tr>
+			<td>Numero repertorio:</td>
+			<td><input type="text" name="numeroRepertorio" value="01"></td>
+		</tr>
+		<tr>
+			<td>Data repertorio:</td>
+			<td><input type="text" name="dataRepertorio" value="2012-09-01"></td>
+		</tr>
+		<tr>
+			<td>Classificazione:</td>
+			<td><input type="text" name="classificazione" value="classificazione1"></td>
+		</tr>
+		<tr>
+			<td>Oggetto:</td>
+			<td><input type="text" name="classificazione" value="oggetto2"></td>
+		</tr>
+		<tr>
+			<td>Tipo iniziativa:</td>
+			<td><input type="text" name="tipoIniziativa" value="tipoIniz1"></td>
+		</tr>
+		<tr>
+			<td>Data iniziativa:</td>
+			<td><input type="text" name="dataIniziativa" value="2012-09-02"></td>
+		</tr>
+		<tr>
+			<td>Descrizione iniziativa:</td>
+			<td><input type="text" name="descrizioneIniziativa" value="descrizione1000mila"></td>
+		</tr>
+		<tr>
+			<td>Numero DGR:</td>
+			<td><input type="text" name="numeroDgr" value="9877"></td>
+		</tr>
+		<tr>
+			<td>Data DGR:</td>
+			<td><input type="text" name="dataDgr" value="2012-09-10"></td>
+		</tr>
+		<tr>
+			<td>Assegnazione:</td>
+			<td><input type="text" name="assegnazione" value="assegnazione9"></td>
 		</tr>
 		<tr>
 		<td></td>

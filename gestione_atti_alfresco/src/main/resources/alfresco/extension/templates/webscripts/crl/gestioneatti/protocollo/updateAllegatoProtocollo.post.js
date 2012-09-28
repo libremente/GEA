@@ -1,0 +1,32 @@
+var idProtocolloAllegato = "";
+var filename = "";
+var content = null;
+
+for each (field in formdata.fields) {
+  if (field.name == "idProtocolloAllegato") {
+	  idProtocolloAllegato = field.value;
+  } else if (field.name == "file" && field.isFile) {
+    filename = field.filename;
+    content = field.content;
+  }
+}
+
+if(idProtocollo == ""){
+	status.code = 400;
+	status.message = "ID protocollo non valorizzato";
+	status.redirect = true;
+} else {
+	var allegatoLuceneQuery = "@crlatti\\:idProtocollo\""+idProtocolloAllegato+"\"";
+	var allegatoResults = search.luceneSearch(allegatoLuceneQuery);
+	if(allegatoResults!=null && allegatoResults.length>0){
+		var allegatoNode = allegatoResults[0];
+		allegatoNode.properties.content.write(content);
+		allegatoNode.properties.content.setEncoding("UTF-8");
+		allegatoNode.properties.content.guessMimetype(filename);
+		allegatoNode.save();
+	} else {
+		status.code = 400;
+		status.message = "Allegato con idProtocollo:\""+idProtocolloAllegato+"\" non trovato";
+		status.redirect = true;
+	}	
+}
