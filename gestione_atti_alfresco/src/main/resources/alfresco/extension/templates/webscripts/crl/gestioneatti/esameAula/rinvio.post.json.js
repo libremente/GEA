@@ -113,7 +113,7 @@ if(checkIsNotNull(id)
 	attoNode.save();
 
 	model.atto = attoNode;
-	model.aula = aulaFolderNode;
+	model.nuovoPassaggio = nuovoPassaggioFolderNode;
 	
 } else {
 	status.code = 400;

@@ -86,10 +86,6 @@
 					<title>Oggetto</title>
 					<type>d:text</type>
 				</property>
-				<property name="crlatti:tipoChiusura">
-					<title>Tipo chiusura</title>
-					<type>d:text</type>
-				</property>
 				<property name="crlatti:dataPubblicazione">
 					<title>Data pubblicazione</title>
 					<type>d:date</type>
@@ -160,10 +156,6 @@
 					<title>Soggetto consultato</title>
 					<type>d:text</type>
 				</property>
-				<property name="crlatti:numeroLr">
-					<title>Numero LR</title>
-					<type>d:text</type>
-				</property>
 				<property name="crlatti:anno">
 					<title>Anno</title>
 					<type>d:int</type>
@@ -192,7 +184,34 @@
 					<title>Data presa in carico</title>
 					<type>d:date</type>
 				</property>
-				
+				<property name="crlatti:dataChiusura">
+					<title>Data chiusura</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:tipoChiusura">
+					<title>Tipo chiusura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteChiusura">
+					<title>Note chiusura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroLr">
+					<title>Numero LR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataLr">
+					<title>Data LR</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numeroPubblicazioneBURL">
+					<title>Numero BURL</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataPubblicazioneBURL">
+					<title>Data BURL</title>
+					<type>d:date</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:tipizzabile</aspect>

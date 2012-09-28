@@ -397,7 +397,6 @@
 			<show-property name="crlatti:numeroDcr" />
 
 			<show-property name="crlatti:oggetto" />
-			<show-property name="crlatti:tipoChiusura" />
 			<show-property name="crlatti:dataPubblicazione" />
 			<show-property name="crlatti:esitoVotoComRef" />
 			<show-property name="crlatti:dataSedutaSc" />
@@ -413,7 +412,6 @@
 
 			<show-property name="crlatti:numeroLcr" />
 			<show-property name="crlatti:soggettoConsultato" />
-			<show-property name="crlatti:numeroLr" />
 			<show-property name="crlatti:anno" />
 			<show-property name="crlatti:emendato" />
 
@@ -423,6 +421,14 @@
 			<show-property name="crlatti:stralcio" />
 			<show-property name="crlatti:primoFirmatario" />
 			<show-property name="crlatti:firmatari" />
+			
+			<show-property name="crlatti:dataChiusura" />
+			<show-property name="crlatti:tipoChiusura" />
+			<show-property name="crlatti:noteChiusura" />
+			<show-property name="crlatti:numeroLr" />
+			<show-property name="crlatti:dataLr" />
+			<show-property name="crlatti:numeroPubblicazioneBURL" />
+			<show-property name="crlatti:dataPubblicazioneBURL" />
 			
 		</property-sheet>
 	</config>
@@ -445,7 +451,6 @@
 			<show-property name="crlatti:numeroDcr" />
 
 			<show-property name="crlatti:oggetto" />
-			<show-property name="crlatti:tipoChiusura" />
 			<show-property name="crlatti:dataPubblicazione" />
 			<show-property name="crlatti:esitoVotoComRef" />
 			<show-property name="crlatti:dataSedutaSc" />
@@ -461,7 +466,6 @@
 
 			<show-property name="crlatti:numeroLcr" />
 			<show-property name="crlatti:soggettoConsultato" />
-			<show-property name="crlatti:numeroLr" />
 			<show-property name="crlatti:anno" />
 			<show-property name="crlatti:emendato" />
 
@@ -469,6 +473,14 @@
 			<show-property name="crlatti:sospeso" />
 			<show-property name="crlatti:abbinamento" />
 			<show-property name="crlatti:stralcio" />
+			
+			<show-property name="crlatti:dataChiusura" />
+			<show-property name="crlatti:tipoChiusura" />
+			<show-property name="crlatti:noteChiusura" />
+			<show-property name="crlatti:numeroLr" />
+			<show-property name="crlatti:dataLr" />
+			<show-property name="crlatti:numeroPubblicazioneBURL" />
+			<show-property name="crlatti:dataPubblicazioneBURL" />
 
 		</property-sheet>
 	</config>
@@ -510,7 +522,6 @@
 				<meta-data type="crlatti:atto" property="crlatti:tipoIniziativa" />
 				<meta-data type="crlatti:atto" property="crlatti:numeroDcr" />
 				<meta-data type="crlatti:atto" property="crlatti:oggetto" />
-				<meta-data type="crlatti:atto" property="crlatti:tipoChiusura" />
 
 				<meta-data type="crlatti:atto" property="crlatti:dataPubblicazione" />
 				<meta-data type="crlatti:atto" property="crlatti:esitoVotoComRef" />
@@ -528,7 +539,6 @@
 				<meta-data type="crlatti:atto" property="crlatti:organismoStatutario" />
 				<meta-data type="crlatti:atto" property="crlatti:numeroLcr" />
 				<meta-data type="crlatti:atto" property="crlatti:soggettoConsultato" />
-				<meta-data type="crlatti:atto" property="crlatti:numeroLr" />
 
 				<meta-data type="crlatti:atto" property="crlatti:anno" />
 				<meta-data type="crlatti:atto" property="crlatti:emendato" />
@@ -536,6 +546,15 @@
 				<meta-data type="crlatti:atto" property="crlatti:sospeso" />
 				<meta-data type="crlatti:atto" property="crlatti:abbinamento" />
 				<meta-data type="crlatti:atto" property="crlatti:stralcio" />
+				
+				<meta-data type="crlatti:atto" property="crlatti:dataChiusura" />
+				<meta-data type="crlatti:atto" property="crlatti:tipoChiusura" />
+				<meta-data type="crlatti:atto" property="crlatti:noteChiusura" />
+				<meta-data type="crlatti:atto" property="crlatti:numeroLr" />
+				<meta-data type="crlatti:atto" property="crlatti:dataLr" />
+				<meta-data type="crlatti:atto" property="crlatti:numeroPubblicazioneBURL" />
+				<meta-data type="crlatti:atto" property="crlatti:dataPubblicazioneBURL" />
+			
 
 			</custom-properties>
 		</advanced-search>
