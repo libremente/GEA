@@ -79,6 +79,10 @@ if(checkIsNotNull(id)){
 		commissioneNode.properties["crlatti:ruoloCommissione"] = ruolo;
 		commissioneNode.properties["crlatti:statoCommissione"] = stato;
 		commissioneNode.save();
+		
+		
+		attoNode.setPermission("Coordinator", "GROUP_"+descrizione);
+		
 	}
 	
 	//verifica commissioni da cancellare

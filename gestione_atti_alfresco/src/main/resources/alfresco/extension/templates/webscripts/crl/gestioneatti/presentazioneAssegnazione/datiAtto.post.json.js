@@ -2,17 +2,17 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
-var classificazione = atto.get("classificazione");
-var oggetto = atto.get("oggetto");
-var numeroRepertorio = atto.get("numeroRepertorio");
-var dataRepertorio = atto.get("dataRepertorio");
-var tipoIniziativa = atto.get("tipoIniziativa");
-var dataIniziativa = atto.get("dataIniziativa");
-var descrizioneIniziativa = atto.get("descrizioneIniziativa");
-var assegnazione = atto.get("assegnazione");
-var numeroDgr = atto.get("numeroDgr");
-var dataDgr = atto.get("dataDgr");
-var firmatari = atto.get("firmatari");
+var classificazione = filterParam(atto.get("classificazione"));
+var oggetto = filterParam(atto.get("oggetto"));
+var numeroRepertorio = filterParam(atto.get("numeroRepertorio"));
+var dataRepertorio = filterParam(atto.get("dataRepertorio"));
+var tipoIniziativa = filterParam(atto.get("tipoIniziativa"));
+var dataIniziativa = filterParam(atto.get("dataIniziativa"));
+var descrizioneIniziativa = filterParam(atto.get("descrizioneIniziativa"));
+var assegnazione = filterParam(atto.get("assegnazione"));
+var numeroDgr = filterParam(atto.get("numeroDgr"));
+var dataDgr = filterParam(atto.get("dataDgr"));
+var firmatari = filterParam(atto.get("firmatari"));
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
