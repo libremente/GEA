@@ -23,6 +23,13 @@
         
     </url-mapping>
     
+     <url-mapping id="Reportistica"> 
+        
+        <pattern value="/reportistica" /> 
+        <view-id value="views/reportistica/reportistica_base.xhtml" />
+        
+    </url-mapping>
+    
     <url-mapping id="Gestione_Sedute"> 
         <pattern value="/gestionesedute" /> 
         <view-id value="views/gestionesedute/gestionesedute_base.xhtml" />
