@@ -380,7 +380,6 @@
             <show id="crlatti:tipoIniziativa"/>
             <show id="crlatti:numeroDcr"/>
             <show id="crlatti:oggetto"/>
-            <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
             <show id="crlatti:dataSedutaSc"/>
@@ -395,7 +394,6 @@
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
-            <show id="crlatti:numeroLr"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
             <show id="crlatti:rinviato"/>
@@ -404,7 +402,13 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
-            
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
           </field-visibility>
       </form>
    </forms>
@@ -436,7 +440,6 @@
             <show id="crlatti:primoFirmatario"/>
             <show id="crlatti:oggetto"/>
             <show id="crlatti:firmatari"/>
-            <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
             <show id="crlatti:dataSedutaSc"/>
@@ -451,7 +454,6 @@
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
-            <show id="crlatti:numeroLr"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
             <show id="crlatti:rinviato"/>
@@ -460,7 +462,13 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
-            
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -490,7 +498,6 @@
             <show id="crlatti:tipoIniziativa"/>
             <show id="crlatti:numeroDcr"/>
             <show id="crlatti:oggetto"/>
-            <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
             <show id="crlatti:dataSedutaSc"/>
@@ -505,7 +512,6 @@
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
-            <show id="crlatti:numeroLr"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
             <show id="crlatti:rinviato"/>
@@ -514,7 +520,13 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" /> 
             <show id="crlatti:firmatari"/>
-            
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
           </field-visibility>
       </form>
    </forms>
@@ -544,7 +556,6 @@
             <show id="crlatti:tipoIniziativa"/>
             <show id="crlatti:numeroDcr"/>
             <show id="crlatti:oggetto"/>
-            <show id="crlatti:tipoChiusura"/>
             <show id="crlatti:dataPubblicazione"/>
             <show id="crlatti:esitoVotoComRef"/>
             <show id="crlatti:dataSedutaSc"/>
@@ -559,7 +570,6 @@
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
             <show id="crlatti:soggettoConsultato"/>
-            <show id="crlatti:numeroLr"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
             <show id="crlatti:rinviato"/>
@@ -568,7 +578,13 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
-            
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -720,9 +736,9 @@
 				<show id="crlatti:numeroLcrPassaggioAula" />
 				<show id="crlatti:emendatoAula" />
 				<show id="crlatti:noteVotazioneAula" />
-				<show id="crlatti:dataSedutaRinvio" />
-				<show id="crlatti:dataTermineMassimo" />
-				<show id="crlatti:motivazioneRinvio" />
+				<show id="crlatti:dataSedutaRinvioAula" />
+				<show id="crlatti:dataTermineMassimoAula" />
+				<show id="crlatti:motivazioneRinvioAula" />
 				<show id="crlatti:dataSedutaStralcioAula" />
 				<show id="crlatti:dataStralcioAula" />
 				<show id="crlatti:dataIniziativaStralcioAula" />
