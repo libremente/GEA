@@ -720,9 +720,9 @@
 				<show id="crlatti:numeroLcrPassaggioAula" />
 				<show id="crlatti:emendatoAula" />
 				<show id="crlatti:noteVotazioneAula" />
-				<show id="crlatti:dataSedutaRinvioAula" />
-				<show id="crlatti:dataTermineMassimoAula" />
-				<show id="crlatti:motivazioneRinvioAula" />
+				<show id="crlatti:dataSedutaRinvio" />
+				<show id="crlatti:dataTermineMassimo" />
+				<show id="crlatti:motivazioneRinvio" />
 				<show id="crlatti:dataSedutaStralcioAula" />
 				<show id="crlatti:dataStralcioAula" />
 				<show id="crlatti:dataIniziativaStralcioAula" />
@@ -745,10 +745,7 @@
 				<show id="crlatti:numEmendRespintiEsame" />
 				<show id="crlatti:noteEmendamentiEsame" />
 				
-				<show id="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
-				<show id="crlatti:dataIntesaClausolaValutEsame" />
-				<show id="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
-				<show id="crlatti:noteClausolaValutativaEsame" />	
+				
    			</field-visibility>
    		</form>
    	</forms>
