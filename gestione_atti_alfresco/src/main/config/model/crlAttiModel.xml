@@ -479,6 +479,10 @@
 					<title>Materia</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:dataPropostaCommissione">
+					<title>Data proposta</title>
+					<type>d:date</type>
+				</property>
 				<property name="crlatti:dataAssegnazioneCommissione">
 					<title>Data assegnazione</title>
 					<type>d:date</type>

@@ -99,5 +99,19 @@ if(attoResults!=null && attoResults.length>0){
 		firmatariSpaceTemplateNode.copy(attoFolderNode);
 	}
 	
+	
+	// creazione del primo passaggio per le commissioni e l'aula
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoFolderNode.childrenByXPath(passaggiXPathQuery)[0];
+	
+
+	var passaggioSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Passaggio\"";
+	var passaggioSpaceTemplateNode = search.luceneSearch(passaggioSpaceTemplateQuery)[0];
+	var passaggioFolderNode = passaggioSpaceTemplateNode.copy(passaggiFolderNode, true); // deep copy
+	passaggioFolderNode.properties["cm:name"] = "Passaggio1";
+	passaggioFolderNode.save();
+	
+	
+	
 	model.atto = attoFolderNode;
 }

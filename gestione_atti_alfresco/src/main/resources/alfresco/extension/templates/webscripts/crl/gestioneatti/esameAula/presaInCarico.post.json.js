@@ -11,7 +11,8 @@ var passaggioTarget = getPassaggioTarget(json, passaggio);
 var dataPresaInCarico = filterParam(passaggioTarget.get("aula").get("dataPresaInCaricoEsameAula"));
 var relazioneScritta = filterParam(passaggioTarget.get("aula").get("relazioneScritta"));
 
-if(checkIsNotNull(id)){
+if(checkIsNotNull(id)
+		&& checkIsNotNull(passaggio)){
 	var attoNode = utils.getNodeFromString(id);
 	
 	// gestione passaggi
@@ -43,6 +44,6 @@ if(checkIsNotNull(id)){
 	
 } else {
 	status.code = 400;
-	status.message = "id atto non valorizzato";
+	status.message = "id atto e passaggio non valorizzato";
 	status.redirect = true;
 }

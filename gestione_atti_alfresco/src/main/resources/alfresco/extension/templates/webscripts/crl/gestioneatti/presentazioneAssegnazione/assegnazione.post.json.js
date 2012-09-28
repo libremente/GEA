@@ -46,7 +46,6 @@ if(checkIsNotNull(id)){
 			var commissioneSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Commissione\"";
 			var commissioneSpaceTemplateNode = search.luceneSearch(commissioneSpaceTemplateQuery)[0];
 			
-			logger.log(commissioneSpaceTemplateNode);
 			
 			// deep copy con secondo argomento = true
 			commissioneSpaceTemplateNode.copy(commissioniFolderNode, true);
@@ -76,7 +75,7 @@ if(checkIsNotNull(id)){
 		
 		commissioneNode.properties["crlatti:dataAssegnazioneCommissione"] = dataAssegnazioneParsed;
 		commissioneNode.properties["crlatti:dataAnnulloCommissione"] = dataAnnulloParsed;
-		commissioneNode.properties["crlatti:dataPresaInCaricoCommissione"] = dataPropostaParsed;
+		commissioneNode.properties["crlatti:dataPropostaCommissione"] = dataPropostaParsed;
 		commissioneNode.properties["crlatti:ruoloCommissione"] = ruolo;
 		commissioneNode.properties["crlatti:statoCommissione"] = stato;
 		commissioneNode.save();
