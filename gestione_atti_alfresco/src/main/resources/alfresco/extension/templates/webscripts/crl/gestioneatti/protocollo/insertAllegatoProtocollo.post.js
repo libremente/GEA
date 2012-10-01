@@ -11,7 +11,7 @@ for each (field in formdata.fields) {
   }
 }
 
-if(idProtocollo == ""){
+if(idProtocolloAtto == ""){
 	status.code = 400;
 	status.message = "ID protocollo atto non valorizzato";
 	status.redirect = true;
@@ -24,7 +24,7 @@ if(idProtocollo == ""){
 	status.message = "content allegato non valorizzato";
 	status.redirect = true;
 } else {
-	var attoLuceneQuery = "@crlatti\\:idProtocollo\""+idProtocolloAtto+"\"";
+	var attoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocolloAtto+"\"";
 	var attoResults = search.luceneSearch(attoLuceneQuery);
 	
 	if(attoResults!=null && attoResults.length>0){
@@ -37,7 +37,7 @@ if(idProtocollo == ""){
 		if(allegatoResults!=null && allegatoResults.length>0){
 			allegatoNode = allegatoResults[0];	
 		} else {
-		    allegatoNode = allegatiFolderNode.createNode("crlatti:allegato",filename);
+		    allegatoNode = allegatiFolderNode.createNode(filename,"crlatti:allegato");
 		}
 		
 		allegatoNode.properties.content.write(content);

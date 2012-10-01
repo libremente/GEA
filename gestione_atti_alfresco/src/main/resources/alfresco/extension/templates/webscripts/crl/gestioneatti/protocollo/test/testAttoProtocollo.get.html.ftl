@@ -41,6 +41,8 @@
 		
 		var assegnazione = currentForm.assegnazione.value;
 		
+		var esibenteMittente = currentForm.esibenteMittente.value;
+		
 		var attoCustom = {
 		"atto" : {
 			"numeroAtto" : ""+numeroAtto+"",
@@ -58,7 +60,8 @@
 			"descrizioneIniziativa" : ""+descrizioneIniziativa+"",
 			"numeroDgr" : ""+numeroDgr+"",
 			"dataDgr" : ""+dataDgr+"",
-			"assegnazione" : ""+assegnazione+""
+			"assegnazione" : ""+assegnazione+"",
+			"esibenteMittente" : ""+esibenteMittente+""
 			}
 		};
 		
@@ -131,7 +134,7 @@
 		</tr>
 		<tr>
 			<td>Oggetto:</td>
-			<td><input type="text" name="classificazione" value="oggetto2"></td>
+			<td><input type="text" name="oggetto" value="oggetto2"></td>
 		</tr>
 		<tr>
 			<td>Tipo iniziativa:</td>
@@ -156,6 +159,10 @@
 		<tr>
 			<td>Assegnazione:</td>
 			<td><input type="text" name="assegnazione" value="assegnazione9"></td>
+		</tr>
+		<tr>
+			<td>Esibente / Mittente:</td>
+			<td><input type="text" name="esibenteMittente" value="Mario Rossi - Carlo Verdi"></td>
 		</tr>
 		<tr>
 		<td></td>

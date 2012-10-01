@@ -1,7 +1,7 @@
 <webscript>
-  <shortname>Protocollo - Test creazione di un atto</shortname>
-  <description>Protocollo - Test per la creazione del nodo per un nuovo atto</description>
-  <url>/crl/test/protocollo/atto</url>
+  <shortname>Protocollo - Test update upload allegato</shortname>
+  <description>Protocollo - Test per update di un allegato</description>
+  <url>/crl/test/protocollo/post/allegato/update</url>
   <format default="html"/>
   <authentication>admin</authentication>
   <transaction allow="readonly">required</transaction>

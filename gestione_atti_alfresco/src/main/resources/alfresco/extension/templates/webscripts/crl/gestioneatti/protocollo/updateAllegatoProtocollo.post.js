@@ -11,15 +11,24 @@ for each (field in formdata.fields) {
   }
 }
 
-if(idProtocollo == ""){
+if(idProtocolloAllegato == ""){
 	status.code = 400;
 	status.message = "ID protocollo non valorizzato";
 	status.redirect = true;
+} else if(filename == ""){
+	status.code = 400;
+	status.message = "filename allegato non valorizzato";
+	status.redirect = true;
+} else if(content==null){ 
+	status.code = 400;
+	status.message = "binario allegato non valorizzato";
+	status.redirect = true;
 } else {
-	var allegatoLuceneQuery = "@crlatti\\:idProtocollo\""+idProtocolloAllegato+"\"";
+	var allegatoLuceneQuery = "@crlatti\\:idProtocollo:\""+idProtocolloAllegato+"\"";
 	var allegatoResults = search.luceneSearch(allegatoLuceneQuery);
 	if(allegatoResults!=null && allegatoResults.length>0){
 		var allegatoNode = allegatoResults[0];
+		allegatoNode.properties.name=filename;
 		allegatoNode.properties.content.write(content);
 		allegatoNode.properties.content.setEncoding("UTF-8");
 		allegatoNode.properties.content.guessMimetype(filename);
