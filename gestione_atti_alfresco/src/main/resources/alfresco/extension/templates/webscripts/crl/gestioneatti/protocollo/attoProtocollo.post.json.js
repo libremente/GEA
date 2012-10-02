@@ -179,12 +179,15 @@ if(checkIsNotNull(esibenteMittente)){
 					} else {
 						//cerca il consigliere per nome o per cognome
 						var nomeCognomeConsigliereLuceneQuery = "TYPE:\"crlatti:consigliereAnagrafica\" AND ( @crlatti\\:nomeConsigliereAnagrafica\""+firmatario+"\" OR @crlatti\\:cognomeConsigliereAnagrafica\""+firmatario+"\")";
-						var nomeCognomeConsigliereResults = search.luceneSearch("@crlatti\\:nomeConsigliereAnagrafica\""+firmatario+"\"");
+						var nomeCognomeConsigliereResults = search.luceneSearch(nomeCognomeConsigliereLuceneQuery);
 						if(nomeCognomeConsigliereResults!=null && nomeCognomeConsigliereResults.length==1){
 							consigliereAnagraficaNode = nomeCognomeConsigliereResults[0];
 						}
 					}
-					firmatariArray.push(consigliereAnagraficaNode.name);
+					
+					if(consigliereAnagraficaNode!=null){
+						firmatariArray.push(consigliereAnagraficaNode.name);
+					}
 				}
 			}
 		}
