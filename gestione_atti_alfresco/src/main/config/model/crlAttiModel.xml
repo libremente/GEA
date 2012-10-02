@@ -218,6 +218,21 @@
 				<aspect>crlatti:protocollato</aspect>
 			</mandatory-aspects>
 		</type>
+				
+		<type name="crlatti:consigliereAnagrafica">
+			<title>Anagrafica consigliere</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:nomeConsigliereAnagrafica">
+					<title>Nome</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:cognomeConsigliereAnagrafica">
+					<title>Cognome</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
 		
 		<type name="crlatti:testo">
 			<title>Testo</title>
