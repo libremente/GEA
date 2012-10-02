@@ -19,28 +19,40 @@ import org.primefaces.model.TreeNode;
 public class ReportisticaController implements Serializable {
 	
 	private TreeNode root;
-	private TreeNode selectedNode;
-
-
-	
+	  
+	private TreeNode selectedNode;  
+		
 	
 	public ReportisticaController(){
 		
 		root = new DefaultTreeNode("Root", null);
-        TreeNode node0 = new DefaultTreeNode("Segment 0", root);
-        TreeNode node1 = new DefaultTreeNode("Segment 1", root);
-        TreeNode node2 = new DefaultTreeNode("Segment 2", root);
-        TreeNode node00 = new DefaultTreeNode("Segment 0.0", node0);
-        TreeNode node01 = new DefaultTreeNode("Segment 0.1", node0);
-        TreeNode node10 = new DefaultTreeNode("Segment 1.0", node1);
-        TreeNode node11 = new DefaultTreeNode("Segment 1.1", node1);
-        TreeNode node000 = new DefaultTreeNode("Segment 0.0.0", node00);
-        TreeNode node001 = new DefaultTreeNode("Segment 0.0.1", node00);
-        TreeNode node010 = new DefaultTreeNode("Segment 0.1.0", node01);
-        TreeNode node100 = new DefaultTreeNode("Segment 1.0.0", node10);
+		
+		
+		TreeNode servizioCommissioni = new DefaultTreeNode("Servizio commissioni", root);
+		TreeNode commissione = new DefaultTreeNode("Commissione", root);
+		TreeNode aula = new DefaultTreeNode("Aula", root);
+		
+		TreeNode estratti = new DefaultTreeNode("Estratti", servizioCommissioni);
+		TreeNode fascicoli = new DefaultTreeNode("Fascicoli", servizioCommissioni);
+		TreeNode statistiche = new DefaultTreeNode("Statistiche", servizioCommissioni);
+		
  
-
+		TreeNode xxx = new DefaultTreeNode("document","XXX.doc", fascicoli);
+		TreeNode yyy = new DefaultTreeNode("document", "YYY.doc", fascicoli);
+		
 
 	}
+	
+	public TreeNode getRoot() {
+		return root;
+	}
+	
+	public TreeNode getSelectedNode() {  
+	    return selectedNode;  
+	}  
+
+	public void setSelectedNode(TreeNode selectedNode) {  
+	    this.selectedNode = selectedNode;  
+	}  
 
 }
