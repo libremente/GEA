@@ -17,6 +17,17 @@ function checkIsNotNull(parameterValue){
 	}
 }
 
+function checkIsNull(parameterValue){
+	if(parameterValue==undefined 
+			|| parameterValue==null 
+			|| parameterValue==""
+			|| parameterValue=="null"){
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function filterParam(parameterValue){
 	if(checkIsNotNull(parameterValue)){
 		return parameterValue;
@@ -42,7 +53,7 @@ function getCommissioneTarget(json, passaggio, commissione){
 	
 	// seleziono il passaggio corrente
 	for(var i=0; i<passaggi.length(); i++) {
-		var passaggioTemp = passaggi.get(i);
+		var passaggioTemp = passaggi.get(i).get("passaggio");
 		if(""+passaggioTemp.get("nome") == ""+passaggio+"") {
 		
 			var commissioni = passaggioTemp.get("commissioni");
