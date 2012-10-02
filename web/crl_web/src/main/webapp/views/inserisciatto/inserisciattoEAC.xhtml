@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:form>
+
+    <p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
+					widgetVar="uploadAllegatoAttributesDialog" style="width:450px" message="Allega file">
+					<p:panelGrid id="uploadpanelalleg">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="isPubblico" value="Pubblico: " />
+								<p:selectBooleanCheckbox id="isPubblicoAllegato"
+									value="#{inserisciEACController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true"></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:fileUpload label="Carica Allegato"
+									oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
+									update="listaAllegati "
+									fileUploadListener="#{inserisciEACController.uploadAllegato}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton id="declineUploadAllegato" value="Annulla"
+									onclick="uploadAllegatoAttributesDialog.hide()" type="button" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:confirmDialog>
+
+
+
+	<p:fieldset legend="Dati dell' Atto" collapsed="false"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="insertattopanel">
+
+
+
+
+			<p:growl id="inserimentoMsg" showDetail="true" sticky="false" />
+
+			<p:row>
+				<p:column colspan="3">
+					<p:messages id="msgs" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="numeroatto" value="Numero Atto: *" />
+				</p:column>
+				<p:column>
+					<p:inputText id="numeroatto"
+						value="#{inserisciEACController.numeroAtto}" required="true"
+						requiredMessage="Numero Atto obbligatorio" />
+				</p:column>
+				<p:column>
+					<p:message for="numeroatto" display="icon" />
+				</p:column>
+
+			</p:row>
+
+
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="dataatto" value="Data Atto: *" />
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it_IT" id="dataatto"
+						pattern="dd/MM/yyyy" value="#{inserisciEACController.dataAtto}" />
+				</p:column>
+
+
+			</p:row>
+
+
+
+
+
+			<p:row>
+
+				<p:column>
+					<h:outputLabel for="noteatto" value="Note :" />
+				</p:column>
+
+				<p:column>
+					<p:inputTextarea rows="5" cols="101"
+						value="#{inserisciEACController.noteAtto}" id="noteatto">
+					</p:inputTextarea>
+
+				</p:column>
+			</p:row>
+
+
+		</p:panelGrid>
+
+
+	</p:fieldset>
+
+	<p:fieldset legend="Allegati" collapsed="false" toggleable="true"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="allegatopanel">
+			<p:row>
+
+				<p:column colspan="3">
+
+
+					<p:commandButton value="Carica Allegato"
+						oncomplete="uploadAllegatoAttributesDialog.show()">
+					</p:commandButton>
+
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
+
+					<h:dataTable id="listaAllegati"
+						value="#{inserisciEACController.allegatiEAC}" var="allegato"
+						styleClass="generalInfoTab grey-text">
+
+						<h:column>
+							<f:facet name="header">Descrizione Allegato</f:facet>
+							#{allegato.nome}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Documento</f:facet>
+							<h:outputText
+								value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
+
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Pubblico</f:facet>
+							<h:outputText value="si" rendered="#{allegato.pubblico}" />
+							<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="allegatoDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{allegato.id}"
+									target="#{inserisciEACController.allegatoEACToDelete}" />
+							</p:commandButton>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Download</f:facet>
+
+							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{allegato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{allegato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{allegato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</h:column>
+
+
+					</h:dataTable>
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
+	</p:fieldset>
+
+	<p:fieldset
+		legend="Collegamenti con Atti di indirizzo e Sindacato Ispettivo"
+		collapsed="false" toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="collegamenti">
+
+
+			<p:row>
+				<p:column colspan="4">
+
+					<!-- Messaggio azioni -->
+					<p:growl id="attiIndirizzoMsg" showDetail="true" sticky="false" />
+
+					<!-- Confirm dialog -->
+					<p:confirmDialog id="confirmCollegamentoAttoSindacatoDialog"
+						message="Sei sicuro di voler eliminare il Collegamento ?"
+						header="Cancellazione Collegamento" severity="alert"
+						widgetVar="collegamentoAttoSindacatoDialog">
+
+						<p:commandButton id="confirmAttoSindacatoCollegamento"
+							value="Conferma"
+							oncomplete="collegamentoAttoSindacatoDialog.hide()"
+							action="#{inserisciEACController.removeCollegamentoAttoSindacato}"
+							update="listaCollegamentiAttiSindacati" />
+						<p:commandButton id="declineCollegamentoAttoSindacato"
+							value="Annulla" onclick="collegamentoAttoSindacatoDialog.hide()"
+							type="button" />
+					</p:confirmDialog>
+
+
+
+					<p:panelGrid id="addAttoSindacatoPanel" styleClass="tableAppend">
+						<f:facet name="header">
+							<p:row>
+								<p:column>N. Atto</p:column>
+								<p:column>Tipo</p:column>
+								<p:column>Descrizione</p:column>
+								<p:column></p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:selectOneMenu id="numAttoSindacato"
+									value="#{inserisciEACController.numeroAttoSindacato}">
+									<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
+									<f:selectItem itemLabel="1234" itemValue="1234" />
+									<f:selectItem itemLabel="5678" itemValue="5678" />
+									<f:selectItems
+										value="#{inserisciEACController.numeriAttoSindacato}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu id="tipoAttoSindacato"
+									value="#{inserisciEACController.tipoAttoSindacato}">
+									<f:selectItem itemLabel="Scegli tipo Atto" itemValue="" />
+									<f:selectItem itemLabel="ITR" itemValue="ITR" />
+									<f:selectItem itemLabel="ITL" itemValue="ITL" />
+									<f:selectItems
+										value="#{inserisciEACController.tipiAttoSindacato}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column>
+								<p:inputText id="descrizionAttoSindacato"
+									value="#{inserisciEACController.descrizioneAttoSindacato}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Aggiungi"
+									action="#{inserisciEACController.addCollegamentoAttoSindacato}"
+									id="addCollegamentoAttoSindacato"
+									update="listaCollegamentiAttiSindacati, attiIndirizzoMsg"
+									icon="new-icon" />
+							</p:column>
+
+						</p:row>
+
+					</p:panelGrid>
+
+				</p:column>
+			</p:row>
+
+			<br />
+
+			<p:row>
+				<p:column colspan="4">
+
+
+					<p:dataTable id="listaCollegamentiAttiSindacati"
+						value="#{inserisciEACController.collegamentiAttiSindacato}"
+						var="collegamento" styleClass="generalInfoTab" editable="true">
+
+						<p:column headerText="Tipo Atto" style="width:125px">
+							#{collegamento.tipoAtto}
+    			</p:column>
+
+						<p:column headerText="N.Atto" style="width:125px">
+					#{collegamento.numeroAtto}
+				</p:column>
+
+						<p:column headerText="Descrizione" style="width:125px">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{collegamento.descrizione}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{collegamento.descrizione}"
+										style="width:100%">
+										<p:ajax event="change"
+											listener="#{inserisciEACController.updateAttiIndirizzoHandler}" />
+									</p:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Azioni" style="width:125px">
+
+							<p:commandButton
+								oncomplete="collegamentoAttoSindacatoDialog.show()"
+								icon="delete-icon">
+								<f:setPropertyActionListener value="#{collegamento.numeroAtto}"
+									target="#{inserisciEACController.attoSindacatoToDelete}" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor />
+						</p:column>
+
+					</p:dataTable>
+				</p:column>
+			</p:row>
+
+
+
+		</p:panelGrid>
+	</p:fieldset>
+
+
+</h:form>
+</html>

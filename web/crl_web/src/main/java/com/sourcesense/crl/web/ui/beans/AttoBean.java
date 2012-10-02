@@ -43,17 +43,17 @@ public class AttoBean implements Serializable {
 	private String tipoIniziativa;
 	private String oggetto;
 	private Date dataAssegnazione;
-	private String esitoValidazione;    
+	private String esitoValidazione;
 	private Date dataValidazione;
 
 	private String descrizioneIniziativa;
 	private String numeroDGR;
-	private Date   dataDGR;
+	private Date dataDGR;
 	private String assegnazione;
 	private String id;
 	private String tipo;
 	private String primoFirmatario;
-	private Date   dataPresentazione;
+	private Date dataPresentazione;
 	private String stato;
 	private String anno;
 
@@ -63,12 +63,12 @@ public class AttoBean implements Serializable {
 	private boolean redigente;
 	private boolean deliberante;
 	private String numeroLR;
-	private boolean abbinamento;	
+	private boolean abbinamento;
 	private boolean stralcio;
-	private String relatore;	
-	private String organismoStatutario;	
-	private String soggettoConsultato;	
-	private boolean rinviato;	
+	private String relatore;
+	private String organismoStatutario;
+	private String soggettoConsultato;
+	private boolean rinviato;
 	private boolean sospeso;
 
 	private Date dataAssegnazioneCommissioni;
@@ -92,74 +92,102 @@ public class AttoBean implements Serializable {
 	private String noteAmmissibilita;
 	private String noteNoteAllegatiPresentazioneAssegnazione;
 
-	private List <Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
-	private List <Commissione> commissioni = new ArrayList<Commissione>();
-	
+	private List<Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
+	private List<Commissione> commissioni = new ArrayList<Commissione>();
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 
-	
-	public boolean containCommissione (String commissione){
-		
-		//le commissioni sono definite nel primo passaggio
-		for (Commissione commissioneRec : this.atto.getPassaggi().get(0).getCommissioni()) {
-			
-			if(commissioneRec.getDescrizione().equalsIgnoreCase(commissione)){
-				
+	public boolean containCommissione(String commissione) {
+
+		// le commissioni sono definite nel primo passaggio
+		for (Commissione commissioneRec : this.atto.getPassaggi().get(0)
+				.getCommissioni()) {
+
+			if (commissioneRec.getDescrizione().equalsIgnoreCase(commissione) 
+					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	
-    public Commissione getWorkingCommissione(String descrizione){
-		
-    	Commissione commissioneRet=null;
-    	
+
+	public Commissione getCommissioneReferente() {
+
+		Commissione commissioneRet = null;
+
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
-			
-			if(commissioneRec.getDescrizione().equalsIgnoreCase(descrizione) && !commissioneRec.isAnnullata()){
-				
-				commissioneRet=commissioneRec;
+
+			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_REFERENTE) && !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+
+				commissioneRet = commissioneRec;
 			}
 		}
-		
+
 		return commissioneRet;
 	}
-	
-    public Aula getWorkingAula(){
-		
-		return atto.getPassaggi().get(atto.getPassaggi().size()-1).getAula();
-		
-	}
-    
-	public Passaggio getLastPassaggio(){
-		
-		return atto.getPassaggi().get(atto.getPassaggi().size()-1);
-		
-	}
-	
-    public Passaggio getPassaggio(String pass){
-	   
-    	Passaggio passaggioSelected = null;
-    	
-       for (Passaggio passaggioRec : this.atto.getPassaggi()) {
-			
-    		if(passaggioRec.getNome().equalsIgnoreCase(pass)){
-    			
-    			passaggioSelected=passaggioRec;
-    		}
+
+	public Commissione getCommissioneDeliberante() {
+
+		Commissione commissioneRet = null;
+
+		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
+
+			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_DELIBERANTE) && !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+
+				commissioneRet = commissioneRec;
+			}
 		}
-       
-       return passaggioSelected;
-		
+
+		return commissioneRet;
 	}
-	
-	
-	
+
+	public Commissione getWorkingCommissione(String descrizione) {
+
+		Commissione commissioneRet = null;
+
+		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
+
+			if (commissioneRec.getDescrizione().equalsIgnoreCase(descrizione)
+					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+
+				commissioneRet = commissioneRec;
+			}
+		}
+
+		return commissioneRet;
+	}
+
+	public Aula getWorkingAula() {
+
+		return atto.getPassaggi().get(atto.getPassaggi().size() - 1).getAula();
+
+	}
+
+	public Passaggio getLastPassaggio() {
+
+		return atto.getPassaggi().get(atto.getPassaggi().size() - 1);
+
+	}
+
+	public Passaggio getPassaggio(String pass) {
+
+		Passaggio passaggioSelected = null;
+
+		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
+
+			if (passaggioRec.getNome().equalsIgnoreCase(pass)) {
+
+				passaggioSelected = passaggioRec;
+			}
+		}
+
+		return passaggioSelected;
+
+	}
+
 	/* Services */
 	public AttoServiceManager getAttoServiceManager() {
 		return attoServiceManager;
@@ -184,8 +212,8 @@ public class AttoBean implements Serializable {
 	public void setCodice(String codice) {
 		this.codice = codice;
 
-		//		if (codice != null)
-		//			setAtto(attoServiceManager.get(codice));
+		// if (codice != null)
+		// setAtto(attoServiceManager.get(codice));
 	}
 
 	/**
@@ -340,10 +368,6 @@ public class AttoBean implements Serializable {
 		this.atto.setDataValidazione(dataValidazione);
 	}
 
-	
-
-
-
 	public String getDescrizioneIniziativa() {
 		return atto.getDescrizioneIniziativa();
 	}
@@ -432,7 +456,6 @@ public class AttoBean implements Serializable {
 		this.atto.setNumeroProtocollo(numeroProtocollo);
 	}
 
-	
 	public String getFirmatario() {
 		return atto.getFirmatario();
 	}
@@ -449,7 +472,6 @@ public class AttoBean implements Serializable {
 		this.atto.setTipoChiusura(tipoChiusura);
 	}
 
-	
 	public boolean isRedigente() {
 		return atto.isRedigente();
 	}
@@ -465,7 +487,6 @@ public class AttoBean implements Serializable {
 	public void setDeliberante(boolean deliberante) {
 		this.atto.setDeliberante(deliberante);
 	}
-	
 
 	public String getNumeroLR() {
 		return atto.getNumeroLr();
@@ -491,7 +512,6 @@ public class AttoBean implements Serializable {
 		this.atto.setStralcio(stralcio);
 	}
 
-
 	public String getOrganismoStatutario() {
 		return atto.getOrganismoStatutario();
 	}
@@ -508,8 +528,6 @@ public class AttoBean implements Serializable {
 		this.atto.setSoggettoConsultato(soggettoConsultato);
 	}
 
-	
-
 	public boolean isRinviato() {
 		return atto.isRinviato();
 	}
@@ -525,7 +543,6 @@ public class AttoBean implements Serializable {
 	public void setSospeso(boolean sospeso) {
 		this.atto.setSospeso(sospeso);
 	}
-
 
 	public Date getDataLR() {
 		return atto.getDataLR();
@@ -567,7 +584,6 @@ public class AttoBean implements Serializable {
 		this.atto.setStatoChiusura(statoChiusura);
 	}
 
-	
 	public String getValutazioneAmmissibilita() {
 		return atto.getValutazioneAmmissibilita();
 	}
@@ -588,8 +604,7 @@ public class AttoBean implements Serializable {
 		return atto.getDataRicevimentoInformazioni();
 	}
 
-	public void setDataRicevimentoInformazioni(
-			Date dataRicevimentoInformazioni) {
+	public void setDataRicevimentoInformazioni(Date dataRicevimentoInformazioni) {
 		this.atto.setDataRicevimentoInformazioni(dataRicevimentoInformazioni);
 	}
 
@@ -647,7 +662,8 @@ public class AttoBean implements Serializable {
 
 	public void setNoteNoteAllegatiPresentazioneAssegnazione(
 			String noteNoteAllegatiPresentazioneAssegnazione) {
-		this.atto.setNotePresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
+		this.atto
+				.setNotePresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
 	}
 
 	public Date getDataAssegnazioneCommissioni() {
@@ -657,20 +673,13 @@ public class AttoBean implements Serializable {
 	public void setDataAssegnazioneCommissioni(Date dataAssegnazioneCommissioni) {
 		this.atto.setDataAssegnazioneCommissioni(dataAssegnazioneCommissioni);
 	}
-	
-	
-	
+
 	public List<Abbinamento> getAbbinamenti() {
 		return getLastPassaggio().getAbbinamenti();
 	}
 
-
 	public List<Commissione> getCommissioni() {
 		return getLastPassaggio().getCommissioni();
 	}
-	
-	
-	
-	
-}
 
+}

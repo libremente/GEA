@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -18,9 +19,12 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class ComitatoRistretto {
-	
+	                         
+	@JsonProperty("componenti")
 	private List<Componente> componenti = new ArrayList<Componente>();
+	
 	private List<Allegato> testi = new ArrayList<Allegato>();
+	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	 }

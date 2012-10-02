@@ -5,19 +5,26 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.StatoAtto;
+import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 @ManagedBean(name = "chiusuraIterController")
 @ViewScoped
 public class ChiusuraIterController {
 	
+	
+	@ManagedProperty(value = "#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager;
+	
 	private Atto atto = new Atto();
 	
-	private Date dataChiusura;
+	private Date dataChiusura = new Date();
 	private String tipoChiusura;
 	private String note;
 	private String numRiferimentoBurl;
@@ -35,7 +42,10 @@ public class ChiusuraIterController {
 	
 	
 	public void chiusuraAtto() {
-		//TODO: alfresco service
+		
+		this.atto.setStato(StatoAtto.CHIUSO);
+		
+		attoServiceManager.chiusuraAtto(atto);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -48,7 +58,7 @@ public class ChiusuraIterController {
 		attoBean.getAtto().setDataPubblicazioneBURL(getDataBurl());
 		attoBean.getAtto().setNumeroLr(getNumeroLr());
 		attoBean.getAtto().setDataLR(getDataLr());
-		
+		attoBean.setStato(StatoAtto.CHIUSO);
 		context.addMessage(null, new FacesMessage("Atto chiuso con successo", ""));
 	}
 	
@@ -118,6 +128,18 @@ public class ChiusuraIterController {
 	public void setDataLr(Date dataLr) {
 		this.atto.setDataLR(dataLr);
 	}
+
+
+	public AttoServiceManager getAttoServiceManager() {
+		return attoServiceManager;
+	}
+
+
+	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+		this.attoServiceManager = attoServiceManager;
+	}
+	
+	
 	
 	
 }

@@ -45,6 +45,14 @@ public class CommissioneServiceManager implements ServiceManager{
 		return false;
 	}
 	
+	public void salvaEmendamentiClausoleEsameCommissioni(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_clausole_esame_commissioni", null), esameCommissione);
+	}
+	
+	public void salvaVotazioneEsameCommissioni(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_commissioni", null), esameCommissione);
+	}
+	
 	public void salvaPresaInCaricoEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_presa_in_carico_esame_commissioni", null), esameCommissione);
 	}

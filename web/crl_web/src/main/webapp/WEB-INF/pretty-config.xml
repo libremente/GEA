@@ -23,10 +23,15 @@
         
     </url-mapping>
     
-     <url-mapping id="Reportistica"> 
+    <url-mapping id="Inserimento_EAC"> 
+        <pattern value="/inserisciattoEAC" /> 
+        <view-id value="views/inserisciatto/inserisciatto_baseEAC.xhtml" />
         
-        <pattern value="/reportistica" /> 
-        <view-id value="views/reportistica/reportistica_base.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="Inserimento_MIS"> 
+        <pattern value="/inserisciattoMIS" /> 
+        <view-id value="views/inserisciatto/inserisciatto_baseMIS.xhtml" />
         
     </url-mapping>
     
@@ -84,7 +89,12 @@
           
     </url-mapping> 
 
-     
+       <url-mapping id="Reportistica"> 
+        
+        <pattern value="/reportistica" /> 
+        <view-id value="views/reportistica/reportistica_base.xhtml" />
+        
+    </url-mapping>
           
 
 

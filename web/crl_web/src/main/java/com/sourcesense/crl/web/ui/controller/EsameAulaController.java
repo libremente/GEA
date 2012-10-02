@@ -19,6 +19,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.Link;
+import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.model.TestoAtto;
@@ -477,7 +478,7 @@ public class EsameAulaController {
 		esameAula.setAtto(attoBean.getAtto());
 		
 		
-		aulaServiceManager.salvaRinvioEsameEsameAula(esameAula);
+		Passaggio passaggio = aulaServiceManager.salvaRinvioEsameEsameAula(esameAula);
 		
 		
 		attoBean.getWorkingAula().setDataSedutaRinvio(aulaUser.getDataSedutaRinvio());

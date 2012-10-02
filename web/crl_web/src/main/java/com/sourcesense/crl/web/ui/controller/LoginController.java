@@ -4,6 +4,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
@@ -14,7 +15,7 @@ import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
-@ManagedBean(name = "loginController")
+@ManagedBean(name = "loginController")    
 @RequestScoped
 public class LoginController {
 
@@ -49,6 +50,12 @@ public class LoginController {
 
 		}
 
+	}
+	
+	
+	public String logout() {
+	    ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
+	     return "pretty:login";
 	}
 
 	public User getUser() {

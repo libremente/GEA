@@ -20,6 +20,7 @@ public class OrganismoStatutario {
 	private Date dataAssegnazione;
 	private Date dataAnnullo;
 	private boolean obbligatorio;
+	private Parere parere = new Parere();
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -58,6 +59,15 @@ public class OrganismoStatutario {
 	public void setObbligatorio(boolean obbligatorio) {
 		this.obbligatorio = obbligatorio;
 	}
+
+	public Parere getParere() {
+		return parere;
+	}
+
+	public void setParere(Parere parere) {
+		this.parere = parere;
+	}
+	
 	
 
 }

@@ -18,8 +18,10 @@
 		<c:set value="Home" var="home" />
 		<c:set value="Gestione_Sedute" var="gestioneSed" />
 		<c:set value="Inserimento_Atto" var="insAtto" />
+		<c:set value="Inserimento_EAC" var="insEAC" />
+		<c:set value="Inserimento_MIS" var="insMIS" />
 		<c:if
-			test="#{ !(function == gestioneSed) and !(function  == insAtto) and !(function == home) }"
+			test="#{ !(function == gestioneSed) and !(function  == insAtto) and !(function == home) and !(function == insEAC) and !(function == insMIS) }"
 			var="attoVisible" />
 		<p:row style="background-color: #E6E6FA !important;">
 

@@ -2,6 +2,8 @@ package com.sourcesense.crl.business.service.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Component;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.CommissioneReferente;
+import com.sourcesense.crl.business.model.ConsultazioneParere;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
@@ -106,6 +109,8 @@ public class AttoService {
 		String responseMsg = response.getEntity(String.class);
 
 		try {
+			
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			atto = objectMapper.readValue(responseMsg, Atto.class);
 
 		} catch (JsonMappingException e) {
@@ -294,6 +299,53 @@ public class AttoService {
 						+ response.getStatus()
 						+ ": Alfresco non raggiungibile ");
 			}
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+
+	}
+	
+	
+	public void salvaPareri(String url, ConsultazioneParere consultazioneParere) {
+
+		try {
+            WebResource webResource = client.resource(url);
+			
+			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			objectMapper.getSerializationConfig().setDateFormat(myDateFormat);
+			
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+				false);
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
+					false);
+			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
+					false);
+			
+			String json = objectMapper.writeValueAsString(consultazioneParere);
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+			
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
+					true);
+			
+			
 		} catch (JsonMappingException e) {
 
 			throw new ServiceNotAvailableException(this.getClass()

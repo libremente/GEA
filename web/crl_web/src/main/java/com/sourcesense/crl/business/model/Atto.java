@@ -118,6 +118,7 @@ public class Atto implements Cloneable
 	private List <Organo> organi = new ArrayList<Organo>();
 	private List <Firmatario> firmatari = new ArrayList<Firmatario>();
 	private List <Relatore> relatori = new ArrayList<Relatore>();
+	//TODO eleiminare pareri
 	private List <Parere> pareri = new ArrayList<Parere>();
 	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
 	private List <Allegato> allegati = new ArrayList<Allegato>();

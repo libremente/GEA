@@ -35,13 +35,13 @@ public class UserBean implements Serializable{
 	@PostConstruct
 	public void init(){
 		
-		GruppoUtente g1 = new GruppoUtente();
-		g1.setNome("Commissione2");
-		this.getUser().setSessionGroup(g1);
 	}
 	
 	
-	
+	public String getUserGroupName(){
+		
+		return user.getSessionGroup().getNome();
+	}
 	
 	public User getUser() {
 		return user;

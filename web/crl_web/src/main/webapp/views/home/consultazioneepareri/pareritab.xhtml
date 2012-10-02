@@ -70,7 +70,7 @@
 				</p:confirmDialog>
 
 				<h:dataTable id="listaPareri"
-					value="#{consultazioniPareriController.pareriList}" var="parere"
+					value="#{consultazioniPareriController.organismiList}" var="organismo"
 					styleClass="generalInfoTab grey-text">
 
 					<h:column>
@@ -78,18 +78,18 @@
 							action="#{consultazioniPareriController.showParereDetail}"
 							update=":consultazioniPareriForm:tabView:dettagliparerepanel">
 							<f:setPropertyActionListener value="#{parere.descrizione}"
-								target="#{consultazioniPareriController.descrizioneParereSelected}" />
+								target="#{consultazioniPareriController.descrizioneOrganismoSelected}" />
 						</p:commandButton>
 					</h:column>
 
 					<h:column>
 						<f:facet name="header">Organismo Statutario</f:facet>
-							#{parere.descrizione}
+							#{organismo.descrizione}
     			       </h:column>
 
 					<h:column>
 						<f:facet name="header">Richiesto</f:facet>
-						<h:outputText value="#{parere.dataAssegnazione}">
+						<h:outputText value="#{organismo.dataAssegnazione}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 
@@ -97,7 +97,7 @@
 
 					<h:column>
 						<f:facet name="header">Ricevuto</f:facet>
-						<h:outputText value="#{parere.dataRicezioneOrgano}">
+						<h:outputText value="#{organismo.parere.dataRicezioneOrgano}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 
@@ -105,7 +105,7 @@
 
 					<h:column>
 						<f:facet name="header">Esito</f:facet>
-							#{parere.esito}
+							#{organismo.parere.esito}
 						</h:column>
 
 					<h:column>

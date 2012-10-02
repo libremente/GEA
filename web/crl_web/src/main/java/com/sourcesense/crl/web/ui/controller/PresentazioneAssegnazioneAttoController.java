@@ -118,7 +118,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private String commissioneToAnnul;
 
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
-	private List<Parere> pareriList = new ArrayList<Parere>();
+	private List<OrganismoStatutario> organismiList = new ArrayList<OrganismoStatutario>();
 
 	private String nomeOrganismoStatutario;
 	private Date dataAssegnazioneParere;
@@ -156,7 +156,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto.getFirmatari()));
 		this.commissioniList = new ArrayList<Commissione>(Clonator.cloneList(atto.getPassaggi().get(0).getCommissioni()));
-		this.pareriList = new ArrayList<Parere>(Clonator.cloneList(atto.getPareri()));
+		this.organismiList = new ArrayList<OrganismoStatutario>(Clonator.cloneList(atto.getOrganismiStatutari()));
 		this.linksList = new ArrayList<Link>(Clonator.cloneList(atto.getLinksPresentazioneAssegnazione()));
 
 
@@ -549,7 +549,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 		for (Commissione element : commissioniList) {
 
-			if (element.getDescrizione().equals(nomeCommissione)) {
+			if (element.getDescrizione().equals(nomeCommissione) 
+					&& !element.getStato().equals(Commissione.STATO_ANNULLATO)) {
 
 				return false;
 			}
@@ -590,12 +591,12 @@ public class PresentazioneAssegnazioneAttoController {
 						""));
 
 			} else {
-				Parere parere = new Parere();
+				OrganismoStatutario parere = new OrganismoStatutario();
 				parere.setDescrizione(nomeOrganismoStatutario);
 				parere.setDataAssegnazione(dataAssegnazioneParere);
 				parere.setDataAnnullo(dataAnnulloParere);
 				parere.setObbligatorio(obbligatorio);
-				pareriList.add(parere);
+				organismiList.add(parere);
 
 				updateAssegnazioneHandler();
 			}
@@ -604,11 +605,11 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void removeParere() {
 
-		for (Parere element : pareriList) {
+		for (OrganismoStatutario element : organismiList) {
 
 			if (element.getDescrizione().equals(parereToDelete)) {
 
-				pareriList.remove(element);
+				organismiList.remove(element);
 				break;
 			}
 		}
@@ -616,7 +617,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private boolean checkPareri() {
 
-		for (Parere element : pareriList) {
+		for (OrganismoStatutario element : organismiList) {
 
 			if (element.getDescrizione().equals(nomeOrganismoStatutario)) {
 
@@ -632,7 +633,7 @@ public class PresentazioneAssegnazioneAttoController {
 		
 		changeStatoCommissioni(Commissione.STATO_ASSEGNATO);
 		this.atto.getPassaggi().get(0).setCommissioni(commissioniList);
-		this.atto.setPareri(pareriList);
+		this.atto.setOrganismiStatutari(organismiList);
 		this.atto.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
 		attoServiceManager.salvaAssegnazionePresentazione(atto);
 
@@ -642,7 +643,7 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 
 		attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
-		attoBean.getAtto().setPareri(pareriList);
+		attoBean.getAtto().setOrganismiStatutari(organismiList);
 		attoBean.getAtto().setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
 
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
@@ -1325,12 +1326,12 @@ public class PresentazioneAssegnazioneAttoController {
 		this.allegatiList = allegatiList;
 	}
 
-	public List<Parere> getPareriList() {
-		return pareriList;
+	public List<OrganismoStatutario> getOrganismiList() {
+		return organismiList;
 	}
 
-	public void setPareriList(List<Parere> pareriList) {
-		this.pareriList = pareriList;
+	public void setOrganismiList(List<OrganismoStatutario> pareriList) {
+		this.organismiList = organismiList;
 	}
 
 	public Date getDataPresaInCarico() {

@@ -19,6 +19,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.EsameCommissione;
+import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
@@ -39,6 +40,62 @@ public class AulaService {
 	@Autowired
 	ObjectMapper objectMapper;
 	
+	
+	
+	
+	public Passaggio rinvioEsame(String url, EsameAula esameAula) {
+		
+		Passaggio passaggio = null;
+		
+		try {
+			WebResource webResource = client.resource(url);
+			
+			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			objectMapper.getSerializationConfig().setDateFormat(myDateFormat);
+			
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+				false);
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
+					false);
+			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
+					false);
+			
+			String json = objectMapper.writeValueAsString(esameAula);
+	
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+			
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
+					true);
+			
+			String responseMsg = response.getEntity(String.class);
+			passaggio = objectMapper.readValue(responseMsg, Passaggio.class);
+			
+			
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		
+		return passaggio;
+
+	}
 	
 	public void merge(String url, EsameAula esameAula) {
 		try {

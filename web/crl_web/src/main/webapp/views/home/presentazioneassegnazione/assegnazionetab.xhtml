@@ -313,25 +313,25 @@
 						<p:column colspan="5">
 
 							<p:dataTable id="listaPareri"
-								value="#{presentazioneAssegnazioneAttoController.pareriList}"
-								var="parere" styleClass="generalInfoTab grey-text"
+								value="#{presentazioneAssegnazioneAttoController.organismiList}"
+								var="organismo" styleClass="generalInfoTab grey-text"
 								editable="true">
 
 								<p:column headerText="Nome">
-									#{parere.descrizione}
+									#{organismo.descrizione}
 									</p:column>
 
 
 								<p:column headerText="Data Assegnazione">
 									<p:cellEditor>
 										<f:facet name="output">
-											<h:outputText value="#{parere.dataAssegnazione}">
+											<h:outputText value="#{organismo.dataAssegnazione}">
 												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 											</h:outputText>
 										</f:facet>
 										<f:facet name="input">
 											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-												value="#{parere.dataAssegnazione}" />
+												value="#{organismo.dataAssegnazione}" />
 										</f:facet>
 									</p:cellEditor>
 								</p:column>
@@ -339,13 +339,13 @@
 								<p:column headerText="Data Annullo">
 									<p:cellEditor>
 										<f:facet name="output">
-											<h:outputText value="#{parere.dataAnnullo}">
+											<h:outputText value="#{organismo.dataAnnullo}">
 												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 											</h:outputText>
 										</f:facet>
 										<f:facet name="input">
 											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-												value="#{parere.dataAnnullo}" />
+												value="#{organismo.dataAnnullo}" />
 										</f:facet>
 									</p:cellEditor>
 								</p:column>
@@ -355,11 +355,11 @@
 								<p:column headerText="Obbligatorio">
 									<p:cellEditor>
 										<f:facet name="output">
-											<h:outputText value="si" rendered="#{parere.obbligatorio}" />
-											<h:outputText value="no" rendered="#{!parere.obbligatorio}" />
+											<h:outputText value="si" rendered="#{organismo.obbligatorio}" />
+											<h:outputText value="no" rendered="#{!organismo.obbligatorio}" />
 										</f:facet>
 										<f:facet name="input">
-											<p:selectBooleanCheckbox value="#{parere.obbligatorio}" />
+											<p:selectBooleanCheckbox value="#{organismo.obbligatorio}" />
 										</f:facet>
 									</p:cellEditor>
 								</p:column>
@@ -369,7 +369,7 @@
 									<p:commandButton oncomplete="parereDialog.show()"
 										icon="delete-icon">
 
-										<f:setPropertyActionListener value="#{parere.descrizione}"
+										<f:setPropertyActionListener value="#{organismo.descrizione}"
 											target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
 									</p:commandButton>
 								</p:column>

@@ -52,7 +52,6 @@ public class CommissioneService {
 					false);
 			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
 					false);
-			//objectMapper.getSerializationConfig().addMixInAnnotations(Commissione.class, Commissione.class);
 			
 			String json = objectMapper.writeValueAsString(esameCommissione);
 	

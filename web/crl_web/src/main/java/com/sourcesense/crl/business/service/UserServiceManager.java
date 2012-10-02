@@ -32,12 +32,9 @@ public class UserServiceManager implements ServiceManager {
 		urlBuilder.setAlfrescoSessionTicket(userService.getAuthenticationToken(urlBuilder.buildURL("alfresco_context_url","alfresco_authentication"),user));
 
 		User sessionUser = userService.completeAuthentication(urlBuilder.buildAlfrescoURL("alfresco_context_url","alf_gruppi_utente",null),user);
-
-		//TODO: MOCK
-		GruppoUtente g1 = new GruppoUtente();
-		g1.setNome("Commissione2");
-		sessionUser.setSessionGroup(g1);
-
+        
+		sessionUser.setSessionGroup(sessionUser.getGruppi().get(0));
+		
 		if(urlBuilder.getAlfrescoSessionTicket()!=null){
 			return sessionUser;
 		}else{

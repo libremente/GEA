@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:form>
+
+	<p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
+		widgetVar="uploadAllegatoAttributesDialog" style="width:450px"
+		message="Allega file">
+		<p:panelGrid id="uploadpanelalleg">
+			<p:row>
+				<p:column >
+					<h:outputLabel for="isPubblico" value="Pubblico: " />
+					<p:selectBooleanCheckbox id="isPubblicoAllegato"
+						value="#{inserisciEACController.currentFilePubblico}">
+						<p:ajax event="change" immediate="true"></p:ajax>
+					</p:selectBooleanCheckbox>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:fileUpload label="Carica Allegato"
+						oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
+						update="listaAllegati "
+						fileUploadListener="#{inserisciEACController.uploadAllegato}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton id="declineUploadAllegato" value="Annulla"
+						onclick="uploadAllegatoAttributesDialog.hide()" type="button" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:confirmDialog>
+
+
+
+	<p:fieldset legend="Dati dell' Atto" collapsed="false"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid style="width:90%;"  id="insertattopanel">
+
+			<p:growl id="inserimentoMsg" showDetail="true" sticky="false" />
+
+			<p:row>
+				<p:column colspan="4">
+					<p:messages id="msgs" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="numerorepertorio" value="Numero repertorio: *" />
+				</p:column>
+				<p:column style="width: 25%;">
+					<p:inputText id="numerorepertorio"
+						value="#{inserisciMISController.numeroRepertorio}" required="true"
+						requiredMessage="Numero Repertorio obbligatorio" />
+				</p:column>
+				<p:column colspan="2">
+					<p:message for="numerorepertorio" display="icon" />
+				</p:column>
+
+			</p:row>
+
+			<p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="oggetto" value="Oggetto: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputText id="oggetto" value="#{inserisciMISController.oggetto}" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="datainiziativacomitato"
+						value="Data iniziativa comitato: " />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:calendar size="10" locale="it_IT" id="datainiziativacomitato"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataIniziativaComitato}" />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<h:outputLabel for="datapropostacommissione"
+						value="Data proposta commissione: " />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:calendar size="10" locale="it_IT" id="datacropostacommissione"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataPropostaCommissione}" />
+				</p:column>
+
+			</p:row>
+
+			<p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="commissionecomp"
+						value="Commissione competente: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:selectOneMenu id="commissionecomp"
+						value="#{inserisciMISController.commissioneCompetente}">
+						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
+						<f:selectItems value="#{inserisciMISController.commissioni}" />
+
+					</p:selectOneMenu>
+				</p:column>
+
+
+			</p:row>
+
+
+			<p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="esitovotoint" value="Esito voto intesa: " />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:selectOneMenu id="esitovotoint"
+						value="#{inserisciMISController.esitoVotoIntesa}">
+						<f:selectItem itemLabel="Scegli esito" itemValue="" />
+
+
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<h:outputLabel for="dataintesa" value="Data intesa: " />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:calendar size="10" locale="it_IT" id="dataintesa"
+						pattern="dd/MM/yyyy" value="#{inserisciMISController.dataIntesa}" />
+				</p:column>
+
+			</p:row>
+
+
+			<p:row>
+
+				<p:column style="width: 25%;">
+					<h:outputLabel for="datarispostaromitato"
+						value="Data risposta Comitato :" />
+				</p:column>
+
+				<p:column colspan="3">
+					<p:calendar size="10" locale="it_IT" id="datarispostaromitato"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataRispostaComitato}" />
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="dataapprovazioneprogetto"
+						value="Data Approvazione Progetto :" />
+				</p:column>
+
+				<p:column colspan="3">
+					<p:calendar size="10" locale="it_IT" id="dataapprovazioneprogetto"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataApprovazioneProgetto}" />
+				</p:column>
+			</p:row>
+
+            <p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="dataapprovazioneUdP"
+						value="Data approvazione Udp: " />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:calendar size="10" locale="it_IT" id="dataapprovazioneUdP"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataApprovazioneUdP}" />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<h:outputLabel for="numeroattoUdp"
+						value="Numero Atto UdP: *" />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:inputText id="numeroattoUdp" value="#{inserisciMISController.numeroAttoUdp}" />
+				</p:column>
+
+			</p:row>   
+
+
+            <p:row>
+				
+				<p:column style="width: 25%;">
+					<h:outputLabel for="istitutoIncaricato"
+						value="Istituto Incaricato: *" />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:inputText id="istitutoIncaricato" value="#{inserisciMISController.istitutoIncaricato}" />
+				</p:column>
+				
+				<p:column style="width: 25%;">
+					<h:outputLabel for="dataScadenzaMV"
+						value="Data approvazione Udp: " />
+				</p:column>
+
+				<p:column style="width: 25%;">
+					<p:calendar size="10" locale="it_IT" id="dataScadenzaMV"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataScadenzaMV}" />
+				</p:column>
+
+				
+
+			</p:row>       
+
+            <p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="dataEsameRapportoFinale"
+						value="Data EsameRapporto Finale :" />
+				</p:column>
+
+				<p:column colspan="3">
+					<p:calendar size="10" locale="it_IT" id="dataEsameRapportoFinale"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataEsameRapportoFinale}" />
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="dataTrasmissioneCommissioni"
+						value="Data Trasmissione Commissioni :" />
+				</p:column>
+
+				<p:column colspan="3">
+					<p:calendar size="10" locale="it_IT" id="dataTrasmissioneCommissioni"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataTrasmissioneCommissioni}" />
+				</p:column>
+			</p:row>    
+
+
+			<p:row>
+
+				<p:column style="width: 25%;">
+					<h:outputLabel for="noteatto" value="Note :" />
+				</p:column>
+
+				<p:column colspan="3">
+					<p:inputTextarea rows="5" cols="101"
+						value="#{inserisciMISController.note}" id="noteatto">
+					</p:inputTextarea>
+
+				</p:column>
+			</p:row>
+
+
+		</p:panelGrid>
+
+
+	</p:fieldset>
+
+	<p:fieldset legend="Allegati" collapsed="false" toggleable="true"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="allegatopanel">
+			<p:row>
+
+				<p:column>
+
+
+					<p:commandButton value="Carica Allegato"
+						oncomplete="uploadAllegatoAttributesDialog.show()">
+					</p:commandButton>
+
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
+
+					<h:dataTable id="listaAllegati"
+						value="#{inserisciMISController.allegatiMIS}" var="allegato"
+						styleClass="generalInfoTab grey-text">
+
+						<h:column>
+							<f:facet name="header">Descrizione Allegato</f:facet>
+							#{allegato.nome}
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Documento</f:facet>
+							<h:outputText
+								value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
+
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Pubblico</f:facet>
+							<h:outputText value="si" rendered="#{allegato.pubblico}" />
+							<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="allegatoDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{allegato.id}"
+									target="#{inserisciMISController.allegatoEACToDelete}" />
+							</p:commandButton>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Download</f:facet>
+
+							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{allegato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{allegato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{allegato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</h:column>
+
+
+					</h:dataTable>
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
+	</p:fieldset>
+
+
+</h:form>
+</html>

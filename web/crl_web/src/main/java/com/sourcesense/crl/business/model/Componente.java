@@ -12,11 +12,12 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("componente")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Componente extends Personale implements Cloneable {
+public class Componente  implements Cloneable {
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;
 	private boolean coordinatore;
+	private String descrizione;
 	
 	public Object clone() {
 		try {
@@ -54,6 +55,14 @@ public class Componente extends Personale implements Cloneable {
 	}
 	public void setCoordinatore(boolean coordinatore) {
 		this.coordinatore = coordinatore;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 	
 	

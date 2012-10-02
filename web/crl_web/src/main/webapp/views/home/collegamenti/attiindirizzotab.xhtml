@@ -48,8 +48,8 @@
 						<p:panelGrid id="addAttoSindacatoPanel" styleClass="tableAppend">
 							<f:facet name="header">
 								<p:row>
+								    <p:column>N. Atto</p:column> 
 									<p:column>Tipo</p:column>
-									<p:column>N. Atto</p:column>
 									<p:column>Descrizione</p:column>
 									<p:column></p:column>
 								</p:row>
@@ -59,8 +59,6 @@
 									<p:selectOneMenu id="numAttoSindacato"
 										value="#{collegamentiController.numeroAttoSindacato}">
 										<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
-										<f:selectItem itemLabel="1234" itemValue="1234" />
-										<f:selectItem itemLabel="5678" itemValue="5678" />
 										<f:selectItems
 											value="#{collegamentiController.numeriAttoSindacato}" />
 									</p:selectOneMenu>

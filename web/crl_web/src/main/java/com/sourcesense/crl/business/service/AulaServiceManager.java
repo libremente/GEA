@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.EsameAula;
+import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoService;
 import com.sourcesense.crl.business.service.rest.AulaService;
@@ -60,8 +61,8 @@ public class AulaServiceManager implements ServiceManager {
     	aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_esame_aula", null), esameAula);
 	}
 	
-	public void salvaRinvioEsameEsameAula(EsameAula esameAula) {
-		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_rinvio_esame_esame_aula", null), esameAula);
+	public Passaggio salvaRinvioEsameEsameAula(EsameAula esameAula) {
+		return aulaService.rinvioEsame(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_rinvio_esame_esame_aula", null), esameAula);
 	}
 	
 	public void salvaStralciEsameAula(EsameAula esameAula) {

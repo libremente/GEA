@@ -200,11 +200,28 @@ public class EsameCommissioniController {
 		//Ricavo le commisioni dall'ultimo passaggio
 		setCommissioniList(Clonator.cloneList(attoBean.getLastPassaggio().getCommissioni()));
 		
+		
 		//I dati della commissione relativa all'utente loggato
-		setCommissioneUser(findCommissione(userBean.getUser().getSessionGroup().getNome()));
+		//solo se admin prende la referente o deliberante
+		Commissione commTemp =findCommissione(userBean.getUser().getSessionGroup().getNome());
+		if(commTemp==null){
+		    
+			commTemp = attoBean.getCommissioneReferente();
+			
+			if(commTemp!=null){
+				
+				commTemp = attoBean.getCommissioneDeliberante();
+				
+				if(commTemp!=null){
+					commTemp=new Commissione();
+				}
+				
+			}
+			
+		}
 		
+		setCommissioneUser(commTemp);
 		setPassaggio(attoBean.getLastPassaggio().getNome());
-		
 		loadData(attoBean.getLastPassaggio());
 		
 //		if(!abbinamentiList.isEmpty()) {
@@ -251,6 +268,7 @@ public class EsameCommissioniController {
     
     private void loadData(Passaggio passaggioIn){
     	
+    	//Controllo per admin
     	setDataPresaInCarico(commissioneUser.getDataPresaInCarico());
 		setMateria(commissioneUser.getMateria());
 		setDataScadenza(commissioneUser.getDataScadenza());
@@ -281,7 +299,12 @@ public class EsameCommissioniController {
     }
     
 	
+    /*
+     * 
+     * */
 	private Commissione findCommissione(String nome) {
+		
+		
 		for(Commissione element : commissioniList) {
 			if(element.getDescrizione().equals(nome)) {
 				return element;
@@ -1013,17 +1036,25 @@ public class EsameCommissioniController {
 			}		
 		}
 	}
+	
 
 	public void registraVotazione() {
 		
-		
-		atto.setStato(StatoAtto.VOTATO_COMMISSIONE);
-		attoServiceManager.salvaVotazioneEsameCommissioni(atto);
-
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
+		Target target = new Target();
+		target.setCommissione(commissioneUser.getDescrizione());
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		EsameCommissione esameCommissione = new EsameCommissione();
+		esameCommissione.setAtto(atto);
+		esameCommissione.setTarget(target);
+		
+		atto.setStato(StatoAtto.VOTATO_COMMISSIONE);
+		commissioneServiceManager.salvaVotazioneEsameCommissioni(esameCommissione);
 
+		
 		attoBean.getAtto().setStato(StatoAtto.VOTATO_COMMISSIONE);
 		attoBean.getLastPassaggio().setCommissioni(commissioniList);
 
@@ -1315,13 +1346,20 @@ public class EsameCommissioniController {
 
 
 	public void salvaEmendamentiClausole() {
-		attoServiceManager.salvaEmendamentiClausoleEsameCommissioni(atto);
-
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
+		Target target = new Target();
+		target.setCommissione(commissioneUser.getDescrizione());
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		EsameCommissione esameCommissione = new EsameCommissione();
+		esameCommissione.setAtto(atto);
+		esameCommissione.setTarget(target);
+		commissioneServiceManager.salvaEmendamentiClausoleEsameCommissioni(esameCommissione);
 
-		attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).setNumEmendPresentatiMaggiorEsameCommissioni(commissioneUser.getNumEmendPresentatiMaggiorEsameCommissioni());
+	    attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).setNumEmendPresentatiMaggiorEsameCommissioni(commissioneUser.getNumEmendPresentatiMaggiorEsameCommissioni());
 		attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).setNumEmendPresentatiMinorEsameCommissioni(commissioneUser.getNumEmendPresentatiMinorEsameCommissioni());
 		attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).setNumEmendPresentatiGiuntaEsameCommissioni(commissioneUser.getNumEmendPresentatiGiuntaEsameCommissioni());
 		attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).setNumEmendPresentatiMistoEsameCommissioni(commissioneUser.getNumEmendPresentatiMistoEsameCommissioni());

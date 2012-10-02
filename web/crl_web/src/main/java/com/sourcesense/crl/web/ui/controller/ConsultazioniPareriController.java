@@ -17,8 +17,11 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Consultazione;
+import com.sourcesense.crl.business.model.ConsultazioneParere;
+import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.SoggettoInvitato;
+import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -32,10 +35,10 @@ public class ConsultazioniPareriController {
 
 	private Atto atto = new Atto();
 
-	private List<Parere> pareriList = new ArrayList<Parere>();
+	private List<OrganismoStatutario> organismiList = new ArrayList<OrganismoStatutario>();
 
 	private Parere parereSelected = new Parere();
-	private String descrizioneParereSelected;
+	private String descrizioneOrganismoSelected;
 
 	private Date dataRicezioneParere;
 	private Date dataRicezioneOrgano;
@@ -81,10 +84,10 @@ public class ConsultazioniPareriController {
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());	
 
-		setPareriList(new ArrayList<Parere>(atto.getPareri()));
+		setOrganismiList(new ArrayList<OrganismoStatutario>(atto.getOrganismiStatutari()));
 
-		if(!pareriList.isEmpty()) {
-			setDescrizioneParereSelected(pareriList.get(0).getDescrizione());
+		if(!organismiList.isEmpty()) {
+			setDescrizioneOrganismoSelected(organismiList.get(0).getDescrizione());
 			showParereDetail();
 		}
 
@@ -131,7 +134,9 @@ public class ConsultazioniPareriController {
 	// Pareri********************************************************
 
 	public void showParereDetail() {
-		setParereSelected(findParere(descrizioneParereSelected));
+		
+		
+		setParereSelected(findParere(descrizioneOrganismoSelected));
 
 		if(parereSelected!=null) {
 			setDataRicezioneParere(parereSelected.getDataRicezioneParere());
@@ -150,9 +155,9 @@ public class ConsultazioniPareriController {
 	}
 
 	private Parere findParere(String descrizione) {
-		for(Parere element : pareriList) {
+		for(OrganismoStatutario element : organismiList) {
 			if(element.getDescrizione().equals(descrizione)) {
-				return element;
+				return element.getParere();
 			}
 		}
 		return null;
@@ -227,21 +232,27 @@ public class ConsultazioniPareriController {
 
 
 	public void salvaParere() {
+		
 		parereSelected.setDataRicezioneOrgano(getDataRicezioneOrgano());
 		parereSelected.setDataRicezioneParere(getDataRicezioneParere());
 		parereSelected.setEsito(getEsito());
 		parereSelected.setNote(getNoteParere());
 		//parereSelected.setAllegati
 
-		atto.setPareri(pareriList);
-
-		attoServiceManager.salvaPareri(atto);
+		atto.setOrganismiStatutari(organismiList);
+        
+		ConsultazioneParere consultazioneParere = new ConsultazioneParere(); 
+		consultazioneParere.setAtto(atto);
+		Target target = new Target();
+		target.setOrganismoStatutario(descrizioneOrganismoSelected);
+		
+		attoServiceManager.salvaPareri(consultazioneParere);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setPareri(pareriList);
+		attoBean.getAtto().setOrganismiStatutari(organismiList);
 
 		setStatoCommitPareri(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Pareri salvati con successo", ""));
@@ -489,11 +500,11 @@ public class ConsultazioniPareriController {
 	public void setAtto(Atto atto) {
 		this.atto = atto;
 	}
-	public List<Parere> getPareriList() {
-		return pareriList;
+	public List<OrganismoStatutario> getOrganismiList() {
+		return organismiList;
 	}
-	public void setPareriList(List<Parere> pareriList) {
-		this.pareriList = pareriList;
+	public void setOrganismiList(List<OrganismoStatutario> organismiList) {
+		this.organismiList = organismiList;
 	}
 	public Parere getParereSelected() {
 		return parereSelected;
@@ -536,12 +547,12 @@ public class ConsultazioniPareriController {
 		this.noteParere = noteParere;
 	}
 
-	public String getDescrizioneParereSelected() {
-		return descrizioneParereSelected;
+	public String getDescrizioneOrganismoSelected() {
+		return descrizioneOrganismoSelected;
 	}
 
-	public void setDescrizioneParereSelected(String descrizioneParereSelected) {
-		this.descrizioneParereSelected = descrizioneParereSelected;
+	public void setDescrizioneOrganismoSelected(String descrizioneOrganismoSelected) {
+		this.descrizioneOrganismoSelected = descrizioneOrganismoSelected;
 	}
 
 	public List<Allegato> getAllegatiParereList() {

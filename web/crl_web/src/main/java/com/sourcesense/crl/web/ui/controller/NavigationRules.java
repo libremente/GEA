@@ -47,22 +47,47 @@ public class NavigationRules {
 
     public boolean presentazioneAssegnazioneDisabled() {
 
-        return false;
+    	if("ServizioCommissioni".equals(userBean.getUserGroupName()) ||
+        		"ADMINISTRATORS".equals(userBean.getUserGroupName())){
+        	return false;
+        }else{
+        	return true;
+        }
 
     }
 
     public boolean esameCommissioniDisabled() {
 
-
-        return !attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome());
+        if((attoBean.containCommissione(userBean.getUser().getSessionGroup().getNome()) ||
+        		"ADMINISTRATORS".equals(userBean.getUserGroupName()))
+        		&& attoBean.getLastPassaggio().getCommissioni().size() > 0 ){
+        	return false;
+        }else{
+        	return true;
+        } 
+        
 
     }
 
     public boolean esameAulaDisabled() {
 
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        return false;
+    	if( ("Aula".equals(userBean.getUserGroupName()) || "ADMINISTRATORS".equals(userBean.getUserGroupName()))
+    			&&  !(  attoBean.getTipoAtto().equals("PAR") 
+    					|| 
+    					attoBean.getTipoAtto().equals("REL") 
+    					|| 
+    					attoBean.getTipoAtto().equals("INP")
+    					|| 
+    					attoBean.getTipoAtto().equals("EAC")
+    					|| 
+    					attoBean.getTipoAtto().equals("MIS")
+    					)
+    			
+    			){
+        	return false;
+        }else{
+        	return true;
+        }
 
     }
 
