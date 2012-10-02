@@ -20,9 +20,6 @@ public class ReportisticaController implements Serializable {
 	
 	private TreeNode root;
 	  
-	private TreeNode selectedNode;  
-		
-	
 	public ReportisticaController(){
 		
 		root = new DefaultTreeNode("Root", null);
@@ -46,13 +43,5 @@ public class ReportisticaController implements Serializable {
 	public TreeNode getRoot() {
 		return root;
 	}
-	
-	public TreeNode getSelectedNode() {  
-	    return selectedNode;  
-	}  
-
-	public void setSelectedNode(TreeNode selectedNode) {  
-	    this.selectedNode = selectedNode;  
-	}  
 
 }
