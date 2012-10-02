@@ -138,7 +138,7 @@
 		</tr>
 		<tr>
 			<td>Tipo iniziativa:</td>
-			<td><input type="text" name="tipoIniziativa" value="tipoIniz1"></td>
+			<td><input type="text" name="tipoIniziativa" value="01_ATTO DI INIZIATIVA CONSILIARE"></td>
 		</tr>
 		<tr>
 			<td>Data iniziativa:</td>

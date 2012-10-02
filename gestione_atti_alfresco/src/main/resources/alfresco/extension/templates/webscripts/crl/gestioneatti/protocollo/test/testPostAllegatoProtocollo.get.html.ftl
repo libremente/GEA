@@ -10,7 +10,7 @@
 	<table>
 		<tr>
 			<td>
-				Atto:
+				ID protocollo atto:
 			</td>
 			<td>
 				<select name="idProtocolloAtto">
@@ -20,6 +20,12 @@
 						</#if>
 					</#list>
 				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>ID protocollo allegato:</td>
+			<td>
+				<input type="text" name="idProtocolloAllegato">
 			</td>
 		</tr>
 		<tr>

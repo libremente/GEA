@@ -1,10 +1,13 @@
 var idProtocolloAtto = "";
+var idProtocolloAllegato = "";
 var filename = "";
 var content = null;
 
 for each (field in formdata.fields) {
   if (field.name == "idProtocolloAtto") {
 	  idProtocolloAtto = field.value;
+  } else if (field.name == "idProtocolloAllegato") {
+	    idProtocolloAllegato = field.value;
   } else if (field.name == "file" && field.isFile) {
     filename = field.filename;
     content = field.content;
@@ -14,6 +17,10 @@ for each (field in formdata.fields) {
 if(idProtocolloAtto == ""){
 	status.code = 400;
 	status.message = "ID protocollo atto non valorizzato";
+	status.redirect = true;
+} else if(idProtocolloAllegato == ""){
+	status.code = 400;
+	status.message = "ID protocollo allegato non valorizzato";
 	status.redirect = true;
 } else if(filename == ""){
 	status.code = 400;
@@ -40,6 +47,7 @@ if(idProtocolloAtto == ""){
 		    allegatoNode = allegatiFolderNode.createNode(filename,"crlatti:allegato");
 		}
 		
+		allegatoNode.properties["crlatti:idProtocollo"] = idProtocolloAllegato;
 		allegatoNode.properties.content.write(content);
 		allegatoNode.properties.content.setEncoding("UTF-8");
 		allegatoNode.properties.content.guessMimetype(filename);
