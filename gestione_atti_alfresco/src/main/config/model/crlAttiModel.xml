@@ -590,23 +590,23 @@
 			<parent>cm:folder</parent>
 			<properties>
 				<property name="crlatti:dataPresaInCaricoEsameAula">
-					<title>Data Presa in Carico</title>
+					<title>Data presa in carico</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:relazioneScrittaAula">
-					<title>Relazione Scritta</title>
+					<title>Relazione scritta</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:esitoVotoPassaggioAula">
-					<title>Esito Voto Aula</title>
+					<title>Esito voto aula</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:tipologiaVotazioneAula">
-					<title>Tipologia Votazione</title>
+					<title>Tipologia votazione</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:dataSedutaPassaggioAula">
-					<title>Data Seduta Aula</title>
+					<title>Data seduta aula</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:numeroDcrPassaggioAula">
@@ -623,39 +623,39 @@
 					<default>false</default>
 				</property>
 				<property name="crlatti:noteVotazioneAula">
-					<title>Note Votazione</title>
+					<title>Note votazione</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:dataSedutaRinvioAula">
-					<title>Data Seduta Rinvio Aula</title>
+					<title>Data seduta rinvio aula</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:dataTermineMassimoAula">
-					<title>Data Termine Massimo Aula</title>
+					<title>Data termine massimo aula</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:motivazioneRinvioAula">
-					<title>Motivazione Rinvio Aula</title>
+					<title>Motivazione rinvio aula</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:dataSedutaStralcioAula">
-					<title>Data Seduta Stralcio</title>
+					<title>Data seduta stralcio</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:dataStralcioAula">
-					<title>Data Stralcio</title>
+					<title>Data stralcio</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:dataIniziativaStralcioAula">
-					<title>Data Iniziativa Stralcio</title>
+					<title>Data iniziativa stralcio</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:articoliAula">
-					<title>Artcoli Aula</title>
+					<title>Artcoli aula</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:noteStralcioAula">
-					<title>Note Stralcio</title>
+					<title>Note stralcio</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:quorumEsameAula">
@@ -683,9 +683,10 @@
 			</mandatory-aspects>
 		</type>
 		
+		
 		<type name="crlatti:parere">
 			<title>Parere</title>
-			<parent>cm:content</parent>
+			<parent>cm:folder</parent>
 			<properties>
 				<property name="crlatti:organismoStatutarioParere">
 					<title>Organismo statutario</title>
@@ -704,11 +705,76 @@
 					<title>Data annullo</title>
 					<type>d:date</type>
 				</property>
+				<property name="crlatti:dataRicezioneParere">
+					<title>Data ricezione Parere</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRicezioneOrganoParere">
+					<title>Data ricezione organo</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteParere">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoParere">
+					<title>Esito</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:obbligatorioAspect</aspect>
 			</mandatory-aspects>
 		</type>
+		
+		
+		<type name="crlatti:consultazione">
+			<title>Consultazione</title>
+			<parent>cm:folder</parent>
+			<properties>		
+				<property name="crlatti:descrizioneConsultazione">
+					<title>Descrizione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataConsultazione">
+					<title>Data consultazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:previstaConsultazione">
+					<title>Prevista</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:discussaConsultazione">
+					<title>Discussa</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:dataSedutaConsultazione">
+					<title>Data seduta</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteConsultazione">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		
+		<type name="crlatti:soggettoInvitato">
+			<title>Soggetto invitato</title>
+			<parent>cm:content</parent>
+			<properties>		
+				<property name="crlatti:descrizioneSoggettoInvitato">
+					<title>Descrizione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:intervenutoSoggettoInvitato">
+					<title>Intervenuto</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</type>
+		
 		
 		
 	</types>

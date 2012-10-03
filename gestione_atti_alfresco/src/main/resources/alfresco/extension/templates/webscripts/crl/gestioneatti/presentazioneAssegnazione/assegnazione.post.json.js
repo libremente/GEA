@@ -158,7 +158,20 @@ if(checkIsNotNull(id)){
 		if(parereEsistenteResults!=null && parereEsistenteResults.length>0){
 			parereNode = parereEsistenteResults[0];
 		} else {
-			parereNode = pareriFolderNode.createNode(descrizione,"crlatti:parere");
+			
+			// copia la cartella parere dagli space template e la rinomina
+			
+			var parereSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Parere\"";
+			var parereSpaceTemplateNode = search.luceneSearch(parereSpaceTemplateQuery)[0];
+			
+			
+			// deep copy con secondo argomento = true
+			parereSpaceTemplateNode.copy(pareriFolderNode, true);
+			
+			var parereXPathQuery = "*[@cm:name='Parere']";
+			parereNode = pareriFolderNode.childrenByXPath(parereXPathQuery)[0];
+			parereNode.properties["cm:name"] = descrizione;
+			
 		}
 		
 		var dataAssegnazioneParsed = null;
