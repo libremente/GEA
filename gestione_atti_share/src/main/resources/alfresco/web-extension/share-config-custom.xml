@@ -129,7 +129,6 @@
          	<subtype name="crlatti:allegato"/>
          	<subtype name="crlatti:testo"/>
          	<subtype name="crlatti:link"/>
-			<subtype name="crlatti:parere"/>
 			<subtype name="crlatti:relatore"/>
 			<subtype name="crlatti:membroComitatoRistretto" />
 			<subtype name="crlatti:testoComitatoRistretto"/>
@@ -150,6 +149,8 @@
 			<subtype name="crlatti:commissione"/>
 			<subtype name="crlatti:comitatoRistretto"/>
 			<subtype name="crlatti:aula"/>
+			<subtype name="crlatti:parere"/>
+			<subtype name="crlatti:consultazione"/>
          </type>
       </types>
 
@@ -814,6 +815,40 @@
    		</form>
    	</forms>
    </config>
+   
+   
+   <config evaluator="node-type" condition="crlatti:parere">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:organismoStatutarioParere"/>
+   				<show id="crlatti:dataAnnulloParere" />
+   				<show id="crlatti:dataAssegnazioneParere" />
+   				<show id="crlatti:dataRicezioneParere"/>
+   				<show id="crlatti:dataRicezioneOrganoParere" />
+   				<show id="crlatti:noteParere" />
+   				<show id="crlatti:esitoParere" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:consultazione">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:descrizioneConsultazione"/>
+   				<show id="crlatti:dataConsultazione" />
+   				<show id="crlatti:previstaConsultazione" />
+   				<show id="crlatti:discussaConsultazione"/>
+   				<show id="crlatti:dataSedutaConsultazione" />
+   				<show id="crlatti:noteConsultazione" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+	
    
    <config evaluator="string-compare" condition="AdvancedSearch" replace="true">
       <advanced-search>
