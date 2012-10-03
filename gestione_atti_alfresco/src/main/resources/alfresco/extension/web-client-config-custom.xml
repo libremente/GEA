@@ -10,6 +10,7 @@
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
 			<type name="crlatti:parere"/>
+			<type name="crlatti:consultazione"/>
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
 		</content-types>
@@ -24,6 +25,7 @@
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
 			<type name="crlatti:parere"/>
+			<type name="crlatti:consultazione"/>
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
 		</subtypes>
@@ -35,6 +37,7 @@
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
 			<type name="crlatti:parere"/>
+			<type name="crlatti:consultazione"/>
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
 		</specialise-types>
@@ -231,9 +234,23 @@
 			<show-property name="crlatti:organismoStatutarioParere"/>
 			<show-property name="crlatti:dataAnnulloParere"/>
 			<show-property name="crlatti:dataAssegnazioneParere"/>
+			<show-property name="crlatti:dataRicezioneParere"/>
+			<show-property name="crlatti:dataRicezioneOrganoParere"/>
+			<show-property name="crlatti:noteParere"/>
+			<show-property name="crlatti:esitoParere"/>
 		</property-sheet>
 	</config>
 	
+	<config evaluator="node-type" condition="crlatti:consultazione">
+		<property-sheet> 
+			<show-property name="crlatti:descrizioneConsultazione"/>
+			<show-property name="crlatti:dataConsultazione"/>
+			<show-property name="crlatti:previstaConsultazione"/>
+			<show-property name="crlatti:discussaConsultazione"/>
+			<show-property name="crlatti:dataSedutaConsultazione"/>
+			<show-property name="crlatti:noteConsultazione"/>
+		</property-sheet>
+	</config>
 	
 	<config evaluator="node-type" condition="crlatti:link">
 		<property-sheet> 
