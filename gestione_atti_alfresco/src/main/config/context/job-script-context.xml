@@ -12,6 +12,9 @@
 	language governing permissions and limitations under the License. -->
 <beans>
 
+    <bean id="dataExtractor" class="org.alfresco.jobs.DataExtractor">
+    </bean>
+
     <bean id="templateActionModelFactory" class="org.alfresco.repo.action.scheduled.FreeMarkerWithLuceneExtensionsModelFactory">
         <property name="serviceRegistry">
             <ref bean="ServiceRegistry"/>
@@ -31,7 +34,10 @@
 		<property name="nodeService">
             <ref bean="NodeService" />
         </property>
-	</bean>
+        <property name="dataExtractor">
+            <ref bean="dataExtractor" />
+        </property>
+    </bean>
 
   <!--
     Execute the script /Company Home/Data Dictionary/Scripts/anagraficaImport.js
