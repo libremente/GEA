@@ -147,6 +147,24 @@
             <version>${spring.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>alfresco-data-model</artifactId>
+            <version>4.0.d</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>alfresco-web-client</artifactId>
+            <version>4.0.d</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rhino</groupId>
+            <artifactId>js</artifactId>
+            <version>1.6R7</version>
+            <scope>provided</scope>
+        </dependency>
 		<!--
 			Example Jar dependency: will be properly packed into the AMP /lib
 			directory <dependency> <groupId>rome</groupId>
