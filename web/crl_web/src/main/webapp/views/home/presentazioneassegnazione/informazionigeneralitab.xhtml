@@ -16,7 +16,7 @@
 
 	<p:row>
 		<p:column colspan="3">
-		<div id="presaInCaricoDiv" class="transparentBlock">
+		<div id="presaInCaricoDiv">
 			<p>
 				<!-- Messaggio azioni -->
 				<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
@@ -575,7 +575,8 @@ function unblockDiv() {
     $('#blockedInfoGen').unblock(); 
     $('#blockedAmmissibilita').unblock(); 
     $('#blockedAssegnazione').unblock(); 
-    $('#blockedNote').unblock(); 
+    $('#blockedNote').unblock();
+    location.reload();
    };
    
 if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
