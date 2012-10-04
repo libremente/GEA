@@ -39,6 +39,9 @@ public class RiepilogoAttoController {
 
 	@PostConstruct
 	protected void init() {
+		
+		
+		
 		// setDocumentiAllegati(AllegatoServiceManager.findTestiUfficiali());
 		// setAltriAllegati(AllegatoServiceManager.findAltriAllegati());
 		// setOrganiInterni(OrganoServiceManager.findOrganiInterni());

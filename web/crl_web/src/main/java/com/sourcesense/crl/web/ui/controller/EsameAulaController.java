@@ -53,12 +53,11 @@ public class EsameAulaController {
 	private boolean emendato;
 	private String noteVotazione;
 	boolean currentFilePubblico;
-
+	private String testoAttoVotatoToDelete;
 	
 	private List<TestoAtto> testiAttoVotatoList = new ArrayList<TestoAtto>();
-	private String testoAttoVotatoToDelete;
-
 	private List<Allegato> emendamentiList = new ArrayList<Allegato>();
+	private List<Allegato> allegatiList = new ArrayList<Allegato>();
 	private String emendamentoToDelete;
 
 	private int numEmendPresentatiMaggior;
@@ -90,7 +89,7 @@ public class EsameAulaController {
 
 	private String noteGenerali;
 
-	private List<Allegato> allegatiList = new ArrayList<Allegato>();
+	
 	private String allegatoToDelete;
 
 	private List<Link> linksList = new ArrayList<Link>();
@@ -117,9 +116,9 @@ public class EsameAulaController {
 		setAtto((Atto) attoBean.getAtto().clone());	
 
 		aulaUser = (Aula)attoBean.getLastPassaggio().getAula().clone();
-		testiAttoVotatoList = new ArrayList<TestoAtto>(aulaUser.getTestiAttoVotatoEsameAula());		
-		emendamentiList = new ArrayList<Allegato>(aulaUser.getEmendamentiEsameAula());
-		allegatiList = new ArrayList<Allegato>(aulaUser.getAllegatiEsameAula());
+		testiAttoVotatoList = Clonator.cloneList(aulaUser.getTestiAttoVotatoEsameAula());		
+		emendamentiList = Clonator.cloneList(aulaUser.getEmendamentiEsameAula());
+		allegatiList = Clonator.cloneList(aulaUser.getAllegatiEsameAula());
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
 
 		totaleEmendApprovati();
@@ -237,9 +236,11 @@ public class EsameAulaController {
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
 		// TODO Service logic
 		String fileName = event.getFile().getFileName();
-
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));  
+		
 		if (!checkTestoAttoVotato(fileName)) {
-			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
 							+ fileName + " è già stato allegato ", ""));
@@ -249,6 +250,7 @@ public class EsameAulaController {
 			TestoAtto allegatoRet = new TestoAtto();
 			allegatoRet.setNome(event.getFile().getFileName());
 			allegatoRet.setPubblico(currentFilePubblico);
+			allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 			
 
 			try {
@@ -263,27 +265,21 @@ public class EsameAulaController {
 				e.printStackTrace();
 			}
 
-			// TODO aggiungi a bean di sessione
-			FacesContext context = FacesContext.getCurrentInstance();
-			AttoBean attoBean = ((AttoBean) context.getExternalContext()
-					.getSessionMap().get("attoBean"));
-
 			attoBean.getWorkingAula().getTestiAttoVotatoEsameAula().add(allegatoRet);
-
 			testiAttoVotatoList.add(allegatoRet);
 		}
 	}
 
 	private boolean checkTestoAttoVotato(String fileName) {
 
-//		for (TestoAtto element : testiAttoVotatoList) {
-//
-//			if (element.getDescrizione().equals(fileName)) {
-//
-//				return false;
-//			}
-//
-//		}
+		for (TestoAtto element : testiAttoVotatoList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+
+				return false;
+			}
+
+		}
 
 		return true;
 	}
@@ -344,24 +340,24 @@ public class EsameAulaController {
 	// Emendamenti************************************************************
 
 	public void uploadEmendamento(FileUploadEvent event) {
-		// TODO Service logic
 		String fileName = event.getFile().getFileName();
-
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		if (!checkEmendamenti(fileName)) {
-			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			// TODO Alfresco upload
 			Allegato emendamentoRet = new Allegato();
-			
 			emendamentoRet.setNome(event.getFile().getFileName());
 			emendamentoRet.setPubblico(currentFilePubblico);
+			emendamentoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
+
 
 			try {
-				//TODO change method
 				emendamentoRet = aulaServiceManager.uploadEmendamentoEsameAula(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap() 
@@ -372,10 +368,8 @@ public class EsameAulaController {
 				e.printStackTrace();
 			}
 
-			// TODO aggiungi a bean di sessione
-			FacesContext context = FacesContext.getCurrentInstance();
-			AttoBean attoBean = ((AttoBean) context.getExternalContext()
-					.getSessionMap().get("attoBean"));
+			
+			
 
 			attoBean.getWorkingAula().getEmendamentiEsameAula().add(emendamentoRet);
 
@@ -385,14 +379,13 @@ public class EsameAulaController {
 
 	private boolean checkEmendamenti(String fileName) {
 
-//		for (TestoAtto element : emendamentiList) {
-//
-//			if (element.getDescrizione().equals(fileName)) {
-//
-//				return false;
-//			}
-//
-//		}
+		for (Allegato element : emendamentiList) {
+
+			if (element.getDescrizione().equals(fileName)) {
+				return false;
+			}
+
+		}
 
 		return true;
 	}
@@ -521,35 +514,35 @@ public class EsameAulaController {
 
 	public void uploadAllegato(FileUploadEvent event) {
 
-		// TODO Service logic
 		String fileName = event.getFile().getFileName();
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
 
+		
 		if (!checkAllegato(fileName)) {
-			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			// TODO Alfresco upload
-			Allegato allegatoRet = null;
+			Allegato allegatoRet = new Allegato();
+			allegatoRet.setNome(fileName);
+			allegatoRet.setPubblico(currentFilePubblico);
+			allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 
 			try {
-				//TODO change method
 				allegatoRet = aulaServiceManager.uploadAllegatoNoteAllegatiEsameAula(
 						((AttoBean) FacesContext.getCurrentInstance()
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), event.getFile().getFileName());
+								.getFile().getInputstream(), allegatoRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			// TODO aggiungi a bean di sessione
-			FacesContext context = FacesContext.getCurrentInstance();
-			AttoBean attoBean = ((AttoBean) context.getExternalContext()
-					.getSessionMap().get("attoBean"));
-
+			
+			
 			attoBean.getWorkingAula().getAllegatiEsameAula().add(allegatoRet);
 
 			allegatiList.add(allegatoRet);

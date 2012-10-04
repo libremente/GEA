@@ -14,6 +14,8 @@ import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.Consultazione;
+import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
@@ -166,6 +168,44 @@ public class AttoBean implements Serializable {
 
 	}
 
+	public OrganismoStatutario getWorkingOrganismoStatutario(String organismo) {
+
+		
+		OrganismoStatutario  organismoRet =null;
+		
+		for (OrganismoStatutario organismoRec : atto.getOrganismiStatutari()) {
+
+			if (organismoRec.getDescrizione().equalsIgnoreCase(organismo)
+					) {
+
+				organismoRet = organismoRec;
+			}
+		}
+
+		
+		return organismoRet;
+
+	}
+	
+    public Consultazione getWorkingConsultazione(String consultazione) {
+
+		
+    	Consultazione  consultazioneRet =null;
+		
+		for (Consultazione consultazioneRec : atto.getConsultazioni()) {
+
+			if (consultazioneRec.getDescrizione().equalsIgnoreCase(consultazione)
+					) {
+
+				consultazioneRet = consultazioneRec;
+			}
+		}
+
+		
+		return consultazioneRet;
+
+	}
+	
 	public Passaggio getLastPassaggio() {
 
 		return atto.getPassaggi().get(atto.getPassaggi().size() - 1);

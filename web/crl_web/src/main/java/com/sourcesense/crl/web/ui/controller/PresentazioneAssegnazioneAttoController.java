@@ -154,15 +154,12 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
 
+		this.testiAttoList = new ArrayList<TestoAtto>(Clonator.cloneList(atto.getTestiAtto()));
+		this.allegatiList = new ArrayList<Allegato>(Clonator.cloneList(atto.getAllegati()));
 		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto.getFirmatari()));
 		this.commissioniList = new ArrayList<Commissione>(Clonator.cloneList(atto.getPassaggi().get(0).getCommissioni()));
 		this.organismiList = new ArrayList<OrganismoStatutario>(Clonator.cloneList(atto.getOrganismiStatutari()));
 		this.linksList = new ArrayList<Link>(Clonator.cloneList(atto.getLinksPresentazioneAssegnazione()));
-
-
-		// TODO
-		// setAllegatiList(attoRecordServiceManager.findAllegatiByTipo(Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE));
-		// setTestiAtto(attoRecordServiceManager.findTestoByTipo());
 
 
 	}
@@ -252,9 +249,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void uploadTestoAtto(FileUploadEvent event) {
 
-		// TODO Service logic
 		String fileName = event.getFile().getFileName();
-
 		if (!checkTestoAtto(fileName)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
@@ -263,7 +258,6 @@ public class PresentazioneAssegnazioneAttoController {
 
 		} else {
 
-			// TODO Alfresco upload
 			TestoAtto testoAttoRet = new TestoAtto();
 
 			testoAttoRet.setNome(event.getFile().getFileName());
@@ -281,7 +275,6 @@ public class PresentazioneAssegnazioneAttoController {
 				e.printStackTrace();
 			}
 
-			// TODO aggiungi a bean di sessione
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
@@ -295,17 +288,15 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	private boolean checkTestoAtto(String fileName) {
-
-		/*
-		 * for (AttoRecord element : testiAttoList) {
-		 * 
-		 * if (element.getDescrizione().equals(fileName)) {
-		 * 
-		 * return false; }
-		 * 
-		 * }
-		 */
-
+		
+		  for (TestoAtto element : testiAttoList) {
+		  
+		  if (element.getDescrizione().equals(fileName)) {
+		  
+		  return false; }
+		  
+		  }
+		 
 		return true;
 	}
 
@@ -314,7 +305,7 @@ public class PresentazioneAssegnazioneAttoController {
 		for (TestoAtto element : testiAttoList) {
 
 			if (element.getId().equals(testoAttoToDelete)) {
-				// TODO Alfresco delete
+				
 				testiAttoList.remove(element);
 				break;
 			}
@@ -388,9 +379,6 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public String ritiraPerMancanzaFirmatari() {
-
-		// TODO Service logic
-
 		return "pretty:Chiusura_Iter";
 
 	}
@@ -399,7 +387,6 @@ public class PresentazioneAssegnazioneAttoController {
 		atto.setFirmatari(firmatariList);
 		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
 
-		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
@@ -699,7 +686,7 @@ public class PresentazioneAssegnazioneAttoController {
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().getAllegatiNotePresentazioneAssegnazione()
+			attoBean.getAtto().getAllegati()
 					.add(allegatoRet);
 
 			allegatiList.add(allegatoRet);

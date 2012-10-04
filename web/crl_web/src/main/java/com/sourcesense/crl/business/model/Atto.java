@@ -122,7 +122,7 @@ public class Atto implements Cloneable
 	private List <Parere> pareri = new ArrayList<Parere>();
 	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
 	private List <Allegato> allegati = new ArrayList<Allegato>();
-	private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
+	//private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
 	
 	private List <Link> linksPresentazioneAssegnazione = new ArrayList<Link>();
 	
@@ -592,14 +592,16 @@ public class Atto implements Cloneable
 		this.allegati = allegati;
 	}
 
-	public List<Allegato> getAllegatiNotePresentazioneAssegnazione() {
+	
+	
+	/*public List<Allegato> getAllegatiNotePresentazioneAssegnazione() {
 		return allegatiNotePresentazioneAssegnazione;
 	}
 
 	public void setAllegatiNotePresentazioneAssegnazione(
 			List<Allegato> allegatiNotePresentazioneAssegnazione) {
 		this.allegatiNotePresentazioneAssegnazione = allegatiNotePresentazioneAssegnazione;
-	}
+	}*/
 
 	
 

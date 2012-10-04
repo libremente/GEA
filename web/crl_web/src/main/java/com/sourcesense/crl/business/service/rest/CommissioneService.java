@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.service.rest;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,15 +20,20 @@ import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.sourcesense.crl.business.model.Allegato;
+import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneConsultiva;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Legislatura;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 @Component(value = "commissioneService")
 @Path("/commissioni")
@@ -204,14 +210,26 @@ public class CommissioneService {
 		return listCommissioni;
 	}
 
-	/*public List<CommissioneReferente> getAllCommissioneReferente(String url) {
-		List<CommissioneReferente> listCommissioniReferenti =null;
+	public Allegato uploadAllegato(String url, Atto atto, InputStream stream,
+			Allegato allegato, String tipologia) {
 
+		
 		try {
-			WebResource webResource = client.resource(url);
 
-			ClientResponse response = webResource.accept(
-					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
+			part.field("id", atto.getId());
+			part.field("pubblico", allegato.isPubblico()+"");
+			part.field("commissione", allegato.getCommissione());
+			part.field("passaggio", allegato.getPassaggio());
+			part.field("dataSeduta", allegato.getDataSeduta()+"");
+			part.field("tipologia", tipologia);
+			
+			ClientResponse response = webResource
+					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8")
+					.post(ClientResponse.class, part);
 
 			if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "
@@ -220,12 +238,8 @@ public class CommissioneService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listCommissioniReferenti = objectMapper.readValue(responseMsg,
-					new TypeReference<List<CommissioneReferente>>() {
-			});
-
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {
 
@@ -240,17 +254,32 @@ public class CommissioneService {
 			throw new ServiceNotAvailableException(this.getClass()
 					.getSimpleName(), e);
 		}
-		return listCommissioniReferenti;
+		return allegato;
 	}
 
-	public List<CommissioneConsultiva> getAllCommissioneConsultiva(String url) {
-		List<CommissioneConsultiva> listCommissioniConsultive =null;
+	
+	
+	
+	public TestoAtto uploadTestoAtto(String url, Atto atto,
+			InputStream stream, TestoAtto testoAtto, String tipologia) {
+
+		TestoAtto attoRecord = null;
 
 		try {
-			WebResource webResource = client.resource(url);
 
-			ClientResponse response = webResource.accept(
-					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream, testoAtto.getNome()));
+			part.field("id", atto.getId());
+			part.field("tipologia", tipologia);
+			part.field("commissione", testoAtto.getCommissione());
+			part.field("passaggio", testoAtto.getPassaggio());
+			part.field("pubblico", ""+testoAtto.isPubblico());
+
+			ClientResponse response = webResource
+					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8")
+					.post(ClientResponse.class, part);
 
 			if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "
@@ -259,12 +288,7 @@ public class CommissioneService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listCommissioniConsultive = objectMapper.readValue(responseMsg,
-					new TypeReference<List<CommissioneConsultiva>>() {
-			});
-
+			attoRecord = objectMapper.readValue(responseMsg, TestoAtto.class);
 
 		} catch (JsonMappingException e) {
 
@@ -279,7 +303,8 @@ public class CommissioneService {
 			throw new ServiceNotAvailableException(this.getClass()
 					.getSimpleName(), e);
 		}
-		return listCommissioniConsultive;
-	}*/
+		return attoRecord;
+	}
+
 
 }

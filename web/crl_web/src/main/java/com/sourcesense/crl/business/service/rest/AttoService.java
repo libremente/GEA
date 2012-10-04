@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -107,6 +108,7 @@ public class AttoService {
 					+ response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 		String responseMsg = response.getEntity(String.class);
+		System.out.println("JSON:"+responseMsg);
 
 		try {
 			
@@ -180,6 +182,96 @@ public class AttoService {
 		return allegato;
 	}
 
+	public Allegato uploadAllegatoParere(String url, Atto atto, InputStream stream,
+			Allegato allegato, String tipologia) {
+
+		
+
+		try {
+
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
+			part.field("id", atto.getId());
+			part.field("tipologia", tipologia);
+			part.field("organismoStatutario", allegato.getOrganismoStatutario());
+
+			ClientResponse response = webResource
+					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8")
+					.post(ClientResponse.class, part);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			allegato = objectMapper.readValue(responseMsg, Allegato.class);
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return allegato;
+	}
+	
+	public Allegato uploadAllegatoConsultazioni(String url, Atto atto, InputStream stream,
+			Allegato allegato, String tipologia) {
+
+		
+		try {
+
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
+			part.field("id", atto.getId());
+			part.field("tipologia", tipologia);
+			part.field("consultazione", allegato.getConsultazione());
+
+			ClientResponse response = webResource
+					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8")
+					.post(ClientResponse.class, part);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			allegato = objectMapper.readValue(responseMsg, Allegato.class);
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return allegato;
+	}
+	
+	
 	public void removeFirmatario(String url){
 		
 		WebResource webResource = client.resource(url);

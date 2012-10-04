@@ -72,9 +72,9 @@ public class Commissione implements Cloneable {
 	private List <Relatore> relatori = new ArrayList<Relatore>();
 	private List <Link> linksNoteEsameCommissione = new ArrayList<Link>();
 	private List <TestoAtto> testiAttoVotatoEsameCommissioni = new ArrayList<TestoAtto>();
-	private List <TestoAtto> emendamentiEsameCommissioni = new ArrayList<TestoAtto>();
+	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
-	private List <TestoAtto> testiClausola = new ArrayList<TestoAtto>();
+	private List <Allegato> testiClausola = new ArrayList<Allegato>();
 	
 	private boolean annullata = false;
 	private boolean presenzaComitatoRistretto;
@@ -130,12 +130,12 @@ public class Commissione implements Cloneable {
 		this.testiAttoVotatoEsameCommissioni = testiAttoVotatoEsameCommissioni;
 	}
 
-	public List<TestoAtto> getEmendamentiEsameCommissioni() {
+	public List<Allegato> getEmendamentiEsameCommissioni() {
 		return emendamentiEsameCommissioni;
 	}
 
 	public void setEmendamentiEsameCommissioni(
-			List<TestoAtto> emendamentiEsameCommissioni) {
+			List<Allegato> emendamentiEsameCommissioni) {
 		this.emendamentiEsameCommissioni = emendamentiEsameCommissioni;
 	}
 
@@ -530,11 +530,11 @@ public class Commissione implements Cloneable {
 		this.noteGeneraliEsameCommissione = noteGeneraliEsameCommissione;
 	}
 	
-	public List<TestoAtto> getTestiClausola() {
+	public List<Allegato> getTestiClausola() {
 		return testiClausola;
 	}
 
-	public void setTestiClausola(List<TestoAtto> testiClausola) {
+	public void setTestiClausola(List<Allegato> testiClausola) {
 		this.testiClausola = testiClausola;
 	}
 

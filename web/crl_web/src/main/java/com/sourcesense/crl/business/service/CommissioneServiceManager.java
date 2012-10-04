@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.service;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,12 +10,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneConsultiva;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Legislatura;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.CommissioneService;
 import com.sourcesense.crl.util.URLBuilder;
 
@@ -69,7 +72,37 @@ public class CommissioneServiceManager implements ServiceManager{
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_fine_lavori_esame_commissioni", null), esameCommissione);
 	}
 	
+	public Allegato uploadTestoComitatoRistretto(Atto atto, InputStream stream, Allegato testoAtto) {
 
+		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo_comitato_ristretto", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_COMITATO);
+	}
+	
+	public TestoAtto uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
+
+		return commissioneService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
+	}
+	
+	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
+
+		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_emendamento_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
+	}
+	
+	
+	public Allegato uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
+
+		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_clausola_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
+	}	
+	
+	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, Allegato allegato) {
+
+		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
+	}	
+	
     public List <Commissione> findCommissioniByAtto(String idAtto) {
 		
     	List <Commissione> commissioni = new ArrayList<Commissione>();

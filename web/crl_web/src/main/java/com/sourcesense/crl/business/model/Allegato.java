@@ -20,7 +20,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 public class Allegato {
 	
 	public static final String TIPO_PRESENTAZIONE_ASSEGNAZIONE = "allegato_atto";
-//	public static final String TIPO_ESAME_COMMISSIONE_COMITATO = "testo_comitato_ristretto";
+	public static final String TESTO_ESAME_AULA_EMENDAMENTO = "emendamento_aula";
 	public static final String TIPO_ESAME_COMMISSIONE_EMENDAMENTO = "emendamento_commissione";
 //	public static final String TIPO_ESAME_COMMISSIONE_CLAUSOLA = "clausola_commissione";
 	public static final String TIPO_ESAME_COMMISSIONE_ALLEGATO = "allegato_commissione";
@@ -28,7 +28,8 @@ public class Allegato {
 	public static final String TIPO_ESAME_AULA_ALLEGATO = "allegato_aula";
 	public static final String TIPO_PARERE = "allegato_parere";
 	public static final String TIPO_CONSULTAZIONE = "allegato_consultazione";
-	
+	public static final String TESTO_ESAME_COMMISSIONE_COMITATO = "testo_atto_comitato_ristretto";
+	public static final String TESTO_ESAME_COMMISSIONE_CLAUSOLA = "clausola_commissione";
 	
 	private String nome;
 	private String descrizione;
@@ -40,6 +41,11 @@ public class Allegato {
 	private Date dataSeduta;
 	private String tipologia;
 	private String provenienza;
+	private String passaggio;
+	private String commissione;
+	private String organismoStatutario;
+	private String consultazione;
+	
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -112,6 +118,46 @@ public class Allegato {
 
 	public void setProvenienza(String provenienza) {
 		this.provenienza = provenienza;
+	}
+
+
+	public String getPassaggio() {
+		return passaggio;
+	}
+
+
+	public void setPassaggio(String passaggio) {
+		this.passaggio = passaggio;
+	}
+
+
+	public String getCommissione() {
+		return commissione;
+	}
+
+
+	public void setCommissione(String commissione) {
+		this.commissione = commissione;
+	}
+
+
+	public String getOrganismoStatutario() {
+		return organismoStatutario;
+	}
+
+
+	public void setOrganismoStatutario(String organismoStatutario) {
+		this.organismoStatutario = organismoStatutario;
+	}
+
+
+	public String getConsultazione() {
+		return consultazione;
+	}
+
+
+	public void setConsultazione(String consultazione) {
+		this.consultazione = consultazione;
 	}
 	
 	

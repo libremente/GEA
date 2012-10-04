@@ -46,9 +46,10 @@ public class ConsultazioniPareriController {
 	private String noteParere;
 
 	private List<Allegato> allegatiParereList = new ArrayList<Allegato>();
+	private List<Allegato> allegatiConsultazioneList = new ArrayList<Allegato>();
+	
 	private String allegatoParereToDelete;
 	private boolean currentFilePubblico;
-
 
 	private List<Consultazione> consultazioniList = new ArrayList<Consultazione>();
 	private String soggettoConsultato;
@@ -69,32 +70,33 @@ public class ConsultazioniPareriController {
 	private boolean intervenuto;
 	private String soggettoInvitatoToDelete;
 
-	private List<Allegato> allegatiConsultazioneList = new ArrayList<Allegato>();
-
-
+	
 
 	private String statoCommitPareri = CRLMessage.COMMIT_DONE;
 	private String statoCommitConsultazioni = CRLMessage.COMMIT_DONE;
-
 
 	@PostConstruct
 	protected void init() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		setAtto((Atto) attoBean.getAtto().clone());	
+		setAtto((Atto) attoBean.getAtto().clone());
 
-		setOrganismiList(new ArrayList<OrganismoStatutario>(atto.getOrganismiStatutari()));
+		setOrganismiList(new ArrayList<OrganismoStatutario>(
+				atto.getOrganismiStatutari()));
 
-		if(!organismiList.isEmpty()) {
-			setDescrizioneOrganismoSelected(organismiList.get(0).getDescrizione());
+		if (!organismiList.isEmpty()) {
+			setDescrizioneOrganismoSelected(organismiList.get(0)
+					.getDescrizione());
 			showParereDetail();
 		}
 
-		setConsultazioniList(new ArrayList<Consultazione>(atto.getConsultazioni()));
+		setConsultazioniList(new ArrayList<Consultazione>(
+				atto.getConsultazioni()));
 
-		if(!consultazioniList.isEmpty()) {
-			setDescrizioneConsultazioneSelected(consultazioniList.get(0).getDescrizione());
+		if (!consultazioniList.isEmpty()) {
+			setDescrizioneConsultazioneSelected(consultazioniList.get(0)
+					.getDescrizione());
 			showConsultazioneDetail();
 		}
 	}
@@ -106,7 +108,6 @@ public class ConsultazioniPareriController {
 	public void updateConsultazioniHandler() {
 		setStatoCommitConsultazioni(CRLMessage.COMMIT_UNDONE);
 	}
-
 
 	public void changeTabHandler() {
 
@@ -134,18 +135,16 @@ public class ConsultazioniPareriController {
 	// Pareri********************************************************
 
 	public void showParereDetail() {
-		
-		
+
 		setParereSelected(findParere(descrizioneOrganismoSelected));
 
-		if(parereSelected!=null) {
+		if (parereSelected != null) {
 			setDataRicezioneParere(parereSelected.getDataRicezioneParere());
 			setDataRicezioneOrgano(parereSelected.getDataRicezioneOrgano());
 			setEsito(parereSelected.getEsito());
 			setNoteParere(parereSelected.getNote());
 			setAllegatiParereList(parereSelected.getAllegati());
-		}
-		else {
+		} else {
 			setDataRicezioneParere(null);
 			setDataRicezioneOrgano(null);
 			setEsito("");
@@ -155,51 +154,58 @@ public class ConsultazioniPareriController {
 	}
 
 	private Parere findParere(String descrizione) {
-		for(OrganismoStatutario element : organismiList) {
-			if(element.getDescrizione().equals(descrizione)) {
+		
+		for (OrganismoStatutario element : organismiList) {
+			if (element.getDescrizione().equals(descrizione)) {
 				return element.getParere();
 			}
 		}
 		return null;
 	}
 
-	
 	public void uploadAllegatoParere(FileUploadEvent event) {
 
-		// TODO Service logic
 		String fileName = event.getFile().getFileName();
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		if(attoBean.getWorkingOrganismoStatutario(descrizioneOrganismoSelected)==null){
+			
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Nessun organismo Statutario selezionato ", ""));
+			
+		}else{
+		
 		if (!checkAllegatoParere(fileName)) {
-			FacesContext context = FacesContext.getCurrentInstance();
+			
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			// TODO Alfresco upload
-			Allegato allegatoParereRet = null;
-
+			Allegato allegatoParereRet = new Allegato();
+			allegatoParereRet.setNome(fileName);
+			allegatoParereRet.setOrganismoStatutario(descrizioneOrganismoSelected);
+           
 			try {
 				allegatoParereRet = attoServiceManager
-						.uploadAllegatoConultaioneConsultazioniPareri(
+						.uploadAllegatoPareri(
 								((AttoBean) FacesContext.getCurrentInstance()
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
-										.getFile().getInputstream(), event
-										.getFile().getFileName());
+										.getFile().getInputstream(), allegatoParereRet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			// TODO aggiungi a bean di sessione
-			FacesContext context = FacesContext.getCurrentInstance();
-			AttoBean attoBean = ((AttoBean) context.getExternalContext()
-					.getSessionMap().get("attoBean"));
-
-			attoBean.getAtto().getAllegatiNotePresentazioneAssegnazione()
-			.add(allegatoParereRet);
+			
+			attoBean.getWorkingOrganismoStatutario(descrizioneOrganismoSelected)
+					.getParere().getAllegati().add(allegatoParereRet);
 
 			allegatiParereList.add(allegatoParereRet);
+		}
 		}
 	}
 
@@ -230,22 +236,21 @@ public class ConsultazioniPareriController {
 		}
 	}
 
-
 	public void salvaParere() {
-		
+
 		parereSelected.setDataRicezioneOrgano(getDataRicezioneOrgano());
 		parereSelected.setDataRicezioneParere(getDataRicezioneParere());
 		parereSelected.setEsito(getEsito());
 		parereSelected.setNote(getNoteParere());
-		//parereSelected.setAllegati
+		// parereSelected.setAllegati
 
 		atto.setOrganismiStatutari(organismiList);
-        
-		ConsultazioneParere consultazioneParere = new ConsultazioneParere(); 
+
+		ConsultazioneParere consultazioneParere = new ConsultazioneParere();
 		consultazioneParere.setAtto(atto);
 		Target target = new Target();
 		target.setOrganismoStatutario(descrizioneOrganismoSelected);
-		
+
 		attoServiceManager.salvaPareri(consultazioneParere);
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -255,16 +260,16 @@ public class ConsultazioniPareriController {
 		attoBean.getAtto().setOrganismiStatutari(organismiList);
 
 		setStatoCommitPareri(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Pareri salvati con successo", ""));
+		context.addMessage(null, new FacesMessage(
+				"Pareri salvati con successo", ""));
 	}
-
 
 	// Consultazioni****************************************************
 
 	public void showConsultazioneDetail() {
 		setConsultazioneSelected(findConsultazione());
 
-		if(consultazioneSelected!=null) {
+		if (consultazioneSelected != null) {
 			setDataSedutaConsultazione(consultazioneSelected.getDataSeduta());
 			setPrevista(consultazioneSelected.isPrevista());
 			setDiscussa(consultazioneSelected.isDiscussa());
@@ -284,9 +289,10 @@ public class ConsultazioniPareriController {
 	}
 
 	private Consultazione findConsultazione() {
-		if(descrizioneConsultazioneSelected!=null) {
-			for(Consultazione element : consultazioniList) {
-				if(element.getDescrizione().equals(descrizioneConsultazioneSelected)) {
+		if (descrizioneConsultazioneSelected != null) {
+			for (Consultazione element : consultazioniList) {
+				if (element.getDescrizione().equals(
+						descrizioneConsultazioneSelected)) {
 					return element;
 				}
 			}
@@ -296,15 +302,13 @@ public class ConsultazioniPareriController {
 
 	public void addConsultazione() {
 
-		if (soggettoConsultato != null
-				&& !soggettoConsultato.trim().equals("")) {
+		if (soggettoConsultato != null && !soggettoConsultato.trim().equals("")) {
 			if (!checkConsultazioni()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Soggetto consultato "
-								+ soggettoConsultato + " già presente ",
-						""));
+								+ soggettoConsultato + " già presente ", ""));
 
 			} else {
 				Consultazione consultazione = new Consultazione();
@@ -327,8 +331,9 @@ public class ConsultazioniPareriController {
 
 				consultazioniList.remove(element);
 
-				if(!consultazioniList.isEmpty()) {
-					setDescrizioneConsultazioneSelected(consultazioniList.get(0).getDescrizione());					
+				if (!consultazioniList.isEmpty()) {
+					setDescrizioneConsultazioneSelected(consultazioniList
+							.get(0).getDescrizione());
 				}
 				showConsultazioneDetail();
 
@@ -361,8 +366,7 @@ public class ConsultazioniPareriController {
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Soggetto invitato "
-								+ nomeSoggettoInvitato + " già presente ",
-						""));
+								+ nomeSoggettoInvitato + " già presente ", ""));
 
 			} else {
 				SoggettoInvitato soggetto = new SoggettoInvitato();
@@ -402,7 +406,6 @@ public class ConsultazioniPareriController {
 		return true;
 	}
 
-
 	public void salvaConsultazione() {
 		consultazioneSelected.setDataSeduta(getDataSedutaConsultazione());
 		consultazioneSelected.setPrevista(isPrevista());
@@ -412,7 +415,7 @@ public class ConsultazioniPareriController {
 		atto.setConsultazioni(getConsultazioniList());
 		attoServiceManager.salvaAmmissibilitaPresentazione(atto);
 
-		//TODO: alfresco service
+		// TODO: alfresco service
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -421,112 +424,135 @@ public class ConsultazioniPareriController {
 		attoBean.getAtto().setConsultazioni(getConsultazioniList());
 
 		setStatoCommitConsultazioni(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Consultazioni salvati con successo", ""));
+		context.addMessage(null, new FacesMessage(
+				"Consultazioni salvati con successo", ""));
 	}
-	
-	
-		public void uploadAllegatoConsultazione(FileUploadEvent event) {
 
-			// TODO Service logic
-			String fileName = event.getFile().getFileName();
+	public void uploadAllegatoConsultazione(FileUploadEvent event) {
+
+		// TODO Service logic
+		String fileName = event.getFile().getFileName();
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		if (attoBean.getWorkingConsultazione(descrizioneConsultazioneSelected) == null) {
+
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! salvare prima la consultazione ", ""));
+
+		} else {
 
 			if (!checkAllegatoConsultazione(fileName)) {
-				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
 								+ fileName + " è già stato allegato ", ""));
+
 			} else {
 
 				// TODO Alfresco upload
-				Allegato allegatoConsultazioneRet = null;
-
+				Allegato allegatoConsultazioneRet = new Allegato();
+				allegatoConsultazioneRet.setNome(fileName);
+				allegatoConsultazioneRet.setConsultazione(descrizioneConsultazioneSelected);  
+				
+				
+				
 				try {
 					allegatoConsultazioneRet = attoServiceManager
-							.uploadAllegatoParereConsultazioniPareri(
-									((AttoBean) FacesContext.getCurrentInstance()
-											.getExternalContext().getSessionMap()
-											.get("attoBean")).getAtto(), event
-											.getFile().getInputstream(), event
-											.getFile().getFileName());
+							.uploadAllegatoConsultazioni(
+									((AttoBean) FacesContext
+											.getCurrentInstance()
+											.getExternalContext()
+											.getSessionMap().get("attoBean"))
+											.getAtto(), event.getFile()
+											.getInputstream(), allegatoConsultazioneRet);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
-				// TODO aggiungi a bean di sessione
-				FacesContext context = FacesContext.getCurrentInstance();
-				AttoBean attoBean = ((AttoBean) context.getExternalContext()
-						.getSessionMap().get("attoBean"));
-
-				attoBean.getAtto().getAllegatiNotePresentazioneAssegnazione()
-				.add(allegatoConsultazioneRet);
+				attoBean.getWorkingConsultazione(
+						descrizioneConsultazioneSelected).getAllegati()
+						.add(allegatoConsultazioneRet);
 
 				allegatiConsultazioneList.add(allegatoConsultazioneRet);
 			}
 		}
+	}
 
-		private boolean checkAllegatoConsultazione(String fileName) {
+	private boolean checkAllegatoConsultazione(String fileName) {
 
-			for (Allegato element : allegatiConsultazioneList) {
+		for (Allegato element : allegatiConsultazioneList) {
 
-				if (element.getDescrizione().equals(fileName)) {
+			if (element.getDescrizione().equals(fileName)) {
 
-					return false;
-				}
-
+				return false;
 			}
 
-			return true;
 		}
 
-		public void removeAllegatoConsultazione() {
+		return true;
+	}
 
-			for (Allegato element : allegatiConsultazioneList) {
+	public void removeAllegatoConsultazione() {
 
-				if (element.getId().equals(allegatoConsultazioneToDelete)) {
+		for (Allegato element : allegatiConsultazioneList) {
 
-					// TODO Alfresco delete
-					allegatiConsultazioneList.remove(element);
-					break;
-				}
+			if (element.getId().equals(allegatoConsultazioneToDelete)) {
+
+				// TODO Alfresco delete
+				allegatiConsultazioneList.remove(element);
+				break;
 			}
 		}
-
+	}
 
 	// Getters & Setters**********************************************
 
 	public Atto getAtto() {
 		return atto;
 	}
+
 	public void setAtto(Atto atto) {
 		this.atto = atto;
 	}
+
 	public List<OrganismoStatutario> getOrganismiList() {
 		return organismiList;
 	}
+
 	public void setOrganismiList(List<OrganismoStatutario> organismiList) {
 		this.organismiList = organismiList;
 	}
+
 	public Parere getParereSelected() {
 		return parereSelected;
 	}
+
 	public void setParereSelected(Parere parereSelected) {
 		this.parereSelected = parereSelected;
 	}
+
 	public Date getDataRicezioneParere() {
 		return dataRicezioneParere;
 	}
+
 	public void setDataRicezioneParere(Date dataRicezioneParere) {
 		this.dataRicezioneParere = dataRicezioneParere;
 	}
+
 	public Date getDataRicezioneOrgano() {
 		return dataRicezioneOrgano;
 	}
+
 	public void setDataRicezioneOrgano(Date dataRicezioneOrgano) {
 		this.dataRicezioneOrgano = dataRicezioneOrgano;
 	}
+
 	public String getEsito() {
 		return esito;
 	}
+
 	public void setEsito(String esito) {
 		this.esito = esito;
 	}
@@ -551,7 +577,8 @@ public class ConsultazioniPareriController {
 		return descrizioneOrganismoSelected;
 	}
 
-	public void setDescrizioneOrganismoSelected(String descrizioneOrganismoSelected) {
+	public void setDescrizioneOrganismoSelected(
+			String descrizioneOrganismoSelected) {
 		this.descrizioneOrganismoSelected = descrizioneOrganismoSelected;
 	}
 
@@ -718,7 +745,6 @@ public class ConsultazioniPareriController {
 		this.currentFilePubblico = currentFilePubblico;
 	}
 
-
 	public String getAllegatoConsultazioneToDelete() {
 		return allegatoConsultazioneToDelete;
 	}
@@ -727,7 +753,5 @@ public class ConsultazioniPareriController {
 			String allegatoConsultazioneToDelete) {
 		this.allegatoConsultazioneToDelete = allegatoConsultazioneToDelete;
 	}
-
-
 
 }

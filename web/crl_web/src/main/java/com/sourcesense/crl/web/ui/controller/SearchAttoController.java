@@ -242,28 +242,7 @@ public class SearchAttoController {
 		this.lazyAttoModel = lazyAttoModel;
 	}
 
-	/**
-     */
-	// public void searchLazyAttoModel() {
-	//
-	//
-	//
-	// lazyAttoModel = new LazyDataModel<Atto>() {
-	//
-	// @Override
-	// public List<Atto> load(int first, int pageSize, String sortField,
-	// SortOrder sortOrder, Map<String, String> filters) {
-	// return null;
-	// }
-	//
-	// @Override
-	// public int getRowCount() {
-	// return (int) attoServiceManager.count();
-	// }
-	// };
-	//
-	// }
-
+	
 	public String attoDetail(String idAttoParam) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -281,11 +260,11 @@ public class SearchAttoController {
 		// TODO riempire liste abbinamenti
 
 		// TODO riempire liste testi
-		attoBean.getAtto().setTestiAtto(
-				attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
+		attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
 		// TODO riempire liste allegati
-		attoBean.getAtto().setAllegati(
-				attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+		attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+		
+		
 		// TODO riempire liste organi interni
 
 		// TODO riempire liste altri organi
