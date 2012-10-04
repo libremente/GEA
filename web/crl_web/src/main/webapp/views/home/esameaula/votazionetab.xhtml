@@ -70,23 +70,29 @@
 			</p:confirmDialog>
 		</p:column>
 	</p:row>
+	
 	<p:row>
+	
 		<p:column>
+		
 		
 		Data presa in carico:
 		</p:column>
-		<p:column>
+		<p:column><div id="DataPresaInCaricoDiv">
 			<p:calendar size="10" locale="it"
 				value="#{esameAulaController.dataPresaInCarico}">
 				<p:ajax event="dateSelect"
 					listener="#{esameAulaController.updateVotazioneHandler}" />
 			</p:calendar>
+			</div>
 		</p:column>
-		<p:column>
+		<p:column><div id="presaInCaricoDiv">
 			<p:commandButton value="Presa in carico" 
 			action="#{esameAulaController.presaInCarico}"
 			update="votazioneMsg , :informationForm:informationBar" oncomplete="unblockDiv()"/>
+			</div>
 		</p:column>
+		
 	</p:row>
 	<p:row>
 		<p:column>
@@ -102,6 +108,7 @@
 			</p:selectOneMenu>
 		</p:column>
 	</p:row>
+	
 </p:panelGrid>
 <div  id="blockedVotazione">
 <p:panelGrid styleClass="infoTable" id="votazionePanel2">
@@ -344,7 +351,11 @@ function unblockDiv() {
     $('#blockedRinvioStralci').unblock(); 
     $('#blockedNote').unblock(); 
    };
-
+   
+if ( #{navigationBean.esameAulaDisabled()}==true) {
+   $.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#presaInCaricoDiv').block({ message: null } );
+   $('#DataPresaInCaricoDiv').block({ message: null } ); }
 </script>
 
 </html>

@@ -118,7 +118,7 @@
 					value="Data presa in carico: " />
 			</b>
 		</p:column>
-		<p:column>
+		<p:column><div id="presaInCarico">
 			<p:calendar size="10" locale="it" id="datapresaincarico"
 				update="comitatiMsg"
 				value="#{esameCommissioniController.dataPresaInCarico}">
@@ -132,7 +132,7 @@
 				actionListener="#{esameCommissioniController.presaInCarico}"
 				oncomplete="unblockDiv()" />
 
-
+		</div>
 		</p:column>
 		<p:column></p:column>
 		<p:column></p:column>
@@ -141,13 +141,14 @@
 	<p:row>
 		<p:column>
 			<h:outputText style="font-weight: bold;" value="Materia: " />
+			
 		</p:column>
-		<p:column>
+		<p:column><div id="materiaDiv">
 			<p:inputText id="inputmateria"
 				value="#{esameCommissioniController.materia}">
 				<p:ajax event="change"
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
-			</p:inputText>
+			</p:inputText></div>
 		</p:column>
 	</p:row>
 	<p:row rendered="#{navigationBean.isSessionAttoPAR()}">
@@ -155,12 +156,12 @@
 			<b> <h:outputLabel for="datascadenza" value="Data scadenza: " />
 			</b>
 		</p:column>
-		<p:column>
+		<p:column><div id="dataScadenza">
 			<p:calendar size="10" locale="it" id="datascadenza"
 				value="#{esameCommissioniController.dataScadenza}">
 				<p:ajax event="dateSelect"
 					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
-			</p:calendar>
+			</p:calendar></div>
 		</p:column>
 	</p:row>
 </p:panelGrid>
@@ -599,6 +600,12 @@
 		$('#blockedEmendamenti').unblock();
 		$('#blockedNote').unblock();
 	};
+	
+if ( #{navigationBean.esameCommissioniDisabled()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#presaInCarico').block({ message: null } );
+	$('#materiaDiv').block({ message: null } );
+	$('#dataScadenza').block({ message: null } );}
 </script>
 
 </html>

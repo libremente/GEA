@@ -16,6 +16,7 @@
 
 	<p:row>
 		<p:column colspan="3">
+		<div id="presaInCaricoDiv" class="transparentBlock">
 			<p>
 				<!-- Messaggio azioni -->
 				<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
@@ -90,6 +91,7 @@
 				<p:commandButton value="Presa in Carico" update="presaCaricoMsg ,:informationForm:informationBar"
 					actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}" oncomplete="unblockDiv()" />
 			</p>
+			</div>
 		</p:column>
 	</p:row>
 </p:panelGrid>
@@ -549,6 +551,7 @@
 <script>
 
 
+
 if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
 $('#blockedInfoGen').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 	width:		'350px',
@@ -574,6 +577,10 @@ function unblockDiv() {
     $('#blockedAssegnazione').unblock(); 
     $('#blockedNote').unblock(); 
    };
+   
+if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#presaInCaricoDiv').block({ message: null } ); }
 
 </script>
 </html>
