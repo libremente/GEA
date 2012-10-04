@@ -133,7 +133,7 @@ public class InserisciMISController {
 
 			try {
 				allegatoRet = attoServiceManager
-						.uploadAllegatoConultaioneConsultazioniPareri(
+						.uploadAllegatoMIS(
 								((AttoBean) FacesContext.getCurrentInstance()
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event

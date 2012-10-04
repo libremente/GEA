@@ -90,7 +90,20 @@ public class AttoServiceManager implements ServiceManager {
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
-		
+	
+	public Allegato uploadAllegatoMIS(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
+	}
+	
+	public Allegato uploadAllegatoEAC(Atto atto, InputStream stream, String nomeFile) {
+
+		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
+	}
+	
+	
 	public Allegato uploadAllegatoPareri(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegatoParere(urlBuilder.buildAlfrescoURL(

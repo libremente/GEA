@@ -138,7 +138,7 @@ public class InserisciEACController {
 
 			try {
 				allegatoRet = attoServiceManager
-						.uploadAllegatoConultaioneConsultazioniPareri(
+						.uploadAllegatoEAC(
 								((AttoBean) FacesContext.getCurrentInstance()
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
