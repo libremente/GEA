@@ -18,7 +18,7 @@ public class DataExtractor {
         Councilor c0 = new Councilor("GAROFALO", "COSIMO", "LEGISLATURA_19", "PDL");
         c0.addCommittee("COMMISSIONE CACCIA E PESCA");
         c0.addCommittee("COMMISSIONE TURISMO");
-        Councilor c1 = new Councilor("BALDELLI", "MARCCO", "LEGISLATURA_19", "PD");
+        Councilor c1 = new Councilor("BALDELLI", "MARCO", "LEGISLATURA_19", "PD");
         c1.addCommittee("COMMISSIONE CACCIA E PESCA");
         c1.addCommittee("COMMISSIONE TURISMO");
         Councilor c2 = new Councilor("MENCONI", "GABRIELE", "LEGISLATURA_19", "IDV");
