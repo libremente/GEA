@@ -12,6 +12,7 @@
 			<type name="crlatti:parere"/>
 			<type name="crlatti:consultazione"/>
 			<type name="crlatti:relatore"/>
+			<type name="crlatti:collegamento"/>
 			<type name="crlatti:membroComitatoRistretto" />
 		</content-types>
 	</config>
@@ -361,6 +362,14 @@
 			<show-property name="crlatti:noteClausolaValutativaEsame" />	
 
 		</property-sheet>
+	</config>
+
+
+	<config evaluator="node-type" condition="crlatti:collegamento">
+		<property-sheet>
+ 			<show-property name="crlatti:note" />
+			<show-property name="crlatti:attoAssociatoCollegamento" />
+ 		</property-sheet>
 	</config>
 
 
