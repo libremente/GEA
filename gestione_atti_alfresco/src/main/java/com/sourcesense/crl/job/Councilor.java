@@ -3,6 +3,7 @@ package com.sourcesense.crl.job;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class Councilor {
@@ -11,7 +12,7 @@ public class Councilor {
     private String lastName;
     private String legislatureNumber;
     private String groupName;
-    private Collection<String> committeeNames;
+    private List<String> committeeNames;
 
     public Councilor() {
         committeeNames = new ArrayList<String>();
@@ -61,7 +62,7 @@ public class Councilor {
         return committeeNames;
     }
 
-    public void setCommitteeNames(Collection<String> committeeNames) {
+    public void setCommitteeNames(List<String> committeeNames) {
         this.committeeNames = committeeNames;
     }
 
