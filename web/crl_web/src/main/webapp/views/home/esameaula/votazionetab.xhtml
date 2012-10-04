@@ -98,14 +98,14 @@
 		<p:column>
 		Relazione scritta:
 		</p:column>
-		<p:column>
+		<p:column><div id="relazioneScrittaDiv">
 			<p:selectOneMenu id="relazioneScritta"
 				value="#{esameAulaController.relazioneScritta}">
 				<f:selectItem itemLabel="Sì" itemValue="Sì" />
 				<f:selectItem itemLabel="No" itemValue="No" />
 				<p:ajax event="change"
 					listener="#{esameAulaController.updateVotazioneHandler}" />
-			</p:selectOneMenu>
+			</p:selectOneMenu></div>
 		</p:column>
 	</p:row>
 	
@@ -355,7 +355,8 @@ function unblockDiv() {
 if ( #{navigationBean.esameAulaDisabled()}==true) {
    $.blockUI.defaults.overlayCSS.opacity = 0; 
    $('#presaInCaricoDiv').block({ message: null } );
-   $('#DataPresaInCaricoDiv').block({ message: null } ); }
+   $('#DataPresaInCaricoDiv').block({ message: null } );
+   $('#relazioneScrittaDiv').block({ message: null } );}
 </script>
 
 </html>
