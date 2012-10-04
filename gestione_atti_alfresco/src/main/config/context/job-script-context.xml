@@ -12,7 +12,7 @@
 	language governing permissions and limitations under the License. -->
 <beans>
 
-    <bean id="dataExtractor" class="org.alfresco.jobs.DataExtractor">
+    <bean id="dataExtractor" class="com.sourcesense.crl.job.DataExtractor">
     </bean>
 
     <bean id="templateActionModelFactory" class="org.alfresco.repo.action.scheduled.FreeMarkerWithLuceneExtensionsModelFactory">
@@ -21,7 +21,7 @@
         </property>
     </bean>
 
-	<bean id="crlImportScriptBean" parent="baseJavaScriptExtension" class="org.alfresco.jobs.AnagraficaImportScript">
+	<bean id="crlImportScriptBean" parent="baseJavaScriptExtension" class="com.sourcesense.crl.job.AnagraficaImportScript">
 	    <property name="extensionName">
 	        <value>crlImporter</value>
 	    </property>
@@ -99,7 +99,7 @@
             <value>PATH:"/app:company_home"</value> 
         </property>
         <property name="cronExpression">
-            <value>5 * * * * ?</value>
+            <value>0 0/2 * * * ?</value>
         </property>
         <property name="jobName">
             <value>jobD</value>
