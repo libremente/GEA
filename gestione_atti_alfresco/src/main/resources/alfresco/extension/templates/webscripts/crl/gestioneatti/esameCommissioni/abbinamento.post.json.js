@@ -4,6 +4,7 @@ var jsonAbbinamento = filterParam(json.get("abbinamento"));
 var idAtto = filterParam(jsonAbbinamento.get("idAtto"));
 var idAttoAbbinato = filterParam(jsonAbbinamento.get("idAttoAbbinato"));
 var tipoTesto = filterParam(jsonAbbinamento.get("tipoTesto"));
+var note = filterParam(jsonAbbinamento.get("note"));
 var dataAbbinamento = filterParam(jsonAbbinamento.get("dataAbbinamento"));
 var dataDisabbinamento = filterParam(jsonAbbinamento.get("dataDisabbinamento"));
 
@@ -61,6 +62,7 @@ if(checkIsNotNull(jsonAbbinamento)
 	abbinamentoNode.properties["crlatti:dataAbbinamento"] = dataAbbinamentoParsed;
 	abbinamentoNode.properties["crlatti:dataDisabbinamento"] = dataDisabbinamentoParsed;
 	abbinamentoNode.properties["crlatti:tipoTestoAbbinamento"] = tipoTesto;
+	abbinamentoNode.properties["crlatti:noteAbbinamento"] = note;
 	abbinamentoNode.save();
 	
 	if(creaAssociazione){

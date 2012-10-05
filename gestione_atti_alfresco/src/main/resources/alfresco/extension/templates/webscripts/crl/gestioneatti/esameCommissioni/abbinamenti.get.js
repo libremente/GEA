@@ -23,3 +23,4 @@ if(checkIsNotNull(idAtto)
 	status.redirect = true;
 }
 model.abbinamenti = abbinamenti;
+model.atto = attoNode;
