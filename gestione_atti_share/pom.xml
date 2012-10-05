@@ -49,11 +49,11 @@
 	<properties>
 		<env>local</env><!-- dev per la macchina di sviluppo interna | local per locale -->
 		<webapp.name>share</webapp.name>
-		<alfresco.version>4.0.2.9</alfresco.version>
-        <alfresco.edition>enterprise</alfresco.edition>
+		<alfresco.version>4.0.e</alfresco.version>
+        <alfresco.edition>community</alfresco.edition>
 		<share.log.level>debug</share.log.level>
 		<share.servlet.port>8081</share.servlet.port>
-        <surf.wiring.mode>development</surf.wiring.mode><!-- "production" is the other allowed value -->
+        <surf.wiring.mode>production</surf.wiring.mode><!-- "production" is the other allowed value -->
 	</properties>
 
 	<!-- Alfresco dependencies -->
@@ -62,7 +62,7 @@
 			Alfresco Dependencies. Use this dependency to switch SHARE version
 		-->
 		<dependency>
-			<groupId>org.alfresco.enterprise</groupId>
+			<groupId>org.alfresco</groupId>
 			<artifactId>share</artifactId>
 			<type>war</type>
 			<version>${alfresco.version}</version>

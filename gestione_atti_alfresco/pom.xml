@@ -101,8 +101,8 @@
 			slash, e.g. '/var/log/alfresco/' ) | | Jetty embedded run logs by
 			default in target/alfresco.log
 		-->
-        <alfresco.version>4.0.2.9</alfresco.version>
-        <alfresco.edition>enteprise</alfresco.edition>
+        <alfresco.version>4.0.e</alfresco.version>
+        <alfresco.edition>community</alfresco.edition>
 		<alfresco.data.location>./alf_data_jetty</alfresco.data.location>
 		<alfresco.db.name>alf_jetty</alfresco.db.name>
 		<alfresco.db.username>alfresco</alfresco.db.username>
@@ -124,13 +124,13 @@
 	-->
 	<dependencies>
         <dependency>
-            <groupId>org.alfresco.enterprise</groupId>
+            <groupId>org.alfresco</groupId>
             <artifactId>alfresco-core</artifactId>
             <version>${alfresco.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-			<groupId>org.alfresco.enterprise</groupId>
+			<groupId>org.alfresco</groupId>
 			<artifactId>alfresco-repository</artifactId>
 			<version>${alfresco.version}</version>
 			<scope>provided</scope>
@@ -476,7 +476,7 @@
 									<scanIntervalSeconds>10</scanIntervalSeconds>
 									<connectors>
 										<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-											<port>9090</port>
+											<port>8080</port>
 											<maxIdleTime>60000</maxIdleTime>
 										</connector>
 									</connectors>
@@ -538,7 +538,7 @@
 					remove if you want jetty to be able to deploy a WAR :)
 				-->
 				<dependency>
-					<groupId>org.alfresco.enterprise</groupId>
+					<groupId>org.alfresco</groupId>
 					<artifactId>alfresco</artifactId>
 					<version>${alfresco.version}</version>
 					<type>war</type>
@@ -564,7 +564,7 @@
                 <dependency>
                     <groupId>tk.skuro.alfresco</groupId>
                     <artifactId>h2-support</artifactId>
-                    <version>1.4</version>
+                    <version>1.2</version>
                 </dependency>
 			</dependencies>
 		</profile>
