@@ -54,7 +54,7 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 
         /* Extract data from DB */
         Legislature legislature = dataExtractor.getCurrentLegislature();
-        if (legislature != null) {
+        if (legislature == null) {
             logger.warn("Impossibile determinare la legislatura corrente: termino");
             return;
         }
