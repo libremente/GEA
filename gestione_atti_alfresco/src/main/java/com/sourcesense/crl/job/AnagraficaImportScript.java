@@ -50,16 +50,15 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
     public void executeImport() {
         logger.debug("Start of method 'executeImport'");
 
-        //String councilorsStorePath = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Consiglieri\"";
         String crlModel = "http://www.regione.lombardia.it/content/model/atti/1.0";
 
         /* Extract data from DB */
-        int idCurrentLegislature = dataExtractor.getCurrentLegislature();
-        if (idCurrentLegislature <= 0) {
+        Legislature legislature = dataExtractor.getCurrentLegislature();
+        if (legislature != null) {
             logger.warn("Impossibile determinare la legislatura corrente: termino");
             return;
         }
-        List<Councilor> councilors = dataExtractor.getCouncilors(idCurrentLegislature);
+        List<Councilor> councilors = dataExtractor.getCouncilors(legislature.getId());
 
         /* If no councilor exists... */
         if (councilors.size() <= 0) {
@@ -75,19 +74,23 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                                                                        "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature\"");
 
         /* Determine legislature number from data extracted from DB */
-        String legislatureNumber = councilors.get(0).getLegislatureNumber();
-        logger.info("La legislatura a cui i consiglieri si riferiscono e' la '" + legislatureNumber+"'");
+        String legislatureName = "Legislatura"+legislature.getNumber();
+        logger.info("La legislatura a cui i consiglieri si riferiscono e' la '" + legislatureName+"'");
 
         /* Locate legislature node on Alfresco repository */
         ResultSet legislatureNodeResultSet = searchService.query(Repository.getStoreRef(),
                                                                  SearchService.LANGUAGE_LUCENE,
-                                                                 "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/"+legislatureNumber+"\"");
+                                                                 "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/"+legislatureName+"\"");
 
         /* If legislature node does not exist... create it */
         if (legislatureNodeResultSet.length() > 0) {
             QName LEGISLATURE_TYPE_NAME = QName.createQName(crlModel, "legislaturaAnagrafica");
-            FileInfo fileInfo = fileFolderService.create(legislatureFolderNodeResultSet.getNodeRef(0), legislatureNumber, LEGISLATURE_TYPE_NAME);
-            logger.info("Creato il nodo '" + fileInfo.getName() + "' nel repository di Alfresco");
+            QName LEGISLATURE_PROPERTY_YEARS = QName.createQName(crlModel, "anni");
+            FileInfo legislatureFileInfo = fileFolderService.create(legislatureFolderNodeResultSet.getNodeRef(0), legislatureName, LEGISLATURE_TYPE_NAME);
+            logger.info("Creato il nodo '" + legislatureFileInfo.getName() + "' nel repository di Alfresco");
+            nodeService.setProperty(legislatureFileInfo.getNodeRef(), LEGISLATURE_PROPERTY_YEARS, legislature.getFrom());
+            logger.info("Ho settato la proprieta' '"+LEGISLATURE_PROPERTY_YEARS.toString()+"' a '"+legislature.getFrom()+"'");
+
         }
 
         /* Locate all councilors nodes on Alfresco repository */
@@ -113,6 +116,8 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
         QName COUNCILOR_TYPE_NAME = QName.createQName(crlModel, "consigliereAnagrafica");
         QName COUNCILOR_PROPERTY_FIRST_NAME = QName.createQName(crlModel, "nomeConsigliereAnagrafica");
         QName COUNCILOR_PROPERTY_LAST_NAME = QName.createQName(crlModel, "cognomeConsigliereAnagrafica");
+        QName COUNCILOR_PROPERTY_LEGISLATURE = QName.createQName(crlModel, "legislaturaConsigliereAnagrafica");
+        QName COUNCILOR_PROPERTY_GROUP = QName.createQName(crlModel, "gruppoConsigliereAnagrafica");
         for (Councilor councilor : councilors) {
             String councilorNodeName = councilor.getFirstName() + "_" + councilor.getLastName();
             FileInfo councilorFileInfo = fileFolderService.create(councilorsFolderNodeResultSet.getNodeRef(0), councilorNodeName, COUNCILOR_TYPE_NAME);
@@ -121,6 +126,10 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
             logger.info("Ho settato la proprieta' '"+COUNCILOR_PROPERTY_FIRST_NAME.toString()+"' a '"+councilor.getFirstName()+"'");
             nodeService.setProperty(councilorFileInfo.getNodeRef(), COUNCILOR_PROPERTY_LAST_NAME, councilor.getLastName());
             logger.info("Ho settato la proprieta' '"+COUNCILOR_PROPERTY_LAST_NAME.toString()+"' a '"+councilor.getLastName()+"'");
+            nodeService.setProperty(councilorFileInfo.getNodeRef(), COUNCILOR_PROPERTY_LEGISLATURE, legislatureName);
+            logger.info("Ho settato la proprieta' '"+COUNCILOR_PROPERTY_LEGISLATURE.toString()+"' a '"+legislatureName+"'");
+            nodeService.setProperty(councilorFileInfo.getNodeRef(), COUNCILOR_PROPERTY_GROUP, councilor.getGroupName());
+            logger.info("Ho settato la proprieta' '"+COUNCILOR_PROPERTY_GROUP.toString()+"' a '"+councilor.getGroupName()+"'");
         }
 
         logger.debug("End of method 'executeImport'");

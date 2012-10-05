@@ -3,8 +3,11 @@ package com.sourcesense.crl.job;
 
 public class Constant {
 
-    public static String QUERY_CURRENT_LEGISLATURE = "SELECT MAX(id_legislature) FROM legislature";
-    public static String COLUMN_ID_LEGISLATURE = "id_legislature";
+    public static String QUERY_CURRENT_LEGISLATURE = "SELECT id_legislatura, num_legislatura, durata_legislatura_da, durata_legislatura_a FROM legislature WHERE attiva = '1'";
+    public static String COLUMN_LEGISLATURE_ID = "id_legislatura";
+    public static String COLUMN_LEGISLATURE_NUMBER = "num_legislatura";
+    public static String COLUMN_LEGISLATURE_FROM = "durata_legislatura_da";
+    public static String COLUMN_LEGISLATURE_TO = "durata_legislatura_a";
 
     public static String QUERY_ALL_COUNCILORS_FILTERED_BY_LEGISLATURE
                          = "SELECT DISTINCT ll.num_legislatura, " +

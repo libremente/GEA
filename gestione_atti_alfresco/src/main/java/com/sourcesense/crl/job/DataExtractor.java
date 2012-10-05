@@ -28,19 +28,23 @@ public class DataExtractor {
         this.dataSource = dataSource;
     }
 
-    public int getCurrentLegislature() {
+    public Legislature getCurrentLegislature() {
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(Constant.QUERY_CURRENT_LEGISLATURE);
             ResultSet rs = ps.executeQuery();
-            int idCurrentLegislature = -1;
+            Legislature legislature = null;
             if (rs.next()) {
-                idCurrentLegislature = rs.getInt(Constant.COLUMN_ID_LEGISLATURE);
+                legislature = new Legislature();
+                legislature.setId(rs.getInt(Constant.COLUMN_LEGISLATURE_ID));
+                legislature.setNumber(rs.getString(Constant.COLUMN_LEGISLATURE_NUMBER));
+                legislature.setFrom(rs.getDate(Constant.COLUMN_LEGISLATURE_FROM));
+                legislature.setTo(rs.getDate(Constant.COLUMN_LEGISLATURE_TO));
             }
             rs.close();
             ps.close();
-            return idCurrentLegislature;
+            return legislature;
         } catch (SQLException e) {
             logger.error("Cannot get current legislature id", e);
             throw new RuntimeException(e);
@@ -70,9 +74,9 @@ public class DataExtractor {
                 councilor.setLastName(rs.getString(Constant.COLUMN_COGNOME));
                 councilor.setGroupName(rs.getString(Constant.COLUMN_NOME_GRUPPO));
                 councilor.setLegislatureNumber(rs.getString(Constant.COLUMN_NUMERO_LEGISLATURA));
-                String organi = rs.getString(Constant.COLUMN_ORGANI);
-                if (organi != null && !"".equals(organi) && !",".equals(organi)) {
-                    StringTokenizer st = new StringTokenizer(organi, ",");
+                String committes = rs.getString(Constant.COLUMN_ORGANI);
+                if (committes != null && !"".equals(committes) && !",".equals(committes)) {
+                    StringTokenizer st = new StringTokenizer(committes, ",");
                     while (st.hasMoreTokens()) {
                         councilor.addCommittee(st.nextToken());
                     }
