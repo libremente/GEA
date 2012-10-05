@@ -110,7 +110,7 @@
         <alfresco.db.params>MODE=PostgreSQL;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;MVCC=TRUE</alfresco.db.params>
         <alfresco.db.url>jdbc:h2:${alfresco.data.location}/h2_data/${alfresco.db.name};${alfresco.db.params}</alfresco.db.url>
         <alfresco.db.datasource.class>org.h2.jdbcx.JdbcDataSource</alfresco.db.datasource.class>
-        <webapp.log.level>error</webapp.log.level>
+        <webapp.log.level>info</webapp.log.level>
 		<webapp.log.dir></webapp.log.dir>
 		<!--  End of testing webapp specific properties -->
 		<!--  Module specific build time properties -->
@@ -148,6 +148,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-data-model</artifactId>
             <version>4.0.d</version>
@@ -164,6 +169,11 @@
             <artifactId>js</artifactId>
             <version>1.6R7</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.0</version>
         </dependency>
 		<!--
 			Example Jar dependency: will be properly packed into the AMP /lib
@@ -256,7 +266,7 @@
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
-					<overlays>
+					<!--<overlays>-->
 						<!--
 							This sample adds records management module in the finally built
 							AMP <overlay> <groupId>org.org.alfresco</groupId>
@@ -267,7 +277,7 @@
 							The current AMP is always last in order to overwrite other
 							modules' modules.properties <overlay></overlay>
 						-->
-					</overlays>
+					<!--</overlays>-->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -297,47 +307,47 @@
 				</excludes>
 			</resource>
 		</resources>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.apache.maven.plugins</groupId>
-                                        <artifactId>maven-dependency-plugin</artifactId>
-                                        <versionRange>[2.0,)</versionRange>
-                                        <goals>
-                                            <goal>copy-dependencies</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <execute />
-                                    </action>
-                                </pluginExecution>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.alfresco.maven</groupId>
-                                        <artifactId>maven-nosnapshot-plugin</artifactId>
-                                        <versionRange>[0.0,)</versionRange>
-                                        <goals>
-                                            <goal>strip</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore />
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <!--<pluginManagement>-->
+            <!--<plugins>-->
+                <!--<plugin>-->
+                    <!--<groupId>org.eclipse.m2e</groupId>-->
+                    <!--<artifactId>lifecycle-mapping</artifactId>-->
+                    <!--<version>1.0.0</version>-->
+                    <!--<configuration>-->
+                        <!--<lifecycleMappingMetadata>-->
+                            <!--<pluginExecutions>-->
+                                <!--<pluginExecution>-->
+                                    <!--<pluginExecutionFilter>-->
+                                        <!--<groupId>org.apache.maven.plugins</groupId>-->
+                                        <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                                        <!--<versionRange>[2.0,)</versionRange>-->
+                                        <!--<goals>-->
+                                            <!--<goal>copy-dependencies</goal>-->
+                                        <!--</goals>-->
+                                    <!--</pluginExecutionFilter>-->
+                                    <!--<action>-->
+                                        <!--<execute />-->
+                                    <!--</action>-->
+                                <!--</pluginExecution>-->
+                                <!--<pluginExecution>-->
+                                    <!--<pluginExecutionFilter>-->
+                                        <!--<groupId>org.alfresco.maven</groupId>-->
+                                        <!--<artifactId>maven-nosnapshot-plugin</artifactId>-->
+                                        <!--<versionRange>[0.0,)</versionRange>-->
+                                        <!--<goals>-->
+                                            <!--<goal>strip</goal>-->
+                                        <!--</goals>-->
+                                    <!--</pluginExecutionFilter>-->
+                                    <!--<action>-->
+                                        <!--<ignore />-->
+                                    <!--</action>-->
+                                <!--</pluginExecution>-->
+                            <!--</pluginExecutions>-->
+                        <!--</lifecycleMappingMetadata>-->
+                    <!--</configuration>-->
+                <!--</plugin>-->
+            <!--</plugins>-->
+        <!--</pluginManagement>-->
     </build>
 	<profiles>
 		<!--

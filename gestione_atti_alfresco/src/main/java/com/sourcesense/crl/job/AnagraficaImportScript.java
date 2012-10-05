@@ -54,7 +54,12 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
         String crlModel = "http://www.regione.lombardia.it/content/model/atti/1.0";
 
         /* Extract data from DB */
-        List<Councilor> councilors = dataExtractor.getCouncilors();
+        int idCurrentLegislature = dataExtractor.getCurrentLegislature();
+        if (idCurrentLegislature <= 0) {
+            logger.warn("Impossibile determinare la legislatura corrente: termino");
+            return;
+        }
+        List<Councilor> councilors = dataExtractor.getCouncilors(idCurrentLegislature);
 
         /* If no councilor exists... */
         if (councilors.size() <= 0) {
