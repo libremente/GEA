@@ -104,13 +104,13 @@ public class AttoServiceManager implements ServiceManager {
 	}
 	
 	
-	public Allegato uploadAllegatoPareri(Atto atto, InputStream stream, Allegato allegato) {
+	public Allegato  uploadAllegatoConsultazioni(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegatoParere(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_CONSULTAZIONE);
 	}
 	
-	public Allegato uploadAllegatoConsultazioni(Atto atto, InputStream stream, Allegato allegato) {
+	public Allegato uploadAllegatoPareri(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegatoConsultazioni(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PARERE);
@@ -156,9 +156,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 	
 	
-	public void salvaNoteAllegatiEsameCommissioni(Atto atto) {
-		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_commissioni", null), atto);
-	}
+	
 	
 
 	public void salvaConsultazioni(Atto atto) {

@@ -98,7 +98,7 @@
 				</p:column>
 
 			</p:row>
-			<p:row>
+			<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 				<p:column>
 					<h:outputText style="font-weight: bold;" value="Numero LR: " />
 				</p:column>
@@ -126,7 +126,7 @@
 		</p:panelGrid>
 	</p:fieldset>
 	<p>
-		<p:commandButton value="Chiusura atto"
+		<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Chiusura atto"
 			action="#{chiusuraIterController.chiusuraAtto}"
 			update="chiusuraIterMsg , :informationForm:informationBar" />
 	</p>

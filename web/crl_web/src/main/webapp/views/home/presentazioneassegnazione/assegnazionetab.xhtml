@@ -390,7 +390,7 @@
 		<p:column>
 
 			<p>
-				<p:commandButton value="Salva selezione" id="confermaassegnazione"
+				<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva selezione" id="confermaassegnazione"
 					action="#{presentazioneAssegnazioneAttoController.confermaAssegnazione}"
 					update="assegnazioneMsg , commissionipanel , :informationForm:informationBar" />
 			</p>

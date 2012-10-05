@@ -173,7 +173,7 @@
 	<p:row>
 		<p:column>
 			<p>
-				<p:commandButton value="Salva" id="confermaammissibilità"
+				<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva" id="confermaammissibilità"
 					action="#{presentazioneAssegnazioneAttoController.salvaAmmissibilita}" 
 					update="ammissibilitaMsg,:informationForm:informationBar"/>
 			</p>

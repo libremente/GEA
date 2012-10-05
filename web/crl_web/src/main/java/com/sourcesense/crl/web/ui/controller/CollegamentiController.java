@@ -130,7 +130,9 @@ public class CollegamentiController {
 			} else {
 				Atto attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
 				Collegamento collegamento = new Collegamento();
-				collegamento.setAtto(attoDaCollegare);
+				collegamento.setIdAttoCollegato(attoDaCollegare.getId());
+				collegamento.setNumeroAttoCollegato(attoDaCollegare.getNumeroAtto());
+				collegamento.setTipoAttoCollegato(attoDaCollegare.getTipoAtto());
 				attiCollegatiList.add(collegamento);
 				
 				updateAttiInterniHandler();
@@ -142,7 +144,7 @@ public class CollegamentiController {
 
 		for (Collegamento element : attiCollegatiList) {
 
-			if (element.getAtto().getId().equals(collegamentoToDelete)) {
+			if (element.getNumeroAttoCollegato().equals(collegamentoToDelete)) {
 
 				attiCollegatiList.remove(element);
 				updateAttiInterniHandler();
@@ -155,7 +157,7 @@ public class CollegamentiController {
 
 		for (Collegamento element : attiCollegatiList) {
 
-			if (element.getAtto().getId().equals(idAttoToAdd)) {
+			if (element.getIdAttoCollegato().equals(idAttoToAdd)) {
 
 				return false;
 			}
@@ -165,8 +167,7 @@ public class CollegamentiController {
 	
 	public void salvaCollegamenti() {
 		atto.setCollegamenti(getAttiCollegatiList());
-		//TODO: alfresco service
-                attoServiceManager.salvaCollegamenti(atto);
+		attoServiceManager.salvaCollegamenti(atto);
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()

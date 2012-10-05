@@ -87,7 +87,7 @@
 			</div>
 		</p:column>
 		<p:column><div id="presaInCaricoDiv">
-			<p:commandButton value="Presa in carico" 
+			<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Presa in carico" 
 			action="#{esameAulaController.presaInCarico}"
 			update="votazioneMsg , :informationForm:informationBar" oncomplete="unblockDiv()"/>
 			</div>
@@ -184,8 +184,8 @@
 									listener="#{esameAulaController.updateVotazioneHandler}" />
 							</p:inputText>
 						</p:column>
-						<p:column>Numero LCR:</p:column>
-						<p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">Numero LCR:</p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">
 							<p:column>
 								<p:inputText size="5" maxlength="5" id="numeroLcr"
 									value="#{esameAulaController.numeroLcr}">
@@ -232,7 +232,7 @@
 
 						<p:column>
 
-							<p:commandButton value="Salva"
+							<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva"
 								action="#{esameAulaController.salvaVotazione}"
 								update="votazioneMsg, :informationForm:informationBar" />
 

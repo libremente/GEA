@@ -17,7 +17,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @AutoProperty
-public class Allegato {
+public class Allegato implements Cloneable{
 	
 	public static final String TIPO_PRESENTAZIONE_ASSEGNAZIONE = "allegato_atto";
 	public static final String TESTO_ESAME_AULA_EMENDAMENTO = "emendamento_aula";
@@ -46,6 +46,15 @@ public class Allegato {
 	private String organismoStatutario;
 	private String consultazione;
 	
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);

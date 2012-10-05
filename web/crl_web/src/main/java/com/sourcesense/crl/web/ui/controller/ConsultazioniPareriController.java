@@ -413,7 +413,7 @@ public class ConsultazioniPareriController {
 		consultazioneSelected.setNote(getNoteConsultazione());
 
 		atto.setConsultazioni(getConsultazioniList());
-		attoServiceManager.salvaAmmissibilitaPresentazione(atto);
+		attoServiceManager.salvaConsultazioni(atto);
 
 		// TODO: alfresco service
 

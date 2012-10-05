@@ -619,11 +619,11 @@
 				var="collegamento" styleClass="generalInfoTab" editable="true">
 
 				<p:column headerText="Tipo Atto" style="width:125px">
-							#{collegamento.atto.tipoAtto}
+							#{collegamento.tipoAttoCollegato}
     			</p:column>
 
 				<p:column headerText="N.Atto" style="width:125px">
-					#{collegamento.atto.numeroAtto}
+					#{collegamento.numeroAttoCollegato}
 				</p:column>
 
 				<p:column headerText="Note" style="width:125px">
@@ -643,9 +643,8 @@
 				<p:column headerText="Azioni" style="width:125px">
 
 					<p:commandButton oncomplete="collegamentoDialog.show()"
-						icon="delete-icon" 
-                                                rendered="#{not navigationBean.isCommissioneConsultiva()}">
-						<f:setPropertyActionListener value="#{collegamento.atto.id}"
+						icon="delete-icon"  rendered="#{not navigationBean.isCommissioneConsultiva()}">
+						<f:setPropertyActionListener value="#{collegamento.numeroAttoCollegato}"
 							target="#{collegamentiController.collegamentoToDelete}" />
 					</p:commandButton>
 				</p:column>

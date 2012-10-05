@@ -23,7 +23,10 @@ public class Abbinamento implements Cloneable{
 	private Date dataDisabbinamento;
 	private String note;
 	private boolean abbinato;
-	private Atto atto;
+	private String tipoAttoAbbinato;
+	private String numeroAttoAbbinato;
+	
+	//private Atto atto;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -38,12 +41,14 @@ public class Abbinamento implements Cloneable{
 		}
 	}
 	
-	public Atto getAtto() {
+	/*public Atto getAtto() {
 		return atto;
 	}
 	public void setAtto(Atto atto) {
 		this.atto = atto;
-	}
+	}*/
+	
+	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAbbinamento() {
 		return dataAbbinamento;
@@ -92,6 +97,24 @@ public class Abbinamento implements Cloneable{
 	public void setIdAttoAbbinato(String idAttoAbbinato) {
 		this.idAttoAbbinato = idAttoAbbinato;
 	}
+
+	public String getTipoAttoAbbinato() {
+		return tipoAttoAbbinato;
+	}
+
+	public void setTipoAttoAbbinato(String tipoAttoAbbinato) {
+		this.tipoAttoAbbinato = tipoAttoAbbinato;
+	}
+
+	public String getNumeroAttoAbbinato() {
+		return numeroAttoAbbinato;
+	}
+
+	public void setNumeroAttoAbbinato(String numeroAttoAbbinato) {
+		this.numeroAttoAbbinato = numeroAttoAbbinato;
+	}
+	
+	
 	
 	
 

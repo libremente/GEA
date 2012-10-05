@@ -10,7 +10,7 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("attoRecord")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class TestoAtto {
+public class TestoAtto implements Cloneable {
 
 	
 	public static final String TESTO_PRESENTAZIONE_ASSEGNAZIONE = "testo_atto";
@@ -30,6 +30,16 @@ public class TestoAtto {
 	private String dataSeduta;
 	private String passaggio;
 	private String commissione;
+	
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public String getTipologia() {
 		return tipologia;

@@ -87,21 +87,38 @@ public class CommissioneServiceManager implements ServiceManager{
 	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
 
 		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_emendamento_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
+				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
 	}
 	
 	
 	public Allegato uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
 
 		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_clausola_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
+				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
 	}	
+	
+	
+	public void salvaCambiaRuoloInReferente(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_continuazione_commissione_referente", null), esameCommissione);
+	}
+	
+	public void salvaNoteAllegatiEsameCommissioni(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_commissioni", null), esameCommissione);
+	}
+	
+	public void salvaTrasmissione(EsameCommissione esameCommissione) {
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_trasmissione_commissione", null), esameCommissione);
+	}
+	
+	
 	
 	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, Allegato allegato) {
 
 		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
+				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
 	}	
+	
+	
 	
     public List <Commissione> findCommissioniByAtto(String idAtto) {
 		

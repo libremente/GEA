@@ -161,6 +161,8 @@ public class PresentazioneAssegnazioneAttoController {
 		this.organismiList = new ArrayList<OrganismoStatutario>(Clonator.cloneList(atto.getOrganismiStatutari()));
 		this.linksList = new ArrayList<Link>(Clonator.cloneList(atto.getLinksPresentazioneAssegnazione()));
 
+		
+				
 
 	}
 

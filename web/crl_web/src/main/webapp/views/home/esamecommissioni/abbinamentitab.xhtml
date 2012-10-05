@@ -643,12 +643,12 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 				<h:column>
 					<f:facet name="header">Tipo Atto</f:facet>
-							#{abbinamento.atto.tipoAtto}
+							#{abbinamento.tipoAttoAbbinato}
     			       </h:column>
 
 				<h:column>
 					<f:facet name="header">N. Atto</f:facet>
-					#{abbinamento.atto.numeroAtto}
+					#{abbinamento.numeroAttoAbbinato}
 				</h:column>
 
 				<h:column>
@@ -689,7 +689,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 			<p:row>
 				<p:column>
 					<h3>Atto N°
-						#{esameCommissioniController.abbinamentoSelected.atto.numeroAtto}</h3>
+						#{esameCommissioniController.abbinamentoSelected.numeroAttoAbbinato}</h3>
 				</p:column>
 			</p:row>
 			<p:row>
@@ -750,8 +750,8 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 			</p:row>
 			<p:row>
 			<p:column>
-					<p:commandButton value="Salva"
-						update="listaAbbinamenti, abbinamentiMsg"
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva"
+						update="listaAbbinamenti, abbinamentiMsg , :informationForm:informationBar"
 						action="#{esameCommissioniController.salvaAbbinamentoDisabbinamento}" />
 				</p:column>
 			</p:row>
@@ -778,7 +778,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 		<p:column>
 			<p:commandButton value="Salva oggetto"
 				action="#{esameCommissioniController.salvaOggetto}"
-				update="abbinamentiMsg" />
+				update="abbinamentiMsg " />
 		</p:column>
 	</p:row>
 

@@ -477,6 +477,7 @@ public class EsameAulaController {
 		attoBean.getWorkingAula().setDataSedutaRinvio(aulaUser.getDataSedutaRinvio());
 		attoBean.getWorkingAula().setDataTermineMassimo(aulaUser.getDataTermineMassimo());
 		attoBean.getWorkingAula().setMotivazioneRinvio(aulaUser.getMotivazioneRinvio());
+		attoBean.getAtto().getPassaggi().add(passaggio);
 		
 		setStatoCommitRinvioEsame(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Rinvio Esame salvato con successo", ""));

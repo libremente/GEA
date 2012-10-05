@@ -11,9 +11,11 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class Collegamento implements Cloneable{
-	private Atto atto;
+	//private Atto atto;
+	private String idAttoCollegato;
+	private String tipoAttoCollegato;
+	private String numeroAttoCollegato;
 	private String note;
-	
 	
 	public Object clone() {
 		try {
@@ -28,18 +30,38 @@ public class Collegamento implements Cloneable{
 	    return Pojomatic.toString(this);
 	 }
 	
-	public Atto getAtto() {
-		return atto;
-	}
-	public void setAtto(Atto atto) {
-		this.atto = atto;
-	}
+	
 	public String getNote() {
 		return note;
 	}
 	public void setNote(String note) {
 		this.note = note;
 	}
+
+	public String getIdAttoCollegato() {
+		return idAttoCollegato;
+	}
+
+	public void setIdAttoCollegato(String idAttoCollegato) {
+		this.idAttoCollegato = idAttoCollegato;
+	}
+
+	public String getTipoAttoCollegato() {
+		return tipoAttoCollegato;
+	}
+
+	public void setTipoAttoCollegato(String tipoAttoCollegato) {
+		this.tipoAttoCollegato = tipoAttoCollegato;
+	}
+
+	public String getNumeroAttoCollegato() {
+		return numeroAttoCollegato;
+	}
+
+	public void setNumeroAttoCollegato(String numeroAttoCollegato) {
+		this.numeroAttoCollegato = numeroAttoCollegato;
+	}
+	
 	
 	
 

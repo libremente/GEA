@@ -35,7 +35,7 @@
 
 		</p:tab>
 
-		<p:tab id="tab2" title="Abbinamenti">
+		<p:tab rendered="#{!navigationBean.isCommissioneConsultiva()}" id="tab2" title="Abbinamenti">
 
 			<ui:include src="abbinamentitab.xhtml" />
 		</p:tab>
@@ -46,7 +46,7 @@
 
 		</p:tab>
 
-		<p:tab id="tab4" title="Emendamenti e Clausole">
+		<p:tab rendered="#{navigationBean.isCommissioneReferente() && navigationBean.isSessionAttoPDL())}" id="tab4" title="Emendamenti e Clausole">
 
 
 			<ui:include src="./emendamentieclausoletab.xhtml" />
