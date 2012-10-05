@@ -12,16 +12,16 @@
 	language governing permissions and limitations under the License. -->
 <beans>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="crlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
-        <property name="url" value="jdbc:jtds:sqlserver://212.54.226.116:1433;dbconsiglieri" />
+        <property name="url" value="jdbc:jtds:sqlserver://212.54.226.116:1433;DatabaseName=dbconsiglieri" />
         <property name="username" value="SourceSense" />
-        <property name="password" value="SSource2012" />
+        <property name="password" value="SSense2012" />
     </bean>
 
     <bean id="dataExtractor" class="com.sourcesense.crl.job.DataExtractor">
         <property name="dataSource">
-            <ref bean="dataSource" />
+            <ref bean="crlDataSource" />
         </property>
     </bean>
 

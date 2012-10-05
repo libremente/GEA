@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -59,6 +60,15 @@ public class DataExtractor {
         }
     }
 
+//    public Legislature getCurrentLegislature() {
+//        Legislature legislature = new Legislature();
+//        legislature.setId(1);
+//        legislature.setNumber("IX");
+//        legislature.setFrom(new Date());
+//        legislature.setTo(null);
+//        return legislature;
+//    }
+
     public List<Councilor> getCouncilors(int idCurrentLegislature) {
         Connection conn = null;
         try {
@@ -100,38 +110,38 @@ public class DataExtractor {
         }
     }
 
-//    public List<Councilor> getCouncilors() {
+//    public List<Councilor> getCouncilors(int legislatureId) {
 //        logger.debug("Start of method 'extract'");
 //        List<Councilor> councilors = new ArrayList<Councilor>();
 //
-//        Councilor c0 = new Councilor("GAROFALO", "COSIMO", "LEGISLATURA_19", "PDL");
+//        Councilor c0 = new Councilor("GAROFALO", "COSIMO", "IX", "PDL");
 //        c0.addCommittee("COMMISSIONE CACCIA E PESCA");
 //        c0.addCommittee("COMMISSIONE TURISMO");
-//        Councilor c1 = new Councilor("BALDELLI", "MARCO", "LEGISLATURA_19", "PD");
+//        Councilor c1 = new Councilor("BALDELLI", "MARCO", "IX", "PD");
 //        c1.addCommittee("COMMISSIONE CACCIA E PESCA");
 //        c1.addCommittee("COMMISSIONE TURISMO");
-//        Councilor c2 = new Councilor("MENCONI", "GABRIELE", "LEGISLATURA_19", "IDV");
+//        Councilor c2 = new Councilor("MENCONI", "GABRIELE", "IX", "IDV");
 //        c2.addCommittee("COMMISSIONE ECONOMIA");
 //        c2.addCommittee("COMMISSIONE TURISMO");
-//        Councilor c3 = new Councilor("CONTI", "STEFANO", "LEGISLATURA_19", "PDL");
+//        Councilor c3 = new Councilor("CONTI", "STEFANO", "IX", "PDL");
 //        c3.addCommittee("COMMISSIONE ECONOMIA");
 //        c3.addCommittee("COMMISSIONE TURISMO");
-//        Councilor c4 = new Councilor("TREDENTI", "NONNO", "LEGISLATURA_19", "IDV");
+//        Councilor c4 = new Councilor("TREDENTI", "NONNO", "IX", "IDV");
 //        c4.addCommittee("COMMISSIONE SALUTE");
 //        c4.addCommittee("COMMISSIONE POLITICHE GIOVANILI");
-//        Councilor c5 = new Councilor("DEFERRO", "ARTO", "LEGISLATURA_19", "MOVIMENTO 5 STELLE");
+//        Councilor c5 = new Councilor("DEFERRO", "ARTO", "IX", "MOVIMENTO 5 STELLE");
 //        c5.addCommittee("COMMISSIONE CACCIA E PESCA");
 //        c5.addCommittee("COMMISSIONE POLITICHE GIOVANILI");
-//        Councilor c6 = new Councilor("PALO", "ALDO", "LEGISLATURA_19", "VERDI");
+//        Councilor c6 = new Councilor("PALO", "ALDO", "IX", "VERDI");
 //        c6.addCommittee("COMMISSIONE ECONOMIA");
 //        c6.addCommittee("COMMISSIONE POLITICHE GIOVANILI");
-//        Councilor c7 = new Councilor("CAMMARANO", "PASQUALE", "LEGISLATURA_19", "LEGA NORD");
+//        Councilor c7 = new Councilor("CAMMARANO", "PASQUALE", "IX", "LEGA NORD");
 //        c7.addCommittee("COMMISSIONE SALUTE");
 //        c7.addCommittee("COMMISSIONE POLITICHE GIOVANILI");
-//        Councilor c8 = new Councilor("RATTO", "SABINA", "LEGISLATURA_19", "LEGA NORD");
+//        Councilor c8 = new Councilor("RATTO", "SABINA", "IX", "LEGA NORD");
 //        c8.addCommittee("COMMISSIONE SALUTE");
 //        c8.addCommittee("COMMISSIONE POLITICHE GIOVANILI");
-//        Councilor c9 = new Councilor("LUZZO", "ANGELO", "LEGISLATURA_19", "PARTITO V");
+//        Councilor c9 = new Councilor("LUZZO", "ANGELO", "IX", "PARTITO V");
 //        c8.addCommittee("COMMISSIONE AGRICOLTURA");
 //        c8.addCommittee("COMMISSIONE SPORT");
 //
