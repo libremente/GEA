@@ -132,6 +132,7 @@
 			<subtype name="crlatti:relatore"/>
 			<subtype name="crlatti:membroComitatoRistretto" />
 			<subtype name="crlatti:testoComitatoRistretto"/>
+			<subtype name="crlatti:collegamento" />
          </type>
 
          <type name="cm:folder">
@@ -586,6 +587,17 @@
 			<show id="crlatti:dataLr" />
 			<show id="crlatti:numeroPubblicazioneBURL" />
 			<show id="crlatti:dataPubblicazioneBURL" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:collegamento">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:note" />
+				<show id="crlatti:attoAssociatoCollegamento" />
    			</field-visibility>
    		</form>
    	</forms>
