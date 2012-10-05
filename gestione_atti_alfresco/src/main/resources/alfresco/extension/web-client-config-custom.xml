@@ -510,6 +510,16 @@
 
 		</property-sheet>
 	</config>
+	
+	
+	<config evaluator="node-type" condition="crlatti:consigliereAnagrafica">
+		<property-sheet>
+			<show-property name="crlatti:nomeConsigliereAnagrafica" />
+			<show-property name="crlatti:cognomeConsigliereAnagrafica" />
+			<show-property name="crlatti:legislaturaConsigliereAnagrafica" />
+			<show-property name="crlatti:gruppoConsigliereAnagrafica" />
+		</property-sheet>
+	</config>
 
 	<config evaluator="string-compare" condition="Advanced Search">
 		<advanced-search>

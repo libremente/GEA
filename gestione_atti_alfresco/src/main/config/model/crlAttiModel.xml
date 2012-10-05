@@ -231,6 +231,14 @@
 					<title>Cognome</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:legislaturaConsigliereAnagrafica">
+					<title>Legislatura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:gruppoConsigliereAnagrafica">
+					<title>Gruppo</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
 		
@@ -309,6 +317,10 @@
 				<property name="crlatti:dataDisabbinamento">
 					<title>Data disabbinamento</title>
 					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteAbbinamento">
+					<title>Note</title>
+					<type>d:text</type>
 				</property>
 			</properties>
 			<associations>
@@ -803,6 +815,24 @@
 		</type>
 		
 		
+		<type name="crlatti:sedutaODG">
+			<title>Seduta</title>
+			<parent>cm:folder</parent>
+			<properties>		
+				<property name="crlatti:dataSedutaSedutaODG">
+					<title>Data Seduta</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numVerbaleSedutaODG">
+					<title>Numero Verbale</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteSedutaODG">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
 		
 	</types>
 	
