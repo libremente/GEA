@@ -152,6 +152,7 @@
 			<subtype name="crlatti:aula"/>
 			<subtype name="crlatti:parere"/>
 			<subtype name="crlatti:consultazione"/>
+			<subtype name="crlatti:sedutaODG"/>
          </type>
       </types>
 
@@ -860,6 +861,31 @@
    	</forms>
    </config>
    
+   
+   <config evaluator="node-type" condition="crlatti:consigliereAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:nomeConsigliereAnagrafica"/>
+   				<show id="crlatti:cognomeConsigliereAnagrafica" />
+   				<show id="crlatti:legislaturaConsigliereAnagrafica" />
+   				<show id="crlatti:gruppoConsigliereAnagrafica"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:sedutaODG">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataSedutaSedutaODG"/>
+   				<show id="crlatti:numVerbaleSedutaODG" />
+   				<show id="crlatti:noteSedutaODG" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
 	
    
    <config evaluator="string-compare" condition="AdvancedSearch" replace="true">
@@ -895,7 +921,7 @@
             <form label="REF" description="Cerca tra tutte le proposte di referendum">crlatti:attoRef</form>
             <form label="REL" description="Cerca tra tutte le relazioni">crlatti:attoRel</form>
             <form label="EAC" description="Cerca tra tutti gli elenchi di atti comunitari">crlatti:attoEac</form>
-            
+            <form label="Seduta" description="Cerca tra tutte le sedute">crlatti:sedutaODG</form>
             
          </forms>
       </advanced-search>
