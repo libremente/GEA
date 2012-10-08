@@ -36,13 +36,12 @@
 				<h:outputLabel value="Atto corrente :" />
 				<h:outputLabel value="#{attoBean.numeroAtto}" />
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<c:if test="#{attoBean.getLastPassaggio().abbinamenti.size()>0}">
+				<c:if test="#{attoBean.abbinamenti.size() >0 }">
 					<h:outputLabel value="Abbinato a :" />
-					<c:forEach items="attoBean.getLastPassaggio().abbinamenti"
-						var="abbinamento">
-                        <h:outputLabel value="#{abbinamento.tipoAttoAbbinato}-" />
-				        <h:outputLabel value="#{abbinamento.numeroAttoAbbinato}" />
-				        &nbsp;&nbsp;&nbsp;&nbsp;   
+					<c:forEach items="#{attoBean.abbinamenti}" var="abbinamento">
+						<h:outputLabel value="#{abbinamento.tipoAttoAbbinato}-" />
+						<h:outputLabel value="#{abbinamento.numeroAttoAbbinato}" />
+				        &nbsp;&nbsp;   
 					</c:forEach>
 				</c:if>
 				<h:outputLabel value="Tipo :" />

@@ -40,7 +40,7 @@ public class Commissione implements Cloneable {
 	private String nome;
 	private String ruolo;
 	private String stato;
-	private String tipoVotazione;
+	//private String tipoVotazione;
 	private String esitoVotazione;
 	private String materia;
 	private String esitoVotoCommissioneReferente;
@@ -364,13 +364,13 @@ public class Commissione implements Cloneable {
 		this.dataPresaInCarico = dataPresaInCarico;
 	}
 
-	public String getTipoVotazione() {
+	/*public String getTipoVotazione() {
 		return tipoVotazione;
 	}
 
 	public void setTipoVotazione(String tipoVotazione) {
 		this.tipoVotazione = tipoVotazione;
-	}
+	}*/
 
 	public String getEsitoVotazione() {
 		return esitoVotazione;

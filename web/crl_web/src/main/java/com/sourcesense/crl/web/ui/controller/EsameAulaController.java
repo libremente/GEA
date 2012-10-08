@@ -17,6 +17,7 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Aula;
+import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.Passaggio;
@@ -42,7 +43,7 @@ public class EsameAulaController {
 	
 	
 	private Atto atto = new Atto();
-
+	private String passaggio;
 	private Date dataPresaInCarico;
 	private String relazioneScritta;
 	private String esitoVotazione;
@@ -118,13 +119,32 @@ public class EsameAulaController {
 		aulaUser = (Aula)attoBean.getLastPassaggio().getAula().clone();
 		testiAttoVotatoList = Clonator.cloneList(aulaUser.getTestiAttoVotatoEsameAula());		
 		emendamentiList = Clonator.cloneList(aulaUser.getEmendamentiEsameAula());
-		allegatiList = Clonator.cloneList(aulaUser.getAllegatiEsameAula());
+		allegatiList = Clonator.cloneList(attoBean.getAllegatiAula());
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
 	}
+
+	
+	public void changePassaggio() {
+
+		Passaggio passaggioSelected = null;
+
+		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
+
+			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggio)) {
+
+				passaggioSelected = passaggioRec;
+			}
+		}
+
+		// Ricavo le commisioni dall'ultimo passaggio
+		setAulaUser(passaggioSelected.getAula());
+		
+
+	  }
 
 
 
@@ -209,21 +229,21 @@ public class EsameAulaController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		
-		attoBean.getWorkingAula().setDataPresaInCaricoEsameAula(aulaUser.getDataPresaInCaricoEsameAula());
-		attoBean.getWorkingAula().setRelazioneScritta(aulaUser.getRelazioneScritta());
-		attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
-
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
 		
-		
+		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		esameAula.setAtto(attoBean.getAtto());
+		esameAula.setAtto(atto);
 		aulaServiceManager.presaInCarico(esameAula);
+		
+		attoBean.getWorkingAula().setDataPresaInCaricoEsameAula(aulaUser.getDataPresaInCaricoEsameAula());
+		attoBean.getWorkingAula().setRelazioneScritta(aulaUser.getRelazioneScritta());
+		attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
 		
 		String numeroAtto = attoBean.getNumeroAtto();
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
@@ -429,7 +449,8 @@ public class EsameAulaController {
 		
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		esameAula.setAtto(attoBean.getAtto());
+		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+		esameAula.setAtto(atto);
 		
 		aulaServiceManager.salvaEmendamentiEsameAula(esameAula);
 
@@ -463,12 +484,13 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		esameAula.setAtto(attoBean.getAtto());
+		esameAula.setAtto(atto);
 		
 		
 		Passaggio passaggio = aulaServiceManager.salvaRinvioEsameEsameAula(esameAula);
@@ -489,12 +511,14 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
+		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		esameAula.setAtto(attoBean.getAtto());
+		esameAula.setAtto(atto);
 		
 		//TODO Check commissioni
 		//TODO Return passaggio da aggiungere a session bean
@@ -630,15 +654,16 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
+		this.aulaUser.setLinksEsameAula(linksList);
+		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+		
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		esameAula.setAtto(attoBean.getAtto());
-		
-		
-		this.aulaUser.setLinksEsameAula(linksList);
+		esameAula.setAtto(atto);
 		aulaServiceManager.salvaNoteAllegatiEsameAula(esameAula);
 
 		
@@ -1220,6 +1245,16 @@ public class EsameAulaController {
 
 	public void setAulaUser(Aula aulaUser) {
 		this.aulaUser = aulaUser;
+	}
+
+
+	public String getPassaggio() {
+		return passaggio;
+	}
+
+
+	public void setPassaggio(String passaggio) {
+		this.passaggio = passaggio;
 	}
 
 

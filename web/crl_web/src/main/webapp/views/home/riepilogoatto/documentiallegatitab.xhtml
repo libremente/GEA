@@ -11,8 +11,17 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <p:panelGrid styleClass="infoTable" id="documentiallegatipanel">
+
 	<p:row>
 		<p:column colspan="3">
+			<b><u><h:outputText value="Testi Ufficiali :" />
+			</u> </b>
+		</p:column>
+	</p:row>
+	<p:row>
+		<p:column colspan="3">
+
+
 			<h:dataTable id="listaTestiUfficiali"
 				value="#{attoBean.atto.testiAtto}" var="testoAtto"
 				styleClass="generalInfoTab">
@@ -37,46 +46,19 @@
 
 				<h:column>
 					<f:facet name="header">Download</f:facet>
-					
-						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
-						onclick="PrimeFaces.monitorDownload(start, stop)"
-						>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
 						<f:setPropertyActionListener value="#{testoAtto.id}"
-								target="#{fileDownloadController.fileId}" />
+							target="#{fileDownloadController.fileId}" />
 						<f:setPropertyActionListener value="#{testoAtto.nome}"
-								target="#{fileDownloadController.fileName}" />
+							target="#{fileDownloadController.fileName}" />
 						<f:setPropertyActionListener value="#{testoAtto.mimetype}"
-								target="#{fileDownloadController.fileMimetype}" />				
+							target="#{fileDownloadController.fileMimetype}" />
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
 				</h:column>
-
-
-
-
-				<!-- <h:column>
-					<f:facet name="header">Testi Ufficiali:</f:facet>
-					<h:commandLink>
-						<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
-					</h:commandLink>
-					<h:commandLink>
-						<h:graphicImage alt="word" value="/resources/img/word.png" />
-					</h:commandLink>
-					<h:commandLink>
-						<h:graphicImage alt="html" value="/resources/img/html.png" />
-					</h:commandLink>
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Emendamenti:</f:facet>
-
-					<h:commandLink>
-						<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
-					</h:commandLink>
-
-				</h:column> -->
-
 
 			</h:dataTable>
 			<h:outputText value="Nessun Testo Atto"
@@ -84,35 +66,142 @@
 			</h:outputText>
 		</p:column>
 	</p:row>
+
+	<p:row>
+		<p:column colspan="3">
+
+
+			<h:dataTable id="listaTestiUfficialiCommissione"
+				value="#{attoBean.getTestiAttoCommissione()}" var="testoAtto"
+				styleClass="generalInfoTab">
+
+
+				<h:column>
+					<f:facet name="header">Testo Dell'Atto votato in commissione</f:facet>
+							#{testoAtto.nome}
+						</h:column>
+
+				<h:column>
+					<f:facet name="header">Formato</f:facet>
+					<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
+					<h:outputText value="#{testoAtto.mimetype}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Pubblico</f:facet>
+					<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+					<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{testoAtto.id}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{testoAtto.nome}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
+
+			</h:dataTable>
+			<h:outputText value="Nessun Testo Atto"
+				rendered="#{empty attoBean.atto.testiAtto}">
+			</h:outputText>
+		</p:column>
+	</p:row>
+
+	<p:row>
+		<p:column colspan="3">
+
+
+			<h:dataTable id="listaTestiUfficialiAula"
+				value="#{attoBean.getTestiAttoAula()}" var="testoAtto"
+				styleClass="generalInfoTab">
+
+
+				<h:column>
+					<f:facet name="header">Testo Dell'Atto votato in Aula</f:facet>
+							#{testoAtto.nome}
+						</h:column>
+
+				<h:column>
+					<f:facet name="header">Formato</f:facet>
+					<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
+					<h:outputText value="#{testoAtto.mimetype}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Pubblico</f:facet>
+					<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+					<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{testoAtto.id}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{testoAtto.nome}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
+
+			</h:dataTable>
+			<h:outputText value="Nessun Testo Atto"
+				rendered="#{empty attoBean.atto.testiAtto}">
+			</h:outputText>
+		</p:column>
+	</p:row>
+
+
+
+	<p:row>
+		<p:column colspan="3">
+			<b><u><h:outputText value="Allegati :" />
+			</u> </b>
+		</p:column>
+	</p:row>
+
 	<p:row>
 		<p:column colspan="3">
 			<h:dataTable id="listaAltriAllegati"
 				value="#{attoBean.atto.allegati}" var="allegato"
 				styleClass="generalInfoTab">
 
-				
+
 				<h:column>
-					<f:facet name="header">Altri Allegati</f:facet>
+					<f:facet name="header">Allegati Sevizio Commissioni</f:facet>
 					#{allegato.nome}
 				</h:column>
 
-                <h:column>
+				<h:column>
 					<f:facet name="header">Formato</f:facet>
 					#{allegato.mimetype}
 				</h:column>
-                
+
 				<h:column>
 					<f:facet name="header">Download</f:facet>
-					
-						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
-						onclick="PrimeFaces.monitorDownload(start, stop)"
-						>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
 						<f:setPropertyActionListener value="#{allegato.id}"
-								target="#{fileDownloadController.fileId}" />
+							target="#{fileDownloadController.fileId}" />
 						<f:setPropertyActionListener value="#{allegato.nome}"
-								target="#{fileDownloadController.fileName}" />
+							target="#{fileDownloadController.fileName}" />
 						<f:setPropertyActionListener value="#{allegato.mimetype}"
-								target="#{fileDownloadController.fileMimetype}" />				
+							target="#{fileDownloadController.fileMimetype}" />
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
@@ -129,17 +218,246 @@
 
 	<p:row>
 		<p:column colspan="3">
-			<p>
-				<b><u>Comitato Ristretto:</u> </b>
-			</p>
-			<p>
-				<b><u>Consultazioni:</u> </b>
-			</p>
-			<p>
-				<b><u>Pareri:</u> </b>
-			</p>
+			<h:dataTable id="listaAltriAllegatiComm"
+				value="#{attoBean.getAllegatiCommissioni()}" var="allegato"
+				styleClass="generalInfoTab">
+
+
+				<h:column>
+					<f:facet name="header">Allegati Commissioni</f:facet>
+					#{allegato.nome}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Formato</f:facet>
+					#{allegato.mimetype}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{allegato.id}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{allegato.nome}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{allegato.mimetype}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
+
+
+			</h:dataTable>
+
+			<h:outputText value="Nessun allegato"
+				rendered="#{empty attoBean.atto.allegati}">
+			</h:outputText>
 		</p:column>
 	</p:row>
+
+
+	<p:row>
+		<p:column colspan="3">
+			<h:dataTable id="listaAltriAllegatiAula"
+				value="#{attoBean.getAllegatiAula()}" var="allegato"
+				styleClass="generalInfoTab">
+
+
+				<h:column>
+					<f:facet name="header">Allegati Aula</f:facet>
+					#{allegato.nome}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Formato</f:facet>
+					#{allegato.mimetype}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{allegato.id}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{allegato.nome}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{allegato.mimetype}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
+
+
+			</h:dataTable>
+
+			<h:outputText value="Nessun allegato"
+				rendered="#{empty attoBean.atto.allegati}">
+			</h:outputText>
+		</p:column>
+	</p:row>
+
+
+
+
+	<p:row>
+		<p:column colspan="3">
+			<b><u><h:outputText value="Comitato Ristretto :" />
+			</u> </b>
+		</p:column>
+	</p:row>
+
+	<p:row>
+		<p:column colspan="3">
+			<h:dataTable id="listaAltriAllegatiCommitatoRistr"
+				value="#{attoBean.getTestiComitatoRistretto()}" var="allegato"
+				styleClass="generalInfoTab">
+
+
+				<h:column>
+					<f:facet name="header">Allegati</f:facet>
+					#{allegato.nome}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Formato</f:facet>
+					#{allegato.mimetype}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{allegato.id}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{allegato.nome}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{allegato.mimetype}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
+
+
+			</h:dataTable>
+
+			<h:outputText value="Nessun allegato"
+				rendered="#{empty attoBean.atto.allegati}">
+			</h:outputText>
+		</p:column>
+	</p:row>
+
+
+	<p:row>
+		<p:column colspan="3">
+			<b><u><h:outputText value="Consultazioni:" />
+			</u> </b>
+		</p:column>
+	</p:row>
+
+	<p:row>
+		<p:column colspan="3">
+			<h:dataTable id="listaAltriAllegatiConsultazioni"
+				value="#{attoBean.getAllegatiConsultazioni()}" var="allegato"
+				styleClass="generalInfoTab">
+
+
+				<h:column>
+					<f:facet name="header">Allegati</f:facet>
+					#{allegato.nome}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Formato</f:facet>
+					#{allegato.mimetype}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{allegato.id}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{allegato.nome}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{allegato.mimetype}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
+
+
+			</h:dataTable>
+
+			<h:outputText value="Nessun allegato"
+				rendered="#{empty attoBean.atto.allegati}">
+			</h:outputText>
+		</p:column>
+	</p:row>
+
+
+
+	<p:row>
+		<p:column colspan="3">
+			<b><u><h:outputText value="Pareri:" />
+			</u> </b>
+		</p:column>
+	</p:row>
+
+	<p:row>
+		<p:column colspan="3">
+			<h:dataTable id="listaAltriAllegatiPareri"
+				value="#{attoBean.getAllegatiPareri()}" var="allegato"
+				styleClass="generalInfoTab">
+
+
+				<h:column>
+					<f:facet name="header">Allegati</f:facet>
+					#{allegato.nome}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Formato</f:facet>
+					#{allegato.mimetype}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Download</f:facet>
+
+					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{allegato.id}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{allegato.nome}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{allegato.mimetype}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+
+				</h:column>
+
+
+			</h:dataTable>
+
+			<h:outputText value="Nessun allegato"
+				rendered="#{empty attoBean.atto.allegati}">
+			</h:outputText>
+		</p:column>
+	</p:row>
+
+
+
+
+
 </p:panelGrid>
 
 

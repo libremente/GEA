@@ -293,7 +293,7 @@ public class PresentazioneAssegnazioneAttoController {
 		
 		  for (TestoAtto element : testiAttoList) {
 		  
-		  if (element.getDescrizione().equals(fileName)) {
+		  if (element.getNome().equals(fileName)) {
 		  
 		  return false; }
 		  

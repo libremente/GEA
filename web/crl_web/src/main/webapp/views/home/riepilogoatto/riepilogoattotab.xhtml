@@ -139,7 +139,8 @@
 
 					<h:column>
 						<f:facet name="header">Abbinamenti</f:facet>
-							#{abbinamento}
+							<h:outputText style="font-weight: bold;" 
+							value="#{abbinamento.tipoAttoAbbinato} - #{abbinamento.numeroAttoAbbinato} " /> 
     			       </h:column>
 
 					<h:column>
@@ -283,8 +284,11 @@
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Relatore: " />
-				<h:outputText
-					value="#{riepilogoAttoController.commissioneSelected.relatori}" />
+				<c:forEach items="#{riepilogoAttoController.commissioneSelected.relatori}" var="relatore">
+				  <br/>&nbsp;&nbsp;&nbsp;<h:outputText value="#{relatore.nome} - #{relatore.gruppoConsiliare} " />
+				</c:forEach>
+				
+				
 			</p:column>
 
 			<p:column>
@@ -296,22 +300,22 @@
 			</p:column>
 		</p:row>
 
-		<p:row>
+		<p:row rendered="#{ riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' }">
 			<p:column colspan="2">
 				<h:outputText style="font-weight: bold;"
 					value="Membri Comitato Ristretto: " />
 
-				<h:outputText
-					rendered="#{riepilogoAttoController.commissioneSelectedName eq 'CommissioneReferente'}"
-					value="#{riepilogoAttoController.commissioneSelected.membriComitatoRistretto}" />
-
+				<c:forEach items="#{riepilogoAttoController.commissioneSelected.comitatoRistretto.componenti}" var="componente">
+				
+				<br/>&nbsp;&nbsp;&nbsp;<h:outputText value="#{componente.nome}  " />
+				</c:forEach>
 
 			</p:column>
 
 
 		</p:row>
 
-		<p:row>
+		<p:row rendered="#{ riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' }">
 			<p:column>
 				<h:outputText style="font-weight: bold;"
 					value="Data Apertura Lavori Comitato: " />
@@ -336,7 +340,7 @@
 				<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
 
 				<h:outputText
-					value="#{riepilogoAttoController.commissioneSelected.tipoVotazione}" />
+					value="#{riepilogoAttoController.commissioneSelected.quorumEsameCommissioni}" />
 			</p:column>
 
 			<p:column>

@@ -221,7 +221,7 @@ public class CommissioneService {
 			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
 			part.field("id", atto.getId());
 			part.field("pubblico", allegato.isPubblico()+"");
-			part.field("commissione", allegato.getCommissione());
+			part.field("provenienza", allegato.getCommissione());
 			part.field("passaggio", allegato.getPassaggio());
 			part.field("dataSeduta", allegato.getDataSeduta()+"");
 			part.field("tipologia", tipologia);

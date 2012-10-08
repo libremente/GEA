@@ -29,6 +29,8 @@ public class Seduta implements Cloneable{
 		return Pojomatic.toString(this);
 	}
 
+	
+	private String idSeduta;
 	private Date dataSeduta;
 	private String numVerbale;
 	private String note;
@@ -96,6 +98,16 @@ public class Seduta implements Cloneable{
 	public void setAttiSindacato(List<CollegamentoAttiSindacato> attiSindacato) {
 		this.attiSindacato = attiSindacato;
 	}
+
+	public String getIdSeduta() {
+		return idSeduta;
+	}
+
+	public void setIdSeduta(String idSeduta) {
+		this.idSeduta = idSeduta;
+	}
+	
+	
 	
 	
 

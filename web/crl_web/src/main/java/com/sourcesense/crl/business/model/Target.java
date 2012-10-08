@@ -15,6 +15,8 @@ public class Target {
 	private String commissione;
 	private String passaggio;
 	private String organismoStatutario;
+	private String provenienza;
+	
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -42,6 +44,14 @@ public class Target {
 
 	public void setOrganismoStatutario(String organismoStatutario) {
 		this.organismoStatutario = organismoStatutario;
+	}
+
+	public String getProvenienza() {
+		return provenienza;
+	}
+
+	public void setProvenienza(String provenienza) {
+		this.provenienza = provenienza;
 	}
 	
 	

@@ -78,7 +78,7 @@
 										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
 											target="#{gestioneSeduteController.dataSedutaSelected}" />
 									</p:commandButton>
-								</p:column>
+								</p:column>                   
 
 								<p:column headerText="Data Seduta" style="width:50px">
 									<h:outputText value="#{seduta.dataSeduta}">
@@ -102,7 +102,7 @@
 
 										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
 											target="#{gestioneSeduteController.sedutaToDelete}" />
-									</p:commandButton>
+									</p:commandButton>         
 								</p:column>
 
 							</p:dataTable>
@@ -260,12 +260,6 @@
 
 		</p:column>
 	</p:row>
-	<p:row>
-		<p:column>
-			<p:commandButton value="Salva"
-				action="#{gestioneSeduteController.salvaInserisciSedute}"
-				update="inserisciSedutaMsg, inserisciODGGrid" />
-		</p:column>
-	</p:row>
+	
 </p:panelGrid>
 </html>

@@ -11,12 +11,15 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import com.sourcesense.crl.business.model.Abbinamento;
+import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Consultazione;
 import com.sourcesense.crl.business.model.OrganismoStatutario;
+import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.Passaggio;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
 @ManagedBean(name = "attoBean")
@@ -106,8 +109,9 @@ public class AttoBean implements Serializable {
 		for (Commissione commissioneRec : this.atto.getPassaggi().get(0)
 				.getCommissioni()) {
 
-			if (commissioneRec.getDescrizione().equalsIgnoreCase(commissione) 
-					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+			if (commissioneRec.getDescrizione().equalsIgnoreCase(commissione)
+					&& !commissioneRec.getStato().equals(
+							Commissione.STATO_ANNULLATO)) {
 
 				return true;
 			}
@@ -122,7 +126,9 @@ public class AttoBean implements Serializable {
 
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
 
-			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_REFERENTE) && !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_REFERENTE)
+					&& !commissioneRec.getStato().equals(
+							Commissione.STATO_ANNULLATO)) {
 
 				commissioneRet = commissioneRec;
 			}
@@ -137,7 +143,9 @@ public class AttoBean implements Serializable {
 
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
 
-			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_DELIBERANTE) && !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)
+					&& !commissioneRec.getStato().equals(
+							Commissione.STATO_ANNULLATO)) {
 
 				commissioneRet = commissioneRec;
 			}
@@ -153,7 +161,8 @@ public class AttoBean implements Serializable {
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
 
 			if (commissioneRec.getDescrizione().equalsIgnoreCase(descrizione)
-					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
+					&& !commissioneRec.getStato().equals(
+							Commissione.STATO_ANNULLATO)) {
 
 				commissioneRet = commissioneRec;
 			}
@@ -170,42 +179,37 @@ public class AttoBean implements Serializable {
 
 	public OrganismoStatutario getWorkingOrganismoStatutario(String organismo) {
 
-		
-		OrganismoStatutario  organismoRet =null;
-		
+		OrganismoStatutario organismoRet = null;
+
 		for (OrganismoStatutario organismoRec : atto.getOrganismiStatutari()) {
 
-			if (organismoRec.getDescrizione().equalsIgnoreCase(organismo)
-					) {
+			if (organismoRec.getDescrizione().equalsIgnoreCase(organismo)) {
 
 				organismoRet = organismoRec;
 			}
 		}
 
-		
 		return organismoRet;
 
 	}
-	
-    public Consultazione getWorkingConsultazione(String consultazione) {
 
-		
-    	Consultazione  consultazioneRet =null;
-		
+	public Consultazione getWorkingConsultazione(String consultazione) {
+
+		Consultazione consultazioneRet = null;
+
 		for (Consultazione consultazioneRec : atto.getConsultazioni()) {
 
-			if (consultazioneRec.getDescrizione().equalsIgnoreCase(consultazione)
-					) {
+			if (consultazioneRec.getDescrizione().equalsIgnoreCase(
+					consultazione)) {
 
 				consultazioneRet = consultazioneRec;
 			}
 		}
 
-		
 		return consultazioneRet;
 
 	}
-	
+
 	public Passaggio getLastPassaggio() {
 
 		return atto.getPassaggi().get(atto.getPassaggi().size() - 1);
@@ -226,6 +230,164 @@ public class AttoBean implements Serializable {
 
 		return passaggioSelected;
 
+	}
+
+	/* Files */
+
+	public List<TestoAtto> getTestiAttoCommissione() {
+		List<TestoAtto> returnList = new ArrayList<TestoAtto>();
+
+		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
+
+			for (TestoAtto testoAtto : commRec
+					.getTestiAttoVotatoEsameCommissioni()) {
+
+				returnList.add(testoAtto);
+			}
+		}
+
+		return returnList;
+	}
+
+	public List<TestoAtto> getTestiAttoAula() {
+		List<TestoAtto> returnList = new ArrayList<TestoAtto>();
+
+		for (TestoAtto testoAtto : getLastPassaggio().getAula()
+				.getTestiAttoVotatoEsameAula()) {
+
+			returnList.add(testoAtto);
+		}
+
+		return returnList;
+	}
+
+	public List<Allegato> getTestiComitatoRistretto() {
+
+		List<Allegato> returnList = new ArrayList<Allegato>();
+		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
+
+			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
+
+				if (allegato.getTipoAllegato().equals(
+						Allegato.TESTO_ESAME_COMMISSIONE_COMITATO)) {
+					commRec.getComitatoRistretto().getTesti().add(allegato);
+					returnList.add(allegato);
+				}
+
+			}
+		}
+		return returnList;
+	}
+
+	public List<Allegato> getEmendamentiCommissioni() {
+		List<Allegato> returnList = new ArrayList<Allegato>();
+		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
+
+			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
+
+				if (allegato.getTipoAllegato().equals(
+						Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO)) {
+					commRec.getEmendamentiEsameCommissioni().add(allegato);
+					returnList.add(allegato);
+				}
+
+			}
+		}
+		return returnList;
+
+	}
+
+	public List<Allegato> getClausoleCommissioni() {
+		List<Allegato> returnList = new ArrayList<Allegato>();
+
+		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
+
+			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
+
+				if (allegato.getTipoAllegato().equals(
+						Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA)) {
+					commRec.getTestiClausola().add(allegato);
+					returnList.add(allegato);
+				}
+
+			}
+		}
+
+		return returnList;
+	}
+
+	public List<Allegato> getAllegatiCommissioni() {
+		List<Allegato> returnList = new ArrayList<Allegato>();
+		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
+
+			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
+
+				if (allegato.getTipoAllegato().equals(
+						Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO)) {
+					
+					returnList.add(allegato);
+				}
+
+			}
+		}
+		return returnList;
+	}
+
+	public List<Allegato> getEmendamentiAula() {
+		List<Allegato> returnList = new ArrayList<Allegato>();
+		for (Allegato allegato : getLastPassaggio().getAula()
+				.getAllegatiEsameAula()) {
+
+			
+			if (allegato.getTipoAllegato().equals(
+					Allegato.TESTO_ESAME_AULA_EMENDAMENTO)) {
+				getLastPassaggio().getAula().getEmendamentiEsameAula().add(allegato);
+				returnList.add(allegato);
+			}
+			
+		}
+		return returnList;
+	}
+
+	public List<Allegato> getAllegatiAula() {
+		List<Allegato> returnList = new ArrayList<Allegato>();
+		for (Allegato allegato : getLastPassaggio().getAula()
+				.getAllegatiEsameAula()) {
+
+			
+			if (allegato.getTipoAllegato().equals(
+					Allegato.TIPO_ESAME_AULA_ALLEGATO)) {
+				
+				returnList.add(allegato);
+			}
+			
+		}
+		return returnList;
+	}
+
+	public List<Allegato> getAllegatiPareri() {
+		List<Allegato> returnList = new ArrayList<Allegato>();
+		for (Parere parereRec : getAtto().getPareri()) {
+
+			for (Allegato allegato : parereRec.getAllegati()) {
+
+				returnList.add(allegato);
+			}
+		}
+		return returnList;
+	}
+
+	public List<Allegato> getAllegatiConsultazioni() {
+
+		List<Allegato> returnList = new ArrayList<Allegato>();
+		for (Consultazione consultazioneRec : getAtto().getConsultazioni()) {
+
+			for (Allegato allegato : consultazioneRec.getAllegati()) {
+
+				returnList.add(allegato);
+			}
+		}
+		return returnList;
 	}
 
 	/* Services */
