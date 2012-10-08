@@ -14,6 +14,7 @@
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:collegamento"/>
 			<type name="crlatti:membroComitatoRistretto" />
+			<type name="crlatti:sedutaODG" />
 		</content-types>
 	</config>
 
@@ -29,6 +30,7 @@
 			<type name="crlatti:consultazione"/>
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
+			<type name="crlatti:sedutaODG" />
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
@@ -41,6 +43,7 @@
 			<type name="crlatti:consultazione"/>
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
+			<type name="crlatti:sedutaODG" />
 		</specialise-types>
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
@@ -72,6 +75,7 @@
 			<type name="crlatti:comitatoRistretto"/>
 			<type name="crlatti:commissione"/>
 			<type name="crlatti:aula"/>
+			<type name="crlatti:sedutaODG" />
 		</folder-types>
 	</config>
 	
@@ -520,7 +524,18 @@
 			<show-property name="crlatti:gruppoConsigliereAnagrafica" />
 		</property-sheet>
 	</config>
-
+	
+	<config evaluator="node-type" condition="crlatti:sedutaODG">
+		<property-sheet>
+			<show-property name="crlatti:dataSedutaSedutaODG" />
+			<show-property name="crlatti:numVerbaleSedutaODG" />
+			<show-property name="crlatti:noteSedutaODG" />
+		</property-sheet>
+	</config>
+	
+	
+	
+	
 	<config evaluator="string-compare" condition="Advanced Search">
 		<advanced-search>
 

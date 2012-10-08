@@ -106,7 +106,7 @@
 						   	"descrizione" : "${commissione.name}",
 					      	"ruolo" : "<#if commissione.properties["crlatti:ruoloCommissione"]?exists>${commissione.properties["crlatti:ruoloCommissione"]}<#else></#if>",
 					    	"stato" : "<#if commissione.properties["crlatti:statoCommissione"]?exists>${commissione.properties["crlatti:statoCommissione"]}<#else></#if>",
-					    	"tipoVotazione" : "<#if commissione.properties["crlatti:tipoVotazioneCommissione"]?exists>${commissione.properties["crlatti:tipoVotazioneCommissione"]}<#else></#if>",
+					    	"quorumEsameCommissioni" : "<#if commissione.properties["crlatti:tipoVotazioneCommissione"]?exists>${commissione.properties["crlatti:tipoVotazioneCommissione"]}<#else></#if>",
 					    	"esitoVotazione" : "<#if commissione.properties["crlatti:esitoVotazioneCommissione"]?exists>${commissione.properties["crlatti:esitoVotazioneCommissione"]}<#else></#if>",
 					    	"materia" : "<#if commissione.properties["crlatti:materiaCommissione"]?exists>${commissione.properties["crlatti:materiaCommissione"]}<#else></#if>",	
 					    	"motivazioniContinuazioneInReferente": "<#if commissione.properties["crlatti:motivazioniContinuazioneInReferente"]?exists>${commissione.properties["crlatti:motivazioniContinuazioneInReferente"]}<#else></#if>",
@@ -122,7 +122,7 @@
 					  		"dataPresaInCaricoProposta" : "<#if commissione.properties["crlatti:dataPresaInCaricoPropClausolaValutEsame"]?exists>${commissione.properties["crlatti:dataPresaInCaricoPropClausolaValutEsame"]?string("yyyy-MM-dd")}<#else></#if>",
 					    	"dataScadenzaEsameCommissioni" : "<#if commissione.properties["crlatti:dataScadenzaCommissione"]?exists>${commissione.properties["crlatti:dataScadenzaCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
 					  		"dataNomina" : "<#if commissione.properties["crlatti:dataNominaCommissione"]?exists>${commissione.properties["crlatti:dataNominaCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
-					  		"dataVotazione" : "<#if commissione.properties["crlatti:dataVotazioneCommissione"]?exists>${commissione.properties["crlatti:dataVotazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+					  		"dataSedutaCommissione" : "<#if commissione.properties["crlatti:dataVotazioneCommissione"]?exists>${commissione.properties["crlatti:dataVotazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
 					  		"dataTrasmissione" : "<#if commissione.properties["crlatti:dataTrasmissioneCommissione"]?exists>${commissione.properties["crlatti:dataTrasmissioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
 					  		"dataSedutaContinuazioneInReferente" : "<#if commissione.properties["crlatti:dataSedutaContinuazioneInReferente"]?exists>${commissione.properties["crlatti:dataSedutaContinuazioneInReferente"]?string("yyyy-MM-dd")}<#else></#if>",
 							"dataRichiestaIscrizioneAula" : "<#if commissione.properties["crlatti:dataRichiestaIscrizioneAulaCommissione"]?exists>${commissione.properties["crlatti:dataRichiestaIscrizioneAulaCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
@@ -173,7 +173,7 @@
 							   			
 							   			]
 						   		}
-						   	},
+						   	},							
 						   	"numEmendPresentatiMaggiorEsameCommissioni": "<#if commissione.properties["crlatti:numEmendPresentatiMaggiorEsame"]?exists>${commissione.properties["crlatti:numEmendPresentatiMaggiorEsame"]}<#else></#if>",
    							"numEmendPresentatiMinorEsameCommissioni": "<#if commissione.properties["crlatti:numEmendPresentatiMinorEsame"]?exists>${commissione.properties["crlatti:numEmendPresentatiMinorEsame"]}<#else></#if>",
   							"numEmendPresentatiGiuntaEsameCommissioni": "<#if commissione.properties["crlatti:numEmendPresentatiGiuntaEsame"]?exists>${commissione.properties["crlatti:numEmendPresentatiGiuntaEsame"]}<#else></#if>",
@@ -186,17 +186,98 @@
    							"decadutiEsameCommissioni": "<#if commissione.properties["crlatti:numEmendDecadutiEsame"]?exists>${commissione.properties["crlatti:numEmendDecadutiEsame"]}<#else></#if>",
    							"ritiratiEsameCommissioni": "<#if commissione.properties["crlatti:numEmendRitiratiEsame"]?exists>${commissione.properties["crlatti:numEmendRitiratiEsame"]}<#else></#if>",
    							"respintiEsameCommissioni": "<#if commissione.properties["crlatti:numEmendRespintiEsame"]?exists>${commissione.properties["crlatti:numEmendRespintiEsame"]}<#else></#if>",
-							"noteEmendamentiEsameCommissioni": "<#if commissione.properties["crlatti:noteEmendamentiEsame"]?exists>${commissione.properties["crlatti:noteEmendamentiEsame"]}<#else></#if>"
+							"noteEmendamentiEsameCommissioni": "<#if commissione.properties["crlatti:noteEmendamentiEsame"]?exists>${commissione.properties["crlatti:noteEmendamentiEsame"]}<#else></#if>",
+							"linksNoteEsameCommissione":[
+							<#assign links = commissione.childrenByXPath["*[@cm:name='Links']"][0]>
+			    			<#assign linksList = links.getChildAssocsByType("crlatti:link")>
+			    			<#list linksList as link>
+								{
+									"link" : 
+									{
+										"descrizione":"${link.name}",
+										"indirizzo":"<#if link.properties["crlatti:indirizzoCollegamento"]?exists>${link.properties["crlatti:indirizzoCollegamento"]}<#else></#if>",
+										"pubblico":"<#if link.properties["crlatti:pubblico"]?exists>${link.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>"
+									}
+								}<#if link_has_next>,</#if>
+							</#list>
+							]
 							}
 						}
 						<#if commissione_has_next>,</#if>
 						</#list>
 			    	
-			    	]
+			    	],
+			    	"abbinamenti" : [
+			    		<#assign abbinamenti = passaggio.childrenByXPath["*[@cm:name='Abbinamenti']"][0]>
+			    		<#assign abbinamentiList = abbinamenti.getChildAssocsByType("crlatti:abbinamento")>
+			    		<#list abbinamentiList as abbinamento>
+					   { "abbinamento" : 
+						   {
+						   	"idAtto": "${atto.nodeRef}",
+						   	"idAttoAbbinato": "${abbinamento.assocs["crlatti:attoAssociatoAbbinamento"][0].nodeRef}",
+							"tipoTesto" : "<#if abbinamento.properties["crlatti:tipoTestoAbbinamento"]?exists>${abbinamento.properties["crlatti:tipoTestoAbbinamento"]}<#else></#if>",
+							"dataAbbinamento" : "<#if abbinamento.properties["crlatti:dataAbbinamento"]?exists>${abbinamento.properties["crlatti:dataAbbinamento"]?string("yyyy-MM-dd")}<#else></#if>",
+							"dataDisabbinamento" : "<#if abbinamento.properties["crlatti:dataDisabbinamento"]?exists>${abbinamento.properties["crlatti:dataDisabbinamento"]?string("yyyy-MM-dd")}<#else></#if>",
+							"note" : "<#if abbinamento.properties["crlatti:noteAbbinamento"]?exists>${abbinamento.properties["crlatti:noteAbbinamento"]}<#else></#if>",
+							"numeroAttoAbbinato": "${abbinamento.assocs["crlatti:attoAssociatoAbbinamento"][0].name}",
+							"tipoAttoAbbinato" : "${abbinamento.assocs["crlatti:attoAssociatoAbbinamento"][0].typeShort?substring(12)?upper_case}"
+						   }
+					   }<#if abbinamento_has_next>,</#if>
+					   </#list>
+			    	],
+			    	"aula": {
+			    		<#assign aula = passaggio.childrenByXPath["*[@cm:name='Aula']"][0]>
+			    			"dataPresaInCaricoEsameAula": "<#if aula.properties["crlatti:dataPresaInCaricoEsameAula"]?exists>${aula.properties["crlatti:dataPresaInCaricoEsameAula"]?string("yyyy-MM-dd")}<#else></#if>",
+			    			"relazioneScritta": "<#if aula.properties["crlatti:relazioneScrittaAula"]?exists>${aula.properties["crlatti:relazioneScrittaAula"]}<#else></#if>",
+			    			"esitoVotoAula": "<#if aula.properties["crlatti:esitoVotoPassaggioAula"]?exists>${aula.properties["crlatti:esitoVotoPassaggioAula"]}<#else></#if>",
+							"tipologiaVotazione": "<#if aula.properties["crlatti:tipologiaVotazioneAula"]?exists>${aula.properties["crlatti:tipologiaVotazioneAula"]}<#else></#if>",
+							"dataSedutaAula": "<#if aula.properties["crlatti:dataSedutaAula"]?exists>${aula.properties["crlatti:dataSedutaAula"]?string("yyyy-MM-dd")}<#else></#if>",
+							"numeroDcr": "<#if aula.properties["crlatti:numeroDcrPassaggioAula"]?exists>${aula.properties["crlatti:numeroDcrPassaggioAula"]}<#else></#if>",
+						 	"numeroLcr": "<#if aula.properties["crlatti:numeroLcrPassaggioAula"]?exists>${aula.properties["crlatti:numeroLcrPassaggioAula"]}<#else></#if>",
+						 	"emendato": "<#if aula.properties["crlatti:emendatoAula"]?exists>${aula.properties["crlatti:emendatoAula"]?string("true","false")}<#else></#if>",
+						 	"noteVotazione": "<#if aula.properties["crlatti:noteVotazioneAula"]?exists>${aula.properties["crlatti:noteVotazioneAula"]}<#else></#if>",
+						 	"numEmendPresentatiMaggiorEsameAula": "<#if aula.properties["crlatti:numEmendPresentatiMaggiorEsame"]?exists>${aula.properties["crlatti:numEmendPresentatiMaggiorEsame"]}<#else></#if>",
+   							"numEmendPresentatiMinorEsameAula": "<#if aula.properties["crlatti:numEmendPresentatiMinorEsame"]?exists>${aula.properties["crlatti:numEmendPresentatiMinorEsame"]}<#else></#if>",
+  							"numEmendPresentatiGiuntaEsameAula": "<#if aula.properties["crlatti:numEmendPresentatiGiuntaEsame"]?exists>${aula.properties["crlatti:numEmendPresentatiGiuntaEsame"]}<#else></#if>",
+						    "numEmendPresentatiMistoEsameAula": "<#if aula.properties["crlatti:numEmendPresentatiMistoEsame"]?exists>${aula.properties["crlatti:numEmendPresentatiMistoEsame"]}<#else></#if>",
+						    "numEmendApprovatiMaggiorEsameAula": "<#if aula.properties["crlatti:numEmendApprovatiMaggiorEsame"]?exists>${aula.properties["crlatti:numEmendApprovatiMaggiorEsame"]}<#else></#if>",
+						    "numEmendApprovatiMinorEsameAula": "<#if aula.properties["crlatti:numEmendApprovatiMinorEsame"]?exists>${aula.properties["crlatti:numEmendApprovatiMinorEsame"]}<#else></#if>",
+						    "numEmendApprovatiGiuntaEsameAula": "<#if aula.properties["crlatti:numEmendApprovatiGiuntaEsame"]?exists>${aula.properties["crlatti:numEmendApprovatiGiuntaEsame"]}<#else></#if>",
+						    "numEmendApprovatiMistoEsameAula": "<#if aula.properties["crlatti:numEmendApprovatiMistoEsame"]?exists>${aula.properties["crlatti:numEmendApprovatiMistoEsame"]}<#else></#if>",
+  							"nonAmmissibiliEsameAula": "<#if aula.properties["crlatti:numEmendNonAmmissibiliEsame"]?exists>${aula.properties["crlatti:numEmendNonAmmissibiliEsame"]}<#else></#if>",
+   							"decadutiEsameAula": "<#if aula.properties["crlatti:numEmendDecadutiEsame"]?exists>${aula.properties["crlatti:numEmendDecadutiEsame"]}<#else></#if>",
+   							"ritiratiEsameAula": "<#if aula.properties["crlatti:numEmendRitiratiEsame"]?exists>${aula.properties["crlatti:numEmendRitiratiEsame"]}<#else></#if>",
+   							"respintiEsameAula": "<#if aula.properties["crlatti:numEmendRespintiEsame"]?exists>${aula.properties["crlatti:numEmendRespintiEsame"]}<#else></#if>",
+							"noteEmendamentiEsameAula": "<#if aula.properties["crlatti:noteEmendamentiEsame"]?exists>${aula.properties["crlatti:noteEmendamentiEsame"]}<#else></#if>",
+							"dataSedutaRinvio": "<#if aula.properties["crlatti:dataSedutaRinvioAula"]?exists>${aula.properties["crlatti:dataSedutaRinvioAula"]}<#else></#if>",
+						 	"dataTermineMassimo": "<#if aula.properties["crlatti:dataTermineMassimoAula"]?exists>${aula.properties["crlatti:dataTermineMassimoAula"]}<#else></#if>",
+						 	"motivazioneRinvio": "<#if aula.properties["crlatti:motivazioneRinvioAula"]?exists>${aula.properties["crlatti:motivazioneRinvioAula"]}<#else></#if>",
+							"dataSedutaStralcio": "<#if aula.properties["crlatti:dataSedutaStralcioAula"]?exists>${aula.properties["crlatti:dataSedutaStralcioAula"]?string("yyyy-MM-dd")}<#else></#if>",
+						 	"dataStralcio": "<#if aula.properties["crlatti:dataStralcioAula"]?exists>${aula.properties["crlatti:dataStralcioAula"]?string("yyyy-MM-dd")}<#else></#if>",
+						 	"dataIniziativaStralcio": "<#if aula.properties["crlatti:dataIniziativaStralcioAula"]?exists>${aula.properties["crlatti:dataIniziativaStralcioAula"]?string("yyyy-MM-dd")}<#else></#if>",
+						 	"articoli": "<#if aula.properties["crlatti:articoliAula"]?exists>${aula.properties["crlatti:articoliAula"]}<#else></#if>",
+						 	"noteStralcio": "<#if aula.properties["crlatti:noteStralcioAula"]?exists>${aula.properties["crlatti:noteStralcioAula"]}<#else></#if>",
+						 	"quorumEsameAula": "<#if aula.properties["crlatti:quorumEsameAula"]?exists>${aula.properties["crlatti:quorumEsameAula"]}<#else></#if>",
+							"linksEsameAula":[
+							<#assign links = aula.childrenByXPath["*[@cm:name='Links']"][0]>
+			    			<#assign linksList = links.getChildAssocsByType("crlatti:link")>
+			    			<#list linksList as link>
+								{
+									"link" : 
+									{
+										"descrizione":"${link.name}",
+										"indirizzo":"<#if link.properties["crlatti:indirizzoCollegamento"]?exists>${link.properties["crlatti:indirizzoCollegamento"]}<#else></#if>",
+										"pubblico":"<#if link.properties["crlatti:pubblico"]?exists>${link.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>"
+									}
+								}<#if link_has_next>,</#if>
+							</#list>
+							]
+			    		
+			    	}
 			   }
-			   <#if passaggio_has_next>,</#if>
+			  
 			}
-			
+			 <#if passaggio_has_next>,</#if>
     	</#list>
     <#else></#if>]
     

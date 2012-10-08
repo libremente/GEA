@@ -40,7 +40,7 @@
 							"aula" : 
 								{
 										"noteGeneraliEsameAula" : ""+note+"",
-										"linksNoteEsameAula" : [
+										"linksEsameAula" : [
 											{
 												"link":{
 													"descrizione":"Yahoo",

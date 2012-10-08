@@ -9,9 +9,9 @@ var passaggio = json.get("target").get("passaggio");
 // selezione della commissione e del passaggio corrente
 var commissioneTarget = getCommissioneTarget(json, passaggio, commissioneUtente);
 
-var tipoVotazione = filterParam(commissioneTarget.get("tipoVotazione"));
+var tipoVotazione = filterParam(commissioneTarget.get("quorumEsameCommissioni"));
 var esitoVotazione = filterParam(commissioneTarget.get("esitoVotazione"));
-var dataVotazione = filterParam(commissioneTarget.get("dataVotazione"));
+var dataVotazione = filterParam(commissioneTarget.get("dataSedutaCommissione"));
 var statoCommissione = filterParam(commissioneTarget.get("stato"));
 var ruoloCommissione = filterParam(commissioneTarget.get("ruolo"));
 

@@ -56,7 +56,7 @@ if(checkIsNotNull(id)
 	var linksFolderNode = commissioneFolder.childrenByXPath(linksFolderXPathQuery)[0];
 	
 	for (var i=0; i<links.length(); i++){
-		var link = links.get(i).get("link");
+		var link = links.get(i);
 		var descrizione = link.get("descrizione");
 		var indirizzo = link.get("indirizzo");
 		var pubblico = link.get("pubblico");
@@ -89,7 +89,7 @@ if(checkIsNotNull(id)
 		//cerco il nome del link nel repo all'interno del json
 		for (var q=0; q<links.length(); q++){
 			var link = links.get(q);
-			var descrizione = filterParam(link.get("link").get("descrizione"));
+			var descrizione = filterParam(link.get("descrizione"));
 			if(""+descrizione+""==""+linkNelRepository.name+""){
 				trovato = true;
 				break

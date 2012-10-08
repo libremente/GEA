@@ -43,18 +43,18 @@
 							"commissioni": [
 								{
 							 			"descrizione": ""+commissione+"",
-							 			"tipoVotazione": ""+tipoVotazione+"",
+							 			"quorumEsameCommissioni": ""+tipoVotazione+"",
 							 			"esitoVotazione": ""+esitoVotazione+"",
-										"dataVotazione": ""+dataVotazione+"",
+										"dataSedutaCommissione": ""+dataVotazione+"",
 										"stato": "votazione comissione",
 										"ruolo": "Referente"
 									
 								},
 								{
 							 			"descrizione": "commissioneStaticaTest",
-										"tipoVotazione": "tipo",
+										"quorumEsameCommissioni": "tipo",
 							 			"esitoVotazione": "esito",
-										"dataVotazione": "2012-09-09",
+										"dataSedutaCommissione": "2012-09-09",
 										"stato": "votazione comissione",
 										"ruolo": "Referente"
 									

@@ -53,7 +53,7 @@ function getCommissioneTarget(json, passaggio, commissione){
 	
 	// seleziono il passaggio corrente
 	for(var i=0; i<passaggi.length(); i++) {
-		var passaggioTemp = passaggi.get(i).get("passaggio");
+		var passaggioTemp = passaggi.get(i);
 		if(""+passaggioTemp.get("nome") == ""+passaggio+"") {
 		
 			var commissioni = passaggioTemp.get("commissioni");
@@ -84,7 +84,7 @@ function getPassaggioTarget(json, passaggio){
 	
 	// seleziono il passaggio corrente
 	for(var i=0; i<passaggi.length(); i++) {
-		var passaggioTemp = passaggi.get(i).get("passaggio");
+		var passaggioTemp = passaggi.get(i);
 		if(""+passaggioTemp.get("nome") == ""+passaggio+"") {
 		
 			passaggioTarget = passaggioTemp;
