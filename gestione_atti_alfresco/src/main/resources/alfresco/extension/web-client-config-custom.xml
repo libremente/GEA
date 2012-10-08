@@ -20,6 +20,7 @@
 
 	<config evaluator="string-compare" condition="Action Wizards">
 		<subtypes>
+			<type name="crlatti:atto"/>
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
 			<type name="crlatti:abbinamento" />
@@ -55,7 +56,8 @@
          	<aspect name="crlatti:ammissibilitaUrgenzaAspect"/>
          	<aspect name="crlatti:ammissibilitaNormaFinanziariaAspect"/>
          	<aspect name="crlatti:obbligatorioAspect"/>
-         	<aspect name="crlatti:protocollatoAspect"/>
+         	<aspect name="crlatti:protocollato"/>
+         	<aspect name="crlatti:importatoDaProtocollo"/>
         </aspects>
 	</config>
 
@@ -154,6 +156,12 @@
 		<property-sheet>
 			<show-property name="crlatti:firmatari" />
 			<show-property name="crlatti:primoFirmatario" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="crlatti:importatoDaProtocollo">
+		<property-sheet>
+			<show-property name="crlatti:idProtocolloAtto" />
 		</property-sheet>
 	</config>
 	

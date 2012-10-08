@@ -218,7 +218,7 @@
 				<aspect>crlatti:protocollato</aspect>
 			</mandatory-aspects>
 		</type>
-				
+		
 		<type name="crlatti:consigliereAnagrafica">
 			<title>Anagrafica consigliere</title>
 			<parent>cm:content</parent>
@@ -299,8 +299,7 @@
 				</association>
 			</associations>
 		</type>
-		
-		
+
 
 		<type name="crlatti:abbinamento">
 			<title>Abbinamento</title>
@@ -317,10 +316,6 @@
 				<property name="crlatti:dataDisabbinamento">
 					<title>Data disabbinamento</title>
 					<type>d:date</type>
-				</property>
-				<property name="crlatti:noteAbbinamento">
-					<title>Note</title>
-					<type>d:text</type>
 				</property>
 			</properties>
 			<associations>
@@ -1109,6 +1104,17 @@
 						<stored>false</stored>
 						<tokenised>false</tokenised>
 					</index>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:importatoDaProtocollo">
+			<title>Importato da protocollo</title>
+			<description>Aspetto creato inizialmente per la gestione dell'importazione degli allegati in modo asincrono</description>
+			<properties>
+				<property name="crlatti:idProtocolloAtto">
+					<title>ID protocollo atto</title>
+					<type>d:text</type>
 				</property>
 			</properties>
 		</aspect>

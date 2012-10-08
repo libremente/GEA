@@ -46,6 +46,10 @@ if(checkIsNull(nodeRefAllegato)){
 	attoRecordNode.properties.content.setEncoding("UTF-8");
 	attoRecordNode.properties.content.guessMimetype(filename);
 	attoRecordNode.save();
+	
+	allegatoNode.properties["crlatti:tipologia"] = "Copiato come testo";
+	allegatoNode.save();
+	
 
 	model.attoRecord = attoRecordNode;
 }

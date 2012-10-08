@@ -11,7 +11,8 @@
 		"pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
 		"provenienza" : "<#if allegato.properties["crlatti:provenienza"]?exists>${allegato.properties["crlatti:provenienza"]}<#else></#if>"
 	  }
-   }<#if allegato_has_next>,</#if>
+   }
+   <#if allegato_has_next>,</#if>
    </#list>
    ]
 }
