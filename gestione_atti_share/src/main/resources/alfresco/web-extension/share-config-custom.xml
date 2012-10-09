@@ -98,6 +98,7 @@
             <aspect name="cm:geographic" />
             <aspect name="exif:exif" />
             <aspect name="crlatti:protocollato" />
+            <aspect name="crlatti:importatoDaProtocollo"/>
          </visible>
 
          <!-- Aspects that a user can add. Same as "visible" if left empty -->
