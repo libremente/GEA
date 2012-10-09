@@ -59,7 +59,7 @@ public class GestioneSeduteController {
 	private String urlLink;
 
 
-	private Map<Date, Date> dateSedute = new HashMap<Date, Date>();
+	private List<Date> dateSedute = new ArrayList<Date>();
 
 	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();
 	private String idAttoTrattatoToDelete;
@@ -89,7 +89,6 @@ public class GestioneSeduteController {
 
 	@PostConstruct
 	protected void init() {
-		
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
@@ -261,7 +260,8 @@ public class GestioneSeduteController {
 				seduta.setNumVerbale(getNumVerbale());
 				seduta.setNote(getNote());
 				seduta.setLinks(Clonator.cloneList(getLinksList()));
-
+				
+				
 				seduteList.add(seduta);
 			
 			
@@ -270,38 +270,30 @@ public class GestioneSeduteController {
 				seduta.setNote(getNote());
 				seduta.setLinks(Clonator.cloneList(getLinksList()));
 			}
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			UserBean userBean = ((UserBean) context.getExternalContext()
+					.getSessionMap().get("userBean"));
+			
+			GestioneSedute gestioneSedute = new GestioneSedute();
+			Target target = new Target();
+			target.setProvenienza(userBean.getUser().getSessionGroup().getNome());
+			gestioneSedute.setTarget(target);
+			gestioneSedute.setSeduta(seduta);
+			seduteServiceManager.salvaSeduta(gestioneSedute);
 			updateInserisciSedutaHandler();
 		}
 	}
 
-	/*public void salvaInserisciSedute() {
-		
-		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
-
-		GestioneSedute gestioneSedute = new GestioneSedute();
-		Target target = new Target();
-		target.setProvenienza(userBean.getUser().getSessionGroup().getNome());
-		gestioneSedute.setSedute(getSeduteList());
-		
-        seduteServiceManager.salvaSedute(gestioneSedute);
-		
-        userBean.getUser().getSessionGroup().setSedute(Clonator.cloneList(getSeduteList()));
-		
-		fillDateSeduteMap();
-
-		setStatoCommitInserisciSeduta(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Sedute salvate con successo", ""));
-	}*/
+	
 
 
 	// Inserisci ODG***************************************
 
 	public void fillDateSeduteMap() {
-		dateSedute = new HashMap<Date, Date>();
+		dateSedute = new ArrayList<Date>();
 		for(Seduta element : seduteList) {			
-			dateSedute.put(element.getDataSeduta(), element.getDataSeduta());
+			dateSedute.add(element.getDataSeduta());
 		}
 	}
 
@@ -507,12 +499,12 @@ public class GestioneSeduteController {
 				.getSessionMap().get("userBean"));
 
 		
-		GestioneSedute gestioneSedute = new GestioneSedute();
+		/*GestioneSedute gestioneSedute = new GestioneSedute();
 		Target target = new Target();
 		target.setProvenienza(userBean.getUser().getSessionGroup().getNome());
-		gestioneSedute.setSeduta(sedutaSelected);
+		gestioneSedute.setSeduta(sedutaSelected);*/
 		
-        seduteServiceManager.salvaOdg(gestioneSedute);
+        seduteServiceManager.salvaOdg(sedutaSelected);
         
 		userBean.getUser().getSessionGroup().setSedute(Clonator.cloneList(getSeduteList()));
 
@@ -669,11 +661,11 @@ public class GestioneSeduteController {
 		this.sedutaSelected = sedutaSelected;
 	}
 
-	public Map<Date, Date> getDateSedute() {
+	public List<Date> getDateSedute() {
 		return dateSedute;
 	}
 
-	public void setDateSedute(Map<Date, Date> dateSedute) {
+	public void setDateSedute(List<Date> dateSedute) {
 		this.dateSedute = dateSedute;
 	}
 

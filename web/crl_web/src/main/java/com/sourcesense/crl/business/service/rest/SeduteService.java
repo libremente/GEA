@@ -159,6 +159,41 @@ public class SeduteService {
 		
 	}
 	
+	public void mergeSeduta(String url, Seduta seduta) {
+		try {
+			WebResource webResource = client.resource(url);
+			
+			
+			String json = objectMapper.writeValueAsString(seduta);
+	
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+			
+			
+			
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+
+	}
+	
 	public void merge(String url, GestioneSedute gestioneSedute) {
 		try {
 			WebResource webResource = client.resource(url);

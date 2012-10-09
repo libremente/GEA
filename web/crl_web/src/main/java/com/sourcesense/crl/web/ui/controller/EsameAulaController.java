@@ -43,7 +43,7 @@ public class EsameAulaController {
 	
 	
 	private Atto atto = new Atto();
-	private String passaggio;
+	private Passaggio passaggio;
 	private Date dataPresaInCarico;
 	private String relazioneScritta;
 	private String esitoVotazione;
@@ -125,6 +125,7 @@ public class EsameAulaController {
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
+		setPassaggio(attoBean.getLastPassaggio());
 	}
 
 	
@@ -134,7 +135,7 @@ public class EsameAulaController {
 
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
 
-			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggio)) {
+			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggio.getNome())) {
 
 				passaggioSelected = passaggioRec;
 			}
@@ -1248,12 +1249,12 @@ public class EsameAulaController {
 	}
 
 
-	public String getPassaggio() {
+	public Passaggio getPassaggio() {
 		return passaggio;
 	}
 
 
-	public void setPassaggio(String passaggio) {
+	public void setPassaggio(Passaggio passaggio) {
 		this.passaggio = passaggio;
 	}
 

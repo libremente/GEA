@@ -27,23 +27,23 @@ public class SeduteServiceManager implements ServiceManager{
 	private  URLBuilder urlBuilder;
 	
 	public void deleteSeduta(String idSeduta) {
-		 seduteService.delete(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_sedute", new String[]{idSeduta}));
+		 seduteService.delete(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elimina_seduta", new String[]{idSeduta}));
 	}
 	
 	public Seduta salvaSeduta(GestioneSedute gestioneSedute) {
-		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_sedute", null), gestioneSedute);
+		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
 	}
 	
 	public void updateSeduta(GestioneSedute gestioneSedute) {
-		seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_sedute", null), gestioneSedute);
+		seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
 	}
 	
 	public List<Seduta>  getSedute(String gruppo) {
-		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_sedute", new String[]{gruppo}));
+		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", new String[]{gruppo}));
 	}
 	
-	public void salvaOdg(GestioneSedute gestioneSedute) {
-		seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), gestioneSedute);
+	public void salvaOdg(Seduta seduta) {
+		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
 	}
 	
 	

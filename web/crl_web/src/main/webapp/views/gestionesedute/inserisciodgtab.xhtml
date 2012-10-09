@@ -8,7 +8,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:o="http://omnifaces.org/ui"
+    xmlns:of="http://omnifaces.org/functions">
 
 <script>
 	hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')
@@ -587,12 +589,10 @@
 
 				<p:column headerText="N.Atto">
 					<c:set value="#{atto.id}" var="idAttoParam" />
-					<p:commandLink
-						action="#{searchAttoController.attoDetail(idAttoParam)}"
-						update="listaAtti">
+					
 						<h:outputText value="#{atto.numeroAtto}" />
-						<!-- <f:param name="numeroatto" value="#{atto.numeroAtto}" /> -->
-					</p:commandLink>
+					
+					
 				</p:column>
 				<p:column headerText="N° Protocollo">
 					<h:outputText value="#{atto.numeroProtocollo}" />
@@ -620,11 +620,13 @@
 						
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
-						<p:selectOneMenu id="selezioneSeduta"
-							value="#{gestioneSeduteController.dataSedutaSelected}">
-							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-							<f:selectItems value="#{gestioneSeduteController.dateSedute}" />
-
+						<p:selectOneMenu id="selezioneSeduta" value="gestioneSeduteController.sedutaSelected"
+							>
+							<f:selectItems value="#{gestioneSeduteController.seduteList}"
+								var="seduta" itemValue="#{seduta}" 
+								itemLabel="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"/>
+                            
+							 
 							<p:ajax event="change"
 								listener="#{gestioneSeduteController.showSedutaDetail}"
 								update="inserisciODGGrid" />
@@ -645,7 +647,8 @@
 								<th>Ordine del Giorno per la seduta del <h:outputText
 										value="#{gestioneSeduteController.dataSedutaSelected}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText></th>
+									</h:outputText>
+								</th>
 
 							</thead>
 						</table>
@@ -731,19 +734,17 @@
 	<p:row>
 		<p:column>
 
-			<c:if
-				test="#{!navigationBean.gestioneSeduteConsultazioniAula()}">
+			<c:if test="#{!navigationBean.gestioneSeduteConsultazioniAula()}">
 				<ui:include src="./inserisciodgcommissionetab.xhtml" />
 			</c:if>
 
 		</p:column>
 	</p:row>
-	
+
 	<p:row>
 		<p:column>
 
-			<c:if
-				test="#{navigationBean.gestioneSeduteConsultazioniAula()}">
+			<c:if test="#{navigationBean.gestioneSeduteConsultazioniAula()}">
 				<ui:include src="./inserisciodgaulatab.xhtml" />
 			</c:if>
 

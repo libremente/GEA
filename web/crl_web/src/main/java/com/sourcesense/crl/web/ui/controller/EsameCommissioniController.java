@@ -65,7 +65,7 @@ public class EsameCommissioniController {
 	// Commissione dell utente loggato
 	private Commissione commissioneUser = new Commissione();
 	// Passaggio selezionato
-	private String passaggio;
+	private Passaggio passaggio;
 
 	private Map<String, String> relatori = new HashMap<String, String>();
 	private Map<String, String> membriComitato = new HashMap<String, String>();
@@ -215,7 +215,7 @@ public class EsameCommissioniController {
 		}
 
 		setCommissioneUser(commTemp);
-		setPassaggio(attoBean.getLastPassaggio().getNome());
+		setPassaggio(attoBean.getLastPassaggio());
 		loadData(attoBean.getLastPassaggio(), attoBean);
 
 	}
@@ -226,7 +226,7 @@ public class EsameCommissioniController {
 
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
 
-			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggio)) {
+			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggio.getNome())) {
 
 				passaggioSelected = passaggioRec;
 			}
@@ -2445,11 +2445,11 @@ public class EsameCommissioniController {
 		this.currentDataSeduta = currentDataSeduta;
 	}
 
-	public String getPassaggio() {
+	public Passaggio getPassaggio() {
 		return passaggio;
 	}
 
-	public void setPassaggio(String passaggio) {
+	public void setPassaggio(Passaggio passaggio) {
 		this.passaggio = passaggio;
 	}
 

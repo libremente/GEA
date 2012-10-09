@@ -358,7 +358,7 @@
 		</p:panelGrid>
 	</p:fieldset>
 
-	<p:fieldset legend="Firmatari" toggleable="true" collapsed="false"
+	<p:fieldset rendered="#{navigationBean.isFirmatariEnabled()}" legend="Firmatari" toggleable="true" collapsed="false"
 		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="firmataripanel">
 			<!-- <p:row>

@@ -37,7 +37,7 @@
 	<bean
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
 		id="messageSource" 
-		p:basenames="WEB-INF/messages/ext_resources"
+		p:basenames="file:${catalina.base}/conf/ext_resources"
 		p:fallbackToSystemLocale="false" />
 
 	<bean factory-method="create" class="com.sun.jersey.api.client.Client"
