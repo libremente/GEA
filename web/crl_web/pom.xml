@@ -36,6 +36,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -164,6 +170,11 @@
 			<version>0.5.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>1.1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
