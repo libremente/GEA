@@ -29,7 +29,7 @@
 	              	<cm:userName>protocollo</cm:userName>
 	              	<cm:firstName>protocollo</cm:firstName>
 	              	<cm:lastName>protocollo</cm:lastName>
-	              	<cm:email>protocollo@alfresco.com</cm:email>
+	              	<cm:email>marco.dario@siav.it</cm:email>
 	              	<cm:organizationId></cm:organizationId>
 	              	<cm:homeFolder>/app:company_home</cm:homeFolder>
 	              	<cm:homeFolderProvider>bootstrapHomeFolderProvider</cm:homeFolderProvider>

@@ -44,11 +44,19 @@ if(idProtocolloAtto == ""){
 			allegatoNode.properties["crlatti:idProtocolloAtto"] = idProtocolloAtto;
 			allegatoNode.save();
 			
+			if(allegatoNode.hasAspect("crlatti:importatoDaProtocollo")){
+				allegatoNode.removeAspect("crlatti:importatoDaProtocollo");
+			}
+			
 			document.remove();
 			
 		} else {
+			
+			if(document.hasAspect("crlatti:importatoDaProtocollo")){
+				document.removeAspect("crlatti:importatoDaProtocollo");
+			}
+			
 			document.move(allegatiFolderNode);
-			document.removeAspect("crlatti:importatoDaProtocollo");
 		}
 	}
 }

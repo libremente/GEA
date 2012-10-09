@@ -96,11 +96,19 @@ if(checkIsNotNull(legislatura)
 		attoFolderNode.properties["crlatti:descrizioneIniziativa"] = descrizioneIniziativa;
 		attoFolderNode.properties["crlatti:assegnazione"] = assegnazione;
 		attoFolderNode.save();
+		
+		if(attoFolderNode.hasAspect("crlatti:importatoDaProtocollo")){
+			attoFolderNode.removeAspect("crlatti:importatoDaProtocollo");
+		}
+		
 		document.remove();
 		
 	} else {
 		//creazione del nodo del nuovo atto
 		document.move(meseFolderNode);
+		if(document.hasAspect("crlatti:importatoDaProtocollo")){
+			document.removeAspect("crlatti:importatoDaProtocollo");
+		}
 	}
-	
+
 }
