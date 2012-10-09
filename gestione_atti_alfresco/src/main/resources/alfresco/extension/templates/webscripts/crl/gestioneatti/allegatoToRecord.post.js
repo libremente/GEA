@@ -47,9 +47,8 @@ if(checkIsNull(nodeRefAllegato)){
 	attoRecordNode.properties.content.guessMimetype(filename);
 	attoRecordNode.save();
 	
-	allegatoNode.properties["crlatti:tipologia"] = "Copiato come testo";
-	allegatoNode.save();
-	
+	//rimozione del vecchio allegato che adesso è presente come testo dell'atto
+	allegatoNode.remove();
 
 	model.attoRecord = attoRecordNode;
 }

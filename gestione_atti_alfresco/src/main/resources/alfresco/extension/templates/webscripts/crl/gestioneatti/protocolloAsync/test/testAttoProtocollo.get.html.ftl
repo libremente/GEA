@@ -162,7 +162,7 @@
 		</tr>
 		<tr>
 			<td>Esibente / Mittente:</td>
-			<td><input type="text" name="esibenteMittente" value="Mario Rossi - Carlo Verdi"></td>
+			<td><input type="text" name="esibenteMittente" value="Agostino Alloni - Alessandro Alfieri"></td>
 		</tr>
 		<tr>
 		<td></td>

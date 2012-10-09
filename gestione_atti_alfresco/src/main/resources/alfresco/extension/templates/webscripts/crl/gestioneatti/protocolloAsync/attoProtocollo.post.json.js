@@ -163,7 +163,12 @@ if(username=="protocollo" || username=="admin"){
 							}
 							
 							if(consigliereAnagraficaNode!=null){
-								firmatariArray.push(consigliereAnagraficaNode.name);
+								var nomeConsigliere = consigliereAnagraficaNode.properties["crlatti:nomeConsigliereAnagrafica"];
+								var cognomeConsigliere = consigliereAnagraficaNode.properties["crlatti:cognomeConsigliereAnagrafica"];
+								if(checkIsNotNull(nomeConsigliere) && checkIsNotNull(cognomeConsigliere)){
+									var nomeCompletoConsigliere = nomeConsigliere + " " + cognomeConsigliere;
+									firmatariArray.push(nomeCompletoConsigliere);
+								}
 							}
 						}
 					}
