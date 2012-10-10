@@ -48,7 +48,7 @@ var tipoAtto = typeQName.substring(12).toUpperCase();
 
 model.notePresentazioneAssegnazione = notePresentazioneAssegnazioneNode;
 model.links = links;
-model.pareri = pareri;
+model.organismiStatutari = pareri;
 model.passaggi = passaggi;
 model.atto = attoFolderNode;
 model.tipoAtto = tipoAtto;

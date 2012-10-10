@@ -40,15 +40,13 @@
 						{
 							"link":{
 								"descrizione":"Yahoo",
-								"indirizzo":"http://www.yahoo.it",
-								"pubblico":true
+								"indirizzo":"http://www.yahoo.it"
 							}
 						},
 						{
 							"link":{
 								"descrizione":"Google",
-								"indirizzo":"http://www.google.it",
-								"pubblico":true
+								"indirizzo":"http://www.google.it"
 							}
 						}
 					]	

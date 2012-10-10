@@ -4,7 +4,7 @@ var atto = json.get("atto");
 var id = atto.get("id");
 // suppongo che ci sia solo un passaggio essendo la fase di assegnazione antecedente all'esame commissioni e all'esame aula
 var commissioni = atto.get("passaggi").get(0).get("passaggio").get("commissioni");
-var pareri = atto.get("pareri");
+var organismiStatutari = atto.get("organismiStatutari");
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
@@ -143,13 +143,13 @@ if(checkIsNotNull(id)){
 	var pareriXPathQuery = "*[@cm:name='Pareri']";
 	var pareriFolderNode = attoNode.childrenByXPath(pareriXPathQuery)[0];
 	
-	var numeroPareri = pareri.length();
-	for (var j=0; j<numeroPareri; j++){
-		var parere = pareri.get(j).get("parere");
-		var descrizione = filterParam(parere.get("descrizione"));
-		var dataAssegnazione = filterParam(parere.get("dataAssegnazione"));
-		var dataAnnullo = filterParam(parere.get("dataAnnullo"));
-		var obbligatorio = filterParam(parere.get("obbligatorio"));
+	var numeroOrganismi = organismiStatutari.length();
+	for (var j=0; j<numeroOrganismi; j++){
+		var organismoStatutario = organismiStatutari.get(j).get("organismoStatutario");
+		var descrizione = filterParam(organismoStatutario.get("descrizione"));
+		var dataAssegnazione = filterParam(organismoStatutario.get("dataAssegnazione"));
+		var dataAnnullo = filterParam(organismoStatutario.get("dataAnnullo"));
+		var obbligatorio = filterParam(organismoStatutario.get("obbligatorio"));
 		
 		//verifica l'esistenza del parere all'interno del folder Pareri
 		var existParereXPathQuery = "*[@cm:name='"+descrizione+"']";
@@ -202,9 +202,9 @@ if(checkIsNotNull(id)){
 		var parereNelRepository = pareriNelRepository[z];
 		
 		//cerco il nome del parere nel repo all'interno del json
-		for (var q=0; q<numeroPareri; q++){
-			var parere = pareri.get(q).get("parere");
-			var descrizione = filterParam(parere.get("descrizione"));
+		for (var q=0; q<numeroOrganismi; q++){
+			var organismoStatutario = organismiStatutari.get(q).get("organismoStatutario");
+			var descrizione = filterParam(organismoStatutario.get("descrizione"));
 			if(""+descrizione+""==""+parereNelRepository.name+""){
 				trovato = true;
 				break

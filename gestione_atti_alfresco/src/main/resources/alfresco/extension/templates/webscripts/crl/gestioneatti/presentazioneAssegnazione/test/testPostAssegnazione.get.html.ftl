@@ -67,9 +67,9 @@
 					}
 				}
 			],
-			"pareri" : [
+			"organismiStatutari" : [
 				{
-					"parere":{
+					"organismoStatutario":{
 						"descrizione":""+descrizioneParere+"",
 						"dataAssegnazione":""+dataAssegnazioneParere+"",
 						"dataAnnullo":""+dataAnnulloParere+"",
@@ -77,7 +77,7 @@
 					}
 				},
 				{
-					"parere":{
+					"organismoStatutario":{
 						"descrizione":"Parere statico",
 						"dataAssegnazione":""+dataAssegnazioneParere+"",
 						"dataAnnullo":""+dataAnnulloParere+"",

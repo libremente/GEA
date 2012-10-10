@@ -75,18 +75,31 @@
 	
 		<#else>
 	</#if>],
-	"pareri" : [<#if pareri?exists>
-		<#list pareri as parere>
+	"organismiStatutari" : [<#if organismiStatutari?exists>
+		<#list organismiStatutari as organismoStatutario>
 			{
-				"parere" :
+				"organismoStatutario" :
 				{
-			    	"descrizione" : "<#if parere.properties["crlatti:organismoStatutarioParere"]?exists>${parere.properties["crlatti:organismoStatutarioParere"]}<#else></#if>",
-			    	"dataAssegnazione" : "<#if parere.properties["crlatti:dataAssegnazioneParere"]?exists>${parere.properties["crlatti:dataAssegnazioneParere"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"dataAnnullo" : "<#if parere.properties["crlatti:dataAnnulloParere"]?exists>${parere.properties["crlatti:dataAnnulloParere"]?string("yyyy-MM-dd")}<#else></#if>",
-			    	"obbligatorio" : "<#if parere.properties["crlatti:obbligatorio"]?exists>${parere.properties["crlatti:obbligatorio"]?string("true","false")}<#else></#if>"
+					"descrizione" : "<#if organismoStatutario.properties["crlatti:organismoStatutarioParere"]?exists>${organismoStatutario.properties["crlatti:organismoStatutarioParere"]}<#else></#if>",
+			    	"dataAssegnazione" : "<#if organismoStatutario.properties["crlatti:dataAssegnazioneParere"]?exists>${organismoStatutario.properties["crlatti:dataAssegnazioneParere"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"dataAnnullo" : "<#if organismoStatutario.properties["crlatti:dataAnnulloParere"]?exists>${organismoStatutario.properties["crlatti:dataAnnulloParere"]?string("yyyy-MM-dd")}<#else></#if>",
+			    	"obbligatorio" : "<#if organismoStatutario.properties["crlatti:obbligatorio"]?exists>${organismoStatutario.properties["crlatti:obbligatorio"]?string("true","false")}<#else></#if>",
+					
+					"parere": 
+					{
+						"parere":
+						{
+						"descrizione" : "<#if organismoStatutario.properties["crlatti:organismoStatutarioParere"]?exists>${organismoStatutario.properties["crlatti:organismoStatutarioParere"]}<#else></#if>",
+						"dataRicezioneParere" : "<#if organismoStatutario.properties["crlatti:dataRicezioneParere"]?exists>${organismoStatutario.properties["crlatti:dataRicezioneParere"]?string("yyyy-MM-dd")}<#else></#if>",
+						"esito" : "<#if organismoStatutario.properties["crlatti:esitoParere"]?exists>${organismoStatutario.properties["crlatti:esitoParere"]?string("yyyy-MM-dd")}<#else></#if>",
+						"dataRicezioneOrgano" : "<#if organismoStatutario.properties["crlatti:dataRicezioneOrganoParere"]?exists>${organismoStatutario.properties["crlatti:dataRicezioneOrganoParere"]?string("yyyy-MM-dd")}<#else></#if>",
+						"note" : "<#if organismoStatutario.properties["crlatti:noteParere"]?exists>${organismoStatutario.properties["crlatti:noteParere"]?string("yyyy-MM-dd")}<#else></#if>"		
+						}
+					}
+			
 			    }
 			}
-			<#if parere_has_next>,</#if>
+			<#if organismoStatutario_has_next>,</#if>
     	</#list>
     <#else></#if>],
     

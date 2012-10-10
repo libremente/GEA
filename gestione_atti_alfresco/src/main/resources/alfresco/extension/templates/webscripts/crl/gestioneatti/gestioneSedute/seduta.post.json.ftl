@@ -2,7 +2,7 @@
 {
   		"seduta": 
    		{
-		"id":"${seduta.nodeRef}"
+		"idSeduta":"${seduta.nodeRef}"
    		}
    	
 }
