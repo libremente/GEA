@@ -94,6 +94,13 @@ public class Commissione implements Cloneable {
 	private int respintiEsameCommissioni = 0;
 	
 	
+	private Date dataSedutaStralcio;
+	private Date dataIniziativaStralcio;
+	private Date dataStralcio;
+	private String articoli;
+	private String noteStralcio;
+	private String quorumStralcio;
+	
 	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
 	
 	
@@ -572,6 +579,56 @@ public class Commissione implements Cloneable {
 	public void setNoteClausolaValutativa(String noteClausolaValutativa) {
 		this.noteClausolaValutativa = noteClausolaValutativa;
 	}
+
+	public Date getDataSedutaStralcio() {
+		return dataSedutaStralcio;
+	}
+
+	public void setDataSedutaStralcio(Date dataSedutaStralcio) {
+		this.dataSedutaStralcio = dataSedutaStralcio;
+	}
+
+	public Date getDataIniziativaStralcio() {
+		return dataIniziativaStralcio;
+	}
+
+	public void setDataIniziativaStralcio(Date dataIniziativaStralcio) {
+		this.dataIniziativaStralcio = dataIniziativaStralcio;
+	}
+
+	public Date getDataStralcio() {
+		return dataStralcio;
+	}
+
+	public void setDataStralcio(Date dataStralcio) {
+		this.dataStralcio = dataStralcio;
+	}
+
+	public String getArticoli() {
+		return articoli;
+	}
+
+	public void setArticoli(String articoli) {
+		this.articoli = articoli;
+	}
+
+	public String getNoteStralcio() {
+		return noteStralcio;
+	}
+
+	public void setNoteStralcio(String noteStralcio) {
+		this.noteStralcio = noteStralcio;
+	}
+
+	public String getQuorumStralcio() {
+		return quorumStralcio;
+	}
+
+	public void setQuorumStralcio(String quorumStralcio) {
+		this.quorumStralcio = quorumStralcio;
+	}
+	
+	
 	
 
 }

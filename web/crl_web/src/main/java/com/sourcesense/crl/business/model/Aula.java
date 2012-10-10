@@ -52,6 +52,7 @@ public class Aula implements Cloneable{
 	private Date dataSedutaRinvio;
 	private Date dataTermineMassimo;
 	private String motivazioneRinvio;
+	
 	private Date dataSedutaStralcio;
 	private Date dataStralcio;
 	private Date dataIniziativaStralcio;

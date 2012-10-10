@@ -575,7 +575,7 @@ public class PresentazioneAssegnazioneAttoController {
 			if (!checkPareri()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Attenzione ! Parere "
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Organismo Statutario "
 								+ nomeOrganismoStatutario + " già presente ",
 						""));
 

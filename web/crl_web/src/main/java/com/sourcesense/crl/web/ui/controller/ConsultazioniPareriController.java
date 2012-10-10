@@ -24,6 +24,7 @@ import com.sourcesense.crl.business.model.SoggettoInvitato;
 import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
+import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 @ManagedBean(name = "consultazioniPareriController")
@@ -37,7 +38,9 @@ public class ConsultazioniPareriController {
 
 	private List<OrganismoStatutario> organismiList = new ArrayList<OrganismoStatutario>();
 
-	private Parere parereSelected = new Parere();
+	
+	private OrganismoStatutario organismoSelected = new OrganismoStatutario(); 
+	//private Parere parereSelected = new Parere();
 	private String descrizioneOrganismoSelected;
 
 	private Date dataRicezioneParere;
@@ -83,16 +86,17 @@ public class ConsultazioniPareriController {
 		setAtto((Atto) attoBean.getAtto().clone());
 
 		setOrganismiList(new ArrayList<OrganismoStatutario>(
-				atto.getOrganismiStatutari()));
+				Clonator.cloneList(atto.getOrganismiStatutari())));
 
 		if (!organismiList.isEmpty()) {
-			setDescrizioneOrganismoSelected(organismiList.get(0)
-					.getDescrizione());
+			
+			setOrganismoSelected(organismiList.get(0));
+			setDescrizioneOrganismoSelected(organismiList.get(0).getDescrizione());
 			showParereDetail();
 		}
 
 		setConsultazioniList(new ArrayList<Consultazione>(
-				atto.getConsultazioni()));
+				Clonator.cloneList(atto.getConsultazioni())));
 
 		if (!consultazioniList.isEmpty()) {
 			setDescrizioneConsultazioneSelected(consultazioniList.get(0)
@@ -136,14 +140,14 @@ public class ConsultazioniPareriController {
 
 	public void showParereDetail() {
 
-		setParereSelected(findParere(descrizioneOrganismoSelected));
+		setOrganismoSelected(findOrganismo(descrizioneOrganismoSelected));
 
-		if (parereSelected != null) {
-			setDataRicezioneParere(parereSelected.getDataRicezioneParere());
-			setDataRicezioneOrgano(parereSelected.getDataRicezioneOrgano());
-			setEsito(parereSelected.getEsito());
-			setNoteParere(parereSelected.getNote());
-			setAllegatiParereList(parereSelected.getAllegati());
+		if (organismoSelected != null) {
+			setDataRicezioneParere(organismoSelected.getParere().getDataRicezioneParere());
+			setDataRicezioneOrgano(organismoSelected.getParere().getDataRicezioneOrgano());
+			setEsito(organismoSelected.getParere().getEsito());
+			setNoteParere(organismoSelected.getParere().getNote());
+			setAllegatiParereList(organismoSelected.getParere().getAllegati());
 		} else {
 			setDataRicezioneParere(null);
 			setDataRicezioneOrgano(null);
@@ -153,11 +157,11 @@ public class ConsultazioniPareriController {
 		}
 	}
 
-	private Parere findParere(String descrizione) {
+	private OrganismoStatutario findOrganismo(String descrizione) {
 		
 		for (OrganismoStatutario element : organismiList) {
 			if (element.getDescrizione().equals(descrizione)) {
-				return element.getParere();
+				return element;
 			}
 		}
 		return null;
@@ -238,10 +242,10 @@ public class ConsultazioniPareriController {
 
 	public void salvaParere() {
 
-		parereSelected.setDataRicezioneOrgano(getDataRicezioneOrgano());
-		parereSelected.setDataRicezioneParere(getDataRicezioneParere());
-		parereSelected.setEsito(getEsito());
-		parereSelected.setNote(getNoteParere());
+		organismoSelected.getParere().setDataRicezioneOrgano(getDataRicezioneOrgano());
+		organismoSelected.getParere().setDataRicezioneParere(getDataRicezioneParere());
+		organismoSelected.getParere().setEsito(getEsito());
+		organismoSelected.getParere().setNote(getNoteParere());
 		// parereSelected.setAllegati
 
 		atto.setOrganismiStatutari(organismiList);
@@ -525,13 +529,13 @@ public class ConsultazioniPareriController {
 		this.organismiList = organismiList;
 	}
 
-	public Parere getParereSelected() {
+	/*public Parere getParereSelected() {
 		return parereSelected;
 	}
 
 	public void setParereSelected(Parere parereSelected) {
 		this.parereSelected = parereSelected;
-	}
+	}*/
 
 	public Date getDataRicezioneParere() {
 		return dataRicezioneParere;
@@ -754,4 +758,14 @@ public class ConsultazioniPareriController {
 		this.allegatoConsultazioneToDelete = allegatoConsultazioneToDelete;
 	}
 
+	public OrganismoStatutario getOrganismoSelected() {
+		return organismoSelected;
+	}
+
+	public void setOrganismoSelected(OrganismoStatutario organismoSelected) {
+		this.organismoSelected = organismoSelected;
+	}
+
+	
+	
 }

@@ -20,7 +20,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @AutoProperty
 public class Parere implements Cloneable {
 
-	private String descrizione;
+	
 	
 	
 	//TODO eliminare
@@ -30,7 +30,7 @@ public class Parere implements Cloneable {
 	private boolean obbligatorio;
 	//TODO eliminare
 
-	
+	private String descrizione;
 	private Date dataRicezioneParere;
 	private String esito;
 	private Date dataRicezioneOrgano;

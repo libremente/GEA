@@ -20,7 +20,9 @@ import org.primefaces.event.FileUploadEvent;
 import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GestioneAbbinamento;
@@ -159,6 +161,13 @@ public class EsameCommissioniController {
 	private String urlLink;
 	private boolean pubblico;
 
+	private Date dataSedutaStralcio;
+	private Date dataIniziativaStralcio;
+	private Date dataStralcio;
+	private String articoli;
+	private String noteStralcio;
+	private String quorumStralcio;
+
 	private String statoCommitRelatori = CRLMessage.COMMIT_DONE;
 	private String statoCommitComitatoRistretto = CRLMessage.COMMIT_DONE;
 	private String statoCommitPresaInCarico = CRLMessage.COMMIT_DONE;
@@ -170,6 +179,7 @@ public class EsameCommissioniController {
 	private String statoCommitTrasmissione = CRLMessage.COMMIT_DONE;
 	private String statoCommitEmendamentiClausole = CRLMessage.COMMIT_DONE;
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
+	private String statoCommitStralci = CRLMessage.COMMIT_DONE;
 
 	@PostConstruct
 	protected void init() {
@@ -226,7 +236,8 @@ public class EsameCommissioniController {
 
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
 
-			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggio.getNome())) {
+			if (passaggioRec.getNome().equalsIgnoreCase(
+					this.passaggio.getNome())) {
 
 				passaggioSelected = passaggioRec;
 			}
@@ -365,6 +376,10 @@ public class EsameCommissioniController {
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
 	}
 
+	public void updateStralciHandler() {
+		setStatoCommitStralci(CRLMessage.COMMIT_UNDONE);
+	}
+
 	public void changeTabHandler() {
 
 		if (statoCommitRelatori.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -475,6 +490,16 @@ public class EsameCommissioniController {
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR,
 							"Attenzione ! Le modifiche alle Note ed Allegati non sono state salvate ",
+							""));
+		}
+
+		if (statoCommitStralci.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche a Stralci non sono state salvate ",
 							""));
 		}
 
@@ -1683,6 +1708,32 @@ public class EsameCommissioniController {
 
 	}
 
+	// Stralci **************************************************************
+	public void salvaStralci() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setCommissioni(getCommissioniList());
+		Target target = new Target();
+		target.setCommissione(commissioneUser.getDescrizione());
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		EsameCommissione esameCommissione = new EsameCommissione();
+		esameCommissione.setAtto(atto);
+		esameCommissione.setTarget(target);
+		
+		commissioneServiceManager
+		.salvaStralci(esameCommissione);
+
+		attoBean.getLastPassaggio().setCommissioni(
+				Clonator.cloneList(getCommissioniList()));
+
+		setStatoCommitStralci(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage(
+				"Stralci salvati con successo", ""));
+	}
+
 	// Getters & Setters******************************************************
 
 	public Atto getAtto() {
@@ -2460,5 +2511,66 @@ public class EsameCommissioniController {
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
 	}
+
+	
+	
+	
+	public Date getDataSedutaStralcio() {
+		return this.commissioneUser.getDataSedutaStralcio();
+	}
+
+	public void setDataSedutaStralcio(Date dataSedutaStralcio) {
+		this.commissioneUser.setDataSedutaStralcio(dataSedutaStralcio);
+	}
+
+	public Date getDataIniziativaStralcio() {
+		return this.commissioneUser.getDataIniziativaStralcio();
+	}
+
+	public void setDataIniziativaStralcio(Date dataIniziativaStralcio) {
+		this.commissioneUser.setDataIniziativaStralcio(dataIniziativaStralcio);
+	}
+
+	public Date getDataStralcio() {
+		return this.commissioneUser.getDataStralcio();
+	}
+
+	public void setDataStralcio(Date dataStralcio) {
+		this.commissioneUser.setDataStralcio(dataStralcio);
+	}
+
+	public String getArticoli() {
+		return this.commissioneUser.getArticoli();
+	}
+
+	public void setArticoli(String articoli) {
+		this.commissioneUser.setArticoli(articoli);
+	}
+
+	public String getNoteStralcio() {
+		return this.commissioneUser.getNoteStralcio();
+	}
+
+	public void setNoteStralcio(String noteStralcio) {
+		this.commissioneUser.setNoteStralcio(noteStralcio);
+	}
+
+	public String getQuorumStralcio() {
+		return this.commissioneUser.getQuorumStralcio();
+	}
+
+	public void setQuorumStralcio(String quorumStralcio) {
+		this.commissioneUser.setQuorumStralcio(quorumStralcio);
+	}
+
+	public String getStatoCommitStralci() {
+		return statoCommitStralci;
+	}
+
+	public void setStatoCommitStralci(String statoCommitStralci) {
+		this.statoCommitStralci = statoCommitStralci;
+	}
+
+	
 
 }
