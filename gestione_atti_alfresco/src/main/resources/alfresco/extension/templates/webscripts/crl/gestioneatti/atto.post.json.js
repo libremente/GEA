@@ -56,7 +56,7 @@ if(nodeType=="crlatti:attoEac"){
 	}
 	
 	//creazione spazio mese
-	var eacMesePath = annoPath + "/cm:" + search.ISO9075Encode(mese);
+	var eacMesePath = eacAnnoPath + "/cm:" + search.ISO9075Encode(mese);
 	var eacMeseLuceneQuery = "PATH:\""+eacMesePath+"\"";
 	var eacMeseResults = search.luceneSearch(eacMeseLuceneQuery);
 	var eacMeseFolderNode = null;
@@ -67,7 +67,7 @@ if(nodeType=="crlatti:attoEac"){
 	}
 	
 	//verifica esistenza del folder dell'atto EAC
-	var eacAttoPath = eacMeseFolderNode + "/cm:" + search.ISO9075Encode(numeroAtto);
+	var eacAttoPath = eacMesePath + "/cm:" + search.ISO9075Encode(numeroAtto);
 	var eacAttoLuceneQuery = "PATH:\""+eacAttoPath+"\"";
 	var eacAttoResults = search.luceneSearch(eacAttoLuceneQuery);
 	var eacAttoFolderNode = null;
