@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Creazione lettera</shortname>
+  <description>creazione lettera</description>
+  <url>/crl/template/lettere/crealettera</url>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

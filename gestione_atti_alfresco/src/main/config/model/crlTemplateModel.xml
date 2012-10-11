@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="crlatti:gestioneAttiModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>CRL Template Model</description>
+	<author>Sourcesense</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	
+	<namespaces>
+		<namespace uri="http://www.regione.lombardia.it/content/model/template/1.0"
+			prefix="crltemplate" />
+	</namespaces>
+
+	<types>
+	
+		<type name="crltemplate:lettera">
+			<title>Lettera</title>
+			<parent>cm:content</parent>
+			<properties>		
+				<property name="crltemplate:nomePresidenteConsiglioRegionale">
+					<title>Nome del Presidente del Consiglio Regionale</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crltemplate:letteraCommissioneSoloReferente">
+			<title>Lettera Commissione solo Referente</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+	</types>
+	
+	<aspects>
+		
+		
+		
+	</aspects>
+
+</model>

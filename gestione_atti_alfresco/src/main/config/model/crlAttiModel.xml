@@ -849,6 +849,25 @@
 			</associations>
 		</type>
 		
+		
+		<!-- Modelli per i template delle lettere -->
+		
+		<type name="crlatti:lettera">
+			<title>Lettera</title>
+			<parent>cm:content</parent>
+		</type>
+		
+		<type name="crlatti:letteraCommissioneSoloReferente">
+			<title>Lettera Commissione solo Referente</title>
+			<parent>crlatti:lettera</parent>
+			<properties>		
+				<property name="crlatti:nomePresidenteConsiglioRegionale">
+					<title>Nome del Presidente del Consiglio Regionale</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
 	</types>
 	
 	<aspects>

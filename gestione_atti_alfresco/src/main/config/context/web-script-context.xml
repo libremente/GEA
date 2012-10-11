@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+	<bean id="letteraBaseCommand" class="com.sourcesense.crl.webscript.LetteraBaseCommand" abstract="true"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	</bean> 
+	
+	<bean id="letteraCommissioneSoloReferenteCommand" class="com.sourcesense.crl.webscript.LetteraCommissioneSoloReferenteCommand" parent="letteraBaseCommand" />
+
+
+	<bean id="webscript.crl.gestioneatti.template.lettera.post" class="com.sourcesense.crl.webscript.LetteraWebScript" parent="webscript"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	    <property name="lettereCommandMap">
+            <map>
+                <entry key="{http://www.regione.lombardia.it/content/model/atti/1.0}letteraCommissioneSoloReferente" value-ref="letteraCommissioneSoloReferenteCommand"/>
+            </map>
+        </property>
+	    
+	    
+	</bean> 
+	
+	
+
+</beans>
