@@ -594,6 +594,28 @@
    	</forms>
    </config>
    
+   <config evaluator="model-type" condition="crlatti:attoEac">
+   	<forms>
+   		<form id="search">
+   			<field-visibility>
+   				<show id="crlatti:dataAtto"/>
+   				<show id="crlatti:noteEac"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:attoEac">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataAtto"/>
+   				<show id="crlatti:noteEac"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
    <config evaluator="node-type" condition="crlatti:collegamento">
    	<forms>
    		<form>

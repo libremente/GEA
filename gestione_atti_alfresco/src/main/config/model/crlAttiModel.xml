@@ -300,7 +300,6 @@
 			</associations>
 		</type>
 
-
 		<type name="crlatti:abbinamento">
 			<title>Abbinamento</title>
 			<parent>cm:content</parent>
@@ -427,6 +426,16 @@
 		<type name="crlatti:attoEac">
 			<title>Elenchi di Atti Comunitari</title>
 			<parent>crlatti:atto</parent>
+			<properties>
+				<property name="crlatti:dataAtto">
+					<title>Data atto</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteEac">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:dgr</aspect>
 			</mandatory-aspects>

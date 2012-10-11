@@ -210,6 +210,13 @@
 		</property-sheet>
 	</config>
 	 
+	 <config evaluator="node-type" condition="crlatti:attoEac">
+	 	<property-sheet>
+	 		<show-property name="crlatti:dataAtto"/>
+	 		<show-property name="crlatti:noteEac"/>
+	 	</property-sheet>
+	 </config>
+	 
 	 <config evaluator="node-type" condition="crlatti:testoComitatoRistretto">
 		<property-sheet>
 			<show-property name="crlatti:tipologia"/>
