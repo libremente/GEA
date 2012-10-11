@@ -74,6 +74,7 @@
 			<type name="crlatti:attoRef" />
 			<type name="crlatti:attoRel" />
 			<type name="crlatti:attoEac" />
+			<type name="crlatti:attoMis"/>
 			<type name="crlatti:comitatoRistretto"/>
 			<type name="crlatti:commissione"/>
 			<type name="crlatti:aula"/>
@@ -214,6 +215,25 @@
 	 	<property-sheet>
 	 		<show-property name="crlatti:dataAtto"/>
 	 		<show-property name="crlatti:noteEac"/>
+	 	</property-sheet>
+	 </config>
+	 
+	 <config evaluator="node-type" condition="crlatti:attoMis">
+	 	<property-sheet>
+	 		<show-property name="crlatti:dataIniziativaComitatoMis"/>
+	 		<show-property name="crlatti:dataPropostaCommissioneMis"/>
+	 		<show-property name="crlatti:commissioneCompetenteMis"/>
+	 		<show-property name="crlatti:esitoVotoIntesaMis"/>
+	 		<show-property name="crlatti:dataIntesaMis"/>
+	 		<show-property name="crlatti:dataRispostaComitatoMis"/>
+	 		<show-property name="crlatti:dataApprovazioneProgettoMis"/>
+	 		<show-property name="crlatti:dataApprovazioneUdpMis"/>
+	 		<show-property name="crlatti:numeroAttoUdpMis"/>
+	 		<show-property name="crlatti:istitutoIncaricatoMis"/>
+	 		<show-property name="crlatti:scadenzaMvMis"/>
+	 		<show-property name="crlatti:dataEsameRapportoFinaleMis"/>
+	 		<show-property name="crlatti:dataTrasmissioneACommissioniMis"/>
+	 		<show-property name="crlatti:noteMis"/>
 	 	</property-sheet>
 	 </config>
 	 
@@ -576,6 +596,7 @@
 				<type name="crlatti:attoRef" />
 				<type name="crlatti:attoRel" />
 				<type name="crlatti:attoEac" />
+				<type name="crlatti:attoMis" />
 			</folder-types>
 			<custom-properties>
 				<meta-data type="crlatti:atto" property="crlatti:tipologia" />

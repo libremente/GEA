@@ -128,6 +128,11 @@
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/attoEacSpaceTemplate.acp</prop>
 	         </props>
 	         
+	         <props>
+	            <prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.templates.childname}</prop>
+	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/attoMisSpaceTemplate.acp</prop>
+	         </props>
+	         
 	         
           </list>
 	   </property>

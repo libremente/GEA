@@ -440,6 +440,69 @@
 				<aspect>crlatti:dgr</aspect>
 			</mandatory-aspects>
 		</type>
+		
+		<type name="crlatti:attoMis">
+			<title>Missioni valutative</title>
+			<parent>crlatti:atto</parent>
+			<properties>
+				<property name="crlatti:dataIniziativaComitatoMis">
+					<title>Data iniziativa comitato</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataPropostaCommissioneMis">
+					<title>Data proposta commissione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:commissioneCompetenteMis">
+					<title>Commissione competente</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoVotoIntesaMis">
+					<title>Esito voto intesa</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataIntesaMis">
+					<title>Data intesa</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRispostaComitatoMis">
+					<title>Data risposta comitato</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataApprovazioneProgettoMis">
+					<title>Data approvazione progetto</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataApprovazioneUdpMis">
+					<title>Data approvazione progetto</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numeroAttoUdpMis">
+					<title>Numero atto UDP</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:istitutoIncaricatoMis">
+					<title>Istituto incaricato</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:scadenzaMvMis">
+					<title>Scadenza MV</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataEsameRapportoFinaleMis">
+					<title>Data esame rapporto finale</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataTrasmissioneACommissioniMis">
+					<title>Data trasmissione a commissioni</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteMis">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
 
 		<type name="crlatti:firmatario">
 			<title>Firmatario</title>
@@ -856,25 +919,6 @@
 				</target>
 				</association>
 			</associations>
-		</type>
-		
-		
-		<!-- Modelli per i template delle lettere -->
-		
-		<type name="crlatti:lettera">
-			<title>Lettera</title>
-			<parent>cm:content</parent>
-		</type>
-		
-		<type name="crlatti:letteraCommissioneSoloReferente">
-			<title>Lettera Commissione solo Referente</title>
-			<parent>crlatti:lettera</parent>
-			<properties>		
-				<property name="crlatti:nomePresidenteConsiglioRegionale">
-					<title>Nome del Presidente del Consiglio Regionale</title>
-					<type>d:text</type>
-				</property>
-			</properties>
 		</type>
 		
 	</types>
