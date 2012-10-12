@@ -1,7 +1,6 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
 var atto = json.get("atto");
-var id = atto.get("id");
 var legislatura = atto.get("legislatura");
 var tipologia = atto.get("tipologia");
 var numeroAtto = atto.get("numeroAtto");
@@ -36,9 +35,13 @@ if(tipoAtto=="PDL"){
 	nodeType = "crlatti:attoRel";
 } else if(tipoAtto=="EAC"){
 	nodeType = "crlatti:attoEac";
+} else if(tipoAtto=="MIS"){
+	nodeType = "crlatti:attoMis";
 }
 
 if(nodeType=="crlatti:attoEac"){
+	//gestione inserimento e modifica dell'atto di tipo EAC
+	var id = atto.get("id");
 	var dataAtto = atto.get("dataAtto");
 	var note = atto.get("note");
 	var eacRootPath = gestioneAttiPath + "/cm:EAC";
@@ -95,6 +98,131 @@ if(nodeType=="crlatti:attoEac"){
 	model.atto = eacAttoFolderNode;
 		
 } else if(nodeType=="crlatti:attoMis") {
+	
+	//gestione inserimento e modifica dell'atto di tipo MIS
+	var id = atto.get("id");
+	var dataIniziativaComitato = atto.get("dataIniziativaComitato");
+	var dataPropostaCommissione = atto.get("dataPropostaCommissione");
+	var commissioneCompetente = atto.get("commissioneCompetente");
+	var esitoVotoIntesa = atto.get("esitoVotoIntesa");
+	var dataIntesa = atto.get("dataIntesa");
+	var dataRispostaComitato = atto.get("dataRispostaComitato");
+	var dataApprovazioneProgetto = atto.get("dataApprovazioneProgetto");
+	var dataApprovazioneUdp = atto.get("dataApprovazioneUdp");
+	var numeroAttoUdp = atto.get("numeroAttoUdp");
+	var istitutoIncaricato = atto.get("istitutoIncaricato");
+	var scadenzaMv = atto.get("scadenzaMv");
+	var dataEsameRapportoFinale = atto.get("dataEsameRapportoFinale");
+	var dataTrasmissioneACommissioni = atto.get("dataTrasmissioneACommissioni");
+	var note = atto.get("note");
+	
+	var misRootPath = gestioneAttiPath + "/cm:MIS";
+	var misRootFolderNode = search.luceneSearch("PATH:\""+misRootPath+"\"")[0];
+	
+	//creazione spazio anno
+	var misAnnoPath = misRootPath + "/cm:" + search.ISO9075Encode(anno);
+	var misAnnoLuceneQuery = "PATH:\""+misAnnoPath+"\"";
+	var misAnnoResults = search.luceneSearch(misAnnoLuceneQuery);
+	var misAnnoFolderNode = null;
+	if(misAnnoResults!=null && misAnnoResults.length>0){
+		misAnnoFolderNode = misAnnoResults[0];
+	} else {
+		misAnnoFolderNode = misRootFolderNode.createFolder(anno);
+	}
+	
+	//creazione spazio mese
+	var misMesePath = misAnnoPath + "/cm:" + search.ISO9075Encode(mese);
+	var misMeseLuceneQuery = "PATH:\""+misMesePath+"\"";
+	var misMeseResults = search.luceneSearch(misMeseLuceneQuery);
+	var misMeseFolderNode = null;
+	if(misMeseResults!=null && misMeseResults.length>0){
+		misMeseFolderNode = misMeseResults[0];
+	} else {
+		misMeseFolderNode = misAnnoFolderNode.createFolder(mese);
+	}
+	
+	//verifica esistenza del folder dell'atto MIS
+	var misAttoPath = misMesePath + "/cm:" + search.ISO9075Encode(numeroAtto);
+	var misAttoLuceneQuery = "PATH:\""+misAttoPath+"\"";
+	var misAttoResults = search.luceneSearch(misAttoLuceneQuery);
+	var misAttoFolderNode = null;
+	
+	if(checkIsNotNull(id)){
+		misAttoFolderNode = utils.getNodeFromString(id);
+	} else {
+		//creazione dell'atto di tipo MIS
+		var misAttoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:AttoMis\"";
+		var misAttoSpaceTemplateNode = search.luceneSearch(misAttoSpaceTemplateQuery)[0];
+		misAttoFolderNode = misAttoSpaceTemplateNode.copy(misMeseFolderNode,true);
+	}
+	
+	//metadati
+	
+	//date
+	if(checkIsNotNull(dataIniziativaComitato)){
+		var dataIniziativaComitatoSplitted = dataIniziativaComitato.split("-");
+		var dataIniziativaComitatoParsed = new Date(dataIniziativaComitatoSplitted[0],dataIniziativaComitatoSplitted[1]-1,dataIniziativaComitatoSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataIniziativaComitatoMis"] = dataIniziativaComitatoParsed;
+	}
+	
+	if(checkIsNotNull(dataPropostaCommissione)){
+		var dataPropostaCommissioneSplitted = dataPropostaCommissione.split("-");
+		var dataPropostaCommissioneParsed = new Date(dataPropostaCommissioneSplitted[0],dataPropostaCommissioneSplitted[1]-1,dataPropostaCommissioneSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataPropostaCommissioneMis"] = dataPropostaCommissioneParsed;
+	}
+	
+	if(checkIsNotNull(dataIntesa)){
+		var dataIntesaSplitted = dataIntesa.split("-");
+		var dataIntesaSplittedParsed = new Date(dataIntesaSplitted[0],dataIntesaSplitted[1]-1,dataIntesaSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataIntesaMis"] = dataIntesaSplittedParsed;
+	}
+	
+	if(checkIsNotNull(dataRispostaComitato)){
+		var dataRispostaComitatoSplitted = dataRispostaComitato.split("-");
+		var dataRispostaComitatoParsed = new Date(dataRispostaComitatoSplitted[0],dataRispostaComitatoSplitted[1]-1,dataRispostaComitatoSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataRispostaComitatoMis"] = dataRispostaComitatoParsed;
+	}
+	
+	if(checkIsNotNull(dataApprovazioneProgetto)){
+		var dataApprovazioneProgettoSplitted = dataApprovazioneProgetto.split("-");
+		var dataApprovazioneProgettoParsed = new Date(dataApprovazioneProgettoSplitted[0],dataApprovazioneProgettoSplitted[1]-1,dataApprovazioneProgettoSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataApprovazioneProgettoMis"] = dataApprovazioneProgettoParsed;
+	}
+	
+	if(checkIsNotNull(dataApprovazioneUdp)){
+		var dataApprovazioneUdpSplitted = dataApprovazioneUdp.split("-");
+		var dataApprovazioneUdpParsed = new Date(dataApprovazioneUdpSplitted[0],dataApprovazioneUdpSplitted[1]-1,dataApprovazioneUdpSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataApprovazioneUdpMis"] = dataApprovazioneUdpParsed;
+	}
+	
+	if(checkIsNotNull(scadenzaMv)){
+		var scadenzaMvSplitted = scadenzaMv.split("-");
+		var scadenzaMvParsed = new Date(scadenzaMvSplitted[0],scadenzaMvSplitted[1]-1,scadenzaMvSplitted[2]);
+		misAttoFolderNode.properties["crlatti:scadenzaMvMis"] = scadenzaMvParsed;
+	}
+	
+	if(checkIsNotNull(dataEsameRapportoFinale)){
+		var dataEsameRapportoFinaleSplitted = dataEsameRapportoFinale.split("-");
+		var dataEsameRapportoFinaleParsed = new Date(dataEsameRapportoFinaleSplitted[0],dataEsameRapportoFinaleSplitted[1]-1,dataEsameRapportoFinaleSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataEsameRapportoFinaleMis"] = dataEsameRapportoFinaleParsed;
+	}
+	
+	if(checkIsNotNull(dataTrasmissioneACommissioni)){
+		var dataTrasmissioneACommissioniSplitted = dataTrasmissioneACommissioni.split("-");
+		var dataTrasmissioneACommissioniParsed = new Date(dataTrasmissioneACommissioniSplitted[0],dataTrasmissioneACommissioniSplitted[1]-1,dataTrasmissioneACommissioniSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataTrasmissioneACommissioniMis"] = dataTrasmissioneACommissioniParsed;
+	}
+	
+	misAttoFolderNode.name = numeroAtto;
+	misAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
+	misAttoFolderNode.properties["crlatti:noteMis"] = note;
+	misAttoFolderNode.properties["crlatti:commissioneCompetenteMis"] = commissioneCompetente;
+	misAttoFolderNode.properties["crlatti:esitoVotoIntesaMis"] = esitoVotoIntesa;
+	misAttoFolderNode.properties["crlatti:numeroAttoUdpMis"] = numeroAttoUdp;
+	misAttoFolderNode.properties["crlatti:istitutoIncaricatoMis"] = istitutoIncaricato;
+	
+	misAttoFolderNode.save();
+	model.atto = misAttoFolderNode;
 	
 } else {
 
