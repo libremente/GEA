@@ -256,6 +256,9 @@ public class EsameCommissioniController {
 		if(conta < this.atto.getPassaggi().size()){
 			
 			setReadonly(true);
+		}else{
+			setReadonly(false);
+			
 		}
 		
 		// Ricavo le commisioni dall'ultimo passaggio

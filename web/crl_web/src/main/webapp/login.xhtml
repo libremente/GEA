@@ -9,11 +9,18 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form>
+
+	<p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog>
 	<p:panelGrid
 		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
-		id="loginpanel" >
+		id="loginpanel">
 
-      
+
 
 		<f:facet name="header">
 			<p:row>
@@ -23,11 +30,11 @@
 			</p:row>
 		</f:facet>
 
-         
 
-        <p:row rendered="#{param.reason == 'expired'}">
-			<p:column colspan="3" >
-				<h:outputText value="Sessione Utente scaduta "  />
+
+		<p:row rendered="#{param.reason == 'expired'}">
+			<p:column colspan="3">
+				<h:outputText value="Sessione Utente scaduta " />
 			</p:column>
 		</p:row>
 
@@ -44,10 +51,11 @@
 
 			<p:column>
 				<p:inputText id="username" value="#{loginController.username}"
-					required="true" label="Username"  requiredMessage="Username obbligatorio" />
+					required="true" label="Username"
+					requiredMessage="Username obbligatorio" />
 
 			</p:column>
-			
+
 			<p:column>
 				<p:message for="username" display="icon" />
 			</p:column>
@@ -60,8 +68,9 @@
 
 			<p:column>
 				<p:password id="password" value="#{loginController.password}"
-					required="true" label="Password" requiredMessage="Password obbligatoria"  />
-				
+					required="true" label="Password"
+					requiredMessage="Password obbligatoria" />
+
 			</p:column>
 			<p:column>
 				<p:message for="password" display="icon" />
