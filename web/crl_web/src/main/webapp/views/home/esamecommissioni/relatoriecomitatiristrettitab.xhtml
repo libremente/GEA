@@ -115,24 +115,24 @@
 
 
 			<b> <h:outputLabel for="datapresaincarico"
-					value="Data presa in carico: " />
-			</b>
+					value="Data presa in carico: " /> </b>
 		</p:column>
-		<p:column><div id="presaInCarico">
-			<p:calendar size="10" locale="it" id="datapresaincarico"
-				update="comitatiMsg"
-				value="#{esameCommissioniController.dataPresaInCarico}">
-				<p:ajax event="dateSelect"
-					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
-			</p:calendar>
-					&nbsp;
-					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" id="presaincaricoesamecommissione"
-				value="Presa in Carico"
-				update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg, :informationForm:informationBar"
-				actionListener="#{esameCommissioniController.presaInCarico}"
-				oncomplete="unblockDiv()" />
+		<p:column>
+			<div id="presaInCarico">
+				<p:calendar size="10" locale="it" id="datapresaincarico"
+					update="comitatiMsg"
+					value="#{esameCommissioniController.dataPresaInCarico}">
+					<p:ajax event="dateSelect"
+						listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
+				</p:calendar>
+				&nbsp;
+				<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+					id="presaincaricoesamecommissione" value="Presa in Carico"
+					update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg, :informationForm:informationBar"
+					actionListener="#{esameCommissioniController.presaInCarico}"
+					oncomplete="unblockDiv()" />
 
-		</div>
+			</div>
 		</p:column>
 		<p:column></p:column>
 		<p:column></p:column>
@@ -141,14 +141,16 @@
 	<p:row>
 		<p:column>
 			<h:outputText style="font-weight: bold;" value="Materia: " />
-			
+
 		</p:column>
-		<p:column><div id="materiaDiv">
-			<p:inputText id="inputmateria"
-				value="#{esameCommissioniController.materia}">
-				<p:ajax event="change"
-					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
-			</p:inputText></div>
+		<p:column>
+			<div id="materiaDiv">
+				<p:inputText id="inputmateria"
+					value="#{esameCommissioniController.materia}">
+					<p:ajax event="change"
+						listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
+				</p:inputText>
+			</div>
 		</p:column>
 	</p:row>
 	<p:row rendered="#{navigationBean.isSessionAttoPAR()}">
@@ -156,12 +158,14 @@
 			<b> <h:outputLabel for="datascadenza" value="Data scadenza: " />
 			</b>
 		</p:column>
-		<p:column><div id="dataScadenza">
-			<p:calendar size="10" locale="it" id="datascadenza"
-				value="#{esameCommissioniController.dataScadenza}">
-				<p:ajax event="dateSelect"
-					listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
-			</p:calendar></div>
+		<p:column>
+			<div id="dataScadenza">
+				<p:calendar size="10" locale="it" id="datascadenza"
+					value="#{esameCommissioniController.dataScadenza}">
+					<p:ajax event="dateSelect"
+						listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
+				</p:calendar>
+			</div>
 		</p:column>
 	</p:row>
 </p:panelGrid>
@@ -285,7 +289,8 @@
 			</p:row>
 			<p:row>
 				<p:column>
-					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Conferma Relatori"
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+						value="Conferma Relatori"
 						action="#{esameCommissioniController.confermaRelatori}"
 						update="comitatiMsg, :informationForm:informationBar" />
 				</p:column>
@@ -295,7 +300,8 @@
 		</p:panelGrid>
 
 	</p:fieldset>
-	<p:fieldset rendered="#{!navigationBean.isCommissioneConsultiva()}" legend="Gestione Comitati Ristretti" collapsed="false"
+	<p:fieldset rendered="#{!navigationBean.isCommissioneConsultiva()}"
+		legend="Gestione Comitati Ristretti" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable"
 			id="gestionecomitatiristrettipanel">
@@ -314,8 +320,7 @@
 				<p:column>
 
 					<b> <h:outputLabel for="dataistituzionecomitato"
-							value="Data istituzione Comitato: " />
-					</b>
+							value="Data istituzione Comitato: " /> </b>
 				</p:column>
 				<p:column>
 					<p>
@@ -548,8 +553,7 @@
 			<p:row>
 				<p:column>
 					<b> <h:outputLabel for="datafinelavori"
-							value="Data Fine Lavori: " />
-					</b>
+							value="Data Fine Lavori: " /> </b>
 				</p:column>
 				<p:column>
 					<p>
@@ -602,7 +606,7 @@
 		location.reload();
 	};
 	
-if ( #{navigationBean.esameCommissioniDisabled()}==true) {
+if ( #{navigationBean.esameCommissioniDisabled()}==true || #{esameCommissioniController.readonly}==true) {
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
 	$('#presaInCarico').block({ message: null } );
 	$('#materiaDiv').block({ message: null } );

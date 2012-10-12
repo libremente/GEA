@@ -44,6 +44,7 @@ public class EsameAulaController {
 	
 	private Atto atto = new Atto();
 	private Passaggio passaggio;
+	private String passaggioSelected;
 	private Date dataPresaInCarico;
 	private String relazioneScritta;
 	private String esitoVotazione;
@@ -60,7 +61,9 @@ public class EsameAulaController {
 	private List<Allegato> emendamentiList = new ArrayList<Allegato>();
 	private List<Allegato> allegatiList = new ArrayList<Allegato>();
 	private String emendamentoToDelete;
-
+    private boolean readonly = false; 
+	
+	
 	private int numEmendPresentatiMaggior;
 	private int numEmendPresentatiMinor;
 	private int numEmendPresentatiGiunta;
@@ -125,7 +128,7 @@ public class EsameAulaController {
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
-		setPassaggio(attoBean.getLastPassaggio());
+		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
 	}
 
 	
@@ -133,12 +136,25 @@ public class EsameAulaController {
 
 		Passaggio passaggioSelected = null;
 
+		int conta = 0;
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
 
-			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggio.getNome())) {
+			conta++;
+			
+			if (passaggioRec.getNome().equalsIgnoreCase(
+					this.passaggioSelected)) {
 
 				passaggioSelected = passaggioRec;
+				break;
 			}
+			
+			
+		}
+
+		
+		if(conta < this.atto.getPassaggi().size()){
+			
+			setReadonly(true);
 		}
 
 		// Ricavo le commisioni dall'ultimo passaggio
@@ -1256,6 +1272,26 @@ public class EsameAulaController {
 
 	public void setPassaggio(Passaggio passaggio) {
 		this.passaggio = passaggio;
+	}
+
+
+	public String getPassaggioSelected() {
+		return passaggioSelected;
+	}
+
+
+	public void setPassaggioSelected(String passaggioSelected) {
+		this.passaggioSelected = passaggioSelected;
+	}
+
+
+	public boolean isReadonly() {
+		return readonly;
+	}
+
+
+	public void setReadonly(boolean readonly) {
+		this.readonly = readonly;
 	}
 
 

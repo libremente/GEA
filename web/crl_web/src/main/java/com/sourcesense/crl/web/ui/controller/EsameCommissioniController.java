@@ -63,12 +63,15 @@ public class EsameCommissioniController {
 
 	private Atto atto = new Atto();
 
+	private boolean readonly = false;
+	
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 	// Commissione dell utente loggato
 	private Commissione commissioneUser = new Commissione();
 	// Passaggio selezionato
 	private Passaggio passaggio;
-
+	private String passaggioSelected;
+	
 	private Map<String, String> relatori = new HashMap<String, String>();
 	private Map<String, String> membriComitato = new HashMap<String, String>();
 
@@ -225,7 +228,7 @@ public class EsameCommissioniController {
 		}
 
 		setCommissioneUser(commTemp);
-		setPassaggio(attoBean.getLastPassaggio());
+		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
 		loadData(attoBean.getLastPassaggio(), attoBean);
 
 	}
@@ -234,15 +237,27 @@ public class EsameCommissioniController {
 
 		Passaggio passaggioSelected = null;
 
+		int conta = 0;
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
 
+			conta++;
+			
 			if (passaggioRec.getNome().equalsIgnoreCase(
-					this.passaggio.getNome())) {
+					this.passaggioSelected)) {
 
 				passaggioSelected = passaggioRec;
+				break;
 			}
+			
+			
 		}
 
+		
+		if(conta < this.atto.getPassaggi().size()){
+			
+			setReadonly(true);
+		}
+		
 		// Ricavo le commisioni dall'ultimo passaggio
 		setCommissioniList(Clonator.cloneList(passaggioSelected
 				.getCommissioni()));
@@ -2570,6 +2585,24 @@ public class EsameCommissioniController {
 	public void setStatoCommitStralci(String statoCommitStralci) {
 		this.statoCommitStralci = statoCommitStralci;
 	}
+
+	public String getPassaggioSelected() {
+		return passaggioSelected;
+	}
+
+	public void setPassaggioSelected(String passaggioSelected) {
+		this.passaggioSelected = passaggioSelected;
+	}
+
+	public boolean isReadonly() {
+		return readonly;
+	}
+
+	public void setReadonly(boolean readonly) {
+		this.readonly = readonly;
+	}
+	
+	
 
 	
 

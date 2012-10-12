@@ -324,7 +324,7 @@ public class AttoBean implements Serializable {
 
 				if (allegato.getTipoAllegato().equals(
 						Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO)) {
-					
+
 					returnList.add(allegato);
 				}
 
@@ -338,13 +338,13 @@ public class AttoBean implements Serializable {
 		for (Allegato allegato : getLastPassaggio().getAula()
 				.getAllegatiEsameAula()) {
 
-			
 			if (allegato.getTipoAllegato().equals(
 					Allegato.TESTO_ESAME_AULA_EMENDAMENTO)) {
-				getLastPassaggio().getAula().getEmendamentiEsameAula().add(allegato);
+				getLastPassaggio().getAula().getEmendamentiEsameAula()
+						.add(allegato);
 				returnList.add(allegato);
 			}
-			
+
 		}
 		return returnList;
 	}
@@ -354,13 +354,12 @@ public class AttoBean implements Serializable {
 		for (Allegato allegato : getLastPassaggio().getAula()
 				.getAllegatiEsameAula()) {
 
-			
 			if (allegato.getTipoAllegato().equals(
 					Allegato.TIPO_ESAME_AULA_ALLEGATO)) {
-				
+
 				returnList.add(allegato);
 			}
-			
+
 		}
 		return returnList;
 	}
@@ -388,6 +387,19 @@ public class AttoBean implements Serializable {
 			}
 		}
 		return returnList;
+	}
+
+	public List<String> getPassaggi() {
+
+		List<String> passaggi = new ArrayList<String>();
+
+		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
+             
+			passaggi.add(passaggioRec.getNome());
+		}
+		
+		return passaggi;
+
 	}
 
 	/* Services */

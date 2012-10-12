@@ -14,8 +14,8 @@
 
 
 	<p:selectOneMenu id="indicatorePassaggioCommissione" style="align: right" 
-	             value="#{esameAulaController.passaggio}" >
-	    <f:selectItems value="#{attoBean.atto.passaggi}"   itemValue="#{passaggio}" var="passaggio" itemLabel="#{passaggio.nome}"/>
+	             value="#{esameAulaController.passaggioSelected}" >
+	    <f:selectItems value="#{attoBean.getPassaggi()}"  />
 	    
 	    <p:ajax update="tabView" listener="#{esameAulaController.changePassaggio}" />  
 	</p:selectOneMenu>

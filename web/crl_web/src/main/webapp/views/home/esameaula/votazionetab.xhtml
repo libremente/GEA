@@ -353,7 +353,7 @@ function unblockDiv() {
     location.reload();
    };
    
-if ( #{navigationBean.esameAulaDisabled()}==true) {
+if ( #{navigationBean.esameAulaDisabled()}==true || #{esameAulaController.readonly}==true) {
    $.blockUI.defaults.overlayCSS.opacity = 0; 
    $('#presaInCaricoDiv').block({ message: null } );
    $('#DataPresaInCaricoDiv').block({ message: null } );
