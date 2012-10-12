@@ -216,6 +216,9 @@ if (! ("#{esameAulaController.dataPresaInCarico}").length) {
 	}, });
 	};
 
+	if ( #{esameAulaController.readonly}==true) {
+		   $.blockUI.defaults.overlayCSS.opacity = 0; 
+		   $('#blockedRinvioStralci').block({ message: null } );}
 
 </script>
 

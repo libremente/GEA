@@ -353,11 +353,18 @@ function unblockDiv() {
     location.reload();
    };
    
-if ( #{navigationBean.esameAulaDisabled()}==true || #{esameAulaController.readonly}==true) {
+if ( #{navigationBean.esameAulaDisabled()}==true) {
    $.blockUI.defaults.overlayCSS.opacity = 0; 
    $('#presaInCaricoDiv').block({ message: null } );
    $('#DataPresaInCaricoDiv').block({ message: null } );
    $('#relazioneScrittaDiv').block({ message: null } );}
+   
+if ( #{esameAulaController.readonly}==true) {
+	   $.blockUI.defaults.overlayCSS.opacity = 0; 
+	   $('#presaInCaricoDiv').block({ message: null } );
+	   $('#DataPresaInCaricoDiv').block({ message: null } );
+	   $('#relazioneScrittaDiv').block({ message: null } );
+	   $('#blockedVotazione').block({ message: null } );}
 </script>
 
 </html>

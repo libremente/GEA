@@ -267,13 +267,21 @@
 
 				</p:column>
 			</p:row>
+			<p:row>
+
+			<p:column colspan="2">
+				<p:commandButton ajax="false" update="insertattopanel"
+					id="insertattobtn" value="Salva"
+					action="#{inserisciMISController.inserisciAtto}" />
+			</p:column>
+		</p:row>
 
 
 		</p:panelGrid>
 
 
 	</p:fieldset>
-
+<div id="blockedUploadMis">
 	<p:fieldset legend="Allegati" collapsed="false" toggleable="true"
 		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="allegatopanel">
@@ -282,10 +290,10 @@
 				<p:column>
 
 
-					<p:commandButton value="Carica Allegato"
+					 <p:commandButton value="Carica Allegato"
 						oncomplete="uploadAllegatoAttributesDialog.show()">
 					</p:commandButton>
-
+					
 				</p:column>
 			</p:row>
 			<p:row>
@@ -342,10 +350,34 @@
 					</h:dataTable>
 				</p:column>
 			</p:row>
+			
 
 		</p:panelGrid>
 	</p:fieldset>
-
+</div>
 
 </h:form>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+if (("#{attoBean.getAtto()}").length) {
+	$('#blockedUploadMis').block({ message: 'Atto non ancora creato.', css: {
+		width:		'350px',
+		top:		'10px',
+		left:		'',
+		right:		'10px',
+		border:		'none',
+		padding:	'5px',
+		opacity:	0.6,
+		cursor:		'default',
+		color:		'#fff',
+		backgroundColor: '#000',
+		'-webkit-border-radius':'10px',
+		'-moz-border-radius':	'10px',
+		'border-radius':		'10px'
+	}, });
+
+	
+};
+
+</script>
 </html>

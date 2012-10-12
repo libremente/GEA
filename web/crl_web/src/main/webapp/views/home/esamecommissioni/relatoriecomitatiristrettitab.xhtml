@@ -606,11 +606,18 @@
 		location.reload();
 	};
 	
-if ( #{navigationBean.esameCommissioniDisabled()}==true || #{esameCommissioniController.readonly}==true) {
+if ( #{navigationBean.esameCommissioniDisabled()}==true) {
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
 	$('#presaInCarico').block({ message: null } );
 	$('#materiaDiv').block({ message: null } );
 	$('#dataScadenza').block({ message: null } );}
+	
+if ( #{esameCommissioniController.readonly}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#presaInCarico').block({ message: null } );
+	$('#materiaDiv').block({ message: null } );
+	$('#dataScadenza').block({ message: null } );
+	$('#blockedRelatori').block({ message: null } );}
 </script>
 
 </html>

@@ -391,5 +391,9 @@
 						});
 
 	};
+	
+	if ( #{esameCommissioniController.readonly}==true) {
+		$.blockUI.defaults.overlayCSS.opacity = 0; 
+		$('#blockedVotazione').block({ message: null } );}
 </script>
 </html>

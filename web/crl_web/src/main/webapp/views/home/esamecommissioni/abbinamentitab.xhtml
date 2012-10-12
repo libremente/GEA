@@ -808,6 +808,10 @@ $('#blockedAbbinamenti').block({ message: 'Pagina bloccata!<br />Prendere in car
 
 };
 
+if ( #{esameCommissioniController.readonly}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedAbbinamenti').block({ message: null } );}
+
 </script>
 <!-- -->
 </html>

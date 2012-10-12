@@ -154,6 +154,10 @@
 							},
 						});
 	};
+	
+	if ( #{esameCommissioniController.readonly}==true) {
+		$.blockUI.defaults.overlayCSS.opacity = 0; 
+		$('#blockedRinvioStralci').block({ message: null } );}
 </script>
 
 

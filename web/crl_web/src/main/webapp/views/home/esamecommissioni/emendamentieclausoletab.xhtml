@@ -537,5 +537,8 @@ $('#blockedEmendamenti').block({ message: 'Pagina bloccata!<br />Prendere in car
 
 };
 
+if ( #{esameCommissioniController.readonly}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedEmendamenti').block({ message: null } );}
 </script>
 </html>

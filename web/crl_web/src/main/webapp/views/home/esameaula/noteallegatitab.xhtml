@@ -351,5 +351,8 @@ $('#blockedNote').block({ message: 'Pagina bloccata!<br />Prendere in carico per
 
 };
 
+if ( #{esameAulaController.readonly}==true) {
+	   $.blockUI.defaults.overlayCSS.opacity = 0; 
+	   $('#blockedNote').block({ message: null } );}
 </script>
 </html>
