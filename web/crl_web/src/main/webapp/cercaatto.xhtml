@@ -13,6 +13,13 @@
 
 <h:form id="insertattoform">
 
+<p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog> 
+
 
 
 	<p:panel style="text-align:left;margin-bottom:5px;font-size:12px"
