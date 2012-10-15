@@ -21,6 +21,8 @@ import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoEAC;
+import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.ConsultazioneParere;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
@@ -69,6 +71,98 @@ public class AttoService {
 			//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
 
 			attoRet = objectMapper.readValue(responseMsg, Atto.class);
+			atto.setId(attoRet.getId());
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return atto;
+	}
+	
+	public AttoMIS createMIS(String url, AttoMIS atto) {
+
+		AttoMIS attoRet = null;
+
+		WebResource webResource = client.resource(url);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+				false);
+		try {
+			String json = objectMapper.writeValueAsString(atto);
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+
+			if (response.getStatus() == 500) {
+
+				atto.setError(response.getEntity(String.class));
+
+			} else if (response.getStatus() != 200) {
+
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			attoRet = objectMapper.readValue(responseMsg, AttoMIS.class);
+			atto.setId(attoRet.getId());
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return atto;
+	}
+	
+	public AttoEAC createEAC(String url, AttoEAC atto) {
+
+		AttoEAC attoRet = null;
+
+		WebResource webResource = client.resource(url);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+				false);
+		try {
+			String json = objectMapper.writeValueAsString(atto);
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+
+			if (response.getStatus() == 500) {
+
+				atto.setError(response.getEntity(String.class));
+
+			} else if (response.getStatus() != 200) {
+
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
+
+			attoRet = objectMapper.readValue(responseMsg, AttoEAC.class);
 			atto.setId(attoRet.getId());
 
 		} catch (JsonMappingException e) {

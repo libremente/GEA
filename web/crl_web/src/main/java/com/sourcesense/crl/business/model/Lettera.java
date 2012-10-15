@@ -18,9 +18,12 @@ import org.springframework.beans.factory.annotation.Configurable;
 public class Lettera implements Cloneable
 {
 	/**
-	 * 
+	 *"idAtto" : ""+idAtto+"",
+            "tipoTemplate" : ""+tipoTemplate+"" 
 	 */
 
+	
+	
 	public Object clone() {
 		try {
 			return super.clone();
@@ -30,4 +33,31 @@ public class Lettera implements Cloneable
 		}
 	}
 
+	
+	String idAtto;
+    String tipoTemplate;
+
+	public String getIdAtto() {
+		return idAtto;
+	}
+
+
+	public void setIdAtto(String idAtto) {
+		this.idAtto = idAtto;
+	}
+
+
+	public String getTipoTemplate() {
+		return tipoTemplate;
+	}
+
+
+	public void setTipoTemplate(String tipoTemplate) {
+		this.tipoTemplate = tipoTemplate;
+	}
+	
+	
+	
+	
+	
 }

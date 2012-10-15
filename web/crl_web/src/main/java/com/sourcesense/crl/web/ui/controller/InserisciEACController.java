@@ -85,24 +85,15 @@ public class InserisciEACController {
 	}
 	
     
-	public String inserisciAtto() {
+	public void inserisciAtto() {
 
-		atto.setStato("EAC");
+		atto.setTipoAtto("EAC");
 		
-		Atto attoRet = attoServiceManager.persist(atto);
+		AttoEAC attoRet = attoServiceManager.persistEAC(atto);
 		
 		if (attoRet!=null && attoRet.getError()==null) {
 
-			FacesContext context = FacesContext.getCurrentInstance();
-			AttoBean attoBean = (AttoBean) context
-					.getApplication()
-					.getExpressionFactory()
-					.createValueExpression(context.getELContext(),
-							"#{attoBean}", AttoBean.class)
-					.getValue(context.getELContext());
-
-			attoBean.setAtto(attoRet);
-			return "pretty:Riepilogo_Atto";
+			 this.atto=attoRet;
 
 		} else if (attoRet!=null && attoRet.getError()!=null && !attoRet.getError().equals("")) {
 			
@@ -110,12 +101,7 @@ public class InserisciEACController {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));
-			return null;
 			
-		}else {
-
-		    return null;
-
 		}
 	}
 	

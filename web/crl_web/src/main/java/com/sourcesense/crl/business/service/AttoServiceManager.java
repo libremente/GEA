@@ -12,6 +12,8 @@ package com.sourcesense.crl.business.service;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoEAC;
+import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.ConsultazioneParere;
@@ -114,6 +116,19 @@ public class AttoServiceManager implements ServiceManager {
 
 		return attoService.uploadAllegatoConsultazioni(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PARERE);
+	}
+	
+	
+	public AttoMIS persistMIS(Object object) {
+		return attoService.createMIS(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_new_atto", null), (AttoMIS) object);
+
+	}
+	
+	public AttoEAC persistEAC(Object object) {
+		return attoService.createEAC(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_new_atto", null), (AttoEAC) object);
+
 	}
 	
 
