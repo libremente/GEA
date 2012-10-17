@@ -3,7 +3,7 @@
 
 <beans>
 
-	<bean id="letteraBaseCommand" class="com.sourcesense.crl.webscript.LetteraBaseCommand" abstract="true"> 
+	<bean id="letteraBaseCommand" class="com.sourcesense.crl.webscript.template.LetteraBaseCommand" abstract="true"> 
 		<property name="searchService">
 			<ref bean="SearchService" />
 		</property>
@@ -15,10 +15,10 @@
 	    </property>
 	</bean> 
 	
-	<bean id="letteraCommissioneSoloReferenteCommand" class="com.sourcesense.crl.webscript.LetteraCommissioneSoloReferenteCommand" parent="letteraBaseCommand" />
+	<bean id="letteraGenericaCommand" class="com.sourcesense.crl.webscript.template.LetteraGenericaCommand" parent="letteraBaseCommand" />
+	
 
-
-	<bean id="webscript.crl.gestioneatti.template.lettera.post" class="com.sourcesense.crl.webscript.LetteraWebScript" parent="webscript"> 
+	<bean id="webscript.crl.gestioneatti.template.lettera.post" class="com.sourcesense.crl.webscript.template.LetteraWebScript" parent="webscript"> 
 		<property name="searchService">
 			<ref bean="SearchService" />
 		</property>
@@ -30,7 +30,25 @@
 	    </property>
 	    <property name="lettereCommandMap">
             <map>
-                <entry key="{http://www.regione.lombardia.it/content/model/atti/1.0}letteraCommissioneSoloReferente" value-ref="letteraCommissioneSoloReferenteCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPopolareServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRitiroFirmaServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIntegrazioneCPOServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRettificaAssegnazioneServComm" value-ref="letteraGenericaCommand"/>
+				<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraAggiuntaFirmaServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRitiroServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteConsultivaServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPresidenteGiuntaServComm" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" value-ref="letteraGenericaCommand"/>
+            
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePARCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDACommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDLCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePLPCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneRELCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneRISCommissioni" value-ref="letteraGenericaCommand"/>
+
             </map>
         </property>
 	    

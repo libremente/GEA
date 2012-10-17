@@ -15,6 +15,23 @@
 			<type name="crlatti:collegamento"/>
 			<type name="crlatti:membroComitatoRistretto" />
 			<type name="crlatti:sedutaODG" />
+			<type name="crltemplate:letteraIniziativaPopolareServComm" />
+			<type name="crltemplate:letteraRitiroFirmaServComm" />
+			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
+			<type name="crltemplate:letteraRettificaAssegnazioneServComm" />
+			<type name="crltemplate:letteraAggiuntaFirmaServComm" />
+			<type name="crltemplate:letteraRitiroServComm" />		
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
+  			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
+   			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
+   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
+   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
+   			<type name="crltemplate:letteraTrasmissionePARCommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePDACommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePDLCommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePLPCommissioni" />
+   			<type name="crltemplate:letteraTrasmissioneRELCommissioni" />
+   			<type name="crltemplate:letteraTrasmissioneRISCommissioni" />
 		</content-types>
 	</config>
 
@@ -32,6 +49,24 @@
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
 			<type name="crlatti:sedutaODG" />
+			<type name="crltemplate:letteraIniziativaPopolareServComm" />
+			<type name="crltemplate:letteraRitiroFirmaServComm" />
+			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
+			<type name="crltemplate:letteraRettificaAssegnazioneServComm" />
+			<type name="crltemplate:letteraAggiuntaFirmaServComm" />
+			<type name="crltemplate:letteraRitiroServComm" />		
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
+  			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
+   			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
+   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
+   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
+   			<type name="crltemplate:letteraTrasmissionePARCommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePDACommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePDLCommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePLPCommissioni" />
+   			<type name="crltemplate:letteraTrasmissioneRELCommissioni" />
+   			<type name="crltemplate:letteraTrasmissioneRISCommissioni" />
+   			
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
@@ -45,6 +80,23 @@
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
 			<type name="crlatti:sedutaODG" />
+			<type name="crltemplate:letteraIniziativaPopolareServComm" />
+			<type name="crltemplate:letteraRitiroFirmaServComm" />
+			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
+			<type name="crltemplate:letteraRettificaAssegnazioneServComm" />
+			<type name="crltemplate:letteraAggiuntaFirmaServComm" />
+			<type name="crltemplate:letteraRitiroServComm" />		
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
+  			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
+   			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
+   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
+   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
+   			<type name="crltemplate:letteraTrasmissionePARCommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePDACommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePDLCommissioni" />
+   			<type name="crltemplate:letteraTrasmissionePLPCommissioni" />
+   			<type name="crltemplate:letteraTrasmissioneRELCommissioni" />
+   			<type name="crltemplate:letteraTrasmissioneRISCommissioni" />
 		</specialise-types>
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
@@ -568,7 +620,110 @@
 		</property-sheet>
 	</config>
 	
+	<config evaluator="node-type" condition="crltemplate:letteraIniziativaPopolareServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
 	
+	<config evaluator="node-type" condition="crltemplate:letteraRitiroFirmaServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraIntegrazioneCPOServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraRettificaAssegnazioneServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraAggiuntaFirmaServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraRitiroServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePARCommissioni">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDACommissioni">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDLCommissioni">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePLPCommissioni">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRELCommissioni">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRISCommissioni">
+		<property-sheet>
+			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+		</property-sheet>
+	</config>
 	
 	
 	<config evaluator="string-compare" condition="Advanced Search">

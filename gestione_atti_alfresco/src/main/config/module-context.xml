@@ -5,4 +5,5 @@
 	<import resource="classpath:alfresco/module/${artifactId}/context/service-context.xml" />
 	<import resource="classpath:alfresco/module/${artifactId}/context/job-script-context.xml" />
 	<import resource="classpath:alfresco/module/${artifactId}/context/web-script-context.xml" />
+	<import resource="classpath:alfresco/module/${artifactId}/context/script-context.xml" />
 </beans>

@@ -39,6 +39,7 @@
         <property name="models">
             <list>
                 <value>alfresco/module/crl_gestione_atti_alfresco/model/crlAttiModel.xml</value>
+                <value>alfresco/module/crl_gestione_atti_alfresco/model/crlTemplateModel.xml</value>
             </list>
         </property>
     </bean>

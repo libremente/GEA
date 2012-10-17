@@ -3,6 +3,6 @@ var attiResults = search.luceneSearch(luceneQueryAtti);
 model.atti = attiResults;
 
 
-var luceneQueryLettere = "TYPE:\"crlatti:lettera\"";
+var luceneQueryLettere = "TYPE:\"crltemplate:lettera\"";
 var lettereResults = search.luceneSearch(luceneQueryLettere);
 model.lettere = lettereResults;

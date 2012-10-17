@@ -58,7 +58,17 @@
 									"descrizione":"Commissione statica",
 									"dataProposta":""+dataProposta+"",
 									"dataAssegnazione":""+dataAssegnazione+"",
-									"ruolo" : ""+ruolo+"",
+									"ruolo" : "Consultiva",
+									"stato" : ""+stato+"",
+									"dataAnnullo":""+dataAnnullo+""
+								}
+							},
+							{
+								"commissione":{
+									"descrizione":"Commissione pippo",
+									"dataProposta":""+dataProposta+"",
+									"dataAssegnazione":""+dataAssegnazione+"",
+									"ruolo" : "Consultiva",
 									"stato" : ""+stato+"",
 									"dataAnnullo":""+dataAnnullo+""
 								}

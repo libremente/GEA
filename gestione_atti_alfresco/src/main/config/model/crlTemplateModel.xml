@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<model name="crlatti:gestioneAttiModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+<model name="crltemplate:gestioneTemplateModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
 
@@ -31,11 +31,97 @@
 			</properties>
 		</type>
 		
-		<type name="crltemplate:letteraCommissioneSoloReferente">
-			<title>Lettera Commissione solo Referente</title>
+		
+		<!-- Servizio Commissioni -->
+		
+		<type name="crltemplate:letteraIniziativaPopolareServComm">
+			<title>Lettera Iniziativa Popolare</title>
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
+		<type name="crltemplate:letteraRitiroFirmaServComm">
+			<title>Lettera Ritiro Firma</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIntegrazioneCPOServComm">
+			<title>Lettera Integrazione CPO</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRettificaAssegnazioneServComm">
+			<title>Lettera Rettifica Assegnazione</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAggiuntaFirmaServComm">
+			<title>Lettera Aggiunta Firma</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRitiroServComm">
+			<title>Lettera Ritiro</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
+			<title>Lettera Trasmissione Commissione Referente</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm">
+			<title>Lettera Trasmissione Commissione Referente e Consultiva</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm">
+			<title>Lettera Trasmissione Commissione Referente, Consultiva e Organismo Statutario</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm">
+			<title>Lettera Inziativa Presidente Giunta</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm">
+			<title>Lettera Iniziativa Presidente Giunta: fusione e distacchi di comuni</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		
+		<!-- Commissioni -->
+		
+		<type name="crltemplate:letteraTrasmissionePARCommissioni">
+			<title>Lettera di Trasmissione PAR</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDACommissioni">
+			<title>Lettera di Trasmissione PDA</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDLCommissioni">
+			<title>Lettera di Trasmissione PDL</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePLPCommissioni">
+			<title>Lettera di Trasmissione PLP</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneRELCommissioni">
+			<title>Lettera di Trasmissione REL</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneRISCommissioni">
+			<title>Lettera di Trasmissione RIS</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+
 	</types>
 	
 	<aspects>
