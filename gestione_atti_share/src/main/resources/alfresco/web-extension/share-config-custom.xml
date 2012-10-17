@@ -98,7 +98,7 @@
             <aspect name="cm:geographic" />
             <aspect name="exif:exif" />
             <aspect name="crlatti:protocollato" />
-            <aspect name="crlatti:importatoDaProtocollo"/>
+           	<aspect name="crlatti:importatoDaProtocollo"/>
          </visible>
 
          <!-- Aspects that a user can add. Same as "visible" if left empty -->
@@ -134,6 +134,24 @@
 			<subtype name="crlatti:membroComitatoRistretto" />
 			<subtype name="crlatti:testoComitatoRistretto"/>
 			<subtype name="crlatti:collegamento" />
+			<subtype name="crltemplate:letteraIniziativaPopolareServComm" />
+			<subtype name="crltemplate:letteraRitiroFirmaServComm" />
+			<subtype name="crltemplate:letteraIntegrazioneCPOServComm" />
+			<subtype name="crltemplate:letteraRettificaAssegnazioneServComm" />
+			<subtype name="crltemplate:letteraAggiuntaFirmaServComm" />
+			<subtype name="crltemplate:letteraRitiroServComm" />		
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
+  			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
+   			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
+   			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
+   			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />		
+   			<subtype name="crltemplate:letteraTrasmissionePARCommissioni" />
+   			<subtype name="crltemplate:letteraTrasmissionePDACommissioni" />
+   			<subtype name="crltemplate:letteraTrasmissionePDLCommissioni" />
+   			<subtype name="crltemplate:letteraTrasmissionePLPCommissioni" />
+   			<subtype name="crltemplate:letteraTrasmissioneRELCommissioni" />
+   			<subtype name="crltemplate:letteraTrasmissioneRISCommissioni" />
+   			
          </type>
 
          <type name="cm:folder">
@@ -910,6 +928,178 @@
    	</forms>
    </config>
 	
+   <config evaluator="node-type" condition="crltemplate:letteraIniziativaPopolareServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraRitiroFirmaServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraIntegrazioneCPOServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraRettificaAssegnazioneServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraAggiuntaFirmaServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraRitiroServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePARCommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDACommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDLCommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePLPCommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRELCommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRISCommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   
    
    <config evaluator="string-compare" condition="AdvancedSearch" replace="true">
       <advanced-search>
