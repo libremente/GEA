@@ -752,6 +752,13 @@
 		         <show id="crlatti:dataAnnulloCommissione" />
 		         <show id="crlatti:ruoloCommissione" />
 		         <show id="crlatti:statoCommissione" />
+		         <show id="crlatti:dataSedutaStralcioCommissione" />
+				 <show id="crlatti:dataStralcioCommissione" />
+				 <show id="crlatti:dataIniziativaStralcioCommissione" />
+				 <show id="crlatti:articoliCommissione" />
+				 <show id="crlatti:noteStralcioCommissione" />
+				 <show id="crlatti:dataStralcioCommissione" />
+				 <show id="crlatti:quorumEsameCommissione" />
 		         
 		        <show id="crlatti:numEmendPresentatiMaggiorEsame" />
 				<show id="crlatti:numEmendPresentatiMinorEsame" />
