@@ -35,7 +35,7 @@
 				"id": ""+id+"",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"aula" : 
 								{
@@ -57,8 +57,7 @@
 											}
 										]	
 								}
-							
-						}
+						
 					}
 				
 				]

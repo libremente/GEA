@@ -36,7 +36,7 @@
 				"stato": "fine lavori comitato",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"commissioni": [
 								{
@@ -54,7 +54,7 @@
 									
 								}
 							]
-						}
+					
 					}
 				
 				]

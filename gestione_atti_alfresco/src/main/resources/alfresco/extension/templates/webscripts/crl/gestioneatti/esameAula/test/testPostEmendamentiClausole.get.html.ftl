@@ -52,7 +52,7 @@
 				"stato": "emendamenti aula",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"aula":
 									{
@@ -76,7 +76,7 @@
 										
 									}
 							
-						}
+						
 					}
 				]
 		

@@ -13,7 +13,7 @@
 				document.getElementById("myDiv").innerHTML = "status: "+xmlhttp.status;
 			}
 		}
-		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/esamecommissioni/trasmissione?alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/esamecommissioni/stralcio?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(atto);
 	}
@@ -25,11 +25,15 @@
 		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
 		var commissione = currentForm.commissione.value;
 		var passaggio = currentForm.passaggio.value;
-		var passaggioDirettoInAula = currentForm.passaggioDirettoInAula.value;
-		var dataRichiestaIscrizioneAula = currentForm.dataRichiestaIscrizioneAula.value;
-		var dataTrasmissione = currentForm.dataTrasmissione.value;
-	
 		
+		var dataSedutaStralcio = currentForm.dataSedutaStralcio.value;
+		var dataStralcio = currentForm.dataStralcio.value;
+		var dataIniziativaStralcio = currentForm.dataIniziativaStralcio.value;
+		var articoli = currentForm.articoli.value;
+		var noteStralcio = currentForm.noteStralcio.value;
+		var quorumStralcio = currentForm.quorumStralcio.value;
+		
+
 		var attoCustom = {
 			"target":{
 				"commissione": ""+commissione+"",
@@ -45,18 +49,18 @@
 							"commissioni" : [
 								{
 							 			"descrizione": ""+commissione+"",
-							 			"passaggioDirettoInAula": ""+passaggioDirettoInAula+"",
-							 			"dataRichiestaIscrizioneAula": ""+dataRichiestaIscrizioneAula+"",
-										"dataTrasmissione": ""+dataTrasmissione+"",
+							 			"dataSedutaStralcio": ""+dataSedutaStralcio+"",
+							 			"dataStralcio": ""+dataStralcio+"",
+										"dataIniziativaStralcio": ""+dataIniziativaStralcio+"",
+										"articoli": ""+articoli+"",
+							 			"noteStralcio": ""+noteStralcio+"",
+										"quorumStralcio": ""+quorumStralcio+"",
 										"stato": "trasmissione",
 										"ruolo": "Referente"
 									
 								},
 								{
 							 			"descrizione": "commissioneStaticaTest",
-										"passaggioDirettoInAula": "true",
-							 			"dataRichiestaIscrizioneAula": "2012-09-09",
-										"dataTrasmissione": "2012-09-09",
 										"stato": "trasmissione",
 										"ruolo": "Consultiva"
 									
@@ -109,26 +113,42 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Data Richiesta Iscrizione Aula</td>
+			<td>Data Seduta Stralcio</td>
 			<td>
-				<input type="text" name="dataRichiestaIscrizioneAula"/>
+				<input type="text" name="dataSedutaStralcio"/>
 			</td>
 		</tr>
 		<tr>
-			<td>Data trasmissione</td>
+			<td>Data Stralcio</td>
 			<td>
-				<input type="text" name="dataTrasmissione"/>
+				<input type="text" name="dataStralcio"/>
 			</td>
 		</tr>
 		<tr>
-			<td>Passaggio Diretto In Aula</td>
+			<td>Data Inziativa Stralcio</td>
 			<td>
-				<select name="passaggioDirettoInAula">
-					<option value="true">SI</option>
-					<option value="false">NO</option>
-				</select>
+				<input type="text" name="dataIniziativaStralcio"/>
 			</td>
 		</tr>
+		<tr>
+			<td>Articoli</td>
+			<td>
+				<input type="text" name="articoli"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Note Stralcio</td>
+			<td>
+				<input type="text" name="noteStralcio"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Quorum Strlacio</td>
+			<td>
+				<input type="text" name="quorumStralcio"/>
+			</td>
+		</tr>
+		
 	
 		<tr>
 			<td></td>

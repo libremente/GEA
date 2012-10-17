@@ -58,7 +58,7 @@
 				"stato": "emendamenti e clausole",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"commissioni": [
 								{
@@ -94,7 +94,7 @@
 								}
 							]
 							
-						}
+						
 					}
 				]
 		

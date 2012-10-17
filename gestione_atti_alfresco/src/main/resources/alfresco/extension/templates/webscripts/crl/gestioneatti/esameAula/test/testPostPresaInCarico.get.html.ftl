@@ -39,7 +39,7 @@
 				"stato": "Votato in aula",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"aula" : 
 								{
@@ -52,7 +52,7 @@
 						 			"noteVotazione": ""+noteVotazione+""
 						 			
 								}
-						}
+						
 					}
 				]
 				 

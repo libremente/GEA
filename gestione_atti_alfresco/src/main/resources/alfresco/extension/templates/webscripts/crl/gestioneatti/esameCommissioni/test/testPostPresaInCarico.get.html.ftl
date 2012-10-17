@@ -37,7 +37,7 @@
 				"stato": "Preso in carico da Commissione",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"commissioni" : [
 								{
@@ -57,7 +57,7 @@
 									"stato": "In carico"
 								}
 							]
-						}
+						
 					}
 				]
 				 

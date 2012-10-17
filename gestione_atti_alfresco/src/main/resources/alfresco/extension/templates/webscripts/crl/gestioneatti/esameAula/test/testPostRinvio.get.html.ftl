@@ -37,7 +37,7 @@
 				"stato": "Preso in carico da Aula",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"aula" : 
 								{
@@ -45,7 +45,7 @@
 						 			"dataTermineMassimo": ""+dataTermineMassimo+"",
 						 			"motivazioneRinvio": ""+motivazioneRinvio+""
 								}
-						}
+						
 					}
 				]
 				 

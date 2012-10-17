@@ -40,7 +40,7 @@
 				"stato": "nominato relatore",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"commissioni" : [
 								{
@@ -72,7 +72,7 @@
 								}
 				
 							]
-						}
+						
 					}
 				]	 
 			}

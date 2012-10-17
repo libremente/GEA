@@ -39,7 +39,7 @@
 				"stato": "continuazione referente",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"commissioni" : [
 								{
@@ -59,7 +59,7 @@
 									
 								}
 							]
-						}
+						
 					}
 				
 				]

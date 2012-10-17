@@ -38,7 +38,7 @@
 				"stato": "votazione comissione",
 				"passaggi": [
 					{
-						"passaggio": {
+						
 							"nome" : "Passaggio1",
 							"commissioni": [
 								{
@@ -61,7 +61,7 @@
 								}
 				
 							]
-						}
+						
 					}
 				]
 				 

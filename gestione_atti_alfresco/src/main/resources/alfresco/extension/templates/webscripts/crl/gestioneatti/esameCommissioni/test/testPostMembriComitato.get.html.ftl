@@ -44,7 +44,7 @@
 				"stato": "comitato ristretto",
 				"passaggi": [
 					{
-						"passaggio": {
+					
 							"nome" : "Passaggio1",
 							"commissioni": [
 								{
@@ -83,7 +83,7 @@
 									
 								}
 							]
-						}
+						
 					}
 				]
 				 
