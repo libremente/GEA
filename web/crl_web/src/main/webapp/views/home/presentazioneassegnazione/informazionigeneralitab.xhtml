@@ -8,7 +8,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:of="http://omnifaces.org/functions">
 
 
 <p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
@@ -158,7 +159,7 @@
 
 				<p:column>
 					<p:inputText readonly="true" id="datarepertorio"
-						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
+						value="#{of:formatDate(presentazioneAssegnazioneAttoController.dataRepertorio,'dd/MM/yyyy')}">
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
 					</p:inputText>
@@ -200,7 +201,7 @@
 				</p:column>
 
 				<p:column>
-					
+
 
 					 <p:calendar size="10" locale="it_IT" id="datainiziativa"
 					pattern="dd/MM/yyyy"
@@ -245,8 +246,10 @@
 				</p:column>
 
 				<p:column>
+
 					
 					 <p:calendar size="10" locale="it_IT" id="datadgr"
+
 					pattern="dd/MM/yyyy"
 					value="#{presentazioneAssegnazioneAttoController.dataDgr}">
 					
@@ -395,13 +398,13 @@
 							<p:column>
 								<p:calendar size="10" locale="it_IT" id="datafirma"
 									pattern="dd/MM/yyyy"
-									value="#{presentazioneAssegnazioneAttoController.dataFirma}" />
+									value="#{of:formatDate(presentazioneAssegnazioneAttoController.dataFirma,'dd/MM/yyyy')}" />
 							</p:column>
 
 							<p:column>
 								<p:calendar size="10" locale="it_IT" id="dataritiro"
 									pattern="dd/MM/yyyy"
-									value="#{presentazioneAssegnazioneAttoController.dataRitiro}" />
+									value="#{of:formatDate(presentazioneAssegnazioneAttoController.dataRitiro,'dd/MM/yyyy')}" />
 							</p:column>
 
 							<p:column>
