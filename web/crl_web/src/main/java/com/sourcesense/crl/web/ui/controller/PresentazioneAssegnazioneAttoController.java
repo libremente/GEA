@@ -453,6 +453,36 @@ public class PresentazioneAssegnazioneAttoController {
 
 			return null;
 		} else {
+			
+			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			attoServiceManager.salvaAmmissibilitaPresentazione(atto);
+
+			// TODO Service logic
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().setValutazioneAmmissibilita(
+					atto.getValutazioneAmmissibilita());
+			attoBean.getAtto().setDataRichiestaInformazioni(
+					atto.getDataRichiestaInformazioni());
+			attoBean.getAtto().setDataRicevimentoInformazioni(
+					atto.getDataRicevimentoInformazioni());
+			attoBean.getAtto().setAiutiStato(atto.isAiutiStato());
+			attoBean.getAtto().setNormaFinanziaria(atto.isNormaFinanziaria());
+			attoBean.getAtto().setRichiestaUrgenza(atto.isRichiestaUrgenza());
+			attoBean.getAtto().setVotazioneUrgenza(atto.isVotazioneUrgenza());
+			attoBean.getAtto().setDataVotazioneUrgenza(
+					atto.getDataVotazioneUrgenza());
+			attoBean.getAtto()
+					.setNoteAmmissibilita(atto.getNoteAmmissibilita());
+			attoBean.getAtto()
+			.setStato(atto.getStato());
+			
+			setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
+
+			context.addMessage(null, new FacesMessage(
+					"Ammissibilità salvata con successo", ""));
 
 			return "pretty:Chiusura_Iter";
 		}
