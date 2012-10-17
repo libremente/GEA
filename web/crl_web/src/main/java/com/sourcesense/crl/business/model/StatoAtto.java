@@ -41,6 +41,18 @@ public class StatoAtto {
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	  }
+	
+	public StatoAtto(){
+		
+		
+	}
+	
+	
+    public StatoAtto(String descrizione){
+		
+		this.descrizione=descrizione;
+	}
+	
 	public String getDescrizione() {
 		return descrizione;
 	}

@@ -24,8 +24,10 @@ import com.sourcesense.crl.business.service.VotazioneServiceManager;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.util.LazyAttoDataModel;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
+import com.sourcesense.crl.web.ui.beans.UserBean;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -88,6 +90,9 @@ public class SearchAttoController {
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
 
+	
+	private String listaLavoro;
+	
 	private LazyDataModel<Atto> lazyAttoModel;
 
 	private List<Atto> listAtti;
@@ -196,8 +201,78 @@ public class SearchAttoController {
 
 	public void searchAtti() {
 
-		setListAtti(attoServiceManager.searchAtti(atto));
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean"));
 
+		
+		//LAVORAZIONE
+        if("inlavorazione".equals(listaLavoro)){
+        	
+        	if(userBean.getUser().getSessionGroup().getNome().startsWith("Commissione")){
+        	
+        		
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_COMMISSIONE));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+        	    
+        	
+        	}else if("Aula".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        		
+        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+        	    
+        		
+        		
+        	}else if("ServizioCommissioni".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        		
+        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+        		
+        	}
+        
+        
+        //LAVORATI
+        }else if("lavorati".equals(listaLavoro)){
+        	
+        	if(userBean.getUser().getSessionGroup().getNome().startsWith("Commissione")){
+            	
+        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+        	
+        	}else if("Aula".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        		
+        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
+        		
+        	}else if("ServizioCommissioni".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        		
+        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_COMMISSIONE));
+         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+         	    
+        	}
+        	
+        }		
+		
+		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
+		
+		setListAtti(attoServiceManager.searchAtti(atto));
 		lazyAttoModel = new LazyAttoDataModel(listAtti);
 	}
 
@@ -794,4 +869,14 @@ public class SearchAttoController {
 		this.listAtti = listAtti;
 	}
 
+	public String getListaLavoro() {
+		return listaLavoro;
+	}
+
+	public void setListaLavoro(String listaLavoro) {
+		this.listaLavoro = listaLavoro;
+	}
+
+	
+	
 }

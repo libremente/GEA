@@ -13,12 +13,12 @@
 
 <h:form id="insertattoform">
 
-<p:ajaxStatus onstart="statusDialog.show();"
+	<p:ajaxStatus onstart="statusDialog.show();"
 		onsuccess="statusDialog.hide();" />
 	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
 		draggable="false" closable="false">
 		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
-	</p:dialog> 
+	</p:dialog>
 
 
 
@@ -518,35 +518,10 @@
 
 
 
-								<!-- 
-					 
-             <p:commandButton value="Ricerca Avanzata" update="listaAtti" id="btncercaatto_ricavnz"  actionListener="" />  
-              
-              <p:commandButton value="Reimposta" update="searchPanel" id="btncercaatto_reset" actionListener="" />
-              
--->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 							</p:column>
 
 
 						</p:row>
-
-
-						<!-- <h:outputText style="color: #BBBB">Qui Maschera di ricerca</h:outputText> -->
 
 					</p:panelGrid>
 				</p:column>
@@ -554,8 +529,21 @@
 		</p:panelGrid>
 
 
+		<p:panelGrid id="listaLavoroPanel" style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F">
 
+			<p:row>
+				<p:column>
+					<h:outputLabel for="listaLavoro" value="Lista di Lavoro : "  style="valign:middle"/>
+					<p:selectOneMenu id="listaLavoro" value="#{searchAttoController.listaLavoro}">
+						<f:selectItem itemLabel="Tutti gli Atti" itemValue="tutti" />
+						<f:selectItem itemLabel="In lavorazione" itemValue="inlavorazione" />
+						<f:selectItem itemLabel="Lavorati" itemValue="lavorati" />
+					</p:selectOneMenu>
 
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
 
 
 

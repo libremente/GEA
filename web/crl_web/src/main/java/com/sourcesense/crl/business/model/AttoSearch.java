@@ -1,6 +1,8 @@
 package com.sourcesense.crl.business.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
@@ -34,6 +36,8 @@ public class AttoSearch extends Atto {
 	private String commissioneReferente;
 	private String commissioneConsultiva;
 	private String numeroLcr;
+	private List<StatoAtto> statiUtente = new ArrayList<StatoAtto>();
+	private String gruppoUtente;
 	private boolean emendato;
 	
 	@JsonSerialize(using=JsonDateSerializer.class)
@@ -190,6 +194,24 @@ public class AttoSearch extends Atto {
 	public void setEmendato(boolean emendato) {
 		this.emendato = emendato;
 	}
+
+	public List<StatoAtto> getStatiUtente() {
+		return statiUtente;
+	}
+
+	public void setStatiUtente(List<StatoAtto> statiUtente) {
+		this.statiUtente = statiUtente;
+	}
+
+	public String getGruppoUtente() {
+		return gruppoUtente;
+	}
+
+	public void setGruppoUtente(String gruppoUtente) {
+		this.gruppoUtente = gruppoUtente;
+	}
+
+	
 	
 	
 	
