@@ -1,6 +1,7 @@
 package com.sourcesense.crl.web.ui.controller;
 
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
@@ -93,7 +94,9 @@ public class InserisciAttoController {
 	
 	
 	public String inserisciAtto() {
-
+		
+		atto.setStato(StatoAtto.PROTOCOLLATO);
+		
 		Atto attoRet = attoServiceManager.persist(atto);
 		
 		if (attoRet!=null && attoRet.getError()==null) {
@@ -107,6 +110,9 @@ public class InserisciAttoController {
 					.getValue(context.getELContext());
 
 			attoBean.setAtto(attoRet);
+			attoBean.getAtto().setStato(StatoAtto.PROTOCOLLATO);
+			
+			
 			return "pretty:Riepilogo_Atto";
 
 		} else if (attoRet!=null && attoRet.getError()!=null && !attoRet.getError().equals("")) {
@@ -125,7 +131,6 @@ public class InserisciAttoController {
 	}
 	
 	
-
 	public AttoServiceManager getAttoServiceManager() {
 		return attoServiceManager;
 	}
@@ -256,8 +261,6 @@ public class InserisciAttoController {
 	public void setAnno(String anno) {
 		this.atto.setAnno(anno);
 	}
-    
-	
 	
 
 }
