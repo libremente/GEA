@@ -388,6 +388,12 @@
 			<show-property name="crlatti:dataAnnulloCommissione" />
 			<show-property name="crlatti:ruoloCommissione" />
 			<show-property name="crlatti:statoCommissione" />
+			<show-property name="crlatti:dataSedutaStralcioCommissione" />
+			<show-property name="crlatti:dataStralcioCommissione" />
+			<show-property name="crlatti:dataIniziativaStralcioCommissione" />
+			<show-property name="crlatti:articoliCommissione" />
+			<show-property name="crlatti:noteStralcioCommissione" />
+			<show-property name="crlatti:dataStralcioCommissione" />
 			
 			<show-property name="crlatti:numEmendPresentatiMaggiorEsame" />
 			<show-property name="crlatti:numEmendPresentatiMinorEsame" />

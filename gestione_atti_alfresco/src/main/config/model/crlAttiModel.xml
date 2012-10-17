@@ -685,6 +685,30 @@
 					<title>Stato</title>
 					<type>d:text</type>
 				</property>
+					<property name="crlatti:dataSedutaStralcioCommissione">
+					<title>Data seduta stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataStralcioCommissione">
+					<title>Data stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataIniziativaStralcioCommissione">
+					<title>Data iniziativa stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:articoliCommissione">
+					<title>Artcoli aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteStralcioCommissione">
+					<title>Note stralcio</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:quorumEsameCommissione">
+					<title>Quorum</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:emendamentiAspect</aspect>
