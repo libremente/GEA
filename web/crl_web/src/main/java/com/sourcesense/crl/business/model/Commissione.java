@@ -28,6 +28,8 @@ public class Commissione implements Cloneable {
 	public static final String STATO_ASSEGNATO = "Assegnato";
 	public static final String STATO_IN_CARICO = "In Carico";
 	public static final String STATO_ANNULLATO = "Annullato";
+	public static final String STATO_VOTATO = "Votato";
+	public static final String STATO_TRASMESSO = "Trasmesso";
 	
 	public static final String RUOLO_REFERENTE = "Referente";
 	public static final String RUOLO_COREFERENTE = "Co-Referente";

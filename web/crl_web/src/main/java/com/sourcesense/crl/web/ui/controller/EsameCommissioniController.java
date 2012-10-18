@@ -64,14 +64,14 @@ public class EsameCommissioniController {
 	private Atto atto = new Atto();
 
 	private boolean readonly = false;
-	
+
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 	// Commissione dell utente loggato
 	private Commissione commissioneUser = new Commissione();
 	// Passaggio selezionato
 	private Passaggio passaggio;
 	private String passaggioSelected;
-	
+
 	private Map<String, String> relatori = new HashMap<String, String>();
 	private Map<String, String> membriComitato = new HashMap<String, String>();
 
@@ -241,26 +241,23 @@ public class EsameCommissioniController {
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
 
 			conta++;
-			
-			if (passaggioRec.getNome().equalsIgnoreCase(
-					this.passaggioSelected)) {
+
+			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggioSelected)) {
 
 				passaggioSelected = passaggioRec;
 				break;
 			}
-			
-			
+
 		}
 
-		
-		if(conta < this.atto.getPassaggi().size()){
-			
+		if (conta < this.atto.getPassaggi().size()) {
+
 			setReadonly(true);
-		}else{
+		} else {
 			setReadonly(false);
-			
+
 		}
-		
+
 		// Ricavo le commisioni dall'ultimo passaggio
 		setCommissioniList(Clonator.cloneList(passaggioSelected
 				.getCommissioni()));
@@ -535,14 +532,16 @@ public class EsameCommissioniController {
 		// Puo essere modificato solo l'ultimo passaggio
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(getCommissioniList());
-		
-		if(commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
-				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
-				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE)
-				){
-		   atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+
+		if (commissioneUser.getRuolo().equalsIgnoreCase(
+				Commissione.RUOLO_REFERENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_REDIGENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_DELIBERANTE)) {
+			atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
 		}
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
@@ -561,11 +560,13 @@ public class EsameCommissioniController {
 				.getSessionMap().get("userBean"));
 
 		attoBean.getLastPassaggio().setCommissioni(commissioniList);
-		
-		if(commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
-				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
-				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE)
-				){
+
+		if (commissioneUser.getRuolo().equalsIgnoreCase(
+				Commissione.RUOLO_REFERENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_REDIGENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_DELIBERANTE)) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
 		}
 
@@ -635,14 +636,14 @@ public class EsameCommissioniController {
 			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 					.setCommissioni(commissioniList);
 
-			if((commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
-					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
-					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
-					&& isNominatoRelatore()
-					){
-				atto.setStato(StatoAtto.NOMINATO_RELATORE);   
+			if ((commissioneUser.getRuolo().equalsIgnoreCase(
+					Commissione.RUOLO_REFERENTE)
+					|| commissioneUser.getRuolo().equalsIgnoreCase(
+							Commissione.RUOLO_REDIGENTE) || commissioneUser
+					.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
+					&& isNominatoRelatore()) {
+				atto.setStato(StatoAtto.NOMINATO_RELATORE);
 			}
-			
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -655,16 +656,18 @@ public class EsameCommissioniController {
 			esameCommissione.setAtto(atto);
 			esameCommissione.setTarget(target);
 
-			commissioneServiceManager.salvaRelatoriEsameCommissioni(esameCommissione);
+			commissioneServiceManager
+					.salvaRelatoriEsameCommissioni(esameCommissione);
 
 			attoBean.getLastPassaggio().setCommissioni(
 					Clonator.cloneList(commissioniList));
 
-			if((commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
-					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
-					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
-					&& isNominatoRelatore()
-					){
+			if ((commissioneUser.getRuolo().equalsIgnoreCase(
+					Commissione.RUOLO_REFERENTE)
+					|| commissioneUser.getRuolo().equalsIgnoreCase(
+							Commissione.RUOLO_REDIGENTE) || commissioneUser
+					.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
+					&& isNominatoRelatore()) {
 				attoBean.setStato(StatoAtto.NOMINATO_RELATORE);
 			}
 
@@ -676,17 +679,17 @@ public class EsameCommissioniController {
 	}
 
 	private boolean isNominatoRelatore() {
-		
-		int usciti =0;
-		
+
+		int usciti = 0;
+
 		for (Relatore element : relatoriList) {
-            
+
 			if (element.getDataUscita() != null) {
 
 				usciti++;
 			}
 		}
-		return (usciti<relatoriList.size());
+		return (usciti < relatoriList.size());
 	}
 
 	public void addComponente() {
@@ -787,12 +790,33 @@ public class EsameCommissioniController {
 			Target target = new Target();
 			target.setCommissione(commissioneUser.getDescrizione());
 			target.setPassaggio(attoBean.getLastPassaggio().getNome());
+			
+			if ((commissioneUser.getRuolo().equalsIgnoreCase(
+					Commissione.RUOLO_REFERENTE)
+					|| commissioneUser.getRuolo().equalsIgnoreCase(
+							Commissione.RUOLO_REDIGENTE) || commissioneUser
+					.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
+					&& isNominatoRelatore()) {
+				atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+			}
+			
+			
 			EsameCommissione esameCommissione = new EsameCommissione();
 			esameCommissione.setAtto(atto);
 			esameCommissione.setTarget(target);
 			commissioneServiceManager
 					.salvaComitatoRistrettoEsameCommissioni(esameCommissione);
 
+			
+			
+			if ((commissioneUser.getRuolo().equalsIgnoreCase(
+					Commissione.RUOLO_REFERENTE)
+					|| commissioneUser.getRuolo().equalsIgnoreCase(
+							Commissione.RUOLO_REDIGENTE) || commissioneUser
+					.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
+					&& isNominatoRelatore()) {
+				attoBean.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+			}
 			attoBean.getLastPassaggio().setCommissioni(
 					Clonator.cloneList(commissioniList));
 
@@ -859,7 +883,7 @@ public class EsameCommissioniController {
 
 			setCurrentDataSeduta(null);
 			setCurrentFilePubblico(false);
-			
+
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 					.getComitatoRistretto().getTesti().add(allegatoRet);
 			testiComitatoRistrettoList.add(allegatoRet);
@@ -1157,6 +1181,7 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
+		commissioneUser.setStato(Commissione.STATO_VOTATO);
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(getCommissioniList());
 
@@ -1167,13 +1192,29 @@ public class EsameCommissioniController {
 		esameCommissione.setAtto(atto);
 		esameCommissione.setTarget(target);
 
-		atto.setStato(StatoAtto.VOTATO_COMMISSIONE);
+		if (commissioneUser.getRuolo().equalsIgnoreCase(
+				Commissione.RUOLO_REFERENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_REDIGENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_DELIBERANTE)) {
+			atto.setStato(StatoAtto.VOTATO_COMMISSIONE);
+		}
+
 		commissioneServiceManager
 				.salvaVotazioneEsameCommissioni(esameCommissione);
 
-		attoBean.getAtto().setStato(StatoAtto.VOTATO_COMMISSIONE);
+		if (commissioneUser.getRuolo().equalsIgnoreCase(
+				Commissione.RUOLO_REFERENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_REDIGENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_DELIBERANTE)) {
+			attoBean.getAtto().setStato(StatoAtto.VOTATO_COMMISSIONE);
+		}
+		
+		
 		attoBean.getLastPassaggio().setCommissioni(commissioniList);
-
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Registrazione Votazione salvata con successo", ""));
@@ -1209,16 +1250,14 @@ public class EsameCommissioniController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								testoVotatoRet);
-				
+
 				testoVotatoRet.setPubblico(currentFilePubblico);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			
-			
 			setCurrentFilePubblico(false);
-			
+
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 					.getTestiAttoVotatoEsameCommissioni().add(testoVotatoRet);
 
@@ -1310,6 +1349,7 @@ public class EsameCommissioniController {
 		Commissione comm = attoBean.getWorkingCommissione(commissioneUser
 				.getDescrizione());
 
+		
 		if (isPassaggioDiretto()
 				&& comm.getEsitoVotoCommissioneReferente() != null
 				&& !comm.getEsitoVotoCommissioneReferente().trim().equals("")) {
@@ -1319,13 +1359,15 @@ public class EsameCommissioniController {
 							FacesMessage.SEVERITY_ERROR,
 							"Attenzione ! Presenza di estremi della votazione (art. 23 comma 9)",
 							""));
-		}
-
-		else {
+		
+		}else {
+			
+			
 			commissioneUser.setDataTrasmissione(getDataTrasmissione());
 			commissioneUser.setPassaggioDirettoInAula(isPassaggioDiretto());
-			commissioneUser
-					.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
+			commissioneUser.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
+			commissioneUser.setStato(Commissione.STATO_TRASMESSO);
+			
 			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 					.setCommissioni(getCommissioniList());
 
@@ -1346,7 +1388,11 @@ public class EsameCommissioniController {
 
 			} else if (commissioneUser.getRuolo().equals(
 					Commissione.RUOLO_REFERENTE)
-					&& commissioneUser.isPassaggioDirettoInAula()) {
+					|| commissioneUser.getRuolo().equalsIgnoreCase(
+							Commissione.RUOLO_REDIGENTE)
+					|| commissioneUser.getRuolo().equalsIgnoreCase(
+							Commissione.RUOLO_DELIBERANTE)
+					) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 				atto.setStato(StatoAtto.TRASMESSO_AULA);
 
@@ -1403,7 +1449,6 @@ public class EsameCommissioniController {
 		} else {
 
 			Allegato allegatoRet = new Allegato();
-			
 
 			try {
 				// TODO change method
@@ -1421,11 +1466,11 @@ public class EsameCommissioniController {
 										.getFile().getInputstream(),
 								allegatoRet);
 				allegatoRet.setPubblico(currentFilePubblico);
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			setCurrentFilePubblico(false);
 
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
@@ -1777,9 +1822,8 @@ public class EsameCommissioniController {
 		EsameCommissione esameCommissione = new EsameCommissione();
 		esameCommissione.setAtto(atto);
 		esameCommissione.setTarget(target);
-		
-		commissioneServiceManager
-		.salvaStralci(esameCommissione);
+
+		commissioneServiceManager.salvaStralci(esameCommissione);
 
 		attoBean.getLastPassaggio().setCommissioni(
 				Clonator.cloneList(getCommissioniList()));
@@ -2567,9 +2611,6 @@ public class EsameCommissioniController {
 		this.currentFilePubblico = currentFilePubblico;
 	}
 
-	
-	
-	
 	public Date getDataSedutaStralcio() {
 		return this.commissioneUser.getDataSedutaStralcio();
 	}
@@ -2641,9 +2682,5 @@ public class EsameCommissioniController {
 	public void setReadonly(boolean readonly) {
 		this.readonly = readonly;
 	}
-	
-	
-
-	
 
 }

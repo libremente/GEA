@@ -353,6 +353,7 @@
 								<p:selectOneMenu id="componente"
 									value="#{esameCommissioniController.nomeComponente}">
 									<f:selectItem itemLabel="Scegli Componente" itemValue="" />
+									<f:selectItem itemLabel="Mario Rossi" itemValue="Mario Rossi" />
 									<f:selectItems
 										value="#{esameCommissioniController.membriComitato}" />
 								</p:selectOneMenu>
@@ -474,7 +475,7 @@
 				<p:column>
 					<p:commandButton value="Conferma Comitato"
 						action="#{esameCommissioniController.confermaComitatoRistretto}"
-						update="comitatiMsg" />
+						update="comitatiMsg, :informationForm:informationBar" />
 				</p:column>
 			</p:row>
 			<p:row>
