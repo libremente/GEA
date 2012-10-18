@@ -327,24 +327,13 @@ public class SearchAttoController {
 				.createValueExpression(context.getELContext(), "#{attoBean}",
 						AttoBean.class).getValue(context.getELContext());
 
-		// TODO Ottenere dettaglio atto da Alfresco
 		attoBean.setAtto(attoServiceManager.findById(idAttoParam));
-		// TODO riempire liste firmatari
 		attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
-
-		// TODO riempire liste abbinamenti
-
-		// TODO riempire liste testi
 		attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
-		// TODO riempire liste allegati
 		attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+        
 		
 		
-		// TODO riempire liste organi interni
-
-		// TODO riempire liste altri organi
-		
-		// TODO riempire liste membri comitato ristretto
 		
 		return "pretty:Riepilogo_Atto";
 

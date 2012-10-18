@@ -154,15 +154,18 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
 
-		this.testiAttoList = new ArrayList<TestoAtto>(Clonator.cloneList(atto.getTestiAtto()));
-		this.allegatiList = new ArrayList<Allegato>(Clonator.cloneList(atto.getAllegati()));
-		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto.getFirmatari()));
-		this.commissioniList = new ArrayList<Commissione>(Clonator.cloneList(atto.getPassaggi().get(0).getCommissioni()));
-		this.organismiList = new ArrayList<OrganismoStatutario>(Clonator.cloneList(atto.getOrganismiStatutari()));
-		this.linksList = new ArrayList<Link>(Clonator.cloneList(atto.getLinksPresentazioneAssegnazione()));
-
-		
-				
+		this.testiAttoList = new ArrayList<TestoAtto>(Clonator.cloneList(atto
+				.getTestiAtto()));
+		this.allegatiList = new ArrayList<Allegato>(Clonator.cloneList(atto
+				.getAllegati()));
+		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto
+				.getFirmatari()));
+		this.commissioniList = new ArrayList<Commissione>(
+				Clonator.cloneList(atto.getPassaggi().get(0).getCommissioni()));
+		this.organismiList = new ArrayList<OrganismoStatutario>(
+				Clonator.cloneList(atto.getOrganismiStatutari()));
+		this.linksList = new ArrayList<Link>(Clonator.cloneList(atto
+				.getLinksPresentazioneAssegnazione()));
 
 	}
 
@@ -244,9 +247,8 @@ public class PresentazioneAssegnazioneAttoController {
 		String numeroAtto = attoBean.getNumeroAtto();
 
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
-				+ " preso in carico con successo dall' utente " + username , ""));
+				+ " preso in carico con successo dall' utente " + username, ""));
 
-		
 	}
 
 	public void uploadTestoAtto(FileUploadEvent event) {
@@ -290,15 +292,16 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	private boolean checkTestoAtto(String fileName) {
-		
-		  for (TestoAtto element : testiAttoList) {
-		  
-		  if (element.getNome().equals(fileName)) {
-		  
-		  return false; }
-		  
-		  }
-		 
+
+		for (TestoAtto element : testiAttoList) {
+
+			if (element.getNome().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
 		return true;
 	}
 
@@ -307,7 +310,7 @@ public class PresentazioneAssegnazioneAttoController {
 		for (TestoAtto element : testiAttoList) {
 
 			if (element.getId().equals(testoAttoToDelete)) {
-				
+
 				testiAttoList.remove(element);
 				break;
 			}
@@ -443,9 +446,8 @@ public class PresentazioneAssegnazioneAttoController {
 					atto.getDataVotazioneUrgenza());
 			attoBean.getAtto()
 					.setNoteAmmissibilita(atto.getNoteAmmissibilita());
-			attoBean.getAtto()
-			.setStato(atto.getStato());
-			
+			attoBean.getAtto().setStato(atto.getStato());
+
 			setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
 
 			context.addMessage(null, new FacesMessage(
@@ -492,7 +494,7 @@ public class PresentazioneAssegnazioneAttoController {
 	public void addCommissione() {
 
 		if (nomeCommissione != null && !nomeCommissione.trim().equals("")) {
-			
+
 			if (!checkCommissioni()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
@@ -500,13 +502,16 @@ public class PresentazioneAssegnazioneAttoController {
 						"Attenzione ! Commissione " + nomeCommissione
 								+ " già presente ", ""));
 
-			}else if(!checkCommissioniRuolo()){ 
-				
+			} else if (!checkCommissioniRuolo()) {
+
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Esiste già una commissione con questa competenza ", ""));
-			
+				context.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Attenzione ! Esiste già una commissione con questa competenza ",
+								""));
+
 			} else {
 				Commissione commissione = new Commissione();
 				commissione.setDescrizione(nomeCommissione);
@@ -514,20 +519,28 @@ public class PresentazioneAssegnazioneAttoController {
 				commissione.setDataProposta(dataProposta);
 				commissione.setRuolo(ruolo);
 				commissione.setStato(Commissione.STATO_PROPOSTO);
+				if (ruolo.equalsIgnoreCase(Commissione.RUOLO_REFERENTE)) {
+					this.atto.setStato(StatoAtto.PROPOSTA_ASSEGNAZIONE);
+				}
 				commissioniList.add(commissione);
 				this.atto.getPassaggi().get(0).setCommissioni(commissioniList);
+
 				attoServiceManager.salvaAssegnazionePresentazione(atto);
+
 				FacesContext context = FacesContext.getCurrentInstance();
+
 				AttoBean attoBean = ((AttoBean) context.getExternalContext()
 						.getSessionMap().get("attoBean"));
-				attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
+				attoBean.getAtto().getPassaggi().get(0)
+						.setCommissioni(commissioniList);
+				if (ruolo.equalsIgnoreCase(Commissione.RUOLO_REFERENTE)) {
+					attoBean.setStato(StatoAtto.PROPOSTA_ASSEGNAZIONE);
+				}
 				updateAssegnazioneHandler();
 			}
 		}
 	}
 
-	
-	
 	public void removeCommissione() {
 
 		for (Commissione element : commissioniList) {
@@ -540,35 +553,39 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
-	
 	private boolean checkCommissioniRuolo() {
 
 		for (Commissione element : commissioniList) {
 
-			if(!element.getStato().equalsIgnoreCase(Commissione.STATO_ANNULLATO)){
-			
-			if (element.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE) && element.getRuolo().equals(ruolo)) {
+			if (!element.getStato().equalsIgnoreCase(
+					Commissione.STATO_ANNULLATO)) {
 
-				return false;
-			}
-			
-			if (element.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE) && element.getRuolo().equals(ruolo)) {
+				if (element.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_REFERENTE)
+						&& element.getRuolo().equals(ruolo)) {
 
-				return false;
-			}
-			
+					return false;
+				}
+
+				if (element.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_DELIBERANTE)
+						&& element.getRuolo().equals(ruolo)) {
+
+					return false;
+				}
+
 			}
 
 		}
 
 		return true;
 	}
-	
+
 	private boolean checkCommissioni() {
 
 		for (Commissione element : commissioniList) {
 
-			if (element.getDescrizione().equals(nomeCommissione) 
+			if (element.getDescrizione().equals(nomeCommissione)
 					&& !element.getStato().equals(Commissione.STATO_ANNULLATO)) {
 
 				return false;
@@ -592,7 +609,8 @@ public class PresentazioneAssegnazioneAttoController {
 				FacesContext context = FacesContext.getCurrentInstance();
 				AttoBean attoBean = ((AttoBean) context.getExternalContext()
 						.getSessionMap().get("attoBean"));
-				attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
+				attoBean.getAtto().getPassaggi().get(0)
+						.setCommissioni(commissioniList);
 				break;
 			}
 		}
@@ -605,7 +623,8 @@ public class PresentazioneAssegnazioneAttoController {
 			if (!checkPareri()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Attenzione ! Organismo Statutario "
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Organismo Statutario "
 								+ nomeOrganismoStatutario + " già presente ",
 						""));
 
@@ -649,42 +668,62 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void confermaAssegnazione() {
-		
-		changeStatoCommissioni(Commissione.STATO_ASSEGNATO);
+
 		this.atto.getPassaggi().get(0).setCommissioni(commissioniList);
 		this.atto.setOrganismiStatutari(organismiList);
-		this.atto.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
+		int checkAssegnazione = changeStatoCommissioni(Commissione.STATO_ASSEGNATO);
+		// Se c'è una commissione referente cambia lo stato dell'atto
+		if (checkAssegnazione > 0) {
+
+			this.atto.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
+		}
+
 		attoServiceManager.salvaAssegnazionePresentazione(atto);
 
-		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
 		attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
 		attoBean.getAtto().setOrganismiStatutari(organismiList);
-		attoBean.getAtto().setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
+
+		if (checkAssegnazione > 0) {
+			attoBean.getAtto().setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
+		}
 
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
-
 		context.addMessage(null, new FacesMessage(
 				"Assegnazione salvata con successo", ""));
 	}
 
-	
-	public void changeStatoCommissioni(String stato){
-		
+	public int changeStatoCommissioni(String stato) {
+
+		int totaleCommChange = 0;
+
 		for (Commissione element : atto.getPassaggi().get(0).getCommissioni()) {
 
-			if (!element.getStato().equals(Commissione.STATO_ANNULLATO)) {
+			if (!element.getStato().equals(Commissione.STATO_ANNULLATO)
+					&& !element.getStato().equals(Commissione.STATO_ASSEGNATO)
+					&& element.getDataAssegnazione() != null) {
 
 				element.setStato(stato);
+				// Se c'è una commissione referente cambia lo stato dell'atto
+				if (element.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_REFERENTE)
+						|| element.getRuolo().equalsIgnoreCase(
+								Commissione.RUOLO_REDIGENTE)
+						|| element.getRuolo().equalsIgnoreCase(
+								Commissione.RUOLO_DELIBERANTE)) {
+					totaleCommChange++;
+				}
 			}
 
 		}
-		
+
+		return totaleCommChange;
+
 	}
-	
+
 	// Note e Allegati******************************************************
 	public void uploadAllegato(FileUploadEvent event) {
 
@@ -718,8 +757,7 @@ public class PresentazioneAssegnazioneAttoController {
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
 
-			attoBean.getAtto().getAllegati()
-					.add(allegatoRet);
+			attoBean.getAtto().getAllegati().add(allegatoRet);
 
 			allegatiList.add(allegatoRet);
 		}

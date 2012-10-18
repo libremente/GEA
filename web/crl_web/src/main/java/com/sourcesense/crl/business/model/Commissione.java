@@ -75,6 +75,8 @@ public class Commissione implements Cloneable {
 	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
 	private List <Allegato> testiClausola = new ArrayList<Allegato>();
+	private List <Allegato> allegati = new ArrayList<Allegato>();
+	
 	
 	private boolean annullata = false;
 	private boolean presenzaComitatoRistretto;
@@ -117,8 +119,17 @@ public class Commissione implements Cloneable {
 		}
 	}
 	
-
+  
 	
+	
+	public List<Allegato> getAllegati() {
+		return allegati;
+	}
+
+	public void setAllegati(List<Allegato> allegati) {
+		this.allegati = allegati;
+	}
+
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataScadenzaEsameCommissioni() {
 		return dataScadenzaEsameCommissioni;

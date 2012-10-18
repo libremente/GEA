@@ -535,7 +535,14 @@ public class EsameCommissioniController {
 		// Puo essere modificato solo l'ultimo passaggio
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(getCommissioniList());
-		atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+		
+		if(commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
+				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
+				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE)
+				){
+		   atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+		}
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
@@ -554,7 +561,13 @@ public class EsameCommissioniController {
 				.getSessionMap().get("userBean"));
 
 		attoBean.getLastPassaggio().setCommissioni(commissioniList);
-		attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+		
+		if(commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
+				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
+				||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE)
+				){
+			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+		}
 
 		confrontaDataScadenza();
 
@@ -622,7 +635,14 @@ public class EsameCommissioniController {
 			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 					.setCommissioni(commissioniList);
 
-			atto.setStato(StatoAtto.NOMINATO_RELATORE);
+			if((commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
+					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
+					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
+					&& isNominatoRelatore()
+					){
+				atto.setStato(StatoAtto.NOMINATO_RELATORE);   
+			}
+			
 
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -635,13 +655,16 @@ public class EsameCommissioniController {
 			esameCommissione.setAtto(atto);
 			esameCommissione.setTarget(target);
 
-			commissioneServiceManager
-					.salvaRelatoriEsameCommissioni(esameCommissione);
+			commissioneServiceManager.salvaRelatoriEsameCommissioni(esameCommissione);
 
 			attoBean.getLastPassaggio().setCommissioni(
 					Clonator.cloneList(commissioniList));
 
-			if (isNominatoRelatore()) {
+			if((commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REFERENTE)
+					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_REDIGENTE)
+					||commissioneUser.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE))
+					&& isNominatoRelatore()
+					){
 				attoBean.setStato(StatoAtto.NOMINATO_RELATORE);
 			}
 
@@ -653,14 +676,17 @@ public class EsameCommissioniController {
 	}
 
 	private boolean isNominatoRelatore() {
+		
+		int usciti =0;
+		
 		for (Relatore element : relatoriList) {
+            
+			if (element.getDataUscita() != null) {
 
-			if (element.getDataUscita() == null) {
-
-				return true;
+				usciti++;
 			}
 		}
-		return false;
+		return (usciti<relatoriList.size());
 	}
 
 	public void addComponente() {
@@ -813,7 +839,6 @@ public class EsameCommissioniController {
 
 			// TODO Alfresco upload
 			Allegato allegatoRet = new Allegato();
-
 			allegatoRet.setNome(event.getFile().getFileName());
 			allegatoRet.setPubblico(currentFilePubblico);
 			allegatoRet.setDataSeduta(currentDataSeduta);
@@ -826,10 +851,15 @@ public class EsameCommissioniController {
 								.getCurrentInstance().getExternalContext()
 								.getSessionMap().get("attoBean")).getAtto(),
 								event.getFile().getInputstream(), allegatoRet);
+				allegatoRet.setPubblico(currentFilePubblico);
+				allegatoRet.setDataSeduta(currentDataSeduta);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
+			setCurrentDataSeduta(null);
+			setCurrentFilePubblico(false);
+			
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 					.getComitatoRistretto().getTesti().add(allegatoRet);
 			testiComitatoRistrettoList.add(allegatoRet);
@@ -1179,10 +1209,16 @@ public class EsameCommissioniController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								testoVotatoRet);
+				
+				testoVotatoRet.setPubblico(currentFilePubblico);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
+			
+			
+			setCurrentFilePubblico(false);
+			
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 					.getTestiAttoVotatoEsameCommissioni().add(testoVotatoRet);
 
@@ -1367,14 +1403,13 @@ public class EsameCommissioniController {
 		} else {
 
 			Allegato allegatoRet = new Allegato();
-			;
+			
 
 			try {
 				// TODO change method
 
 				allegatoRet.setNome(event.getFile().getFileName());
 				allegatoRet.setPubblico(currentFilePubblico);
-				allegatoRet.setDataSeduta(currentDataSeduta);
 				allegatoRet.setCommissione(commissioneUser.getDescrizione());
 				allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 
@@ -1385,11 +1420,13 @@ public class EsameCommissioniController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								allegatoRet);
+				allegatoRet.setPubblico(currentFilePubblico);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			// TODO aggiungi a bean di sessione
+			
+			setCurrentFilePubblico(false);
 
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 					.getEmendamentiEsameCommissioni().add(allegatoRet);

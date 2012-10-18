@@ -33,6 +33,8 @@ public class Aula implements Cloneable{
 	
 	private List<TestoAtto> testiAttoVotatoEsameAula = new ArrayList<TestoAtto>();
 	private List<Allegato> emendamentiEsameAula = new ArrayList<Allegato>();
+	private List<Allegato> allegatiEsameAula = new ArrayList<Allegato>();
+	
 	
 	private int numEmendPresentatiMaggiorEsameAula;
 	private int numEmendPresentatiMinorEsameAula;
@@ -61,7 +63,7 @@ public class Aula implements Cloneable{
 	private String noteStralcio;
 	private String quorumEsameAula;
 	
-	private List<Allegato> allegatiEsameAula = new ArrayList<Allegato>();
+	
 	private List<Link> linksEsameAula = new ArrayList<Link>();
 	
 	private String noteGeneraliEsameAula;

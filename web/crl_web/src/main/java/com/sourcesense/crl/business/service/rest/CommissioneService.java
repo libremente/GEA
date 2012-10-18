@@ -238,7 +238,6 @@ public class CommissioneService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {

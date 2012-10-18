@@ -442,7 +442,63 @@ public class AttoBean implements Serializable {
 	 *            the atto to set
 	 */
 	public void setAtto(Atto atto) {
+		
 		this.atto = atto;
+		
+		//Ciclo passaggi
+		for (Passaggio passaggio : this.atto.getPassaggi()) {
+			
+			for (Commissione commissione : passaggio.getCommissioni()) {
+				
+				List <Allegato> appoList = new ArrayList<Allegato>();
+				
+				for (Allegato allegato : commissione.getAllegati()) {
+					
+					if(allegato.getTipoAllegato().equals(Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA)){
+						
+						commissione.getTestiClausola().add(allegato);
+						
+					   
+					}else if(allegato.getTipoAllegato().equals(Allegato.TESTO_ESAME_COMMISSIONE_COMITATO)){
+						
+						commissione.getAllegatiNoteEsameCommissioni().add(allegato);
+						
+						
+					}else if(allegato.getTipoAllegato().equals(Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO)){
+						
+						commissione.getEmendamentiEsameCommissioni().add(allegato);
+						
+					}else{
+						
+						appoList.add(allegato);
+					}
+					
+				}
+				
+				commissione.setAllegati(appoList);
+				
+			}
+			
+			List <Allegato> appoList = new ArrayList<Allegato>();
+			
+	        for (Allegato allegato : passaggio.getAula().getAllegatiEsameAula()) {
+				
+	        	if(allegato.getTipoAllegato().equals(Allegato.TESTO_ESAME_AULA_EMENDAMENTO)){
+	        	    
+	        		passaggio.getAula().getEmendamentiEsameAula().add(allegato);
+	        		
+	        	}else{
+	        		
+	        		appoList.add(allegato);
+	        	}
+	        	
+			}
+	        
+	        passaggio.getAula().setAllegatiEsameAula(appoList);
+			
+		}
+		
+		
 	}
 
 	public boolean isShowCommDetail() {
