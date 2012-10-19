@@ -10,8 +10,12 @@
         <property name="serviceRegistry">
             <ref bean="ServiceRegistry"/>
         </property>
+    </bean>    
+    
+    <bean id="protocolloLoggerScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.ProtocolloLoggerScript">
+        <property name="extensionName">
+            <value>protocolloLogger</value>
+        </property>
     </bean>
 	
-	
-
 </beans>

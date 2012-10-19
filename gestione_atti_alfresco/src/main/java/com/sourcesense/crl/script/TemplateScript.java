@@ -11,7 +11,7 @@ public class TemplateScript extends BaseScopableProcessorExtension {
 	
 	private ServiceRegistry serviceRegistry;
 	
-	// Get title form node-type definition
+	// Get title from node-type definition
 	public String getTypeDescription(String type) {
         
 		String typeDescription = "";
