@@ -268,11 +268,7 @@ public class AttoBean implements Serializable {
 
 			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
 
-				if (allegato.getTipoAllegato().equals(
-						Allegato.TESTO_ESAME_COMMISSIONE_COMITATO)) {
-					commRec.getComitatoRistretto().getTesti().add(allegato);
-					returnList.add(allegato);
-				}
+				returnList.add(allegato);
 
 			}
 		}
@@ -283,18 +279,13 @@ public class AttoBean implements Serializable {
 		List<Allegato> returnList = new ArrayList<Allegato>();
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
-			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
+			for (Allegato allegato : commRec.getEmendamentiEsameCommissioni()) {
 
-				if (allegato.getTipoAllegato().equals(
-						Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO)) {
-					commRec.getEmendamentiEsameCommissioni().add(allegato);
-					returnList.add(allegato);
-				}
+				returnList.add(allegato);
 
 			}
 		}
 		return returnList;
-
 	}
 
 	public List<Allegato> getClausoleCommissioni() {
@@ -302,13 +293,9 @@ public class AttoBean implements Serializable {
 
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
-			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
+			for (Allegato allegato : commRec.getTestiClausola()) {
 
-				if (allegato.getTipoAllegato().equals(
-						Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA)) {
-					commRec.getTestiClausola().add(allegato);
-					returnList.add(allegato);
-				}
+				returnList.add(allegato);
 
 			}
 		}
@@ -320,14 +307,8 @@ public class AttoBean implements Serializable {
 		List<Allegato> returnList = new ArrayList<Allegato>();
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
-			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
-
-				if (allegato.getTipoAllegato().equals(
-						Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO)) {
-
-					returnList.add(allegato);
-				}
-
+			for (Allegato allegato : commRec.getAllegati()) {
+				returnList.add(allegato);
 			}
 		}
 		return returnList;
@@ -336,14 +317,9 @@ public class AttoBean implements Serializable {
 	public List<Allegato> getEmendamentiAula() {
 		List<Allegato> returnList = new ArrayList<Allegato>();
 		for (Allegato allegato : getLastPassaggio().getAula()
-				.getAllegatiEsameAula()) {
+				.getEmendamentiEsameAula()) {
 
-			if (allegato.getTipoAllegato().equals(
-					Allegato.TESTO_ESAME_AULA_EMENDAMENTO)) {
-				getLastPassaggio().getAula().getEmendamentiEsameAula()
-						.add(allegato);
-				returnList.add(allegato);
-			}
+			returnList.add(allegato);
 
 		}
 		return returnList;
@@ -354,11 +330,7 @@ public class AttoBean implements Serializable {
 		for (Allegato allegato : getLastPassaggio().getAula()
 				.getAllegatiEsameAula()) {
 
-			if (allegato.getTipoAllegato().equals(
-					Allegato.TIPO_ESAME_AULA_ALLEGATO)) {
-
-				returnList.add(allegato);
-			}
+			returnList.add(allegato);
 
 		}
 		return returnList;
@@ -366,12 +338,16 @@ public class AttoBean implements Serializable {
 
 	public List<Allegato> getAllegatiPareri() {
 		List<Allegato> returnList = new ArrayList<Allegato>();
-		for (Parere parereRec : getAtto().getPareri()) {
+		for (OrganismoStatutario organismo : getAtto().getOrganismiStatutari() ) {
 
-			for (Allegato allegato : parereRec.getAllegati()) {
+			for (Allegato allegato : organismo.getParere().getAllegati()) {
 
-				returnList.add(allegato);
+				
+					returnList.add(allegato);
+				
+
 			}
+
 		}
 		return returnList;
 	}
@@ -394,10 +370,10 @@ public class AttoBean implements Serializable {
 		List<String> passaggi = new ArrayList<String>();
 
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
-             
+
 			passaggi.add(passaggioRec.getNome());
 		}
-		
+
 		return passaggi;
 
 	}
@@ -442,63 +418,66 @@ public class AttoBean implements Serializable {
 	 *            the atto to set
 	 */
 	public void setAtto(Atto atto) {
-		
+
 		this.atto = atto;
-		
-		//Ciclo passaggi
+
+		// Ciclo passaggi
 		for (Passaggio passaggio : this.atto.getPassaggi()) {
-			
+
 			for (Commissione commissione : passaggio.getCommissioni()) {
-				
-				List <Allegato> appoList = new ArrayList<Allegato>();
-				
+
+				List<Allegato> appoList = new ArrayList<Allegato>();
+
 				for (Allegato allegato : commissione.getAllegati()) {
-					
-					if(allegato.getTipoAllegato().equals(Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA)){
-						
+
+					if (Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA
+							.equals(allegato.getTipologia())) {
+
 						commissione.getTestiClausola().add(allegato);
-						
-					   
-					}else if(allegato.getTipoAllegato().equals(Allegato.TESTO_ESAME_COMMISSIONE_COMITATO)){
-						
-						commissione.getAllegatiNoteEsameCommissioni().add(allegato);
-						
-						
-					}else if(allegato.getTipoAllegato().equals(Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO)){
-						
-						commissione.getEmendamentiEsameCommissioni().add(allegato);
-						
-					}else{
-						
+
+					} else if (Allegato.TESTO_ESAME_COMMISSIONE_COMITATO
+							.equals(allegato.getTipologia())) {
+
+						commissione.getAllegatiNoteEsameCommissioni().add(
+								allegato);
+
+					} else if (Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO
+							.equals(allegato.getTipologia())) {
+
+						commissione.getEmendamentiEsameCommissioni().add(
+								allegato);
+
+					} else {
+
 						appoList.add(allegato);
 					}
-					
+
 				}
-				
+
 				commissione.setAllegati(appoList);
-				
+
 			}
-			
-			List <Allegato> appoList = new ArrayList<Allegato>();
-			
-	        for (Allegato allegato : passaggio.getAula().getAllegatiEsameAula()) {
-				
-	        	if(allegato.getTipoAllegato().equals(Allegato.TESTO_ESAME_AULA_EMENDAMENTO)){
-	        	    
-	        		passaggio.getAula().getEmendamentiEsameAula().add(allegato);
-	        		
-	        	}else{
-	        		
-	        		appoList.add(allegato);
-	        	}
-	        	
+
+			List<Allegato> appoList = new ArrayList<Allegato>();
+
+			for (Allegato allegato : passaggio.getAula().getAllegatiEsameAula()) {
+
+				if (Allegato.TESTO_ESAME_AULA_EMENDAMENTO.equals(allegato
+						.getTipologia())) {
+
+					passaggio.getAula().getEmendamentiEsameAula().add(allegato);
+
+				} else {
+
+					appoList.add(allegato);
+				}
+
 			}
-	        
-	        passaggio.getAula().setAllegatiEsameAula(appoList);
-			
+
+			passaggio.getAula().setAllegatiEsameAula(appoList);
+
 		}
-		
-		
+
 	}
 
 	public boolean isShowCommDetail() {

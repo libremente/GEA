@@ -137,13 +137,12 @@
 
 								<h:column>
 									<f:facet name="header">Descrizione Allegato</f:facet>
-							#{allegato.nome}
+							      #{allegato.nome}
 						</h:column>
 
 								<h:column>
-									<f:facet name="header">Documento</f:facet>
-									<h:outputText
-										value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
+									<f:facet name="header">Formato</f:facet>
+									#{allegato.mimetype}
 
 								</h:column>
 

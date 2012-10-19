@@ -38,11 +38,7 @@ public class AulaServiceManager implements ServiceManager {
     	aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_aula", null), esameAula);
 	}
 	
-    public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, Allegato allegato) {
-
-		return aulaService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_emendamento_aula", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
-	}	
+    
     
     public TestoAtto uploadTestoAttoVotatoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
@@ -55,6 +51,12 @@ public class AulaServiceManager implements ServiceManager {
 
 		return aulaService.uploadAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato_aula", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_ESAME_AULA_ALLEGATO);
+	}	
+    
+    public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, Allegato allegato) {
+
+		return aulaService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_emendamento_aula", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
 	}	
     
     public void salvaEmendamentiEsameAula(EsameAula esameAula) {

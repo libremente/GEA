@@ -87,35 +87,35 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 	
-	public Allegato uploadAllegatoNoteAllegatiPresentazioneAssegnazione(Atto atto, InputStream stream, String nomeFile) {
+	public Allegato uploadAllegatoNoteAllegatiPresentazioneAssegnazione(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 	
-	public Allegato uploadAllegatoMIS(Atto atto, InputStream stream, String nomeFile) {
+	public Allegato uploadAllegatoMIS(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 	
-	public Allegato uploadAllegatoEAC(Atto atto, InputStream stream, String nomeFile) {
+	public Allegato uploadAllegatoEAC(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, nomeFile, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
+				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 	
 	
 	public Allegato  uploadAllegatoConsultazioni(Atto atto, InputStream stream, Allegato allegato) {
 
-		return attoService.uploadAllegatoParere(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_CONSULTAZIONE);
+		return attoService.uploadAllegatoConsultazioni(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato_consultazioni", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_CONSULTAZIONE);
 	}
 	
 	public Allegato uploadAllegatoPareri(Atto atto, InputStream stream, Allegato allegato) {
 
-		return attoService.uploadAllegatoConsultazioni(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PARERE);
+		return attoService.uploadAllegatoParere(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato_pareri", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PARERE);
 	}
 	
 	

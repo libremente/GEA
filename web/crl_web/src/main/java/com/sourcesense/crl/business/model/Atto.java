@@ -118,8 +118,6 @@ public class Atto implements Cloneable
 	private List <Organo> organi = new ArrayList<Organo>();
 	private List <Firmatario> firmatari = new ArrayList<Firmatario>();
 	private List <Relatore> relatori = new ArrayList<Relatore>();
-	//TODO eleiminare pareri
-	private List <Parere> pareri = new ArrayList<Parere>();
 	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
 	private List <Allegato> allegati = new ArrayList<Allegato>();
 	//private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
@@ -568,14 +566,7 @@ public class Atto implements Cloneable
 		this.relatori = relatori;
 	}
 
-	public List<Parere> getPareri() {
-		return pareri;
-	}
-
-	public void setPareri(List<Parere> pareri) {
-		this.pareri = pareri;
-	}
-
+	
 	public List<Consultazione> getConsultazioni() {
 		return consultazioni;
 	}

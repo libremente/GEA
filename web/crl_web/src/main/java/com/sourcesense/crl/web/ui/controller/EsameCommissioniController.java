@@ -319,7 +319,7 @@ public class EsameCommissioniController {
 		membriComitatoList = Clonator.cloneList(commissioneUser
 				.getComitatoRistretto().getComponenti());
 		testiComitatoRistrettoList = Clonator.cloneList(commissioneUser
-				.getComitatoRistretto().getTesti());
+				.getAllegatiNoteEsameCommissioni());
 		testiAttoVotatoList = Clonator.cloneList(commissioneUser
 				.getTestiAttoVotatoEsameCommissioni());
 		emendamentiList = Clonator.cloneList(commissioneUser
@@ -848,7 +848,7 @@ public class EsameCommissioniController {
 	}
 
 	public void uploadTestoComitatoRistretto(FileUploadEvent event) {
-		// TODO Service logic
+		
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -861,7 +861,6 @@ public class EsameCommissioniController {
 
 		} else {
 
-			// TODO Alfresco upload
 			Allegato allegatoRet = new Allegato();
 			allegatoRet.setNome(event.getFile().getFileName());
 			allegatoRet.setPubblico(currentFilePubblico);
@@ -875,8 +874,7 @@ public class EsameCommissioniController {
 								.getCurrentInstance().getExternalContext()
 								.getSessionMap().get("attoBean")).getAtto(),
 								event.getFile().getInputstream(), allegatoRet);
-				allegatoRet.setPubblico(currentFilePubblico);
-				allegatoRet.setDataSeduta(currentDataSeduta);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -885,7 +883,7 @@ public class EsameCommissioniController {
 			setCurrentFilePubblico(false);
 
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
-					.getComitatoRistretto().getTesti().add(allegatoRet);
+					.getAllegatiNoteEsameCommissioni().add(allegatoRet);
 			testiComitatoRistrettoList.add(allegatoRet);
 		}
 	}
@@ -1221,7 +1219,6 @@ public class EsameCommissioniController {
 	}
 
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
-		// TODO Service logic
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -1233,16 +1230,14 @@ public class EsameCommissioniController {
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			// TODO Alfresco upload
 			TestoAtto testoVotatoRet = new TestoAtto();
-
 			testoVotatoRet.setNome(event.getFile().getFileName());
 			testoVotatoRet.setPubblico(currentFilePubblico);
 			testoVotatoRet.setCommissione(commissioneUser.getDescrizione());
 			testoVotatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 
 			try {
-				// TODO change method
+
 				testoVotatoRet = commissioneServiceManager
 						.uploadTestoAttoVotatoEsameCommissioni(
 								((AttoBean) FacesContext.getCurrentInstance()
@@ -1251,7 +1246,7 @@ public class EsameCommissioniController {
 										.getFile().getInputstream(),
 								testoVotatoRet);
 
-				testoVotatoRet.setPubblico(currentFilePubblico);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1436,7 +1431,7 @@ public class EsameCommissioniController {
 	}
 
 	public void uploadEmendamento(FileUploadEvent event) {
-		// TODO Service logic
+		
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -1451,8 +1446,7 @@ public class EsameCommissioniController {
 			Allegato allegatoRet = new Allegato();
 
 			try {
-				// TODO change method
-
+				
 				allegatoRet.setNome(event.getFile().getFileName());
 				allegatoRet.setPubblico(currentFilePubblico);
 				allegatoRet.setCommissione(commissioneUser.getDescrizione());
@@ -1465,7 +1459,7 @@ public class EsameCommissioniController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								allegatoRet);
-				allegatoRet.setPubblico(currentFilePubblico);
+				
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -1521,8 +1515,7 @@ public class EsameCommissioniController {
 		} else {
 
 			Allegato allegatoRet = new Allegato();
-			;
-
+			
 			try {
 				// TODO change method
 
@@ -1539,9 +1532,13 @@ public class EsameCommissioniController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								allegatoRet);
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			setCurrentFilePubblico(false);
 
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 					.getTestiClausola().add(allegatoRet);
@@ -1696,12 +1693,15 @@ public class EsameCommissioniController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								allegatoRet);
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
+			setCurrentFilePubblico(false);
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
-					.getAllegatiNoteEsameCommissioni().add(allegatoRet);
+					.getAllegati().add(allegatoRet);
 			allegatiList.add(allegatoRet);
 		}
 	}

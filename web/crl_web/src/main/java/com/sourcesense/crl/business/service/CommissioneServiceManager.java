@@ -72,30 +72,38 @@ public class CommissioneServiceManager implements ServiceManager{
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_fine_lavori_esame_commissioni", null), esameCommissione);
 	}
 	
+	
+	
+	public TestoAtto uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
+
+		return commissioneService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_testo_atto_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
+	}
+	
+	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
+
+		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO);
+	}
+	
 	public Allegato uploadTestoComitatoRistretto(Atto atto, InputStream stream, Allegato testoAtto) {
 
 		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_testo_comitato_ristretto", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_COMITATO);
 	}
 	
-	public TestoAtto uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
-
-		return commissioneService.uploadTestoAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_testo", new String[] { atto.getId() }),atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
-	}
-	
-	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
-
-		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
-	}
-	
-	
 	public Allegato uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
 
 		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
 	}	
+	
+	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, Allegato allegato) {
+
+		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
+	}	
+	
 	
 	
 	public void salvaCambiaRuoloInReferente(EsameCommissione esameCommissione) {
@@ -119,11 +127,7 @@ public class CommissioneServiceManager implements ServiceManager{
 	
 	
 	
-	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, Allegato allegato) {
-
-		return commissioneService.uploadAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
-	}	
+	
 	
 	
 	

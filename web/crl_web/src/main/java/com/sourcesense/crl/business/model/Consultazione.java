@@ -18,7 +18,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("consultazione")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Consultazione {
+public class Consultazione implements Cloneable{
 	
 	private String descrizione;
 	private Date dataConsultazione;
@@ -29,6 +29,15 @@ public class Consultazione {
 	
 	private List <SoggettoInvitato> soggettiInvitati = new ArrayList<SoggettoInvitato>();
 	private List<Allegato> allegati = new ArrayList<Allegato>();
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);

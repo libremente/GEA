@@ -80,9 +80,9 @@
 							</p:row>
 							<p:row>
 							<p:column>
-								<p:fileUpload label="Carica Testo dell'Atto"
+								<p:fileUpload label="Carica Allegato"
 									oncomplete="uploadFileConsultazioneAttributesDialog.hide()" auto="false"
-									update="listaDocumentazioneConsultazione pareriMsg"
+									update="listaDocumentazioneConsultazione, pareriMsg"
 									fileUploadListener="#{consultazioniPareriController.uploadAllegatoConsultazione}" />
 							</p:column>
 							</p:row>
@@ -376,7 +376,7 @@
 			<p:column colspan="4">
 
 				<h:dataTable id="listaDocumentazioneConsultazione"
-					value="#{consultazioniPareriController.allegatiConsultazioneList}"
+					value="#{consultazioniPareriController.consultazioneSelected.allegati}"
 					var="allegato" styleClass="generalInfoTab grey-text">
 
 					<h:column>
@@ -386,9 +386,7 @@
 
 					<h:column>
 						<f:facet name="header">Documento</f:facet>
-						<h:outputText
-							value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
-
+						#{allegato.mimetype}
 					</h:column>
 
 					<h:column>

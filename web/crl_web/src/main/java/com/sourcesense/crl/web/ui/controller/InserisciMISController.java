@@ -70,6 +70,7 @@ public class InserisciMISController {
 	private String note;
 	
 	private String allegatoMISToDelete;
+	private boolean currentFilePubblico;
 	
 	private List<Allegato> allegatiMIS = new ArrayList<Allegato>();
 	private Map<String, String> commissioni = new HashMap<String, String>();
@@ -116,8 +117,9 @@ public class InserisciMISController {
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			// TODO Alfresco upload
-			Allegato allegatoRet = null;
+			Allegato allegatoRet = new Allegato();
+			allegatoRet.setNome(event.getFile().getFileName());
+			allegatoRet.setPubblico(currentFilePubblico);
 
 			try {
 				allegatoRet = attoServiceManager
@@ -125,8 +127,8 @@ public class InserisciMISController {
 								((AttoBean) FacesContext.getCurrentInstance()
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
-										.getFile().getInputstream(), event
-										.getFile().getFileName());
+										.getFile().getInputstream(), allegatoRet);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -426,6 +428,16 @@ public class InserisciMISController {
 
 	public void setCommissioni(Map<String, String> commissioni) {
 		this.commissioni = commissioni;
+	}
+
+
+	public boolean isCurrentFilePubblico() {
+		return currentFilePubblico;
+	}
+
+
+	public void setCurrentFilePubblico(boolean currentFilePubblico) {
+		this.currentFilePubblico = currentFilePubblico;
 	}
 	
 	

@@ -275,6 +275,8 @@ public class PresentazioneAssegnazioneAttoController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								testoAttoRet);
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -727,7 +729,6 @@ public class PresentazioneAssegnazioneAttoController {
 	// Note e Allegati******************************************************
 	public void uploadAllegato(FileUploadEvent event) {
 
-		// TODO Service logic
 		String fileName = event.getFile().getFileName();
 
 		if (!checkAllegato(fileName)) {
@@ -737,8 +738,10 @@ public class PresentazioneAssegnazioneAttoController {
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			// TODO Alfresco upload
-			Allegato allegatoRet = null;
+			
+			Allegato allegatoRet = new Allegato();
+			allegatoRet.setNome(event.getFile().getFileName());
+			allegatoRet.setPubblico(currentFilePubblico);
 
 			try {
 				allegatoRet = attoServiceManager
@@ -746,8 +749,8 @@ public class PresentazioneAssegnazioneAttoController {
 								((AttoBean) FacesContext.getCurrentInstance()
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
-										.getFile().getInputstream(), event
-										.getFile().getFileName());
+										.getFile().getInputstream(), allegatoRet);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

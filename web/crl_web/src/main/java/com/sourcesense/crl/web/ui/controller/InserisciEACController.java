@@ -63,7 +63,7 @@ public class InserisciEACController {
 	private Date dataAtto;
 	
 	
-	private String currentFilePubblico;
+	private boolean currentFilePubblico;
 	
 	private List<Allegato> allegatiEAC = new ArrayList<Allegato>();
 	
@@ -119,8 +119,9 @@ public class InserisciEACController {
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			// TODO Alfresco upload
-			Allegato allegatoRet = null;
+			Allegato allegatoRet = new Allegato();
+			allegatoRet.setNome(event.getFile().getFileName());
+			allegatoRet.setPubblico(currentFilePubblico);
 
 			try {
 				allegatoRet = attoServiceManager
@@ -128,8 +129,9 @@ public class InserisciEACController {
 								((AttoBean) FacesContext.getCurrentInstance()
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
-										.getFile().getInputstream(), event
-										.getFile().getFileName());
+										.getFile().getInputstream(), allegatoRet);
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -375,14 +377,17 @@ public class InserisciEACController {
 	}
 
 
-	public String getCurrentFilePubblico() {
+	public boolean isCurrentFilePubblico() {
 		return currentFilePubblico;
 	}
 
 
-	public void setCurrentFilePubblico(String currentFilePubblico) {
+	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
 	}
+
+
+	
 
 
 	

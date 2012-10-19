@@ -231,18 +231,18 @@ public class AttoService {
 	}
 
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream,
-			String nomeFile, String tipologia) {
+			Allegato allegato, String tipologia) {
 
-		Allegato allegato = null;
+		
 
 		try {
 
 			WebResource webResource = client.resource(url);
 			FormDataMultiPart part = new FormDataMultiPart();
-			part.bodyPart(new StreamDataBodyPart("file", stream, nomeFile));
+			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
-
+			part.field("pubblico", ""+allegato.isPubblico());   
 			ClientResponse response = webResource
 					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
 					.header("Accept-Charset", "UTF-8")
@@ -255,7 +255,6 @@ public class AttoService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {
@@ -287,7 +286,8 @@ public class AttoService {
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
 			part.field("organismoStatutario", allegato.getOrganismoStatutario());
-
+			part.field("pubblico", ""+allegato.isPubblico());
+			
 			ClientResponse response = webResource
 					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
 					.header("Accept-Charset", "UTF-8")
@@ -331,7 +331,8 @@ public class AttoService {
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
 			part.field("consultazione", allegato.getConsultazione());
-
+			part.field("pubblico", ""+allegato.isPubblico());
+			
 			ClientResponse response = webResource
 					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
 					.header("Accept-Charset", "UTF-8")

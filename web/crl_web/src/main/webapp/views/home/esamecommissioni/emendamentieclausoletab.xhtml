@@ -141,9 +141,8 @@
 						</h:column>
 
 								<h:column>
-									<f:facet name="header">Azioni</f:facet>
-									<h:outputText
-										value="#{fn:substring(emendamento.nome, fn:indexOf(emendamento.nome,'.')+1 ,fn:length(emendamento.nome) )}" />
+									<f:facet name="header">Formato</f:facet>
+									#{emendamento.mimetype}
 
 								</h:column>
 
@@ -456,9 +455,8 @@
 						</h:column>
 
 								<h:column>
-									<f:facet name="header">Documento</f:facet>
-									<h:outputText
-										value="#{fn:substring(testoClausola.nome, fn:indexOf(testoClausola.nome,'.')+1 ,fn:length(testoClausola.nome) )}" />
+									<f:facet name="header">Formato</f:facet>
+									#{testoClausola.mimetype}
 
 								</h:column>
 

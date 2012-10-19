@@ -48,8 +48,8 @@ public class ConsultazioniPareriController {
 	private String esito;
 	private String noteParere;
 
-	private List<Allegato> allegatiParereList = new ArrayList<Allegato>();
-	private List<Allegato> allegatiConsultazioneList = new ArrayList<Allegato>();
+	/*private List<Allegato> allegatiParereList = new ArrayList<Allegato>();
+	private List<Allegato> allegatiConsultazioneList = new ArrayList<Allegato>();*/
 	
 	private String allegatoParereToDelete;
 	private boolean currentFilePubblico;
@@ -147,13 +147,13 @@ public class ConsultazioniPareriController {
 			setDataRicezioneOrgano(organismoSelected.getParere().getDataRicezioneOrgano());
 			setEsito(organismoSelected.getParere().getEsito());
 			setNoteParere(organismoSelected.getParere().getNote());
-			setAllegatiParereList(organismoSelected.getParere().getAllegati());
+			
 		} else {
 			setDataRicezioneParere(null);
 			setDataRicezioneOrgano(null);
 			setEsito("");
 			setNoteParere("");
-			setAllegatiParereList(new ArrayList<Allegato>());
+			
 		}
 	}
 
@@ -192,6 +192,7 @@ public class ConsultazioniPareriController {
 			Allegato allegatoParereRet = new Allegato();
 			allegatoParereRet.setNome(fileName);
 			allegatoParereRet.setOrganismoStatutario(descrizioneOrganismoSelected);
+			allegatoParereRet.setPubblico(currentFilePubblico);
            
 			try {
 				allegatoParereRet = attoServiceManager
@@ -200,24 +201,26 @@ public class ConsultazioniPareriController {
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(), allegatoParereRet);
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			
+            
+			setCurrentFilePubblico(false);
 			attoBean.getWorkingOrganismoStatutario(descrizioneOrganismoSelected)
 					.getParere().getAllegati().add(allegatoParereRet);
 
-			allegatiParereList.add(allegatoParereRet);
+			//organismoSelected.getParere().getAllegati().add(allegatoParereRet);
 		}
 		}
 	}
 
 	private boolean checkAllegatoParere(String fileName) {
 
-		for (Allegato element : allegatiParereList) {
+		for (Allegato element : organismoSelected.getParere().getAllegati()) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (element.getNome().equals(fileName)) {
 
 				return false;
 			}
@@ -229,12 +232,12 @@ public class ConsultazioniPareriController {
 
 	public void removeAllegatoParere() {
 
-		for (Allegato element : allegatiParereList) {
+		for (Allegato element : organismoSelected.getParere().getAllegati()) {
 
 			if (element.getId().equals(allegatoParereToDelete)) {
 
 				// TODO Alfresco delete
-				allegatiParereList.remove(element);
+				organismoSelected.getParere().getAllegati().remove(element);
 				break;
 			}
 		}
@@ -279,7 +282,7 @@ public class ConsultazioniPareriController {
 			setDiscussa(consultazioneSelected.isDiscussa());
 			setNoteConsultazione(consultazioneSelected.getNote());
 			setSoggettiInvitatiList(consultazioneSelected.getSoggettiInvitati());
-			setAllegatiConsultazioneList(consultazioneSelected.getAllegati());
+			
 		}
 
 		else {
@@ -288,7 +291,7 @@ public class ConsultazioniPareriController {
 			setDiscussa(false);
 			setNoteConsultazione("");
 			setSoggettiInvitatiList(new ArrayList<SoggettoInvitato>());
-			setAllegatiConsultazioneList(new ArrayList<Allegato>());
+			
 		}
 	}
 
@@ -351,7 +354,7 @@ public class ConsultazioniPareriController {
 
 		for (Consultazione element : consultazioniList) {
 
-			if (element.getDescrizione().equals(soggettoConsultato)) {
+			if (soggettoConsultato.equals(element.getDescrizione())) {
 
 				return false;
 			}
@@ -400,7 +403,7 @@ public class ConsultazioniPareriController {
 
 		for (SoggettoInvitato element : soggettiInvitatiList) {
 
-			if (element.getDescrizione().equals(nomeSoggettoInvitato)) {
+			if (nomeSoggettoInvitato.equals(element.getDescrizione())) {
 
 				return false;
 			}
@@ -459,7 +462,7 @@ public class ConsultazioniPareriController {
 				Allegato allegatoConsultazioneRet = new Allegato();
 				allegatoConsultazioneRet.setNome(fileName);
 				allegatoConsultazioneRet.setConsultazione(descrizioneConsultazioneSelected);  
-				
+				allegatoConsultazioneRet.setPubblico(currentFilePubblico);
 				
 				
 				try {
@@ -471,24 +474,27 @@ public class ConsultazioniPareriController {
 											.getSessionMap().get("attoBean"))
 											.getAtto(), event.getFile()
 											.getInputstream(), allegatoConsultazioneRet);
+					
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
+                 
+				setCurrentFilePubblico(false);
 				attoBean.getWorkingConsultazione(
 						descrizioneConsultazioneSelected).getAllegati()
 						.add(allegatoConsultazioneRet);
 
-				allegatiConsultazioneList.add(allegatoConsultazioneRet);
+				//consultazioneSelected.getAllegati().add(allegatoConsultazioneRet);
 			}
 		}
 	}
 
 	private boolean checkAllegatoConsultazione(String fileName) {
 
-		for (Allegato element : allegatiConsultazioneList) {
+		for (Allegato element : consultazioneSelected.getAllegati()) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getNome())) {
 
 				return false;
 			}
@@ -500,12 +506,12 @@ public class ConsultazioniPareriController {
 
 	public void removeAllegatoConsultazione() {
 
-		for (Allegato element : allegatiConsultazioneList) {
+		for (Allegato element : consultazioneSelected.getAllegati()) {
 
 			if (element.getId().equals(allegatoConsultazioneToDelete)) {
 
 				// TODO Alfresco delete
-				allegatiConsultazioneList.remove(element);
+				consultazioneSelected.getAllegati().remove(element);
 				break;
 			}
 		}
@@ -586,13 +592,7 @@ public class ConsultazioniPareriController {
 		this.descrizioneOrganismoSelected = descrizioneOrganismoSelected;
 	}
 
-	public List<Allegato> getAllegatiParereList() {
-		return allegatiParereList;
-	}
-
-	public void setAllegatiParereList(List<Allegato> allegatiParereList) {
-		this.allegatiParereList = allegatiParereList;
-	}
+	
 
 	public String getAllegatoParereToDelete() {
 		return allegatoParereToDelete;
@@ -675,15 +675,7 @@ public class ConsultazioniPareriController {
 		this.soggettiInvitatiList = soggettiInvitatiList;
 	}
 
-	public List<Allegato> getAllegatiConsultazioneList() {
-		return allegatiConsultazioneList;
-	}
-
-	public void setAllegatiConsultazioneList(
-			List<Allegato> allegatiConsultazioneList) {
-		this.allegatiConsultazioneList = allegatiConsultazioneList;
-	}
-
+	
 	public Consultazione getConsultazioneSelected() {
 		return consultazioneSelected;
 	}

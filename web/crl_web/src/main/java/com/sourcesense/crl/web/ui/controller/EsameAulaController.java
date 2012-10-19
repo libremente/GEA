@@ -301,10 +301,12 @@ public class EsameAulaController {
 								.get("attoBean")).getAtto(), event
 								.getFile().getInputstream(),
 							allegatoRet);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+            
+			setCurrentFilePubblico(false);
 			attoBean.getWorkingAula().getTestiAttoVotatoEsameAula().add(allegatoRet);
 			testiAttoVotatoList.add(allegatoRet);
 		}
@@ -395,7 +397,7 @@ public class EsameAulaController {
 			emendamentoRet.setNome(event.getFile().getFileName());
 			emendamentoRet.setPubblico(currentFilePubblico);
 			emendamentoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
-
+             
 
 			try {
 				emendamentoRet = aulaServiceManager.uploadEmendamentoEsameAula(
@@ -404,12 +406,14 @@ public class EsameAulaController {
 								.get("attoBean")).getAtto(), event
 								.getFile().getInputstream(),
 								emendamentoRet);
+				emendamentoRet.setPubblico(currentFilePubblico);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			
-			
+			setCurrentFilePubblico(false);
 
 			attoBean.getWorkingAula().getEmendamentiEsameAula().add(emendamentoRet);
 
@@ -582,12 +586,13 @@ public class EsameAulaController {
 								.getExternalContext().getSessionMap()
 								.get("attoBean")).getAtto(), event
 								.getFile().getInputstream(), allegatoRet);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			
-			
+			setCurrentFilePubblico(false);
 			attoBean.getWorkingAula().getAllegatiEsameAula().add(allegatoRet);
 
 			allegatiList.add(allegatoRet);
