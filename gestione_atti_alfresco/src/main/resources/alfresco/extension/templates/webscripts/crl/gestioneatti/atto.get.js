@@ -4,6 +4,7 @@ var id = args.id;
 var attoFolderNode = null;
 var notePresentazioneAssegnazioneNode = null;
 var pareri = null;
+var consultazioni = null;
 var links = null;
 if(checkIsNotNull(id)){
 	attoFolderNode = utils.getNodeFromString(id);
@@ -28,11 +29,14 @@ if(checkIsNotNull(id)){
 	if(pareriFolderNode!=null && pareriFolderNode!=undefined){
 		pareri = pareriFolderNode.getChildAssocsByType("crlatti:parere");
 	}
-
-//	//lettura commissioni
-//	var commissioniFolderXPathQuery = "*[@cm:name='Commissioni']";
-//	var commissioniFolderNode = attoFolderNode.childrenByXPath(commissioniFolderXPathQuery)[0];
-//	commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
+	
+	
+	//lettura pareri
+	var consultazioniFolderXPathQuery = "*[@cm:name='Consultazioni']";
+	var consultazioniFolderNode = attoFolderNode.childrenByXPath(consultazioniFolderXPathQuery)[0];
+	if(consultazioniFolderNode!=null && consultazioniFolderNode!=undefined){
+		consultazioni = consultazioniFolderNode.getChildAssocsByType("crlatti:consultazione");
+	}
 	
 
 	// gestione passaggi
@@ -56,6 +60,7 @@ var tipoAtto = typeQName.substring(12).toUpperCase();
 model.notePresentazioneAssegnazione = notePresentazioneAssegnazioneNode;
 model.links = links;
 model.organismiStatutari = pareri;
+model.consultazioni = consultazioni;
 model.passaggi = passaggi;
 model.atto = attoFolderNode;
 model.tipoAtto = tipoAtto;

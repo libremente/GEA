@@ -72,7 +72,6 @@
     "note":"<#if atto.properties["crlatti:noteMis"]?exists>${atto.properties["crlatti:noteMis"]}<#else></#if>",
 	</#if>
 
-
     "notePresentazioneAssegnazione":"<#if notePresentazioneAssegnazione?exists>${notePresentazioneAssegnazione.content}<#else></#if>",
 	"linksPresentazioneAssegnazione":[
 	<#if links?exists>
@@ -88,6 +87,42 @@
 	</#list>
 	</#if>
 	],
+	"allegati": [
+	<#assign allegatiAttoFolder = atto.childrenByXPath["*[@cm:name='Allegati']"][0]>
+	<#assign allegati = allegatiAttoFolder.getChildAssocsByType("crlatti:allegato")>
+	<#list allegati as allegato>
+		{
+			"allegato" : 
+			{
+				 "id" : "${allegato.nodeRef}",
+				 "nome" : "${allegato.name}",
+				 "mimetype" : "${allegato.mimetype}",
+				 "tipologia" : "<#if allegato.properties["crlatti:tipologia"]?exists>${allegato.properties["crlatti:tipologia"]}<#else></#if>",
+				 "pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+				 "provenienza" : "<#if allegato.properties["crlatti:provenienza"]?exists>${allegato.properties["crlatti:provenienza"]}<#else></#if>",
+				 "downloadUrl": "${allegato.downloadUrl}"
+			}
+		}<#if allegato_has_next>,</#if>
+	</#list>
+	],
+	"testiAtto": [
+	<#assign testiAttoFolder = atto.childrenByXPath["*[@cm:name='Testi']"][0]>
+	<#assign testi = testiAttoFolder.getChildAssocsByType("crlatti:testo")>
+	<#list testi as testo>
+		{
+			"attoRecord" : 
+			{
+				 "id" : "${testo.nodeRef}",
+				 "nome" : "${testo.name}",
+				 "mimetype" : "${testo.mimetype}",
+				 "tipologia" : "<#if testo.properties["crlatti:tipologia"]?exists>${testo.properties["crlatti:tipologia"]}<#else></#if>",
+				 "pubblico" : "<#if testo.properties["crlatti:pubblico"]?exists>${testo.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+				 "provenienza" : "<#if testo.properties["crlatti:provenienza"]?exists>${testo.properties["crlatti:provenienza"]}<#else></#if>",
+				 "downloadUrl":"${testo.downloadUrl}"
+			}
+		}<#if testo_has_next>,</#if>
+	</#list>
+	],
 	"relatori" : [<#if atto.properties["crlatti:relatori"]?exists>
 	
 	<#list atto.properties["crlatti:relatori"] as relatore>
@@ -102,7 +137,8 @@
 	
 		<#else>
 	</#if>],
-	"organismiStatutari" : [<#if organismiStatutari?exists>
+	"organismiStatutari" : [
+		<#if organismiStatutari?exists>
 		<#list organismiStatutari as organismoStatutario>
 			{
 				"organismoStatutario" :
@@ -118,15 +154,82 @@
 						{
 						"descrizione" : "<#if organismoStatutario.properties["crlatti:organismoStatutarioParere"]?exists>${organismoStatutario.properties["crlatti:organismoStatutarioParere"]}<#else></#if>",
 						"dataRicezioneParere" : "<#if organismoStatutario.properties["crlatti:dataRicezioneParere"]?exists>${organismoStatutario.properties["crlatti:dataRicezioneParere"]?string("yyyy-MM-dd")}<#else></#if>",
-						"esito" : "<#if organismoStatutario.properties["crlatti:esitoParere"]?exists>${organismoStatutario.properties["crlatti:esitoParere"]?string("yyyy-MM-dd")}<#else></#if>",
+						"esito" : "<#if organismoStatutario.properties["crlatti:esitoParere"]?exists>${organismoStatutario.properties["crlatti:esitoParere"]}<#else></#if>",
 						"dataRicezioneOrgano" : "<#if organismoStatutario.properties["crlatti:dataRicezioneOrganoParere"]?exists>${organismoStatutario.properties["crlatti:dataRicezioneOrganoParere"]?string("yyyy-MM-dd")}<#else></#if>",
-						"note" : "<#if organismoStatutario.properties["crlatti:noteParere"]?exists>${organismoStatutario.properties["crlatti:noteParere"]?string("yyyy-MM-dd")}<#else></#if>"		
+						"note" : "<#if organismoStatutario.properties["crlatti:noteParere"]?exists>${organismoStatutario.properties["crlatti:noteParere"]}<#else></#if>",
+						"allegati": [
+							<#assign allegatiParereFolder = organismoStatutario.childrenByXPath["*[@cm:name='Allegati']"][0]>
+							<#assign allegatiParere = allegatiParereFolder.getChildAssocsByType("crlatti:allegato")>
+							<#list allegatiParere as allegato>
+							{
+								"allegato" : 
+								{
+									 "id" : "${allegato.nodeRef}",
+									 "nome" : "${allegato.name}",
+									 "mimetype" : "${allegato.mimetype}",
+									 "tipologia" : "<#if allegato.properties["crlatti:tipologia"]?exists>${allegato.properties["crlatti:tipologia"]}<#else></#if>",
+									 "pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+									 "provenienza" : "<#if allegato.properties["crlatti:provenienza"]?exists>${allegato.properties["crlatti:provenienza"]}<#else></#if>",
+									 "downloadUrl": "${allegato.downloadUrl}"
+								}
+							}<#if allegato_has_next>,</#if>
+						</#list>
+							]
 						}
 					}
 			
 			    }
 			}
 			<#if organismoStatutario_has_next>,</#if>
+    	</#list>
+    <#else></#if>],
+    "consultazioni" : [<#if consultazioni?exists>
+		<#list consultazioni as consultazione>
+			{
+				"consultazione" :
+				{
+					"descrizione" : "${consultazione.name}",
+					"dataConsultazione" : "<#if consultazione.properties["crlatti:dataConsultazione"]?exists>${consultazione.properties["crlatti:dataConsultazione"]?string("yyyy-MM-dd")}<#else></#if>",
+					"prevista" : "<#if consultazione.properties["crlatti:previstaConsultazione"]?exists>${consultazione.properties["crlatti:previstaConsultazione"]?string("true","false")}<#else></#if>",
+					"discussa" : "<#if consultazione.properties["crlatti:discussaConsultazione"]?exists>${consultazione.properties["crlatti:discussaConsultazione"]?string("true","false")}<#else></#if>",
+					"dataSeduta" :  "<#if consultazione.properties["crlatti:dataSedutaConsultazione"]?exists>${consultazione.properties["crlatti:dataSedutaConsultazione"]?string("yyyy-MM-dd")}<#else></#if>",
+					"note" : "<#if consultazione.properties["crlatti:noteConsultazione"]?exists>${consultazione.properties["crlatti:noteConsultazione"]}<#else></#if>",
+					"soggettiInvitati" : [
+						<#assign soggettiConsultazioneFolder = consultazione.childrenByXPath["*[@cm:name='SoggettiInvitati']"][0]>
+						<#assign soggettiConsultazione = soggettiConsultazioneFolder.getChildAssocsByType("crlatti:soggettoInvitato")>
+						<#list soggettiConsultazione as soggetto>
+						{
+							"soggettoInvitato" : 
+							{
+								"descrizione" : "<#if soggetto.properties["crlatti:descrizioneSoggettoInvitato"]?exists>${soggetto.properties["crlatti:descrizioneSoggettoInvitato"]}<#else></#if>",
+								"intervenuto" : "<#if soggetto.properties["crlatti:intervenutoSoggettoInvitato"]?exists>${soggetto.properties["crlatti:intervenutoSoggettoInvitato"]?string("true","false")}<#else></#if>"
+							}
+						}<#if soggetto_has_next>,</#if>
+						</#list>
+					],
+					"allegati" : [
+						<#assign allegatiConsultazioneFolder = consultazione.childrenByXPath["*[@cm:name='Allegati']"][0]>
+						<#assign allegatiConsultazione = allegatiConsultazioneFolder.getChildAssocsByType("crlatti:allegato")>
+						<#list allegatiConsultazione as allegato>
+						{
+							"allegato" : 
+							{
+								 "id" : "${allegato.nodeRef}",
+								 "nome" : "${allegato.name}",
+								 "mimetype" : "${allegato.mimetype}",
+								 "tipologia" : "<#if allegato.properties["crlatti:tipologia"]?exists>${allegato.properties["crlatti:tipologia"]}<#else></#if>",
+								 "pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+								 "provenienza" : "<#if allegato.properties["crlatti:provenienza"]?exists>${allegato.properties["crlatti:provenienza"]}<#else></#if>",
+								 "downloadUrl": "${allegato.downloadUrl}"
+							}
+						}<#if allegato_has_next>,</#if>
+						</#list>
+					]
+					
+    			}
+    		}
+
+    		<#if consultazione_has_next>,</#if>
     	</#list>
     <#else></#if>],
     
@@ -173,6 +276,46 @@
 							"dataIstituzioneComitato" : "<#if comitato.properties["crlatti:dataIstituzioneCR"]?exists>${comitato.properties["crlatti:dataIstituzioneCR"]?string("yyyy-MM-dd")}<#else></#if>",
 							"dataFineLavoriComitato" : "<#if comitato.properties["crlatti:dataFineLavoriCR"]?exists>${comitato.properties["crlatti:dataFineLavoriCR"]?string("yyyy-MM-dd")}<#else></#if>",
 							"presenzaComitatoRistretto": "<#if comitato.properties["crlatti:presenzaCR"]?exists>${comitato.properties["crlatti:presenzaCR"]?string("true","false")}<#else></#if>",
+							"allegati" : [
+								<#assign allegatiCommissioneFolder = commissione.childrenByXPath["*[@cm:name='Allegati']"][0]>
+								<#assign allegatiCommissione = allegatiCommissioneFolder.children>
+								<#list allegatiCommissione as allegato>
+								{
+									"allegato" : 
+									{
+										 "id" : "${allegato.nodeRef}",
+										 "nome" : "${allegato.name}",
+										 "mimetype" : "${allegato.mimetype}",
+										 "tipologia" : "<#if allegato.properties["crlatti:tipologia"]?exists>${allegato.properties["crlatti:tipologia"]}<#else></#if>",
+										 "pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+										 "provenienza" : "<#if allegato.properties["crlatti:provenienza"]?exists>${allegato.properties["crlatti:provenienza"]}<#else></#if>",
+										 "downloadUrl": "${allegato.downloadUrl}",
+										 "dataSeduta": "<#if allegato.properties["crlatti:dataSedutaTestoCR"]?exists>${allegato.properties["crlatti:dataSedutaTestoCR"]?string("yyyy-MM-dd")}<#else></#if>"
+									}
+								}<#if allegato_has_next>,</#if>
+									</#list>
+							],
+							"testiAttoVotatoEsameCommissioni" : 
+							[
+								<#assign testiCommissioneFolder = commissione.childrenByXPath["*[@cm:name='Testi']"][0]>
+								<#assign testiCommissione = testiCommissioneFolder.getChildAssocsByType("crlatti:testo")>
+								<#list testiCommissione as testo>
+							
+								{
+									"attoRecord" : 
+									{
+										 "id" : "${testo.nodeRef}",
+										 "nome" : "${testo.name}",
+										 "mimetype" : "${testo.mimetype}",
+										 "tipologia" : "<#if testo.properties["crlatti:tipologia"]?exists>${testo.properties["crlatti:tipologia"]}<#else></#if>",
+										 "pubblico" : "<#if testo.properties["crlatti:pubblico"]?exists>${testo.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+										 "provenienza" : "<#if testo.properties["crlatti:provenienza"]?exists>${testo.properties["crlatti:provenienza"]}<#else></#if>",
+										 "downloadUrl":"${testo.downloadUrl}"
+									}
+								}<#if testo_has_next>,</#if>
+								</#list>
+							
+							],
 							
 					    	"relatori" : [<#if atto.properties["crlatti:relatori"]?exists>
 	
@@ -191,6 +334,7 @@
 								</#list>
 									<#else>
 								</#if>],
+								
 						   	"comitatoRistretto" : 
 						   	{
 						   		"comitatoRistretto" : {
@@ -210,8 +354,8 @@
 										}
 										<#if componente_has_next>,</#if>
 									</#list>
-							   			
 							   			]
+							   		
 						   		}
 						   	},			
 						   	 					
@@ -235,6 +379,14 @@
    							"ritiratiEsameCommissioni": "<#if commissione.properties["crlatti:numEmendRitiratiEsame"]?exists>${commissione.properties["crlatti:numEmendRitiratiEsame"]}<#else></#if>",
    							"respintiEsameCommissioni": "<#if commissione.properties["crlatti:numEmendRespintiEsame"]?exists>${commissione.properties["crlatti:numEmendRespintiEsame"]}<#else></#if>",
 							"noteEmendamentiEsameCommissioni": "<#if commissione.properties["crlatti:noteEmendamentiEsame"]?exists>${commissione.properties["crlatti:noteEmendamentiEsame"]}<#else></#if>",
+							
+							<#if commissione.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]?exists>
+							<#assign noteGenerali = commissione.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]>
+							
+							"noteGeneraliEsameCommissione": "${noteGenerali.content}",
+							<#else>
+							"noteGeneraliEsameCommissione": "",
+							</#if>
 							"linksNoteEsameCommissione":[
 							<#assign links = commissione.childrenByXPath["*[@cm:name='Links']"][0]>
 			    			<#assign linksList = links.getChildAssocsByType("crlatti:link")>
@@ -249,6 +401,7 @@
 								}<#if link_has_next>,</#if>
 							</#list>
 							]
+							
 							}
 						}
 						<#if commissione_has_next>,</#if>
@@ -306,6 +459,13 @@
 						 	"articoli": "<#if aula.properties["crlatti:articoliAula"]?exists>${aula.properties["crlatti:articoliAula"]}<#else></#if>",
 						 	"noteStralcio": "<#if aula.properties["crlatti:noteStralcioAula"]?exists>${aula.properties["crlatti:noteStralcioAula"]}<#else></#if>",
 						 	"quorumEsameAula": "<#if aula.properties["crlatti:quorumEsameAula"]?exists>${aula.properties["crlatti:quorumEsameAula"]}<#else></#if>",
+						 	<#if aula.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]?exists>
+							<#assign noteGenerali = aula.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]>
+							
+							"noteGeneraliEsameAula": "${noteGenerali.content}",
+							<#else>
+							"noteGeneraliEsameAula": "",
+							</#if>
 							"linksEsameAula":[
 							<#assign links = aula.childrenByXPath["*[@cm:name='Links']"][0]>
 			    			<#assign linksList = links.getChildAssocsByType("crlatti:link")>
@@ -319,6 +479,44 @@
 									}
 								}<#if link_has_next>,</#if>
 							</#list>
+							],
+							"allegatiEsameAula" : [
+								<#assign allegatiAulaFolder = aula.childrenByXPath["*[@cm:name='Allegati']"][0]>
+								<#assign allegatiAula = allegatiAulaFolder.getChildAssocsByType("crlatti:allegato")>
+								<#list allegatiAula as allegato>
+								{
+									"allegato" : 
+									{
+										 "id" : "${allegato.nodeRef}",
+										 "nome" : "${allegato.name}",
+										 "mimetype" : "${allegato.mimetype}",
+										 "tipologia" : "<#if allegato.properties["crlatti:tipologia"]?exists>${allegato.properties["crlatti:tipologia"]}<#else></#if>",
+										 "pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+										 "provenienza" : "<#if allegato.properties["crlatti:provenienza"]?exists>${allegato.properties["crlatti:provenienza"]}<#else></#if>",
+										 "downloadUrl": "${allegato.downloadUrl}"
+									}
+								}<#if allegato_has_next>,</#if>
+									</#list>
+							],
+							"testiAttoVotatoEsameAula" : 
+							[
+								<#assign testiAulaFolder = aula.childrenByXPath["*[@cm:name='Testi']"][0]>
+								<#assign testiAula = testiAulaFolder.getChildAssocsByType("crlatti:testo")>
+								<#list testiAula as testo>
+								{
+									"attoRecord" : 
+									{
+										 "id" : "${testo.nodeRef}",
+										 "nome" : "${testo.name}",
+										 "mimetype" : "${testo.mimetype}",
+										 "tipologia" : "<#if testo.properties["crlatti:tipologia"]?exists>${testo.properties["crlatti:tipologia"]}<#else></#if>",
+										 "pubblico" : "<#if testo.properties["crlatti:pubblico"]?exists>${testo.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+										 "provenienza" : "<#if testo.properties["crlatti:provenienza"]?exists>${testo.properties["crlatti:provenienza"]}<#else></#if>",
+										 "downloadUrl":"${testo.downloadUrl}"
+									}
+								}<#if testo_has_next>,</#if>
+								</#list>
+							
 							]
 			    		
 			    	}

@@ -20,7 +20,7 @@
 		
 		var testForm = document.createElement("form");
  		testForm.setAttribute("method","post");
- 		testForm.setAttribute("action","http://localhost:9090/alfresco/service/crl/template/lettere/crealettera?alf_ticket=${session.ticket}");
+ 		testForm.setAttribute("action","http://localhost:8080/alfresco/service/crl/template/lettere/crealettera?alf_ticket=${session.ticket}");
  		
  		var input = document.createElement("input");
  		input.setAttribute("type","hidden");

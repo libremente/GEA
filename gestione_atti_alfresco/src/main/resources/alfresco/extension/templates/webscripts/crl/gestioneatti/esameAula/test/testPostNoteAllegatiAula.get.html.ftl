@@ -42,18 +42,18 @@
 										"noteGeneraliEsameAula" : ""+note+"",
 										"linksEsameAula" : [
 											{
-												"link":{
+												
 													"descrizione":"Yahoo",
 													"indirizzo":"http://www.yahoo.it",
 													"pubblico":true
-												}
+												
 											},
 											{
-												"link":{
+												
 													"descrizione":"Google",
 													"indirizzo":"http://www.google.it",
 													"pubblico":true
-												}
+												
 											}
 										]	
 								}

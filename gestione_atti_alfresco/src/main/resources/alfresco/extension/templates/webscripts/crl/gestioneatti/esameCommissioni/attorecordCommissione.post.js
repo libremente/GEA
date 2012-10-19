@@ -15,7 +15,7 @@ for each (field in formdata.fields) {
 	tipologia = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
-  } else if(field.name == "provenienza"){
+  } else if(field.name == "commissione"){
 	provenienza = field.value;
   } else if(field.name == "passaggio"){
 	passaggio = field.value;

@@ -2,6 +2,7 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
+var statoAtto = atto.get("stato");
 // suppongo che ci sia solo un passaggio essendo la fase di assegnazione antecedente all'esame commissioni e all'esame aula
 var commissioni = atto.get("passaggi").get(0).get("passaggio").get("commissioni");
 var organismiStatutari = atto.get("organismiStatutari");
@@ -82,6 +83,8 @@ if(checkIsNotNull(id)){
 		
 		
 		attoNode.setPermission("Coordinator", "GROUP_"+descrizione);
+		
+		
 		
 	}
 	
@@ -235,6 +238,9 @@ if(checkIsNotNull(id)){
 		}
 	}
 	
+	
+	attoNode.properties["crlatti:statoAtto"] = statoAtto;
+	attoNode.save();
 	
 	model.atto = attoNode;
 	

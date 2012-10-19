@@ -18,14 +18,17 @@ if(username=="protocollo" || username=="admin"){
 	if(idProtocolloAllegato == ""){
 		status.code = 400;
 		status.message = "ID protocollo allegato non valorizzato";
+		protocolloLogger.error(status.message);
 		status.redirect = true;
 	} else if(filename == ""){
 		status.code = 400;
 		status.message = "filename allegato non valorizzato";
+		protocolloLogger.error(status.message);
 		status.redirect = true;
 	} else if(content==null){ 
 		status.code = 400;
 		status.message = "content allegato non valorizzato";
+		protocolloLogger.error(status.message);
 		status.redirect = true;
 	} else {
 		
@@ -66,12 +69,16 @@ if(username=="protocollo" || username=="admin"){
 		
 		allegatoNode.addAspect("crlatti:importatoDaProtocollo");
 		allegatoNode.properties["crlatti:idProtocolloAtto"] = idProtocolloAtto;
-		allegatoNode.save();			
+		allegatoNode.save();
+		
+		protocolloLogger.info("Allegato modificato correttamente. Atto idProtocottoAtto:"+idProtocolloAtto);	
+
 		
 	}
 
 } else {
 	status.code = 401;
 	status.message = "utenza non abilitata ad accedere a questo servizio";
+	protocolloLogger.error(status.message);
 	status.redirect = true;
 }

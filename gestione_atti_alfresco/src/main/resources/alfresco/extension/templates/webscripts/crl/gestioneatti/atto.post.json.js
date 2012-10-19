@@ -5,6 +5,7 @@ var legislatura = atto.get("legislatura");
 var tipologia = atto.get("tipologia");
 var numeroAtto = atto.get("numeroAtto");
 var tipoAtto = atto.get("tipoAtto");
+var stato = atto.get("stato");
 var dataImportazione = new Date();
 var mese = dataImportazione.getMonth() + 1;
 var anno = dataImportazione.getFullYear();
@@ -220,7 +221,7 @@ if(nodeType=="crlatti:attoEac"){
 	misAttoFolderNode.properties["crlatti:esitoVotoIntesaMis"] = esitoVotoIntesa;
 	misAttoFolderNode.properties["crlatti:numeroAttoUdpMis"] = numeroAttoUdp;
 	misAttoFolderNode.properties["crlatti:istitutoIncaricatoMis"] = istitutoIncaricato;
-	
+
 	misAttoFolderNode.save();
 	model.atto = misAttoFolderNode;
 	
@@ -282,6 +283,7 @@ if(nodeType=="crlatti:attoEac"){
 		attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
 		attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 		attoFolderNode.properties["crlatti:anno"] = anno;
+		attoFolderNode.properties["crlatti:statoAtto"] = stato;
 		attoFolderNode.save();
 		
 		if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){

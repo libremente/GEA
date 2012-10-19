@@ -345,29 +345,36 @@ if(username=="protocollo" || username=="admin"){
 				attoFolderNode.save();
 				attoFolderNode.addAspect("crlatti:importatoDaProtocollo");
 				model.atto = attoFolderNode;
-			
+							
 			} else if(checkIsNull(numeroAtto)){
 				status.code = 400;
 				status.message = "numero atto non valorizzato";
+				protocolloLogger.error(status.message);
 				status.redirect = true;
 			} else if(checkIsNull(tipoAtto)){
 				status.code = 400;
 				status.message = "tipoAtto per atto "+numeroAtto+" non valorizzato";
+				protocolloLogger.error(status.message);
 				status.redirect = true;
 			} else if(checkIsNull(legislatura)){
 				status.code = 400;
 				status.message = "Legislatura per atto "+numeroAtto+" non valorizzata";
+				protocolloLogger.error(status.message);
 				status.redirect = true;
 			} else if(checkIsNull(idProtocollo)){
 				status.code = 400;
 				status.message = "idProtocollo non valorizzato";
+				protocolloLogger.error(status.message);
 				status.redirect = true;
 			}
 			
 		} 
+		
+		protocolloLogger.info("Atto importato correttamente. Atto numero:"+numeroAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
 	}
 } else {
 	status.code = 401;
 	status.message = "utenza non abilitata ad accedere a questo servizio";
+	protocolloLogger.error(status.message);
 	status.redirect = true;
 }

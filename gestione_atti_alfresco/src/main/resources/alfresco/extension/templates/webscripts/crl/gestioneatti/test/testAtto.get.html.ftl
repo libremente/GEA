@@ -31,7 +31,8 @@
 			"numeroAtto" : ""+numeroAtto+"",
 			"tipoAtto" : ""+tipoAtto+"",
 			"tipologia" : ""+tipologia+"",
-			"legislatura" : ""+legislatura+""
+			"legislatura" : ""+legislatura+"",
+			"stato" : "Protocollato"
 			}
 		};
 		

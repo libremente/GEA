@@ -38,6 +38,7 @@
 		var attoCustom = {
 		"atto" : {
 			"id" : ""+id+"",
+			"stato" : "Assegnato a Commissioni",
 			"passaggi": [
 				{
 					"passaggio": {
