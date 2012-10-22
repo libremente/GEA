@@ -42,6 +42,24 @@
 							onclick="testoAttoDialog.hide()" type="button" />
 
 					</p:confirmDialog>
+					
+					
+					<p:confirmDialog id="confirmTrasmissioneDialog"
+						message="Conferma trasmissione"
+						header="Trasmissione " severity="alert"
+						widgetVar="trsmissioneAttoDialog">
+
+						<p:commandButton id="confirmTrasmDialog" value="Conferma"
+							oncomplete="trsmissioneAttoDialog.hide()"
+							action="#{esameCommissioniController.confermaTrasmissione}"
+					     	update="votazioneMsg, :informationForm:informationBar" />
+						
+						<p:commandButton id="declineTrasmAtto" value="Annulla"
+							onclick="trsmissioneAttoDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+					
+					
 					<p:confirmDialog id="uploadFileAttributesVotazione"
 						header="Caricamento"
 						widgetVar="uploadFileAttributesVotazioneDialog"
@@ -360,8 +378,8 @@
 			<p:row>
 				<p:column>
 					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva Trasmissione"
-						action="#{esameCommissioniController.confermaTrasmissione}"
-						update="votazioneMsg, :informationForm:informationBar" />
+					    oncomplete="trsmissioneAttoDialog.show()"
+						 />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
