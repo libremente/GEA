@@ -253,6 +253,7 @@ public class EsameAulaController {
 				.getSessionMap().get("userBean")).getUsername();
 		
 		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+		atto.setStato(StatoAtto.PRESO_CARICO_AULA);
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		
