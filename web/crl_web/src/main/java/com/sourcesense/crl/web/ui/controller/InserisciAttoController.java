@@ -95,9 +95,12 @@ public class InserisciAttoController {
 	
 	public String inserisciAtto() {
 		
+		
 		atto.setStato(StatoAtto.PROTOCOLLATO);
 		
 		Atto attoRet = attoServiceManager.persist(atto);
+		
+		
 		
 		if (attoRet!=null && attoRet.getError()==null) {
 
@@ -124,10 +127,16 @@ public class InserisciAttoController {
 			return null;
 			
 		}else {
+			
+			
 
 		    return null;
 
 		}
+		
+		 
+	          
+	      
 	}
 	
 	
@@ -138,7 +147,8 @@ public class InserisciAttoController {
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
 	}
-
+	
+	
 	
 
 	public Map<String, String> getTipiAtto() {

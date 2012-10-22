@@ -57,7 +57,7 @@ public class AttoService {
 
 			if (response.getStatus() == 500) {
 
-				atto.setError(response.getEntity(String.class));
+				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
 
 			} else if (response.getStatus() != 200) {
 
@@ -65,13 +65,14 @@ public class AttoService {
 						+ response.getStatus()
 						+ ": Alfresco non raggiungibile ");
 
-			}
+			}else{
 
 			String responseMsg = response.getEntity(String.class);
 			//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
 
 			attoRet = objectMapper.readValue(responseMsg, Atto.class);
 			atto.setId(attoRet.getId());
+			}
 
 		} catch (JsonMappingException e) {
 
