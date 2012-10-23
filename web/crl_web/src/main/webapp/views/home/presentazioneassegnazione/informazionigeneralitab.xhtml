@@ -176,19 +176,20 @@
 				</p:column>
 
 				<p:column>
-					<p:inputText readonly="false" id="tipoiniziativa"
-						value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
-						<p:ajax event="change"
-							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
-					</p:inputText>
-
-					<!-- <p:selectOneMenu id="tipoiniziativa"
+				<p:selectOneMenu id="tipoiniziativa"
 					value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
 					<f:selectItem itemLabel="Scegli tipo" itemValue="" />
-					<f:selectItems
-						value="#{presentazioneAssegnazioneAttoController.tipiIniziativa}" />
+					<f:selectItem itemLabel="Consiliare" itemValue="Consiliare" />
+					<f:selectItem itemLabel="Popolare" itemValue="Popolare" />
+					<f:selectItem itemLabel="d'Ufficio" itemValue="d'Ufficio" />
+					<f:selectItem itemLabel="Consiglio delle Autonomie locali" itemValue="Consiglio delle Autonomie locali" />
+					<f:selectItem itemLabel="Presidente della Giunta" itemValue="Presidente della Giunta" />
+					<f:selectItem itemLabel="Giunta" itemValue="Giunta" />
+					<f:selectItem itemLabel="Commissione europea" itemValue="Commissione europea" />
 					
-				</p:selectOneMenu> -->
+					
+				</p:selectOneMenu>	
+				
 				</p:column>
 
 				<p:column>
