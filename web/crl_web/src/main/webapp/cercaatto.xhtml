@@ -48,9 +48,6 @@
 						<p:panelGrid style="width:100%;margin-bottom:7px;"
 							id="searchPanel">
 
-
-
-
 							<p:messages id="msgs" />
 
 							<p:row>
@@ -506,7 +503,7 @@
 
 								<p:commandButton value="Cerca" update="listaAtti"
 									id="btncercaatto_cerca"
-									actionListener="#{searchAttoController.searchAtti()}" />
+									actionListener="#{searchAttoController.searchAtti}" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
 									<p:dataExporter type="xls" target="listaAtti"
@@ -552,7 +549,7 @@
 		<!-- Pannello ricerca end -->
 
 		<p:dataTable id="listaAtti" var="atto"
-			value="#{searchAttoController.lazyAttoModel}" rows="10"
+			value="#{searchAttoController.listAtti}" rows="10"
 			paginator="true"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 			paginatorAlwaysVisible="false" paginatorPosition="bottom">
@@ -561,7 +558,7 @@
 				<h:outputText value="#{atto.tipo}" />
 			</p:column>
 
-			<p:column headerText="N.Atto">
+			<p:column headerText="N.Atto" sortBy="#{atto.numeroAtto}">
 				<c:set value="#{atto.id}" var="idAttoParam" />
 				<p:commandLink
 					action="#{searchAttoController.attoDetail(idAttoParam)}"

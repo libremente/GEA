@@ -93,7 +93,8 @@ public class PresentazioneAssegnazioneAttoController {
 	private String statoCommitAmmissibilita = CRLMessage.COMMIT_DONE;
 	private String statoCommitAssegnazione = CRLMessage.COMMIT_DONE;
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
-
+	private boolean annullaAmmissibilita = false;
+	
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
 	private Date dataRicevimentoInformazioni;
@@ -168,7 +169,8 @@ public class PresentazioneAssegnazioneAttoController {
 				.getLinksPresentazioneAssegnazione()));
 
 	}
-
+	
+	
 	public void updateInfoGenHandler() {
 		setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
 	}
@@ -184,6 +186,14 @@ public class PresentazioneAssegnazioneAttoController {
 	public void updateNoteHandler() {
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
 	}
+	
+	
+	
+	public int sortTable(Object s1, Object s2) {
+        // just print something so I know this function is being invoked:
+        System.out.println("mySort" + s1 + "/" + s2);
+        return ((Date)s1).compareTo((Date)s2);
+    }
 
 	public void changeTabHandler() {
 
@@ -423,17 +433,15 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public String salvaAmmissibilita() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		// se Ammissibile : OK altrimenti KO
-		if (atto.getValutazioneAmmissibilita().equalsIgnoreCase("ammissibile")) {
+		if ("ammissibile".equalsIgnoreCase(atto.getValutazioneAmmissibilita())) {
 
 			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
 			attoServiceManager.salvaAmmissibilitaPresentazione(atto);
-
-			// TODO Service logic
-			FacesContext context = FacesContext.getCurrentInstance();
-			AttoBean attoBean = ((AttoBean) context.getExternalContext()
-					.getSessionMap().get("attoBean"));
-
 			attoBean.getAtto().setValutazioneAmmissibilita(
 					atto.getValutazioneAmmissibilita());
 			attoBean.getAtto().setDataRichiestaInformazioni(
@@ -456,16 +464,16 @@ public class PresentazioneAssegnazioneAttoController {
 					"Ammissibilità salvata con successo", ""));
 
 			return null;
-		} else {
+			
+		}else if("".equalsIgnoreCase(atto.getValutazioneAmmissibilita())){ 
+		
+			setAnnullaAmmissibilita(true);
+			return null;
+		
+		}else {
 			
 			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
 			attoServiceManager.salvaAmmissibilitaPresentazione(atto);
-
-			// TODO Service logic
-			FacesContext context = FacesContext.getCurrentInstance();
-			AttoBean attoBean = ((AttoBean) context.getExternalContext()
-					.getSessionMap().get("attoBean"));
-
 			attoBean.getAtto().setValutazioneAmmissibilita(
 					atto.getValutazioneAmmissibilita());
 			attoBean.getAtto().setDataRichiestaInformazioni(
@@ -491,6 +499,51 @@ public class PresentazioneAssegnazioneAttoController {
 			return "pretty:Chiusura_Iter";
 		}
 	}
+	
+	
+	public void annullaAmmissibilita(){
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		atto.setStato(StatoAtto.PRESO_CARICO_SC);
+		atto.setValutazioneAmmissibilita("");
+		atto.setDataRichiestaInformazioni(null);
+		atto.setDataRicevimentoInformazioni(null);
+		atto.setAiutiStato(false);
+		atto.setNormaFinanziaria(false);
+		atto.setRichiestaUrgenza(false);
+		atto.setVotazioneUrgenza(false);
+		atto.setDataVotazioneUrgenza(null);
+		atto.setNoteAmmissibilita("");
+		
+		
+		attoServiceManager.salvaAmmissibilitaPresentazione(atto);
+		
+		attoBean.getAtto().setValutazioneAmmissibilita(
+				atto.getValutazioneAmmissibilita());
+		attoBean.getAtto().setDataRichiestaInformazioni(
+				atto.getDataRichiestaInformazioni());
+		attoBean.getAtto().setDataRicevimentoInformazioni(
+				atto.getDataRicevimentoInformazioni());
+		attoBean.getAtto().setAiutiStato(atto.isAiutiStato());
+		attoBean.getAtto().setNormaFinanziaria(atto.isNormaFinanziaria());
+		attoBean.getAtto().setRichiestaUrgenza(atto.isRichiestaUrgenza());
+		attoBean.getAtto().setVotazioneUrgenza(atto.isVotazioneUrgenza());
+		attoBean.getAtto().setDataVotazioneUrgenza(
+				atto.getDataVotazioneUrgenza());
+		attoBean.getAtto()
+				.setNoteAmmissibilita(atto.getNoteAmmissibilita());
+		attoBean.getAtto().setStato(atto.getStato());
+
+		setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
+		setAnnullaAmmissibilita(false);
+		context.addMessage(null, new FacesMessage(
+				"Ammissibilità annullata con successo", ""));
+		
+	}
+	
 
 	// Assegnazione******************************************************
 	public void addCommissione() {
@@ -1409,5 +1462,15 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
 	}
+
+	public boolean isAnnullaAmmissibilita() {
+		return annullaAmmissibilita;
+	}
+
+	public void setAnnullaAmmissibilita(boolean annullaAmmissibilita) {
+		this.annullaAmmissibilita = annullaAmmissibilita;
+	}
+	
+	
 
 }

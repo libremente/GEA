@@ -15,6 +15,25 @@
 	<p:row>
 		<p:column>
 			<p:growl id="ammissibilitaMsg" showDetail="true" sticky="false" />
+			
+			<!-- Confirm dialog -->
+				<p:confirmDialog visible="#{presentazioneAssegnazioneAttoController.annullaAmmissibilita}" 
+				     
+				    id="confirmAmmissibilitaDialog"
+					message="Attenzione ! Procedendo verranno eliminati tutti i dati presenti "
+					header="Annulla ammissibilità" severity="alert"
+					widgetVar="annullaValiditaDialog">
+
+					<p:commandButton id="confirmAnnullaAmmiss" value="Conferma"
+						oncomplete="annullaValiditaDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.annullaAmmissibilita}"
+						update="formammissibilitaattopanel,ammissibilitaMsg,:informationForm:informationBar" />
+					<p:commandButton id="declineAnnullaAmmiss" value="Annulla"
+						onclick="annullaValiditaDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+			
+			
 		</p:column>
 	</p:row>
 	<p:row>
@@ -31,7 +50,6 @@
 							<p:selectOneMenu id="valutazioneammissibilità"
 								value="#{presentazioneAssegnazioneAttoController.valutazioneAmmissibilita}">
 								<f:selectItem itemLabel="Scegli valutazione" itemValue="" />
-								<f:selectItem itemLabel="Ricevibile" itemValue="Ricevibile" />
 								<f:selectItem itemLabel="Ammissibile" itemValue="Ammissibile" />
 								<f:selectItem itemLabel="Inammissibile"
 									itemValue="Inammissibile" />
@@ -175,7 +193,7 @@
 			<p>
 				<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva" id="confermaammissibilità"
 					action="#{presentazioneAssegnazioneAttoController.salvaAmmissibilita}" 
-					update="ammissibilitaMsg,:informationForm:informationBar"/>
+					update="ammissibilitaMsg,:informationForm:informationBar,:presAssForm:tabView:confirmAmmissibilitaDialog"/>
 			</p>
 		</p:column>
 	</p:row>

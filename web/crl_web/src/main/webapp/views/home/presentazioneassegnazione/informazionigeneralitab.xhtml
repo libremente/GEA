@@ -356,11 +356,7 @@
 	<p:fieldset rendered="#{navigationBean.isFirmatariEnabled()}" legend="Firmatari" toggleable="true" collapsed="false"
 		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="firmataripanel">
-			<!-- <p:row>
-				<p:column>
-					<p:commandButton value="Inserimento Multiplo" />
-				</p:column>
-			</p:row>-->
+			
 
 			<p:row>
 				<p:column colspan="6">
@@ -377,7 +373,7 @@
 							</p:row>
 						</f:facet>
 						<p:row>
-							<p:column>
+							<p:column >
 								<p:selectOneMenu id="firmatario"
 									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
 									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
@@ -432,21 +428,10 @@
 					<p:dataTable id="listaFirmatari"
 						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
 						var="firmatarioAdd" styleClass="generalInfoTab grey-text"
-						editable="true">
+						editable="true" >
 
-						<p:column headerText="Nome" style="width:125px">
-							<h:outputText value="#{firmatarioAdd.descrizione}" />
-							<!-- <p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{firmatarioAdd.descrizione}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:selectOneMenu value="#{firmatarioAdd.descrizione}">
-									<f:selectItems value="#{presentazioneAssegnazioneAttoController.firmatari}"/>
-
-									</p:selectOneMenu>
-							</f:facet>
-						</p:cellEditor> -->
+						<p:column headerText="Nome" style="width:125px" sortBy="#{firmatarioAdd.descrizione}">
+							<h:outputText value="#{firmatarioAdd.descrizione}" />						
 						</p:column>
 
 						<p:column headerText="Gruppo Consiliare">
@@ -465,11 +450,11 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column headerText="Data Firma" style="width:100px">
+						<p:column headerText="Data Firma"  sortBy="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{firmatarioAdd.dataFirma}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									<h:outputText value="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}" >
+										
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">

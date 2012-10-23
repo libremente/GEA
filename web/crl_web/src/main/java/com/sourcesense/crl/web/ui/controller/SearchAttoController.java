@@ -93,10 +93,10 @@ public class SearchAttoController {
 	
 	private String listaLavoro;
 	
-	private LazyDataModel<Atto> lazyAttoModel;
+	
 
-	private List<Atto> listAtti;
-
+	private List<Atto> listAtti = new ArrayList<Atto>();
+	
 	private String numeroAtto;
 
 	private Date dataIniziativaDa;
@@ -199,7 +199,7 @@ public class SearchAttoController {
 
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 
-	public void searchAtti() {
+	public void searchAtti() {          
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
@@ -273,7 +273,8 @@ public class SearchAttoController {
 		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
 		
 		setListAtti(attoServiceManager.searchAtti(atto));
-		lazyAttoModel = new LazyAttoDataModel(listAtti);
+		
+		
 	}
 
 	@PostConstruct
@@ -297,25 +298,12 @@ public class SearchAttoController {
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.findAll());
 
-		setListAtti(attoServiceManager.initListAtti());
-
-		setLazyAttoModel(new LazyAttoDataModel(listAtti));
+		//setListAtti(attoServiceManager.initListAtti());
+		setListAtti(attoServiceManager.searchAtti(atto));
+		
 	}
 
-	/**
-	 * @return the lazyAttoModel
-	 */
-	public LazyDataModel<Atto> getLazyAttoModel() {
-		return lazyAttoModel;
-	}
-
-	/**
-	 * @param lazyAttoModel
-	 *            the lazyAttoModel to set
-	 */
-	public void setLazyAttoModel(LazyDataModel<Atto> lazyAttoModel) {
-		this.lazyAttoModel = lazyAttoModel;
-	}
+	
 
 	
 	public String attoDetail(String idAttoParam) {
