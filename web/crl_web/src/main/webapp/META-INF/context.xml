@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<Context path="/crl">
-
-<Loader delegate="true" />
+<Context path="porcapaletta">
+	<Loader delegate="true" />
 </Context>
