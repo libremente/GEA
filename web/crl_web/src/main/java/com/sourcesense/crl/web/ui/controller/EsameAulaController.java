@@ -513,6 +513,8 @@ public class EsameAulaController {
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		
+		atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+		
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
 		esameAula.setAtto(atto);

@@ -253,11 +253,12 @@ public class ConsultazioniPareriController {
 
 		atto.setOrganismiStatutari(organismiList);
 
-		ConsultazioneParere consultazioneParere = new ConsultazioneParere();
-		consultazioneParere.setAtto(atto);
 		Target target = new Target();
 		target.setOrganismoStatutario(descrizioneOrganismoSelected);
-
+		
+		ConsultazioneParere consultazioneParere = new ConsultazioneParere();
+		consultazioneParere.setAtto(atto);
+		consultazioneParere.setTarget(target);
 		attoServiceManager.salvaPareri(consultazioneParere);
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -532,7 +533,16 @@ public class ConsultazioniPareriController {
 	}
 
 	public void setOrganismiList(List<OrganismoStatutario> organismiList) {
-		this.organismiList = organismiList;
+		
+		for (OrganismoStatutario organismoStatutario : organismiList) {
+			
+			if(organismoStatutario.getDataAnnullo()==null){
+		          		
+				this.organismiList.add(organismoStatutario);
+			}
+		}
+		
+		
 	}
 
 	/*public Parere getParereSelected() {

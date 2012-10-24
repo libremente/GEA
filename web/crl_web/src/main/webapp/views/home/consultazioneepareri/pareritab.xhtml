@@ -77,7 +77,7 @@
 						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
 							action="#{consultazioniPareriController.showParereDetail}"
 							update=":consultazioniPareriForm:tabView:dettagliparerepanel">
-							<f:setPropertyActionListener value="#{parere.descrizione}"
+							<f:setPropertyActionListener value="#{organismo.descrizione}"
 								target="#{consultazioniPareriController.descrizioneOrganismoSelected}" />
 						</p:commandButton>
 					</h:column>

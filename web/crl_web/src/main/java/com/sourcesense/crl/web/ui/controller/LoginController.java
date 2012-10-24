@@ -54,8 +54,11 @@ public class LoginController {
 	
 	
 	public String logout() {
-	    ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
-	     return "pretty:login";
+		HttpSession session = ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false));
+		session.removeAttribute("userBean");
+		session.removeAttribute("attoBean");
+		session.invalidate();
+	    return "pretty:login";
 	}
 
 	public User getUser() {

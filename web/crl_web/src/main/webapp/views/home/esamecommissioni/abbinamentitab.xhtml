@@ -581,7 +581,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 	<h3>Risultati ricerca</h3>
 
 	<p:dataTable id="listaAtti" var="atto"
-		value="#{searchAttoController.lazyAttoModel}" rows="10"
+		value="#{searchAttoController.listAtti}" rows="10"
 		paginator="true"
 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 		paginatorAlwaysVisible="false" paginatorPosition="bottom">
