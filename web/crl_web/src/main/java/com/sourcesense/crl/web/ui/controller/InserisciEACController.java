@@ -145,7 +145,7 @@ public class InserisciEACController {
 
 		for (Allegato element : allegatiEAC) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getDescrizione())) {
 
 				return false;
 			}

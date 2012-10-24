@@ -142,7 +142,7 @@ public class InserisciMISController {
 
 		for (Allegato element : allegatiMIS) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getDescrizione())) {
 
 				return false;
 			}

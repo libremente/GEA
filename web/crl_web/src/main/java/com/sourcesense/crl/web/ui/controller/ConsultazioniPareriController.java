@@ -220,7 +220,7 @@ public class ConsultazioniPareriController {
 
 		for (Allegato element : organismoSelected.getParere().getAllegati()) {
 
-			if (element.getNome().equals(fileName)) {
+			if (fileName.equals(element.getNome())) {
 
 				return false;
 			}

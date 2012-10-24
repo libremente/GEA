@@ -823,7 +823,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		for (Allegato element : allegatiList) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getDescrizione())) {
 
 				return false;
 			}

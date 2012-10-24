@@ -317,7 +317,7 @@ public class EsameAulaController {
 
 		for (TestoAtto element : testiAttoVotatoList) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getNome())) {
 
 				return false;
 			}
@@ -426,7 +426,7 @@ public class EsameAulaController {
 
 		for (Allegato element : emendamentiList) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (element.getNome().equals(fileName)) {
 				return false;
 			}
 
@@ -606,7 +606,7 @@ public class EsameAulaController {
 
 		for (Allegato element : allegatiList) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getNome())) {
 
 				return false;
 			}

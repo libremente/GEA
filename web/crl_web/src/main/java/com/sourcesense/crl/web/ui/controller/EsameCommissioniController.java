@@ -1287,7 +1287,7 @@ public class EsameCommissioniController {
 
 		for (TestoAtto element : testiAttoVotatoList) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getNome())) {
 
 				return false;
 			}
@@ -1565,7 +1565,7 @@ public class EsameCommissioniController {
 
 		for (Allegato element : testiClausolaList) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getNome())) {
 
 				return false;
 			}
@@ -1723,7 +1723,7 @@ public class EsameCommissioniController {
 
 		for (Allegato element : allegatiList) {
 
-			if (element.getDescrizione().equals(fileName)) {
+			if (fileName.equals(element.getNome())) {
 
 				return false;
 			}
