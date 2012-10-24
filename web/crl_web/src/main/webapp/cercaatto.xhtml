@@ -553,7 +553,7 @@
 			paginator="true"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 			paginatorAlwaysVisible="false" paginatorPosition="bottom">
-			<p:column>
+			<p:column sortBy="#{atto.tipo}">
 				<f:facet name="header">Tipo</f:facet>
 				<h:outputText value="#{atto.tipo}" />
 			</p:column>
@@ -567,16 +567,16 @@
 					<!-- <f:param name="numeroatto" value="#{atto.numeroAtto}" /> -->
 				</p:commandLink>
 			</p:column>
-			<p:column headerText="Oggetto">
+			<p:column headerText="Oggetto" sortBy="#{atto.oggetto}">
 				<h:outputText value="#{atto.oggetto}" />
 			</p:column>
-			<p:column headerText="1 Firmatario">
+			<p:column headerText="1 Firmatario" sortBy="#{atto.primoFirmatario}">
 				<h:outputText value="#{atto.primoFirmatario}" />
 			</p:column>
-			<p:column headerText="Data Presentazione">
+			<p:column headerText="Data Presentazione" sortBy="#{atto.dataPresentazione}">
 				<h:outputText value="#{atto.dataPresentazione}" />
 			</p:column>
-			<p:column headerText="Stato">
+			<p:column headerText="Stato" sortBy="#{atto.stato}">
 				<h:outputText value="#{atto.stato}" />
 			</p:column>
 			<p:column headerText="Alert">

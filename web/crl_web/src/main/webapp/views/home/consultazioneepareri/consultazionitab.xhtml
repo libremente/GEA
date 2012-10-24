@@ -137,37 +137,37 @@
 		<p:row>
 			<p:column colspan="4">
 
-				<h:dataTable id="listaConsultazioni"
+				<p:dataTable id="listaConsultazioni"
 					value="#{consultazioniPareriController.consultazioniList}"
 					var="consultazione" styleClass="generalInfoTab grey-text">
 
-					<h:column>
+					<p:column sortBy="#{consultazioniPareriController.descrizioneConsultazioneSelected}">
 						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
 							action="#{consultazioniPareriController.showConsultazioneDetail}"
 							update=":consultazioniPareriForm:tabView:dettagliconsultazionepanel">
 							<f:setPropertyActionListener value="#{consultazione.descrizione}"
 								target="#{consultazioniPareriController.descrizioneConsultazioneSelected}" />
 						</p:commandButton>
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{consultazione.dataConsultazione}">
 						<f:facet name="header">Data Consultazione</f:facet>
 						<h:outputText value="#{consultazione.dataConsultazione}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{consultazione.descrizione}">
 						<f:facet name="header">Soggetti Consultati</f:facet>
-							#{consultazione.descrizione}
-					</h:column>
+							<h:outputText value="#{consultazione.descrizione}" />
+					</p:column>
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">Documenti</f:facet>
 
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">Elimina</f:facet>
 
 						<p:commandButton oncomplete="consultazioneDialog.show()"
@@ -176,9 +176,9 @@
 							<f:setPropertyActionListener value="#{consultazione.descrizione}"
 								target="#{consultazioniPareriController.consultazioneToDelete}" />
 						</p:commandButton>
-					</h:column>
+					</p:column>
 
-				</h:dataTable>
+				</p:dataTable>
 			</p:column>
 		</p:row>
 		<p:row>
@@ -278,25 +278,25 @@
 						<p:row>
 							<p:column colspan="3">
 
-								<h:dataTable id="listaSoggettiInvitati"
+								<p:dataTable id="listaSoggettiInvitati"
 									value="#{consultazioniPareriController.soggettiInvitatiList}"
 									var="soggettoInvitato" styleClass="generalInfoTab grey-text">
 
-									<h:column>
+									<p:column sortBy="#{soggettoInvitato.descrizione}">
 										<f:facet name="header">Soggetti Invitati</f:facet>
-										#{soggettoInvitato.descrizione}
-									</h:column>
+										<h:outputText value="#{soggettoInvitato.descrizione}" />
+									</p:column>
 
-									<h:column>
+									<p:column sortBy="#{soggettoInvitato.intervenuto}">
 										<f:facet name="header">Intervenuti</f:facet>
 										<h:outputText value="si"
 											rendered="#{soggettoInvitato.intervenuto}" />
 										<h:outputText value="no"
 											rendered="#{!soggettoInvitato.intervenuto}" />
 
-									</h:column>
+									</p:column>
 
-									<h:column>
+									<p:column>
 										<f:facet name="header">Elimina</f:facet>
 
 										<p:commandButton oncomplete="soggettoInvitatoDialog.show()"
@@ -306,9 +306,9 @@
 												value="#{soggettoInvitato.descrizione}"
 												target="#{consultazioniPareriController.soggettoInvitatoToDelete}" />
 										</p:commandButton>
-									</h:column>
+									</p:column>
 
-								</h:dataTable>
+								</p:dataTable>
 							</p:column>
 						</p:row>
 
@@ -375,27 +375,27 @@
 		<p:row>
 			<p:column colspan="4">
 
-				<h:dataTable id="listaDocumentazioneConsultazione"
+				<p:dataTable id="listaDocumentazioneConsultazione"
 					value="#{consultazioniPareriController.consultazioneSelected.allegati}"
 					var="allegato" styleClass="generalInfoTab grey-text">
 
-					<h:column>
+					<p:column sortBy="#{allegato.nome}">
 						<f:facet name="header">Documentazione allegata</f:facet>
-							#{allegato.nome}
-						</h:column>
+							<h:outputText value="#{allegato.nome}" />
+						</p:column>
 
-					<h:column>
+					<p:column sortBy="#{allegato.mimetype}">
 						<f:facet name="header">Documento</f:facet>
-						#{allegato.mimetype}
-					</h:column>
+						<h:outputText value="#{allegato.mimetype}" />
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{allegato.pubblico}">
 						<f:facet name="header">Pubblico</f:facet>
 						<h:outputText value="si" rendered="#{allegato.pubblico}" />
 						<h:outputText value="no" rendered="#{!allegato.pubblico}" />
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">Elimina</f:facet>
 						<p:commandButton oncomplete="allegatoConsultazioneDialog.show()"
 							icon="delete-icon">
@@ -403,9 +403,9 @@
 							<f:setPropertyActionListener value="#{allegato.id}"
 								target="#{consultazioniPareriController.allegatoConsultazioneToDelete}" />
 						</p:commandButton>
-					</h:column>
+					</p:column>
 					
-					<h:column>
+					<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
@@ -419,10 +419,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
 
-				</h:dataTable>
+				</p:dataTable>
 			
 							
 								

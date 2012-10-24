@@ -107,15 +107,15 @@
 							value="#{collegamentiController.collegamentiLeggiRegionali}"
 							var="collegamento" styleClass="generalInfoTab" editable="true">
 
-							<p:column headerText="Tipo Atto" style="width:125px">
-							#{collegamento.tipoAtto}
+							<p:column headerText="Tipo Atto" style="width:125px" sortBy="#{collegamento.tipoAtto}">
+							<h:outputText value="#{collegamento.tipoAtto}" />
     			</p:column>
 
-							<p:column headerText="N.Atto" style="width:125px">
-					#{collegamento.numeroAtto}
+							<p:column headerText="N.Atto" style="width:125px" sortBy="#{collegamento.numeroAtto}">
+					<h:outputText value="#{collegamento.numeroAtto}" />
 				</p:column>
 
-							<p:column headerText="Descrizione" style="width:125px">
+							<p:column headerText="Descrizione" style="width:125px" sortBy="#{collegamento.descrizione}">
 								<p:cellEditor>
 									<f:facet name="output">
 										<h:outputText value="#{collegamento.descrizione}" />

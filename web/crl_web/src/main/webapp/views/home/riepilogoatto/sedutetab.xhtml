@@ -14,33 +14,33 @@
 	<p:panelGrid styleClass="infoTable" id="sedutetab">
 		<p:row>
 			<p:column colspan="3">
-				<h:dataTable id="listaOrganiInterni"
+				<p:dataTable id="listaOrganiInterni"
 					value="#{attoBean.atto.organi}" var="organo"   
-					styleClass="generalInfoTab">
+					styleClass="generalInfoTab grey-text">
 
-					<h:column>
+					<p:column sortBy="#{organo.nome}">
 						<f:facet name="header">Organi Interni</f:facet>
-							#{organo.nome}
-    			       </h:column>
+							<h:outputText value="#{organo.nome}" />
+    			       </p:column>
 
-					<h:column>
+					<p:column sortBy="#{organo.dataSeduta}">
 						<f:facet name="header">Data Seduta</f:facet>
-					#{organo.dataSeduta}
-				</h:column>
+					<h:outputText value="#{organo.dataSeduta}" />
+				</p:column>
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">ODG</f:facet>
 						<h:commandLink>
 							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
 						</h:commandLink>
-					</h:column>
-					<h:column>
+					</p:column>
+					<p:column>
 						<f:facet name="header">Link Risorse Esterne</f:facet>
 						<h:commandLink>
 							<h:graphicImage alt="html" value="/resources/img/html.png" />
 						</h:commandLink>
-					</h:column>
-				</h:dataTable>
+					</p:column>
+				</p:dataTable>
                 <h:outputText value="Nessun organo" rendered="#{empty attoBean.atto.organi}">
                  </h:outputText>
 
@@ -50,21 +50,21 @@
 
 		<p:row>
 			<p:column colspan="3">
-				<h:dataTable id="listaAltriOrgani"
+				<p:dataTable id="listaAltriOrgani"
 					value="#{attoBean.atto.organi}" var="organo"
-					styleClass="generalInfoTab">
+					styleClass="generalInfoTab grey-text">
 
-					<h:column>
+					<p:column sortBy="#{organo.nome}">
 						<f:facet name="header">Altri Organi</f:facet>
-							#{organo.nome}
-    			       </h:column>
+							<h:outputText value="#{organo.nome}" />
+    			       </p:column>
 
-					<h:column>
+					<p:column sortBy="#{organo.dataSeduta}">
 						<f:facet name="header">Data Seduta</f:facet>
-					#{organo.dataSeduta}
-				</h:column>
+					<h:outputText value="#{organo.dataSeduta}" />
+				</p:column>
                 
-				</h:dataTable>
+				</p:dataTable>
 				<h:outputText value="Nessun organo" rendered="#{empty attoBean.atto.organi}">
                  </h:outputText>
 				

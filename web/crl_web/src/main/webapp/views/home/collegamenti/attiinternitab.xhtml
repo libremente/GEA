@@ -579,12 +579,12 @@
 		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 		paginatorAlwaysVisible="false" paginatorPosition="bottom" 
                 rendered="#{not navigationBean.isCommissioneConsultiva()}">
-		<p:column>
+		<p:column sortBy="#{atto.tipo}">
 			<f:facet name="header">Tipo</f:facet>
 			<h:outputText value="#{atto.tipo}" />
 		</p:column>
 
-		<p:column headerText="N.Atto">
+		<p:column headerText="N.Atto" sortBy="#{atto.id}">
 			<c:set value="#{atto.id}" var="idAttoParam" />
 			<p:commandLink
 				action="#{searchAttoController.attoDetail(idAttoParam)}"
@@ -593,10 +593,10 @@
 				<!-- <f:param name="numeroatto" value="#{atto.numeroAtto}" /> -->
 			</p:commandLink>
 		</p:column>
-		<p:column headerText="N° Protocollo">
+		<p:column headerText="N° Protocollo" sortBy="#{atto.numeroProtocollo}">
 			<h:outputText value="#{atto.numeroProtocollo}" />
 		</p:column>
-		<p:column headerText="Oggetto">
+		<p:column headerText="Oggetto" sortBy="#{atto.oggetto}">
 			<h:outputText value="#{atto.oggetto}" />
 		</p:column>
 		<p:column headerText="Azioni">
@@ -618,15 +618,15 @@
 				value="#{collegamentiController.attiCollegatiList}"
 				var="collegamento" styleClass="generalInfoTab" editable="true">
 
-				<p:column headerText="Tipo Atto" style="width:125px">
-							#{collegamento.tipoAttoCollegato}
+				<p:column headerText="Tipo Atto" style="width:125px" sortBy="#{collegamento.tipoAttoCollegato}">
+							<h:outputText value="#{collegamento.tipoAttoCollegato}" />
     			</p:column>
 
-				<p:column headerText="N.Atto" style="width:125px">
-					#{collegamento.numeroAttoCollegato}
+				<p:column headerText="N.Atto" style="width:125px" sortBy="#{collegamento.numeroAttoCollegato}">
+					<h:outputText value="#{collegamento.numeroAttoCollegato}" />
 				</p:column>
 
-				<p:column headerText="Note" style="width:125px">
+				<p:column headerText="Note" style="width:125px" sortBy="#{collegamento.note}">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{collegamento.note}" />

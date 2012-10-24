@@ -22,29 +22,29 @@
 		<p:column colspan="3">
 
 
-			<h:dataTable id="listaTestiUfficiali"
+			<p:dataTable id="listaTestiUfficiali"
 				value="#{attoBean.atto.testiAtto}" var="testoAtto"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.nome}">
 					<f:facet name="header">Testo Dell'Atto</f:facet>
-							#{testoAtto.nome}
-						</h:column>
+							<h:outputText value="#{testoAtto.nome}" />
+						</p:column>
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.mimetype}">
 					<f:facet name="header">Formato</f:facet>
 					<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
 					<h:outputText value="#{testoAtto.mimetype}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.pubblico}">
 					<f:facet name="header">Pubblico</f:facet>
 					<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
 					<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -58,9 +58,9 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
-			</h:dataTable>
+			</p:dataTable>
 			<h:outputText value="Nessun Testo Atto"
 				rendered="#{empty attoBean.atto.testiAtto}">
 			</h:outputText>
@@ -71,29 +71,29 @@
 		<p:column colspan="3">
 
 
-			<h:dataTable id="listaTestiUfficialiCommissione"
+			<p:dataTable id="listaTestiUfficialiCommissione"
 				value="#{attoBean.getTestiAttoCommissione()}" var="testoAtto"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.nome}">
 					<f:facet name="header">Testo Dell'Atto votato in commissione</f:facet>
-							#{testoAtto.nome}
-						</h:column>
+							<h:outputText value="#{testoAtto.nome}" />
+						</p:column>
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.mimetype}">
 					<f:facet name="header">Formato</f:facet>
 					<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
 					<h:outputText value="#{testoAtto.mimetype}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.pubblico}">
 					<f:facet name="header">Pubblico</f:facet>
 					<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
 					<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -107,9 +107,9 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
-			</h:dataTable>
+			</p:dataTable>
 			<h:outputText value="Nessun Testo Atto"
 				rendered="#{empty attoBean.atto.testiAtto}">
 			</h:outputText>
@@ -120,29 +120,29 @@
 		<p:column colspan="3">
 
 
-			<h:dataTable id="listaTestiUfficialiAula"
+			<p:dataTable id="listaTestiUfficialiAula"
 				value="#{attoBean.getTestiAttoAula()}" var="testoAtto"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.nome}">
 					<f:facet name="header">Testo Dell'Atto votato in Aula</f:facet>
-							#{testoAtto.nome}
-						</h:column>
+							<h:outputText value="#{testoAtto.nome}" />
+						</p:column>
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.mimetype}">
 					<f:facet name="header">Formato</f:facet>
 					<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
 					<h:outputText value="#{testoAtto.mimetype}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{testoAtto.pubblico}">
 					<f:facet name="header">Pubblico</f:facet>
 					<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
 					<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
-				</h:column>
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -156,9 +156,9 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
-			</h:dataTable>
+			</p:dataTable>
 			<h:outputText value="Nessun Testo Atto"
 				rendered="#{empty attoBean.atto.testiAtto}">
 			</h:outputText>
@@ -176,22 +176,22 @@
 
 	<p:row>
 		<p:column colspan="3">
-			<h:dataTable id="listaAltriAllegati"
+			<p:dataTable id="listaAltriAllegati"
 				value="#{attoBean.atto.allegati}" var="allegato"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{allegato.nome}">
 					<f:facet name="header">Allegati Sevizio Commissioni</f:facet>
-					#{allegato.nome}
-				</h:column>
+					<h:outputText value="#{allegato.nome}" />
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{allegato.mimetype}">
 					<f:facet name="header">Formato</f:facet>
-					#{allegato.mimetype}
-				</h:column>
+					<h:outputText value="#{allegato.mimetype}" />
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -205,10 +205,10 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
 
-			</h:dataTable>
+			</p:dataTable>
 
 			<h:outputText value="Nessun allegato"
 				rendered="#{empty attoBean.atto.allegati}">
@@ -218,22 +218,22 @@
 
 	<p:row>
 		<p:column colspan="3">
-			<h:dataTable id="listaAltriAllegatiComm"
+			<p:dataTable id="listaAltriAllegatiComm"
 				value="#{attoBean.getAllegatiCommissioni()}" var="allegato"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{allegato.nome}">
 					<f:facet name="header">Allegati Commissioni</f:facet>
-					#{allegato.nome}
-				</h:column>
+					<h:outputText value="#{allegato.nome}" />
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{allegato.mimetype}">
 					<f:facet name="header">Formato</f:facet>
-					#{allegato.mimetype}
-				</h:column>
+					<h:outputText value="#{allegato.mimetype}" />
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -247,10 +247,10 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
 
-			</h:dataTable>
+			</p:dataTable>
 
 			<h:outputText value="Nessun allegato"
 				rendered="#{empty attoBean.atto.allegati}">
@@ -261,22 +261,22 @@
 
 	<p:row>
 		<p:column colspan="3">
-			<h:dataTable id="listaAltriAllegatiAula"
+			<p:dataTable id="listaAltriAllegatiAula"
 				value="#{attoBean.getAllegatiAula()}" var="allegato"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{allegato.nome}">
 					<f:facet name="header">Allegati Aula</f:facet>
-					#{allegato.nome}
-				</h:column>
+					<h:outputText value="#{allegato.nome}" />
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{allegato.mimetype}">
 					<f:facet name="header">Formato</f:facet>
-					#{allegato.mimetype}
-				</h:column>
+					<h:outputText value="#{allegato.mimetype}" />
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -290,10 +290,10 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
 
-			</h:dataTable>
+			</p:dataTable>
 
 			<h:outputText value="Nessun allegato"
 				rendered="#{empty attoBean.atto.allegati}">
@@ -313,22 +313,22 @@
 
 	<p:row>
 		<p:column colspan="3">
-			<h:dataTable id="listaAltriAllegatiCommitatoRistr"
+			<p:dataTable id="listaAltriAllegatiCommitatoRistr"
 				value="#{attoBean.getTestiComitatoRistretto()}" var="allegato"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{allegato.nome}">
 					<f:facet name="header">Allegati</f:facet>
-					#{allegato.nome}
-				</h:column>
+					<h:outputText value="#{allegato.nome}" />
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{allegato.mimetype}">
 					<f:facet name="header">Formato</f:facet>
-					#{allegato.mimetype}
-				</h:column>
+					<h:outputText value="#{allegato.mimetype}" />
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -342,10 +342,10 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
 
-			</h:dataTable>
+			</p:dataTable>
 
 			<h:outputText value="Nessun allegato"
 				rendered="#{empty attoBean.atto.allegati}">
@@ -363,22 +363,22 @@
 
 	<p:row>
 		<p:column colspan="3">
-			<h:dataTable id="listaAltriAllegatiConsultazioni"
+			<p:dataTable id="listaAltriAllegatiConsultazioni"
 				value="#{attoBean.getAllegatiConsultazioni()}" var="allegato"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{allegato.nome}">
 					<f:facet name="header">Allegati</f:facet>
-					#{allegato.nome}
-				</h:column>
+					<h:outputText value="#{allegato.nome}" />
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{allegato.mimetype}">
 					<f:facet name="header">Formato</f:facet>
-					#{allegato.mimetype}
-				</h:column>
+					<h:outputText value="#{allegato.mimetype}" />
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -392,10 +392,10 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
 
-			</h:dataTable>
+			</p:dataTable>
 
 			<h:outputText value="Nessun allegato"
 				rendered="#{empty attoBean.atto.allegati}">
@@ -414,22 +414,22 @@
 
 	<p:row>
 		<p:column colspan="3">
-			<h:dataTable id="listaAltriAllegatiPareri"
+			<p:dataTable id="listaAltriAllegatiPareri"
 				value="#{attoBean.getAllegatiPareri()}" var="allegato"
-				styleClass="generalInfoTab">
+				styleClass="generalInfoTab grey-text">
 
 
-				<h:column>
+				<p:column sortBy="#{allegato.nome}">
 					<f:facet name="header">Allegati</f:facet>
-					#{allegato.nome}
-				</h:column>
+					<h:outputText value="#{allegato.nome}" />
+				</p:column>
 
-				<h:column>
+				<p:column sortBy="#{allegato.mimetype}">
 					<f:facet name="header">Formato</f:facet>
-					#{allegato.mimetype}
-				</h:column>
+					<h:outputText value="#{allegato.mimetype}" />
+				</p:column>
 
-				<h:column>
+				<p:column>
 					<f:facet name="header">Download</f:facet>
 
 					<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
@@ -443,10 +443,10 @@
 						<p:fileDownload value="#{fileDownloadController.file}" />
 					</p:commandButton>
 
-				</h:column>
+				</p:column>
 
 
-			</h:dataTable>
+			</p:dataTable>
 
 			<h:outputText value="Nessun allegato"
 				rendered="#{empty attoBean.atto.allegati}">

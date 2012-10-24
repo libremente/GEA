@@ -69,53 +69,53 @@
 					</p:panelGrid>
 				</p:confirmDialog>
 
-				<h:dataTable id="listaPareri"
+				<p:dataTable id="listaPareri"
 					value="#{consultazioniPareriController.organismiList}" var="organismo"
 					styleClass="generalInfoTab grey-text">
 
-					<h:column>
+					<p:column>
 						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
 							action="#{consultazioniPareriController.showParereDetail}"
 							update=":consultazioniPareriForm:tabView:dettagliparerepanel">
 							<f:setPropertyActionListener value="#{organismo.descrizione}"
 								target="#{consultazioniPareriController.descrizioneOrganismoSelected}" />
 						</p:commandButton>
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{organismo.descrizione}">
 						<f:facet name="header">Organismo Statutario</f:facet>
-							#{organismo.descrizione}
-    			       </h:column>
+							<h:outputText value="#{organismo.descrizione}" />
+    			       </p:column>
 
-					<h:column>
+					<p:column sortBy="#{organismo.dataAssegnazione}">
 						<f:facet name="header">Richiesto</f:facet>
 						<h:outputText value="#{organismo.dataAssegnazione}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{organismo.parere.dataRicezioneOrgano}">
 						<f:facet name="header">Ricevuto</f:facet>
 						<h:outputText value="#{organismo.parere.dataRicezioneOrgano}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{organismo.parere.esito}">
 						<f:facet name="header">Esito</f:facet>
-							#{organismo.parere.esito}
-						</h:column>
+							<h:outputText value="#{organismo.parere.esito}" />
+						</p:column>
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">Allegati</f:facet>
 
-					</h:column>
+					</p:column>
 
 
 
-				</h:dataTable>
+				</p:dataTable>
 			</p:column>
 		</p:row>
 
@@ -221,27 +221,27 @@
 		<p:row>
 			<p:column colspan="4">
 
-				<h:dataTable id="listaDocumentazioneParere"
+				<p:dataTable id="listaDocumentazioneParere"
 					value="#{consultazioniPareriController.organismoSelected.parere.allegati}"
 					var="allegato" styleClass="generalInfoTab grey-text">
 
-					<h:column>
+					<p:column sortBy="#{allegato.nome}">
 						<f:facet name="header">Documentazione allegata</f:facet>
-							#{allegato.nome}
-						</h:column>
+							<h:outputText value="#{allegato.nome}" />
+						</p:column>
 
-					<h:column>
+					<p:column sortBy="#{allegato.mimetype}">
 						<f:facet name="header">Formato</f:facet>
-						 #{allegato.mimetype}
-					</h:column>
+						 <h:outputText value="#{allegato.mimetype}" />
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{allegato.pubblico}">
 						<f:facet name="header">Pubblico</f:facet>
 						<h:outputText value="si" rendered="#{allegato.pubblico}" />
 						<h:outputText value="no" rendered="#{!allegato.pubblico}" />
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">Elimina</f:facet>
 						<p:commandButton oncomplete="allegatoParereDialog.show()"
 							icon="delete-icon">
@@ -249,9 +249,9 @@
 							<f:setPropertyActionListener value="#{allegato.id}"
 								target="#{consultazioniPareriController.allegatoParereToDelete}" />
 						</p:commandButton>
-					</h:column>
+					</p:column>
 					
-					<h:column>
+					<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
@@ -265,10 +265,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
 
-				</h:dataTable>
+				</p:dataTable>
 			
 							
 								

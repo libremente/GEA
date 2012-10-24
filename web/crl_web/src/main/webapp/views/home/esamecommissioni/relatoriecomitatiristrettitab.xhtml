@@ -231,13 +231,13 @@
 						value="#{esameCommissioniController.relatoriList}" var="relatore"
 						styleClass="generalInfoTab grey-text" editable="true">
 
-						<p:column headerText="Relatore">
+						<p:column headerText="Relatore" sortBy="#{relatore.descrizione}">
 
 							<h:outputText value="#{relatore.descrizione}" />
 						</p:column>
 
-						<p:column headerText="Data nomina">
-
+						<p:column headerText="Data nomina" sortBy="#{relatore.dataNomina}" >
+ 							
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{relatore.dataNomina}">
@@ -252,7 +252,7 @@
 
 						</p:column>
 
-						<p:column headerText="Data uscita">
+						<p:column headerText="Data uscita" sortBy="#{relatore.dataUscita}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -400,12 +400,12 @@
 						var="componente" styleClass="generalInfoTab grey-text"
 						editable="true">
 
-						<p:column headerText="Componenti">
+						<p:column headerText="Componenti" sortBy="#{componente.descrizione}">
 						
-							#{componente.descrizione}
+							<h:outputText value="#{componente.descrizione}" />
     			       </p:column>
 
-						<p:column headerText="Data nomina">
+						<p:column headerText="Data nomina" sortBy="#{componente.dataNomina}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -422,7 +422,7 @@
 
 						</p:column>
 
-						<p:column headerText="Coordinatore">
+						<p:column headerText="Coordinatore" sortBy="#{componente.coordinatore}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -437,7 +437,7 @@
 
 						</p:column>
 
-						<p:column headerText="Data uscita">
+						<p:column headerText="Data uscita" sortBy="#{componente.dataUscita}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -494,34 +494,34 @@
 			<p:row>
 				<p:column colspan="4">
 
-					<h:dataTable id="listaTestiComitatoRistretto"
+					<p:dataTable id="listaTestiComitatoRistretto"
 						value="#{esameCommissioniController.testiComitatoRistrettoList}"
 						var="testoComitato" styleClass="generalInfoTab grey-text">
 
-						<h:column>
+						<p:column sortBy="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}">
 							<f:facet name="header">Data Seduta</f:facet>
-							#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')} 
-						</h:column>
+							<h:outputText value="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}" />
+						</p:column>
 
-						<h:column>
+						<p:column sortBy="#{testoComitato.nome}">
 							<f:facet name="header">Testo Dell'Atto</f:facet>
-							#{testoComitato.nome}
-						</h:column>
+							<h:outputText value="#{testoComitato.nome}" />
+						</p:column>
 
-						<h:column>
+						<p:column sortBy="#{fn:substring(testoComitato.nome, fn:indexOf(testoComitato.nome,'.')+1 ,fn:length(testoComitato.nome) )}">
 							<f:facet name="header">Formato</f:facet>
 							<h:outputText
 								value="#{fn:substring(testoComitato.nome, fn:indexOf(testoComitato.nome,'.')+1 ,fn:length(testoComitato.nome) )}" />
 
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column sortBy="#{testoComitato.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
 							<h:outputText value="si" rendered="#{testoComitato.pubblico}" />
 							<h:outputText value="no" rendered="#{!testoComitato.pubblico}" />
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">Elimina</f:facet>
 							<p:commandButton oncomplete="testoComitatoDialog.show()"
 								icon="delete-icon">
@@ -529,8 +529,8 @@
 								<f:setPropertyActionListener value="#{testoComitato.id}"
 									target="#{esameCommissioniController.testoComitatoToDelete}" />
 							</p:commandButton>
-						</h:column>
-						<h:column>
+						</p:column>p:column>
+						<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
@@ -544,10 +544,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
 
-					</h:dataTable>
+					</p:dataTable>
 				</p:column>
 			</p:row>
 			<p:row>

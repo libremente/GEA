@@ -151,11 +151,11 @@
 								editable="true">
 
 
-								<p:column headerText="Nome">
+								<p:column headerText="Nome" sortBy="#{commissione.descrizione}">
 									<h:outputText value="#{commissione.descrizione}" />
 								</p:column>
 
-								<p:column headerText="Data Proposta" style="width:100px">
+								<p:column headerText="Data Proposta" style="width:100px" sortBy="#{commissione.dataProposta}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{commissione.dataProposta}">
@@ -169,7 +169,7 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="Data Assegn." style="width:100px">
+								<p:column headerText="Data Assegn." style="width:100px" sortBy="#{commissione.dataAssegnazione}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{commissione.dataAssegnazione}">
@@ -183,7 +183,7 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="Competenza">
+								<p:column headerText="Competenza" sortBy="#{commissione.ruolo}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{commissione.ruolo}" />
@@ -201,11 +201,11 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="Stato">
+								<p:column headerText="Stato" sortBy="#{commissione.stato}">
                                     <h:outputText value="#{commissione.stato}" />
 								</p:column>
 
-								<p:column headerText="Data Ann." style="width:100px">
+								<p:column headerText="Data Ann." style="width:100px" sortBy="#{commissione.dataAnnullo}">
 
 									<h:outputText value="#{commissione.dataAnnullo}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
@@ -317,12 +317,12 @@
 								var="organismo" styleClass="generalInfoTab grey-text"
 								editable="true">
 
-								<p:column headerText="Nome">
-									#{organismo.descrizione}
+								<p:column headerText="Nome" sortBy="#{organismo.descrizione}">
+									<h:outputText value="#{organismo.descrizione}" />
 									</p:column>
 
 
-								<p:column headerText="Data Assegnazione">
+								<p:column headerText="Data Assegnazione" sortBy="#{organismo.dataAssegnazione}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{organismo.dataAssegnazione}">
@@ -336,7 +336,7 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="Data Annullo">
+								<p:column headerText="Data Annullo" sortBy="#{organismo.dataAnnullo}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{organismo.dataAnnullo}">
@@ -352,7 +352,7 @@
 
 
 
-								<p:column headerText="Obbligatorio">
+								<p:column headerText="Obbligatorio" sortBy="#{organismo.obbligatorio}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="si" rendered="#{organismo.obbligatorio}" />

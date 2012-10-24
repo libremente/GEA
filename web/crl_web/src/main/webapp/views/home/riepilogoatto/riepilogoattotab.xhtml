@@ -91,38 +91,38 @@
 		<p:row>
 			<p:column colspan="3">
 
-				<h:dataTable styleClass="generalInfoTab"
+				<p:dataTable styleClass="generalInfoTab grey-text"
 					value="#{attoBean.atto.firmatari}" var="firmatario">
 
-					<h:column>
+					<p:column sortBy="#{firmatario.primoFirmatario}">
 						<f:facet name="header">Primo firmatario</f:facet>
 
 						<h:outputText value="si" rendered="#{firmatario.primoFirmatario}" />
 						<h:outputText value="no" rendered="#{!firmatario.primoFirmatario}" />
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column sortBy="#{firmatario.descrizione}">
 						<f:facet name="header">Nome Firmatario</f:facet>
-					#{firmatario.descrizione}
+					<h:outputText value="#{firmatario.descrizione}" />
 					
-				    </h:column>
+				    </p:column>
 
-					<h:column>
+					<p:column sortBy="#{firmatario.dataFirma}">
 						<f:facet name="header">Data Firma</f:facet>
 
 						<h:outputText value="#{firmatario.dataFirma}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
-					</h:column>
-					<h:column>
+					</p:column>
+					<p:column sortBy="#{firmatario.dataRitiro}">
 						<f:facet name="header">Data Ritiro</f:facet>
 						<h:outputText value="#{firmatario.dataRitiro}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 
-					</h:column>
+					</p:column>
 
-				</h:dataTable>
+				</p:dataTable>
 				<h:outputText value="Nessun firmatario"
 					rendered="#{empty attoBean.atto.firmatari}">
 				</h:outputText>
@@ -134,22 +134,22 @@
 		<p:row>
 			<p:column colspan="3">
 
-				<h:dataTable styleClass="generalInfoTab"
+				<p:dataTable styleClass="generalInfoTab grey-text"
 					value="#{attoBean.abbinamenti}" var="abbinamento">
 
-					<h:column>
+					<p:column sortBy="#{abbinamento.tipoAttoAbbinato}">
 						<f:facet name="header">Abbinamenti</f:facet>
 							<h:outputText style="font-weight: bold;" 
 							value="#{abbinamento.tipoAttoAbbinato} - #{abbinamento.numeroAttoAbbinato} " /> 
-    			       </h:column>
+    			       </p:column>
 
-					<h:column>
+					<p:column sortBy="#{abbinamento.numeroAttoAbbinato}">
 						<f:facet name="header">
 						</f:facet>
 
-					</h:column>
+					</p:column>
 
-				</h:dataTable>
+				</p:dataTable>
 				<h:outputText value="Nessun abbinamento"
 					rendered="#{empty attoBean.abbinamenti}">
 				</h:outputText>
@@ -212,10 +212,10 @@
 		<p:row>
 			<p:column colspan="2">
 
-				<h:dataTable styleClass="generalInfoTab"
+				<p:dataTable styleClass="generalInfoTab grey-text"
 					value="#{attoBean.commissioni}" var="commissione">
 
-					<h:column>
+					<p:column>
 						<f:facet name="header">
 						</f:facet>
 						<p:commandButton
@@ -228,24 +228,24 @@
 								target="#{riepilogoAttoController.nomeCommissione}" />
 
 						</p:commandButton>
-					</h:column>
+					</p:column>
 
-					<h:column>
+					<p:column  sortBy="#{commissione.descrizione}">
 						<f:facet name="header">Nome Commissione</f:facet>
-					 #{commissione.descrizione}
-				</h:column>
+					 <h:outputText value="#{commissione.descrizione}" />
+				</p:column>
 
-					<h:column>
+					<p:column sortBy="#{commissione.ruolo}">
 						<f:facet name="header">Ruolo</f:facet>
 						
-							#{commissione.ruolo}
-					</h:column>
-					<h:column>
+							<h:outputText value="#{commissione.ruolo}" />
+					</p:column>
+					<p:column sortBy="#{commissione.stato}">
 						<f:facet name="header">Stato</f:facet>
-						#{commissione.stato}
+						<h:outputText value="#{commissione.stato}" />
 							
-					</h:column>
-				</h:dataTable>
+					</p:column>
+				</p:dataTable>
 
 			</p:column>
 		</p:row>

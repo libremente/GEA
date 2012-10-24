@@ -176,7 +176,7 @@
 				</p:column>
 
 				<p:column>
-				<p:selectOneMenu id="tipoiniziativa"
+					<p:selectOneMenu id="tipoiniziativa"
 					value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
 					<f:selectItem itemLabel="Scegli tipo" itemValue="" />
 					<f:selectItem itemLabel="Consiliare" itemValue="Consiliare" />
@@ -189,7 +189,6 @@
 					
 					
 				</p:selectOneMenu>	
-				
 				</p:column>
 
 				<p:column>
@@ -295,32 +294,32 @@
 			<p:row>
 				<p:column colspan="4">
 
-					<h:dataTable id="listaTestiAtto"
+					<p:dataTable id="listaTestiAtto"
 						value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
 						var="testoAtto" styleClass="generalInfoTab grey-text">
 
-						<h:column>
+						<p:column sortBy="#{testoAtto.nome}">
 							<f:facet name="header">Testo Dell'Atto</f:facet>
-							#{testoAtto.nome}
-						</h:column>
+							<h:outputText value="#{testoAtto.nome}" />
+						</p:column>
 
-						<h:column>
+						<p:column sortBy="#{testoAtto.mimetype}">
 							<f:facet name="header">Formato</f:facet>
 
 							<h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.') ,fn:length(testoAtto.nome) )}" />
 
-							#{testoAtto.mimetype}
+							<h:outputText value="#{testoAtto.mimetype}" />
 
 
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column sortBy="#{testoAtto.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
 							<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
 							<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
@@ -334,9 +333,9 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
-						<h:column>
+						<p:column>
 							<f:facet name="header">Elimina</f:facet>
 							<p:commandButton oncomplete="testoAttoDialog.show()"
 								icon="delete-icon">
@@ -344,10 +343,10 @@
 								<f:setPropertyActionListener value="#{testoAtto.id}"
 									target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
 							</p:commandButton>
-						</h:column>
+						</p:column>
 
 
-					</h:dataTable>
+					</p:dataTable>
 				</p:column>
 			</p:row>
 
@@ -435,7 +434,7 @@
 							<h:outputText value="#{firmatarioAdd.descrizione}" />						
 						</p:column>
 
-						<p:column headerText="Gruppo Consiliare">
+						<p:column headerText="Gruppo Consiliare" sortBy="#{firmatarioAdd.gruppoConsiliare}">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{firmatarioAdd.gruppoConsiliare}" />
@@ -465,7 +464,7 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column headerText="Data Ritiro" style="width:100px">
+						<p:column headerText="Data Ritiro" style="width:100px" sortBy="#{firmatarioAdd.dataRitiro}">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{firmatarioAdd.dataRitiro}">
@@ -479,7 +478,7 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column headerText="1° firm." style="width:100px">
+						<p:column headerText="1° firm." style="width:100px" sortBy="#{firmatarioAdd.primoFirmatario}">
 
 							<h:outputText value="si"
 								rendered="#{firmatarioAdd.primoFirmatario}" />

@@ -262,29 +262,29 @@
 				</p:row>
 				<p:row>
 					<p:column colspan="4">
-						<h:dataTable id="listaTestiAtto"
+						<p:dataTable id="listaTestiAtto"
 							value="#{esameAulaController.testiAttoVotatoList}"
 							var="testoAttoVotato" styleClass="generalInfoTab grey-text">
 
-							<h:column>
+							<p:column sortBy="#{testoAttoVotato.nome}">
 								<f:facet name="header">Testo Dell'Atto</f:facet>
-							#{testoAttoVotato.nome}
-						</h:column>
+							<h:outputText value="#{testoAttoVotato.nome}" />
+						</p:column>
 
-							<h:column>
+							<p:column sortBy="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}">
 								<f:facet name="header">Azioni</f:facet>
 								<h:outputText
 									value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
 
-							</h:column>
+							</p:column>
 
-							<h:column>
+							<p:column sortBy="#{testoAttoVotato.pubblico}">
 								<f:facet name="header">Pubblico</f:facet>
 								<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
 								<h:outputText value="no" rendered="#{!testoAttoVotato.pubblico}" />
-							</h:column>
+							</p:column>
 
-							<h:column>
+							<p:column>
 								<f:facet name="header">Elimina</f:facet>
 								<p:commandButton oncomplete="testoAttoDialog.show()"
 									icon="delete-icon">
@@ -292,9 +292,9 @@
 									<f:setPropertyActionListener value="#{testoAttoVotato.id}"
 										target="#{esameAulaController.testoAttoVotatoToDelete}" />
 								</p:commandButton>
-							</h:column>
+							</p:column>
 							
-							<h:column>
+							<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
@@ -308,10 +308,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
 
-						</h:dataTable>
+						</p:dataTable>
 					</p:column>
 				</p:row>
 

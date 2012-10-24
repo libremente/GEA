@@ -131,28 +131,28 @@
 					</p:row>
 					<p:row>
 						<p:column colspan="4">
-							<h:dataTable id="listaEmendamenti"
+							<p:dataTable id="listaEmendamenti"
 								value="#{esameCommissioniController.emendamentiList}"
 								var="emendamento" styleClass="generalInfoTab grey-text">
 
-								<h:column>
+								<p:column sortBy="#{emendamento.nome}">
 									<f:facet name="header">Emendamento</f:facet>
-							#{emendamento.nome}
-						</h:column>
+							<h:outputText value="#{emendamento.nome}" />
+						</p:column>
 
-								<h:column>
+								<p:column sortBy="#{emendamento.mimetype}">
 									<f:facet name="header">Formato</f:facet>
-									#{emendamento.mimetype}
+									<h:outputText value="#{emendamento.mimetype}" />
 
-								</h:column>
+								</p:column>
 
-								<h:column>
+								<p:column sortBy="#{emendamento.pubblico}">
 									<f:facet name="header">Pubblico</f:facet>
 									<h:outputText value="si" rendered="#{emendamento.pubblico}" />
 									<h:outputText value="no" rendered="#{!emendamento.pubblico}" />
-								</h:column>
+								</p:column>
 
-								<h:column>
+								<p:column>
 									<f:facet name="header">Elimina</f:facet>
 									<p:commandButton oncomplete="emendamentoDialog.show()"
 										icon="delete-icon">
@@ -160,8 +160,8 @@
 										<f:setPropertyActionListener value="#{emendamento.id}"
 											target="#{esameCommissioniController.emendamentoToDelete}" />
 									</p:commandButton>
-								</h:column>
-								<h:column>
+								</p:column>
+								<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
@@ -175,10 +175,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
 
-							</h:dataTable>
+							</p:dataTable>
 						</p:column>
 					</p:row>
 					<p:row>

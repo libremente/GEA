@@ -130,29 +130,29 @@
 					<p:row>
 						<p:column colspan="4">
 
-							<h:dataTable id="listaAllegati"
+							<p:dataTable id="listaAllegati"
 								value="#{esameCommissioniController.allegatiList}"
 								var="allegato" styleClass="generalInfoTab grey-text">
 
-								<h:column>
+								<p:column sortBy="#{allegato.nome}">
 									<f:facet name="header">Descrizione Allegato</f:facet>
-							#{allegato.nome}
-						</h:column>
+							<h:outputText value="#{allegato.nome}" />
+						</p:column>
 
-								<h:column>
+								<p:column sortBy="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}">
 									<f:facet name="header">Azioni</f:facet>
 									<h:outputText
 										value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
 
-								</h:column>
+								</p:column>
 
-								<h:column>
+								<p:column sortBy="#{allegato.pubblico}">
 									<f:facet name="header">Pubblico</f:facet>
 									<h:outputText value="si" rendered="#{allegato.pubblico}" />
 									<h:outputText value="no" rendered="#{!allegato.pubblico}" />
-								</h:column>
+								</p:column>
 
-								<h:column>
+								<p:column>
 									<f:facet name="header">Elimina</f:facet>
 									<p:commandButton oncomplete="allegatoDialog.show()"
 										icon="delete-icon">
@@ -160,9 +160,9 @@
 										<f:setPropertyActionListener value="#{allegato.id}"
 											target="#{esameCommissioniController.allegatoToDelete}" />
 									</p:commandButton>
-								</h:column>
+								</p:column>
 								
-								<h:column>
+								<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
@@ -176,10 +176,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
 
-							</h:dataTable>
+							</p:dataTable>
 						</p:column>
 					</p:row>
 
@@ -247,7 +247,7 @@
 								value="#{esameCommissioniController.linksList}"
 								var="link" styleClass="generalInfoTab grey-text" editable="true">
 
-								<p:column headerText="Descrizione collegamento">
+								<p:column headerText="Descrizione collegamento" sortBy="#{link.descrizione}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{link.descrizione}" />
@@ -260,7 +260,7 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="Indirizzo collegamento">
+								<p:column headerText="Indirizzo collegamento" sortBy="#{link.indirizzo}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputLink value="#{link.indirizzo}">
@@ -277,7 +277,7 @@
 
 								</p:column>
 
-								<p:column headerText="Pubblico">
+								<p:column headerText="Pubblico" sortBy="#{link.pubblico}">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="si" rendered="#{link.pubblico}" />
