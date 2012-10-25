@@ -27,12 +27,16 @@ if(checkIsNotNull(id)){
 			var dataRichiestaInformazioniSplitted = dataRichiestaInformazioni.split("-");
 			var dataRichiestaInformazioniParsed = new Date(dataRichiestaInformazioniSplitted[0],dataRichiestaInformazioniSplitted[1]-1,dataRichiestaInformazioniSplitted[2]);
 			attoNode.properties["crlatti:ammissibilitaDataRichiestaInformazioni"] = dataRichiestaInformazioniParsed;
+		}else {
+			attoNode.properties["crlatti:ammissibilitaDataRichiestaInformazioni"] = null;
 		}
 		
 		if(checkIsNotNull(dataRicevimentoInformazioni)){
 			var dataRicevimentoInformazioniSplitted = dataRicevimentoInformazioni.split("-");
 			var dataRicevimentoInformazioniParsed = new Date(dataRicevimentoInformazioniSplitted[0],dataRicevimentoInformazioniSplitted[1]-1,dataRicevimentoInformazioniSplitted[2]);
 			attoNode.properties["crlatti:ammissibilitaDataRicevimentoInformazioni"] = dataRicevimentoInformazioniParsed;
+		}else {
+			attoNode.properties["crlatti:ammissibilitaDataRicevimentoInformazioni"] = null;
 		}
 		
 		attoNode.properties["crlatti:ammissibilitaNote"] = note;
@@ -54,6 +58,8 @@ if(checkIsNotNull(id)){
 			var dataVotazioneUrgenzaSplitted = dataVotazioneUrgenza.split("-");
 			var dataVotazioneUrgenzaParsed = new Date(dataVotazioneUrgenzaSplitted[0],dataVotazioneUrgenzaSplitted[1]-1,dataVotazioneUrgenzaSplitted[2]);
 			attoNode.properties["crlatti:ammissibilitaDataVotazioneUrgenza"] = dataVotazioneUrgenzaParsed;
+		}else {
+			attoNode.properties["crlatti:ammissibilitaDataVotazioneUrgenza"] = null;
 		}
 	}
 	

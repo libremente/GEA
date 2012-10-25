@@ -16,10 +16,11 @@ for(var i=0; i<consultazioni.length(); i++) {
 }
 	
 var dataSeduta = filterParam(consultazione.get("dataSeduta"));
-var dataConsultazione =  filterParam(consultazione.get("dataSeduta"));
+var dataConsultazione =  filterParam(consultazione.get("dataConsultazione"));
 var prevista =  filterParam(consultazione.get("prevista"));
 var discussa =  filterParam(consultazione.get("discussa"));
 var note =  filterParam(consultazione.get("note"));
+
 
 
 if(checkIsNotNull(id)
@@ -33,16 +34,22 @@ if(checkIsNotNull(id)
 	var consultazionePathQuery = "*[@cm:name='"+consultazioneTarget+"']";
 	var consultazioneNode = consultazioniFolderNode.childrenByXPath(consultazionePathQuery)[0];
 	
+	if(checkIsNotNull(dataSeduta)) {
+		var dataSedutaSplitted = dataSeduta.split("-");
+		var dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);	
+		consultazioneNode.properties["crlatti:dataSedutaConsultazione"] = dataSedutaParsed;
+	}else {
+		consultazioneNode.properties["crlatti:dataSedutaConsultazione"] = null;
+	}
 	
-	var dataSedutaSplitted = dataSeduta.split("-");
-	var dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);
-		
-	consultazioneNode.properties["crlatti:dataSedutaConsultazione"] = dataSedutaParsed;
 	
-	var dataConsultazioneSplitted = dataConsultazione.split("-");
-	var dataConsultazioneParsed = new Date(dataConsultazioneSplitted[0],dataConsultazioneSplitted[1]-1,dataConsultazioneSplitted[2]);
-		
-	consultazioneNode.properties["crlatti:dataConsultazione"] = dataConsultazioneParsed;
+	if(checkIsNotNull(dataConsultazione)) {
+		var dataConsultazioneSplitted = dataConsultazione.split("-");
+		var dataConsultazioneParsed = new Date(dataConsultazioneSplitted[0],dataConsultazioneSplitted[1]-1,dataConsultazioneSplitted[2]);
+		consultazioneNode.properties["crlatti:dataConsultazione"] = dataConsultazioneParsed;
+	}else {
+		consultazioneNode.properties["crlatti:dataConsultazione"] = null;
+	}
 	
 	consultazioneNode.properties["crlatti:previstaConsultazione"] = prevista;
 	consultazioneNode.properties["crlatti:discussaConsultazione"] = discussa;

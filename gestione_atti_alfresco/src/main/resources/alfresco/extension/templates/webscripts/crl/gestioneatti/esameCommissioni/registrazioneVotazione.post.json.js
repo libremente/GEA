@@ -46,6 +46,8 @@ if(checkIsNotNull(id)){
 				var dataVotazioneSplitted = dataVotazione.split("-");
 				var dataVotazioneParsed = new Date(dataVotazioneSplitted[0],dataVotazioneSplitted[1]-1,dataVotazioneSplitted[2]);
 				commissioneFolderNode.properties["crlatti:dataVotazioneCommissione"] = dataVotazioneParsed;
+			}else{
+				commissioneFolderNode.properties["crlatti:dataVotazioneCommissione"] = null;
 			}
 			
 			

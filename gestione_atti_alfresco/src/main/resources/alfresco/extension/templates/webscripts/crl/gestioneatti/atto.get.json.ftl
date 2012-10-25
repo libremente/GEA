@@ -325,7 +325,7 @@
 								{	 
 										"relatore" : 
 										{ 
-											"nome" : "${relatore.name}",
+											"descrizione" : "${relatore.name}",
 											"dataNomina": "<#if relatore.properties["crlatti:dataNominaRelatore"]?exists>${relatore.properties["crlatti:dataNominaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
 											"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>"
 										}
@@ -346,7 +346,7 @@
 										 {
 											"componente" : 
 											{ 
-												"nome" : "${componente.name}",
+												"descrizione" : "${componente.name}",
 												"dataNomina": "<#if componente.properties["crlatti:dataNominaMCR"]?exists>${componente.properties["crlatti:dataNominaMCR"]?string("yyyy-MM-dd")}<#else></#if>",
 												"dataUscita": "<#if componente.properties["crlatti:dataUscitaMCR"]?exists>${componente.properties["crlatti:dataUscitaMCR"]?string("yyyy-MM-dd")}<#else></#if>",
 												"coordinatore": "<#if componente.properties["crlatti:coordinatoreMCR"]?exists>${componente.properties["crlatti:coordinatoreMCR"]?string("true","false")}<#else></#if>"

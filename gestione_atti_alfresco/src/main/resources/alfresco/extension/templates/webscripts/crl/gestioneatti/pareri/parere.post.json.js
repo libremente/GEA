@@ -10,7 +10,7 @@ var organismi = json.get("atto").get("organismiStatutari");
 var organismo = null;
 //selezione dell'organismo statutario corrente
 for(var i=0; i<organismi.length(); i++) {
-	var organismoTemp = organismi.get(i).get("organismoStatutario");
+	var organismoTemp = organismi.get(i);
 	if(""+organismoTemp.get("descrizione") == ""+organismoTarget+"") {
 		organismo = organismoTemp;		
 	}	
@@ -37,21 +37,29 @@ if(checkIsNotNull(id)
 	var organismoStatutarioXPathQuery = "*[@cm:name='"+organismoTarget+"']";
 	var organismoStatutarioNode = pareriFolderNode.childrenByXPath(organismoStatutarioXPathQuery)[0];
 	
+	if(checkIsNotNull(dataAnnullo)) {
+		var dataAnnulloSplitted = dataAnnullo.split("-");
+		var dataAnnulloParsed = new Date(dataAnnulloSplitted[0],dataAnnulloSplitted[1]-1,dataAnnulloSplitted[2]);
+		organismoStatutarioNode.properties["crlatti:dataAnnulloParere"] = dataAnnulloParsed;
+	}else {
+		organismoStatutarioNode.properties["crlatti:dataAnnulloParere"] = null;
+	}
 	
-	var dataAnnulloSplitted = dataAnnullo.split("-");
-	var dataAnnulloParsed = new Date(dataAnnulloSplitted[0],dataAnnulloSplitted[1]-1,dataAnnulloSplitted[2]);
-		
-	organismoStatutarioNode.properties["crlatti:dataAnnulloParere"] = dataAnnulloParsed;
+	if(checkIsNotNull(dataRicezioneParere)) {
+		var dataRicezioneParereSplitted = dataRicezioneParere.split("-");
+		var dataRicezioneParereParsed = new Date(dataRicezioneParereSplitted[0],dataRicezioneParereSplitted[1]-1,dataRicezioneParereSplitted[2]);	
+		organismoStatutarioNode.properties["crlatti:dataRicezioneParere"] = dataRicezioneParereParsed;
+	}else {
+		organismoStatutarioNode.properties["crlatti:dataRicezioneParere"] = null;
+	}
 	
-	var dataRicezioneParereSplitted = dataRicezioneParere.split("-");
-	var dataRicezioneParereParsed = new Date(dataRicezioneParereSplitted[0],dataRicezioneParereSplitted[1]-1,dataRicezioneParereSplitted[2]);
-		
-	organismoStatutarioNode.properties["crlatti:dataRicezioneParere"] = dataRicezioneParereParsed;
-	
-	var dataRicezioneOrganoSplitted = dataRicezioneOrgano.split("-");
-	var dataRicezioneOrganoParsed = new Date(dataRicezioneOrganoSplitted[0],dataRicezioneOrganoSplitted[1]-1,dataRicezioneOrganoSplitted[2]);
-		
-	organismoStatutarioNode.properties["crlatti:dataRicezioneOrganoParere"] = dataRicezioneOrganoParsed;
+	if(checkIsNotNull(dataRicezioneOrgano)) {
+		var dataRicezioneOrganoSplitted = dataRicezioneOrgano.split("-");
+		var dataRicezioneOrganoParsed = new Date(dataRicezioneOrganoSplitted[0],dataRicezioneOrganoSplitted[1]-1,dataRicezioneOrganoSplitted[2]);
+		organismoStatutarioNode.properties["crlatti:dataRicezioneOrganoParere"] = dataRicezioneOrganoParsed;
+	}else {
+		organismoStatutarioNode.properties["crlatti:dataRicezioneOrganoParere"] = null;
+	}
 	
 	organismoStatutarioNode.properties["crlatti:noteParere"] = note;
 	organismoStatutarioNode.properties["crlatti:esitoParere"] = esito;

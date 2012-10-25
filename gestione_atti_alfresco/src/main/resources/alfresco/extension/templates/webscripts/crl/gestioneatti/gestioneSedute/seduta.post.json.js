@@ -69,25 +69,28 @@ if(checkIsNotNull(provenienza)){
 	var sedutaLuceneQuery = "PATH:\""+sedutaPath+"\"";
 	var sedutaResults = search.luceneSearch(sedutaLuceneQuery);
 	if(sedutaResults!=null && sedutaResults.length>0){
-		//seduta presente
-		status.code = 500;
-		status.message = "seduta in data "+dataSeduta+" per l'organo "+provenienza+" gia' presente nel repository";
-		status.redirect = true;
+//		//seduta presente
+//		status.code = 500;
+//		status.message = "seduta in data "+dataSeduta+" per l'organo "+provenienza+" gia' presente nel repository";
+//		status.redirect = true;
+		sedutaFolderNode = sedutaResults[0];
+		
 	} else {
 		//creazione del nodo
 		var sedutaSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Seduta\"";
 		var sedutaSpaceTemplateNode = search.luceneSearch(sedutaSpaceTemplateQuery)[0];
 		var sedutaFolderNode = sedutaSpaceTemplateNode.copy(meseFolderNode,true);
 		sedutaFolderNode.name = dataSeduta;
+	}
 		
-		var dataSedutaSplitted = dataSeduta.split("-");
-		var dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);
-		
-		sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataSedutaParsed;
-		sedutaFolderNode.properties["crlatti:numVerbaleSedutaODG"] = numVerbale;
-		sedutaFolderNode.properties["crlatti:noteSedutaODG"] = note;
-		
-		sedutaFolderNode.save();
+	var dataSedutaSplitted = dataSeduta.split("-");
+	var dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);
+	
+	sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataSedutaParsed;
+	sedutaFolderNode.properties["crlatti:numVerbaleSedutaODG"] = numVerbale;
+	sedutaFolderNode.properties["crlatti:noteSedutaODG"] = note;
+	
+	sedutaFolderNode.save();
 		
 		
 		
@@ -96,7 +99,7 @@ if(checkIsNotNull(provenienza)){
 		var linksFolderNode = sedutaFolderNode.childrenByXPath(linksFolderXPathQuery)[0];
 		
 		for (var i=0; i<links.length(); i++){
-			var link = links.get(i).get("link");
+			var link = links.get(i);
 			var descrizione = link.get("descrizione");
 			var indirizzo = link.get("indirizzo");
 			
@@ -116,7 +119,7 @@ if(checkIsNotNull(provenienza)){
 		
 		model.seduta = sedutaFolderNode;
 			
-	}
+	
 	
 }else{
 	
