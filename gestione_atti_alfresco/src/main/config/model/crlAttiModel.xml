@@ -140,13 +140,17 @@
 						<tokenised>false</tokenised>
 					</index>
 				</property>
+				<property name="crlatti:coreferente">
+					<title>Co-Referente</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:redigente">
 					<title>Redigente</title>
-					<type>d:boolean</type>
+					<type>d:text</type>
 				</property>
 				<property name="crlatti:deliberante">
 					<title>Deliberante</title>
-					<type>d:boolean</type>
+					<type>d:text</type>
 				</property>
 				<property name="crlatti:numeroLcr">
 					<title>Numero LCR</title>

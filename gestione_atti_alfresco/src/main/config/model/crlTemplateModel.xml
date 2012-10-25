@@ -24,8 +24,8 @@
 			<title>Lettera</title>
 			<parent>cm:content</parent>
 			<properties>		
-				<property name="crltemplate:nomePresidenteConsiglioRegionale">
-					<title>Nome del Presidente del Consiglio Regionale</title>
+				<property name="crltemplate:firmatario">
+					<title>Firmatario</title>
 					<type>d:text</type>
 				</property>
 			</properties>
@@ -34,35 +34,6 @@
 		
 		<!-- Servizio Commissioni -->
 		
-		<type name="crltemplate:letteraIniziativaPopolareServComm">
-			<title>Lettera Iniziativa Popolare</title>
-			<parent>crltemplate:lettera</parent>
-		</type>
-		
-		<type name="crltemplate:letteraRitiroFirmaServComm">
-			<title>Lettera Ritiro Firma</title>
-			<parent>crltemplate:lettera</parent>
-		</type>
-		
-		<type name="crltemplate:letteraIntegrazioneCPOServComm">
-			<title>Lettera Integrazione CPO</title>
-			<parent>crltemplate:lettera</parent>
-		</type>
-		
-		<type name="crltemplate:letteraRettificaAssegnazioneServComm">
-			<title>Lettera Rettifica Assegnazione</title>
-			<parent>crltemplate:lettera</parent>
-		</type>
-		
-		<type name="crltemplate:letteraAggiuntaFirmaServComm">
-			<title>Lettera Aggiunta Firma</title>
-			<parent>crltemplate:lettera</parent>
-		</type>
-		
-		<type name="crltemplate:letteraRitiroServComm">
-			<title>Lettera Ritiro</title>
-			<parent>crltemplate:lettera</parent>
-		</type>
 		
 		<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
 			<title>Lettera Trasmissione Commissione Referente</title>
@@ -79,8 +50,38 @@
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
-		<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm">
-			<title>Lettera Inziativa Presidente Giunta</title>
+		<type name="crltemplate:letteraRettificaAssegnazioneServComm">
+			<title>Lettera Rettifica Assegnazione</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIntegrazioneCPOServComm">
+			<title>Lettera Integrazione CPO</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRitiroServComm">
+			<title>Lettera Ritiro</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAggiuntaFirmaServComm">
+			<title>Lettera aggiunta firma</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRitiroFirmaServComm">
+			<title>Lettera ritiro firma</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAssestamentoBilancioServComm">
+			<title>Lettera assestamento bilancio</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraBilancioProgrammaticoServComm">
+			<title>Lettera bilancio programmatico</title>
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
@@ -89,11 +90,67 @@
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
+		<type name="crltemplate:letteraIniziativaPopolareServComm">
+			<title>Lettera Iniziativa Popolare</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRendicontoGeneraleServComm">
+			<title>Lettera Rendiconto Generale</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraLeggeFinanziariaServComm">
+			<title>Lettera Legge Finanziaria</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraDOCAssegnazionePSRServComm">
+			<title>Lettera DOC assegnazione PSR</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraDOCAssegnazioneDSAServComm">
+			<title>Lettera DOC assegnazione DSA</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm">
+			<title>Lettera Assegnazione Programma Lavoro Commissione Europea</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraParereCommissioneServComm">
+			<title>Lettera Parere Commissione</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIntesaCommissioneGiuntaServComm">
+			<title>Lettera Intesa Commissione Giunta</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm">
+			<title>Lettera Parere Commissione con sospensione pausa estiva</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm">
+			<title>Lettera Intesa Commissione Giunta con sospensione pausa estiva</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraParerePropostaDiRegolamentoServComm">
+			<title>Lettera Parere Proposta di Regolamento</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+	
 		
 		<!-- Commissioni -->
 		
-		<type name="crltemplate:letteraTrasmissionePARCommissioni">
-			<title>Lettera di Trasmissione PAR</title>
+		<type name="crltemplate:letteraTrasmissionePDLCommissioni">
+			<title>Lettera di Trasmissione PDL</title>
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
@@ -102,8 +159,13 @@
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
-		<type name="crltemplate:letteraTrasmissionePDLCommissioni">
-			<title>Lettera di Trasmissione PDL</title>
+		<type name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni">
+			<title>Lettera di Trasmissione PDA con urgenza</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePARCommissioni">
+			<title>Lettera di Trasmissione PAR</title>
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
@@ -112,8 +174,23 @@
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
-		<type name="crltemplate:letteraTrasmissioneRELCommissioni">
-			<title>Lettera di Trasmissione REL</title>
+		<type name="crltemplate:letteraPresaAttoRELCommissioni">
+			<title>Lettera di Presa Atto REL</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIscrizioneRISCommissioni">
+			<title>Lettera di Iscrizione RIS</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneREFCommissioni">
+			<title>Lettera di Trasmissione REF</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni">
+			<title>Lettera di Trasmissione Parere da sede consultiva</title>
 			<parent>crltemplate:lettera</parent>
 		</type>
 		
@@ -121,6 +198,64 @@
 			<title>Lettera di Trasmissione RIS</title>
 			<parent>crltemplate:lettera</parent>
 		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni">
+			<title>Lettera di Trasmissione ad Aula legge di riordino (normativo)</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+			<type name="crltemplate:letteraTrasmissioneAulaTestoUnico">
+			<title>Lettera di Trasmissione in Aula testo unico (compilativo)</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		
+	
+		<!-- Aula -->
+		
+		<type name="crltemplate:letteraTrasmissioneLCRAula">
+			<title>Lettera di Trasmissione LCR</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDAAula">
+			<title>Lettera di Trasmissione PDA</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDABilancioAula">
+			<title>Lettera di Trasmissione PDA Bilancio</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula">
+			<title>Lettera di Trasmissione PDA Variazione Bilancio</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneREFAula">
+			<title>Lettera di Trasmissione REF</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneORGAula">
+			<title>Lettera di Trasmissione ORG</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraConvalidaORGAula">
+			<title>Lettera di Convalida ORG</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneBURLAula">
+			<title>Lettera di Trasmissione BURL</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		
+		
+		
 
 	</types>
 	

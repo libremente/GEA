@@ -9,12 +9,9 @@
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link"/>
-			<type name="crlatti:parere"/>
-			<type name="crlatti:consultazione"/>
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:collegamento"/>
 			<type name="crlatti:membroComitatoRistretto" />
-			<type name="crlatti:sedutaODG" />
 			<type name="crltemplate:letteraIniziativaPopolareServComm" />
 			<type name="crltemplate:letteraRitiroFirmaServComm" />
 			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
@@ -130,6 +127,8 @@
 			<type name="crlatti:comitatoRistretto"/>
 			<type name="crlatti:commissione"/>
 			<type name="crlatti:aula"/>
+			<type name="crlatti:parere" />
+			<type name="crlatti:consultazione" />
 			<type name="crlatti:sedutaODG" />
 		</folder-types>
 	</config>
@@ -530,6 +529,7 @@
 			<show-property name="crlatti:dataSedutaAula" />
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
+			<show-property name="crlatti:coreferente" />
 			<show-property name="crlatti:redigente" />
 			<show-property name="crlatti:deliberante" />
 
@@ -585,6 +585,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
+			<show-property name="crlatti:coreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -783,6 +784,7 @@
 				<meta-data type="crlatti:atto" property="crlatti:relatori" />
 
 				<meta-data type="crlatti:atto" property="crlatti:redigente" />
+				<meta-data type="crlatti:atto" property="crlatti:coreferente" />			
 				<meta-data type="crlatti:atto" property="crlatti:deliberante" />
 				<meta-data type="crlatti:atto" property="crlatti:organismoStatutario" />
 				<meta-data type="crlatti:atto" property="crlatti:numeroLcr" />

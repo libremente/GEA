@@ -28,17 +28,18 @@ public class LetteraGenericaCommand extends LetteraBaseCommand{
     	HashMap<String, String> searchTerms = new HashMap<String, String>();
 
 		// Set properties from template
-    	String nomePresidenteConsiglioRegionale = (String) nodeService.getProperty(templateNodeRef, QName.createQName(CRL_TEMPLATE_MODEL, PROP_NOME_PRES_CONS_REG));	
-		searchTerms.put("<nomePresidenteConsiglioRegionale>", nomePresidenteConsiglioRegionale);
+    	String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));	
+		searchTerms.put("<firmatario>", firmatario);
     	
     	
     	// Set properties from atto
     	String numeroAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO));
     	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
-    	String iniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_INIZIATIVA));
+    	String iniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_TIPO_INIZIATIVA));
+    	String descrizioneIniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_DESCRIZIONE_INIZIATIVA));
     	String numeroRepertorio = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_REPERTORIO));
 
-    	List<String> commissioneReferente = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONE_REFERENTE));
+    	List<String> commissioneReferente = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONI_REFERENTI));
     	List<String> commissioniConsultive = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONI_CONSULTIVE));
     	List<String> organismiStatutari = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_ORGANISMI_STATUTARI));
     	
@@ -58,7 +59,7 @@ public class LetteraGenericaCommand extends LetteraBaseCommand{
 		searchTerms.put("<commissioneReferente>", commissioneReferente.get(0));
 		searchTerms.put("<commissioneConsultiva>", commissioniConsultive.get(0));
 		searchTerms.put("<organismoStatutario>", organismiStatutari.get(0));
-		searchTerms.put("<firmatari>", firmatari);
+		searchTerms.put("<firmatariAtto>", firmatari);
 		searchTerms.put("<numeroRepertorio>", numeroRepertorio);
     	
     	

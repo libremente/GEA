@@ -19,7 +19,8 @@ public class TemplateFiller {
 	
 	 public static byte[] searchAndReplace(byte[] documentByteArray , HashMap<String, String> replacements) throws IOException {
 		  		
-			HWPFDocument document = new HWPFDocument(new ByteArrayInputStream(documentByteArray));
+		 	HWPFDocument document = new HWPFDocument(new ByteArrayInputStream(documentByteArray));
+		 	
 
             // Range and Paragraph of Document
             Range docRange = document.getRange();

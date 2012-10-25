@@ -13,9 +13,13 @@
 	    <property name="nodeService">
 	    	<ref bean="NodeService" />
 	    </property>
+	    <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
 	</bean> 
 	
 	<bean id="letteraGenericaCommand" class="com.sourcesense.crl.webscript.template.LetteraGenericaCommand" parent="letteraBaseCommand" />
+	<bean id="letteraGenericaServCommCommand" class="com.sourcesense.crl.webscript.template.LetteraGenericaServCommCommand" parent="letteraBaseCommand" />
 	
 
 	<bean id="webscript.crl.gestioneatti.template.lettera.post" class="com.sourcesense.crl.webscript.template.LetteraWebScript" parent="webscript"> 
@@ -30,27 +34,56 @@
 	    </property>
 	    <property name="lettereCommandMap">
             <map>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPopolareServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRitiroFirmaServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIntegrazioneCPOServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRettificaAssegnazioneServComm" value-ref="letteraGenericaCommand"/>
-				<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraAggiuntaFirmaServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRitiroServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteConsultivaServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPresidenteGiuntaServComm" value-ref="letteraGenericaCommand"/>
-                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" value-ref="letteraGenericaCommand"/>
             
-            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePARCommissioni" value-ref="letteraGenericaCommand"/>
-            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDACommissioni" value-ref="letteraGenericaCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteConsultivaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRettificaAssegnazioneServComm" value-ref="letteraGenericaServCommCommand"/>
+				<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIntegrazioneCPOServComm" value-ref="letteraGenericaServCommCommand"/>		
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRitiroServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraAggiuntaFirmaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRitiroFirmaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraAssestamentoBilancioServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraBilancioProgrammaticoServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIniziativaPopolareServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraRendicontoGeneraleServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraLeggeFinanziariaServComm" value-ref="letteraGenericaServCommCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraDOCAssegnazionePSRServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraDOCAssegnazioneDSAServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraAssegnazioneProgrammaLavoroCommEuropeaServComm" value-ref="letteraGenericaServCommCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraParereCommissioneServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIntesaCommissioneGiuntaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraParereCommissioneConSospPausaEstivaServComm" value-ref="letteraGenericaServCommCommand"/>
+           		<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraParerePropostaDiRegolamentoServComm" value-ref="letteraGenericaServCommCommand"/>
+            
             	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDLCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDACommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDAUrgenzaCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePARCommissioni" value-ref="letteraGenericaCommand"/>
             	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePLPCommissioni" value-ref="letteraGenericaCommand"/>
-            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneRELCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraPresaAttoRELCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraIscrizioneRISCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneREFCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneParereDaSedeConsultivaCommissioni" value-ref="letteraGenericaCommand"/>
             	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneRISCommissioni" value-ref="letteraGenericaCommand"/>
-
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneAulaLeggeRiordinoCommissioni" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneAulaTestoUnico" value-ref="letteraGenericaCommand"/>
+            	
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneLCRAula" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDAAula" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDABilancioAula" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissionePDAVariazioneBilancioAula" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneREFAula" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneORGAula" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraConvalidaORGAula" value-ref="letteraGenericaCommand"/>
+            	<entry key="{http://www.regione.lombardia.it/content/model/template/1.0}letteraTrasmissioneBURLAula" value-ref="letteraGenericaCommand"/>
+            
             </map>
         </property>
+	    
+	    
 	    
 	    
 	</bean> 
