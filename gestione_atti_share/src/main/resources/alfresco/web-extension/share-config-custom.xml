@@ -55,6 +55,7 @@
             Example config entry:
               <share-url repositoryId="622f9533-2a1e-48fe-af4e-ee9e41667ea4">http://new-york-office:8080/share/</share-url>
          -->
+         <share-url repositoryId="c15b1b46-6d5a-46d0-b0e4-40090feec886">http://localhost:9080/share/</share-url>
       </share-urls>
    </config>
 
@@ -134,23 +135,49 @@
 			<subtype name="crlatti:membroComitatoRistretto" />
 			<subtype name="crlatti:testoComitatoRistretto"/>
 			<subtype name="crlatti:collegamento" />
-			<subtype name="crltemplate:letteraIniziativaPopolareServComm" />
-			<subtype name="crltemplate:letteraRitiroFirmaServComm" />
-			<subtype name="crltemplate:letteraIntegrazioneCPOServComm" />
-			<subtype name="crltemplate:letteraRettificaAssegnazioneServComm" />
-			<subtype name="crltemplate:letteraAggiuntaFirmaServComm" />
-			<subtype name="crltemplate:letteraRitiroServComm" />		
+			
 			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
-  			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
-   			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
-   			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
-   			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />		
-   			<subtype name="crltemplate:letteraTrasmissionePARCommissioni" />
-   			<subtype name="crltemplate:letteraTrasmissionePDACommissioni" />
-   			<subtype name="crltemplate:letteraTrasmissionePDLCommissioni" />
-   			<subtype name="crltemplate:letteraTrasmissionePLPCommissioni" />
-   			<subtype name="crltemplate:letteraTrasmissioneRELCommissioni" />
-   			<subtype name="crltemplate:letteraTrasmissioneRISCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
+			<subtype name="crltemplate:letteraRettificaAssegnazioneServComm" />
+			<subtype name="crltemplate:letteraIntegrazioneCPOServComm" />
+			<subtype name="crltemplate:letteraRitiroServComm" />
+			<subtype name="crltemplate:letteraAggiuntaFirmaServComm" />
+			<subtype name="crltemplate:letteraRitiroFirmaServComm" />
+			<subtype name="crltemplate:letteraAssestamentoBilancioServComm" />
+			<subtype name="crltemplate:letteraBilancioProgrammaticoServComm" />
+			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
+			<subtype name="crltemplate:letteraIniziativaPopolareServComm" />
+			<subtype name="crltemplate:letteraRendicontoGeneraleServComm" />
+			<subtype name="crltemplate:letteraLeggeFinanziariaServComm" />
+			<subtype name="crltemplate:letteraDOCAssegnazionePSRServComm" />
+			<subtype name="crltemplate:letteraDOCAssegnazioneDSAServComm" />
+			<subtype name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm" />
+			<subtype name="crltemplate:letteraParereCommissioneServComm" />
+			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaServComm" />
+			<subtype name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm" />
+			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm" />
+			<subtype name="crltemplate:letteraParerePropostaDiRegolamentoServComm" />
+			<subtype name="crltemplate:letteraTrasmissionePDLCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissionePDACommissioni" />
+			<subtype name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissionePARCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissionePLPCommissioni" />
+			<subtype name="crltemplate:letteraPresaAttoRELCommissioni" />
+			<subtype name="crltemplate:letteraIscrizioneRISCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissioneREFCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissioneRISCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni" />
+			<subtype name="crltemplate:letteraTrasmissioneAulaTestoUnico" />
+			<subtype name="crltemplate:letteraTrasmissioneLCRAula" />
+			<subtype name="crltemplate:letteraTrasmissionePDAAula" />
+			<subtype name="crltemplate:letteraTrasmissionePDABilancioAula" />
+			<subtype name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula" />
+			<subtype name="crltemplate:letteraTrasmissioneREFAula" />
+			<subtype name="crltemplate:letteraTrasmissioneORGAula" />
+			<subtype name="crltemplate:letteraConvalidaORGAula" />
+			<subtype name="crltemplate:letteraTrasmissioneBURLAula" />
    			
          </type>
 
@@ -412,6 +439,7 @@
             <show id="crlatti:commConsultiva"/>
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
             <show id="crlatti:deliberante"/>
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
@@ -472,6 +500,7 @@
             <show id="crlatti:commConsultiva"/>
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
             <show id="crlatti:deliberante"/>
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
@@ -530,6 +559,7 @@
             <show id="crlatti:commConsultiva"/>
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
             <show id="crlatti:deliberante"/>
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
@@ -588,6 +618,7 @@
             <show id="crlatti:commConsultiva"/>
             <show id="crlatti:relatori"/>
             <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
             <show id="crlatti:deliberante"/>
             <show id="crlatti:organismiStatutari"/>
             <show id="crlatti:numeroLcr"/>
@@ -935,171 +966,22 @@
    	</forms>
    </config>
 	
-   <config evaluator="node-type" condition="crltemplate:letteraIniziativaPopolareServComm">
+   
+   <config evaluator="node-type" condition="crltemplate:lettera">
    	<forms>
    		<form>
    			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   				<show id="crltemplate:firmatario"/>
    			</field-visibility>
    		</form>
    	</forms>
    </config>
    
-   <config evaluator="node-type" condition="crltemplate:letteraRitiroFirmaServComm">
+    <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
    	<forms>
    		<form>
    			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraIntegrazioneCPOServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraRettificaAssegnazioneServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraAggiuntaFirmaServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraRitiroServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-    <config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePARCommissioni">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDACommissioni">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDLCommissioni">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePLPCommissioni">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-    <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRELCommissioni">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
-   			</field-visibility>
-   		</form>
-   	</forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRISCommissioni">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   				<show id="crltemplate:nomePresidenteConsiglioRegionale"/>
+   				<show id="crltemplate:firmatario"/>
    			</field-visibility>
    		</form>
    	</forms>
