@@ -69,6 +69,16 @@ public class URLBuilder {
 		return url;
 	}
 	
+     
+     public  String buildSimpleURL(String contextPropertyName,String[] paramsValues){
+ 		
+ 		
+ 		String url ="";
+ 		
+ 		url=messageSource.getMessage(contextPropertyName, paramsValues, Locale.ITALY);
+ 		
+ 		return url;
+ 	} 
 	
 
 	public MessageSource getMessageSource() {

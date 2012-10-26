@@ -419,12 +419,8 @@ public class ConsultazioniPareriController {
 		consultazioneSelected.setPrevista(isPrevista());
 		consultazioneSelected.setDiscussa(isDiscussa());
 		consultazioneSelected.setNote(getNoteConsultazione());
-
 		atto.setConsultazioni(getConsultazioniList());
 		attoServiceManager.salvaConsultazioni(atto);
-
-		// TODO: alfresco service
-
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));

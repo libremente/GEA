@@ -190,6 +190,9 @@ public class AttoServiceManager implements ServiceManager {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_chiusura_atto", null), atto);
 	}
 	
+	public String regioniUrl(String data,String numero){
+	return urlBuilder.buildSimpleURL("leggi_regionali_link", new String[]{data,numero});
+	}
 
 	@Override
 	public Atto merge(Object object) {

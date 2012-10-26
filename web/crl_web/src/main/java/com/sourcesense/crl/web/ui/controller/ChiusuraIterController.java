@@ -1,5 +1,7 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +14,7 @@ import javax.faces.context.FacesContext;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
+import com.sourcesense.crl.util.URLBuilder;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 @ManagedBean(name = "chiusuraIterController")
@@ -31,6 +34,7 @@ public class ChiusuraIterController {
 	private Date dataBurl;
 	private String numeroLr;
 	private Date dataLr;
+	private String urlLeggiRegionali;
 
 	@PostConstruct
 	protected void init() {
@@ -60,6 +64,34 @@ public class ChiusuraIterController {
 		attoBean.getAtto().setDataLR(getDataLr());
 		attoBean.setStato(StatoAtto.CHIUSO);
 		context.addMessage(null, new FacesMessage("Atto chiuso con successo", ""));
+	}
+	
+	
+	public void createLeggeRegionaleLink (){
+		//http://consiglionline.lombardia.it/normelombardia/accessibile/main.aspx?view=showdoc&iddoc=lr00{0}{1}
+		if("".equals(getNumeroLr()) || getDataLr()==null || getNumeroLr()==null ){
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! sono necessari la Data ed il Numero LR", ""));
+			
+			
+		}else{
+			
+			URLBuilder urlBuilder = new URLBuilder();
+			Format formatter=new SimpleDateFormat("yyyyMMdd");
+			String data = formatter.format(getDataLr());
+			String numero = getNumeroLr();
+			try{
+				
+			String url = attoServiceManager.regioniUrl( data, numero);	
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
+		
 	}
 	
 
@@ -137,6 +169,16 @@ public class ChiusuraIterController {
 
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
+	}
+
+
+	public String getUrlLeggiRegionali() {
+		return urlLeggiRegionali;
+	}
+
+
+	public void setUrlLeggiRegionali(String urlLeggiRegionali) {
+		this.urlLeggiRegionali = urlLeggiRegionali;
 	}
 	
 	

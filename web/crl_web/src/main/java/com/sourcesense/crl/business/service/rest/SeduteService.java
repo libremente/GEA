@@ -115,8 +115,6 @@ public class SeduteService {
 					true);
 			
 			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
-
 			seduta = objectMapper.readValue(responseMsg, Seduta.class);       
 			
 		} catch (JsonMappingException e) {
@@ -194,7 +192,10 @@ public class SeduteService {
 
 	}
 	
-	public void merge(String url, GestioneSedute gestioneSedute) {
+	public Seduta merge(String url, GestioneSedute gestioneSedute) {
+		
+		Seduta seduta=null;
+		
 		try {
 			WebResource webResource = client.resource(url);
 			
@@ -207,7 +208,6 @@ public class SeduteService {
 					false);
 			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
 					false);
-			//objectMapper.getSerializationConfig().addMixInAnnotations(Commissione.class, Commissione.class);
 			
 			String json = objectMapper.writeValueAsString(gestioneSedute);
 	
@@ -224,6 +224,9 @@ public class SeduteService {
 			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
 					true);
 			
+			String responseMsg = response.getEntity(String.class);
+			seduta = objectMapper.readValue(responseMsg, Seduta.class); 
+			
 		} catch (JsonMappingException e) {
 
 			throw new ServiceNotAvailableException(this.getClass()
@@ -237,6 +240,8 @@ public class SeduteService {
 			throw new ServiceNotAvailableException(this.getClass()
 					.getSimpleName(), e);
 		}
+		
+		return seduta;
 
 	}
 	

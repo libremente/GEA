@@ -8,7 +8,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form id="gestioneSeduteForm" enctype="multipart/form-data">
+<h:form id="gestioneSeduteForm" >
 
 <!-- <p:ajaxStatus onstart="statusDialog.show();"
 		onsuccess="statusDialog.hide();" />
@@ -20,14 +20,9 @@
 	
 	<p:growl id="tabGestioneSeduteMsg" showDetail="true" sticky="false" />
 
-	<p:tabView id="gestioneSedute" dynamic="true" cache="true"
+	<p:tabView id="gestioneSedute" dynamic="true"  widgetVar="gestioneSeduteTabs"
 		effect="slide">
-		<p:ajax event="tabChange"
-			listener="#{gestioneSeduteController.changeTabHandler}"
-			update=":gestioneSeduteForm:tabGestioneSeduteMsg" />
-		<p:ajax event="tabChange"
-			listener="#{gestioneSeduteController.updateSedutaInserisciOdg}"
-			update=":gestioneSeduteForm:gestioneSedute:inserisciODGGrid" />
+		
 
 		<p:tab id="tab1" title="Inserisci Seduta">
 
@@ -37,7 +32,7 @@
 
 		</p:tab>
 
-		<p:tab id="tab2" title="Inserisci ODG">
+		<p:tab id="tab2"  title="Inserisci ODG">
 
 			<ui:include src="./inserisciodgtab.xhtml" />
 

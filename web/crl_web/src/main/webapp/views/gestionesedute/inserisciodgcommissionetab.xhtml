@@ -56,34 +56,26 @@
 				editable="true">
 
 				<p:column headerText="Tipo Atto" style="width:125px">
-							#{consultazioneAtto.atto.tipoAtto}
+							#{consultazioneAtto.tipoAtto}
     			</p:column>
 
 				<p:column headerText="N.Atto" style="width:125px">
-					#{consultazioneAtto.atto.numeroAtto}
+					#{consultazioneAtto.numeroAtto}
 				</p:column>
 
 				<p:column headerText="Soggetto Consultato" style="width:125px">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{consultazioneAtto.soggettoConsultato}" />
-						</f:facet>
-						<f:facet name="input"
-							value="#{consultazioneAtto.soggettoConsultato}">
-							<p:inputText />
-						</f:facet>
-					</p:cellEditor>
+					#{consultazioneAtto.soggettiInvitati}					
 				</p:column>
 
 				<p:column headerText="Previsto" style="width:125px">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="si" rendered="#{consultazioneAtto.previsto}" />
+							<h:outputText value="si" rendered="#{consultazioneAtto.prevista}" />
 							<h:outputText value="no"
-								rendered="#{!consultazioneAtto.previsto}" />
+								rendered="#{!consultazioneAtto.prevista}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectBooleanCheckbox value="#{consultazioneAtto.previsto}">
+							<p:selectBooleanCheckbox value="#{consultazioneAtto.prevista}">
 								<p:ajax event="change"
 									listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
 							</p:selectBooleanCheckbox>
@@ -94,12 +86,12 @@
 				<p:column headerText="Discusso" style="width:125px">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="si" rendered="#{consultazioneAtto.discusso}" />
+							<h:outputText value="si" rendered="#{consultazioneAtto.discussa}" />
 							<h:outputText value="no"
-								rendered="#{!consultazioneAtto.discusso}" />
+								rendered="#{!consultazioneAtto.discussa}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectBooleanCheckbox value="#{consultazioneAtto.discusso}">
+							<p:selectBooleanCheckbox value="#{consultazioneAtto.discussa}">
 								<p:ajax event="change"
 									listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
 							</p:selectBooleanCheckbox>
@@ -107,13 +99,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Azioni" style="width:125px">
-					<p:commandButton oncomplete="consultazioneAttoDialog.show()"
-						icon="delete-icon">
-						<f:setPropertyActionListener value="#{consultazioneAtto.atto.id}"
-							target="#{gestioneSeduteController.idConsultazioneToDelete}" />
-					</p:commandButton>
-				</p:column>
+				
 
 				<p:column headerText="Modifica" style="width:50px">
 					<p:rowEditor />

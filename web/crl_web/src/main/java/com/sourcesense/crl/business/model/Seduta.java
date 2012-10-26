@@ -37,7 +37,7 @@ public class Seduta implements Cloneable{
 	private List<Link> links = new ArrayList<Link>();
 
 	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();	
-	private List<ConsultazioneAtto> consultazioniAtti = new ArrayList<ConsultazioneAtto>();	
+	private List<Consultazione> consultazioniAtti = new ArrayList<Consultazione>();	
 	private List<Audizione> audizioni = new ArrayList<Audizione>();	
 	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 
@@ -75,11 +75,12 @@ public class Seduta implements Cloneable{
 		this.attiTrattati = attiTrattati;
 	}
 
-	public List<ConsultazioneAtto> getConsultazioniAtti() {
+	public List<Consultazione> getConsultazioniAtti() {
+		
 		return consultazioniAtti;
 	}
 
-	public void setConsultazioniAtti(List<ConsultazioneAtto> consultazioniAtti) {
+	public void setConsultazioniAtti(List<Consultazione> consultazioniAtti) {
 		this.consultazioniAtti = consultazioniAtti;
 	}
 

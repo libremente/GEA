@@ -34,8 +34,8 @@ public class SeduteServiceManager implements ServiceManager{
 		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
 	}
 	
-	public void updateSeduta(GestioneSedute gestioneSedute) {
-		seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
+	public Seduta updateSeduta(GestioneSedute gestioneSedute) {
+		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
 	}
 	
 	public List<Seduta>  getSedute(String gruppo) {

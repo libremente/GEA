@@ -6,7 +6,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
 
 <p:panelGrid styleClass="infoTable" id="inserisciSeduta">
 	<p:row>
@@ -70,35 +71,38 @@
 								styleClass="generalInfoTab grey-text" editable="true"
 								style="width:100%">
 
-								<p:column headerText="Dettagli" style="width:50px">
+								<p:column  headerText="Dettagli" style="width:50px">
 									<p:commandButton
 										action="#{gestioneSeduteController.showSedutaDetail}"
 										icon="detail-icon"
 										update=":gestioneSeduteForm:gestioneSedute:dettagliSeduta">
 										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
-											target="#{gestioneSeduteController.dataSedutaSelected}" />
+											 target="#{gestioneSeduteController.dataSedutaSelected}" />
 									</p:commandButton>
 								</p:column>                   
 
-								<p:column headerText="Data Seduta" style="width:50px">
+								<p:column sortBy="#{seduta.dataSeduta}" headerText="Data Seduta">
 									<h:outputText value="#{seduta.dataSeduta}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 									</h:outputText>
 								</p:column>
 
-								<p:column headerText="Numero Verbale" style="width:50px">
+								<p:column sortBy="#{seduta.numVerbale}" headerText="Numero Verbale" >
 									<h:outputText value="#{seduta.numVerbale}" />
 								</p:column>
 
 								<p:column headerText="Azioni" style="width:130px">
 
-									<p:commandButton value="ODG" />
-										
+									<p:commandButton action="#{gestioneSeduteController.dettaglioOdg}" 
+									oncomplete="gestioneSeduteTabs.select(1)" value="ODG" update=":gestioneSeduteForm:gestioneSedute">
+									<f:setPropertyActionListener value="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"
+											target="#{gestioneSeduteController.dataSedutaSelected}"  />
+									</p:commandButton>	
 										
 									&nbsp;
 
 									<p:commandButton oncomplete="sedutaDialog.show()"
-										icon="delete-icon">
+										icon="delete-icon" >
 
 										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
 											target="#{gestioneSeduteController.sedutaToDelete}" />
@@ -200,7 +204,7 @@
 								value="#{gestioneSeduteController.linksList}" var="link"
 								styleClass="generalInfoTab grey-text" editable="true">
 
-								<p:column headerText="Descrizione collegamento">
+								<p:column sortBy="#{link.descrizione}" headerText="Descrizione collegamento">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{link.descrizione}" />
@@ -213,7 +217,7 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column headerText="Indirizzo collegamento">
+								<p:column sortBy="#{link.descrizione}" headerText="Indirizzo collegamento">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputLink value="#{link.indirizzo}">

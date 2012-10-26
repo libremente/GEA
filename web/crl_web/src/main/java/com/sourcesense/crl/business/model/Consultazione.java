@@ -20,6 +20,9 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @AutoProperty
 public class Consultazione implements Cloneable{
 	
+	
+	private String numeroAtto;
+	private String tipoAtto;
 	private String descrizione;
 	private Date dataConsultazione;
 	private boolean prevista;
@@ -94,6 +97,23 @@ public class Consultazione implements Cloneable{
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
+
+	public String getNumeroAtto() {
+		return numeroAtto;
+	}
+
+	public void setNumeroAtto(String numeroAtto) {
+		this.numeroAtto = numeroAtto;
+	}
+
+	public String getTipoAtto() {
+		return tipoAtto;
+	}
+
+	public void setTipoAtto(String tipoAtto) {
+		this.tipoAtto = tipoAtto;
+	}
+	
 	
 	
 

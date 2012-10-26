@@ -10,7 +10,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:o="http://omnifaces.org/ui"
-    xmlns:of="http://omnifaces.org/functions">
+	xmlns:of="http://omnifaces.org/functions">
 
 <script>
 	hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')
@@ -61,9 +61,6 @@
 
 							<p:panelGrid style="width:100%;margin-bottom:7px;"
 								id="searchPanel">
-
-
-
 
 								<p:messages id="msgs" />
 
@@ -197,9 +194,7 @@
 										</p:selectOneMenu>
 									</p:column>
 								</p:row>
-
 							</p:panelGrid>
-
 						</div>
 
 
@@ -534,38 +529,11 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<p:commandButton value="Reimposta" update="searchPanel"
 										id="btncercaatto_reset" />
-
-
-
-									<!-- 
-					 
-             <p:commandButton value="Ricerca Avanzata" update="listaAtti" id="btncercaatto_ricavnz"  actionListener="" />  
-              
-              <p:commandButton value="Reimposta" update="searchPanel" id="btncercaatto_reset" actionListener="" />
-              
--->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 								</p:column>
 
 
 							</p:row>
 
-
-							<!-- <h:outputText style="color: #BBBB">Qui Maschera di ricerca</h:outputText> -->
 
 						</p:panelGrid>
 					</p:column>
@@ -573,60 +541,76 @@
 			</p:panelGrid>
 
 			<!-- Pannello ricerca end -->
+			<p:panelGrid id="listaLavoroPanel"
+				style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F">
 
+				<p:row>
+					<p:column>
+						<h:outputLabel for="listaLavoro" value="Lista di Lavoro : "
+							style="valign:middle" />
+						<p:selectOneMenu id="listaLavoro"
+							value="#{searchAttoController.listaLavoro}">
+							<f:selectItem itemLabel="Tutti gli Atti" itemValue="tutti" />
+							<f:selectItem itemLabel="In lavorazione"
+								itemValue="inlavorazione" />
+							<f:selectItem itemLabel="Lavorati" itemValue="lavorati" />
+						</p:selectOneMenu>
+
+					</p:column>
+				</p:row>
+
+			</p:panelGrid>
 
 			<h3>Risultati ricerca</h3>
 
 			<p:dataTable id="listaAtti" var="atto"
-				value="#{searchAttoController.listAtti}" rows="10"
-				paginator="true"
+				value="#{searchAttoController.listAtti}" rows="5" paginator="true"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom">
-				<p:column>
+				<p:column sortBy="#{atto.tipo}">
 					<f:facet name="header">Tipo</f:facet>
 					<h:outputText value="#{atto.tipo}" />
 				</p:column>
 
-				<p:column headerText="N.Atto">
-					<c:set value="#{atto.id}" var="idAttoParam" />
-					
-						<h:outputText value="#{atto.numeroAtto}" />
-					
-					
+				<p:column sortBy="#{atto.numeroAtto}" headerText="N.Atto">
+					<h:outputText value="#{atto.numeroAtto}" />
 				</p:column>
-				<p:column headerText="N° Protocollo">
+				<p:column sortBy="#{atto.numeroProtocollo}" headerText="N° Protocollo">
 					<h:outputText value="#{atto.numeroProtocollo}" />
 				</p:column>
-				<p:column headerText="Oggetto">
+				<p:column sortBy="#{atto.oggetto}" headerText="Oggetto">
 					<h:outputText value="#{atto.oggetto}" />
 				</p:column>
 				<p:column headerText="Azioni">
-					<c:set value="#{atto.id}" var="idAttoParam" />
-					<p:commandButton value="Aggiungi a Trattati" id="addAttoTrattato"
-						action="#{gestioneSeduteController.addAttoTrattato(idAttoParam)}"
-						update=":gestioneSeduteForm:gestioneSedute:listaAttiTrattati, :gestioneSeduteForm:gestioneSedute:inserisciOdgMsg"
-						icon="new-icon" />	
+					
+					<p:commandButton action="#{gestioneSeduteController.addAttoTrattato}"
+						value="Aggiungi a Trattati"
+						immediate="true"
+						update=":gestioneSeduteForm:gestioneSedute"
+						icon="new-icon">
+						<f:setPropertyActionListener value="#{atto.id}"
+							target="#{gestioneSeduteController.attoDaTrattare}" />
+					</p:commandButton>	
 					&nbsp; &nbsp; &nbsp;
 				</p:column>
 			</p:dataTable>
 
-
+			<br />
 
 			<p:panelGrid styleClass="infoTable">
 				<p:row>
 					<p:column>
 
-						<h:outputLabel for="selezioneSeduta" value="Selezione seduta:  " />
+						<b><h:outputLabel for="selezioneSeduta"
+								value="Selezione seduta:  " />
+						</b>
 						
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
-						<p:selectOneMenu id="selezioneSeduta" value="gestioneSeduteController.sedutaSelected"
-							>
-							<f:selectItems value="#{gestioneSeduteController.seduteList}"
-								var="seduta" itemValue="#{seduta}" 
-								itemLabel="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"/>
-                            
-							 
+						<p:selectOneMenu id="selezioneSeduta"
+							value="#{gestioneSeduteController.dataSedutaSelected}">
+							<f:selectItems value="#{gestioneSeduteController.dateSeduteList}"
+							/>
 							<p:ajax event="change"
 								listener="#{gestioneSeduteController.showSedutaDetail}"
 								update="inserisciODGGrid" />
@@ -647,8 +631,7 @@
 								<th>Ordine del Giorno per la seduta del <h:outputText
 										value="#{gestioneSeduteController.dataSedutaSelected}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
-								</th>
+									</h:outputText></th>
 
 							</thead>
 						</table>
@@ -663,19 +646,19 @@
 					value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato"
 					styleClass="generalInfoTab grey-text" editable="true">
 
-					<p:column headerText="Tipo Atto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.atto.tipoAtto}" headerText="Tipo Atto" style="width:125px">
 							#{attoTrattato.atto.tipoAtto}
     			</p:column>
 
-					<p:column headerText="N.Atto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.atto.numeroAtto}" headerText="N.Atto" style="width:125px">
 					#{attoTrattato.atto.numeroAtto}
 				</p:column>
 
-					<p:column headerText="Oggetto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.atto.oggetto}" headerText="Oggetto" style="width:125px">
 					#{attoTrattato.atto.oggetto}
 				</p:column>
 
-					<p:column headerText="Previsto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.previsto}" headerText="Previsto" style="width:125px">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="si" rendered="#{attoTrattato.previsto}" />
@@ -690,7 +673,7 @@
 						</p:cellEditor>
 					</p:column>
 
-					<p:column headerText="Discusso" style="width:125px">
+					<p:column sortBy="#{attoTrattato.discusso}" headerText="Discusso" style="width:125px">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="si" rendered="#{attoTrattato.discusso}" />
@@ -705,23 +688,7 @@
 						</p:cellEditor>
 					</p:column>
 
-					<p:column headerText="Azioni" style="width:125px">
-						<p:commandButton oncomplete="attoTrattatoDialog.show()"
-							icon="delete-icon">
-							<f:setPropertyActionListener value="#{attoTrattato.atto.id}"
-								target="#{gestioneSeduteController.idAttoTrattatoToDelete}" />
-						</p:commandButton>
-						
-						&nbsp; &nbsp; &nbsp;
-						
-						<c:set value="#{attoTrattato.atto.id}" var="idAttoParam" />
-						<p:commandButton id="addConsultazioneAtto"
-							rendered="#{navigationBean.gestioneSeduteConsultazioniCommissione()}"
-							action="#{gestioneSeduteController.addConsultazioneAtto(idAttoParam)}"
-							update=":gestioneSeduteForm:gestioneSedute:listaConsultazioniAtti, :gestioneSeduteForm:gestioneSedute:inserisciOdgMsg"
-							icon="new-icon" />
-					</p:column>
-
+					
 					<p:column headerText="Modifica" style="width:50px">
 						<p:rowEditor />
 					</p:column>
