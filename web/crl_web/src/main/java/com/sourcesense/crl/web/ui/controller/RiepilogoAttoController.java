@@ -10,11 +10,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Organo;
+import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
+import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 @ManagedBean(name = "riepilogoAttoController")
@@ -27,6 +30,9 @@ public class RiepilogoAttoController {
 	private List<Organo> altriOrgani;
 	private String nomeCommissione;
 	private String commissioneSelectedName;
+	
+	private List<Abbinamento> abbinamentiAttivi = new ArrayList<Abbinamento>();
+	private List<Abbinamento> abbinamentiList = new ArrayList<Abbinamento>();
 
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
@@ -39,6 +45,8 @@ public class RiepilogoAttoController {
 
 	@PostConstruct
 	protected void init() {
+		
+		
 		
 		
 		
@@ -59,7 +67,9 @@ public class RiepilogoAttoController {
 			commissioneSelected = attoBean.getAtto().getPassaggi().get(0).getCommissioni().get(0);
 		}
 		
-
+		abbinamentiList = Clonator.cloneList(attoBean.getLastPassaggio().getAbbinamenti());
+		
+		filtraAbbinamenti();
 	}
 
 	public void showCommissioneDetail() {
@@ -79,6 +89,20 @@ public class RiepilogoAttoController {
 		}
 
 	}
+	
+	public void filtraAbbinamenti() {
+
+		for (Abbinamento element : abbinamentiList) {
+
+			if (element.getDataDisabbinamento() == null) {
+
+				abbinamentiAttivi.add(element);
+				
+			}
+		}
+	}
+	
+
 
 	public List<Allegato> getTestiUfficiali() {
 		return testiUfficiali;
@@ -153,6 +177,15 @@ public class RiepilogoAttoController {
 		this.attoServiceManager = attoServiceManager;
 	}
 
+	public List<Abbinamento> getAbbinamentiAttivi() {
+		return abbinamentiAttivi;
+	}
+
+	public void setAbbinamentiAttivi(List<Abbinamento> abbinamentiAttivi) {
+		this.abbinamentiAttivi = abbinamentiAttivi;
+	}
+
+	
 
 
 }
