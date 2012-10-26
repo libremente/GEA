@@ -39,9 +39,11 @@
 				<c:if test="#{attoBean.abbinamenti.size() >0 }">
 					<h:outputLabel value="Abbinato a :" />
 					<c:forEach items="#{attoBean.abbinamenti}" var="abbinamento">
+					<c:if test = "#{empty abbinamento.dataDisabbinamento}">
 						<h:outputLabel value="#{abbinamento.tipoAttoAbbinato}-" />
 						<h:outputLabel value="#{abbinamento.numeroAttoAbbinato}" />
 				        &nbsp;&nbsp;   
+					</c:if>
 					</c:forEach>
 				</c:if>
 				<h:outputLabel value="Tipo :" />
