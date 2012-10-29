@@ -16,7 +16,7 @@
 
 
 
-
+<div id="blockedAttiInterni">
 <p:fieldset legend="Atti Interni" toggleable="true" toggleSpeed="500">
 
 	<!-- Messaggio azioni -->
@@ -668,6 +668,13 @@
 
 </p:fieldset>
 
-
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedAttiInterni').block({ message: null } );}
+</script>
 
 </html>

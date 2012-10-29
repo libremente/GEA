@@ -15,6 +15,7 @@
 
 
 <h:form>
+<div id="blockedIter">
 	<p:fieldset legend="Chiudi fascicolo" toggleable="true"
 		toggleSpeed="500">
 		<p:row>
@@ -143,5 +144,15 @@
 			action="#{chiusuraIterController.chiusuraAtto}"
 			update="chiusuraIterMsg , :informationForm:informationBar" />
 	</p>
+	
+	</div>
 </h:form>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+
+	
+if ( #{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedIter').block({ message: null } );}
+</script>
 </html>

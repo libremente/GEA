@@ -13,7 +13,7 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-
+<div id="blockedLeggiRegionali">
 <p:panelGrid styleClass="infoTable" id="LRIndirizzoPanel">
 	<p:row>
 		<p:column>
@@ -161,5 +161,12 @@
 		</p:column>
 	</p:row>
 </p:panelGrid>
-
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedLeggiRegionali').block({ message: null } );}
+</script>
 </html>

@@ -333,7 +333,7 @@
 <script>
 
 
-if (! ("#{esameCommissioniController.dataPresaInCarico}").length) {
+if (! ("#{esameCommissioniController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 $('#blockedNote').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 	width:		'350px',
 	top:		'10px',
@@ -354,7 +354,7 @@ $('#blockedNote').block({ message: 'Pagina bloccata!<br />Prendere in carico per
 
 };
 
-if ( #{esameCommissioniController.readonly}==true) {
+if ( #{esameCommissioniController.readonly}==true || #{navigationBean.isGuest()}==true) {
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
 	$('#blockedNote').block({ message: null } );}
 

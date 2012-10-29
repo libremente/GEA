@@ -549,7 +549,8 @@
 </div>
 <script type="text/javascript" src="resources/javascript/blockUI.js"></script>
 <script>
-	if (!("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
+	if (!("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+		
 		$('#blockedInfoGen')
 				.block(
 						{
@@ -571,7 +572,7 @@
 							},
 						});
 
-	};
+	}
 
 	function unblockDiv() {
 		$('#blockedInfoGen').unblock();
@@ -584,6 +585,13 @@
 	if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
    $('#presaInCaricoDiv').block({ message: null } ); }
+	
+	if (#{navigationBean.isGuest()}==true){
+		$.blockUI.defaults.overlayCSS.opacity = 0; 
+		   $('#presaInCaricoDiv').block({ message: null } );
+		   $('#blockedInfoGen').block({ message: null } );
+		
+	}
 	
 	
 </script>

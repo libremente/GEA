@@ -577,7 +577,7 @@
 </div>
 <script type="text/javascript" src="resources/javascript/blockUI.js"></script>
 <script>
-	if (!("#{esameCommissioniController.dataPresaInCarico}").length) {
+	if (!("#{esameCommissioniController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 		$('#blockedRelatori').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 			width:		'350px',
 			top:		'10px',
@@ -612,7 +612,7 @@ if ( #{navigationBean.esameCommissioniDisabled()}==true) {
 	$('#materiaDiv').block({ message: null } );
 	$('#dataScadenza').block({ message: null } );}
 	
-if ( #{esameCommissioniController.readonly}==true) {
+if ( #{esameCommissioniController.readonly}==true || #{navigationBean.isGuest()}==true) {
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
 	$('#presaInCarico').block({ message: null } );
 	$('#materiaDiv').block({ message: null } );

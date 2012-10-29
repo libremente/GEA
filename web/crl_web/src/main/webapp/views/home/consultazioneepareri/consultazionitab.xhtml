@@ -17,7 +17,7 @@
 
 
 
-
+<div id="blockedConsultazioni">
 <p:fieldset legend="Consultazioni" toggleable="true" toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="consultazionipanel">
 		<p:row>
@@ -444,4 +444,13 @@
 		</p:row>
 	</p:panelGrid>
 </p:fieldset>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedConsultazioni').block({ message: null } );}
+</script>
+
 </html>

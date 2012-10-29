@@ -198,7 +198,7 @@
 <script>
 
 
-if (! ("#{esameAulaController.dataPresaInCarico}").length) {
+if (! ("#{esameAulaController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 	$('#blockedRinvioStralci').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 		width:		'350px',
 		top:		'10px',
@@ -216,7 +216,7 @@ if (! ("#{esameAulaController.dataPresaInCarico}").length) {
 	}, });
 	};
 
-	if ( #{esameAulaController.readonly}==true) {
+	if ( #{esameAulaController.readonly}==true || #{navigationBean.isGuest()}==true) {
 		   $.blockUI.defaults.overlayCSS.opacity = 0; 
 		   $('#blockedRinvioStralci').block({ message: null } );}
 

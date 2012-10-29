@@ -202,7 +202,7 @@
 <script>
 
 
-if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
+if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 $('#blockedAmmissibilita').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 	width:		'350px',
 	top:		'10px',
@@ -222,6 +222,12 @@ $('#blockedAmmissibilita').block({ message: 'Pagina bloccata!<br />Prendere in c
 
 
 };
+
+if (#{navigationBean.isGuest()}==true){
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	   $('#blockedAmmissibilita').block({ message: null } );
+	
+}
 
 </script>
 

@@ -132,7 +132,7 @@
 	</p:panelGrid>
 </div>
 <script>
-	if (!("#{esameCommissioniController.dataPresaInCarico}").length) {
+	if (!("#{esameCommissioniController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 		$('#blockedRinvioStralci')
 				.block(
 						{
@@ -155,7 +155,7 @@
 						});
 	};
 	
-	if ( #{esameCommissioniController.readonly}==true) {
+	if ( #{esameCommissioniController.readonly}==true || #{navigationBean.isGuest()}==true) {
 		$.blockUI.defaults.overlayCSS.opacity = 0; 
 		$('#blockedRinvioStralci').block({ message: null } );}
 </script>

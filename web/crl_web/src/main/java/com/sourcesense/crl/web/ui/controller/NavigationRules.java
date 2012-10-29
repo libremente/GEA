@@ -17,7 +17,7 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 public class NavigationRules {
 
 	/**
-	 * Gruppi ADMINISTRATORS servizioCommissioni CommissioneN Aula
+	 * Gruppi ADMINISTRATORS servizioCommissioni CommissioneN Aula Guest
 	 */
 
 	AttoBean attoBean;
@@ -200,6 +200,18 @@ public class NavigationRules {
 		}
 
 		return false;
+	}
+	
+	public boolean isGuest(){
+		
+		
+		
+		if (userBean.getUser().getSessionGroup().getNome().equals("Guest")){
+			return true;
+		}
+		
+		return false;
+		
 	}
 
 }

@@ -15,7 +15,7 @@
 	position="left center" />
 
 
-
+<div id="blockedPareri">
 <p:fieldset legend="Pareri" toggleable="true" toggleSpeed="500">
 
 	<p:panelGrid styleClass="infoTable" id="pareripanel">
@@ -292,4 +292,12 @@
 
 	</p:panelGrid>
 </p:fieldset>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedPareri').block({ message: null } );}
+</script>
 </html>

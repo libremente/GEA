@@ -17,6 +17,7 @@
 
 <p:growl id="messages" showDetail="true" />
 
+<div id="blockedLettere">
 <p:fieldset legend="Tipo di notifiche" toggleable="true"
 	toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="tiponotifichepanel">
@@ -64,6 +65,13 @@
 <p>
 	<p:commandButton value="Genera lettera" />
 </p>
-
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedLettere').block({ message: null } );}
+</script>
 
 </html>

@@ -337,7 +337,7 @@
 <script>
 
 
-if (! ("#{esameAulaController.dataPresaInCarico}").length) {
+if (! ("#{esameAulaController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 $('#blockedEmendamenti').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 	width:		'350px',
 	top:		'10px',
@@ -354,7 +354,7 @@ $('#blockedEmendamenti').block({ message: 'Pagina bloccata!<br />Prendere in car
 	'border-radius':		'10px'
 }, });};
 
-if ( #{esameAulaController.readonly}==true) {
+if ( #{esameAulaController.readonly}==true || #{navigationBean.isGuest()}==true) {
 	   $.blockUI.defaults.overlayCSS.opacity = 0; 
 	   $('#blockedNote').block({ message: null } );}
 	   

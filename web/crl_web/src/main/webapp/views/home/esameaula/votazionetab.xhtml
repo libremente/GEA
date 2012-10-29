@@ -326,7 +326,7 @@
 <script>
 
 
-if (! ("#{esameAulaController.dataPresaInCarico}").length) {
+if (! ("#{esameAulaController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 $('#blockedVotazione').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 	width:		'350px',
 	top:		'10px',
@@ -359,7 +359,7 @@ if ( #{navigationBean.esameAulaDisabled()}==true) {
    $('#DataPresaInCaricoDiv').block({ message: null } );
    $('#relazioneScrittaDiv').block({ message: null } );}
    
-if ( #{esameAulaController.readonly}==true) {
+if ( #{esameAulaController.readonly}==true || #{navigationBean.isGuest()}==true) {
 	   $.blockUI.defaults.overlayCSS.opacity = 0; 
 	   $('#presaInCaricoDiv').block({ message: null } );
 	   $('#DataPresaInCaricoDiv').block({ message: null } );

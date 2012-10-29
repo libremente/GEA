@@ -336,7 +336,7 @@
 <script>
 
 
-if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length) {
+if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 $('#blockedNote').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 	width:		'350px',
 	top:		'10px',
@@ -356,6 +356,12 @@ $('#blockedNote').block({ message: 'Pagina bloccata!<br />Prendere in carico per
 
 
 };
+
+if (#{navigationBean.isGuest()}==true){
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	   $('#blockedNote').block({ message: null } );
+	
+}
 
 </script>
 </html>

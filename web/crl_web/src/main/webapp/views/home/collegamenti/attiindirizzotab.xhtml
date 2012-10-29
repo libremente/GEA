@@ -13,7 +13,7 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-
+<div id="blockedAttiIndirizzo">
 <p:panelGrid styleClass="infoTable" id="attiIndirizzoPanel">
 	<p:row>
 		<p:column>
@@ -158,5 +158,12 @@
 		</p:column>
 	</p:row>
 </p:panelGrid>
-
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedAttiIndirizzo').block({ message: null } );}
+</script>
 </html>
