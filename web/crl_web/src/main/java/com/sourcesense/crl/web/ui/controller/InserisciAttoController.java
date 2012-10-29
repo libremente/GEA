@@ -95,7 +95,7 @@ public class InserisciAttoController {
 	
 	public String inserisciAtto() {
 		
-		
+		atto.setError(null);
 		atto.setStato(StatoAtto.PROTOCOLLATO);
 		
 		Atto attoRet = attoServiceManager.persist(atto);

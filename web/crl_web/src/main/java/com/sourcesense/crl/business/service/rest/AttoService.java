@@ -68,8 +68,6 @@ public class AttoService {
 			}else{
 
 			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
-
 			attoRet = objectMapper.readValue(responseMsg, Atto.class);
 			atto.setId(attoRet.getId());
 			}
