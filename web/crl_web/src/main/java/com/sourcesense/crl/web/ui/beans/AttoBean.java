@@ -232,6 +232,18 @@ public class AttoBean implements Serializable {
 
 	}
 
+	public List<String> getCommissioniAssegnate() {
+
+		List<String> commissioni = new ArrayList<String>();
+		for (Commissione commissione : getLastPassaggio().getCommissioni()) {
+            
+			commissioni.add(commissione.getDescrizione());
+		}
+
+		return commissioni;
+
+	}
+
 	/* Files */
 
 	public List<TestoAtto> getTestiAttoCommissione() {
@@ -338,13 +350,11 @@ public class AttoBean implements Serializable {
 
 	public List<Allegato> getAllegatiPareri() {
 		List<Allegato> returnList = new ArrayList<Allegato>();
-		for (OrganismoStatutario organismo : getAtto().getOrganismiStatutari() ) {
+		for (OrganismoStatutario organismo : getAtto().getOrganismiStatutari()) {
 
 			for (Allegato allegato : organismo.getParere().getAllegati()) {
 
-				
-					returnList.add(allegato);
-				
+				returnList.add(allegato);
 
 			}
 

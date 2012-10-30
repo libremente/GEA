@@ -37,29 +37,25 @@ public class ConsultazioniPareriController {
 	private Atto atto = new Atto();
 
 	private List<OrganismoStatutario> organismiList = new ArrayList<OrganismoStatutario>();
-
+	private List<String> commissioni = new ArrayList<String>();
 	
 	private OrganismoStatutario organismoSelected = new OrganismoStatutario(); 
-	//private Parere parereSelected = new Parere();
 	private String descrizioneOrganismoSelected;
 
 	private Date dataRicezioneParere;
 	private Date dataRicezioneOrgano;
 	private String esito;
 	private String noteParere;
-
-	/*private List<Allegato> allegatiParereList = new ArrayList<Allegato>();
-	private List<Allegato> allegatiConsultazioneList = new ArrayList<Allegato>();*/
-	
 	private String allegatoParereToDelete;
 	private boolean currentFilePubblico;
 
 	private List<Consultazione> consultazioniList = new ArrayList<Consultazione>();
+	private Consultazione consultazioneSelected;
 	private String soggettoConsultato;
 	private String consultazioneToDelete;
 	private String allegatoConsultazioneToDelete;
 
-	private Consultazione consultazioneSelected;
+	
 	private String descrizioneConsultazioneSelected;
 
 	private Date dataSedutaConsultazione;
@@ -103,6 +99,9 @@ public class ConsultazioniPareriController {
 					.getDescrizione());
 			showConsultazioneDetail();
 		}
+		
+		
+		commissioni = attoBean.getCommissioniAssegnate();
 	}
 
 	public void updatePareriHandler() {
@@ -764,6 +763,16 @@ public class ConsultazioniPareriController {
 		this.organismoSelected = organismoSelected;
 	}
 
+	public List<String> getCommissioni() {
+		return commissioni;
+	}
+
+	public void setCommissioni(List<String> commissioni) {
+		this.commissioni = commissioni;
+	}
+
+	
+	
 	
 	
 }

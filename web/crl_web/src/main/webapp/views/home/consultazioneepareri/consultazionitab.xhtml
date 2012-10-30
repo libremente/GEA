@@ -51,47 +51,52 @@
 						onclick="soggettoInvitatoDialog.hide()" type="button" />
 
 				</p:confirmDialog>
-				
-				<p:confirmDialog id="confirmAllegatoConsultazioneDialog"
-				message="Sei sicuro di voler eliminare l'allegato ?"
-				header="Cancellazione Allegato" severity="alert"
-				widgetVar="allegatoConsultazioneDialog">
-				
-				<p:commandButton id="confirmAllegatoConsultazioneComponente"
-					value="Conferma" oncomplete="allegatoConsultazioneDialog.hide()"
-					action="#{consultazioniPareriController.removeAllegatoConsultazione}"
-					update="listaDocumentazioneConsultazione" />
-				<p:commandButton id="declineAllegatoConsultazione" value="Annulla"
-					onclick="allegatoConsultazioneDialog.hide()" type="button" />
 
-			</p:confirmDialog>
-				
-				<p:confirmDialog id="uploadFileConsultazioneAttributes" header="Caricamento"
-					widgetVar="uploadFileConsultazioneAttributesDialog" style="width:450px" message="Allega Testo">
+				<p:confirmDialog id="confirmAllegatoConsultazioneDialog"
+					message="Sei sicuro di voler eliminare l'allegato ?"
+					header="Cancellazione Allegato" severity="alert"
+					widgetVar="allegatoConsultazioneDialog">
+
+					<p:commandButton id="confirmAllegatoConsultazioneComponente"
+						value="Conferma" oncomplete="allegatoConsultazioneDialog.hide()"
+						action="#{consultazioniPareriController.removeAllegatoConsultazione}"
+						update="listaDocumentazioneConsultazione" />
+					<p:commandButton id="declineAllegatoConsultazione" value="Annulla"
+						onclick="allegatoConsultazioneDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<p:confirmDialog id="uploadFileConsultazioneAttributes"
+					header="Caricamento"
+					widgetVar="uploadFileConsultazioneAttributesDialog"
+					style="width:450px" message="Allega Testo">
 					<p:panelGrid id="uploadpanelConsultazione">
 						<p:row>
 							<p:column>
 								<h:outputLabel for="ispubblicoConsultazione" value="Pubblico: " />
-								<p:selectBooleanCheckbox id="ispubblicoConsultazione" 
+								<p:selectBooleanCheckbox id="ispubblicoConsultazione"
 									value="#{consultazioniPareriController.currentFilePubblico}">
-									<p:ajax event="change" immediate="true" ></p:ajax>
+									<p:ajax event="change" immediate="true"></p:ajax>
 								</p:selectBooleanCheckbox>
 							</p:column>
-							</p:row>
-							<p:row>
+						</p:row>
+						<p:row>
 							<p:column>
 								<p:fileUpload label="Carica Allegato"
-									oncomplete="uploadFileConsultazioneAttributesDialog.hide()" auto="false"
+									oncomplete="uploadFileConsultazioneAttributesDialog.hide()"
+									auto="false"
 									update="listaDocumentazioneConsultazione, pareriMsg"
 									fileUploadListener="#{consultazioniPareriController.uploadAllegatoConsultazione}" />
 							</p:column>
-							</p:row>
-							<p:row>
+						</p:row>
+						<p:row>
 							<p:column>
-								<p:commandButton id="declineUploadFileConsultazione" value="Annulla"
-									onclick="uploadFileConsultazioneAttributesDialog.hide()" type="button" />
+								<p:commandButton id="declineUploadFileConsultazione"
+									value="Annulla"
+									onclick="uploadFileConsultazioneAttributesDialog.hide()"
+									type="button" />
 							</p:column>
-							</p:row>
+						</p:row>
 					</p:panelGrid>
 				</p:confirmDialog>
 			</p:column>
@@ -141,13 +146,19 @@
 					value="#{consultazioniPareriController.consultazioniList}"
 					var="consultazione" styleClass="generalInfoTab grey-text">
 
-					<p:column sortBy="#{consultazioniPareriController.descrizioneConsultazioneSelected}">
+					<p:column
+						sortBy="#{consultazioniPareriController.descrizioneConsultazioneSelected}">
 						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
 							action="#{consultazioniPareriController.showConsultazioneDetail}"
 							update=":consultazioniPareriForm:tabView:dettagliconsultazionepanel">
 							<f:setPropertyActionListener value="#{consultazione.descrizione}"
 								target="#{consultazioniPareriController.descrizioneConsultazioneSelected}" />
 						</p:commandButton>
+					</p:column>
+
+					<p:column sortBy="#{consultazione.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{consultazione.commissione}" />
 					</p:column>
 
 					<p:column sortBy="#{consultazione.dataConsultazione}">
@@ -159,8 +170,11 @@
 
 					<p:column sortBy="#{consultazione.descrizione}">
 						<f:facet name="header">Soggetti Consultati</f:facet>
-							<h:outputText value="#{consultazione.descrizione}" />
+						<h:outputText value="#{consultazione.descrizione}" />
 					</p:column>
+
+
+
 
 					<p:column>
 						<f:facet name="header">Documenti</f:facet>
@@ -186,6 +200,23 @@
 				<p:fieldset legend="Dettagli consultazione" collapsed="false"
 					toggleable="true" toggleSpeed="500">
 					<p:panelGrid styleClass="infoTable" id="dettagliconsultazionepanel">
+
+						<p:row>
+							<p:column>
+								<b> <h:outputLabel for="commissioniSel" value="Commissione: " />
+								</b>
+							</p:column>
+							<p:column>
+
+								<p:selectOneMenu id="commissioniSel" style="align: right"
+									value="#{consultazioniPareriController.consultazioneSelected.commissione}">
+									<f:selectItem itemLabel="Scegli una Commissione"
+									itemValue="" /> 
+									<f:selectItems
+										value="#{consultazioniPareriController.commissioni}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
 						<p:row>
 							<p:column>
 								<b> <h:outputLabel for="dataseduta" value="Data seduta: " />
@@ -217,8 +248,7 @@
 						<p:row>
 							<p:column>
 								<b> <h:outputLabel for="dataconsultazione"
-										value="Data consultazione: " />
-								</b>
+										value="Data consultazione: " /> </b>
 							</p:column>
 							<p:column>
 								<p:inputText id="dataconsultazione" readonly="true"
@@ -234,7 +264,7 @@
 							</p:column>
 							<p:column colspan="6">
 								<p:inputTextarea rows="2" cols="82" id="noteConsultazione"
-								value="#{consultazioniPareriController.noteConsultazione}"/>
+									value="#{consultazioniPareriController.noteConsultazione}" />
 							</p:column>
 						</p:row>
 
@@ -360,82 +390,84 @@
 								</table>
 							</p:column>
 						</p:row> -->
-						
+
 						<p:row>
 							<p:column colspan="4">
-							
-							
-							<p:commandButton value="Carica Allegato"
-					oncomplete="uploadFileConsultazioneAttributesDialog.show()">
-				</p:commandButton>
-				
-				
-				</p:column>
-		</p:row>
-		<p:row>
-			<p:column colspan="4">
-
-				<p:dataTable id="listaDocumentazioneConsultazione"
-					value="#{consultazioniPareriController.consultazioneSelected.allegati}"
-					var="allegato" styleClass="generalInfoTab grey-text">
-
-					<p:column sortBy="#{allegato.nome}">
-						<f:facet name="header">Documentazione allegata</f:facet>
-							<h:outputText value="#{allegato.nome}" />
-						</p:column>
-
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Documento</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
-
-					<p:column sortBy="#{allegato.pubblico}">
-						<f:facet name="header">Pubblico</f:facet>
-						<h:outputText value="si" rendered="#{allegato.pubblico}" />
-						<h:outputText value="no" rendered="#{!allegato.pubblico}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">Elimina</f:facet>
-						<p:commandButton oncomplete="allegatoConsultazioneDialog.show()"
-							icon="delete-icon">
-
-							<f:setPropertyActionListener value="#{allegato.id}"
-								target="#{consultazioniPareriController.allegatoConsultazioneToDelete}" />
-						</p:commandButton>
-					</p:column>
-					
-					<p:column>
-							<f:facet name="header">Download</f:facet>
-
-							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
-								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
-								<f:setPropertyActionListener value="#{allegato.id}"
-									target="#{fileDownloadController.fileId}" />
-								<f:setPropertyActionListener value="#{allegato.nome}"
-									target="#{fileDownloadController.fileName}" />
-								<f:setPropertyActionListener value="#{allegato.mimetype}"
-									target="#{fileDownloadController.fileMimetype}" />
-								<p:fileDownload value="#{fileDownloadController.file}" />
-							</p:commandButton>
-
-						</p:column>
 
 
-				</p:dataTable>
-			
-							
-								
-								
+								<p:commandButton value="Carica Allegato"
+									oncomplete="uploadFileConsultazioneAttributesDialog.show()">
+								</p:commandButton>
+
+
 							</p:column>
 						</p:row>
-						
-						
+						<p:row>
+							<p:column colspan="4">
+
+								<p:dataTable id="listaDocumentazioneConsultazione"
+									value="#{consultazioniPareriController.consultazioneSelected.allegati}"
+									var="allegato" styleClass="generalInfoTab grey-text">
+
+									<p:column sortBy="#{allegato.nome}">
+										<f:facet name="header">Documentazione allegata</f:facet>
+										<h:outputText value="#{allegato.nome}" />
+									</p:column>
+
+									<p:column sortBy="#{allegato.mimetype}">
+										<f:facet name="header">Documento</f:facet>
+										<h:outputText value="#{allegato.mimetype}" />
+									</p:column>
+
+									<p:column sortBy="#{allegato.pubblico}">
+										<f:facet name="header">Pubblico</f:facet>
+										<h:outputText value="si" rendered="#{allegato.pubblico}" />
+										<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+										<p:commandButton
+											oncomplete="allegatoConsultazioneDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{allegato.id}"
+												target="#{consultazioniPareriController.allegatoConsultazioneToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Download</f:facet>
+
+										<p:commandButton id="downloadLinkemendamento"
+											icon="detail-icon" ajax="false"
+											onclick="PrimeFaces.monitorDownload(start, stop)">
+											<f:setPropertyActionListener value="#{allegato.id}"
+												target="#{fileDownloadController.fileId}" />
+											<f:setPropertyActionListener value="#{allegato.nome}"
+												target="#{fileDownloadController.fileName}" />
+											<f:setPropertyActionListener value="#{allegato.mimetype}"
+												target="#{fileDownloadController.fileMimetype}" />
+											<p:fileDownload value="#{fileDownloadController.file}" />
+										</p:commandButton>
+
+									</p:column>
+
+
+								</p:dataTable>
+
+
+
+
+							</p:column>
+						</p:row>
+
+
 						<p:row>
 							<p:column colspan="2">
-								<p:commandButton value="Salva Consultazioni" 
-								action="#{consultazioniPareriController.salvaConsultazione}" 
-								update="consultazioneMsg"/>
+								<p:commandButton value="Salva Consultazioni"
+									action="#{consultazioniPareriController.salvaConsultazione}"
+									update="consultazioneMsg" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

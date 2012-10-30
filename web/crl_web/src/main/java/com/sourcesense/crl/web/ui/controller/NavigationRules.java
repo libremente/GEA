@@ -42,6 +42,23 @@ public class NavigationRules {
 
 	}
 
+	
+	public boolean presaCaricoAulaDisabled() {
+
+		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)
+				|| attoBean.getStato().equals(StatoAtto.PRESO_CARICO_AULA)
+				|| attoBean.getStato().equals(StatoAtto.VOTATO_AULA)
+				|| attoBean.getStato().equals(StatoAtto.PUBBLICATO)
+				)
+
+		{
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
 	public boolean presentazioneAssegnazioneDisabled() {
 
 		if ("ServizioCommissioni".equals(userBean.getUserGroupName())

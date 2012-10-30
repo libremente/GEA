@@ -87,7 +87,7 @@
 			</div>
 		</p:column>
 		<p:column><div id="presaInCaricoDiv">
-			<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Presa in carico" 
+			<p:commandButton disabled="#{navigationBean.presaCaricoAulaDisabled()}" value="Presa in carico" 
 			action="#{esameAulaController.presaInCarico}"
 			update="votazioneMsg , :informationForm:informationBar" oncomplete="unblockDiv()"/>
 			</div>

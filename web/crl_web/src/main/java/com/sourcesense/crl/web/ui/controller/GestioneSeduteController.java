@@ -154,15 +154,22 @@ public class GestioneSeduteController {
 			setAttiSindacato(Clonator.cloneList(sedutaSelected
 					.getAttiSindacato()));
 
+			FacesContext context = FacesContext.getCurrentInstance();
+			UserBean userBean = ((UserBean) context.getExternalContext()
+					.getSessionMap().get("userBean"));
+			
 			for (AttoTrattato element : attiTrattati) {
 
 				for (Consultazione consultazione : element.getAtto()
 						.getConsultazioni()) {
 
 					Format formatter = new SimpleDateFormat("yyyyMMdd");
+					
+					
 					Consultazione cons = (Consultazione) consultazione.clone();
 					if (formatter.format(cons.getDataSeduta()).equals(
-							formatter.format(sedutaSelected.getDataSeduta()))) {
+							formatter.format(sedutaSelected.getDataSeduta()))
+							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
 						cons.setNumeroAtto(element.getAtto().getNumeroAtto());
 						cons.setTipoAtto(element.getAtto().getTipoAtto());
 						consultazioniAtti.add(cons);
@@ -368,13 +375,19 @@ public class GestioneSeduteController {
 				AttoTrattato attoTrattato = new AttoTrattato();
 				attoTrattato.setAtto(attoDaCollegare);
 				attiTrattati.add(attoTrattato);
+				FacesContext context = FacesContext.getCurrentInstance();
+				UserBean userBean = ((UserBean) context.getExternalContext()
+						.getSessionMap().get("userBean"));
+				
 				for (Consultazione consultazione : attoTrattato.getAtto()
 						.getConsultazioni()) {
 
 					Format formatter = new SimpleDateFormat("yyyyMMdd");
 					Consultazione cons = (Consultazione) consultazione.clone();
 					if (formatter.format(cons.getDataSeduta()).equals(
-							formatter.format(sedutaSelected.getDataSeduta()))) {
+							formatter.format(sedutaSelected.getDataSeduta()))
+							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
+						
 						cons.setNumeroAtto(attoTrattato.getAtto()
 								.getNumeroAtto());
 						cons.setTipoAtto(attoTrattato.getAtto().getTipoAtto());

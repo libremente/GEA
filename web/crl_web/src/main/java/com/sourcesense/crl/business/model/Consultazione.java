@@ -29,6 +29,10 @@ public class Consultazione implements Cloneable{
 	private boolean discussa;
 	private Date dataSeduta;
 	private String note;
+	private String idAtto;
+	private String commissione;
+	
+	
 	
 	private List <SoggettoInvitato> soggettiInvitati = new ArrayList<SoggettoInvitato>();
 	private List<Allegato> allegati = new ArrayList<Allegato>();
@@ -112,6 +116,22 @@ public class Consultazione implements Cloneable{
 
 	public void setTipoAtto(String tipoAtto) {
 		this.tipoAtto = tipoAtto;
+	}
+
+	public String getIdAtto() {
+		return idAtto;
+	}
+
+	public void setIdAtto(String idAtto) {
+		this.idAtto = idAtto;
+	}
+
+	public String getCommissione() {
+		return commissione;
+	}
+
+	public void setCommissione(String commissione) {
+		this.commissione = commissione;
 	}
 	
 	

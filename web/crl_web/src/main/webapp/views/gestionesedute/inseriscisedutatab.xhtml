@@ -81,14 +81,14 @@
 									</p:commandButton>
 								</p:column>                   
 
-								<p:column sortBy="#{seduta.dataSeduta}" headerText="Data Seduta">
-									<h:outputText value="#{seduta.dataSeduta}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
+								<p:column headerText="Data Seduta" style="width:100px" sortBy="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}" >
+									
+									#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}
+									
 								</p:column>
 
-								<p:column sortBy="#{seduta.numVerbale}" headerText="Numero Verbale" >
-									<h:outputText value="#{seduta.numVerbale}" />
+								<p:column  headerText="Numero Verbale" style="width:100px" sortBy="#{seduta.numVerbale}" >
+									#{seduta.numVerbale}
 								</p:column>
 
 								<p:column headerText="Azioni" style="width:130px">
