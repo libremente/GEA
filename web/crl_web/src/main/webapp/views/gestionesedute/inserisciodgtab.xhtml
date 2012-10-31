@@ -13,7 +13,10 @@
 	xmlns:of="http://omnifaces.org/functions">
 
 <script>
-	hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')
+	hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
+	jQuery(function() {
+        jQuery('.ui-datatable tbody').sortable();
+    });
 </script>
 
 <p:panelGrid styleClass="infoTable" id="inserisciODGGrid">
@@ -642,6 +645,8 @@
 			</p:panelGrid>
 			<p:fieldset styleClass="fieldSetTab" legend="Atti trattati "
 				collapsed="false" toggleable="false">
+				<!-- <p:orderList value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato" iconOnly="false" effect="clip"  
+                     controlsLocation="left" id="listaAttiTrattati" itemValue="#{attoTrattato}" style="width: 100%;" >   -->
 				<p:dataTable id="listaAttiTrattati"
 					value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato"
 					styleClass="generalInfoTab grey-text" editable="true">

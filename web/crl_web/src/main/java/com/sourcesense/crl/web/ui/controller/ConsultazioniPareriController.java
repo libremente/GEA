@@ -38,6 +38,7 @@ public class ConsultazioniPareriController {
 
 	private List<OrganismoStatutario> organismiList = new ArrayList<OrganismoStatutario>();
 	private List<String> commissioni = new ArrayList<String>();
+	private String commissioneSelected;
 	
 	private OrganismoStatutario organismoSelected = new OrganismoStatutario(); 
 	private String descrizioneOrganismoSelected;
@@ -97,6 +98,7 @@ public class ConsultazioniPareriController {
 		if (!consultazioniList.isEmpty()) {
 			setDescrizioneConsultazioneSelected(consultazioniList.get(0)
 					.getDescrizione());
+			setCommissioneSelected(consultazioniList.get(0).getCommissione());
 			showConsultazioneDetail();
 		}
 		
@@ -275,6 +277,7 @@ public class ConsultazioniPareriController {
 
 	public void showConsultazioneDetail() {
 		setConsultazioneSelected(findConsultazione());
+		setCommissioneSelected(consultazioneSelected.getCommissione());
 
 		if (consultazioneSelected != null) {
 			setDataSedutaConsultazione(consultazioneSelected.getDataSeduta());
@@ -418,6 +421,7 @@ public class ConsultazioniPareriController {
 		consultazioneSelected.setPrevista(isPrevista());
 		consultazioneSelected.setDiscussa(isDiscussa());
 		consultazioneSelected.setNote(getNoteConsultazione());
+		consultazioneSelected.setCommissione(commissioneSelected);
 		atto.setConsultazioni(getConsultazioniList());
 		attoServiceManager.salvaConsultazioni(atto);
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -540,13 +544,7 @@ public class ConsultazioniPareriController {
 		
 	}
 
-	/*public Parere getParereSelected() {
-		return parereSelected;
-	}
-
-	public void setParereSelected(Parere parereSelected) {
-		this.parereSelected = parereSelected;
-	}*/
+	
 
 	public Date getDataRicezioneParere() {
 		return dataRicezioneParere;
@@ -769,6 +767,14 @@ public class ConsultazioniPareriController {
 
 	public void setCommissioni(List<String> commissioni) {
 		this.commissioni = commissioni;
+	}
+
+	public String getCommissioneSelected() {
+		return commissioneSelected;
+	}
+
+	public void setCommissioneSelected(String commissioneSelected) {
+		this.commissioneSelected = commissioneSelected;
 	}
 
 	

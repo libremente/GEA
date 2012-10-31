@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoEAC;
+import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Consultazione;
@@ -33,6 +35,8 @@ public class AttoBean implements Serializable {
 
 	private boolean showCommDetail;
 	private Atto atto = new Atto();
+	private AttoMIS attoMIS = new AttoMIS();
+	private AttoEAC attoEAC = new AttoEAC();
 	private String codice;
 	private String numeroAtto;
 	private String tipoAtto;
@@ -941,4 +945,23 @@ public class AttoBean implements Serializable {
 		return getLastPassaggio().getCommissioni();
 	}
 
+	public AttoMIS getAttoMIS() {
+		return attoMIS;
+	}
+
+	public void setAttoMIS(AttoMIS attoMIS) {
+		this.attoMIS = attoMIS;
+	}
+
+	public AttoEAC getAttoEAC() {
+		return attoEAC;
+	}
+
+	public void setAttoEAC(AttoEAC attoEAC) {
+		this.attoEAC = attoEAC;
+	}
+
+	
+	
+	
 }

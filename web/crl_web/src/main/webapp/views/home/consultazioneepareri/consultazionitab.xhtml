@@ -209,7 +209,7 @@
 							<p:column>
 
 								<p:selectOneMenu id="commissioniSel" style="align: right"
-									value="#{consultazioniPareriController.consultazioneSelected.commissione}">
+									value="#{consultazioniPareriController.commissioneSelected}">
 									<f:selectItem itemLabel="Scegli una Commissione"
 									itemValue="" /> 
 									<f:selectItems
@@ -405,7 +405,7 @@
 						<p:row>
 							<p:column colspan="4">
 
-								<p:dataTable id="listaDocumentazioneConsultazione"
+								<p:dataTable id="listaDocumentazioneConsultazione" 
 									value="#{consultazioniPareriController.consultazioneSelected.allegati}"
 									var="allegato" styleClass="generalInfoTab grey-text">
 
@@ -467,7 +467,7 @@
 							<p:column colspan="2">
 								<p:commandButton value="Salva Consultazioni"
 									action="#{consultazioniPareriController.salvaConsultazione}"
-									update="consultazioneMsg" />
+									update="consultazioneMsg,listaConsultazioni" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

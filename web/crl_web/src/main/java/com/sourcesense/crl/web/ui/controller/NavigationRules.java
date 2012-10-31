@@ -43,6 +43,21 @@ public class NavigationRules {
 	}
 
 	
+	public String getSottoStatoCommissioneConsultiva (){
+		
+		Commissione comm = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
+		
+		if (comm != null && comm.getRuolo().equals(Commissione.RUOLO_CONSULTIVA)){
+			
+			return comm.getStato();
+			
+		}
+		
+		
+		return null;
+	}
+	
+	
 	public boolean presaCaricoAulaDisabled() {
 
 		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)

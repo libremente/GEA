@@ -163,7 +163,7 @@ public class GestioneSeduteController {
 				for (Consultazione consultazione : element.getAtto()
 						.getConsultazioni()) {
 
-					Format formatter = new SimpleDateFormat("yyyyMMdd");
+					Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 					
 					
 					Consultazione cons = (Consultazione) consultazione.clone();
@@ -172,6 +172,7 @@ public class GestioneSeduteController {
 							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
 						cons.setNumeroAtto(element.getAtto().getNumeroAtto());
 						cons.setTipoAtto(element.getAtto().getTipoAtto());
+						cons.setIdAtto(element.getAtto().getId());
 						consultazioniAtti.add(cons);
 					}
 				}
@@ -194,7 +195,7 @@ public class GestioneSeduteController {
 	}
 
 	public Seduta findSeduta(String dataSeduta) {
-		Format formatter = new SimpleDateFormat("yyyyMMdd");
+		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		for (Seduta element : seduteList) {
 			if (dataSeduta.equals(formatter.format(element.getDataSeduta()))) {
@@ -382,15 +383,16 @@ public class GestioneSeduteController {
 				for (Consultazione consultazione : attoTrattato.getAtto()
 						.getConsultazioni()) {
 
-					Format formatter = new SimpleDateFormat("yyyyMMdd");
+					Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 					Consultazione cons = (Consultazione) consultazione.clone();
-					if (formatter.format(cons.getDataSeduta()).equals(
-							formatter.format(sedutaSelected.getDataSeduta()))
+					if (formatter.format(sedutaSelected.getDataSeduta()).equals(formatter.format(cons.getDataSeduta()))
+							
 							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
 						
 						cons.setNumeroAtto(attoTrattato.getAtto()
 								.getNumeroAtto());
 						cons.setTipoAtto(attoTrattato.getAtto().getTipoAtto());
+						cons.setIdAtto(attoTrattato.getAtto().getId());
 						consultazioniAtti.add(cons);
 					}
 				}

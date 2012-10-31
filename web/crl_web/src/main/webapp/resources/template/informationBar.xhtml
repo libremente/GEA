@@ -20,19 +20,21 @@
 		<c:set value="Inserimento_Atto" var="insAtto" />
 		<c:set value="Inserimento_EAC" var="insEAC" />
 		<c:set value="Inserimento_MIS" var="insMIS" />
+		<c:set value="#{navigationBean.getSottoStatoCommissioneConsultiva()}"
+			var="consultiva" />
 		<c:if
 			test="#{ !(function == gestioneSed) and !(function  == insAtto) and !(function == home) and !(function == insEAC) and !(function == insMIS) }"
 			var="attoVisible" />
 		<p:row style="background-color: #E6E6FA !important;">
 
-			<p:column style="width:50%">
+			<p:column style="width:20%">
 				<h:outputLabel value="     Utente : " />
 				<h:outputLabel value="#{userBean.username}" />
 
 			</p:column>
 
 			<p:column rendered="#{attoVisible}"
-				style="width:50%; text-align : right">
+				style="width:80%; text-align : right">
 				<h:outputLabel value="Atto corrente :" />
 				<h:outputLabel value="#{attoBean.numeroAtto}" />
 				&nbsp;&nbsp;&nbsp;&nbsp;
@@ -52,6 +54,16 @@
 				<h:outputLabel value="      Stato :" />
 				<h:outputLabel value="#{attoBean.stato}" />
 				&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				
+				
+				<c:if test="#{not empty  consultiva}" >
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<h:outputLabel value="Stato Lavorazione :" />
+				<h:outputLabel value="#{navigationBean.getSottoStatoCommissioneConsultiva()}" />
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				</c:if>
 			</p:column>
 
 

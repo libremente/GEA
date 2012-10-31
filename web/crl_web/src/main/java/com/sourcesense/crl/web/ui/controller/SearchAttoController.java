@@ -22,6 +22,8 @@ import com.sourcesense.crl.business.service.TipoChiusuraServiceManager;
 import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.business.service.VotazioneServiceManager;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoEAC;
+import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.StatoAtto;
@@ -315,15 +317,35 @@ public class SearchAttoController {
 				.createValueExpression(context.getELContext(), "#{attoBean}",
 						AttoBean.class).getValue(context.getELContext());
 
-		attoBean.setAtto(attoServiceManager.findById(idAttoParam));
-		attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
-		attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
-		attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+		
+		Atto attoRet = attoServiceManager.findById(idAttoParam);
+		
+		if("MIS".equalsIgnoreCase(attoRet.getTipoAtto())){
+			
+			attoBean.setAttoMIS((AttoMIS)attoRet);
+			return "pretty:Inserimento_MIS";
+			
+		}else if("EAC".equalsIgnoreCase(attoRet.getTipoAtto())){
+			
+			attoBean.setAttoEAC((AttoEAC)attoRet);
+			return "pretty:Inserimento_EAC";
+			
+			
+		}else {
+		
+			attoBean.setAtto(attoRet);
+			attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+			return "pretty:Riepilogo_Atto";
+			
+		}
+		
         
 		
 		
 		
-		return "pretty:Riepilogo_Atto";
+		
 
 	}
 
