@@ -140,17 +140,25 @@
 						<tokenised>false</tokenised>
 					</index>
 				</property>
-				<property name="crlatti:coreferente">
-					<title>Co-Referente</title>
+				<property name="crlatti:commCoreferente">
+					<title>Commissione Co-Referente</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:commRedigentre">
+					<title>Commissione Redigente</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:commDeliberante">
+					<title>Commissione Deliberante</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:redigente">
 					<title>Redigente</title>
-					<type>d:text</type>
+					<type>d:boolean</type>
 				</property>
 				<property name="crlatti:deliberante">
 					<title>Deliberante</title>
-					<type>d:text</type>
+					<type>d:boolean</type>
 				</property>
 				<property name="crlatti:numeroLcr">
 					<title>Numero LCR</title>
@@ -533,6 +541,7 @@
 					<title>Primo firmatario</title>
 					<type>d:boolean</type>
 				</property>
+				
 			</properties>
 		</type>
 		
@@ -891,6 +900,10 @@
 					<title>Note</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:commissioneConsultazione">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
 		
@@ -947,6 +960,22 @@
 				</target>
 				</association>
 			</associations>
+		</type>
+		
+		
+		<type name="crlatti:audizione">
+			<title>Audizione</title>
+			<parent>cm:content</parent>
+			<properties>		
+				<property name="crlatti:previstoAudizione">
+					<title>Previsto</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:discussoAudizione">
+					<title>Discusso</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
 		</type>
 		
 	</types>
@@ -1108,6 +1137,16 @@
 				<property name="crlatti:provenienza">
 					<title>Provenienza</title>
 					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:ordinamentoAspect">
+			<title>Ordinamento</title>
+			<properties>
+				<property name="crlatti:numeroOrdinamento">
+					<title>Numero ordinamento</title>
+					<type>d:int</type>
 				</property>
 			</properties>
 		</aspect>

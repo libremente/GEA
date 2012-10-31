@@ -37,13 +37,20 @@ attoNode.properties["crlatti:commConsultiva"] = commConsultivaAtto;
 attoNode.properties["crlatti:commReferente"] = commReferenteAtto;
 
 if(commCoReferenteAtto.length>0) {
-	attoNode.properties["crlatti:coreferente"] = commCoReferenteAtto[0];
+	attoNode.properties["crlatti:commCoreferente"] = commCoReferenteAtto[0];
 }
 if(commRedigenteAtto.length>0) {
-	attoNode.properties["crlatti:redigente"] = commRedigenteAtto[0];
+	attoNode.properties["crlatti:commRedigente"] = commRedigenteAtto[0];
+	attoNode.properties["crlatti:redigente"] = true;
+}else{
+	attoNode.properties["crlatti:redigente"] = false;
 }
+
 if(commDeliberanteAtto.length>0) {
-	attoNode.properties["crlatti:deliberante"] = commDeliberanteAtto[0];
+	attoNode.properties["crlatti:commDeliberante"] = commDeliberanteAtto[0];
+	attoNode.properties["crlatti:deliberante"] = true;
+}else{
+	attoNode.properties["crlatti:deliberante"] = false;
 }
 
 attoNode.save();

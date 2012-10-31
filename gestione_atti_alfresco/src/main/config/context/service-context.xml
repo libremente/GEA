@@ -109,11 +109,14 @@
 	            <prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.templates.childname}</prop>
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/spaceTemplates.acp</prop>
 	         </props>
-	          <props>
+	         <props>
 	            <prop key="path">/${spaces.company_home.childname}/cm:CRL/cm:Gestione_x0020_Atti</prop>
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/lettere-templates.acp</prop>
 	         </props>
-	          
+	         <props>
+	            <prop key="path">/${spaces.company_home.childname}/cm:CRL/cm:Gestione_x0020_Atti</prop>
+	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/sedute.acp</prop>
+	         </props> 
 	         <props>
 	            <prop key="path">/${spaces.company_home.childname}</prop>
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/importSpaces.acp</prop>

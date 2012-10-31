@@ -189,6 +189,7 @@
 				"consultazione" :
 				{
 					"descrizione" : "${consultazione.name}",
+					"commissione" : "<#if consultazione.properties["crlatti:commissioneConsultazione"]?exists>${consultazione.properties["crlatti:commissioneConsultazione"]}<#else></#if>",
 					"dataConsultazione" : "<#if consultazione.properties["crlatti:dataConsultazione"]?exists>${consultazione.properties["crlatti:dataConsultazione"]?string("yyyy-MM-dd")}<#else></#if>",
 					"prevista" : "<#if consultazione.properties["crlatti:previstaConsultazione"]?exists>${consultazione.properties["crlatti:previstaConsultazione"]?string("true","false")}<#else></#if>",
 					"discussa" : "<#if consultazione.properties["crlatti:discussaConsultazione"]?exists>${consultazione.properties["crlatti:discussaConsultazione"]?string("true","false")}<#else></#if>",

@@ -31,6 +31,16 @@
                     	<cm:authorityName>GROUP_Aula</cm:authorityName>
                  	</view:properties>
               	</cm:authorityContainer>
+              	<cm:authorityContainer view:childName="cm:GROUP_Commissioni">
+                 	<view:aspects>
+                    	<sys:referenceable />
+                 	</view:aspects>
+                 	<view:properties>
+                    	<sys:node-uuid>GROUP_Commissioni</sys:node-uuid>
+                    	<cm:name>GROUP_Commissioni</cm:name>
+                    	<cm:authorityName>GROUP_Commissioni</cm:authorityName>
+                 	</view:properties>
+              	</cm:authorityContainer>
            	</sys:children>
 		</view:associations>
 	 </view:reference>
@@ -49,6 +59,11 @@
                  	view:pathref="${system.authorities_container.childname}/cm:GROUP_Aula"
                  	view:childName="cm:GROUP_Aula" />
            	</cm:inZone>
+           	<cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_Commissioni"
+                 	view:childName="cm:GROUP_Commissioni" />
+           	</cm:inZone>
        	</view:associations>
 	</view:reference>
     
@@ -65,6 +80,11 @@
               	<view:reference
                  	view:pathref="${system.authorities_container.childname}/cm:GROUP_Aula"
                  	view:childName="cm:GROUP_Aula" />
+           	</cm:inZone>
+           	<cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_Commissioni"
+                 	view:childName="cm:GROUP_Commissioni" />
            	</cm:inZone>
         </view:associations>
     </view:reference>

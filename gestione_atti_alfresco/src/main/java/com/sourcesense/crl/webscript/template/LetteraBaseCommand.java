@@ -15,6 +15,7 @@ import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
+import org.alfresco.service.namespace.QName;
 
 
 public abstract class LetteraBaseCommand implements LetteraCommand{
@@ -43,9 +44,9 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected static final String PROP_TIPO_INIZIATIVA = "tipoIniziativa";
 	protected static final String PROP_COMMISSIONI_REFERENTI = "commReferente";
 	protected static final String PROP_COMMISSIONI_CONSULTIVE = "commConsultiva";
-	protected static final String PROP_COMMISSIONE_COREFERENTE = "coreferente";
-	protected static final String PROP_COMMISSIONE_REDIGENTE = "redigente";
-	protected static final String PROP_COMMISSIONE_DELIBERANTE = "deliberante";
+	protected static final String PROP_COMMISSIONE_COREFERENTE = "commCoreferente";
+	protected static final String PROP_COMMISSIONE_REDIGENTE = "commRedigente";
+	protected static final String PROP_COMMISSIONE_DELIBERANTE = "commDeliberante";
 	protected static final String PROP_ORGANISMI_STATUTARI = "organismiStatutari";
 	protected static final String PROP_FIRMATARI = "firmatari";
 	protected static final String PROP_NUMERO_REPERTORIO = "numeroRepertorio";
@@ -67,6 +68,17 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	
 	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef) throws IOException;
 	
+	
+	// Get property value 
+	public String getStringProperty(NodeRef attoNodeRef, String nameSpaceURI, String localName){
+		String value = (String) nodeService.getProperty(attoNodeRef, QName.createQName(nameSpaceURI, localName));
+		
+		if(value==null){
+			value = "";
+		}
+	
+		return value;
+	}
 	
 	// Search last "passaggio" function
 	public NodeRef getLastPassaggio(NodeRef attoNodeRef){

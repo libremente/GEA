@@ -1,13 +1,9 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
-
 var atto = json.get("atto");
 var id = atto.get("id");
 
 var consultazioni = atto.get("consultazioni");
-
-
-
 
 
 
@@ -20,9 +16,9 @@ if(checkIsNotNull(id)){
 	
 	var numeroConsultazioni = consultazioni.length();
 	
-	for (var j=0; j<numeroConsultazioni; j++){
+	for (var i=0; i<numeroConsultazioni; i++){
 	
-		var consultazione = consultazioni.get(j).get("consultazione");
+		var consultazione = consultazioni.get(i).get("consultazione");
 	
 		var descrizione = filterParam(consultazione.get("descrizione"));
 		var dataSeduta = filterParam(consultazione.get("dataSeduta"));
@@ -30,6 +26,8 @@ if(checkIsNotNull(id)){
 		var prevista =  filterParam(consultazione.get("prevista"));
 		var discussa =  filterParam(consultazione.get("discussa"));
 		var note =  filterParam(consultazione.get("note"));
+		
+		var commissione =  filterParam(consultazione.get("commissione"));
 		
 		
 			
@@ -76,6 +74,7 @@ if(checkIsNotNull(id)){
 		consultazioneNode.properties["crlatti:previstaConsultazione"] = prevista;
 		consultazioneNode.properties["crlatti:discussaConsultazione"] = discussa;
 		consultazioneNode.properties["crlatti:noteConsultazione"] = note;
+		consultazioneNode.properties["crlatti:commissioneConsultazione"] = commissione;
 		
 		
 		consultazioneNode.save();

@@ -12,6 +12,7 @@
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:collegamento"/>
 			<type name="crlatti:membroComitatoRistretto" />
+			<type name="crlatti:audizione" />
 			<type name="crltemplate:letteraIniziativaPopolareServComm" />
 			<type name="crltemplate:letteraRitiroFirmaServComm" />
 			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
@@ -340,6 +341,7 @@
 			<show-property name="crlatti:discussaConsultazione"/>
 			<show-property name="crlatti:dataSedutaConsultazione"/>
 			<show-property name="crlatti:noteConsultazione"/>
+			<show-property name="crlatti:commissioneConsultazione"/>
 		</property-sheet>
 	</config>
 	
@@ -624,6 +626,13 @@
 			<show-property name="crlatti:dataSedutaSedutaODG" />
 			<show-property name="crlatti:numVerbaleSedutaODG" />
 			<show-property name="crlatti:noteSedutaODG" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:audizione">
+		<property-sheet>
+			<show-property name="crlatti:previstoAudizione" />
+			<show-property name="crlatti:discussoAudizione" />
 		</property-sheet>
 	</config>
 	

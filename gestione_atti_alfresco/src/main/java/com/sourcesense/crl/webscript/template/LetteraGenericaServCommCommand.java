@@ -56,30 +56,51 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	List<String> firmatariList = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_FIRMATARI));
     	String firmatari = "";
     	
+    	if(firmatariList!=null) {
+	    	for(int i=0; i<firmatariList.size(); i++){	
+	    		firmatari += firmatariList.get(i);
+	    		if(i<firmatariList.size()-1){
+	    			firmatari += ", ";
+	    		}
+	    	}
+    	}
+    	
+    	searchTerms.put("<firmatariAtto>", firmatari);
+    	
+    	// ultimoFirmatarioAtto
+    	// iniziativaMinuscolo>
+    	// numeroDGR
+    	// dataDGR
+    	
+    	searchTerms.put("<ultimoFirmatarioAtto>", "pippo");
+    	
     	
     	// Check for iniziativa popolare
-    	if(iniziativa.equals(INIZIATIVA_CONSILIARE)){
-    		
-    		descrizioneIniziativa = "di iniziativa dei Consiglieri regionali: ";
-        	
-        	if(firmatariList!=null) {
-    	    	for(int i=0; i<firmatariList.size(); i++){	
-    	    		descrizioneIniziativa += firmatariList.get(i);
-    	    		if(i<firmatariList.size()-1){
-    	    			firmatari += ", ";
-    	    		}
-    	    	}
-        	}
-    		
+
+    	if(iniziativa!=null){
+	    	if(iniziativa.equals(INIZIATIVA_CONSILIARE)){
+	    		
+	    		descrizioneIniziativa = "di iniziativa dei Consiglieri regionali: ";
+	        	
+	        	if(firmatariList!=null) {
+	    	    	for(int i=0; i<firmatariList.size(); i++){	
+	    	    		descrizioneIniziativa += firmatariList.get(i);
+	    	    		if(i<firmatariList.size()-1){
+	    	    			descrizioneIniziativa += ", ";
+	    	    		}
+	    	    	}
+	        	}
+	        }
+	    	
+	    	searchTerms.put("<iniziativa>", iniziativa);
+	    	searchTerms.put("<descrizioneIniziativa>", descrizioneIniziativa);
     	}
     	
     	
     	
     	searchTerms.put("<numeroAtto>", numeroAtto);
 		searchTerms.put("<oggettoAtto>", oggettoAtto);
-		searchTerms.put("<iniziativa>", iniziativa);
 		searchTerms.put("<numeroRepertorio>", numeroRepertorio);
-		searchTerms.put("<descrizioneIniziativa>", descrizioneIniziativa);
 		searchTerms.put("<tipoAttoDescrizione>", tipoAttoDescrizione);
     	
 		

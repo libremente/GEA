@@ -25,13 +25,57 @@
 		"attiTrattati":[
 			<#assign atti = seduta.childrenByXPath["*[@cm:name='AttiTrattati']"][0]>
 			<#assign attiList = atti.getChildAssocsByType("crlatti:attoTrattatoODG")>
-			<#list attiList as atto>
+			<#list attiList as attoTrattato>
+				<#assign atto = attoTrattato.assocs["crlatti:attoTrattatoSedutaODG"][0]>
+				<#assign tipoSubstring = atto.typeShort?substring(12,15)>
+	   			<#assign tipoTroncatoMaiuscolo = tipoSubstring?capitalize>
 				{
 					"attoTrattato" : 
 					{
-						"id":"${atto.name}"
+						"atto": {
+							"atto": {
+								"id": "${atto.nodeRef}",
+								"nome": "${atto.name}",
+								"tipoAtto": "${tipoTroncatoMaiuscolo}",
+								"numeroAtto" : "<#if atto.properties["crlatti:numeroAtto"]?exists>${atto.properties["crlatti:numeroAtto"]}<#else></#if>",
+								"consultazioni": [
+									<#assign consultazioni = atto.childrenByXPath["*[@cm:name='Consultazioni']"][0]>
+			    					<#assign consultazioniList = consultazioni.getChildAssocsByType("crlatti:consultazione")>
+			    					<#list consultazioniList as consultazione>
+			    					{
+			    						"consultazione" : 
+			    						{
+											"descrizione" : "${consultazione.name}",
+											"commissione" : "<#if consultazione.properties["crlatti:commissioneConsultazione"]?exists>${consultazione.properties["crlatti:commissioneConsultazione"]}<#else></#if>",
+											"dataConsultazione" : "<#if consultazione.properties["crlatti:dataConsultazione"]?exists>${consultazione.properties["crlatti:dataConsultazione"]?string("yyyy-MM-dd")}<#else></#if>",
+											"prevista" : "<#if consultazione.properties["crlatti:previstaConsultazione"]?exists>${consultazione.properties["crlatti:previstaConsultazione"]?string("true","false")}<#else></#if>",
+											"discussa" : "<#if consultazione.properties["crlatti:discussaConsultazione"]?exists>${consultazione.properties["crlatti:discussaConsultazione"]?string("true","false")}<#else></#if>",
+											"dataSeduta" :  "<#if consultazione.properties["crlatti:dataSedutaConsultazione"]?exists>${consultazione.properties["crlatti:dataSedutaConsultazione"]?string("yyyy-MM-dd")}<#else></#if>",
+											"note" : "<#if consultazione.properties["crlatti:noteConsultazione"]?exists>${consultazione.properties["crlatti:noteConsultazione"]}<#else></#if>",
+											"soggettiInvitati" : [
+												<#assign soggettiConsultazioneFolder = consultazione.childrenByXPath["*[@cm:name='SoggettiInvitati']"][0]>
+												<#assign soggettiConsultazione = soggettiConsultazioneFolder.getChildAssocsByType("crlatti:soggettoInvitato")>
+												<#list soggettiConsultazione as soggetto>
+												{
+													"soggettoInvitato" : 
+													{
+														"descrizione" : "<#if soggetto.properties["crlatti:descrizioneSoggettoInvitato"]?exists>${soggetto.properties["crlatti:descrizioneSoggettoInvitato"]}<#else></#if>",
+														"intervenuto" : "<#if soggetto.properties["crlatti:intervenutoSoggettoInvitato"]?exists>${soggetto.properties["crlatti:intervenutoSoggettoInvitato"]?string("true","false")}<#else></#if>"
+													}
+												}<#if soggetto_has_next>,</#if>
+												</#list>
+											]
+						
+    									}
+    								}
+									<#if consultazione_has_next>,</#if>
+									</#list>
+								]
+			    					
+							}
+						}
 					}
-				}<#if atto_has_next>,</#if>
+				}<#if attoTrattato_has_next>,</#if>
 			</#list>
 		]
 	 }
