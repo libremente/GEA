@@ -29,6 +29,7 @@ if(checkIsNotNull(id)){
 		
 		var commissione =  filterParam(consultazione.get("commissione"));
 		
+			
 		
 			
 		//verifica l'esistenza della consultazione all'interno del folder Consultazioni
@@ -51,8 +52,86 @@ if(checkIsNotNull(id)){
 			consultazioneNode = consultazioniFolderNode.childrenByXPath(consXPathQuery)[0];
 			consultazioneNode.properties["cm:name"] = descrizione;
 			
+			// creo la seduta con la data della consultazione per la commissione corrente
+			
+
+			var gestioneSedutePath = "/app:company_home"+
+			"/cm:"+search.ISO9075Encode("CRL")+
+			"/cm:"+search.ISO9075Encode("Gestione Atti")+
+			"/cm:"+search.ISO9075Encode("Sedute");
+
+
+			if(checkIsNotNull(commissione) 
+					&& checkIsNotNull(dataSeduta)){
+				
+				var dataCreazioneSedutaSplitted = dataSeduta.split("-");
+				var dataCreazioneSedutaParsed = new Date(dataCreazioneSedutaSplitted[0],dataCreazioneSedutaSplitted[1]-1,dataCreazioneSedutaSplitted[2]);	
+				
+				var anno = dataCreazioneSedutaSplitted[0]
+				var mese = dataCreazioneSedutaSplitted[1];
+
+				//creazione spazio per la provenienza (commissione o aula)
+				var provenienzaPath = gestioneSedutePath + "/cm:"+search.ISO9075Encode(commissione);
+				var provenienzaLuceneQuery = "PATH:\""+provenienzaPath+"\"";
+				var provenienzaResults = search.luceneSearch(provenienzaLuceneQuery);
+
+				var provenienzaFolderNode = null;
+				if(provenienzaResults!=null && provenienzaResults.length>0){
+					provenienzaFolderNode = provenienzaResults[0];
+				} else {
+					var gestioneSeduteLuceneQuery = "PATH:\""+gestioneSedutePath+"\"";
+					var gestioneSeduteFolderNode = search.luceneSearch(gestioneSeduteLuceneQuery)[0];
+					provenienzaFolderNode = gestioneSeduteFolderNode.createFolder(provenienza);
+					
+					// setting dei permessi sul nodo in base alla provenienza
+					provenienzaFolderNode.setPermission("Coordinator", "GROUP_"+commissione);
+				}
+
+				//creazione spazio anno
+				var annoPath = provenienzaPath + "/cm:" + search.ISO9075Encode(anno);
+				var annoLuceneQuery = "PATH:\""+annoPath+"\"";
+				var annoResults = search.luceneSearch(annoLuceneQuery);
+				var annoFolderNode = null;
+				if(annoResults!=null && annoResults.length>0){
+					annoFolderNode = annoResults[0];
+				} else {
+					annoFolderNode = provenienzaFolderNode.createFolder(anno);
+				}
+
+				//creazione spazio mese
+				var mesePath = annoPath + "/cm:" + search.ISO9075Encode(mese);
+				var meseLuceneQuery = "PATH:\""+mesePath+"\"";
+				var meseResults = search.luceneSearch(meseLuceneQuery);
+				var meseFolderNode = null;
+				if(meseResults!=null && meseResults.length>0){
+					meseFolderNode = meseResults[0];
+				} else {
+					meseFolderNode = annoFolderNode.createFolder(mese);
+				}
+
+
+				//verifica esistenza del folder della seduta
+				var sedutaPath = mesePath + "/cm:" + search.ISO9075Encode(dataSeduta);
+				var sedutaLuceneQuery = "PATH:\""+sedutaPath+"\"";
+				var sedutaResults = search.luceneSearch(sedutaLuceneQuery);
+				if(sedutaResults!=null && sedutaResults.length>0){
+					sedutaFolderNode = sedutaResults[0];
+					
+				} else {
+					//creazione del nodo
+					var sedutaSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Seduta\"";
+					var sedutaSpaceTemplateNode = search.luceneSearch(sedutaSpaceTemplateQuery)[0];
+					var sedutaFolderNode = sedutaSpaceTemplateNode.copy(meseFolderNode,true);
+					sedutaFolderNode.name = dataSeduta;
+				}
+					
+				
+				sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataCreazioneSedutaParsed;				
+				sedutaFolderNode.save();
+			}
 		}
 	
+		
 		
 		if(checkIsNotNull(dataSeduta)) {
 			var dataSedutaSplitted = dataSeduta.split("-");
@@ -61,7 +140,6 @@ if(checkIsNotNull(id)){
 		}else {
 			consultazioneNode.properties["crlatti:dataSedutaConsultazione"] = null;
 		}
-		
 		
 		if(checkIsNotNull(dataConsultazione)) {
 			var dataConsultazioneSplitted = dataConsultazione.split("-");

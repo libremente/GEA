@@ -32,6 +32,8 @@
 				{
 					"attoTrattato" : 
 					{
+						"previsto" : "<#if attoTrattato.properties["crlatti:previstoAttoTrattatoODG"]?exists>${attoTrattato.properties["crlatti:previstoAttoTrattatoODG"]?string("true","false")}<#else></#if>",
+						"discusso" : "<#if attoTrattato.properties["crlatti:discussoAttoTrattatoODG"]?exists>${attoTrattato.properties["crlatti:discussoAttoTrattatoODG"]?string("true","false")}<#else></#if>",
 						"atto": {
 							"atto": {
 								"id": "${atto.nodeRef}",
@@ -77,6 +79,21 @@
 					}
 				}<#if attoTrattato_has_next>,</#if>
 			</#list>
+		],
+		"audizioni" : [
+			<#assign audizioni = seduta.childrenByXPath["*[@cm:name='Audizioni']"][0]>
+			<#assign audizioniList = audizioni.getChildAssocsByType("crlatti:audizione")>
+			<#list audizioniList as audizione>
+			{
+				"audizione" : {
+					"soggettoPartecipante" : "${audizione.name}",
+					"previsto" : "<#if audizione.properties["crlatti:previstoAudizione"]?exists>${audizione.properties["crlatti:previstoAudizione"]?string("true","false")}<#else></#if>",
+					"discusso" : "<#if audizione.properties["crlatti:discussoAudizione"]?exists>${audizione.properties["crlatti:discussoAudizione"]?string("true","false")}<#else></#if>"
+				}
+			}
+			<#if audizione_has_next>,</#if>
+			</#list>
+		
 		]
 	 }
    }<#if seduta_has_next>,</#if>

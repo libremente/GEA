@@ -629,6 +629,15 @@
 		</property-sheet>
 	</config>
 	
+	<config evaluator="node-type" condition="crlatti:attoTrattatoODG">
+		<property-sheet>
+			<show-property name="crlatti:previstoAttoTrattatoODG" />
+			<show-property name="crlatti:discussoAttoTrattatoODG" />
+			<show-property name="crlatti:attoTrattatoSedutaODG" />
+			<show-property name="crlatti:numeroOrdinamento" />
+		</property-sheet>
+	</config>
+	
 	<config evaluator="node-type" condition="crlatti:audizione">
 		<property-sheet>
 			<show-property name="crlatti:previstoAudizione" />

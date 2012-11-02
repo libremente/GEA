@@ -543,6 +543,9 @@
 				</property>
 				
 			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:ordinamentoAspect</aspect>
+			</mandatory-aspects>
 		</type>
 		
 		<type name="crlatti:relatore">
@@ -946,6 +949,16 @@
 		<type name="crlatti:attoTrattatoODG">
 			<title>Atto trattato OdG</title>
 			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:previstoAttoTrattatoODG">
+					<title>Previsto</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:discussoAttoTrattatoODG">
+					<title>Discusso</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
 			<associations>
 				<association name="crlatti:attoTrattatoSedutaODG">
 				<title>Atto collegato</title>
@@ -960,6 +973,9 @@
 				</target>
 				</association>
 			</associations>
+			<mandatory-aspects>
+				<aspect>crlatti:ordinamentoAspect</aspect>
+			</mandatory-aspects>
 		</type>
 		
 		

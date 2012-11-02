@@ -24,9 +24,14 @@ if(checkIsNotNull(id)){
 	for (var j=0; j<numeroAtti; j++){
 	
 		var atto = atti.get(j).get("attoTrattato").get("atto").get("atto");
-	
-		var idAttoTrattato = filterParam(atto.get("id"));
 		
+		var attoTrattato = atti.get(j).get("attoTrattato");
+		
+		var previstoAttoTrattato = filterParam(attoTrattato.get("previsto"));
+		var discussoAttoTrattato = filterParam(attoTrattato.get("discusso"));
+		
+		var idAttoTrattato = filterParam(atto.get("id"));
+			
 		var attoTrattatoFolderNode = utils.getNodeFromString(idAttoTrattato);
 		
 		//verifica l'esistenza dell'atto all'interno del folder AttiTrattati
@@ -44,11 +49,12 @@ if(checkIsNotNull(id)){
 			attoTrattatoNode = attiFolderNode.createNode(attoTrattatoFolderNode.name,"crlatti:attoTrattatoODG");
 		}
 	
-		
-
 		if(creaAssociazione){
 			attoTrattatoNode.createAssociation(attoTrattatoFolderNode,"crlatti:attoTrattatoSedutaODG");
 		}
+		
+		attoTrattatoNode.properties["crlatti:previstoAttoTrattatoODG"] = previstoAttoTrattato;
+		attoTrattatoNode.properties["crlatti:discussoAttoTrattatoODG"] = discussoAttoTrattato;
 		
 		attoTrattatoNode.save();
 		
@@ -146,7 +152,7 @@ if(checkIsNotNull(id)){
 		if(audizioneEsistenteResults!=null && audizioneEsistenteResults.length>0){
 			audizioneNode = audizioneEsistenteResults[0];
 		} else {
-			audizioneNode = attiFolderNode.createNode(soggettoPartecipante,"crlatti:audizione");
+			audizioneNode = audizioniFolderNode.createNode(soggettoPartecipante,"crlatti:audizione");
 		}
 	
 		audizioneNode.properties["crlatti:previstoAudizione"] = previstoAudizione; 
@@ -167,7 +173,7 @@ if(checkIsNotNull(id)){
 		
 		//cerco il nome dell'audizione nel repo all'interno del json
 		for (var q=0; q<audizioni.length(); q++){
-			var audizione = atti.get(q).get("audizione");
+			var audizione = audizioni.get(q).get("audizione");
 			if(""+audizione.get("soggettoPartecipante")+""==""+audizioneNelRepository.name+""){
 				trovato = true;
 				break
