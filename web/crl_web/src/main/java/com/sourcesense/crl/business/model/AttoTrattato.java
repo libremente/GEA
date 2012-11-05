@@ -15,6 +15,7 @@ public class AttoTrattato implements Cloneable{
 	private Atto atto;
 	private boolean previsto;
 	private boolean discusso;
+	private String numeroOrdinamento;
 	
 	public Object clone() {
 		try {
@@ -51,6 +52,14 @@ public class AttoTrattato implements Cloneable{
 
 	public void setDiscusso(boolean discusso) {
 		this.discusso = discusso;
+	}
+
+	public String getNumeroOrdinamento() {
+		return numeroOrdinamento;
+	}
+
+	public void setNumeroOrdinamento(String numeroOrdinamento) {
+		this.numeroOrdinamento = numeroOrdinamento;
 	}
 	
 	

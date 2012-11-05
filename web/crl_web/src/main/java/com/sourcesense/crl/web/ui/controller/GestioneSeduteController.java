@@ -46,6 +46,8 @@ public class GestioneSeduteController {
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
 	private List<Seduta> seduteList = new ArrayList<Seduta>();
+	private List<Seduta> seduteListAll = new ArrayList<Seduta>();
+	
 	private List<String> dateSeduteList = new ArrayList<String>();
 	private String dataSedutaSelected;
 	private String attoDaTrattare;
@@ -94,14 +96,18 @@ public class GestioneSeduteController {
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
-		seduteList = seduteServiceManager.getSedute(userBean.getUser()
+		seduteListAll = seduteServiceManager.getSedute(userBean.getUser()
 				.getSessionGroup().getNome());
+		
+		
+		seduteList = Clonator.cloneList(seduteListAll);
+		
+		
 		setDateSeduteList();
 
-		if (!seduteList.isEmpty()) {
+		if (!seduteListAll.isEmpty()) {
 			setDataSedutaSelected(dateSeduteList.get(0));
 			showSedutaDetail();
-
 			fillDateSeduteMap();
 		}
 
@@ -140,6 +146,32 @@ public class GestioneSeduteController {
 
 	// Inserisci Seduta***********************************
 
+	
+	public void filterDataTable(){
+		
+		seduteList.clear();
+		for (Seduta seduta : seduteListAll) {
+			
+			if(getDataSedutaDa()!=null   && seduta.getDataSeduta().compareTo(dataSedutaDa)<0){
+				
+				continue;
+				
+			}else if(getDataSedutaA()!=null   && seduta.getDataSeduta().compareTo(dataSedutaA)>0){
+				
+				continue;
+				
+			}else{
+				
+				seduteList.add((Seduta)seduta.clone());
+			}
+			
+			
+		}
+		
+		
+	}
+	
+	
 	public void showSedutaDetail() {
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 
@@ -154,9 +186,13 @@ public class GestioneSeduteController {
 			setAttiSindacato(Clonator.cloneList(sedutaSelected
 					.getAttiSindacato()));
 
+			setAudizioni(Clonator.cloneList(sedutaSelected.getAudizioni()));
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = ((UserBean) context.getExternalContext()
 					.getSessionMap().get("userBean"));
+			
+			consultazioniAtti.clear();
 			
 			for (AttoTrattato element : attiTrattati) {
 
@@ -179,7 +215,7 @@ public class GestioneSeduteController {
 
 			}
 
-			setAudizioni(Clonator.cloneList(sedutaSelected.getAudizioni()));
+			
 
 		} else {
 
@@ -239,7 +275,38 @@ public class GestioneSeduteController {
 	}
 
 	public String dettaglioOdg() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean"));
+		
 		setSedutaSelected(findSeduta(dataSedutaSelected));
+		setAttiTrattati(sedutaSelected.getAttiTrattati());
+		setAttiSindacato(sedutaSelected.getAttiSindacato());
+		setAudizioni(sedutaSelected.getAudizioni());
+
+		consultazioniAtti.clear();
+		
+		for (AttoTrattato element : attiTrattati) {
+
+			for (Consultazione consultazione : element.getAtto()
+					.getConsultazioni()) {
+
+				Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+				
+				
+				Consultazione cons = (Consultazione) consultazione.clone();
+				if (formatter.format(cons.getDataSeduta()).equals(
+						formatter.format(sedutaSelected.getDataSeduta()))
+						&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
+					cons.setNumeroAtto(element.getAtto().getNumeroAtto());
+					cons.setTipoAtto(element.getAtto().getTipoAtto());
+					cons.setIdAtto(element.getAtto().getId());
+					consultazioniAtti.add(cons);
+				}
+			}
+
+		}
 		return null;
 	}
 
@@ -318,6 +385,7 @@ public class GestioneSeduteController {
 						.salvaSeduta(gestioneSedute);
 				seduta.setIdSeduta(sedutaRet.getIdSeduta());
 				setSedutaSelected(seduta);
+				seduteListAll.add(seduta);
 				seduteList.add(seduta);
 
 				// Modifica
@@ -876,5 +944,18 @@ public class GestioneSeduteController {
 	public void setAttoDaTrattare(String attoDaTrattare) {
 		this.attoDaTrattare = attoDaTrattare;
 	}
+
+	public List<Seduta> getSeduteListAll() {
+		return seduteListAll;
+	}
+
+	public void setSeduteListAll(List<Seduta> seduteListAll) {
+		this.seduteListAll = seduteListAll;
+	}
+	
+	
+	
+	
+	
 
 }

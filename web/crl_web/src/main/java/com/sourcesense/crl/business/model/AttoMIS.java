@@ -2,6 +2,10 @@ package com.sourcesense.crl.business.model;
 
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
+
 public class AttoMIS extends Atto {
 	
 	
@@ -36,12 +40,16 @@ public class AttoMIS extends Atto {
 	public void setOggetto(String oggetto) {
 		this.oggetto = oggetto;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataIniziativaComitato() {
 		return dataIniziativaComitato;
 	}
 	public void setDataIniziativaComitato(Date dataIniziativaComitato) {
 		this.dataIniziativaComitato = dataIniziativaComitato;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPropostaCommissione() {
 		return dataPropostaCommissione;
 	}
@@ -60,24 +68,32 @@ public class AttoMIS extends Atto {
 	public void setEsitoVotoIntesa(String esitoVotoIntesa) {
 		this.esitoVotoIntesa = esitoVotoIntesa;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataIntesa() {
 		return dataIntesa;
 	}
 	public void setDataIntesa(Date dataIntesa) {
 		this.dataIntesa = dataIntesa;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataRispostaComitato() {
 		return dataRispostaComitato;
 	}
 	public void setDataRispostaComitato(Date dataRispostaComitato) {
 		this.dataRispostaComitato = dataRispostaComitato;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataApprovazioneProgetto() {
 		return dataApprovazioneProgetto;
 	}
 	public void setDataApprovazioneProgetto(Date dataApprovazioneProgetto) {
 		this.dataApprovazioneProgetto = dataApprovazioneProgetto;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataApprovazioneUdP() {
 		return dataApprovazioneUdP;
 	}
@@ -90,18 +106,24 @@ public class AttoMIS extends Atto {
 	public void setNumeroAttoUdp(String numeroAttoUdp) {
 		this.numeroAttoUdp = numeroAttoUdp;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataScadenzaMV() {
 		return dataScadenzaMV;
 	}
 	public void setDataScadenzaMV(Date dataScadenzaMV) {
 		this.dataScadenzaMV = dataScadenzaMV;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataEsameRapportoFinale() {
 		return dataEsameRapportoFinale;
 	}
 	public void setDataEsameRapportoFinale(Date dataEsameRapportoFinale) {
 		this.dataEsameRapportoFinale = dataEsameRapportoFinale;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataTrasmissioneCommissioni() {
 		return dataTrasmissioneCommissioni;
 	}

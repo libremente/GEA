@@ -86,6 +86,7 @@ public class InserisciMISController {
 	public void inserisciAtto() {
 
 		atto.setTipoAtto("MIS");
+		atto.setNumeroAtto(atto.getNumeroRepertorio());
 		
 		AttoMIS attoRet = attoServiceManager.persistMIS(atto);
 		

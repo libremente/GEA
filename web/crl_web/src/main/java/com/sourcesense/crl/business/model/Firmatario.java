@@ -34,6 +34,7 @@ public class Firmatario extends Personale implements Cloneable {
 	private Date dataFirma;
 	private Date dataRitiro;
 	private boolean primoFirmatario;
+	private String numeroOrdinamento;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -83,6 +84,16 @@ public class Firmatario extends Personale implements Cloneable {
 	public void setPrimoFirmatario(boolean primoFirmatario) {
 		this.primoFirmatario = primoFirmatario;
 	}
+
+	public String getNumeroOrdinamento() {
+		return numeroOrdinamento;
+	}
+
+	public void setNumeroOrdinamento(String numeroOrdinamento) {
+		this.numeroOrdinamento = numeroOrdinamento;
+	}
+	
+	
 	
 	
 	

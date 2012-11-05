@@ -12,12 +12,7 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions">
 
-<script>
-	hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
-	jQuery(function() {
-        jQuery('.ui-datatable tbody').sortable();
-    });
-</script>
+
 
 <p:panelGrid styleClass="infoTable" id="inserisciODGGrid">
 	<p:row>
@@ -578,19 +573,19 @@
 				<p:column sortBy="#{atto.numeroAtto}" headerText="N.Atto">
 					<h:outputText value="#{atto.numeroAtto}" />
 				</p:column>
-				<p:column sortBy="#{atto.numeroProtocollo}" headerText="N° Protocollo">
+				<p:column sortBy="#{atto.numeroProtocollo}"
+					headerText="N° Protocollo">
 					<h:outputText value="#{atto.numeroProtocollo}" />
 				</p:column>
 				<p:column sortBy="#{atto.oggetto}" headerText="Oggetto">
 					<h:outputText value="#{atto.oggetto}" />
 				</p:column>
 				<p:column headerText="Azioni">
-					
-					<p:commandButton action="#{gestioneSeduteController.addAttoTrattato}"
-						value="Aggiungi a Trattati"
-						immediate="true"
-						update=":gestioneSeduteForm:gestioneSedute"
-						icon="new-icon">
+
+					<p:commandButton
+						action="#{gestioneSeduteController.addAttoTrattato}"
+						value="Aggiungi a Trattati" immediate="true"
+						update=":gestioneSeduteForm:gestioneSedute" icon="new-icon">
 						<f:setPropertyActionListener value="#{atto.id}"
 							target="#{gestioneSeduteController.attoDaTrattare}" />
 					</p:commandButton>	
@@ -605,15 +600,13 @@
 					<p:column>
 
 						<b><h:outputLabel for="selezioneSeduta"
-								value="Selezione seduta:  " />
-						</b>
+								value="Selezione seduta:  " /> </b>
 						
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 						<p:selectOneMenu id="selezioneSeduta"
 							value="#{gestioneSeduteController.dataSedutaSelected}">
-							<f:selectItems value="#{gestioneSeduteController.dateSeduteList}"
-							/>
+							<f:selectItems value="#{gestioneSeduteController.dateSeduteList}" />
 							<p:ajax event="change"
 								listener="#{gestioneSeduteController.showSedutaDetail}"
 								update="inserisciODGGrid" />
@@ -647,23 +640,33 @@
 				collapsed="false" toggleable="false">
 				<!-- <p:orderList value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato" iconOnly="false" effect="clip"  
                      controlsLocation="left" id="listaAttiTrattati" itemValue="#{attoTrattato}" style="width: 100%;" >   -->
-				<p:dataTable id="listaAttiTrattati"
+
+				<script>
+					hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
+				</script>
+
+
+				<p:dataTable id="listaAttiTrattati" widgetVar="tableAttiTrattati"
 					value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato"
 					styleClass="generalInfoTab grey-text" editable="true">
 
-					<p:column sortBy="#{attoTrattato.atto.tipoAtto}" headerText="Tipo Atto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.atto.tipoAtto}"
+						headerText="Tipo Atto" style="width:125px">
 							#{attoTrattato.atto.tipoAtto}
     			</p:column>
 
-					<p:column sortBy="#{attoTrattato.atto.numeroAtto}" headerText="N.Atto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.atto.numeroAtto}"
+						headerText="N.Atto" style="width:125px">
 					#{attoTrattato.atto.numeroAtto}
 				</p:column>
 
-					<p:column sortBy="#{attoTrattato.atto.oggetto}" headerText="Oggetto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.atto.oggetto}"
+						headerText="Oggetto" style="width:125px">
 					#{attoTrattato.atto.oggetto}
 				</p:column>
 
-					<p:column sortBy="#{attoTrattato.previsto}" headerText="Previsto" style="width:125px">
+					<p:column sortBy="#{attoTrattato.previsto}" headerText="Previsto"
+						style="width:125px">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="si" rendered="#{attoTrattato.previsto}" />
@@ -678,7 +681,8 @@
 						</p:cellEditor>
 					</p:column>
 
-					<p:column sortBy="#{attoTrattato.discusso}" headerText="Discusso" style="width:125px">
+					<p:column sortBy="#{attoTrattato.discusso}" headerText="Discusso"
+						style="width:125px">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="si" rendered="#{attoTrattato.discusso}" />
@@ -693,12 +697,23 @@
 						</p:cellEditor>
 					</p:column>
 
-					
+
 					<p:column headerText="Modifica" style="width:50px">
 						<p:rowEditor />
 					</p:column>
 
 				</p:dataTable>
+
+				<script>
+					jQuery(function() {
+						jQuery('.ui-datatable tbody').sortable();
+						
+						console.log(jQuery('#gestioneSeduteForm\\:gestioneSedute\\:listaAttiTrattati_data'));
+						
+					});
+				</script>
+
+
 
 			</p:fieldset>
 		</p:column>

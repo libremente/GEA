@@ -55,10 +55,21 @@
 
 					Filtra data:&nbsp;&nbsp;&nbsp;
 					<h:outputLabel for="filtraData_da" value="da " />
-					<p:calendar size="10" locale="it" id="filtraData_da" />
+					<p:calendar id="filtraData_da" 
+						value="#{gestioneSeduteController.dataSedutaDa}" locale="it" pattern="dd/MM/yyyy">
+						<p:ajax event="dateSelect" listener="#{gestioneSeduteController.filterDataTable()}"
+							update="listaSedute" />
+					</p:calendar>
+           
+                    <h:outputLabel for="filtraData_a" value="a " />
+                    <p:calendar id="filtraData_a" 
+						value="#{gestioneSeduteController.dataSedutaA}" locale="it" pattern="dd/MM/yyyy">
+						<p:ajax event="dateSelect" listener="#{gestioneSeduteController.filterDataTable()}"
+							update="listaSedute" />
+					</p:calendar>
 
-					<h:outputLabel for="filtraData_a" value="a " />
-					<p:calendar size="10" locale="it" id="filtraData_a" />
+
+
 
 					<br />
 					<br />
@@ -71,42 +82,48 @@
 								styleClass="generalInfoTab grey-text" editable="true"
 								style="width:100%">
 
-								<p:column  headerText="Dettagli" style="width:50px">
+								<p:column headerText="Dettagli" style="width:50px">
 									<p:commandButton
 										action="#{gestioneSeduteController.showSedutaDetail}"
 										icon="detail-icon"
 										update=":gestioneSeduteForm:gestioneSedute:dettagliSeduta">
-										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
-											 target="#{gestioneSeduteController.dataSedutaSelected}" />
+										<f:setPropertyActionListener
+											value="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"
+											target="#{gestioneSeduteController.dataSedutaSelected}" />
 									</p:commandButton>
-								</p:column>                   
+								</p:column>
 
-								<p:column headerText="Data Seduta" style="width:100px" sortBy="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}" >
+								<p:column headerText="Data Seduta" style="width:100px"
+									sortBy="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}">
 									
 									#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}
 									
 								</p:column>
 
-								<p:column  headerText="Numero Verbale" style="width:100px" sortBy="#{seduta.numVerbale}" >
+								<p:column headerText="Numero Verbale" style="width:100px"
+									sortBy="#{seduta.numVerbale}">
 									#{seduta.numVerbale}
 								</p:column>
 
 								<p:column headerText="Azioni" style="width:130px">
 
-									<p:commandButton action="#{gestioneSeduteController.dettaglioOdg}" 
-									oncomplete="gestioneSeduteTabs.select(1)" value="ODG" update=":gestioneSeduteForm:gestioneSedute">
-									<f:setPropertyActionListener value="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"
-											target="#{gestioneSeduteController.dataSedutaSelected}"  />
+									<p:commandButton
+										action="#{gestioneSeduteController.dettaglioOdg}"
+										oncomplete="gestioneSeduteTabs.select(1)" value="ODG"
+										update=":gestioneSeduteForm:gestioneSedute">
+										<f:setPropertyActionListener
+											value="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"
+											target="#{gestioneSeduteController.dataSedutaSelected}" />
 									</p:commandButton>	
 										
 									&nbsp;
 
 									<p:commandButton oncomplete="sedutaDialog.show()"
-										icon="delete-icon" >
+										icon="delete-icon">
 
 										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
 											target="#{gestioneSeduteController.sedutaToDelete}" />
-									</p:commandButton>         
+									</p:commandButton>
 								</p:column>
 
 							</p:dataTable>
@@ -204,7 +221,8 @@
 								value="#{gestioneSeduteController.linksList}" var="link"
 								styleClass="generalInfoTab grey-text" editable="true">
 
-								<p:column sortBy="#{link.descrizione}" headerText="Descrizione collegamento">
+								<p:column sortBy="#{link.descrizione}"
+									headerText="Descrizione collegamento">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputText value="#{link.descrizione}" />
@@ -217,7 +235,8 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column sortBy="#{link.descrizione}" headerText="Indirizzo collegamento">
+								<p:column sortBy="#{link.descrizione}"
+									headerText="Indirizzo collegamento">
 									<p:cellEditor>
 										<f:facet name="output">
 											<h:outputLink value="#{link.indirizzo}">
@@ -264,6 +283,6 @@
 
 		</p:column>
 	</p:row>
-	
+
 </p:panelGrid>
 </html>
