@@ -12,10 +12,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.URLBuilder;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
+import com.sourcesense.crl.web.ui.beans.UserBean;
 
 @ManagedBean(name = "chiusuraIterController")
 @ViewScoped
@@ -35,6 +37,8 @@ public class ChiusuraIterController {
 	private String numeroLr;
 	private Date dataLr;
 	private String urlLeggiRegionali;
+	
+	AttoBean attoBean;
 
 	@PostConstruct
 	protected void init() {
@@ -92,6 +96,29 @@ public class ChiusuraIterController {
 		}
 		
 		
+	}
+	
+public String tipoChiusuraPar() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		attoBean = (AttoBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{attoBean}",
+						AttoBean.class).getValue(context.getELContext());
+		
+		
+
+		if (attoBean.getTipoAtto().equals("PAR"))
+			
+		{
+			return "Respinto";
+		}
+			
+		 else {
+			return "Rifiutato e trasmesso alla Giunta";
+		}
+
 	}
 	
 

@@ -45,6 +45,10 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
+/**
+ * @author chris
+ *
+ */
 @ManagedBean(name = "esameCommissioniController")
 @ViewScoped
 public class EsameCommissioniController {
@@ -64,6 +68,8 @@ public class EsameCommissioniController {
 	private Atto atto = new Atto();
 
 	private boolean readonly = false;
+	AttoBean attoBean;
+	UserBean userBean;
 
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 	// Commissione dell utente loggato
@@ -140,6 +146,8 @@ public class EsameCommissioniController {
 	private int numEmendApprovatiGiunta;
 	private int numEmendApprovatiMisto;
 	private int numEmendApprovatiTotale;
+	private int numEmendApprovatiCommissione;
+	private int numEmendPresentatiCommissione;
 
 	private int nonAmmissibili;
 	private int decaduti;
@@ -780,12 +788,11 @@ public class EsameCommissioniController {
 		
 		boolean isOneMembroAttivo = checkOneMembroAttivo(attoBean);
 		
-		if ((isPresenzaComitatoRistretto() && isOneMembroAttivo)
-				|| (!isPresenzaComitatoRistretto() && !isOneMembroAttivo)) {
+		if (isOneMembroAttivo) {
 			commissioneUser.getComitatoRistretto().setComponenti(
 					membriComitatoList);
-			commissioneUser
-					.setPresenzaComitatoRistretto(isPresenzaComitatoRistretto());
+//			commissioneUser
+//					.setPresenzaComitatoRistretto(isPresenzaComitatoRistretto());
 			commissioneUser
 					.setDataIstituzioneComitato(getDataIstituzioneComitato());
 			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
@@ -820,23 +827,23 @@ public class EsameCommissioniController {
 		}
 
 		else {
-			if (isPresenzaComitatoRistretto()) {
+//			if (isPresenzaComitatoRistretto()) {
 				context.addMessage(
 						null,
 						new FacesMessage(
 								FacesMessage.SEVERITY_ERROR,
 								"Attenzione ! non ci sono membri attivi nel comitato ristretto",
 								""));
-			}
-
-			else {
-				context.addMessage(
-						null,
-						new FacesMessage(
-								FacesMessage.SEVERITY_ERROR,
-								"Attenzione ! casella Presenza Comitato Ristretto non spuntata ",
-								""));
-			}
+//			}
+//
+//			else {
+//				context.addMessage(
+//						null,
+//						new FacesMessage(
+//								FacesMessage.SEVERITY_ERROR,
+//								"Attenzione ! casella Presenza Comitato Ristretto non spuntata ",
+//								""));
+//			}
 		}
 
 	}
@@ -1426,19 +1433,57 @@ public class EsameCommissioniController {
 
 		return risultato;
 	}
+	
+	
+	public String testoParereEspressoAttoVotato() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		attoBean = (AttoBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{attoBean}",
+						AttoBean.class).getValue(context.getELContext());
+		
+		userBean = (UserBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{userBean}",
+						UserBean.class).getValue(context.getELContext());
+		
+		Commissione commissione = attoBean.getWorkingCommissione(userBean
+				.getUser().getSessionGroup().getNome());
+
+
+		if (attoBean.getTipoAtto().equals("PAR"))
+			
+		{
+			return "Testo del parere espresso";
+		}
+			
+		else if (commissione != null
+			&& Commissione.RUOLO_CONSULTIVA.equals(commissione.getRuolo()))
+
+		{
+			return "Testo del parere espresso";
+		} else {
+			return "Testo dell'atto votato";
+		}
+
+	}
+	
 
 	// Emendamenti e Clausole*************************************************
 
 	public void totaleEmendPresentati() {
 		numEmendPresentatiTotale = getNumEmendPresentatiGiunta()
 				+ getNumEmendPresentatiMaggior() + getNumEmendPresentatiMinor()
-				+ getNumEmendPresentatiMisto();
+				+ getNumEmendPresentatiMisto() + getNumEmendPresentatiCommissione();
 	}
 
 	public void totaleEmendApprovati() {
 		numEmendApprovatiTotale = getNumEmendApprovatiGiunta()
 				+ getNumEmendApprovatiMaggior() + getNumEmendApprovatiMinor()
-				+ getNumEmendApprovatiMisto();
+				+ getNumEmendApprovatiMisto() + getNumEmendApprovatiCommissione();
 	}
 
 	public void totaleNonApprovati() {
@@ -2695,5 +2740,29 @@ public class EsameCommissioniController {
 	public void setReadonly(boolean readonly) {
 		this.readonly = readonly;
 	}
+
+
+	public int getNumEmendApprovatiCommissione() {
+		return numEmendApprovatiCommissione;
+	}
+
+
+	public void setNumEmendApprovatiCommissione(int numEmendApprovatiCommissione) {
+		this.numEmendApprovatiCommissione = numEmendApprovatiCommissione;
+	}
+
+
+	public int getNumEmendPresentatiCommissione() {
+		return numEmendPresentatiCommissione;
+	}
+
+
+	public void setNumEmendPresentatiCommissione(int numEmendPresentatiCommissione) {
+		this.numEmendPresentatiCommissione = numEmendPresentatiCommissione;
+	}
+
+
+	
+	
 
 }

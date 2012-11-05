@@ -15,6 +15,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Organo;
 import com.sourcesense.crl.business.model.Passaggio;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.util.Clonator;
@@ -23,6 +24,8 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 @ManagedBean(name = "riepilogoAttoController")
 @ViewScoped
 public class RiepilogoAttoController {
+	
+	AttoBean attoBean;
 
 	private List<Allegato> testiUfficiali;
 	private List<Allegato> altriAllegati;
@@ -58,6 +61,8 @@ public class RiepilogoAttoController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
+	
 
 
 		// TODO riempire liste commissioni attoBean =>
@@ -70,7 +75,13 @@ public class RiepilogoAttoController {
 		abbinamentiList = Clonator.cloneList(attoBean.getLastPassaggio().getAbbinamenti());
 		
 		filtraAbbinamenti();
+		
+		trasmissioneAdAulaAbilited();
+		
+		
 	}
+	
+	
 
 	public void showCommissioneDetail() {
 
@@ -101,6 +112,31 @@ public class RiepilogoAttoController {
 			}
 		}
 	}
+	
+	public boolean trasmissioneAdAulaAbilited() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		attoBean = (AttoBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{attoBean}",
+						AttoBean.class).getValue(context.getELContext());
+
+		if (attoBean.getTipoAtto().equals("REF")
+				|| attoBean.getTipoAtto().equals("PDA")
+				|| attoBean.getTipoAtto().equals("PDL")
+				|| attoBean.getTipoAtto().equals("PRE")
+				|| attoBean.getTipoAtto().equals("PLP"))
+
+		{
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	
+	
 	
 
 

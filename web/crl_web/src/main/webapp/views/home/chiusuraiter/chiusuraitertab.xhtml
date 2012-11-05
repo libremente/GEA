@@ -47,10 +47,10 @@
 						<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
 						<f:selectItem itemLabel="Approvato e Trasmesso alla Giunta"
 							itemValue="Approvato e Trasmesso alla Giunta" />
-						<f:selectItem itemLabel="Rifiutato e Trasmesso alla Giunta"
-							itemValue="Rifiutato e Trasmesso alla Giunta" />
-						<f:selectItem itemLabel="Per inamissibilità"
-							itemValue="Per inamissibilità" />
+						<f:selectItem itemLabel="#{chiusuraIterController.tipoChiusuraPar()}"
+							itemValue="#{chiusuraIterController.tipoChiusuraPar()}" />
+						<f:selectItem itemLabel="Inammissibile"
+							itemValue="Inammissibile" />
 						<f:selectItem itemLabel="Ritirato dai promotori"
 							itemValue="Ritirato dai promotori" />
 						<f:selectItem itemLabel="Abbinato ad altro atto"
@@ -76,13 +76,13 @@
 		</p:panelGrid>
 
 	</p:fieldset>
-	<p:fieldset legend="Registrazione su BURL" collapsed="false"
+	<p:fieldset legend="Pubblicazione su BURL" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="registrazioneburlpanel">
 			<p:row>
 				<p:column>
 					<h:outputText style="font-weight: bold;"
-						value="Numero Riferimento BURL: " />
+						value="Numero e serie BURL: " />
 				</p:column>
 				<p:column>
 					<p:inputText id="inputnumerorifburl"

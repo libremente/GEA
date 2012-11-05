@@ -194,6 +194,7 @@
 										<td align="left">Minor.</td>
 										<td align="left">Giunta</td>
 										<td align="left">Misto</td>
+										<td align="left">Commissione</td>
 										<td align="left"><b>Totale</b></td>
 									</tr>
 
@@ -226,6 +227,14 @@
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendPresentatiMisto}">
+												<p:ajax event="change" update="totEmendPresentati"
+													listener="#{esameCommissioniController.totaleEmendPresentati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+											</p:inputText></td>
+											
+											<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendPresentatiCommissione}">
 												<p:ajax event="change" update="totEmendPresentati"
 													listener="#{esameCommissioniController.totaleEmendPresentati}" />
 												<p:ajax event="change"
@@ -266,6 +275,14 @@
 
 										<td align="left"><p:inputText size="5" maxlength="5"
 												value="#{esameCommissioniController.numEmendApprovatiMisto}">
+												<p:ajax event="change" update="totEmendApprovati"
+													listener="#{esameCommissioniController.totaleEmendApprovati}" />
+												<p:ajax event="change"
+													listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+											</p:inputText></td>
+											
+											<td align="left"><p:inputText size="5" maxlength="5"
+												value="#{esameCommissioniController.numEmendApprovatiCommissione}">
 												<p:ajax event="change" update="totEmendApprovati"
 													listener="#{esameCommissioniController.totaleEmendApprovati}" />
 												<p:ajax event="change"
@@ -371,7 +388,7 @@
 				<p:panelGrid styleClass="infoTable" id="clausolaValutativaGrid">
 					<p:row>
 						<p:column>
-							Data presa in carico proposta: 
+							Data arrivo proposta: 
 						</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="dataPresaInCarico"
@@ -383,7 +400,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							Data intesa:
+							Data votazione intesa:
 						</p:column>
 						<p:column>
 							<p:calendar size="10" locale="it" id="dataIntesa"
@@ -401,7 +418,7 @@
 							<p:selectOneMenu id="esitoVotazioneIntesa"
 								value="#{esameCommissioniController.esitoVotazioneIntesa}">
 								<f:selectItem itemLabel="Scegli esito" itemValue="" />
-								<f:selectItem itemLabel="Accettata" itemValue="Accettata" />
+								<f:selectItem itemLabel="Approvata" itemValue="Approvata" />
 								<f:selectItem itemLabel="Accettata con modifiche"
 									itemValue="Accettata con modifiche" />
 								<f:selectItem itemLabel="Non accettata"
@@ -437,7 +454,7 @@
 				</p:column>-->
 						<p:column colspan="3">
 							
-							<p:commandButton value="Carica Clausola"
+							<p:commandButton value="Carica proposta di clausola"
 								oncomplete="uploadClausolaAttributesDialog.show()">
 							</p:commandButton>
 								

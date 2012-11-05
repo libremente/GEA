@@ -222,8 +222,10 @@
 			</p:row>
 		</p:panelGrid>
 	</p:fieldset>
-	<p:fieldset legend="Testo dell'Atto votato" collapsed="false"
+	
+	<p:fieldset legend="#{esameCommissioniController.testoParereEspressoAttoVotato()}" collapsed="false"
 		toggleable="true" toggleSpeed="500">
+		
 		<p:panelGrid styleClass="infoTable" id="testoattovotatopanel">
 			<p:row>
 				<!-- <p:column>
@@ -335,6 +337,19 @@
 		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
 			<p:row>
+			<p:column>
+					<b> <h:outputLabel for="datarichsiscrzaula"
+							value="Data Richiesta Iscrizione Aula: " /> </b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="datarichsiscrzaula"
+							value="#{esameCommissioniController.dataRichiestaIscrizione}">
+							<p:ajax event="dateSelect"
+								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
+						</p:calendar>
+					</p>
+				</p:column>
 				<p:column>
 					<b> <h:outputLabel for="datatrasmissione"
 							value="Data Trasmissione: " /> </b>
@@ -343,19 +358,6 @@
 					<p>
 						<p:calendar size="10" locale="it" id="datatrasmissione"
 							value="#{esameCommissioniController.dataTrasmissione}">
-							<p:ajax event="dateSelect"
-								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
-						</p:calendar>
-					</p>
-				</p:column>
-				<p:column>
-					<b> <h:outputLabel for="datarichsiscrzaula"
-							value="Data Richiesta Iscrizione Aula: " /> </b>
-				</p:column>
-				<p:column>
-					<p>
-						<p:calendar size="10" locale="it" id="datarichsiscrzaula"
-							value="#{esameCommissioniController.dataRichiestaIscrizione}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
 						</p:calendar>

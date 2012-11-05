@@ -306,7 +306,7 @@
 		<p:row rendered="#{ riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' }">
 			<p:column colspan="2">
 				<h:outputText style="font-weight: bold;"
-					value="Membri Comitato Ristretto: " />
+					value="Membri Comitato Ristretto/Gruppo di lavoro: " />
 
 				<c:forEach items="#{riepilogoAttoController.commissioneSelected.comitatoRistretto.componenti}" var="componente">
 				
@@ -363,7 +363,12 @@
 			</p:column>
 
 			<p:column>
+			<c:if test="#{riepilogoAttoController.trasmissioneAdAulaAbilited()}">
+				<h:outputText style="font-weight: bold;" value="Data Trasmissione ad Aula: " />
+				</c:if>
+				<c:if test="#{! riepilogoAttoController.trasmissioneAdAulaAbilited()}">
 				<h:outputText style="font-weight: bold;" value="Data Trasmissione: " />
+				</c:if>
 				<h:outputText
 					value="#{riepilogoAttoController.commissioneSelected.dataTrasmissione}">
 					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
@@ -416,7 +421,7 @@
 	<p:panelGrid styleClass="infoTable" id="infoChiusuraIter">
 		<p:row>
 			<p:column>
-				<h:outputText style="font-weight: bold;" value="Stato di chiusura: " />
+				<h:outputText style="font-weight: bold;" value="Tipo chiusura: " />
 				<h:outputText value="#{attoBean.statoChiusura}" />
 			</p:column>
 

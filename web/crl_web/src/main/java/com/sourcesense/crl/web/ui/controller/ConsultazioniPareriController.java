@@ -69,6 +69,8 @@ public class ConsultazioniPareriController {
 	private String nomeSoggettoInvitato;
 	private boolean intervenuto;
 	private String soggettoInvitatoToDelete;
+	
+	
 
 	
 
@@ -516,6 +518,28 @@ public class ConsultazioniPareriController {
 			}
 		}
 	}
+	
+	public int totSoggettiInvitati(){
+		
+		return soggettiInvitatiList.size();
+	}
+	
+	public int totSogettiPresenti(){
+		
+		int totSogettiPresenti = 0;
+		
+		for (SoggettoInvitato element : soggettiInvitatiList) {
+
+		if (element.isIntervenuto()) {
+			
+			totSogettiPresenti ++;
+			
+		}
+
+	}
+		return totSogettiPresenti;
+	}
+
 
 	// Getters & Setters**********************************************
 

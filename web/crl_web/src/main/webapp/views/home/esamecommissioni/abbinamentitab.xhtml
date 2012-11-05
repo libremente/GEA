@@ -700,8 +700,8 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 					<p:selectOneMenu value="#{esameCommissioniController.tipoTesto}">
 						<f:selectItem itemLabel="Scegli testo" itemValue="" />
 						<f:selectItem itemLabel="Testo base" itemValue="Testo base" />
-						<f:selectItem itemLabel="Testo modificato"
-							itemValue="Testo modificato" />
+						<f:selectItem itemLabel="Testo unificato"
+							itemValue="Testo unificato" />
 						<p:ajax event="change"
 							listener="#{esameCommissioniController.updateAbbinamentiHandler}" />
 					</p:selectOneMenu>
@@ -762,7 +762,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 		<p:column>
 			<p>
 				<h:outputText style="font-weight: bold;"
-					value="Modifica oggetto dell'atto corrente: " />
+					value="Modifica titolo dell'atto corrente: " />
 			</p>
 		</p:column>
 		<p:column colspan="3">
@@ -776,7 +776,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<p:row>
 		<p:column>
-			<p:commandButton value="Salva oggetto"
+			<p:commandButton value="Salva titolo"
 				action="#{esameCommissioniController.salvaOggetto}"
 				update="abbinamentiMsg " />
 		</p:column>

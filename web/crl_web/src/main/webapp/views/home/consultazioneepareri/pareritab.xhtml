@@ -16,7 +16,7 @@
 
 
 <div id="blockedPareri">
-<p:fieldset legend="Pareri" toggleable="true" toggleSpeed="500">
+<p:fieldset legend="Pareri org. statutari" toggleable="true" toggleSpeed="500">
 
 	<p:panelGrid styleClass="infoTable" id="pareripanel">
 		<p:row>
@@ -88,7 +88,7 @@
     			       </p:column>
 
 					<p:column sortBy="#{organismo.dataAssegnazione}">
-						<f:facet name="header">Richiesto</f:facet>
+						<f:facet name="header">Assegnato</f:facet>
 						<h:outputText value="#{organismo.dataAssegnazione}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -96,7 +96,7 @@
 					</p:column>
 
 					<p:column sortBy="#{organismo.parere.dataRicezioneOrgano}">
-						<f:facet name="header">Ricevuto</f:facet>
+						<f:facet name="header">Reso</f:facet>
 						<h:outputText value="#{organismo.parere.dataRicezioneOrgano}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -165,7 +165,7 @@
 						<p:row>
 							<p:column>
 								<b> <h:outputLabel for="dataricezioneparere"
-										value="Data ricezione parere: " />
+										value="Data deliberazione parere: " />
 								</b>
 							</p:column>
 							<p:column>
@@ -185,8 +185,6 @@
 								<p:selectOneMenu value="#{consultazioniPareriController.esito}">
 									<f:selectItem itemLabel="Scegli esito" itemValue="" />
 									<f:selectItem itemLabel="Positivo" itemValue="Positivo" />
-									<f:selectItem itemLabel="Positivo condizionato"
-										itemValue="Positivo condizionato" />
 									<f:selectItem itemLabel="Negativo" itemValue="Negativo" />
 									<p:ajax event="change"
 										listener="#{consultazioniPareriController.updatePareriHandler}" />

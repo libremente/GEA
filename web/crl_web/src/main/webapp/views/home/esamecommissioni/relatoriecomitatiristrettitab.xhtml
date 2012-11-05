@@ -302,24 +302,12 @@
 
 	</p:fieldset>
 	<p:fieldset rendered="#{!navigationBean.isCommissioneConsultiva()}"
-		legend="Gestione Comitati Ristretti" collapsed="false"
+		legend="Gestione comitati ristretti/Gruppi di lavoro" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable"
 			id="gestionecomitatiristrettipanel">
 			<p:row>
 				<p:column>
-					<h:outputText style="font-weight: bold;"
-						value="Presenza Comitato Ristretto: " />
-				</p:column>
-				<p:column>
-					<p:selectBooleanCheckbox
-						value="#{esameCommissioniController.presenzaComitatoRistretto}">
-						<p:ajax event="change"
-							listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
-					</p:selectBooleanCheckbox>
-				</p:column>
-				<p:column>
-
 					<b> <h:outputLabel for="dataistituzionecomitato"
 							value="Data istituzione Comitato: " /> </b>
 				</p:column>
@@ -331,6 +319,13 @@
 								listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
 						</p:calendar>
 					</p>
+				</p:column>
+				<p:column>
+
+					
+				</p:column>
+				<p:column>
+					
 				</p:column>
 
 			</p:row>
@@ -344,7 +339,7 @@
 								<p:column>Componente</p:column>
 								<p:column>Data nomina</p:column>
 								<p:column>Coordinatore</p:column>
-								<p:column>Data uscita</p:column>
+								<p:column>Data fine incarico</p:column>
 								<p:column></p:column>
 							</p:row>
 						</f:facet>
@@ -437,7 +432,7 @@
 
 						</p:column>
 
-						<p:column headerText="Data uscita" sortBy="#{componente.dataUscita}">
+						<p:column headerText="Data fine incarico" sortBy="#{componente.dataUscita}">
 
 							<p:cellEditor>
 								<f:facet name="output">
