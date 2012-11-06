@@ -584,7 +584,8 @@
 	
 	if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
-   $('#presaInCaricoDiv').block({ message: null } ); }
+   $('#presaInCaricoDiv').block({ message: null } );
+   $('#blockedInfoGen').block({ message: null } );}
 	
 	if (#{navigationBean.isGuest()}==true){
 		$.blockUI.defaults.overlayCSS.opacity = 0; 

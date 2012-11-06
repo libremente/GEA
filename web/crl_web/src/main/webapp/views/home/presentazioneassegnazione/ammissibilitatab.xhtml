@@ -223,6 +223,12 @@ $('#blockedAmmissibilita').block({ message: 'Pagina bloccata!<br />Prendere in c
 
 };
 
+if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#blockedAmmissibilita').block({ message: null } );
+}
+	
+
 if (#{navigationBean.isGuest()}==true){
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
 	   $('#blockedAmmissibilita').block({ message: null } );

@@ -423,6 +423,11 @@ $('#blockedAssegnazione').block({ message: 'Pagina bloccata!<br />Prendere in ca
 
 };
 
+if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#blockedAssegnazione').block({ message: null } );
+}
+
 if (#{navigationBean.isGuest()}==true){
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
 	   $('#blockedAssegnazione').block({ message: null } );
