@@ -307,25 +307,20 @@
 		<p:panelGrid styleClass="infoTable"
 			id="gestionecomitatiristrettipanel">
 			<p:row>
-				<p:column>
+				
+				<p:column style="width:200px">
+
 					<b> <h:outputLabel for="dataistituzionecomitato"
 							value="Data istituzione Comitato: " /> </b>
 				</p:column>
-				<p:column>
+				<p:column  colspan="5">
 					<p>
 						<p:calendar size="10" locale="it" id="dataistituzionecomitato"
 							value="#{esameCommissioniController.dataIstituzioneComitato}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
 						</p:calendar>
-					</p>
-				</p:column>
-				<p:column>
-
-					
-				</p:column>
-				<p:column>
-					
+					</p> 
 				</p:column>
 
 			</p:row>
