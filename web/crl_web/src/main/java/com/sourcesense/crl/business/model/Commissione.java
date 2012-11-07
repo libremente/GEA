@@ -29,6 +29,8 @@ public class Commissione implements Cloneable {
 	public static final String STATO_IN_CARICO = "In Carico";
 	public static final String STATO_ANNULLATO = "Annullato";
 	public static final String STATO_VOTATO = "Votato";
+	public static final String STATO_NOMINATO_RELATORE = "Nominato Relatore";
+	public static final String STATO_COMITATO_RISTRETTO = "Lavori Comitato Ristretto";
 	public static final String STATO_TRASMESSO = "Trasmesso";
 	public static final String STATO_VERIFICATA_AMMISSIBILITA = "Verificata Ammissibilità";
 	

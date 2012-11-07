@@ -45,10 +45,6 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
-/**
- * @author chris
- *
- */
 @ManagedBean(name = "esameCommissioniController")
 @ViewScoped
 public class EsameCommissioniController {
@@ -68,8 +64,6 @@ public class EsameCommissioniController {
 	private Atto atto = new Atto();
 
 	private boolean readonly = false;
-	AttoBean attoBean;
-	UserBean userBean;
 
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 	// Commissione dell utente loggato
@@ -240,17 +234,14 @@ public class EsameCommissioniController {
 		loadData(attoBean.getLastPassaggio(), attoBean);
 
 	}
-	
-	
-	private boolean canChangeStatoAtto(){
-		
-		return (commissioneUser.getRuolo().equals(
-				Commissione.RUOLO_REFERENTE)
+
+	private boolean canChangeStatoAtto() {
+
+		return (commissioneUser.getRuolo().equals(Commissione.RUOLO_REFERENTE)
 				|| commissioneUser.getRuolo().equalsIgnoreCase(
-						Commissione.RUOLO_REDIGENTE)
-				|| commissioneUser.getRuolo().equalsIgnoreCase(
-						Commissione.RUOLO_DELIBERANTE));
-		
+						Commissione.RUOLO_REDIGENTE) || commissioneUser
+				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE));
+
 	}
 
 	public void changePassaggio() {
@@ -639,7 +630,7 @@ public class EsameCommissioniController {
 
 	public void confermaRelatori() {
 
-		if (relatoriList.size() > 0) {
+		//if (relatoriList.size() > 0) {
 
 			commissioneUser.setRelatori(relatoriList);
 
@@ -647,9 +638,17 @@ public class EsameCommissioniController {
 					.setCommissioni(commissioniList);
 
 			if (canChangeStatoAtto()) {
-				atto.setStato(StatoAtto.NOMINATO_RELATORE);
-			}
 
+				if (checkStatiRelatori()) {
+					atto.setStato(StatoAtto.NOMINATO_RELATORE);
+					commissioneUser
+							.setStato(Commissione.STATO_NOMINATO_RELATORE);
+				} else {
+					atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+					commissioneUser.setStato(Commissione.STATO_IN_CARICO);
+				}
+
+			}
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
@@ -668,14 +667,35 @@ public class EsameCommissioniController {
 					Clonator.cloneList(commissioniList));
 
 			if (canChangeStatoAtto()) {
-				attoBean.setStato(StatoAtto.NOMINATO_RELATORE);
+				if (checkStatiRelatori()) {
+					attoBean.setStato(StatoAtto.NOMINATO_RELATORE);
+				} else {
+					attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+					
+				}
 			}
 
 			setStatoCommitRelatori(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage(
 					"Relatori salvati con successo", ""));
 
+		//}
+	}
+
+	private boolean checkStatiRelatori() {
+
+		int annullo = 0;
+
+		for (Relatore relatore : relatoriList) {
+
+			if (relatore.getDataUscita() != null) {
+				annullo++;
+
+			}
 		}
+
+		return annullo < relatoriList.size();
+
 	}
 
 	private boolean isNominatoRelatore() {
@@ -760,54 +780,54 @@ public class EsameCommissioniController {
 	private boolean checkOneMembroAttivo(AttoBean attoBean) {
 
 		boolean ritorno = false;
-		
+
 		for (Componente element : membriComitatoList) {
 
 			if (element.getDataUscita() == null) {
 
-				ritorno=true;
+				ritorno = true;
 				break;
 			}
 		}
-		
-		//Update di un componente persistito
-		if(!ritorno && attoBean.getWorkingCommissione(commissioneUser
-				.getDescrizione()).getComitatoRistretto().getComponenti().size() == membriComitatoList.size()
-				&& membriComitatoList.size()>0){
-			ritorno=true;
+
+		// Update di un componente persistito
+		if (!ritorno
+				&& attoBean
+						.getWorkingCommissione(commissioneUser.getDescrizione())
+						.getComitatoRistretto().getComponenti().size() == membriComitatoList
+						.size() && membriComitatoList.size() > 0) {
+			ritorno = true;
 		}
-		
+
 		return ritorno;
 	}
 
 	public void confermaComitatoRistretto() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		boolean isOneMembroAttivo = checkOneMembroAttivo(attoBean);
-		
+
 		if (isOneMembroAttivo) {
 			commissioneUser.getComitatoRistretto().setComponenti(
 					membriComitatoList);
-//			commissioneUser
-//					.setPresenzaComitatoRistretto(isPresenzaComitatoRistretto());
 			commissioneUser
 					.setDataIstituzioneComitato(getDataIstituzioneComitato());
-			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
-					.setCommissioni(commissioniList);
-
 			
-
+			
 			Target target = new Target();
 			target.setCommissione(commissioneUser.getDescrizione());
 			target.setPassaggio(attoBean.getLastPassaggio().getNome());
 
-			if (canChangeStatoAtto()
-					&& isNominatoRelatore()) {
+			if (canChangeStatoAtto() && isNominatoRelatore()) {
 				atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+				commissioneUser.setStato(Commissione.STATO_COMITATO_RISTRETTO);
 			}
+			
+			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+			.setCommissioni(commissioniList);
 
 			EsameCommissione esameCommissione = new EsameCommissione();
 			esameCommissione.setAtto(atto);
@@ -1115,8 +1135,6 @@ public class EsameCommissioniController {
 		abbinamentiSession.add(abbinamento);
 	}
 
-	
-
 	public void salvaOggetto() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -1160,38 +1178,36 @@ public class EsameCommissioniController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		String stato = atto.getStato();
-		
-		//Check se annulla votazione
-		if(checkAnnullaCommissione()){
-		
+
+		// Check se annulla votazione
+		if (checkAnnullaCommissione()) {
+
 			commissioneUser.setStato(Commissione.STATO_IN_CARICO);
 			commissioneUser.setDataSedutaCommissione(null);
-			
-			if (checkLavoriComitatoRistretto() && canChangeStatoAtto()){
-				
-					stato = StatoAtto.LAVORI_COMITATO_RISTRETTO;
-				
-				
-			}else if(checkNominatoRelatore() && canChangeStatoAtto()){
-					stato = StatoAtto.NOMINATO_RELATORE;
-				
-			    
-			}else if (canChangeStatoAtto()) {
-					stato = StatoAtto.PRESO_CARICO_COMMISSIONE;
-								
+
+			if (checkLavoriComitatoRistretto() && canChangeStatoAtto()) {
+
+				stato = StatoAtto.LAVORI_COMITATO_RISTRETTO;
+
+			} else if (checkNominatoRelatore() && canChangeStatoAtto()) {
+				stato = StatoAtto.NOMINATO_RELATORE;
+
+			} else if (canChangeStatoAtto()) {
+				stato = StatoAtto.PRESO_CARICO_COMMISSIONE;
+
 			}
-			
-		//Votazione OK	
-		}else{
+
+			// Votazione OK
+		} else {
 			commissioneUser.setStato(Commissione.STATO_VOTATO);
-			
+
 			if (canChangeStatoAtto()) {
 				stato = StatoAtto.VOTATO_COMMISSIONE;
 			}
-		}	
-		
+		}
+
 		atto.setStato(stato);
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(getCommissioniList());
@@ -1201,53 +1217,52 @@ public class EsameCommissioniController {
 		EsameCommissione esameCommissione = new EsameCommissione();
 		esameCommissione.setAtto(atto);
 		esameCommissione.setTarget(target);
-		commissioneServiceManager.salvaVotazioneEsameCommissioni(esameCommissione);
+		commissioneServiceManager
+				.salvaVotazioneEsameCommissioni(esameCommissione);
 
 		if (canChangeStatoAtto()) {
 			attoBean.getAtto().setStato(stato);
 		}
-		
+
 		attoBean.getLastPassaggio().setCommissioni(commissioniList);
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Registrazione Votazione salvata con successo", ""));
 	}
-	
-	private boolean checkAnnullaCommissione(){
-		
-		if  ( ("".equals(getQuorum()) || getQuorum()==null) &&
-				("".equals(getEsitoVotazione()) || getQuorum()==null) &&	
-		     getDataSedutaRegistrazioneVotazione()==null){
+
+	private boolean checkAnnullaCommissione() {
+
+		if (("".equals(getQuorum()) || getQuorum() == null)
+				&& ("".equals(getEsitoVotazione()) || getQuorum() == null)
+				&& getDataSedutaRegistrazioneVotazione() == null) {
 			return true;
 		}
-		
+
 		return false;
-		
+
 	}
-	
-	
-	private boolean checkLavoriComitatoRistretto(){
-		
+
+	private boolean checkLavoriComitatoRistretto() {
+
 		for (Componente componente : this.getMembriComitatoList()) {
-		
-			if(componente.getDataUscita()==null){
+
+			if (componente.getDataUscita() == null) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-    private boolean checkNominatoRelatore(){
+
+	private boolean checkNominatoRelatore() {
 		for (Relatore relatore : getRelatoriList()) {
-			
-			if(relatore.getDataUscita()==null){
+
+			if (relatore.getDataUscita() == null) {
 				return true;
 			}
 		}
-    	return false;
-		
+		return false;
+
 	}
-	
 
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -1438,20 +1453,13 @@ public class EsameCommissioniController {
 	public String testoParereEspressoAttoVotato() {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
-		attoBean = (AttoBean) context
+		AttoBean attoBean = (AttoBean) context
 				.getApplication()
 				.getExpressionFactory()
 				.createValueExpression(context.getELContext(), "#{attoBean}",
 						AttoBean.class).getValue(context.getELContext());
 		
-		userBean = (UserBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{userBean}",
-						UserBean.class).getValue(context.getELContext());
 		
-		Commissione commissione = attoBean.getWorkingCommissione(userBean
-				.getUser().getSessionGroup().getNome());
 
 
 		if (attoBean.getTipoAtto().equals("PAR"))
@@ -1460,8 +1468,7 @@ public class EsameCommissioniController {
 			return "Testo del parere espresso";
 		}
 			
-		else if (commissione != null
-			&& Commissione.RUOLO_CONSULTIVA.equals(commissione.getRuolo()))
+		else if (Commissione.RUOLO_CONSULTIVA.equals(commissioneUser.getRuolo()))
 
 		{
 			return "Testo del parere espresso";
