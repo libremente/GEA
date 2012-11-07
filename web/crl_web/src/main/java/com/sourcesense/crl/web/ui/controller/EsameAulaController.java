@@ -19,6 +19,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.EsameAula;
+import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.model.StatoAtto;
@@ -26,6 +27,7 @@ import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.AulaServiceManager;
+import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -40,6 +42,9 @@ public class EsameAulaController {
 	@ManagedProperty(value = "#{aulaServiceManager}")
 	private AulaServiceManager aulaServiceManager;
 	
+	
+	@ManagedProperty(value = "#{commissioneServiceManager}")
+	private CommissioneServiceManager commissioneServiceManager;
 	
 	
 	private Atto atto = new Atto();
@@ -504,16 +509,17 @@ public class EsameAulaController {
 	
 	// Rinvio e Starlci******************************************************
 	
-	public void salvaRinvioEsame() {
+	public String salvaRinvioEsame() {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
 		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		atto.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
 		
-		atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
 		
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
@@ -526,12 +532,38 @@ public class EsameAulaController {
 		attoBean.getWorkingAula().setDataSedutaRinvio(aulaUser.getDataSedutaRinvio());
 		attoBean.getWorkingAula().setDataTermineMassimo(aulaUser.getDataTermineMassimo());
 		attoBean.getWorkingAula().setMotivazioneRinvio(aulaUser.getMotivazioneRinvio());
+		attoBean.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
 		attoBean.getAtto().getPassaggi().add(passaggio);
-		
+		setAtto((Atto) attoBean.getAtto().clone());	
+		updateStatoCommissioni(attoBean);
 		setStatoCommitRinvioEsame(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("Rinvio Esame salvato con successo", ""));
+		
+		return "pretty:Esame_Aula";
 	}
 	
+	
+	public void updateStatoCommissioni(AttoBean attoBean){
+		
+		for (Commissione commissione : atto.getPassaggi().get(atto.getPassaggi().size()-1).getCommissioni()) {
+			
+			if(!commissione.getStato().equals(Commissione.STATO_ANNULLATO)){
+				
+				commissione.setStato(Commissione.STATO_ASSEGNATO);
+				commissione.setDataPresaInCarico(null);
+				Target target = new Target();
+				target.setCommissione(commissione.getDescrizione());
+				target.setPassaggio(attoBean.getLastPassaggio().getNome());
+				EsameCommissione esameCommissione = new EsameCommissione();
+				esameCommissione.setAtto(atto);
+				esameCommissione.setTarget(target);
+				commissioneServiceManager.salvaPresaInCaricoEsameCommissioni(esameCommissione);
+
+				
+			}
+			
+		}		
+	}
 	
 	public void salvaStralci() {
 		
@@ -1303,6 +1335,17 @@ public class EsameAulaController {
 
 	public void setReadonly(boolean readonly) {
 		this.readonly = readonly;
+	}
+
+
+	public CommissioneServiceManager getCommissioneServiceManager() {
+		return commissioneServiceManager;
+	}
+
+
+	public void setCommissioneServiceManager(
+			CommissioneServiceManager commissioneServiceManager) {
+		this.commissioneServiceManager = commissioneServiceManager;
 	}
 
 

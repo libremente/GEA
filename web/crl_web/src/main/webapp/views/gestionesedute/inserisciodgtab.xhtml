@@ -627,7 +627,8 @@
 								<th>Ordine del Giorno per la seduta del <h:outputText
 										value="#{gestioneSeduteController.dataSedutaSelected}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText></th>
+									</h:outputText>
+								</th>
 
 							</thead>
 						</table>
@@ -637,7 +638,7 @@
 				</p:row>
 			</p:panelGrid>
 			<p:fieldset styleClass="fieldSetTab" legend="Atti trattati "
-				collapsed="false" toggleable="false">
+				collapsed="false" toggleable="false" >
 				<!-- <p:orderList value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato" iconOnly="false" effect="clip"  
                      controlsLocation="left" id="listaAttiTrattati" itemValue="#{attoTrattato}" style="width: 100%;" >   -->
 
@@ -648,7 +649,11 @@
 
 				<p:dataTable id="listaAttiTrattati" widgetVar="tableAttiTrattati"
 					value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato"
-					styleClass="generalInfoTab grey-text" editable="true">
+					styleClass="generalInfoTab grey-text" editable="true" sortBy="attoTrattato.numeroOrdinamento">
+
+                    <p:column headerText="" style="width:20px">
+							<p:graphicImage value="/resources/img/dad.jpeg" />						
+						</p:column> 
 
 					<p:column sortBy="#{attoTrattato.atto.tipoAtto}"
 						headerText="Tipo Atto" style="width:125px">
@@ -703,13 +708,19 @@
 					</p:column>
 
 				</p:dataTable>
+				
+				<p:inputText type="hidden" id="hidOrder" value="#{gestioneSeduteController.attiTrattatiorder}"> </p:inputText>
 
 				<script>
 					jQuery(function() {
-						jQuery('.ui-datatable tbody').sortable();
-						
-						console.log(jQuery('#gestioneSeduteForm\\:gestioneSedute\\:listaAttiTrattati_data'));
-						
+						jQuery('#gestioneSeduteForm\\:gestioneSedute\\:listaAttiTrattati_data').sortable(
+										{
+											update : function() {
+												dragSortTable('gestioneSeduteForm:gestioneSedute:listaAttiTrattati_data',
+														'gestioneSeduteForm:gestioneSedute:hidOrder');
+											}
+										});
+
 					});
 				</script>
 

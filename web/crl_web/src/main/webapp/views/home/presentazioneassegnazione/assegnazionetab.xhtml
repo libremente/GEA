@@ -32,9 +32,11 @@
 						action="#{presentazioneAssegnazioneAttoController.removeCommissione}"
 						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
 						update="listaCommissioni" />
-					<p:commandButton id="declineCommissione" value="Annulla"
-						onclick="commissioneDialog.hide()" type="button" />
-
+						
+						
+						<p:commandButton id="declineCommissione"  value="Annulla"
+							onclick="commissioneDialog.hide()" type="button" />
+                
 				</p:confirmDialog>
 
 				<p:confirmDialog id="confirmAnnullaCommissioneDialog"
@@ -52,7 +54,7 @@
 						oncomplete="annullaCommissioneDialog.hide()"
 						action="#{presentazioneAssegnazioneAttoController.annulCommissione}"
 						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
-						update="listaCommissioni" />
+						update="listaCommissioni,:informationForm:informationBar" />
 					<p:commandButton id="declineAnnullaCommissione" value="Annulla"
 						onclick="annullaCommissioneDialog.hide()" type="button" />
 
@@ -129,6 +131,7 @@
 									</p:column>
 
 									<p:column>
+									
 										<p:commandButton value="Aggiungi"
 											action="#{presentazioneAssegnazioneAttoController.addCommissione}"
 											id="addCommissione"
@@ -214,12 +217,17 @@
 								</p:column>
 
 								<p:column headerText="Annulla">
-
-									<p:commandButton oncomplete="annullaCommissioneDialog.show()" icon="undo-icon">
-										<f:setPropertyActionListener
-											value="#{commissione.descrizione}"
-											target="#{presentazioneAssegnazioneAttoController.commissioneToAnnul}" />
-									</p:commandButton>
+                                   <c:set  value="#{ commissione.stato ne 'Votato' and 
+                                                  commissione.stato ne 'Trasmesso' and
+                                                  commissione.stato ne 'Annullato'
+                                                 }" var="annullabile" />   
+										
+										<p:commandButton rendered="#{annullabile}" oncomplete="annullaCommissioneDialog.show()" icon="undo-icon">
+											<f:setPropertyActionListener
+												value="#{commissione.descrizione}"
+												target="#{presentazioneAssegnazioneAttoController.commissioneToAnnul}" />
+										</p:commandButton>
+									
 								</p:column>
 
 								<!-- <p:column headerText="Elimina" >

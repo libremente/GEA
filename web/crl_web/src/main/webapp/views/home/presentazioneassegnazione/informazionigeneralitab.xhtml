@@ -17,84 +17,85 @@
 
 	<p:row>
 		<p:column colspan="3">
-		<div id="presaInCaricoDiv" >
-			<p>
-				<!-- Messaggio azioni -->
-				<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
+			<div id="presaInCaricoDiv">
+				<p>
+					<!-- Messaggio azioni -->
+					<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
 
 
 
-				<!-- Confirm dialog -->
-				<p:confirmDialog id="confirmAttoDialog"
-					message="Sei sicuro di voler eliminare il File ?"
-					header="Cancellazione Testo Atto" severity="alert"
-					widgetVar="testoAttoDialog">
+					<!-- Confirm dialog -->
+					<p:confirmDialog id="confirmAttoDialog"
+						message="Sei sicuro di voler eliminare il File ?"
+						header="Cancellazione Testo Atto" severity="alert"
+						widgetVar="testoAttoDialog">
 
-					<p:commandButton id="confirmTestoAtto" value="Conferma"
-						oncomplete="testoAttoDialog.hide()"
-						action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
-						update="listaTestiAtto" />
-					<p:commandButton id="declineTestoAtto" value="Annulla"
-						onclick="testoAttoDialog.hide()" type="button" />
+						<p:commandButton id="confirmTestoAtto" value="Conferma"
+							oncomplete="testoAttoDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
+							update="listaTestiAtto" />
+						<p:commandButton id="declineTestoAtto" value="Annulla"
+							onclick="testoAttoDialog.hide()" type="button" />
 
-				</p:confirmDialog>
+					</p:confirmDialog>
 
-				<p:confirmDialog id="confirmDialog"
-					message="Sei sicuro di voler eliminare il Firmatario?"
-					header="Cancellazione Firmatario" severity="alert"
-					widgetVar="firmatarioDialog">
+					<p:confirmDialog id="confirmDialog"
+						message="Sei sicuro di voler eliminare il Firmatario?"
+						header="Cancellazione Firmatario" severity="alert"
+						widgetVar="firmatarioDialog">
 
-					<p:commandButton id="confirm" value="Conferma"
-						oncomplete="firmatarioDialog.hide()"
-						action="#{presentazioneAssegnazioneAttoController.removeFirmatario}"
-						actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
-						update="listaFirmatari" />
-					<p:commandButton id="decline" value="Annulla"
-						onclick="firmatarioDialog.hide()" type="button" />
+						<p:commandButton id="confirm" value="Conferma"
+							oncomplete="firmatarioDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeFirmatario}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
+							update="listaFirmatari" />
+						<p:commandButton id="decline" value="Annulla"
+							onclick="firmatarioDialog.hide()" type="button" />
 
-				</p:confirmDialog>
+					</p:confirmDialog>
 
 
-				<p:confirmDialog id="uploadFileAttributes" header="Caricamento"
-					widgetVar="uploadFileAttributesDialog" style="width:450px"
-					message="Allega Testo">
-					<p:panelGrid id="uploadpanel">
-						<p:row>
-							<p:column>
-								<h:outputLabel for="isPubblico" value="Pubblico: " />
-								<p:selectBooleanCheckbox id="isPubblico"
-									value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
-									<p:ajax event="change" immediate="true"></p:ajax>
-								</p:selectBooleanCheckbox>
-							</p:column>
-						</p:row>
-						<p:row>
-							<p:column>
-								<p:fileUpload label="Carica Testo dell'Atto"
-									oncomplete="uploadFileAttributesDialog.hide()" auto="false"
-									update="listaTestiAtto ,presaCaricoMsg"
-									fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}" />
-							</p:column>
-						</p:row>
-						<p:row>
-							<p:column>
-								<p:commandButton id="declineUploadFile" value="Annulla"
-									onclick="uploadFileAttributesDialog.hide()" type="button" />
-							</p:column>
-						</p:row>
-					</p:panelGrid>
-				</p:confirmDialog>
+					<p:confirmDialog id="uploadFileAttributes" header="Caricamento"
+						widgetVar="uploadFileAttributesDialog" style="width:450px"
+						message="Allega Testo">
+						<p:panelGrid id="uploadpanel">
+							<p:row>
+								<p:column>
+									<h:outputLabel for="isPubblico" value="Pubblico: " />
+									<p:selectBooleanCheckbox id="isPubblico"
+										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+										<p:ajax event="change" immediate="true"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:fileUpload label="Carica Testo dell'Atto"
+										oncomplete="uploadFileAttributesDialog.hide()" auto="false"
+										update="listaTestiAtto ,presaCaricoMsg"
+										fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:commandButton id="declineUploadFile" value="Annulla"
+										onclick="uploadFileAttributesDialog.hide()" type="button" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:confirmDialog>
 
-				<b> <h:outputLabel for="datapresaincarico"
-						value="Data presa in carico: " /> <p:calendar size="10"
-						locale="it_IT" id="datapresaincarico"
-						value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
-				</b>
-				<p:commandButton value="Presa in Carico" disabled="#{navigationBean.isSessionAttoChiuso()}"
-					update="presaCaricoMsg ,:informationForm:informationBar"
-					actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}"
-					oncomplete="unblockDiv()" />
-			</p>
+					<b> <h:outputLabel for="datapresaincarico"
+							value="Data presa in carico: " /> <p:calendar size="10"
+							locale="it_IT" id="datapresaincarico"
+							value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
+					</b>
+					<p:commandButton value="Presa in Carico"
+						disabled="#{navigationBean.isSessionAttoChiuso()}"
+						update="presaCaricoMsg ,:informationForm:informationBar"
+						actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}"
+						oncomplete="unblockDiv()" />
+				</p>
 			</div>
 		</p:column>
 	</p:row>
@@ -158,12 +159,12 @@
 				</p:column>
 
 				<p:column>
-					
-				   <p:calendar disabled="true" readonly="false" size="10" locale="it_IT" id="datarepertorio"
-					pattern="dd/MM/yyyy"
-					value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
-					
-				</p:calendar>
+
+					<p:calendar disabled="true" readonly="false" size="10"
+						locale="it_IT" id="datarepertorio" pattern="dd/MM/yyyy"
+						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
+
+					</p:calendar>
 				</p:column>
 
 
@@ -177,18 +178,21 @@
 
 				<p:column>
 					<p:selectOneMenu id="tipoiniziativa"
-					value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
-					<f:selectItem itemLabel="Scegli tipo" itemValue="" />
-					<f:selectItem itemLabel="Consiliare" itemValue="Consiliare" />
-					<f:selectItem itemLabel="Popolare" itemValue="Popolare" />
-					<f:selectItem itemLabel="d'Ufficio" itemValue="d'Ufficio" />
-					<f:selectItem itemLabel="Consiglio delle Autonomie locali" itemValue="Consiglio delle Autonomie locali" />
-					<f:selectItem itemLabel="Presidente della Giunta" itemValue="Presidente della Giunta" />
-					<f:selectItem itemLabel="Giunta" itemValue="Giunta" />
-					<f:selectItem itemLabel="Commissione europea" itemValue="Commissione europea" />
-					
-					
-				</p:selectOneMenu>	
+						value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
+						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
+						<f:selectItem itemLabel="Consiliare" itemValue="Consiliare" />
+						<f:selectItem itemLabel="Popolare" itemValue="Popolare" />
+						<f:selectItem itemLabel="d'Ufficio" itemValue="d'Ufficio" />
+						<f:selectItem itemLabel="Consiglio delle Autonomie locali"
+							itemValue="Consiglio delle Autonomie locali" />
+						<f:selectItem itemLabel="Presidente della Giunta"
+							itemValue="Presidente della Giunta" />
+						<f:selectItem itemLabel="Giunta" itemValue="Giunta" />
+						<f:selectItem itemLabel="Commissione europea"
+							itemValue="Commissione europea" />
+
+
+					</p:selectOneMenu>
 				</p:column>
 
 				<p:column>
@@ -199,11 +203,11 @@
 				<p:column>
 
 
-					 <p:calendar size="10" locale="it_IT" id="datainiziativa"
-					pattern="dd/MM/yyyy"
-					value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
-					
-				</p:calendar> 
+					<p:calendar size="10" locale="it_IT" id="datainiziativa"
+						pattern="dd/MM/yyyy"
+						value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
+
+					</p:calendar>
 				</p:column>
 
 
@@ -243,13 +247,12 @@
 
 				<p:column>
 
-					
-					 <p:calendar size="10" locale="it_IT" id="datadgr"
 
-					pattern="dd/MM/yyyy"
-					value="#{presentazioneAssegnazioneAttoController.dataDgr}">
-					
-				</p:calendar>
+					<p:calendar size="10" locale="it_IT" id="datadgr"
+						pattern="dd/MM/yyyy"
+						value="#{presentazioneAssegnazioneAttoController.dataDgr}">
+
+					</p:calendar>
 				</p:column>
 
 			</p:row>
@@ -306,7 +309,8 @@
 						<p:column sortBy="#{testoAtto.mimetype}">
 							<f:facet name="header">Formato</f:facet>
 
-							<h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.') ,fn:length(testoAtto.nome) )}" />
+							<h:outputText
+								value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.') ,fn:length(testoAtto.nome) )}" />
 
 							<h:outputText value="#{testoAtto.mimetype}" />
 
@@ -353,10 +357,11 @@
 		</p:panelGrid>
 	</p:fieldset>
 
-	<p:fieldset rendered="#{navigationBean.isFirmatariEnabled()}" legend="Firmatari" toggleable="true" collapsed="false"
+	<p:fieldset rendered="#{navigationBean.isFirmatariEnabled()}"
+		legend="Firmatari" toggleable="true" collapsed="false"
 		toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="firmataripanel">
-			
+
 
 			<p:row>
 				<p:column colspan="6">
@@ -373,7 +378,7 @@
 							</p:row>
 						</f:facet>
 						<p:row>
-							<p:column >
+							<p:column>
 								<p:selectOneMenu id="firmatario"
 									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
 									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
@@ -411,7 +416,7 @@
 							<p:column>
 								<p:commandButton value="Aggiungi"
 									action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
-									id="addFirmatario" update="listaFirmatari , presaCaricoMsg"
+									id="addFirmatario" update=":presAssForm:tabView , presaCaricoMsg"
 									icon="new-icon" />
 							</p:column>
 
@@ -425,16 +430,22 @@
 			<p:row>
 				<p:column colspan="6">
 
-					<p:dataTable id="listaFirmatari"
+					<p:dataTable id="listaFirmatari" widgetVar="tableFirmatari"
 						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
 						var="firmatarioAdd" styleClass="generalInfoTab grey-text"
-						editable="true" >
+						sortBy="firmatarioAdd.numeroOrdinamento" editable="true">
 
-						<p:column headerText="Nome" style="width:125px" sortBy="#{firmatarioAdd.descrizione}">
-							<h:outputText value="#{firmatarioAdd.descrizione}" />						
+						<p:column headerText="" style="width:20px">
+							<p:graphicImage value="/resources/img/dad.jpeg" />
 						</p:column>
 
-						<p:column headerText="Gruppo Consiliare" sortBy="#{firmatarioAdd.gruppoConsiliare}">
+						<p:column headerText="Nome" style="width:125px"
+							sortBy="#{firmatarioAdd.descrizione}">
+							<h:outputText value="#{firmatarioAdd.descrizione}" />
+						</p:column>
+
+						<p:column headerText="Gruppo Consiliare"
+							sortBy="#{firmatarioAdd.gruppoConsiliare}">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{firmatarioAdd.gruppoConsiliare}" />
@@ -450,11 +461,13 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column headerText="Data Firma"  sortBy="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}">
+						<p:column headerText="Data Firma"
+							sortBy="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}" >
-										
+									<h:outputText
+										value="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}">
+
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
@@ -464,7 +477,8 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column headerText="Data Ritiro" style="width:100px" sortBy="#{firmatarioAdd.dataRitiro}">
+						<p:column headerText="Data Ritiro" style="width:100px"
+							sortBy="#{firmatarioAdd.dataRitiro}">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{firmatarioAdd.dataRitiro}">
@@ -478,7 +492,8 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column headerText="1° firm." style="width:100px" sortBy="#{firmatarioAdd.primoFirmatario}">
+						<p:column headerText="1° firm." style="width:100px"
+							sortBy="#{firmatarioAdd.primoFirmatario}">
 
 							<h:outputText value="si"
 								rendered="#{firmatarioAdd.primoFirmatario}" />
@@ -501,9 +516,34 @@
 							<p:rowEditor />
 						</p:column>
 
+						
 					</p:dataTable>
+					
+					<p:inputText type="hidden" id="hidOrder"
+					value="#{presentazioneAssegnazioneAttoController.firmatariOrder}">
+				</p:inputText>
+					
+					<script type="text/javascript">
+                         $(function() {
+			
+								$('#presAssForm\\:tabView\\:listaFirmatari_data').sortable(
+												{
+													update : function() {
+														dragSortTable('presAssForm:tabView:listaFirmatari_data',
+																'presAssForm:tabView:hidOrder');
+													}
+												});
+					
+							});
+					</script>
 				</p:column>
+
+				
+
+
 			</p:row>
+
+
 
 			<p:row>
 				<p:column>
@@ -547,8 +587,17 @@
 
 	</p>
 </div>
+
+
 <script type="text/javascript" src="resources/javascript/blockUI.js"></script>
-<script>
+
+
+<script type="text/javascript">
+
+
+
+
+
 	if (!("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 		
 		$('#blockedInfoGen')
@@ -593,7 +642,7 @@
 		   $('#blockedInfoGen').block({ message: null } );
 		
 	}
-	
+
 	
 </script>
 </html>

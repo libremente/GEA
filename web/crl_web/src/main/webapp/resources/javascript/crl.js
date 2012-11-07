@@ -1,3 +1,36 @@
+function dragSortTable(tableId,hiddeId) {
+	
+	
+
+	var table = document.getElementById(tableId);
+	var hidden = document.getElementById(hiddeId);
+	var nodi = table.getElementsByTagName('tr');
+	
+	hidden.value="";
+	console.log(nodi.length);
+	console.log(nodi);
+	
+	  for (i = 0; i <nodi.length; i++) {
+		  
+		  var nodo = nodi[i];
+		  console.log(jQuery.trim(nodo.getElementsByTagName('td')[1].getElementsByTagName('div')[0].innerHTML));
+		  
+		  if(i==nodi.length-1){
+		   hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[1].getElementsByTagName('div')[0].innerHTML);
+		  }else{
+			  hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[1].getElementsByTagName('div')[0].innerHTML)+ "_";  
+			  
+		  }
+		  console.log(hidden.value);
+		  
+	  }
+	 
+
+}
+									
+
+
+
 function showPanel(elementId, elementId2) {
 	
 	$("#"+elementId).show();
@@ -12,14 +45,14 @@ function hidePanel(elementId, elementId2) {
 
 function addRowsInTable(idTable) {
 
-	//genera l'header della tabella preso dalla tabella di appoggio
+	// genera l'header della tabella preso dalla tabella di appoggio
 	if (document.getElementById(idTable).tBodies[0].childNodes.length == 0) {
 		var headerTR = document.getElementById('idHeader').cloneNode(true);
 		document.getElementById(idTable).tHead.appendChild(headerTR);
 				
 	}
 		
-	//genera la nuova riga con i campi presi dalla tabella di appoggio
+	// genera la nuova riga con i campi presi dalla tabella di appoggio
 	var newRow = document.getElementById('idRow').cloneNode(true);
 	
 	newRow.id = document.getElementById(idTable).tBodies[0].childNodes.length
@@ -31,7 +64,7 @@ function addRowsInTable(idTable) {
 	newRow.appendChild(deleteTD);
 	document.getElementById(idTable).tBodies[0].appendChild(newRow);
 	
-	//controllo tipologia campi
+	// controllo tipologia campi
 	for(i=0;i<newRow.childNodes.length;i++){
 		
 		var rowTD = newRow.childNodes[i];

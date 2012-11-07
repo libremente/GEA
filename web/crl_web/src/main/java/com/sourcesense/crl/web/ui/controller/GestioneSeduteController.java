@@ -47,7 +47,7 @@ public class GestioneSeduteController {
 	private Date dataSedutaA;
 	private List<Seduta> seduteList = new ArrayList<Seduta>();
 	private List<Seduta> seduteListAll = new ArrayList<Seduta>();
-	
+
 	private List<String> dateSeduteList = new ArrayList<String>();
 	private String dataSedutaSelected;
 	private String attoDaTrattare;
@@ -66,6 +66,7 @@ public class GestioneSeduteController {
 	private List<Date> dateSedute = new ArrayList<Date>();
 
 	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();
+	private String attiTrattatiorder;
 	private String idAttoTrattatoToDelete;
 
 	private List<Consultazione> consultazioniAtti = new ArrayList<Consultazione>();
@@ -98,11 +99,9 @@ public class GestioneSeduteController {
 
 		seduteListAll = seduteServiceManager.getSedute(userBean.getUser()
 				.getSessionGroup().getNome());
-		
-		
+
 		seduteList = Clonator.cloneList(seduteListAll);
-		
-		
+
 		setDateSeduteList();
 
 		if (!seduteListAll.isEmpty()) {
@@ -146,32 +145,30 @@ public class GestioneSeduteController {
 
 	// Inserisci Seduta***********************************
 
-	
-	public void filterDataTable(){
-		
+	public void filterDataTable() {
+
 		seduteList.clear();
 		for (Seduta seduta : seduteListAll) {
-			
-			if(getDataSedutaDa()!=null   && seduta.getDataSeduta().compareTo(dataSedutaDa)<0){
-				
+
+			if (getDataSedutaDa() != null
+					&& seduta.getDataSeduta().compareTo(dataSedutaDa) < 0) {
+
 				continue;
-				
-			}else if(getDataSedutaA()!=null   && seduta.getDataSeduta().compareTo(dataSedutaA)>0){
-				
+
+			} else if (getDataSedutaA() != null
+					&& seduta.getDataSeduta().compareTo(dataSedutaA) > 0) {
+
 				continue;
-				
-			}else{
-				
-				seduteList.add((Seduta)seduta.clone());
+
+			} else {
+
+				seduteList.add((Seduta) seduta.clone());
 			}
-			
-			
+
 		}
-		
-		
+
 	}
-	
-	
+
 	public void showSedutaDetail() {
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 
@@ -187,25 +184,25 @@ public class GestioneSeduteController {
 					.getAttiSindacato()));
 
 			setAudizioni(Clonator.cloneList(sedutaSelected.getAudizioni()));
-			
+
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = ((UserBean) context.getExternalContext()
 					.getSessionMap().get("userBean"));
-			
+
 			consultazioniAtti.clear();
-			
+
 			for (AttoTrattato element : attiTrattati) {
 
 				for (Consultazione consultazione : element.getAtto()
 						.getConsultazioni()) {
 
 					Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-					
-					
+
 					Consultazione cons = (Consultazione) consultazione.clone();
 					if (formatter.format(cons.getDataSeduta()).equals(
 							formatter.format(sedutaSelected.getDataSeduta()))
-							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
+							&& userBean.getUser().getSessionGroup().getNome()
+									.equals(cons.getCommissione())) {
 						cons.setNumeroAtto(element.getAtto().getNumeroAtto());
 						cons.setTipoAtto(element.getAtto().getTipoAtto());
 						cons.setIdAtto(element.getAtto().getId());
@@ -214,8 +211,6 @@ public class GestioneSeduteController {
 				}
 
 			}
-
-			
 
 		} else {
 
@@ -275,30 +270,30 @@ public class GestioneSeduteController {
 	}
 
 	public String dettaglioOdg() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
-		
+
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 		setAttiTrattati(sedutaSelected.getAttiTrattati());
 		setAttiSindacato(sedutaSelected.getAttiSindacato());
 		setAudizioni(sedutaSelected.getAudizioni());
 
 		consultazioniAtti.clear();
-		
+
 		for (AttoTrattato element : attiTrattati) {
 
 			for (Consultazione consultazione : element.getAtto()
 					.getConsultazioni()) {
 
 				Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-				
-				
+
 				Consultazione cons = (Consultazione) consultazione.clone();
 				if (formatter.format(cons.getDataSeduta()).equals(
 						formatter.format(sedutaSelected.getDataSeduta()))
-						&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
+						&& userBean.getUser().getSessionGroup().getNome()
+								.equals(cons.getCommissione())) {
 					cons.setNumeroAtto(element.getAtto().getNumeroAtto());
 					cons.setTipoAtto(element.getAtto().getTipoAtto());
 					cons.setIdAtto(element.getAtto().getId());
@@ -447,16 +442,18 @@ public class GestioneSeduteController {
 				FacesContext context = FacesContext.getCurrentInstance();
 				UserBean userBean = ((UserBean) context.getExternalContext()
 						.getSessionMap().get("userBean"));
-				
+
 				for (Consultazione consultazione : attoTrattato.getAtto()
 						.getConsultazioni()) {
 
 					Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 					Consultazione cons = (Consultazione) consultazione.clone();
-					if (formatter.format(sedutaSelected.getDataSeduta()).equals(formatter.format(cons.getDataSeduta()))
-							
-							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
-						
+					if (formatter.format(sedutaSelected.getDataSeduta())
+							.equals(formatter.format(cons.getDataSeduta()))
+
+							&& userBean.getUser().getSessionGroup().getNome()
+									.equals(cons.getCommissione())) {
+
 						cons.setNumeroAtto(attoTrattato.getAtto()
 								.getNumeroAtto());
 						cons.setTipoAtto(attoTrattato.getAtto().getTipoAtto());
@@ -494,39 +491,7 @@ public class GestioneSeduteController {
 		return true;
 	}
 
-	/*
-	 * public void addConsultazioneAtto(String idAttoConsultatoToAdd) {
-	 * 
-	 * if (!idAttoConsultatoToAdd.trim().equals("")) { if
-	 * (!checkAttiConsultati(idAttoConsultatoToAdd)) { FacesContext context =
-	 * FacesContext.getCurrentInstance(); context.addMessage(null, new
-	 * FacesMessage( FacesMessage.SEVERITY_ERROR,
-	 * "Attenzione ! Atto già abbinato ", ""));
-	 * 
-	 * } else { Atto attoDaCollegare = attoServiceManager
-	 * .findById(idAttoConsultatoToAdd); ConsultazioneAtto attoConsultato = new
-	 * ConsultazioneAtto(); attoConsultato.setAtto(attoDaCollegare);
-	 * consultazioniAtti.add(attoConsultato);
-	 * 
-	 * updateInserisciOdgHandler(); } } }
-	 * 
-	 * public void removeAttoConsultato() {
-	 * 
-	 * for (ConsultazioneAtto element : consultazioniAtti) {
-	 * 
-	 * if (element.getAtto().getId().equals(idConsultazioneToDelete)) {
-	 * 
-	 * consultazioniAtti.remove(element); updateInserisciOdgHandler(); break; }
-	 * } }
-	 * 
-	 * private boolean checkAttiConsultati(String idAttoConsultatoToAdd) {
-	 * 
-	 * for (ConsultazioneAtto element : consultazioniAtti) {
-	 * 
-	 * if (element.getAtto().getId().equals(idAttoConsultatoToAdd)) {
-	 * 
-	 * return false; } } return true; }
-	 */
+	
 
 	public void addAudizione() {
 
@@ -624,14 +589,19 @@ public class GestioneSeduteController {
 		// TODO: alfresco service
 
 		if (sedutaSelected != null) {
+
 			sedutaSelected.setAttiSindacato(Clonator
 					.cloneList(getAttiSindacato()));
+
 			sedutaSelected.setAttiTrattati(Clonator
-					.cloneList(getAttiTrattati()));
+					.cloneList(getOrderedAttiTrattati()));
+
 			sedutaSelected.setAudizioni(Clonator.cloneList(getAudizioni()));
+
 			sedutaSelected.setConsultazioniAtti(Clonator
 					.cloneList(getConsultazioniAtti()));
 		}
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
@@ -644,6 +614,47 @@ public class GestioneSeduteController {
 		setStatoCommitInserisciOdg(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage("ODG salvato con successo",
 				""));
+	}
+
+	private List<AttoTrattato> getOrderedAttiTrattati() {
+
+		if (getAttiTrattatiorder() != null
+				&& !getAttiTrattatiorder().equals("")) {
+			// Numeri atto ordinati
+			String[] attiOrd = getAttiTrattatiorder().split("_");
+
+			for (int i = 0; i < attiOrd.length; i++) {
+
+				String numeroAtto = attiOrd[i];
+
+				for (AttoTrattato attoTrattato : getAttiTrattati()) {
+
+					if (numeroAtto.equals(attoTrattato.getAtto()
+							.getNumeroAtto())) {
+
+						if (i < 10) {
+							attoTrattato.setNumeroOrdinamento("0" + i);
+						} else {
+							attoTrattato.setNumeroOrdinamento("" + i);
+						}
+					}
+				}
+			}
+		}else{
+			
+			int i = 0;
+			for (AttoTrattato attoTrattato : getAttiTrattati()) {
+				if (i < 10) {
+					attoTrattato.setNumeroOrdinamento("0" + i);
+				} else {
+					attoTrattato.setNumeroOrdinamento("" + i);
+				}
+			}
+			
+		}
+
+		return attiTrattati;
+
 	}
 
 	// Getters & Setters***********************************
@@ -952,10 +963,13 @@ public class GestioneSeduteController {
 	public void setSeduteListAll(List<Seduta> seduteListAll) {
 		this.seduteListAll = seduteListAll;
 	}
-	
-	
-	
-	
-	
+
+	public String getAttiTrattatiorder() {
+		return attiTrattatiorder;
+	}
+
+	public void setAttiTrattatiorder(String attiTrattatiorder) {
+		this.attiTrattatiorder = attiTrattatiorder;
+	}
 
 }

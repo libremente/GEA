@@ -19,6 +19,7 @@ import org.primefaces.event.FileUploadEvent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoTrattato;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoConsiliare;
@@ -74,6 +75,8 @@ public class PresentazioneAssegnazioneAttoController {
 	private String assegnazione;
 
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
+	private String firmatariOrder;
+
 	private Map<String, String> firmatari = new HashMap<String, String>();
 
 	private String nomeFirmatario;
@@ -94,7 +97,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private String statoCommitAssegnazione = CRLMessage.COMMIT_DONE;
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
 	private boolean annullaAmmissibilita = false;
-	
+
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
 	private Date dataRicevimentoInformazioni;
@@ -169,8 +172,7 @@ public class PresentazioneAssegnazioneAttoController {
 				.getLinksPresentazioneAssegnazione()));
 
 	}
-	
-	
+
 	public void updateInfoGenHandler() {
 		setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
 	}
@@ -186,14 +188,12 @@ public class PresentazioneAssegnazioneAttoController {
 	public void updateNoteHandler() {
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
 	}
-	
-	
-	
+
 	public int sortTable(Object s1, Object s2) {
-        // just print something so I know this function is being invoked:
-        System.out.println("mySort" + s1 + "/" + s2);
-        return ((Date)s1).compareTo((Date)s2);
-    }
+		// just print something so I know this function is being invoked:
+		System.out.println("mySort" + s1 + "/" + s2);
+		return ((Date) s1).compareTo((Date) s2);
+	}
 
 	public void changeTabHandler() {
 
@@ -285,8 +285,7 @@ public class PresentazioneAssegnazioneAttoController {
 										.get("attoBean")).getAtto(), event
 										.getFile().getInputstream(),
 								testoAttoRet);
-				
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -401,7 +400,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void salvaInfoGenerali() {
-		atto.setFirmatari(firmatariList);
+		atto.setFirmatari(getOrderedFirmatari());
 		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -429,6 +428,47 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	private List<Firmatario> getOrderedFirmatari() {
+
+		if (getFirmatariOrder() != null && !getFirmatariOrder().equals("")) {
+			// Numeri atto ordinati
+			String[] attiOrd = getFirmatariOrder().split("_");
+
+			for (int i = 0; i < attiOrd.length; i++) {
+
+				String descFirma = attiOrd[i];
+
+				for (Firmatario firmatario : firmatariList) {
+
+					if (descFirma.equals(firmatario.getDescrizione())) {
+
+						if (i < 10) {
+							firmatario.setNumeroOrdinamento("0" + i);
+						} else {
+							firmatario.setNumeroOrdinamento("" + i);
+						}
+					}
+				}
+			}
+		} else {
+
+			int i = 0;
+			for (Firmatario firmatario : firmatariList) {
+
+				if (i < 10) {
+					firmatario.setNumeroOrdinamento("0" + i);
+				} else {
+					firmatario.setNumeroOrdinamento("" + i);
+				}
+				i++;
+			}
+
+		}
+
+		return firmatariList;
+
+	}
+
 	// Ammissibilita******************************************************
 
 	public String salvaAmmissibilita() {
@@ -436,7 +476,7 @@ public class PresentazioneAssegnazioneAttoController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		// se Ammissibile : OK altrimenti KO
 		if ("ammissibile".equalsIgnoreCase(atto.getValutazioneAmmissibilita())) {
 
@@ -464,14 +504,14 @@ public class PresentazioneAssegnazioneAttoController {
 					"Ammissibilità salvata con successo", ""));
 
 			return null;
-			
-		}else if("".equalsIgnoreCase(atto.getValutazioneAmmissibilita())){ 
-		
+
+		} else if ("".equalsIgnoreCase(atto.getValutazioneAmmissibilita())) {
+
 			setAnnullaAmmissibilita(true);
 			return null;
-		
-		}else {
-			
+
+		} else {
+
 			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
 			attoServiceManager.salvaAmmissibilitaPresentazione(atto);
 			attoBean.getAtto().setValutazioneAmmissibilita(
@@ -488,9 +528,8 @@ public class PresentazioneAssegnazioneAttoController {
 					atto.getDataVotazioneUrgenza());
 			attoBean.getAtto()
 					.setNoteAmmissibilita(atto.getNoteAmmissibilita());
-			attoBean.getAtto()
-			.setStato(atto.getStato());
-			
+			attoBean.getAtto().setStato(atto.getStato());
+
 			setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
 
 			context.addMessage(null, new FacesMessage(
@@ -499,14 +538,13 @@ public class PresentazioneAssegnazioneAttoController {
 			return "pretty:Chiusura_Iter";
 		}
 	}
-	
-	
-	public void annullaAmmissibilita(){
-		
+
+	public void annullaAmmissibilita() {
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		atto.setStato(StatoAtto.PRESO_CARICO_SC);
 		atto.setValutazioneAmmissibilita("");
 		atto.setDataRichiestaInformazioni(null);
@@ -517,10 +555,9 @@ public class PresentazioneAssegnazioneAttoController {
 		atto.setVotazioneUrgenza(false);
 		atto.setDataVotazioneUrgenza(null);
 		atto.setNoteAmmissibilita("");
-		
-		
+
 		attoServiceManager.salvaAmmissibilitaPresentazione(atto);
-		
+
 		attoBean.getAtto().setValutazioneAmmissibilita(
 				atto.getValutazioneAmmissibilita());
 		attoBean.getAtto().setDataRichiestaInformazioni(
@@ -533,17 +570,15 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setVotazioneUrgenza(atto.isVotazioneUrgenza());
 		attoBean.getAtto().setDataVotazioneUrgenza(
 				atto.getDataVotazioneUrgenza());
-		attoBean.getAtto()
-				.setNoteAmmissibilita(atto.getNoteAmmissibilita());
+		attoBean.getAtto().setNoteAmmissibilita(atto.getNoteAmmissibilita());
 		attoBean.getAtto().setStato(atto.getStato());
 
 		setStatoCommitAmmissibilita(CRLMessage.COMMIT_DONE);
 		setAnnullaAmmissibilita(false);
 		context.addMessage(null, new FacesMessage(
 				"Ammissibilità annullata con successo", ""));
-		
+
 	}
-	
 
 	// Assegnazione******************************************************
 	public void addCommissione() {
@@ -653,22 +688,84 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void annulCommissione() {
 
+		boolean redigenteAnnullato = false;
+		boolean referenteAnnullato = false;
+		boolean coreferenteAnnullato = false;
+		boolean deliberanteAnnullato = false;
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
 		for (Commissione element : commissioniList) {
 
-			if (element.getDescrizione().equals(commissioneToAnnul)) {
+			if ((element.getStato().equals(Commissione.STATO_ASSEGNATO)
+					|| element.getStato().equals(Commissione.STATO_PROPOSTO) || element
+					.getStato().equals(Commissione.STATO_IN_CARICO))
+
+			&& element.getDescrizione().equals(commissioneToAnnul)) {
 				element.setAnnullata(true);
 				element.setDataAnnullo(dataAnnullo);
 				element.setStato(Commissione.STATO_ANNULLATO);
 				this.atto.getPassaggi().get(0).setCommissioni(commissioniList);
-				attoServiceManager.salvaAssegnazionePresentazione(atto);
-				FacesContext context = FacesContext.getCurrentInstance();
-				AttoBean attoBean = ((AttoBean) context.getExternalContext()
-						.getSessionMap().get("attoBean"));
-				attoBean.getAtto().getPassaggi().get(0)
-						.setCommissioni(commissioniList);
-				break;
+				if (element.getRuolo().equals(Commissione.RUOLO_COREFERENTE)) {
+					coreferenteAnnullato = true;
+				} else if (element.getRuolo().equals(
+						Commissione.RUOLO_REDIGENTE)) {
+					redigenteAnnullato = true;
+				} else if (element.getRuolo().equals(
+						Commissione.RUOLO_DELIBERANTE)) {
+					deliberanteAnnullato = true;
+				} else if (element.getRuolo().equals(
+						Commissione.RUOLO_REFERENTE)) {
+					referenteAnnullato = true;
+				}
+
 			}
 		}
+
+		if (coreferenteAnnullato) {
+			int countActive = 0;
+			for (Commissione element : commissioniList) {
+				if (element.getRuolo().equals(Commissione.RUOLO_REFERENTE)) {
+
+					if (!element.getStato().equals(Commissione.STATO_ANNULLATO)) {
+						countActive++;
+					}
+				}
+			}
+
+			if (countActive == 0) {
+
+				atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+				attoBean.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			}
+
+		} else if (referenteAnnullato) {
+			int countActive = 0;
+
+			for (Commissione element : commissioniList) {
+				if (element.getRuolo().equals(Commissione.RUOLO_COREFERENTE)) {
+
+					if (!element.getStato().equals(Commissione.STATO_ANNULLATO)) {
+						countActive++;
+					}
+				}
+			}
+
+			if (countActive == 0) {
+
+				atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+				attoBean.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			}
+
+		} else if (deliberanteAnnullato || redigenteAnnullato) {
+
+			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			attoBean.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+		}
+
+		attoServiceManager.salvaAssegnazionePresentazione(atto);
+		attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
 	}
 
 	public void addParere() {
@@ -726,8 +823,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 		this.atto.getPassaggi().get(0).setCommissioni(commissioniList);
 		this.atto.setOrganismiStatutari(organismiList);
-		int checkAssegnazione = changeStatoCommissioni(Commissione.STATO_ASSEGNATO);
-		// Se c'è una commissione referente cambia lo stato dell'atto
+		int checkAssegnazione = changeStatoCommissioniAssegnato();
+
 		if (checkAssegnazione > 0) {
 
 			this.atto.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
@@ -751,24 +848,24 @@ public class PresentazioneAssegnazioneAttoController {
 				"Assegnazione salvata con successo", ""));
 	}
 
-	public int changeStatoCommissioni(String stato) {
+	public int changeStatoCommissioniAssegnato() {
 
 		int totaleCommChange = 0;
 
 		for (Commissione element : atto.getPassaggi().get(0).getCommissioni()) {
 
-			if (!element.getStato().equals(Commissione.STATO_ANNULLATO)
-					&& !element.getStato().equals(Commissione.STATO_ASSEGNATO)
+			if (element.getStato().equals(Commissione.STATO_PROPOSTO)
 					&& element.getDataAssegnazione() != null) {
-
-				element.setStato(stato);
+				element.setStato(Commissione.STATO_ASSEGNATO);
 				// Se c'è una commissione referente cambia lo stato dell'atto
 				if (element.getRuolo().equalsIgnoreCase(
 						Commissione.RUOLO_REFERENTE)
 						|| element.getRuolo().equalsIgnoreCase(
 								Commissione.RUOLO_REDIGENTE)
 						|| element.getRuolo().equalsIgnoreCase(
-								Commissione.RUOLO_DELIBERANTE)) {
+								Commissione.RUOLO_DELIBERANTE)
+						|| element.getRuolo().equalsIgnoreCase(
+								Commissione.RUOLO_COREFERENTE)) {
 					totaleCommChange++;
 				}
 			}
@@ -791,7 +888,6 @@ public class PresentazioneAssegnazioneAttoController {
 							+ fileName + " è già stato allegato ", ""));
 		} else {
 
-			
 			Allegato allegatoRet = new Allegato();
 			allegatoRet.setNome(event.getFile().getFileName());
 			allegatoRet.setPubblico(currentFilePubblico);
@@ -802,8 +898,9 @@ public class PresentazioneAssegnazioneAttoController {
 								((AttoBean) FacesContext.getCurrentInstance()
 										.getExternalContext().getSessionMap()
 										.get("attoBean")).getAtto(), event
-										.getFile().getInputstream(), allegatoRet);
-				
+										.getFile().getInputstream(),
+								allegatoRet);
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1470,7 +1567,13 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setAnnullaAmmissibilita(boolean annullaAmmissibilita) {
 		this.annullaAmmissibilita = annullaAmmissibilita;
 	}
-	
-	
+
+	public String getFirmatariOrder() {
+		return firmatariOrder;
+	}
+
+	public void setFirmatariOrder(String firmatariOrder) {
+		this.firmatariOrder = firmatariOrder;
+	}
 
 }
