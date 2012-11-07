@@ -8,12 +8,13 @@
 		var currentForm = document.forms[0];
 		var idAtto = currentForm.idAtto.options[currentForm.idAtto.selectedIndex].value;
 		var tipoTemplate = currentForm.tipoTemplate.options[currentForm.tipoTemplate.selectedIndex].value;
+		var gruppo = currentForm.gruppo.options[currentForm.gruppo.selectedIndex].value;
 		
 
 		var letteraCustom = {
 			"idAtto" : ""+idAtto+"",
 			"tipoTemplate" : ""+tipoTemplate+""
-			
+			"gruppo" : ""+gruppo+""
 		};
 		
 		var letteraCustomString = JSON.stringify(letteraCustom);
@@ -61,6 +62,12 @@
 					<option value="${lettera.type}">${lettera.type}</option>
 				</#list>
 				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Gruppo corrente:</td>
+			<td>
+				<input type="text" name="gruppo">
 			</td>
 		</tr>
 	

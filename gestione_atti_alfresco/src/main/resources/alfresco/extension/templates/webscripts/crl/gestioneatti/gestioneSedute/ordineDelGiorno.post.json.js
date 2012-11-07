@@ -29,6 +29,7 @@ if(checkIsNotNull(id)){
 		
 		var previstoAttoTrattato = filterParam(attoTrattato.get("previsto"));
 		var discussoAttoTrattato = filterParam(attoTrattato.get("discusso"));
+		var numeroOrdinamento = filterParam(attoTrattato.get("numeroOrdinamento"));
 		
 		var idAttoTrattato = filterParam(atto.get("id"));
 			
@@ -55,6 +56,7 @@ if(checkIsNotNull(id)){
 		
 		attoTrattatoNode.properties["crlatti:previstoAttoTrattatoODG"] = previstoAttoTrattato;
 		attoTrattatoNode.properties["crlatti:discussoAttoTrattatoODG"] = discussoAttoTrattato;
+		attoTrattatoNode.properties["crlatti:numeroOrdinamento"] = numeroOrdinamento;
 		
 		attoTrattatoNode.save();
 		

@@ -272,7 +272,7 @@ if(username=="protocollo" || username=="admin"){
 					var firmatariSpaceTemplateNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
 					firmatariSpaceTemplateNode.copy(attoFolderNode);
 				}
-				
+								
 				//gestione tipo iniziativa
 				if(checkIsNotNull(esibenteMittente)){
 					var firmatariArray = new Array();
@@ -313,9 +313,34 @@ if(username=="protocollo" || username=="admin"){
 									if(consigliereAnagraficaNode!=null){
 										var nomeConsigliere = consigliereAnagraficaNode.properties["crlatti:nomeConsigliereAnagrafica"];
 										var cognomeConsigliere = consigliereAnagraficaNode.properties["crlatti:cognomeConsigliereAnagrafica"];
+										var gruppoConsigliere = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
 										if(checkIsNotNull(nomeConsigliere) && checkIsNotNull(cognomeConsigliere)){
 											var nomeCompletoConsigliere = nomeConsigliere + " " + cognomeConsigliere;
 											firmatariArray.push(nomeCompletoConsigliere);
+											
+											// creo i nodi di tipo firmatario
+											var childrenXPathQuery = "*[@cm:name='Firmatari']";
+											var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
+										
+											firmatarioNode = firmatariFolderNode.createNode(nomeCompletoConsigliere,"crlatti:firmatario");
+											
+											// inserimento proprietà per l'ordinamento 01,02,03 ecc...
+											if(i<10) {
+												firmatarioNode.properties["crlatti:numeroOrdinamento"] = "0"+i+"";
+											}else{
+												firmatarioNode.properties["crlatti:numeroOrdinamento"] = ""+i+"";
+											}
+											
+											firmatarioNode.properties["crlatti:nomeFirmatario"] = ""+nomeCompletoConsigliere+"";
+											firmatarioNode.properties["crlatti:gruppoConsiliare"] = ""+gruppoConsigliere+"";
+											
+											if(i==0){
+												firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
+											}
+											firmatarioNode.content = "";
+											firmatarioNode.save();
+											
+											
 										}
 									}
 								}
@@ -324,10 +349,26 @@ if(username=="protocollo" || username=="admin"){
 					} else {
 						
 						firmatariArray.push(esibenteMittente);
+						attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
 					}
-					attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
+					
+					// La proprietà firmatari viene valorizzata mediante una regola nella cartella firmatari dell'atto. 
+					// attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
 				}
 				
+				// creazione passaggio1 
+				
+				// creazione del primo passaggio per le commissioni e l'aula
+				var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+				var passaggiFolderNode = attoFolderNode.childrenByXPath(passaggiXPathQuery)[0];
+				
+			
+				var passaggioSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Passaggio\"";
+				var passaggioSpaceTemplateNode = search.luceneSearch(passaggioSpaceTemplateQuery)[0];
+				var passaggioFolderNode = passaggioSpaceTemplateNode.copy(passaggiFolderNode, true); // deep copy
+				passaggioFolderNode.properties["cm:name"] = "Passaggio1";
+				passaggioFolderNode.save();
+		
 				
 				//aspect Dgr
 				if(attoFolderNode.hasAspect("crlatti:dgr")){

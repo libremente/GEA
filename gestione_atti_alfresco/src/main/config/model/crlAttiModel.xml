@@ -231,29 +231,6 @@
 			</mandatory-aspects>
 		</type>
 		
-		<type name="crlatti:consigliereAnagrafica">
-			<title>Anagrafica consigliere</title>
-			<parent>cm:content</parent>
-			<properties>
-				<property name="crlatti:nomeConsigliereAnagrafica">
-					<title>Nome</title>
-					<type>d:text</type>
-				</property>
-				<property name="crlatti:cognomeConsigliereAnagrafica">
-					<title>Cognome</title>
-					<type>d:text</type>
-				</property>
-				<property name="crlatti:legislaturaConsigliereAnagrafica">
-					<title>Legislatura</title>
-					<type>d:text</type>
-				</property>
-				<property name="crlatti:gruppoConsigliereAnagrafica">
-					<title>Gruppo</title>
-					<type>d:text</type>
-				</property>
-			</properties>
-		</type>
-		
 		<type name="crlatti:testo">
 			<title>Testo</title>
 			<parent>cm:content</parent>
@@ -515,38 +492,6 @@
 				</property>
 			</properties>
 		</type>
-
-		<type name="crlatti:firmatario">
-			<title>Firmatario</title>
-			<parent>crlatti:firmatarioAnagrafica</parent>
-			<properties>
-				<property name="crlatti:nomeFirmatario">
-					<title>Nome</title>
-					<type>d:text</type>
-					<index enabled="true">
-						<atomic>true</atomic>
-						<stored>false</stored>
-						<tokenised>both</tokenised>
-					</index>
-				</property>
-				<property name="crlatti:dataFirma">
-					<title>Data firma</title>
-					<type>d:date</type>
-				</property>
-				<property name="crlatti:dataRitiro">
-					<title>Data ritiro</title>
-					<type>d:date</type>
-				</property>
-				<property name="crlatti:isPrimoFirmatario">
-					<title>Primo firmatario</title>
-					<type>d:boolean</type>
-				</property>
-				
-			</properties>
-			<mandatory-aspects>
-				<aspect>crlatti:ordinamentoAspect</aspect>
-			</mandatory-aspects>
-		</type>
 		
 		<type name="crlatti:relatore">
 			<title>Relatore</title>
@@ -627,6 +572,64 @@
 				</property>
 			</properties>
 		</type>
+		
+		<type name="crlatti:consigliereAnagrafica">
+			<title>Anagrafica consigliere</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:nomeConsigliereAnagrafica">
+					<title>Nome</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:cognomeConsigliereAnagrafica">
+					<title>Cognome</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:legislaturaConsigliereAnagrafica">
+					<title>Legislatura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:gruppoConsigliereAnagrafica">
+					<title>Gruppo</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		
+		<!-- fine anagrafica -->
+		
+		<type name="crlatti:firmatario">
+			<title>Firmatario</title>
+			<parent>crlatti:firmatarioAnagrafica</parent>
+			<properties>
+				<property name="crlatti:nomeFirmatario">
+					<title>Nome</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:dataFirma">
+					<title>Data firma</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRitiro">
+					<title>Data ritiro</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:isPrimoFirmatario">
+					<title>Primo firmatario</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:ordinamentoAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
 
 		<type name="crlatti:commissione">
 			<title>Commissione</title>
@@ -1162,7 +1165,7 @@
 			<properties>
 				<property name="crlatti:numeroOrdinamento">
 					<title>Numero ordinamento</title>
-					<type>d:int</type>
+					<type>d:text</type>
 				</property>
 			</properties>
 		</aspect>

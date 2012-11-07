@@ -33,6 +33,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected static final String COMMISSIONE_TYPE = "commissione";
 	protected static final String RELATORE_TYPE = "relatore";
 	protected static final String PARERE_TYPE = "parere";
+	protected static final String FIRMATARIO_TYPE = "firmatario";
 	
 	// crlAttiModel properties 
 	protected static final String PROP_ANNO = "anno";
@@ -42,6 +43,8 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected static final String PROP_OGGETTO_ATTO = "oggetto";
 	protected static final String PROP_DESCRIZIONE_INIZIATIVA = "descrizioneIniziativa";
 	protected static final String PROP_TIPO_INIZIATIVA = "tipoIniziativa";
+	protected static final String PROP_NUMERO_DGR = "numeroDgr";
+	protected static final String PROP_DATA_DGR = "dataDgr";
 	protected static final String PROP_COMMISSIONI_REFERENTI = "commReferente";
 	protected static final String PROP_COMMISSIONI_CONSULTIVE = "commConsultiva";
 	protected static final String PROP_COMMISSIONE_COREFERENTE = "commCoreferente";
@@ -53,6 +56,9 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected static final String PROP_DATA_VOTAZIONE_COMMISSIONE = "dataVotazioneCommissione";
 	protected static final String PROP_DATA_ASSEGNAZIONE_COMMISSIONE = "dataAssegnazioneCommissione";
 	protected static final String PROP_DATA_ASSEGNAZIONE_PARERE = "dataAssegnazioneParere";
+	protected static final String PROP_DATA_FIRMA_FIRMATARIO = "dataFirma";
+	protected static final String PROP_QUORUM_VOTAZIONE_COMMISSIONE = "tipoVotazioneCommissione";
+	protected static final String PROP_ESITO_VOTAZIONE_COMMISSIONE = "esitoVotazioneCommissione";
 	
 	protected static final String RUOLO_COMM_REFERENTE = "Referente";
 	protected static final String RUOLO_COMM_COREFERENTE = "Co-Referente";
@@ -65,8 +71,12 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 
 	// crlTemplateModel properties 
 	protected String PROP_FIRMATARIO = "firmatario";
+	protected String PROP_UFFICIO = "ufficio";
+	protected String PROP_DIREZIONE = "direzione";
+	protected String PROP_NUMEROTELFIRMATARIO = "numeroTelFirmatario";
+	protected String PROP_EMAILFIRMATARIO = "emailFirmatario";
 	
-	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef) throws IOException;
+	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException;
 	
 	
 	// Get property value 
@@ -176,8 +186,6 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
     		}
     		
     	}    	
-		
-		
 		return commissioniPrincipaliList;
 	}
 	
@@ -197,7 +205,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
     	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
   
 		
-		// Get commissione referente
+		// Get commissioni consultive
     	ResultSet commissioniConsultiveNodes = searchService.query(attoNodeRef.getStoreRef(),
   				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_CONSULTIVA+"\"");
     	
@@ -242,6 +250,87 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 		
 		return lastOrgano; 
 	}
+	
+	public NodeRef getLastFirmatario(NodeRef attoNodeRef){
+		
+		NodeRef lastFirmatario = null;
+		
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+    	
+    	// Get current atto 
+    	String luceneAttoNodePath = nodeService.getPath(attoNodeRef).toPrefixString(namespacePrefixResolver);
+	
+    		
+    	String firmatarioType = "{"+CRL_ATTI_MODEL+"}"+FIRMATARIO_TYPE;
+    			
+    	SearchParameters sp = new SearchParameters();
+        sp.addStore(attoNodeRef.getStoreRef());
+        sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+        sp.setQuery("PATH:\""+luceneAttoNodePath+"/cm:Firmatari/*\" AND TYPE:\""+firmatarioType+"\"");
+        String field = "{"+CRL_ATTI_MODEL+"}"+PROP_DATA_FIRMA_FIRMATARIO;
+        sp.addSort(field, false);
+    
+        ResultSet firmatariNodes = serviceRegistry.getSearchService().query(sp);
+           
+        if(firmatariNodes.getNodeRefs().size()>0){
+        	lastFirmatario = firmatariNodes.getNodeRef(0); 
+        }
+		
+		return lastFirmatario; 
+	}
+	
+	
+	public NodeRef getCommissioneCorrente(NodeRef attoNodeRef, String commissioneTarget){
+		
+		NodeRef commissione = null;
+		
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+    	
+        // Get current Passaggio 
+    	NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
+    	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
+        
+		// Get commissione
+    	ResultSet commissioneTargetNodes = searchService.query(attoNodeRef.getStoreRef(),
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @cm\\:name:\""+commissioneTarget+"\"");
+    	
+    	if(commissioneTargetNodes.length()>0){
+    		commissione = commissioneTargetNodes.getNodeRef(0);
+    	}
+    	
+		return commissione; 
+	}
+	
+	public NodeRef getRelatoreCorrente(NodeRef commissioneNodeRef){
+		
+		NodeRef relatore = null;
+		
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+    	
+        String luceneCommissioneNodePath = nodeService.getPath(commissioneNodeRef).toPrefixString(namespacePrefixResolver);
+
+        String relatoreType = "{"+CRL_ATTI_MODEL+"}"+RELATORE_TYPE;
+        
+		// Get relatore
+    	ResultSet relatoreNodes = searchService.query(commissioneNodeRef.getStoreRef(),
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneCommissioneNodePath+"/cm:Relatori/*\" AND TYPE:\""+relatoreType+"\"");
+    	
+    	if(relatoreNodes.length()>0){
+    		relatore = relatoreNodes.getNodeRef(0);
+    	}
+    	
+		return relatore; 
+	}
+	
 	
 
 	public ContentService getContentService() {

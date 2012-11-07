@@ -218,7 +218,49 @@ if(type=="crlatti:attoEac"){
 		}
 		
 		if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){
-			attoFolderNode.properties["crlatti:firmatari"] = document.properties["crlatti:firmatari"];
+			// i firmatari verranno infasati con la rule sulla cartella firmatari
+			// attoFolderNode.properties["crlatti:firmatari"] = document.properties["crlatti:firmatari"];
+
+			var childrenXPathQuery = "*[@cm:name='Firmatari']";
+			var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
+			
+			// elimino i firmatari esistenti
+			for each (firmatarioEsistente in firmatariFolderNode.children){
+				firmatarioEsistente.remove();
+			}
+
+			var listaFirmatari = document.properties["crlatti:firmatari"];
+			
+			var childrenXPathQuery = "*[@cm:name='"+nomeFirmatario+"']";
+			var firmatarioNode = firmatariFolderNode.childrenByXPath(childrenXPathQuery);
+			
+			// inserisco i nuovi firmatari
+			for(var k=0; k < listaFirmatari.size(); k++) {
+				
+				var nomeFirmatario = listaFirmatari[k];
+				
+				firmatarioNode = firmatariFolderNode.createNode(nomeFirmatario,"crlatti:firmatario");	
+
+				// inserimento proprietà per l'ordinamento 01,02,03 ecc...
+				if(k<10) {
+					firmatarioNode.properties["crlatti:numeroOrdinamento"] = "0"+k+"";
+				}else{
+					firmatarioNode.properties["crlatti:numeroOrdinamento"] = ""+k+"";
+				}
+				
+				// il primo firmatario della lista è contrassegnato come primo firmatario
+				if(k==0){
+					firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
+				}
+				
+				// se non setto la proprietà content Share da un errore nella visualizzazione
+				firmatarioNode.content = "";
+					
+				firmatarioNode.save();
+				
+			}
+			
+
 		}
 		
 		attoFolderNode.save();

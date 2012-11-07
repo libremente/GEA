@@ -13,23 +13,63 @@
 			<type name="crlatti:collegamento"/>
 			<type name="crlatti:membroComitatoRistretto" />
 			<type name="crlatti:audizione" />
-			<type name="crltemplate:letteraIniziativaPopolareServComm" />
-			<type name="crltemplate:letteraRitiroFirmaServComm" />
-			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
-			<type name="crltemplate:letteraRettificaAssegnazioneServComm" />
-			<type name="crltemplate:letteraAggiuntaFirmaServComm" />
-			<type name="crltemplate:letteraRitiroServComm" />		
-			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
-  			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
-   			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
-   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
-   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
-   			<type name="crltemplate:letteraTrasmissionePARCommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePDACommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePDLCommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePLPCommissioni" />
-   			<type name="crltemplate:letteraTrasmissioneRELCommissioni" />
-   			<type name="crltemplate:letteraTrasmissioneRISCommissioni" />
+   			<type name="crltemplate:lettera"/>
+			<type name="crltemplate:letteraServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm"/>
+			<type name="crltemplate:letteraRettificaAssegnazioneServComm"/>
+			<type name="crltemplate:letteraIntegrazioneCPOServComm"/>
+			<type name="crltemplate:letteraRitiroServComm"/>
+			<type name="crltemplate:letteraAggiuntaFirmaServComm"/>		
+			<type name="crltemplate:letteraRitiroFirmaServComm"/>
+			<type name="crltemplate:letteraAssestamentoBilancioServComm"/>
+			<type name="crltemplate:letteraBilancioProgrammaticoServComm"/>
+			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm"/>
+			<type name="crltemplate:letteraIniziativaPopolareServComm"/>
+			<type name="crltemplate:letteraRendicontoGeneraleServComm"/>
+			<type name="crltemplate:letteraLeggeFinanziariaServComm"/>
+			<type name="crltemplate:letteraDOCAssegnazionePSRServComm"/>
+			<type name="crltemplate:letteraDOCAssegnazioneDSAServComm"/>
+			<type name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm"/>
+			<type name="crltemplate:letteraParereCommissioneServComm"/>
+			<type name="crltemplate:letteraIntesaCommissioneGiuntaServComm"/>
+			<type name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm"/>
+			<type name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm"/>
+			<type name="crltemplate:letteraParerePropostaDiRegolamentoServComm"/>
+			<type name="crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm"/>
+			<type name="crltemplate:letteraAssegnazioneInSedeReferentePDAServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm"/>
+			<type name="crltemplate:letteraRelazionePresentataDallaGiuntaServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaPREServComm"/>	
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaREFServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaINPServComm"/>
+			<type name="crltemplate:letteraCommissioni"/>	
+			<type name="crltemplate:letteraTrasmissionePDLCommissioni"/>		
+			<type name="crltemplate:letteraTrasmissionePDACommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePARCommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePLPCommissioni"/>
+			<type name="crltemplate:letteraPresaAttoRELCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneREFCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneAulaTestoUnico"/>
+			<type name="crltemplate:letteraTrasmissioneDocRisDsaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereSuDOCCommissioni"/>
+			<type name="crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneRISCommissioni"/>
+			<type name="crltemplate:letteraAula"/>
+			<type name="crltemplate:letteraTrasmissioneLCRAula"/>
+			<type name="crltemplate:letteraTrasmissionePDAAula"/>
+			<type name="crltemplate:letteraTrasmissionePDABilancioAula"/>
+			<type name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula"/>
+			<type name="crltemplate:letteraTrasmissioneREFAula"/>
+			<type name="crltemplate:letteraTrasmissioneORGAula"/>
+			<type name="crltemplate:letteraConvalidaORGAula"/>
+			<type name="crltemplate:letteraTrasmissioneBURLAula"/>
 		</content-types>
 	</config>
 
@@ -47,23 +87,63 @@
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
 			<type name="crlatti:sedutaODG" />
-			<type name="crltemplate:letteraIniziativaPopolareServComm" />
-			<type name="crltemplate:letteraRitiroFirmaServComm" />
-			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
-			<type name="crltemplate:letteraRettificaAssegnazioneServComm" />
-			<type name="crltemplate:letteraAggiuntaFirmaServComm" />
-			<type name="crltemplate:letteraRitiroServComm" />		
-			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
-  			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
-   			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
-   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
-   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
-   			<type name="crltemplate:letteraTrasmissionePARCommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePDACommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePDLCommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePLPCommissioni" />
-   			<type name="crltemplate:letteraTrasmissioneRELCommissioni" />
-   			<type name="crltemplate:letteraTrasmissioneRISCommissioni" />
+			<type name="crltemplate:lettera"/>
+			<type name="crltemplate:letteraServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm"/>
+			<type name="crltemplate:letteraRettificaAssegnazioneServComm"/>
+			<type name="crltemplate:letteraIntegrazioneCPOServComm"/>
+			<type name="crltemplate:letteraRitiroServComm"/>
+			<type name="crltemplate:letteraAggiuntaFirmaServComm"/>		
+			<type name="crltemplate:letteraRitiroFirmaServComm"/>
+			<type name="crltemplate:letteraAssestamentoBilancioServComm"/>
+			<type name="crltemplate:letteraBilancioProgrammaticoServComm"/>
+			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm"/>
+			<type name="crltemplate:letteraIniziativaPopolareServComm"/>
+			<type name="crltemplate:letteraRendicontoGeneraleServComm"/>
+			<type name="crltemplate:letteraLeggeFinanziariaServComm"/>
+			<type name="crltemplate:letteraDOCAssegnazionePSRServComm"/>
+			<type name="crltemplate:letteraDOCAssegnazioneDSAServComm"/>
+			<type name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm"/>
+			<type name="crltemplate:letteraParereCommissioneServComm"/>
+			<type name="crltemplate:letteraIntesaCommissioneGiuntaServComm"/>
+			<type name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm"/>
+			<type name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm"/>
+			<type name="crltemplate:letteraParerePropostaDiRegolamentoServComm"/>
+			<type name="crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm"/>
+			<type name="crltemplate:letteraAssegnazioneInSedeReferentePDAServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm"/>
+			<type name="crltemplate:letteraRelazionePresentataDallaGiuntaServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaPREServComm"/>	
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaREFServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaINPServComm"/>
+			<type name="crltemplate:letteraCommissioni"/>	
+			<type name="crltemplate:letteraTrasmissionePDLCommissioni"/>		
+			<type name="crltemplate:letteraTrasmissionePDACommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePARCommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePLPCommissioni"/>
+			<type name="crltemplate:letteraPresaAttoRELCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneREFCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneAulaTestoUnico"/>
+			<type name="crltemplate:letteraTrasmissioneDocRisDsaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereSuDOCCommissioni"/>
+			<type name="crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneRISCommissioni"/>
+			<type name="crltemplate:letteraAula"/>
+			<type name="crltemplate:letteraTrasmissioneLCRAula"/>
+			<type name="crltemplate:letteraTrasmissionePDAAula"/>
+			<type name="crltemplate:letteraTrasmissionePDABilancioAula"/>
+			<type name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula"/>
+			<type name="crltemplate:letteraTrasmissioneREFAula"/>
+			<type name="crltemplate:letteraTrasmissioneORGAula"/>
+			<type name="crltemplate:letteraConvalidaORGAula"/>
+			<type name="crltemplate:letteraTrasmissioneBURLAula"/>
    			
 		</subtypes>
 		<specialise-types>
@@ -78,23 +158,63 @@
 			<type name="crlatti:relatore"/>
 			<type name="crlatti:membroComitatoRistretto" />
 			<type name="crlatti:sedutaODG" />
-			<type name="crltemplate:letteraIniziativaPopolareServComm" />
-			<type name="crltemplate:letteraRitiroFirmaServComm" />
-			<type name="crltemplate:letteraIntegrazioneCPOServComm" />
-			<type name="crltemplate:letteraRettificaAssegnazioneServComm" />
-			<type name="crltemplate:letteraAggiuntaFirmaServComm" />
-			<type name="crltemplate:letteraRitiroServComm" />		
-			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
-  			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
-   			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
-   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaServComm" />
-   			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
-   			<type name="crltemplate:letteraTrasmissionePARCommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePDACommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePDLCommissioni" />
-   			<type name="crltemplate:letteraTrasmissionePLPCommissioni" />
-   			<type name="crltemplate:letteraTrasmissioneRELCommissioni" />
-   			<type name="crltemplate:letteraTrasmissioneRISCommissioni" />
+				<type name="crltemplate:lettera"/>
+			<type name="crltemplate:letteraServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm"/>
+			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm"/>
+			<type name="crltemplate:letteraRettificaAssegnazioneServComm"/>
+			<type name="crltemplate:letteraIntegrazioneCPOServComm"/>
+			<type name="crltemplate:letteraRitiroServComm"/>
+			<type name="crltemplate:letteraAggiuntaFirmaServComm"/>		
+			<type name="crltemplate:letteraRitiroFirmaServComm"/>
+			<type name="crltemplate:letteraAssestamentoBilancioServComm"/>
+			<type name="crltemplate:letteraBilancioProgrammaticoServComm"/>
+			<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm"/>
+			<type name="crltemplate:letteraIniziativaPopolareServComm"/>
+			<type name="crltemplate:letteraRendicontoGeneraleServComm"/>
+			<type name="crltemplate:letteraLeggeFinanziariaServComm"/>
+			<type name="crltemplate:letteraDOCAssegnazionePSRServComm"/>
+			<type name="crltemplate:letteraDOCAssegnazioneDSAServComm"/>
+			<type name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm"/>
+			<type name="crltemplate:letteraParereCommissioneServComm"/>
+			<type name="crltemplate:letteraIntesaCommissioneGiuntaServComm"/>
+			<type name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm"/>
+			<type name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm"/>
+			<type name="crltemplate:letteraParerePropostaDiRegolamentoServComm"/>
+			<type name="crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm"/>
+			<type name="crltemplate:letteraAssegnazioneInSedeReferentePDAServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm"/>
+			<type name="crltemplate:letteraRelazionePresentataDallaGiuntaServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaPREServComm"/>	
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaREFServComm"/>
+			<type name="crltemplate:letteraAssegnazionePerIstruttoriaINPServComm"/>
+			<type name="crltemplate:letteraCommissioni"/>	
+			<type name="crltemplate:letteraTrasmissionePDLCommissioni"/>		
+			<type name="crltemplate:letteraTrasmissionePDACommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePARCommissioni"/>
+			<type name="crltemplate:letteraTrasmissionePLPCommissioni"/>
+			<type name="crltemplate:letteraPresaAttoRELCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneREFCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneAulaTestoUnico"/>
+			<type name="crltemplate:letteraTrasmissioneDocRisDsaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereSuDOCCommissioni"/>
+			<type name="crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni"/>
+			<type name="crltemplate:letteraTrasmissioneRISCommissioni"/>
+			<type name="crltemplate:letteraAula"/>
+			<type name="crltemplate:letteraTrasmissioneLCRAula"/>
+			<type name="crltemplate:letteraTrasmissionePDAAula"/>
+			<type name="crltemplate:letteraTrasmissionePDABilancioAula"/>
+			<type name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula"/>
+			<type name="crltemplate:letteraTrasmissioneREFAula"/>
+			<type name="crltemplate:letteraTrasmissioneORGAula"/>
+			<type name="crltemplate:letteraConvalidaORGAula"/>
+			<type name="crltemplate:letteraTrasmissioneBURLAula"/>
 		</specialise-types>
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
@@ -645,111 +765,13 @@
 		</property-sheet>
 	</config>
 	
-	<config evaluator="node-type" condition="crltemplate:letteraIniziativaPopolareServComm">
+	<config evaluator="node-type" condition="crltemplate:lettera">
 		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
+			<show-property name="crltemplate:firmatario" />
 		</property-sheet>
 	</config>
 	
-	<config evaluator="node-type" condition="crltemplate:letteraRitiroFirmaServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraIntegrazioneCPOServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraRettificaAssegnazioneServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraAggiuntaFirmaServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraRitiroServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePARCommissioni">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDACommissioni">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDLCommissioni">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissionePLPCommissioni">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRELCommissioni">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
-	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneRISCommissioni">
-		<property-sheet>
-			<show-property name="crltemplate:nomePresidenteConsiglioRegionale" />
-		</property-sheet>
-	</config>
-	
+
 	
 	<config evaluator="string-compare" condition="Advanced Search">
 		<advanced-search>

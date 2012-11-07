@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
@@ -26,7 +25,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 
 	private static Log logger = LogFactory.getLog(LetteraGenericaServCommCommand.class);
 	
-	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef) throws IOException{
+	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException{
 		
 		byte[] documentFilledByteArray = null;
 		
@@ -37,20 +36,28 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));	
 		searchTerms.put("<firmatario>", firmatario);
     	
-    	
     	// Set properties from atto
     	String numeroAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO));
     	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
     	String iniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_TIPO_INIZIATIVA));
     	String descrizioneIniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_DESCRIZIONE_INIZIATIVA));
     	String numeroRepertorio = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_REPERTORIO));
+    	String numeroDgr = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_DGR));
+    	Date dataDgr = (Date) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_DATA_DGR));
     	
-    
+    	SimpleDateFormat dataDgrFormatter = new SimpleDateFormat("dd/MM/yy");
+    	String dataDgrString = dataDgrFormatter.format(dataDgr);
     	
     	DictionaryService dictionaryService = serviceRegistry.getDictionaryService();		
 		TypeDefinition typeDef = dictionaryService.getType(nodeService.getType(attoNodeRef));
 		String tipoAttoDescrizione = typeDef.getTitle().toLowerCase();
 
+		searchTerms.put("<numeroAtto>", numeroAtto);
+		searchTerms.put("<oggettoAtto>", oggettoAtto);
+		searchTerms.put("<numeroRepertorio>", numeroRepertorio);
+		searchTerms.put("<tipoAttoDescrizione>", tipoAttoDescrizione);
+		searchTerms.put("<numeroDGR>", numeroDgr);
+		searchTerms.put("<dataDGR>", dataDgrString);
 		
     	//  Set firmatari list
     	List<String> firmatariList = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_FIRMATARI));
@@ -65,15 +72,13 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 	    	}
     	}
     	
-    	searchTerms.put("<firmatariAtto>", firmatari);
+    	searchTerms.put("<firmatariAtto>", firmatari);    	
     	
-    	// ultimoFirmatarioAtto
-    	// iniziativaMinuscolo>
-    	// numeroDGR
-    	// dataDGR
-    	
-    	searchTerms.put("<ultimoFirmatarioAtto>", "pippo");
-    	
+    	NodeRef ultimoFirmatario = getLastFirmatario(attoNodeRef);
+    	if(ultimoFirmatario!=null) {
+    		String ultimoFirmatarioString = (String) nodeService.getProperty(ultimoFirmatario, ContentModel.PROP_NAME);
+    		searchTerms.put("<ultimoFirmatarioAtto>", ultimoFirmatarioString);
+    	}
     	
     	// Check for iniziativa popolare
 
@@ -92,16 +97,10 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 	        	}
 	        }
 	    	
-	    	searchTerms.put("<iniziativa>", iniziativa);
+	    	searchTerms.put("<iniziativa>", iniziativa.substring(8));
+	    	searchTerms.put("<iniziativaMinuscolo>", iniziativa.substring(8).toLowerCase());
 	    	searchTerms.put("<descrizioneIniziativa>", descrizioneIniziativa);
     	}
-    	
-    	
-    	
-    	searchTerms.put("<numeroAtto>", numeroAtto);
-		searchTerms.put("<oggettoAtto>", oggettoAtto);
-		searchTerms.put("<numeroRepertorio>", numeroRepertorio);
-		searchTerms.put("<tipoAttoDescrizione>", tipoAttoDescrizione);
     	
 		
 	 	List<String> commissioniReferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONI_REFERENTI));
@@ -206,22 +205,24 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	
     	List<NodeRef> listaCommissioniPrincipaliNodeRef = getCommissioniPrincipali(attoNodeRef);
     	
-    	Date dataAssegnazioneCommissionePrincipale = (Date) nodeService.getProperty(listaCommissioniPrincipaliNodeRef.get(0), QName.createQName(CRL_ATTI_MODEL, PROP_DATA_ASSEGNAZIONE_COMMISSIONE));
+    	if(listaCommissioniPrincipaliNodeRef.size() > 0){
+    		Date dataAssegnazioneCommissionePrincipale = (Date) nodeService.getProperty(listaCommissioniPrincipaliNodeRef.get(0), QName.createQName(CRL_ATTI_MODEL, PROP_DATA_ASSEGNAZIONE_COMMISSIONE));
 
-    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
-    	String dataAssegnazioneCommissionePrincipaleString = formatter.format(dataAssegnazioneCommissionePrincipale);
-    	
-    	searchTerms.put("<dataAssegnazioneCommissioneRef>", dataAssegnazioneCommissionePrincipaleString);
-    	
-    	
+        	SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yy", Locale.ITALY);
+        	String dataAssegnazioneCommissionePrincipaleString = formatter.format(dataAssegnazioneCommissionePrincipale);
+        	
+        	searchTerms.put("<dataAssegnazioneCommissioneRef>", dataAssegnazioneCommissionePrincipaleString);
+        	
+    	}
+
+        	
     	NodeRef ultimoOrganoStatutario = getLastOrganoStatutarioAssegnato(attoNodeRef);
     	if(ultimoOrganoStatutario!=null) {
     		String ultimoOrganoStatutarioString = (String) nodeService.getProperty(ultimoOrganoStatutario, ContentModel.PROP_NAME);
     		searchTerms.put("<ultimoOrganoStatutario>", ultimoOrganoStatutarioString);
     	}
     	
-    	
-    	
+
 		// Generate byte array of filled document content
 		documentFilledByteArray = TemplateFiller.searchAndReplace(templateByteArray, searchTerms);
 		

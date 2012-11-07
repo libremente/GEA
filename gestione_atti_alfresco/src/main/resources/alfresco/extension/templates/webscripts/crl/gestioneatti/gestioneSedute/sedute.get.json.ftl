@@ -34,6 +34,7 @@
 					{
 						"previsto" : "<#if attoTrattato.properties["crlatti:previstoAttoTrattatoODG"]?exists>${attoTrattato.properties["crlatti:previstoAttoTrattatoODG"]?string("true","false")}<#else></#if>",
 						"discusso" : "<#if attoTrattato.properties["crlatti:discussoAttoTrattatoODG"]?exists>${attoTrattato.properties["crlatti:discussoAttoTrattatoODG"]?string("true","false")}<#else></#if>",
+						"numeroOrdinamento" : "<#if attoTrattato.properties["crlatti:numeroOrdinamento"]?exists>${attoTrattato.properties["crlatti:numeroOrdinamento"]}<#else></#if>",
 						"atto": {
 							"atto": {
 								"id": "${atto.nodeRef}",

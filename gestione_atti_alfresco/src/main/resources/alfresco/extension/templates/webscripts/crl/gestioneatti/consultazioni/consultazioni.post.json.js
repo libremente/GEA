@@ -125,9 +125,42 @@ if(checkIsNotNull(id)){
 					sedutaFolderNode.name = dataSeduta;
 				}
 					
-				
+			
 				sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataCreazioneSedutaParsed;				
 				sedutaFolderNode.save();
+				
+				
+				var attiXPathQuery = "*[@cm:name='AttiTrattati']";
+				var attiFolderNode = sedutaFolderNode.childrenByXPath(attiXPathQuery)[0];	
+				
+				// Inserimento atto trattato
+					
+				var attoTrattatoFolderNode = utils.getNodeFromString(id);
+				
+				//verifica l'esistenza dell'atto all'interno del folder AttiTrattati
+				var existAttoTrattatoXPathQuery = "*[@cm:name='"+attoTrattatoFolderNode.name+"']";
+				var attoTrattatoEsistenteResults = attiFolderNode.childrenByXPath(existAttoTrattatoXPathQuery);
+				
+				var attoTrattatoNode = null;
+				
+				var creaAssociazione = true;
+				
+				if(attoTrattatoEsistenteResults!=null && attoTrattatoEsistenteResults.length>0){
+					attoTrattatoNode = attoTrattatoEsistenteResults[0];
+					creaAssociazione = false;
+				} else {
+					attoTrattatoNode = attiFolderNode.createNode(attoTrattatoFolderNode.name,"crlatti:attoTrattatoODG");
+				}
+			
+				
+
+				if(creaAssociazione){
+					attoTrattatoNode.createAssociation(attoTrattatoFolderNode,"crlatti:attoTrattatoSedutaODG");
+				}
+				
+				attoTrattatoNode.save();
+				
+				
 			}
 		}
 	

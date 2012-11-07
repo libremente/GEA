@@ -52,6 +52,7 @@ public class LetteraWebScript extends AbstractWebScript {
 	    	// Get json properties
 	    	String idAtto = jsonObject.getString("idAtto");
     		String tipoTemplate = jsonObject.getString("tipoTemplate");
+    		String gruppo = jsonObject.getString("gruppo");
         	
 			// Search document template node	
 			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
@@ -68,7 +69,7 @@ public class LetteraWebScript extends AbstractWebScript {
 	    	byte[] templateByteArray = IOUtils.toByteArray(templateInputStream);
     		
     		
-	    	byte[] documentFilledByteArray = lettereCommandMap.get(tipoTemplate).generate(templateByteArray, templateNodeRef, attoNodeRef);
+	    	byte[] documentFilledByteArray = lettereCommandMap.get(tipoTemplate).generate(templateByteArray, templateNodeRef, attoNodeRef, gruppo);
 	    	
 	    	
 	    	
@@ -83,6 +84,7 @@ public class LetteraWebScript extends AbstractWebScript {
             responseOutputStream.write(documentFilledByteArray);        
             
     	}catch(Exception e) {
+    		logger.error("Exception details: "+e.getMessage());
     		throw new WebScriptException("Unable to generate document from template");
     	}finally {
     		if(templateInputStream != null) {

@@ -60,6 +60,7 @@ if(checkIsNotNull(id)){
 		var dataFirma = filterParam(firmatario.get("dataFirma"));
 		var dataRitiro = filterParam(firmatario.get("dataRitiro"));
 		var primoFirmatario = filterParam(firmatario.get("primoFirmatario"));
+		var v = filterParam(firmatario.get("numeroOrdinamento"));
 		
 		//verifica l'esistenza del firmatario all'interno del folder Firmatari
 		var existFirmatarioXPathQuery = "*[@cm:name='"+descrizione+"']";
@@ -88,6 +89,7 @@ if(checkIsNotNull(id)){
 		firmatarioNode.properties["crlatti:dataRitiro"] = dataRitiroParsed;
 		firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
 		firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
+		firmatarioNode.properties["crlatti:numeroOrdinamento"] = numeroOrdinamento;
 		firmatarioNode.save();
 	}
 	
