@@ -10,7 +10,7 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("attoTrattato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class AttoTrattato implements Cloneable{
+public class AttoTrattato implements Cloneable , Comparable <AttoTrattato>{
 	
 	private Atto atto;
 	private boolean previsto;
@@ -24,6 +24,12 @@ public class AttoTrattato implements Cloneable{
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@Override
+	public int compareTo(AttoTrattato arg0) {
+		// TODO Auto-generated method stub
+		return Integer.parseInt(this.numeroOrdinamento) -  Integer.parseInt(arg0.numeroOrdinamento);
 	}
 	
 	@Override public String toString() {
@@ -61,6 +67,8 @@ public class AttoTrattato implements Cloneable{
 	public void setNumeroOrdinamento(String numeroOrdinamento) {
 		this.numeroOrdinamento = numeroOrdinamento;
 	}
+
+	
 	
 	
 

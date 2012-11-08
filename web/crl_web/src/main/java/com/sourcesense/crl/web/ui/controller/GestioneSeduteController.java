@@ -3,6 +3,8 @@ package com.sourcesense.crl.web.ui.controller;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -178,8 +180,11 @@ public class GestioneSeduteController {
 			setNumVerbale(sedutaSelected.getNumVerbale());
 			setNote(sedutaSelected.getNote());
 			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));
+			
 			setAttiTrattati(Clonator
 					.cloneList(sedutaSelected.getAttiTrattati()));
+			Collections.sort(attiTrattati);
+			
 			setAttiSindacato(Clonator.cloneList(sedutaSelected
 					.getAttiSindacato()));
 
@@ -277,6 +282,7 @@ public class GestioneSeduteController {
 
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 		setAttiTrattati(sedutaSelected.getAttiTrattati());
+		Collections.sort(attiTrattati);
 		setAttiSindacato(sedutaSelected.getAttiSindacato());
 		setAudizioni(sedutaSelected.getAudizioni());
 
@@ -595,7 +601,9 @@ public class GestioneSeduteController {
 
 			sedutaSelected.setAttiTrattati(Clonator
 					.cloneList(getOrderedAttiTrattati()));
-
+			
+			Collections.sort(attiTrattati);
+			
 			sedutaSelected.setAudizioni(Clonator.cloneList(getAudizioni()));
 
 			sedutaSelected.setConsultazioniAtti(Clonator
@@ -649,10 +657,12 @@ public class GestioneSeduteController {
 				} else {
 					attoTrattato.setNumeroOrdinamento("" + i);
 				}
+				i++;
 			}
 			
 		}
 
+		Collections.sort(attiTrattati);
 		return attiTrattati;
 
 	}

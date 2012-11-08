@@ -649,10 +649,11 @@
 
 				<p:dataTable id="listaAttiTrattati" widgetVar="tableAttiTrattati"
 					value="#{gestioneSeduteController.attiTrattati}" var="attoTrattato"
-					styleClass="generalInfoTab grey-text" editable="true" sortBy="attoTrattato.numeroOrdinamento">
+					styleClass="generalInfoTab grey-text" editable="true" >
 
                     <p:column headerText="" style="width:20px">
-							<p:graphicImage value="/resources/img/dad.jpeg" />						
+							<p:graphicImage value="/resources/img/dad.jpeg" />	
+												
 						</p:column> 
 
 					<p:column sortBy="#{attoTrattato.atto.tipoAtto}"
@@ -717,10 +718,9 @@
 										{
 											update : function() {
 												dragSortTable('gestioneSeduteForm:gestioneSedute:listaAttiTrattati_data',
-														'gestioneSeduteForm:gestioneSedute:hidOrder');
+														'gestioneSeduteForm:gestioneSedute:hidOrder','2');
 											}
 										});
-
 					});
 				</script>
 

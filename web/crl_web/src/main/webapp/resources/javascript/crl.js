@@ -1,4 +1,4 @@
-function dragSortTable(tableId,hiddeId) {
+function dragSortTable(tableId,hiddeId,colIndx) {
 	
 	
 
@@ -13,12 +13,12 @@ function dragSortTable(tableId,hiddeId) {
 	  for (i = 0; i <nodi.length; i++) {
 		  
 		  var nodo = nodi[i];
-		  console.log(jQuery.trim(nodo.getElementsByTagName('td')[1].getElementsByTagName('div')[0].innerHTML));
+		  console.log(jQuery.trim(nodo.getElementsByTagName('td')[colIndx].getElementsByTagName('div')[0].innerHTML));
 		  
 		  if(i==nodi.length-1){
-		   hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[1].getElementsByTagName('div')[0].innerHTML);
+		   hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[colIndx].getElementsByTagName('div')[0].innerHTML);
 		  }else{
-			  hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[1].getElementsByTagName('div')[0].innerHTML)+ "_";  
+			  hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[colIndx].getElementsByTagName('div')[0].innerHTML)+ "_";  
 			  
 		  }
 		  console.log(hidden.value);

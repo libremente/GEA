@@ -15,19 +15,8 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("firmatario")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Firmatario extends Personale implements Cloneable {
+public class Firmatario extends Personale implements Cloneable ,Comparable <Firmatario>{
 
-	
-	/*
-	 * "firmatario" : 
-	   {
-	    "id" : "workspace://SpacesStore/fb6a588a-186c-4127-8be8-5d91926f8ede",
-		"descrizione" : "Carlo Verdi",
-		"primoFirmatario" : "true",
-		"gruppoConsiliare" : "",
-		"dataFirma" : "2012-07-25",
-		"dataRitiro" : "2012-07-26"
-	   }*/
 	
 	private String nome;
 	private String gruppoConsiliare;
@@ -39,6 +28,11 @@ public class Firmatario extends Personale implements Cloneable {
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
 	  }
+	
+	@Override
+	public int compareTo(Firmatario o) {
+		return Integer.parseInt(this.numeroOrdinamento) -  Integer.parseInt(o.numeroOrdinamento);
+	}
 	
 	public Object clone() {
 		try {
@@ -92,6 +86,8 @@ public class Firmatario extends Personale implements Cloneable {
 	public void setNumeroOrdinamento(String numeroOrdinamento) {
 		this.numeroOrdinamento = numeroOrdinamento;
 	}
+
+	
 	
 	
 	
