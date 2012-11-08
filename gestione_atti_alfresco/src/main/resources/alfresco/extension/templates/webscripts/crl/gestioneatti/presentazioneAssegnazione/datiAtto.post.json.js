@@ -60,7 +60,7 @@ if(checkIsNotNull(id)){
 		var dataFirma = filterParam(firmatario.get("dataFirma"));
 		var dataRitiro = filterParam(firmatario.get("dataRitiro"));
 		var primoFirmatario = filterParam(firmatario.get("primoFirmatario"));
-		var v = filterParam(firmatario.get("numeroOrdinamento"));
+		var numeroOrdinamento = filterParam(firmatario.get("numeroOrdinamento"));
 		
 		//verifica l'esistenza del firmatario all'interno del folder Firmatari
 		var existFirmatarioXPathQuery = "*[@cm:name='"+descrizione+"']";
