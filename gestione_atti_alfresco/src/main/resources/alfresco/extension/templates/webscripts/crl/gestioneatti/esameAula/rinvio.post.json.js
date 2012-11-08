@@ -28,19 +28,19 @@ if(checkIsNotNull(id)
 	var aulaFolderNode = passaggioFolderNode.childrenByXPath(aulaXPathQuery)[0];
 	
 	
-	aulaFolderNode.properties["crlatti:motivazioneRinvio"] = motivazioneRinvio;
+	aulaFolderNode.properties["crlatti:motivazioneRinvioAula"] = motivazioneRinvio;
 	
 	
 	if(checkIsNotNull(dataSedutaRinvio)) {
 		var dataSedutaRinvioSplitted = dataSedutaRinvio.split("-");
 		var dataSedutaRinvioParsed = new Date(dataSedutaRinvioSplitted[0],dataSedutaRinvioSplitted[1]-1,dataSedutaRinvioSplitted[2]);
-		aulaFolderNode.properties["crlatti:dataSedutaRinvio"] = dataSedutaRinvioParsed;
+		aulaFolderNode.properties["crlatti:dataSedutaRinvioAula"] = dataSedutaRinvioParsed;
 	}
 	
 	if(checkIsNotNull(dataTermineMassimo)) {
 		var dataTermineMassimoSplitted = dataTermineMassimo.split("-");
 		var dataTermineMassimoParsed = new Date(dataTermineMassimoSplitted[0],dataTermineMassimoSplitted[1]-1,dataTermineMassimoSplitted[2]);
-		aulaFolderNode.properties["crlatti:dataTermineMassimo"] = dataTermineMassimoParsed;
+		aulaFolderNode.properties["crlatti:dataTermineMassimoAula"] = dataTermineMassimoParsed;
 	}
 			
 	aulaFolderNode.save();
