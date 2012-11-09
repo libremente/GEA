@@ -1,0 +1,10 @@
+Date automatiche dove possibile nel formato "6 febbraio 2012" e non 06/02/2012
+
+Nomi dei firmatari: Nome Cognome (e non COGNOME Nome)
+
+Modificata 
+	Lettera 6 - Trasmissione REF --> Inserito consigliere relatore
+	Lettera 8 - Legge di riordino (normativo) --> Modificato il testo statico
+	Lettera 9 - Legge di riordino (compilativo) --> Modificato il testo statico
+	
+Sistemate Lettere da 10 a 15
