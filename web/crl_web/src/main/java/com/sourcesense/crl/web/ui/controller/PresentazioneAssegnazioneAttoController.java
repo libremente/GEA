@@ -2,6 +2,7 @@ package com.sourcesense.crl.web.ui.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +165,9 @@ public class PresentazioneAssegnazioneAttoController {
 				.getAllegati()));
 		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto
 				.getFirmatari()));
+		
+		Collections.sort(firmatariList);
+		
 		this.commissioniList = new ArrayList<Commissione>(
 				Clonator.cloneList(atto.getPassaggi().get(0).getCommissioni()));
 		this.organismiList = new ArrayList<OrganismoStatutario>(
@@ -419,7 +423,7 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setDataDgr(atto.getDataDgr());
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
 
-		attoBean.getAtto().setFirmatari(Clonator.cloneList(getFirmatariList()));
+		attoBean.getAtto().setFirmatari(Clonator.cloneList(getOrderedFirmatari()));
 
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
@@ -464,7 +468,7 @@ public class PresentazioneAssegnazioneAttoController {
 			}
 
 		}
-
+        Collections.sort(firmatariList);
 		return firmatariList;
 
 	}

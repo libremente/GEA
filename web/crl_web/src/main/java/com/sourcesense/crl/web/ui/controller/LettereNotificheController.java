@@ -14,6 +14,7 @@ import org.primefaces.event.NodeUnselectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import com.sourcesense.crl.business.model.Lettera;
 import com.sourcesense.crl.business.service.LettereNotificheServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 
@@ -21,26 +22,384 @@ import com.sourcesense.crl.business.service.PersonaleServiceManager;
 @ViewScoped
 public class LettereNotificheController {
 
+	
+	
+	
 	private TreeNode root;
 
 	private TreeNode selectedNode;
-
+	private Lettera letteraSelected=new Lettera();
+	private String letteraUrlSelected=new String(); 
+	
 	@ManagedProperty(value = "#{lettereNotificheServiceManager}")
 	private LettereNotificheServiceManager lettereNotificheServiceManager;
 
 	@PostConstruct
 	public void init() {
+		
+		letteraSelected.setUrlView("./lettere/default.xhtml"); 
+		
+		
 		root = new DefaultTreeNode("root", null);
 
 		// SERVIZIO COMMISSIONI
-		TreeNode nodeServComm = new DefaultTreeNode("Servizio Commissioni",
-				root);
-
+		TreeNode nodeServComm = new DefaultTreeNode("Servizio Commissioni",root);
+		
+		TreeNode nodeServCommPDL = new DefaultTreeNode("PDL",nodeServComm);
+		
+		Lettera letteraTrasmissioneCommissioneReferente = new Lettera();
+		letteraTrasmissioneCommissioneReferente.setTipoTemplate("crltemplate:letteraTrasmissioneCommissioneReferenteServComm");
+		letteraTrasmissioneCommissioneReferente.setUrlView("./lettere/servizioCommissioni/pdl/letteraTrasmissioneCommissioneReferente.xhtml");
+		letteraTrasmissioneCommissioneReferente.setNome("Lettera Trasmissione Commissione Referente");
+		TreeNode nodeLetteraTrasmissioneCommissioneReferente = new DefaultTreeNode("lettera",letteraTrasmissioneCommissioneReferente,nodeServCommPDL);
+		
+		Lettera letteraTrasmissioneCommissioneReferenteConsultiva = new Lettera();
+		letteraTrasmissioneCommissioneReferenteConsultiva.setTipoTemplate("crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm");
+		letteraTrasmissioneCommissioneReferenteConsultiva.setUrlView("./lettere/servizioCommissioni/pdl/letteraTrasmissioneCommissioneReferenteConsultiva.xhtml");
+		letteraTrasmissioneCommissioneReferenteConsultiva.setNome("Lettera Trasmissione Commissione Referente e Consultiva");
+		TreeNode nodeLetteraTrasmissioneCommissioneReferenteConsultiva = new DefaultTreeNode("lettera",letteraTrasmissioneCommissioneReferenteConsultiva,nodeServCommPDL);
+		
+		Lettera letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario = new Lettera();
+		letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario.setTipoTemplate("crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm");
+		letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario.setUrlView("./lettere/servizioCommissioni/pdl/letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario.xhtml");
+		letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario.setNome("Lettera Trasmissione Commissione Referente, Consultiva e Organismo Statutario");
+		TreeNode nodeLetteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario = new DefaultTreeNode("lettera",letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario,nodeServCommPDL);
+		
+		Lettera letteraRettificaAssegnazione = new Lettera();
+		letteraRettificaAssegnazione.setTipoTemplate("crltemplate:letteraRettificaAssegnazioneServComm");
+		letteraRettificaAssegnazione.setUrlView("./lettere/servizioCommissioni/pdl/letteraRettificaAssegnazione.xhtml");
+		letteraRettificaAssegnazione.setNome("Lettera Rettifica Assegnazione");
+		TreeNode nodeLetteraRettificaAssegnazione = new DefaultTreeNode("lettera",letteraRettificaAssegnazione,nodeServCommPDL);
+        
+		Lettera letteraIntegrazioneCPOServComm = new Lettera();
+		letteraIntegrazioneCPOServComm.setTipoTemplate("crltemplate:letteraIntegrazioneCPOServComm");
+		letteraIntegrazioneCPOServComm.setUrlView("./lettere/servizioCommissioni/pdl/letteraIntegrazioneCPOServComm.xhtml");
+		letteraIntegrazioneCPOServComm.setNome("Lettera Integrazione CPO");
+		TreeNode nodeLetteraIntegrazioneCPOServComm = new DefaultTreeNode("lettera",letteraIntegrazioneCPOServComm,nodeServCommPDL);
+		
+		Lettera letteraRitiro = new Lettera();
+		letteraRitiro.setTipoTemplate("crltemplate:letteraRitiroServComm");
+		letteraRitiro.setUrlView("./lettere/servizioCommissioni/pdl/letteraRitiro.xhtml");
+		letteraRitiro.setNome("Lettera Ritiro");
+		TreeNode nodeLetteraRitiro = new DefaultTreeNode("lettera",letteraRitiro,nodeServCommPDL);
+		
+		Lettera letteraAggiuntaFirma = new Lettera();
+		letteraAggiuntaFirma.setTipoTemplate("crltemplate:letteraAggiuntaFirmaServComm");
+		letteraAggiuntaFirma.setUrlView("./lettere/servizioCommissioni/pdl/letteraAggiuntaFirma.xhtml");
+		letteraAggiuntaFirma.setNome("Lettera aggiunta firma");
+		TreeNode nodeLetteraAggiuntaFirma = new DefaultTreeNode("lettera",letteraAggiuntaFirma,nodeServCommPDL);
+		
+		Lettera letteraRitiroFirma = new Lettera();
+		letteraRitiroFirma.setTipoTemplate("crltemplate:letteraRitiroFirmaServComm");
+		letteraRitiroFirma.setUrlView("./lettere/servizioCommissioni/pdl/letteraRitiroFirma.xhtml");
+		letteraRitiroFirma.setNome("Lettera ritiro firma");
+		TreeNode nodeLetteraRitiroFirma = new DefaultTreeNode("lettera",letteraRitiroFirma,nodeServCommPDL);
+		
+		Lettera letteraAssestamentoBilancio = new Lettera();
+		letteraAssestamentoBilancio.setTipoTemplate("crltemplate:letteraAssestamentoBilancioServComm");
+		letteraAssestamentoBilancio.setUrlView("./lettere/servizioCommissioni/pdl/letteraAssestamentoBilancio.xhtml");
+		letteraAssestamentoBilancio.setNome("Lettera assestamento bilancio");
+		TreeNode nodeLetteraAssestamentoBilancio = new DefaultTreeNode("lettera",letteraAssestamentoBilancio,nodeServCommPDL);
+		
+		Lettera letteraBilancioProgrammatico = new Lettera();
+		letteraBilancioProgrammatico.setTipoTemplate("crltemplate:letteraBilancioProgrammaticoServComm");
+		letteraBilancioProgrammatico.setUrlView("./lettere/servizioCommissioni/pdl/letteraBilancioProgrammatico.xhtml");
+		letteraBilancioProgrammatico.setNome("Lettera bilancio programmatico");
+		TreeNode nodeLetteraBilancioProgrammatico = new DefaultTreeNode("lettera",letteraBilancioProgrammatico,nodeServCommPDL);
+		
+		Lettera letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni = new Lettera();
+		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.setTipoTemplate("crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm");
+		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.setUrlView("./lettere/servizioCommissioni/pdl/letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.xhtml");
+		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.setNome("Lettera Iniziativa Presidente Giunta: fusione e distacchi di comuni");
+		TreeNode nodeLetteraIniziativaPresidenteGiuntaFusioneDistacchiComuni = new DefaultTreeNode("lettera",letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni,nodeServCommPDL);
+		
+		Lettera letteraIniziativaPopolare = new Lettera();
+		letteraIniziativaPopolare.setTipoTemplate("crltemplate:letteraIniziativaPopolareServComm");
+		letteraIniziativaPopolare.setUrlView("./lettere/servizioCommissioni/pdl/letteraIniziativaPopolare.xhtml");
+		letteraIniziativaPopolare.setNome("Lettera Iniziativa Popolare");
+		TreeNode nodeLetteraIniziativaPopolare = new DefaultTreeNode("lettera",letteraIniziativaPopolare,nodeServCommPDL);
+		
+		Lettera letteraRendicontoGenerale = new Lettera();
+		letteraRendicontoGenerale.setTipoTemplate("crltemplate:letteraRendicontoGeneraleServComm");
+		letteraRendicontoGenerale.setUrlView("./lettere/servizioCommissioni/pdl/letteraRendicontoGenerale.xhtml");
+		letteraRendicontoGenerale.setNome("Lettera Rendiconto Generale");
+		TreeNode nodeLetteraRendicontoGenerale = new DefaultTreeNode("lettera",letteraRendicontoGenerale,nodeServCommPDL);
+		
+		Lettera letteraLeggeFinanziaria = new Lettera();
+		letteraLeggeFinanziaria.setTipoTemplate("crltemplate:letteraLeggeFinanziariaServComm");
+		letteraLeggeFinanziaria.setUrlView("./lettere/servizioCommissioni/pdl/letteraRettificaAssegnazione.xhtml");
+		letteraLeggeFinanziaria.setNome("Lettera Legge Finanziaria");
+		TreeNode nodeLetteraLeggeFinanziaria = new DefaultTreeNode("lettera",letteraLeggeFinanziaria,nodeServCommPDL);
+		
+		TreeNode nodeServCommDOC = new DefaultTreeNode("DOC",nodeServComm);
+		
+		Lettera letteraDOCassegnazionePSR = new Lettera();
+		letteraDOCassegnazionePSR.setTipoTemplate("crltemplate:letteraDOCAssegnazionePSRServComm");
+		letteraDOCassegnazionePSR.setUrlView("./lettere/servizioCommissioni/doc/letteraDOCassegnazionePSR.xhtml");
+		letteraDOCassegnazionePSR.setNome("Lettera DOC assegnazione PSR");
+		TreeNode nodeLetteraDOCassegnazionePSR = new DefaultTreeNode("lettera",letteraDOCassegnazionePSR,nodeServCommDOC);
+		
+		Lettera letteraDOCassegnazioneDSA = new Lettera();
+		letteraDOCassegnazioneDSA.setTipoTemplate("crltemplate:letteraDOCAssegnazioneDSAServComm");
+		letteraDOCassegnazioneDSA.setUrlView("./lettere/servizioCommissioni/doc/letteraDOCassegnazioneDSA.xhtml");
+		letteraDOCassegnazioneDSA.setNome("Lettera DOC assegnazione DSA");
+		TreeNode nodeLetteraDOCassegnazioneDSA = new DefaultTreeNode("lettera",letteraDOCassegnazioneDSA,nodeServCommDOC);
+		
+		Lettera letteraAssegnazioneProgrammaLavoroCommissioneEuropea = new Lettera();
+		letteraAssegnazioneProgrammaLavoroCommissioneEuropea.setTipoTemplate("crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm");
+		letteraAssegnazioneProgrammaLavoroCommissioneEuropea.setUrlView("./lettere/servizioCommissioni/doc/letteraAssegnazioneProgrammaLavoroCommissioneEuropea.xhtml");
+		letteraAssegnazioneProgrammaLavoroCommissioneEuropea.setNome("Lettera Assegnazione Programma Lavoro Commissione Europea");
+		TreeNode nodeLetteraAssegnazioneProgrammaLavoroCommissioneEuropea = new DefaultTreeNode("lettera",letteraAssegnazioneProgrammaLavoroCommissioneEuropea,nodeServCommDOC);
+		
+		TreeNode nodeServCommPAR = new DefaultTreeNode("PAR",nodeServComm);
+		
+		Lettera letteraParereCommissione = new Lettera();
+		letteraParereCommissione.setTipoTemplate("crltemplate:letteraParereCommissioneServComm");
+		letteraParereCommissione.setUrlView("./lettere/servizioCommissioni/par/letteraParereCommissione.xhtml");
+		letteraParereCommissione.setNome("Lettera Parere Commissione");
+		TreeNode nodeLetteraParereCommissione = new DefaultTreeNode("lettera",letteraParereCommissione,nodeServCommPAR);
+		
+		Lettera letteraIntesaCommissioneGiunta = new Lettera();
+		letteraIntesaCommissioneGiunta.setTipoTemplate("crltemplate:letteraIntesaCommissioneGiuntaServComm");
+		letteraIntesaCommissioneGiunta.setUrlView("./lettere/servizioCommissioni/par/letteraIntesaCommissioneGiunta.xhtml");
+		letteraIntesaCommissioneGiunta.setNome("Lettera Intesa Commissione Giunta");
+		TreeNode nodeLetteraIntesaCommissioneGiunta = new DefaultTreeNode("lettera",letteraIntesaCommissioneGiunta,nodeServCommPAR);
+		
+		Lettera letteraParereCommissioneSospensionepausaestiva = new Lettera();
+		letteraParereCommissioneSospensionepausaestiva.setTipoTemplate("crltemplate:letteraParereCommissioneConSospPausaEstivaServComm");
+		letteraParereCommissioneSospensionepausaestiva.setUrlView("./lettere/servizioCommissioni/par/letteraParereCommissioneSospensionepausaestiva.xhtml");
+		letteraParereCommissioneSospensionepausaestiva.setNome("Lettera Parere Commissione con sospensione pausa estiva");
+		TreeNode nodeLetteraParereCommissioneSospensionepausaestiva = new DefaultTreeNode("lettera",letteraParereCommissioneSospensionepausaestiva,nodeServCommPAR);
+		
+		Lettera letteraIntesaCommissioneGiuntasospensionepausaestiva = new Lettera();
+		letteraIntesaCommissioneGiuntasospensionepausaestiva.setTipoTemplate("crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm");
+		letteraIntesaCommissioneGiuntasospensionepausaestiva.setUrlView("./lettere/servizioCommissioni/par/letteraIntesaCommissioneGiuntasospensionepausaestiva.xhtml");
+		letteraIntesaCommissioneGiuntasospensionepausaestiva.setNome("Lettera Intesa Commissione Giunta con sospensione pausa estiva");
+		TreeNode nodeLetteraIntesaCommissioneGiuntasospensionepausaestiva = new DefaultTreeNode("lettera",letteraIntesaCommissioneGiuntasospensionepausaestiva,nodeServCommPAR);
+		
+		Lettera letteraParerePropostaRegolamento = new Lettera();
+		letteraParerePropostaRegolamento.setTipoTemplate("crltemplate:letteraParerePropostaDiRegolamentoServComm");
+		letteraParerePropostaRegolamento.setUrlView("./lettere/servizioCommissioni/par/letteraParerePropostaRegolamento.xhtml");
+		letteraParerePropostaRegolamento.setNome("Lettera Parere Proposta di Regolamento");
+		TreeNode nodeLetteraParerePropostaRegolamento = new DefaultTreeNode("lettera",letteraParerePropostaRegolamento,nodeServCommPAR);
+		
+		TreeNode nodeServCommPDA = new DefaultTreeNode("PDA",nodeServComm);
+		
+		Lettera letteraAssegnazionesededeliberante = new Lettera();
+		letteraAssegnazionesededeliberante.setTipoTemplate("crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm");
+		letteraAssegnazionesededeliberante.setUrlView("./lettere/servizioCommissioni/pda/letteraAssegnazionesededeliberante.xhtml");
+		letteraAssegnazionesededeliberante.setNome("Lettera Assegnazione in sede deliberante");
+		TreeNode nodeLetteraAssegnazionesededeliberante = new DefaultTreeNode("lettera",letteraAssegnazionesededeliberante,nodeServCommPDA);
+		
+		Lettera letteraAssegnazionesedereferente = new Lettera();
+		letteraAssegnazionesedereferente.setTipoTemplate("crltemplate:letteraAssegnazioneInSedeReferentePDAServComm");
+		letteraAssegnazionesedereferente.setUrlView("./lettere/servizioCommissioni/pda/letteraAssegnazionesedereferente.xhtml");
+		letteraAssegnazionesedereferente.setNome("Lettera Parere Proposta di Regolamento");
+		TreeNode nodeLetteraAssegnazionesedereferente = new DefaultTreeNode("lettera",letteraAssegnazionesedereferente,nodeServCommPDA);
+		
+		TreeNode nodeServCommPLP = new DefaultTreeNode("PLP",nodeServComm);
+		
+		Lettera letteraAssegnazioneistruttoria = new Lettera();
+		letteraAssegnazioneistruttoria.setTipoTemplate("crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm");
+		letteraAssegnazioneistruttoria.setUrlView("./lettere/servizioCommissioni/plp/letteraAssegnazioneistruttoria.xhtml");
+		letteraAssegnazioneistruttoria.setNome("Lettera Assegnazione per istruttoria");
+		TreeNode nodeLetteraAssegnazioneistruttoria = new DefaultTreeNode("lettera",letteraAssegnazioneistruttoria,nodeServCommPLP);
+		
+		TreeNode nodeServCommREL = new DefaultTreeNode("REL",nodeServComm);
+		
+		Lettera letteraRelazionepresentatagiunta = new Lettera();
+		letteraRelazionepresentatagiunta.setTipoTemplate("crltemplate:letteraRelazionePresentataDallaGiuntaServComm");
+		letteraRelazionepresentatagiunta.setUrlView("./lettere/servizioCommissioni/rel/letteraRelazionepresentatagiunta.xhtml");
+		letteraRelazionepresentatagiunta.setNome("Lettera Relazione presentata dalla giunta");
+		TreeNode nodeLetteraRelazionepresentatagiunta = new DefaultTreeNode("lettera",letteraRelazionepresentatagiunta,nodeServCommREL);
+		
+		TreeNode nodeServCommPRE = new DefaultTreeNode("PRE",nodeServComm);
+		
+		Lettera letteraAssegnazioneistruttoriaPRE = new Lettera();
+		letteraAssegnazioneistruttoriaPRE.setTipoTemplate("crltemplate:letteraAssegnazionePerIstruttoriaPREServComm");
+		letteraAssegnazioneistruttoriaPRE.setUrlView("./lettere/servizioCommissioni/pre/letteraAssegnazioneistruttoriaPRE.xhtml");
+		letteraAssegnazioneistruttoriaPRE.setNome("Lettera Assegnazione per istruttoria");
+		TreeNode nodeLetteraAssegnazioneistruttoriaPRE = new DefaultTreeNode("lettera",letteraAssegnazioneistruttoriaPRE,nodeServCommPRE);
+		
+		TreeNode nodeServCommREF = new DefaultTreeNode("REF",nodeServComm);
+		
+		Lettera letteraAssegnazioneistruttoriaREF = new Lettera();
+		letteraAssegnazioneistruttoriaREF.setTipoTemplate("crltemplate:letteraAssegnazionePerIstruttoriaREFServComm");
+		letteraAssegnazioneistruttoriaREF.setUrlView("./lettere/servizioCommissioni/pre/letteraAssegnazioneistruttoriaREF.xhtml");
+		letteraAssegnazioneistruttoriaREF.setNome("Lettera Assegnazione per istruttoria");
+		TreeNode nodeLetteraAssegnazioneistruttoriaREF = new DefaultTreeNode("lettera",letteraAssegnazioneistruttoriaREF,nodeServCommREF);
+		
+        TreeNode nodeServCommINP = new DefaultTreeNode("INP",nodeServComm);
+		
+		Lettera letteraAssegnazioneistruttoriaINP = new Lettera();
+		letteraAssegnazioneistruttoriaINP.setTipoTemplate("crltemplate:letteraAssegnazionePerIstruttoriaINPServComm");
+		letteraAssegnazioneistruttoriaINP.setUrlView("./lettere/servizioCommissioni/pre/letteraAssegnazioneistruttoriaREF.xhtml");
+		letteraAssegnazioneistruttoriaINP.setNome("Lettera Assegnazione per istruttoria");
+		TreeNode nodeLetteraAssegnazioneistruttoriaINP = new DefaultTreeNode("lettera",letteraAssegnazioneistruttoriaINP,nodeServCommINP);
+		
+		
 		// COMMISSIONI
 		TreeNode nodeComm = new DefaultTreeNode("Commissioni", root);
 
+		Lettera letteraCommissioni = new Lettera();
+		letteraCommissioni.setTipoTemplate("crltemplate:letteraCommissioni");
+		letteraCommissioni.setUrlView("./lettere/commissioni/letteraCommissioni.xhtml");
+		letteraCommissioni.setNome("Lettera Commissioni");
+		TreeNode nodeLetteraCommissioni = new DefaultTreeNode("lettera",letteraCommissioni,nodeComm);
+		
+		Lettera letteraTrasmissionePDL = new Lettera();
+		letteraTrasmissionePDL.setTipoTemplate("crltemplate:letteraTrasmissionePDLCommissioni");
+		letteraTrasmissionePDL.setUrlView("./lettere/commissioni/letteraTrasmissionePDL.xhtml");
+		letteraTrasmissionePDL.setNome("Lettera Assegnazione per istruttoria");
+		TreeNode nodeLetteraTrasmissionePDL = new DefaultTreeNode("lettera",letteraTrasmissionePDL,nodeComm);
+		
+		Lettera letteraTrasmissionePDA = new Lettera();
+		letteraTrasmissionePDA.setTipoTemplate("crltemplate:letteraTrasmissionePDACommissioni");
+		letteraTrasmissionePDA.setUrlView("./lettere/commissioni/letteraTrasmissionePDA.xhtml");
+		letteraTrasmissionePDA.setNome("Lettera di Trasmissione PDA");
+		TreeNode nodeLetteraTrasmissionePDA = new DefaultTreeNode("lettera",letteraTrasmissionePDA,nodeComm);
+		
+		Lettera letteraTrasmissionePDAurgenza = new Lettera();
+		letteraTrasmissionePDAurgenza.setTipoTemplate("crltemplate:letteraTrasmissionePDAUrgenzaCommissioni");
+		letteraTrasmissionePDAurgenza.setUrlView("./lettere/commissioni/letteraTrasmissionePDAurgenza.xhtml");
+		letteraTrasmissionePDAurgenza.setNome("Lettera di Trasmissione PDA con urgenza");
+		TreeNode nodeLetteraTrasmissionePDAurgenza = new DefaultTreeNode("lettera",letteraTrasmissionePDAurgenza,nodeComm);
+		
+		Lettera letteraTrasmissionePAR = new Lettera();
+		letteraTrasmissionePAR.setTipoTemplate("crltemplate:letteraTrasmissionePARCommissioni");
+		letteraTrasmissionePAR.setUrlView("./lettere/commissioni/letteraTrasmissionePAR.xhtml");
+		letteraTrasmissionePAR.setNome("Lettera di Trasmissione PAR");
+		TreeNode nodeLletteraTrasmissionePAR = new DefaultTreeNode("lettera",letteraTrasmissionePAR,nodeComm);
+		
+		Lettera letteraTrasmissionePLP = new Lettera();
+		letteraTrasmissionePLP.setTipoTemplate("crltemplate:letteraTrasmissionePLPCommissioni");
+		letteraTrasmissionePLP.setUrlView("./lettere/commissioni/letteraTrasmissionePLP.xhtml");
+		letteraTrasmissionePLP.setNome("Lettera di Trasmissione PLP");
+		TreeNode nodeLetteraTrasmissionePLP = new DefaultTreeNode("lettera",letteraTrasmissionePLP,nodeComm);
+		
+		Lettera letteraPresaAttoREL = new Lettera();
+		letteraPresaAttoREL.setTipoTemplate("crltemplate:letteraPresaAttoRELCommissioni");
+		letteraPresaAttoREL.setUrlView("./lettere/commissioni/letteraPresaAttoREL.xhtml");
+		letteraPresaAttoREL.setNome("Lettera di Presa Atto REL");
+		TreeNode nodeLetteraPresaAttoREL = new DefaultTreeNode("lettera",letteraPresaAttoREL,nodeComm);
+		
+		Lettera letteraTrasmissioneREF = new Lettera();
+		letteraTrasmissioneREF.setTipoTemplate("crltemplate:letteraTrasmissioneREFCommissioni");
+		letteraTrasmissioneREF.setUrlView("./lettere/commissioni/letteraTrasmissioneREF.xhtml");
+		letteraTrasmissioneREF.setNome("Lettera di Trasmissione REF");
+		TreeNode nodeLetteraTrasmissioneREF = new DefaultTreeNode("lettera",letteraTrasmissioneREF,nodeComm);
+		
+		Lettera letteraTrasmissionePareresedeconsultiva = new Lettera();
+		letteraTrasmissionePareresedeconsultiva.setTipoTemplate("crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni");
+		letteraTrasmissionePareresedeconsultiva.setUrlView("./lettere/commissioni/letteraTrasmissionePareresedeconsultiva.xhtml");
+		letteraTrasmissionePareresedeconsultiva.setNome("Lettera di Trasmissione Parere da sede consultiva");
+		TreeNode nodeLetteraTrasmissionePareresedeconsultiva = new DefaultTreeNode("lettera",letteraTrasmissionePareresedeconsultiva,nodeComm);
+		
+		Lettera letteraTrasmissioneAulaleggeriordinonormativo = new Lettera();
+		letteraTrasmissioneAulaleggeriordinonormativo.setTipoTemplate("crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni");
+		letteraTrasmissioneAulaleggeriordinonormativo.setUrlView("./lettere/commissioni/letteraTrasmissioneAulaleggeriordinonormativo.xhtml");
+		letteraTrasmissioneAulaleggeriordinonormativo.setNome("Lettera di Trasmissione ad Aula legge di riordino (normativo)");
+		TreeNode nodeLetteraTrasmissioneAulaleggeriordinonormativo = new DefaultTreeNode("lettera",letteraTrasmissioneAulaleggeriordinonormativo,nodeComm);
+		
+		Lettera letteraTrasmissioneAulatestounicocompilativo = new Lettera();
+		letteraTrasmissioneAulatestounicocompilativo.setTipoTemplate("crltemplate:letteraTrasmissioneAulaTestoUnico");
+		letteraTrasmissioneAulatestounicocompilativo.setUrlView("./lettere/commissioni/letteraTrasmissioneAulatestounicocompilativo.xhtml");
+		letteraTrasmissioneAulatestounicocompilativo.setNome("Lettera di Trasmissione in Aula testo unico (compilativo)");
+		TreeNode nodeLetteraTrasmissioneAulatestounicocompilativo = new DefaultTreeNode("lettera",letteraTrasmissioneAulatestounicocompilativo,nodeComm);
+		
+		Lettera letteratrasmissioneDOCRISDSA = new Lettera();
+		letteratrasmissioneDOCRISDSA.setTipoTemplate("crltemplate:letteraTrasmissioneDocRisDsaCommissioni");
+		letteratrasmissioneDOCRISDSA.setUrlView("./lettere/commissioni/letteratrasmissioneDOCRISDSA.xhtml");
+		letteratrasmissioneDOCRISDSA.setNome("Lettera di trasmissione DOC RIS DSA");
+		TreeNode nodeLetteratrasmissioneDOCRISDSA = new DefaultTreeNode("lettera",letteratrasmissioneDOCRISDSA,nodeComm);
+		
+		Lettera letteratrasmissioneDOCRISProgrammaEuropeo = new Lettera();
+		letteratrasmissioneDOCRISProgrammaEuropeo.setTipoTemplate("crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni");
+		letteratrasmissioneDOCRISProgrammaEuropeo.setUrlView("./lettere/commissioni/letteratrasmissioneDOCRISProgrammaEuropeo.xhtml");
+		letteratrasmissioneDOCRISProgrammaEuropeo.setNome("Lettera Assegnazione per istruttoria");
+		TreeNode nodeLetteratrasmissioneDOCRISProgrammaEuropeo = new DefaultTreeNode("lettera",letteratrasmissioneDOCRISProgrammaEuropeo,nodeComm);
+		
+		Lettera letteratrasmissioneparereDOC = new Lettera();
+		letteratrasmissioneparereDOC.setTipoTemplate("crltemplate:letteraTrasmissioneParereSuDOCCommissioni");
+		letteratrasmissioneparereDOC.setUrlView("./lettere/commissioni/letteratrasmissioneparereDOC.xhtml");
+		letteratrasmissioneparereDOC.setNome("Lettera Assegnazione per istruttoria");
+		TreeNode nodeLetteratrasmissioneparereDOC = new DefaultTreeNode("lettera",letteratrasmissioneparereDOC,nodeComm);
+		
+		Lettera letterarichiestaparereNormafinanziaria = new Lettera();
+		letterarichiestaparereNormafinanziaria.setTipoTemplate("crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni");
+		letterarichiestaparereNormafinanziaria.setUrlView("./lettere/commissioni/letterarichiestaparereNormafinanziaria.xhtml");
+		letterarichiestaparereNormafinanziaria.setNome("Lettera di richiesta parere su Norma finanziaria");
+		TreeNode nodeLetterarichiestaparereNormafinanziaria = new DefaultTreeNode("lettera",letterarichiestaparereNormafinanziaria,nodeComm);
+		
+		Lettera letteratrasmissioneparereNormafinanziaria = new Lettera();
+		letteratrasmissioneparereNormafinanziaria.setTipoTemplate("crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni");
+		letteratrasmissioneparereNormafinanziaria.setUrlView("./lettere/commissioni/letteratrasmissioneparereNormafinanziaria.xhtml");
+		letteratrasmissioneparereNormafinanziaria.setNome("Lettera di trasmissione parere su Norma finanziaria");
+		TreeNode nodeLetteratrasmissioneparereNormafinanziaria = new DefaultTreeNode("lettera",letteratrasmissioneparereNormafinanziaria,nodeComm);
+		
+		Lettera letteraTrasmissioneRIS = new Lettera();
+		letteraTrasmissioneRIS.setTipoTemplate("crltemplate:letteraTrasmissioneRISCommissioni");
+		letteraTrasmissioneRIS.setUrlView("./lettere/commissioni/letteraTrasmissioneRIS.xhtml");
+		letteraTrasmissioneRIS.setNome("Lettera di Trasmissione RIS");
+		TreeNode nodeLetteraTrasmissioneRIS = new DefaultTreeNode("lettera",letteraTrasmissioneRIS,nodeComm);
+		
+		
 		// AULA
 		TreeNode nodeAula = new DefaultTreeNode("Aula", root);
+		
+		Lettera letteraAula = new Lettera();
+		letteraAula.setTipoTemplate("crltemplate:letteraAula");
+		letteraAula.setUrlView("./lettere/aula/letteraAula.xhtml");
+		letteraAula.setNome("Lettera Aula");
+		TreeNode nodeLetteraAula = new DefaultTreeNode("lettera",letteraAula,nodeAula);
+		
+		Lettera letteraTrasmissioneLCR = new Lettera();
+		letteraTrasmissioneLCR.setTipoTemplate("crltemplate:letteraTrasmissioneLCRAula");
+		letteraTrasmissioneLCR.setUrlView("./lettere/aula/letteraTrasmissioneLCR.xhtml");
+		letteraTrasmissioneLCR.setNome("Lettera di Trasmissione LCR");
+		TreeNode nodeLetteraTrasmissioneLCR = new DefaultTreeNode("lettera",letteraTrasmissioneLCR,nodeAula);
+		
+		Lettera letteraTrasmissionePDAAula = new Lettera();
+		letteraTrasmissionePDAAula.setTipoTemplate("crltemplate:letteraTrasmissionePDAAula");
+		letteraTrasmissionePDAAula.setUrlView("./lettere/aula/letteraTrasmissionePDAAula.xhtml");
+		letteraTrasmissionePDAAula.setNome("Lettera di Trasmissione PDA");
+		TreeNode nodeLetteraTrasmissionePDAAula = new DefaultTreeNode("lettera",letteraTrasmissionePDAAula,nodeAula);
+		
+		Lettera letteraTrasmissionePDABilancio = new Lettera();
+		letteraTrasmissionePDABilancio.setTipoTemplate("crltemplate:letteraTrasmissionePDABilancioAula");
+		letteraTrasmissionePDABilancio.setUrlView("./lettere/aula/letteraTrasmissionePDABilancio.xhtml");
+		letteraTrasmissionePDABilancio.setNome("Lettera di Trasmissione PDA Bilancio");
+		TreeNode nodeLetteraTrasmissionePDABilancio = new DefaultTreeNode("lettera",letteraTrasmissionePDABilancio,nodeAula);
+		
+		Lettera letteraTrasmissionePDAVariazioneBilancio = new Lettera();
+		letteraTrasmissionePDAVariazioneBilancio.setTipoTemplate("crltemplate:letteraTrasmissionePDAVariazioneBilancioAula");
+		letteraTrasmissionePDAVariazioneBilancio.setUrlView("./lettere/aula/letteraTrasmissionePDAVariazioneBilancio.xhtml");
+		letteraTrasmissionePDAVariazioneBilancio.setNome("Lettera di Trasmissione PDA Variazione Bilancio");
+		TreeNode nodeLetteraTrasmissionePDAVariazioneBilancio = new DefaultTreeNode("lettera",letteraTrasmissionePDAVariazioneBilancio,nodeAula);
+		
+		Lettera letteraTrasmissioneREFAula = new Lettera();
+		letteraTrasmissioneREFAula.setTipoTemplate("crltemplate:letteraTrasmissioneREFAula");
+		letteraTrasmissioneREFAula.setUrlView("./lettere/aula/letteraTrasmissioneREFAula.xhtml");
+		letteraTrasmissioneREFAula.setNome("Lettera di Trasmissione REF");
+		TreeNode nodeLetteraTrasmissioneREFAula = new DefaultTreeNode("lettera",letteraTrasmissioneREFAula,nodeAula);
+		
+		Lettera letteraTrasmissioneORG = new Lettera();
+		letteraTrasmissioneORG.setTipoTemplate("crltemplate:letteraTrasmissioneORGAula");
+		letteraTrasmissioneORG.setUrlView("./lettere/aula/letteraTrasmissioneORG.xhtml");
+		letteraTrasmissioneORG.setNome("Lettera di Trasmissione ORG");
+		TreeNode nodeLetteraTrasmissioneORG = new DefaultTreeNode("lettera",letteraTrasmissioneORG,nodeAula);
+		
+		Lettera letteraConvalidaORG = new Lettera();
+		letteraConvalidaORG.setTipoTemplate("crltemplate:letteraConvalidaORGAula");
+		letteraConvalidaORG.setUrlView("./lettere/aula/letteraConvalidaORG.xhtml");
+		letteraConvalidaORG.setNome("Lettera di Convalida ORG");
+		TreeNode nodeLetteraConvalidaORG = new DefaultTreeNode("lettera",letteraConvalidaORG,nodeAula);
+		
+		Lettera letteraTrasmissioneBURL = new Lettera();
+		letteraTrasmissioneBURL.setTipoTemplate("crltemplate:letteraTrasmissioneBURLAula");
+		letteraTrasmissioneBURL.setUrlView("./lettere/aula/letteraTrasmissioneBURL.xhtml");
+		letteraTrasmissioneBURL.setNome("Lettera di Trasmissione BURL");
+		TreeNode nodeLetteraTrasmissioneBURL = new DefaultTreeNode("lettera",letteraTrasmissioneBURL,nodeAula);
 
 	}
 
@@ -54,35 +413,20 @@ public class LettereNotificheController {
 
 	public void setSelectedNode(TreeNode selectedNode) {
 		this.selectedNode = selectedNode;
+		
 	}
 
-	public void onNodeExpand(NodeExpandEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Expanded", event.getTreeNode().toString());
-
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public void onNodeCollapse(NodeCollapseEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Collapsed", event.getTreeNode().toString());
-
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+	
 
 	public void onNodeSelect(NodeSelectEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Selected", event.getTreeNode().toString());
-
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		
+		if(event.getTreeNode().getData() instanceof Lettera){
+			setLetteraSelected((Lettera)event.getTreeNode().getData());
+		}
+		
 	}
 
-	public void onNodeUnselect(NodeUnselectEvent event) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Unselected", event.getTreeNode().toString());
-
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+	
 
 	public LettereNotificheServiceManager getLettereNotificheServiceManager() {
 		return lettereNotificheServiceManager;
@@ -91,6 +435,18 @@ public class LettereNotificheController {
 	public void setLettereNotificheServiceManager(
 			LettereNotificheServiceManager lettereNotificheServiceManager) {
 		this.lettereNotificheServiceManager = lettereNotificheServiceManager;
+	}
+
+	public Lettera getLetteraSelected() {
+		return letteraSelected;
+	}
+
+	public void setLetteraSelected(Lettera letteraSelected) {
+		this.letteraSelected = letteraSelected;
+	}
+
+	public void setRoot(TreeNode root) {
+		this.root = root;
 	}
 	
 	

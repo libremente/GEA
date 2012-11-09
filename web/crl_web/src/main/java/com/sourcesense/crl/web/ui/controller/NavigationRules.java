@@ -198,6 +198,23 @@ public class NavigationRules {
 		return userBean.getUser().getSessionGroup().getNome().equals("Aula");
 	}
 
+	public boolean isCommissioneUpdateEnabled(){
+		
+		Commissione commissione = attoBean.getWorkingCommissione(userBean
+				.getUser().getSessionGroup().getNome());
+
+		if (commissione != null
+				&& (Commissione.RUOLO_REFERENTE.equals(commissione.getRuolo())
+						|| Commissione.RUOLO_DELIBERANTE.equals(commissione.getRuolo())
+						|| Commissione.RUOLO_REDIGENTE.equals(commissione.getRuolo())
+						|| Commissione.RUOLO_COREFERENTE.equals(commissione.getRuolo()))) {
+			return true;
+		}
+
+		return false;
+ 
+	}
+	
 	public boolean isCommissioneReferente() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean
 				.getUser().getSessionGroup().getNome());

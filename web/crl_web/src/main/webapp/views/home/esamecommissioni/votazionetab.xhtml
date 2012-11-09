@@ -225,7 +225,6 @@
 	
 	<p:fieldset legend="#{esameCommissioniController.testoParereEspressoAttoVotato()}" collapsed="false"
 		toggleable="true" toggleSpeed="500">
-		
 		<p:panelGrid styleClass="infoTable" id="testoattovotatopanel">
 			<p:row>
 				<!-- <p:column>
@@ -364,13 +363,14 @@
 					</p>
 				</p:column>
 			</p:row>
-			<p:row rendered="#{navigationBean.isCommissioneReferente()}">
+			<p:row rendered="#{navigationBean.isSessionAttoPDL() and navigationBean.isCommissioneUpdateEnabled()}">
 				<p:column>
 					<h:outputText style="font-weight: bold;"
 						value="Passaggio diretto in Aula: " />
 				</p:column>
 				<p:column>
-					<p:selectBooleanCheckbox
+					<p:selectBooleanCheckbox 
+					
 						value="#{esameCommissioniController.passaggioDiretto}">
 						<p:ajax event="change"
 							listener="#{esameCommissioniController.updateTrasmissioneHandler}" />

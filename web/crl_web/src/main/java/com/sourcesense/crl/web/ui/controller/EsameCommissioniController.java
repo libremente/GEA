@@ -1357,12 +1357,17 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		Commissione comm = attoBean.getWorkingCommissione(commissioneUser
-				.getDescrizione());
+		/*Commissione comm = attoBean.getWorkingCommissione(commissioneUser
+				.getDescrizione());*/
 
 		if (isPassaggioDiretto()
-				&& comm.getEsitoVotoCommissioneReferente() != null
-				&& !comm.getEsitoVotoCommissioneReferente().trim().equals("")) {
+				&& (
+				(commissioneUser.getEsitoVotazione() != null
+				&& !commissioneUser.getEsitoVotazione().trim().equals(""))||  
+				(commissioneUser.getQuorumEsameCommissioni() != null
+				&& !commissioneUser.getQuorumEsameCommissioni().trim().equals(""))||
+				(commissioneUser.getDataSedutaCommissione() != null)
+						)) {
 			context.addMessage(
 					null,
 					new FacesMessage(
