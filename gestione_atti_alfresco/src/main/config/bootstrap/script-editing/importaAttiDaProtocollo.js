@@ -235,31 +235,32 @@ if(type=="crlatti:attoEac"){
 			var firmatarioNode = firmatariFolderNode.childrenByXPath(childrenXPathQuery);
 			
 			// inserisco i nuovi firmatari
-			for(var k=0; k < listaFirmatari.size(); k++) {
-				
-				var nomeFirmatario = listaFirmatari[k];
-				
-				firmatarioNode = firmatariFolderNode.createNode(nomeFirmatario,"crlatti:firmatario");	
-
-				// inserimento proprietà per l'ordinamento 01,02,03 ecc...
-				if(k<10) {
-					firmatarioNode.properties["crlatti:numeroOrdinamento"] = "0"+k+"";
-				}else{
-					firmatarioNode.properties["crlatti:numeroOrdinamento"] = ""+k+"";
-				}
-				
-				// il primo firmatario della lista è contrassegnato come primo firmatario
-				if(k==0){
-					firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
-				}
-				
-				// se non setto la proprietà content Share da un errore nella visualizzazione
-				firmatarioNode.content = "";
+			if(listaFirmatari!=null) {
+				for(var k=0; k < listaFirmatari.length; k++) {
 					
-				firmatarioNode.save();
-				
+					var nomeFirmatario = listaFirmatari[k];
+					
+					firmatarioNode = firmatariFolderNode.createNode(nomeFirmatario,"crlatti:firmatario");	
+	
+					// inserimento proprietà per l'ordinamento 01,02,03 ecc...
+					if(k<10) {
+						firmatarioNode.properties["crlatti:numeroOrdinamento"] = "0"+k+"";
+					}else{
+						firmatarioNode.properties["crlatti:numeroOrdinamento"] = ""+k+"";
+					}
+					
+					// il primo firmatario della lista è contrassegnato come primo firmatario
+					if(k==0){
+						firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
+					}
+					
+					// se non setto la proprietà content Share da un errore nella visualizzazione
+					firmatarioNode.content = "";
+						
+					firmatarioNode.save();
+					
+				}
 			}
-			
 
 		}
 		
@@ -271,12 +272,19 @@ if(type=="crlatti:attoEac"){
 		
 		document.remove();
 		
+		protocolloLogger.info("Atto importato correttamente. Operazione: Modifica atto esistente - Atto numero:"+numeroAtto+" idProtocollo:"+idProtocollo);	
+		
 	} else {
 		//creazione del nodo del nuovo atto
 		document.move(meseFolderNode);
 		if(document.hasAspect("crlatti:importatoDaProtocollo")){
 			document.removeAspect("crlatti:importatoDaProtocollo");
 		}
+		
+		protocolloLogger.info("Atto importato correttamente. Operazione: Creazione nuovo atto - Atto numero:"+numeroAtto+" idProtocollo:"+idProtocollo);	
 	}
+	
+	
+
 
 }

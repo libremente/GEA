@@ -15,7 +15,7 @@ if(lettera!=null
 	"/cm:"+search.ISO9075Encode("Gestione Atti")+
 	"/cm:"+search.ISO9075Encode("Templates");
 	
-	var luceneQuery = "PATH:\""+templatesPath+"/*/*\" AND TYPE:\""+tipoTemplate+"\"";
+	var luceneQuery = "PATH:\""+templatesPath+"//*\" AND TYPE:\""+tipoTemplate+"\"";
 	var templateResults = search.luceneSearch(luceneQuery);
 	
 	var templateNode = templateResults[0];

@@ -30,6 +30,9 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
 		// Set properties from template
     	String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));	
 		searchTerms.put("<firmatario>", firmatario);
+		
+		QName templateType  =  nodeService.getType(templateNodeRef);
+		String nomeTemplate = templateType.getLocalName();
     	
     	// Set properties from atto
     	String numeroAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO));
@@ -38,14 +41,17 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     	String numeroDgr = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_DGR));
     	Date dataDgr = (Date) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_DATA_DGR));
     	
-    	SimpleDateFormat dataDgrFormatter = new SimpleDateFormat("dd/MM/yy");
-    	String dataDgrString = dataDgrFormatter.format(dataDgr);
-
+    	if(dataDgr != null) {
+    		SimpleDateFormat dataDgrFormatter = new SimpleDateFormat("dd/MM/yy");
+    		String dataDgrString = dataDgrFormatter.format(dataDgr);
+    		searchTerms.put("<dataDGR>", dataDgrString);
+    	}
+    		
 		searchTerms.put("<numeroAtto>", numeroAtto);
 		searchTerms.put("<oggettoAtto>", oggettoAtto);
 		searchTerms.put("<numeroRepertorio>", numeroRepertorio);
 		searchTerms.put("<numeroDGR>", numeroDgr);
-		searchTerms.put("<dataDGR>", dataDgrString);
+		
 
 	 	List<String> commissioniReferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONI_REFERENTI));
     	String commissioneCoreferente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONE_COREFERENTE));
@@ -108,12 +114,14 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     	String esitoVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_ESITO_VOTAZIONE_COMMISSIONE));
     	Date dataVotazione = (Date) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_DATA_VOTAZIONE_COMMISSIONE));
     	
-    	SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yy", Locale.ITALY);
-    	String dataVotazioneString = formatter.format(dataVotazione);
+    	if(dataVotazione != null) {
+    		SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yy", Locale.ITALY);
+    		String dataVotazioneString = formatter.format(dataVotazione);
+        	searchTerms.put("<dataVotazione>", dataVotazioneString);
+    	}
     	
     	searchTerms.put("<quorumVotazione>", quorumVotazione);
     	searchTerms.put("<esitoVotazione>", esitoVotazione);
-    	searchTerms.put("<dataVotazione>", dataVotazioneString);
     	
     	// get Relatore con property crlatti:dataUscitaRelatore non valorizzata
     	
@@ -128,7 +136,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
 		// Generate byte array of filled document content
 		documentFilledByteArray = TemplateFiller.searchAndReplace(templateByteArray, searchTerms);
 		
-		logger.info("Generazione della lettera completata");
+		logger.info("Generazione della lettera completata - template: "+nomeTemplate);
 		
 		return documentFilledByteArray;
 	}

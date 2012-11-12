@@ -44,16 +44,12 @@ public class LetteraWebScript extends AbstractWebScript {
     	InputStream templateInputStream = null;
     	
     	try {
-    		
-    		// Get json parameter
-    		String jsonString = (String)req.getParameter("json");
-	    	JSONObject jsonObject = new JSONObject(jsonString);
-
+    
 	    	// Get json properties
-	    	String idAtto = jsonObject.getString("idAtto");
-    		String tipoTemplate = jsonObject.getString("tipoTemplate");
-    		String gruppo = jsonObject.getString("gruppo");
-        	
+	    	String idAtto = (String)req.getParameter("idAtto");
+    		String tipoTemplate = (String)req.getParameter("tipoTemplate");
+    		String gruppo = (String)req.getParameter("gruppo");
+    		
 			// Search document template node	
 			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
 					SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"");
@@ -72,13 +68,13 @@ public class LetteraWebScript extends AbstractWebScript {
 	    	byte[] documentFilledByteArray = lettereCommandMap.get(tipoTemplate).generate(templateByteArray, templateNodeRef, attoNodeRef, gruppo);
 	    	
 	    	
-	    	
+	    	String nomeLettera = tipoTemplate.split(":")[1];
     				
     		// Set response
             res.setContentType("application/ms-word");
             GregorianCalendar gc = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            res.setHeader( "Content-Disposition", "attachment; filename=\""+tipoTemplate+"_"+sdf.format(gc.getTime())+".doc\"" );
+            res.setHeader( "Content-Disposition", "attachment; filename=\""+nomeLettera+"_"+sdf.format(gc.getTime())+".doc\"" );
     		
     		responseOutputStream = res.getOutputStream();
             responseOutputStream.write(documentFilledByteArray);        

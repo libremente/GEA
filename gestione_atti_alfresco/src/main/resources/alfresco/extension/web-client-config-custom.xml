@@ -771,6 +771,42 @@
 		</property-sheet>
 	</config>
 	
+	<config evaluator="node-type" condition="crltemplate:letteraServComm">
+		<property-sheet>
+			<show-property name="crltemplate:firmatario" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraCommissioni">
+		<property-sheet>
+			<show-property name="crltemplate:firmatario" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraAula">
+		<property-sheet>
+			<show-property name="crltemplate:firmatario" />
+			<show-property name="crltemplate:ufficio" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraAula">
+		<property-sheet>
+			<show-property name="crltemplate:firmatario" />
+			<show-property name="crltemplate:ufficio" />
+			<show-property name="crltemplate:direzione" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crltemplate:letteraTrasmissioneBURLAula">
+		<property-sheet>
+			<show-property name="crltemplate:firmatario" />
+			<show-property name="crltemplate:ufficio" />
+			<show-property name="crltemplate:numeroTelFirmatario" />
+			<show-property name="crltemplate:emailFirmatario" />
+		</property-sheet>
+	</config>
+	
 
 	
 	<config evaluator="string-compare" condition="Advanced Search">

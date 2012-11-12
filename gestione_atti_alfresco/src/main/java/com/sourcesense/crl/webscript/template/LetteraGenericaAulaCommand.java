@@ -41,7 +41,9 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand{
     	// numeroDCR
     	// direzione -> pannello di controllo
     	// <dataOdierna> (gg mese aaaa)
-    
+		
+		QName templateType  =  nodeService.getType(templateNodeRef);
+		String nomeTemplate = templateType.getLocalName();
 				
 		// map object containing terms for search in document
     	HashMap<String, String> searchTerms = new HashMap<String, String>();
@@ -142,7 +144,7 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand{
 		// Generate byte array of filled document content
 		documentFilledByteArray = TemplateFiller.searchAndReplace(templateByteArray, searchTerms);
 		
-		logger.info("Generazione della lettera completata");
+		logger.info("Generazione della lettera completata - template: "+nomeTemplate);
 		
 		return documentFilledByteArray;
 	}

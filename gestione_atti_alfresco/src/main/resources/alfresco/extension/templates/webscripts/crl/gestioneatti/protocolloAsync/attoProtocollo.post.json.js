@@ -411,7 +411,7 @@ if(username=="protocollo" || username=="admin"){
 			
 		} 
 		
-		protocolloLogger.info("Atto importato correttamente. Atto numero:"+numeroAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
+		protocolloLogger.info("Atto trasferito correttamente dal sistema di protocollo. Atto numero:"+numeroAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
 	}
 } else {
 	status.code = 401;
