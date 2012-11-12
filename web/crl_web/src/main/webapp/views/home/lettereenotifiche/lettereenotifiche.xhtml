@@ -10,17 +10,171 @@
 
 <h:form id="lettereForm">
 
-	
+
 	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
 
 		<p:tab id="tab1" title="Creazione lettere">
-            
 
-           <ui:include src="creazioneletteretab.xhtml"/>
-			
+
+			<p:growl id="messages" showDetail="true" />
+
+			<div id="blockedLettere">
+				<p:fieldset legend="Tipo di notifiche" toggleable="true"
+					toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="tiponotifichepanel">
+						<p:row>
+							<p:column>
+
+								<p:tree style="width:90%"
+									value="#{lettereNotificheController.root}" var="node"
+									dynamic="true" cache="false" selectionMode="single"
+									selection="#{lettereNotificheController.selectedNode}"
+									id="tree">
+
+
+									<p:ajax event="select" update=":lettereForm:tabView"
+										listener="#{lettereNotificheController.onNodeSelect}" />
+
+									<p:treeNode expandedIcon="ui-icon-folder-open"
+										collapsedIcon="ui-icon-folder-collapsed">
+										<h:outputText value="#{node}" />
+									</p:treeNode>
+
+									<p:treeNode type="lettera" expandedIcon="ui-icon-folder-open"
+										collapsedIcon="ui-icon-folder-collapsed"
+										icon="ui-icon-document">
+										<h:outputText value="#{node.nome}" />
+									</p:treeNode>
+
+
+								</p:tree>
+
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+				<p:fieldset legend="Dettagli notifica selezionata" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+
+					
+
+						<p:panelGrid styleClass="infoTable" id="insertletterapanel">
+
+
+							<p:row rendered="#{lettereNotificheController.letteraSelected.hasFirmatario}" >
+
+								<p:column>
+									<h:outputLabel for="firmatario" value="Firmatario: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="firmatario"
+										value="#{lettereNotificheController.letteraSelected.firmatario}" />
+								</p:column>
+
+
+
+
+							</p:row>
+
+							<p:row rendered="#{lettereNotificheController.letteraSelected.hasUfficio}" >
+
+								<p:column>
+									<h:outputLabel for="ufficio" value="Ufficio: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="ufficio"
+										value="#{lettereNotificheController.letteraSelected.ufficio}" />
+								</p:column>
+
+
+							</p:row>
+
+
+							<p:row rendered="#{lettereNotificheController.letteraSelected.hasNumeroTelFirmatario}" >
+
+								<p:column>
+									<h:outputLabel for="numeroTelFirmatario"
+										value="Numero Telefono del Firmatario " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="numeroTelFirmatario"
+										value="#{lettereNotificheController.letteraSelected.numeroTelFirmatario}" />
+								</p:column>
+
+
+							</p:row  >
+
+							<p:row rendered="#{lettereNotificheController.letteraSelected.hasEmailFirmatario}">
+
+								<p:column>
+									<h:outputLabel for="emailFirmatario"
+										value="Email del Firmatario: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="emailFirmatario"
+										value="#{lettereNotificheController.letteraSelected.emailFirmatario}" />
+								</p:column>
+
+							</p:row>
+
+							<p:row rendered="#{lettereNotificheController.letteraSelected.hasDirezione}">
+
+								<p:column>
+									<h:outputLabel for="direzione" value="Direzione: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="direzione"
+										value="#{lettereNotificheController.letteraSelected.direzione}" />
+								</p:column>
+
+
+
+
+							</p:row>
+
+
+						</p:panelGrid>
+					
+
+
+				</p:fieldset>
+
+
+				<p>
+					<p:commandButton value="Genera lettera" immediate="true"
+						actionListener="#{lettereNotificheController.salvaLettera}"
+						update="messages" />
+				</p>
+				<p>
+
+
+					<p:commandButton value="Scarica lettera" id="downloadLink"
+						ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+						<p:fileDownload value="#{lettereNotificheController.file}" />
+
+					</p:commandButton>
+
+
+				</p>
+
+
+			</div>
+			<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+			<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedLettere').block({ message: null } );}
+</script>
+
 		</p:tab>
-		
-		
+
+
 	</p:tabView>
 </h:form>
 </html>

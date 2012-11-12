@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.service.rest;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.EsameCommissione;
 import com.sourcesense.crl.business.model.Lettera;
@@ -52,7 +54,8 @@ public class LettereNotificheService {
 			if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "
 						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+						+ ": Alfresco non raggiungibile "); 
+				
 			}
 			
 			
@@ -76,9 +79,9 @@ public class LettereNotificheService {
 	
 	
 	
-	public List<Lettera> getLettere (String url){
+	public Lettera getLettera (String url){
 
-		List<Lettera> listLettere =null;
+		Lettera lettera =null;
 
 		try {
 			WebResource webResource = client.resource(url);
@@ -93,11 +96,13 @@ public class LettereNotificheService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listLettere = objectMapper.readValue(responseMsg,
-					new TypeReference<List<Lettera>>() {
-			});
+			//objectMapper.configure(
+			//		DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			lettera = objectMapper.readValue(responseMsg, Lettera.class
+					);
+			
+			
+			
 
 
 		}catch (JsonMappingException e) {
@@ -113,11 +118,30 @@ public class LettereNotificheService {
 			throw new ServiceNotAvailableException(this.getClass()
 					.getSimpleName(), e);
 		}
-		return listLettere;
+		return lettera;
 	}
 	
 	
-	
+	public InputStream getFile(String url) {
+
+		InputStream responseFile = null;
+		
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource.accept(
+				MediaType.MULTIPART_FORM_DATA).get(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException("Errore - "
+					+ response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+
+		responseFile = response.getEntity(InputStream.class);
+
+		
+		return responseFile;
+
+	}
 	
 
 }

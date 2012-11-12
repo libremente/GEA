@@ -15,60 +15,6 @@
 
 
 
-<p:growl id="messages" showDetail="true" />
 
-<div id="blockedLettere">
-	<p:fieldset legend="Tipo di notifiche" toggleable="true"
-		toggleSpeed="500">
-		<p:panelGrid styleClass="infoTable" id="tiponotifichepanel">
-			<p:row>
-				<p:column>
-
-					<p:tree style="width:90%" value="#{lettereNotificheController.root}" var="node"
-						dynamic="true" cache="false" selectionMode="single"
-						selection="#{lettereNotificheController.selectedNode}" id="tree">
-
-
-						<p:ajax event="select"
-							update=":lettereForm:tabView:letteracrud , :lettereForm:tabView:messages"
-							listener="#{lettereNotificheController.onNodeSelect}" />
-
-						<p:treeNode expandedIcon="ui-icon-folder-open"
-							collapsedIcon="ui-icon-folder-collapsed">
-							<h:outputText value="#{node}" />
-						</p:treeNode>
-
-						<p:treeNode type="lettera" expandedIcon="ui-icon-folder-open"
-							collapsedIcon="ui-icon-folder-collapsed" icon="ui-icon-document">
-							<h:outputText value="#{node.nome}" />
-						</p:treeNode>
-
-
-					</p:tree>
-					
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-	</p:fieldset>
-	<p:fieldset legend="Dettagli notifica selezionata" collapsed="false"
-		toggleable="true" toggleSpeed="500">
-
-		<p:outputPanel id="letteracrud">
-			<ui:include src="#{lettereNotificheController.letteraSelected.urlView}" />
-		</p:outputPanel>
-
-
-	</p:fieldset>
-	<p>
-		<p:commandButton value="Genera lettera" />
-	</p>
-</div>
-<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
-<script>
-		
-if (#{navigationBean.isGuest()}==true) {
-	$.blockUI.defaults.overlayCSS.opacity = 0; 
-	$('#blockedLettere').block({ message: null } );}
-</script>
 
 </html>

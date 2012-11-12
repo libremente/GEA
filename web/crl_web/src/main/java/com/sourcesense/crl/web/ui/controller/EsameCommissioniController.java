@@ -1144,7 +1144,7 @@ public class EsameCommissioniController {
 		}
 	}
 
-	public void registraVotazione() {
+	public String registraVotazione() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -1199,6 +1199,14 @@ public class EsameCommissioniController {
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Registrazione Votazione salvata con successo", ""));
+		
+		//Se deliberante forward su chiusura iter
+		if(Commissione.RUOLO_DELIBERANTE.equals(commissioneUser.getRuolo())){
+			
+		}else{
+			return null;	
+		}
+		return null;
 	}
 
 	private boolean checkAnnullaCommissione() {

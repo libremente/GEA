@@ -32,12 +32,35 @@ public class Lettera implements Cloneable {
 	String tipoTemplate;
 	String urlView;
 	String nome;
+	
 	String firmatario;
 	String ufficio;
 	String direzione;
 	String numeroTelFirmatario;
 	String emailFirmatario;
+	
+	
+	boolean hasFirmatario;
+	boolean hasUfficio;
+	boolean hasDirezione;
+	boolean hasNumeroTelFirmatario;
+	boolean hasEmailFirmatario;
+	
 
+	public void setAuthorities(boolean hasFirmatario,
+	boolean hasUfficio,
+	boolean hasDirezione,
+	boolean hasNumeroTelFirmatario,
+	boolean hasEmailFirmatario){
+		
+		this.hasFirmatario=hasFirmatario;
+		this.hasUfficio=hasUfficio;
+		this.hasDirezione=hasDirezione;
+		this.hasNumeroTelFirmatario=hasNumeroTelFirmatario;
+		this.hasEmailFirmatario=hasEmailFirmatario;
+		
+	}
+	
 	public String getIdAtto() {
 		return idAtto;
 	}
@@ -109,6 +132,48 @@ public class Lettera implements Cloneable {
 	public void setEmailFirmatario(String emailFirmatario) {
 		this.emailFirmatario = emailFirmatario;
 	}
+
+	public boolean isHasFirmatario() {
+		return hasFirmatario;
+	}
+
+	public void setHasFirmatario(boolean hasFirmatario) {
+		this.hasFirmatario = hasFirmatario;
+	}
+
+	public boolean isHasUfficio() {
+		return hasUfficio;
+	}
+
+	public void setHasUfficio(boolean hasUfficio) {
+		this.hasUfficio = hasUfficio;
+	}
+
+	public boolean isHasDirezione() {
+		return hasDirezione;
+	}
+
+	public void setHasDirezione(boolean hasDirezione) {
+		this.hasDirezione = hasDirezione;
+	}
+
+	public boolean isHasNumeroTelFirmatario() {
+		return hasNumeroTelFirmatario;
+	}
+
+	public void setHasNumeroTelFirmatario(boolean hasNumeroTelFirmatario) {
+		this.hasNumeroTelFirmatario = hasNumeroTelFirmatario;
+	}
+
+	public boolean isHasEmailFirmatario() {
+		return hasEmailFirmatario;
+	}
+
+	public void setHasEmailFirmatario(boolean hasEmailFirmatario) {
+		this.hasEmailFirmatario = hasEmailFirmatario;
+	}
+	
+	
 	
 	
 

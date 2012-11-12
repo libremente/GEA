@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.service;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -22,32 +23,26 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	@Autowired
 	private LettereNotificheService lettereNotificheService;
 
+	
+	
 
- 	public List<Lettera>  retrieveLettereServizioCommissioni(){
+ 	public Lettera  getLettera(Lettera lettera){
  		
- 		return lettereNotificheService.getLettere(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_lettere_servizio_commissioni", null));
- 	}
- 	
- 	public List<Lettera>  retrieveLettereCommissioni(){
- 		
- 		return lettereNotificheService.getLettere(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_lettere_commissioni", null));
- 		
- 	}
- 	
- 	
- 	public List<Lettera>  retrieveLettereAula(){
- 		return lettereNotificheService.getLettere(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_lettere_aula", null));
+ 		return lettereNotificheService.getLettera(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_retrieve_lettera", new String[]{lettera.getTipoTemplate()}));
  	}
  	
  	public void  updateLettera(Lettera lettera){
  		 lettereNotificheService.merge(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_lettere_aula", null),lettera);
+				"alfresco_context_url", "alf_update_lettera", null),lettera);
  	}
  	
- 	
+ 	public InputStream getLetteraFile(Lettera lettera , String idAtto, String gruppo) {
+
+		return lettereNotificheService.getFile(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_retrieve_lettera_bin", new String[]{idAtto,lettera.getTipoTemplate(),gruppo} ));
+	}
+	
  	
 	
 	@Override
