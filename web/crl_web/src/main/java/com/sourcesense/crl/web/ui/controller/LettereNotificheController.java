@@ -731,11 +731,11 @@ public class LettereNotificheController implements Serializable{
 			getLetteraSelected().setNumeroTelFirmatario(letteraRet.getNumeroTelFirmatario());
 			getLetteraSelected().setUfficio(letteraRet.getUfficio());
 			
-			/*setDirezione(letteraRet.getDirezione());
+			setDirezione(letteraRet.getDirezione());
 			setEmailFirmatario(letteraRet.getEmailFirmatario());
 			setFirmatario(letteraRet.getFirmatario());
 			setNumeroTelFirmatario(letteraRet.getNumeroTelFirmatario());
-			setUfficio(letteraRet.getUfficio());*/
+			setUfficio(letteraRet.getUfficio());
 			
 		
 		}
@@ -749,11 +749,11 @@ public class LettereNotificheController implements Serializable{
 			
 			
 			
-			/*letteraSelected.setDirezione(this.getDirezione());
+			letteraSelected.setDirezione(this.getDirezione());
 			letteraSelected.setEmailFirmatario(this.getEmailFirmatario());
 			letteraSelected.setFirmatario(this.getFirmatario());
 			letteraSelected.setNumeroTelFirmatario(this.getNumeroTelFirmatario());
-			letteraSelected.setUfficio(this.getUfficio());*/
+			letteraSelected.setUfficio(this.getUfficio());
 			
 			lettereNotificheServiceManager.updateLettera(letteraSelected);
 			
