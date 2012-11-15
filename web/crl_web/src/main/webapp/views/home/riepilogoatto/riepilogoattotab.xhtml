@@ -165,47 +165,27 @@
 
 
 
-<p:fieldset legend="Assegnazioni Pareri "
+<p:fieldset legend="Servizio Commissioni "
 	collapsed="false" toggleable="true" toggleSpeed="500">
 	<p:panelGrid styleClass="infoTable" id="infoUffServSegrComm">
 		<p:row>
-			<p:column>
-				<h:outputText style="font-weight: bold;" value="Data Assegnazione: " />
-				<h:outputText value="#{attoBean.dataAssegnazione}">
-					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-				</h:outputText>
-			</p:column>
-
-			<p:column>
+		<p:column>
 				<h:outputText style="font-weight: bold;"
 					value="Data presa in carico: " />
 				<h:outputText value="#{attoBean.dataPresaInCarico}">
 					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
-		</p:row>
-		<p:row>
+			
 			<p:column>
-				<h:outputText style="font-weight: bold;" value="Esito Validazione: " />
-				<h:outputText value="#{attoBean.esitoValidazione}" />
+				<h:outputText style="font-weight: bold;" value="Valutazione Ammissibilità: " />
+				<h:outputText value="#{attoBean.valutazioneAmmissibilita}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
 			</p:column>
 
-			<p:column>
-				<h:outputText style="font-weight: bold;" value="Data Validazione: " />
-				<h:outputText value="#{attoBean.dataValidazione}">
-					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-				</h:outputText>
-			</p:column>
 		</p:row>
-		<p:row>
-			<p:column colspan="2">
-				<h:outputText style="font-weight: bold;"
-					value="Data Assegnazione Commissioni:  " />
-				<h:outputText value="#{attoBean.dataAssegnazioneCommissioni}">
-					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-				</h:outputText>
-			</p:column>
-		</p:row>
+
 	</p:panelGrid>
 </p:fieldset>
 
