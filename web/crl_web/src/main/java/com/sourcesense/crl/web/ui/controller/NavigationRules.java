@@ -120,8 +120,9 @@ public class NavigationRules {
 				&& !(attoBean.getTipoAtto().equals("PAR")
 						|| attoBean.getTipoAtto().equals("REL")
 						|| attoBean.getTipoAtto().equals("INP")
-						|| attoBean.getTipoAtto().equals("EAC") || attoBean
-						.getTipoAtto().equals("MIS"))
+						|| attoBean.getTipoAtto().equals("EAC")
+						|| attoBean.getTipoAtto().equals("MIS"))
+						|| ! attoBean.getTipologia().equalsIgnoreCase("PRS")
 
 		) {
 			return false;
