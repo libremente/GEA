@@ -15,403 +15,421 @@
 	position="left center" />
 
 <div id="blockedAssegnazione">
-<p:panelGrid styleClass="infoTable" id="assegnazionePanel">
-	<p:row>
-		<p:column>
-			<p>
-				<!-- Messaggio azioni -->
-				<p:growl id="assegnazioneMsg" showDetail="true" sticky="false" />
+	<p:panelGrid styleClass="infoTable" id="assegnazionePanel">
+		<p:row>
+			<p:column>
+				<p>
+					<!-- Messaggio azioni -->
+					<p:growl id="assegnazioneMsg" showDetail="true" sticky="false" />
 
-				<p:confirmDialog id="confirmCommissioneDialog"
-					message="Sei sicuro di voler eliminare la Commissione?"
-					header="Cancellazione Commissione" severity="alert"
-					widgetVar="commissioneDialog">
+					<p:confirmDialog id="confirmCommissioneDialog"
+						message="Sei sicuro di voler eliminare la Commissione?"
+						header="Cancellazione Commissione" severity="alert"
+						widgetVar="commissioneDialog">
 
-					<p:commandButton id="confirmCommissione" value="Salva"
-						oncomplete="commissioneDialog.hide()"
-						action="#{presentazioneAssegnazioneAttoController.removeCommissione}"
-						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
-						update="listaCommissioni" />
-						
-						
-						<p:commandButton id="declineCommissione"  value="Annulla"
+						<p:commandButton id="confirmCommissione" value="Salva"
+							oncomplete="commissioneDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeCommissione}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
+							update="listaCommissioni,:informationForm:informationBar" />
+
+
+						<p:commandButton id="declineCommissione" value="Annulla"
 							onclick="commissioneDialog.hide()" type="button" />
-                
-				</p:confirmDialog>
 
-				<p:confirmDialog id="confirmAnnullaCommissioneDialog"
-					message="Sei sicuro di voler annullare la Commissione?"
-					header="Annullamento Commissione" severity="alert"
-					widgetVar="annullaCommissioneDialog">
+					</p:confirmDialog>
 
-					<p>
-						<h:outputLabel for="dataannullo" value="Data annullo: " />
-						<p:calendar size="10" locale="it_IT" id="dataannullo"
-							pattern="dd/MM/yyyy"
-							value="#{presentazioneAssegnazioneAttoController.dataAnnullo}" />
-					</p>
-					<p:commandButton id="confirmAnnulCommissione" value="Salva"
-						oncomplete="annullaCommissioneDialog.hide()"
-						action="#{presentazioneAssegnazioneAttoController.annulCommissione}"
-						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
-						update="listaCommissioni,:informationForm:informationBar" />
-					<p:commandButton id="declineAnnullaCommissione" value="Annulla"
-						onclick="annullaCommissioneDialog.hide()" type="button" />
+					<p:confirmDialog id="confirmAnnullaCommissioneDialog"
+						message="Sei sicuro di voler annullare la Commissione?"
+						header="Annullamento Commissione" severity="alert"
+						widgetVar="annullaCommissioneDialog">
 
-				</p:confirmDialog>
+						<p>
+							<h:outputLabel for="dataannullo" value="Data annullo: " />
+							<p:calendar size="10" locale="it_IT" id="dataannullo"
+								pattern="dd/MM/yyyy"
+								value="#{presentazioneAssegnazioneAttoController.dataAnnullo}" />
+						</p>
+						<p:commandButton id="confirmAnnulCommissione" value="Salva"
+							oncomplete="annullaCommissioneDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.annulCommissione}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
+							update="listaCommissioni,:informationForm:informationBar" />
+						<p:commandButton id="declineAnnullaCommissione" value="Annulla"
+							onclick="annullaCommissioneDialog.hide()" type="button" />
 
-				<p:confirmDialog id="confirmParereDialog"
-					message="Sei sicuro di voler eliminare il Parere?"
-					header="Cancellazione Parere" severity="alert"
-					widgetVar="parereDialog">
+					</p:confirmDialog>
 
-					<p:commandButton id="confirmParere" value="Salva"
-						oncomplete="parereDialog.hide()"
-						action="#{presentazioneAssegnazioneAttoController.removeParere}"
-						actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
-						update="listaPareri" />
-					<p:commandButton id="declineParere" value="Annulla"
-						onclick="parereDialog.hide()" type="button" />
+					<p:confirmDialog id="confirmParereDialog"
+						message="Sei sicuro di voler eliminare il Parere?"
+						header="Cancellazione Parere" severity="alert"
+						widgetVar="parereDialog">
 
-				</p:confirmDialog>
-			</p>
+						<p:commandButton id="confirmParere" value="Salva"
+							oncomplete="parereDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeParere}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateAssegnazioneHandler}"
+							update="listaPareri" />
+						<p:commandButton id="declineParere" value="Annulla"
+							onclick="parereDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+				</p>
 
 
 
-			<p:fieldset styleClass="fieldSetTab"
-				legend="Assegnazione Commissioni:" collapsed="false"
-				toggleable="true" toggleSpeed="500">
-				<p:panelGrid styleClass="infoTable" id="commissionipanel">
-					<p:row>
-						<p:column colspan="6">
+				<p:fieldset styleClass="fieldSetTab"
+					legend="Assegnazione Commissioni:" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="commissionipanel">
+						<p:row>
+							<p:column colspan="6">
 
-							<p:panelGrid id="addCommissionePanel" styleClass="tableAppend">
-								<f:facet name="header">
+								<p:panelGrid id="addCommissionePanel" styleClass="tableAppend">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Commissione</p:column>
+											<p:column>Data proposta</p:column>
+											<p:column>Data assegnazione</p:column>
+											<p:column>Competenza</p:column>
+											<p:column></p:column>
+										</p:row>
+									</f:facet>
 									<p:row>
-										<p:column>Commissione</p:column>
-										<p:column>Data proposta</p:column>
-										<p:column>Data assegnazione</p:column>
-										<p:column>Competenza</p:column>
-										<p:column></p:column>
-									</p:row>
-								</f:facet>
-								<p:row>
-									<p:column>
-										<p:selectOneMenu id="commissione"
-											value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
-											<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-											<f:selectItems
-												value="#{presentazioneAssegnazioneAttoController.commissioni}" />
-										</p:selectOneMenu>
-									</p:column>
+										<p:column>
+											<p:selectOneMenu id="commissione"
+												value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
+												<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
+												<f:selectItems
+													value="#{presentazioneAssegnazioneAttoController.commissioni}" />
+											</p:selectOneMenu>
+										</p:column>
 
-									<p:column>
-										<p:calendar size="10" locale="it_IT" id="dataproposta"
-											pattern="dd/MM/yyyy"
-											value="#{presentazioneAssegnazioneAttoController.dataProposta}" />
-									</p:column>
+										<p:column>
+											<p:calendar size="10" locale="it_IT" id="dataproposta"
+												pattern="dd/MM/yyyy"
+												value="#{presentazioneAssegnazioneAttoController.dataProposta}" />
+										</p:column>
 
-									<p:column>
-										<p:calendar size="10" locale="it_IT" id="dataassegnazione"
-											pattern="dd/MM/yyyy"
-											value="#{presentazioneAssegnazioneAttoController.dataAssegnazione}" />
-									</p:column>
+										<p:column>
+											<p:calendar size="10" locale="it_IT" id="dataassegnazione"
+												pattern="dd/MM/yyyy"
+												value="#{presentazioneAssegnazioneAttoController.dataAssegnazione}" />
+										</p:column>
 
-									<p:column>
-										<p:selectOneMenu id="ruolo"
-											value="#{presentazioneAssegnazioneAttoController.ruolo}">
-											<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
-											<f:selectItem itemLabel="Referente" itemValue="Referente" />
-											<f:selectItem itemLabel="Co-Referente"
-												itemValue="Co-Referente" />
-											<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
-											<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
-											<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
-										</p:selectOneMenu>
-									</p:column>
-
-									<p:column>
-									
-										<p:commandButton value="Aggiungi"
-											action="#{presentazioneAssegnazioneAttoController.addCommissione}"
-											id="addCommissione"
-											update="listaCommissioni , assegnazioneMsg,:informationForm:informationBar" icon="new-icon" />
-									</p:column>
-
-								</p:row>
-
-							</p:panelGrid>
-
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column colspan="7">
-
-							<p:dataTable id="listaCommissioni"
-								value="#{presentazioneAssegnazioneAttoController.commissioniList}"
-								var="commissione" styleClass="generalInfoTab grey-text"
-								editable="true">
-
-
-								<p:column headerText="Nome" sortBy="#{commissione.descrizione}">
-									<h:outputText value="#{commissione.descrizione}" />
-								</p:column>
-
-								<p:column headerText="Data Proposta" style="width:100px" sortBy="#{commissione.dataProposta}">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="#{commissione.dataProposta}">
-												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-											</h:outputText>
-										</f:facet>
-										<f:facet name="input">
-											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-												value="#{commissione.dataProposta}" />
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
-
-								<p:column headerText="Data Assegn." style="width:100px" sortBy="#{commissione.dataAssegnazione}">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="#{commissione.dataAssegnazione}">
-												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-											</h:outputText>
-										</f:facet>
-										<f:facet name="input">
-											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-												value="#{commissione.dataAssegnazione}" />
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
-
-								<p:column headerText="Competenza" sortBy="#{commissione.ruolo}">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="#{commissione.ruolo}" />
-										</f:facet>
-										<f:facet name="input">
-											<p:selectOneMenu value="#{commissione.ruolo}">
+										<p:column>
+											<p:selectOneMenu id="ruolo"
+												value="#{presentazioneAssegnazioneAttoController.ruolo}">
 												<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
 												<f:selectItem itemLabel="Referente" itemValue="Referente" />
-												<f:selectItem itemLabel="Co-Referente" itemValue="Co-Referente" />
+												<f:selectItem itemLabel="Co-Referente"
+													itemValue="Co-Referente" />
 												<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
 												<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
-												<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
+												<f:selectItem itemLabel="Deliberante"
+													itemValue="Deliberante" />
 											</p:selectOneMenu>
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
+										</p:column>
 
-								<p:column headerText="Stato" sortBy="#{commissione.stato}">
-                                    <h:outputText value="#{commissione.stato}" />
-								</p:column>
+										<p:column>
 
-								<p:column headerText="Data Ann." style="width:100px" sortBy="#{commissione.dataAnnullo}">
+											<p:commandButton value="Aggiungi"
+												action="#{presentazioneAssegnazioneAttoController.addCommissione}"
+												id="addCommissione"
+												update="listaCommissioni , assegnazioneMsg,:informationForm:informationBar"
+												icon="new-icon" />
+										</p:column>
 
-									<h:outputText value="#{commissione.dataAnnullo}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
+									</p:row>
 
-								</p:column>
+								</p:panelGrid>
 
-								<p:column headerText="Annulla">
-                                   <c:set  value="#{ commissione.stato ne 'Votato' and 
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="7">
+
+								<p:dataTable id="listaCommissioni"
+									value="#{presentazioneAssegnazioneAttoController.commissioniList}"
+									var="commissione" styleClass="generalInfoTab grey-text"
+									editable="true">
+
+
+									<p:column headerText="Nome" sortBy="#{commissione.descrizione}">
+										<h:outputText value="#{commissione.descrizione}" />
+									</p:column>
+
+									<p:column headerText="Data Proposta" style="width:100px"
+										sortBy="#{commissione.dataProposta}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{commissione.dataProposta}">
+													<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</f:facet>
+											<f:facet name="input">
+												<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+													value="#{commissione.dataProposta}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Data Assegn." style="width:100px"
+										sortBy="#{commissione.dataAssegnazione}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{commissione.dataAssegnazione}">
+													<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</f:facet>
+											<f:facet name="input">
+												<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+													value="#{commissione.dataAssegnazione}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Competenza" sortBy="#{commissione.ruolo}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{commissione.ruolo}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectOneMenu value="#{commissione.ruolo}">
+													<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
+													<f:selectItem itemLabel="Referente" itemValue="Referente" />
+													<f:selectItem itemLabel="Co-Referente"
+														itemValue="Co-Referente" />
+													<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
+													<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
+													<f:selectItem itemLabel="Deliberante"
+														itemValue="Deliberante" />
+												</p:selectOneMenu>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Stato" sortBy="#{commissione.stato}">
+										<h:outputText value="#{commissione.stato}" />
+									</p:column>
+
+									<p:column headerText="Data Ann." style="width:100px"
+										sortBy="#{commissione.dataAnnullo}">
+
+										<h:outputText value="#{commissione.dataAnnullo}">
+											<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+										</h:outputText>
+
+									</p:column>
+
+									<p:column headerText="Annulla">
+										<c:set
+											value="#{ commissione.stato ne 'Votato' and 
                                                   commissione.stato ne 'Trasmesso' and
                                                   commissione.stato ne 'Annullato'
-                                                 }" var="annullabile" />   
-										
-										<p:commandButton rendered="#{annullabile}" oncomplete="annullaCommissioneDialog.show()" icon="undo-icon">
+                                                 }"
+											var="annullabile" />
+
+										<p:commandButton rendered="#{annullabile}"
+											oncomplete="annullaCommissioneDialog.show()" icon="undo-icon">
 											<f:setPropertyActionListener
 												value="#{commissione.descrizione}"
 												target="#{presentazioneAssegnazioneAttoController.commissioneToAnnul}" />
 										</p:commandButton>
-									
-								</p:column>
 
-								<!-- <p:column headerText="Elimina" >
+									</p:column>
 
 
-									<p:commandButton oncomplete="commissioneDialog.show()"
-										icon="delete-icon">
 
-										<f:setPropertyActionListener
-											value="#{commissione.descrizione}"
-											target="#{presentazioneAssegnazioneAttoController.commissioneToDelete}" />
-									</p:commandButton>
-								</p:column>-->
+									<p:column headerText="Modifica">
+										<c:set var="updatable"
+											value="${ (commissione.stato != 'Assegnato') and  (commissione.stato != 'Annullato' ) }" />
+										<p:rowEditor rendered="${updatable}" />
+									</p:column>
 
-								<p:column headerText="Modifica">
-								    <c:set var="updatable" value="${ (commissione.stato != 'Assegnato') and  (commissione.stato != 'Annullato' ) }" /> 
-									<p:rowEditor rendered="${updatable}" />
-								</p:column>
+									<p:column headerText="Elimina">
 
-							</p:dataTable>
-						</p:column>
-					</p:row>
-					<p:row><p:column>
+
+										<p:commandButton rendered="#{annullabile}"
+											oncomplete="commissioneDialog.show()" icon="delete-icon">
+
+											<f:setPropertyActionListener
+												value="#{commissione.descrizione}"
+												target="#{presentazioneAssegnazioneAttoController.commissioneToDelete}" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</p:column>
+						</p:row>
+						<p:row><p:column>
 					<p:commandLink value="Creazione lettera di assegnazione" />
 					</p:column></p:row>
 					<p:row><p:column>
 					<p:commandLink value="Creazione lettera di modifica assegnazione" />
 					</p:column></p:row>
-				</p:panelGrid>
-			</p:fieldset>
-		</p:column>
-	</p:row>
-	<p:row>
-		<p:column>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
 
-			<p:fieldset legend="Assegnazioni Pareri" collapsed="false"
-				toggleable="true" toggleSpeed="500">
-				<p:panelGrid styleClass="infoTable" id="pareripanel">
+				<p:fieldset legend="Assegnazioni Pareri" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="pareripanel">
 
 
-					<p:row>
-						<p:column colspan="5">
-							<p:panelGrid id="addParerePanel" styleClass="tableAppend">
+						<p:row>
+							<p:column colspan="5">
+								<p:panelGrid id="addParerePanel" styleClass="tableAppend">
 
-								<f:facet name="header">
+									<f:facet name="header">
+										<p:row>
+											<p:column>Organismo Statutario</p:column>
+											<p:column>Data assegnazione</p:column>
+											<p:column>Data annullo</p:column>
+											<p:column>Obbligatorio</p:column>
+											<p:column></p:column>
+										</p:row>
+									</f:facet>
 									<p:row>
-										<p:column>Organismo Statutario</p:column>
-										<p:column>Data assegnazione</p:column>
-										<p:column>Data annullo</p:column>
-										<p:column>Obbligatorio</p:column>
-										<p:column></p:column>
+										<p:column>
+											<p:selectOneMenu id="organismostatutario"
+												value="#{presentazioneAssegnazioneAttoController.nomeOrganismoStatutario}">
+												<f:selectItem itemLabel="Scegli Organismo Statutario"
+													itemValue="" />
+												<f:selectItems
+													value="#{presentazioneAssegnazioneAttoController.organismiStatutari}" />
+											</p:selectOneMenu>
+										</p:column>
+
+										<p:column>
+											<p:calendar size="10" locale="it_IT"
+												id="dataassegnazioneorganismo" pattern="dd/MM/yyyy"
+												value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneParere}" />
+										</p:column>
+
+										<p:column>
+											<p:calendar size="10" locale="it_IT"
+												id="dataannulloorganismostatutario" pattern="dd/MM/yyyy"
+												value="#{presentazioneAssegnazioneAttoController.dataAnnulloParere}" />
+										</p:column>
+
+										<p:column>
+											<p:selectBooleanCheckbox id="obbligatorio"
+												value="#{presentazioneAssegnazioneAttoController.obbligatorio}" />
+										</p:column>
+
+										<p:column>
+											<p:commandButton value="Aggiungi"
+												action="#{presentazioneAssegnazioneAttoController.addParere}"
+												id="addParere" update="listaPareri , assegnazioneMsg"
+												icon="new-icon" />
+										</p:column>
+
 									</p:row>
-								</f:facet>
-								<p:row>
-									<p:column>
-										<p:selectOneMenu id="organismostatutario"
-											value="#{presentazioneAssegnazioneAttoController.nomeOrganismoStatutario}">
-											<f:selectItem itemLabel="Scegli Organismo Statutario"
-												itemValue="" />
-											<f:selectItems
-												value="#{presentazioneAssegnazioneAttoController.organismiStatutari}" />
-										</p:selectOneMenu>
-									</p:column>
-
-									<p:column>
-										<p:calendar size="10" locale="it_IT"
-											id="dataassegnazioneorganismo" pattern="dd/MM/yyyy"
-											value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneParere}" />
-									</p:column>
-
-									<p:column>
-										<p:calendar size="10" locale="it_IT"
-											id="dataannulloorganismostatutario" pattern="dd/MM/yyyy"
-											value="#{presentazioneAssegnazioneAttoController.dataAnnulloParere}" />
-									</p:column>
-
-									<p:column>
-										<p:selectBooleanCheckbox id="obbligatorio"
-											value="#{presentazioneAssegnazioneAttoController.obbligatorio}" />
-									</p:column>
-
-									<p:column>
-										<p:commandButton value="Aggiungi"
-											action="#{presentazioneAssegnazioneAttoController.addParere}"
-											id="addParere" update="listaPareri , assegnazioneMsg"
-											icon="new-icon" />
-									</p:column>
-
-								</p:row>
-							</p:panelGrid>
+								</p:panelGrid>
 
 
-						</p:column>
-					</p:row>
+							</p:column>
+						</p:row>
 
-					<p:row>
-						<p:column colspan="5">
+						<p:row>
+							<p:column colspan="5">
 
-							<p:dataTable id="listaPareri"
-								value="#{presentazioneAssegnazioneAttoController.organismiList}"
-								var="organismo" styleClass="generalInfoTab grey-text"
-								editable="true">
+								<p:dataTable id="listaPareri"
+									value="#{presentazioneAssegnazioneAttoController.organismiList}"
+									var="organismo" styleClass="generalInfoTab grey-text"
+									editable="true">
 
-								<p:column headerText="Nome" sortBy="#{organismo.descrizione}">
-									<h:outputText value="#{organismo.descrizione}" />
+									<p:column headerText="Nome" sortBy="#{organismo.descrizione}">
+										<h:outputText value="#{organismo.descrizione}" />
 									</p:column>
 
 
-								<p:column headerText="Data Assegnazione" sortBy="#{organismo.dataAssegnazione}">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="#{organismo.dataAssegnazione}">
-												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-											</h:outputText>
-										</f:facet>
-										<f:facet name="input">
-											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-												value="#{organismo.dataAssegnazione}" />
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
+									<p:column headerText="Data Assegnazione"
+										sortBy="#{organismo.dataAssegnazione}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{organismo.dataAssegnazione}">
+													<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</f:facet>
+											<f:facet name="input">
+												<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+													value="#{organismo.dataAssegnazione}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
 
-								<p:column headerText="Data Annullo" sortBy="#{organismo.dataAnnullo}">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="#{organismo.dataAnnullo}">
-												<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-											</h:outputText>
-										</f:facet>
-										<f:facet name="input">
-											<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
-												value="#{organismo.dataAnnullo}" />
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
+									<p:column headerText="Data Annullo"
+										sortBy="#{organismo.dataAnnullo}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{organismo.dataAnnullo}">
+													<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</f:facet>
+											<f:facet name="input">
+												<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+													value="#{organismo.dataAnnullo}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
 
 
 
-								<p:column headerText="Obbligatorio" sortBy="#{organismo.obbligatorio}">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="si" rendered="#{organismo.obbligatorio}" />
-											<h:outputText value="no" rendered="#{!organismo.obbligatorio}" />
-										</f:facet>
-										<f:facet name="input">
-											<p:selectBooleanCheckbox value="#{organismo.obbligatorio}" />
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
+									<p:column headerText="Obbligatorio"
+										sortBy="#{organismo.obbligatorio}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si"
+													rendered="#{organismo.obbligatorio}" />
+												<h:outputText value="no"
+													rendered="#{!organismo.obbligatorio}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{organismo.obbligatorio}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
 
-								<p:column headerText="Elimina">
+									<p:column headerText="Elimina">
 
-									<p:commandButton oncomplete="parereDialog.show()"
-										icon="delete-icon">
+										<p:commandButton oncomplete="parereDialog.show()"
+											icon="delete-icon">
 
-										<f:setPropertyActionListener value="#{organismo.descrizione}"
-											target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
-									</p:commandButton>
-								</p:column>
+											<f:setPropertyActionListener value="#{organismo.descrizione}"
+												target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
+										</p:commandButton>
+									</p:column>
 
-								<p:column headerText="Modifica">
-									<p:rowEditor />
-								</p:column>
+									<p:column headerText="Modifica">
+										<p:rowEditor />
+									</p:column>
 
-							</p:dataTable>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-			</p:fieldset>
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
 
-		</p:column>
-	</p:row>
-	<p:row>
-		<p:column>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
 
-			<p>
-				<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva selezione" id="confermaassegnazione"
-					action="#{presentazioneAssegnazioneAttoController.confermaAssegnazione}"
-					update="assegnazioneMsg , commissionipanel , :informationForm:informationBar" />
-			</p>
+				<p>
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+						value="Salva selezione" id="confermaassegnazione"
+						action="#{presentazioneAssegnazioneAttoController.confermaAssegnazione}"
+						update="assegnazioneMsg , commissionipanel , :informationForm:informationBar" />
+				</p>
 
-		</p:column>
-	</p:row>
-</p:panelGrid>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
 </div>
 <script>
 

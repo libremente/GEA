@@ -165,9 +165,9 @@ public class PresentazioneAssegnazioneAttoController {
 				.getAllegati()));
 		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto
 				.getFirmatari()));
-		
+
 		Collections.sort(firmatariList);
-		
+
 		this.commissioniList = new ArrayList<Commissione>(
 				Clonator.cloneList(atto.getPassaggi().get(0).getCommissioni()));
 		this.organismiList = new ArrayList<OrganismoStatutario>(
@@ -423,7 +423,8 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setDataDgr(atto.getDataDgr());
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
 
-		attoBean.getAtto().setFirmatari(Clonator.cloneList(getOrderedFirmatari()));
+		attoBean.getAtto().setFirmatari(
+				Clonator.cloneList(getOrderedFirmatari()));
 
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
@@ -468,7 +469,7 @@ public class PresentazioneAssegnazioneAttoController {
 			}
 
 		}
-        Collections.sort(firmatariList);
+		Collections.sort(firmatariList);
 		return firmatariList;
 
 	}
@@ -645,6 +646,35 @@ public class PresentazioneAssegnazioneAttoController {
 				break;
 			}
 		}
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		int countActive = 0;
+		
+		for (Commissione element : commissioniList) {
+			if (    (element.getRuolo().equals(Commissione.RUOLO_REFERENTE)
+					||element.getRuolo().equals(Commissione.RUOLO_REDIGENTE)
+					||element.getRuolo().equals(Commissione.RUOLO_COREFERENTE)
+					||element.getRuolo().equals(Commissione.RUOLO_DELIBERANTE))
+					&& !element.getStato().equals(Commissione.STATO_ANNULLATO)
+					) {
+
+					countActive++;
+				    break;
+			}
+		}
+		
+		
+        if(commissioniList.size()==0 || countActive== 0){
+		    	
+        	atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			attoBean.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+		}
+
+		attoServiceManager.salvaAssegnazionePresentazione(atto);
+		attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
 	}
 
 	private boolean checkCommissioniRuolo() {

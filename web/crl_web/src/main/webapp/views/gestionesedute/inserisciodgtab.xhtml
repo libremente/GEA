@@ -571,7 +571,14 @@
 				</p:column>
 
 				<p:column sortBy="#{atto.numeroAtto}" headerText="N.Atto">
+				
+					
+					
+					<p:commandLink
+					onclick="window.open('atto?numeroatto=#{atto.numeroAtto}', 'popupWindowName', 'dependent=yes, menubar=no, toolbar=no'); return false;" 
+					update="listaAtti">
 					<h:outputText value="#{atto.numeroAtto}" />
+				</p:commandLink>
 				</p:column>
 				<p:column sortBy="#{atto.numeroProtocollo}"
 					headerText="N° Protocollo">

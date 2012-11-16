@@ -25,6 +25,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoEAC;
 import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.business.model.ColonnaAtto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.util.LazyAttoDataModel;
@@ -32,6 +33,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +49,12 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -307,6 +315,86 @@ public class SearchAttoController {
 
 	
 
+	public void postProcessXLS(Object document) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {  
+	    
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean"));
+		
+		HSSFWorkbook wb = (HSSFWorkbook) document;  
+	    wb.removeSheetAt(0);
+		HSSFSheet sheet = wb.createSheet();
+		sheet.createRow(0);
+	    
+		
+		HSSFCellStyle cellStyle = wb.createCellStyle();    
+	    cellStyle.setFillForegroundColor(HSSFColor.YELLOW.index);  
+	    cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		
+	    HSSFCell cell = sheet.getRow(0).createCell(0);
+	    cell.setCellValue("Tipo atto");
+	    cell.setCellStyle(cellStyle);
+	    cell = sheet.getRow(0).createCell(1);
+	    cell.setCellValue("N° atto");
+	    cell.setCellStyle(cellStyle);
+	    
+	    
+	    int colCount=2;
+		
+	    for (ColonnaAtto colonna : userBean.getColonneTotali()) {
+			
+	    	HSSFCell cellRec = sheet.getRow(0).createCell(colCount);
+	    	cellRec.setCellValue(colonna.getNome());
+	    	cellRec.setCellStyle(cellStyle);
+	    	colCount++;
+	    	
+		}
+	    
+	    
+	    int rowNum =1;
+	    
+	    for (Atto atto : listAtti) {
+	    	
+	    	sheet.createRow(rowNum);
+	    	HSSFCell cella = sheet.getRow(rowNum).createCell(0);
+	    	cella.setCellValue(atto.getTipo());
+	    	cella = sheet.getRow(rowNum).createCell(1);
+	    	cella.setCellValue(atto.getNumeroAtto());
+		    
+	    	int colConta=2;
+	    	DateFormat myDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    	
+	    	for (ColonnaAtto colonna : userBean.getColonneTotali()) {
+	    		
+	    		Field privateStringField = atto.getClass().getDeclaredField(colonna.getAttoProperty());
+
+	    	    privateStringField.setAccessible(true);
+	    		
+	    	    cella = sheet.getRow(rowNum).createCell(colConta);
+		    	
+	    	    String value = "";
+	    	    
+	    	    if(privateStringField.get(atto) instanceof Date){
+	    	    	
+	    	    	value=myDateFormat.format((Date)privateStringField.get(atto));
+	    	    	
+	    	    }else{
+	    	    	
+	    	    	value=(String)privateStringField.get(atto);
+	    	    }
+	    	    
+	    	    cella.setCellValue(value);
+	    		colConta++;
+	    	}
+	    	
+			rowNum++;
+		}
+	    
+	    
+	     
+	}  
+	
+	
 	
 	public String attoDetail(String idAttoParam) {
 

@@ -117,10 +117,23 @@ public class Atto implements Cloneable
 	
 	private List <Organo> organi = new ArrayList<Organo>();
 	private List <Firmatario> firmatari = new ArrayList<Firmatario>();
+	private String elencoFirmatari;
 	private List <Relatore> relatori = new ArrayList<Relatore>();
+	private String relatore;
+	private Date dataNominaRelatore;
 	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
 	private List <Allegato> allegati = new ArrayList<Allegato>();
 	//private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
+	
+	private String elencoAbbinamenti;
+	private String esitoVotazioneCommissioneReferente;
+	private Date dataVotazioneCommissione;
+	private Date dataScadenza;
+	private Date dataRichiestaIscrizioneAula;
+	private String esitoVotazioneAula;
+	private Date dataVotazioneAula;
+	private String numeroDcr;
+	private String numeroLcr;
 	
 	private List <Link> linksPresentazioneAssegnazione = new ArrayList<Link>();
 	
@@ -131,6 +144,8 @@ public class Atto implements Cloneable
 	private List <CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private List <CollegamentoLeggiRegionali> collegamentiLeggiRegionali = new ArrayList<CollegamentoLeggiRegionali>();
 	private List <Passaggio> passaggi = new ArrayList<Passaggio>();
+	private String commissioniNonConsultive;
+	private String commissioniConsultive;
 	
 	private Date dataPresaInCarico;
 	private String valutazioneAmmissibilita;
@@ -198,7 +213,8 @@ public class Atto implements Cloneable
 	}
 
 	public String getPrimoFirmatario() {
-		return primoFirmatario;
+		
+    		return primoFirmatario;
 	}
 
 	public void setPrimoFirmatario(String primoFirmatario) {
@@ -784,6 +800,126 @@ public class Atto implements Cloneable
 	public void setDataAssegnazioneCommissioni(Date dataAssegnazioneCommissioni) {
 		this.dataAssegnazioneCommissioni = dataAssegnazioneCommissioni;
 	}
+
+	public String getElencoFirmatari() {
+		
+				return elencoFirmatari;
+	}
+
+	public void setElencoFirmatari(String elencoFirmatari) {
+		this.elencoFirmatari = elencoFirmatari;
+	}
+
+	public String getCommissioniNonConsultive() {
+		
+		
+		return commissioniNonConsultive;
+	}
+
+	public void setCommissioniNonConsultive(String commissioniNonConsultive) {
+		this.commissioniNonConsultive = commissioniNonConsultive;
+	}
+
+	public String getCommissioniConsultive() {
+		
+		return commissioniConsultive;
+	}
+
+	public void setCommissioniConsultive(String commissioniConsultive) {
+		this.commissioniConsultive = commissioniConsultive;
+	}
+
+	public String getRelatore() {
+		
+		return relatore;
+	}
+
+	public void setRelatore(String relatore) {
+		this.relatore = relatore;
+	}
+
+	public Date getDataNominaRelatore() {
+		return dataNominaRelatore;
+	}
+
+	public void setDataNominaRelatore(Date dataNominaRelatore) {
+		this.dataNominaRelatore = dataNominaRelatore;
+	}
+
+	public String getElencoAbbinamenti() {
+		return elencoAbbinamenti;
+	}
+
+	public void setElencoAbbinamenti(String elencoAbbinamenti) {
+		this.elencoAbbinamenti = elencoAbbinamenti;
+	}
+
+	public String getEsitoVotazioneCommissioneReferente() {
+		return esitoVotazioneCommissioneReferente;
+	}
+
+	public void setEsitoVotazioneCommissioneReferente(
+			String esitoVotazioneCommissioneReferente) {
+		this.esitoVotazioneCommissioneReferente = esitoVotazioneCommissioneReferente;
+	}
+
+	public Date getDataVotazioneCommissione() {
+		return dataVotazioneCommissione;
+	}
+
+	public void setDataVotazioneCommissione(Date dataVotazioneCommissione) {
+		this.dataVotazioneCommissione = dataVotazioneCommissione;
+	}
+
+	public Date getDataScadenza() {
+		return dataScadenza;
+	}
+
+	public void setDataScadenza(Date dataScadenza) {
+		this.dataScadenza = dataScadenza;
+	}
+
+	public Date getDataRichiestaIscrizioneAula() {
+		return dataRichiestaIscrizioneAula;
+	}
+
+	public void setDataRichiestaIscrizioneAula(Date dataRichiestaIscrizioneAula) {
+		this.dataRichiestaIscrizioneAula = dataRichiestaIscrizioneAula;
+	}
+
+	public String getEsitoVotazioneAula() {
+		return esitoVotazioneAula;
+	}
+
+	public void setEsitoVotazioneAula(String esitoVotazioneAula) {
+		this.esitoVotazioneAula = esitoVotazioneAula;
+	}
+
+	public Date getDataVotazioneAula() {
+		return dataVotazioneAula;
+	}
+
+	public void setDataVotazioneAula(Date dataVotazioneAula) {
+		this.dataVotazioneAula = dataVotazioneAula;
+	}
+
+	public String getNumeroDcr() {
+		return numeroDcr;
+	}
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.numeroDcr = numeroDcr;
+	}
+
+	public String getNumeroLcr() {
+		return numeroLcr;
+	}
+
+	public void setNumeroLcr(String numeroLcr) {
+		this.numeroLcr = numeroLcr;
+	}
+	
+	
 	
 	
 	

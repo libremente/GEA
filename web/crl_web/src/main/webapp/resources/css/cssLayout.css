@@ -177,6 +177,13 @@ padding: 8px 19px 4px 10px ;
 	background-image: url(../img/show.png) !important;
 }
 
+
+.columns-icon{
+	
+	background-image: url(../img/columns.jpeg) !important;
+}
+
+
 .generalInfoTab thead, th{
 	
 	background-color:  #E6E6FA !important;
