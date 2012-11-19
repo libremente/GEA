@@ -75,8 +75,6 @@ function getCommissioneTarget(json, passaggio, commissione){
 }
 
 
-
-
 function getPassaggioTarget(json, passaggio){
 	
 	var passaggi = json.get("atto").get("passaggi");
@@ -92,4 +90,42 @@ function getPassaggioTarget(json, passaggio){
 	}
 	
 	return passaggioTarget;
+}
+
+function getLastPassaggio(attoNodeRef){
+	
+	var passaggio;
+	
+	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
+	var passaggiFolderNode = attoNodeRef.childrenByXPath(passaggiXPathQuery)[0];
+	
+	var listaPassaggiXPathQuery = "*[starts-with(@cm:name,'Passaggio')]"
+	var listaPassaggiFolderNode = passaggiFolderNode.childrenByXPath(listaPassaggiXPathQuery);
+	
+	var passaggioMax = 0;
+	
+	for(var i=0; i<listaPassaggiFolderNode.length; i++){
+		
+		var nomePassaggio = listaPassaggiFolderNode[i].name;
+		numeroPassaggio = parseInt(nomePassaggio.substring(9));
+		
+		if(numeroPassaggio > passaggioMax) {
+			passaggioMax = numeroPassaggio;
+			passaggio = listaPassaggiFolderNode[i] ;
+		}
+	}
+		
+	return passaggio;
+}
+
+function canChangeStatoAtto(ruoloCommissione) {
+
+	if (""+ruoloCommissione+"" == "Referente" || ""+ruoloCommissione+"" == "Deliberante" 
+		|| ""+ruoloCommissione+"" == "Redigente" || ""+ruoloCommissione+"" == "Co-Referente"){
+		
+		return true;
+	}else{
+		return false;
+	}
+
 }

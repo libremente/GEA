@@ -17,12 +17,14 @@ var dataIniziativaA = atto.get("dataIniziativaA");
 
 //campi ricerca avanzata
 
+// private String relatore;    
+
 //pannello sinistra
 var tipoChiusura = atto.get("tipoChiusura");
-var esitoVotoComRef = atto.get("esitoVotoComRef");
+var esitoVotoComRef = atto.get("esitoVotoCommissioneReferente");
 var esitoVotoAula = atto.get("esitoVotoAula");
-var commReferente = atto.get("commReferente");
-var commConsultiva = atto.get("commConsultiva");
+var commReferente = atto.get("commissioneConsultiva");
+var commConsultiva = atto.get("commissioneConsultiva");
 var redigente = atto.get("redigente");
 var deliberante = atto.get("deliberante");
 var numeroLcr = atto.get("numeroLcr");
@@ -35,11 +37,11 @@ var stralcio = atto.get("stralcio");
 var dataPubblicazioneDa = atto.get("dataPubblicazioneDa");
 var dataPubblicazioneA = atto.get("dataPubblicazioneA");
 
-var dataSedutaScDa = atto.get("dataSedutaScDa");
-var dataSedutaScA = atto.get("dataSedutaScA");
+var dataSedutaScDa = atto.get("dataSedutaSCDa");
+var dataSedutaScA = atto.get("dataSedutaSCA");
 
-var dataSedutaCommDa = atto.get("dataSedutaCommDa");
-var dataSedutaCommA = atto.get("dataSedutaCommA");
+var dataSedutaCommDa = atto.get("dataSedutaCommissioneDa");
+var dataSedutaCommA = atto.get("dataSedutaCommissioneA");
 
 var dataSedutaAulaDa = atto.get("dataSedutaAulaDa");
 var dataSedutaAulaA = atto.get("dataSedutaAulaA");
@@ -300,4 +302,132 @@ if(checkIsNotNull(numeroDgr)){
 }
 
 var attiResults = search.luceneSearch(luceneQuery);
-model.atti = attiResults;
+
+
+// logica per la creazione degli oggetti da visualizzare nei risultati
+
+var attiResultsObj = new Array();
+
+for(var i=0; i< attiResults.length; i++){
+	
+	var attoResult = attiResults[i];
+	var attoResultObj = new Object();
+	
+	attoResultObj.id = attoResult.nodeRef.toString();
+	
+
+	attoResultObj.tipo =  attoResult.typeShort.substring(12,15);
+	
+	attoResultObj.numeroAtto = attoResult.properties["crlatti:numeroAtto"];
+	attoResultObj.oggetto = attoResult.properties["crlatti:oggetto"];
+	attoResultObj.primoFirmatario = attoResult.properties["crlatti:primoFirmatario"];
+	attoResultObj.stato = attoResult.properties["crlatti:statoAtto"];
+	attoResultObj.elencoFirmatari = attoResult.properties["crlatti:firmatari"];
+	attoResultObj.tipoIniziativa = attoResult.properties["crlatti:tipoIniziativa"];
+	attoResultObj.dataPresentazione = attoResult.properties["crlatti:dataIniziativa"];
+	attoResultObj.tipoChiusura = attoResult.properties["crlatti:tipoChiusura"];
+	
+	var commissioniConsultiveArray = attoResult.properties["crlatti:commConsultiva"];
+	var commissioniConsultiveString = "";
+	
+	for(var j=0; j<commissioniConsultiveArray.length; j++){
+		commissioniConsultiveString += commissioniConsultiveArray[j];
+		if(j!=commissioniConsultiveArray.length-1){
+			commissioniConsultiveString += ",";
+		}
+	}
+	
+	attoResultObj.commissioniConsultive = commissioniConsultiveString
+	
+	var commissioniReferentiArray = attoResult.properties["crlatti:commReferente"];
+	var commissioniReferentiString = "";
+	
+	for(var j=0; j<commissioniReferentiArray.length; j++){
+		commissioniReferentiString += commissioniReferentiArray[j];
+		if(j!=commissioniReferentiArray.length-1){
+			commissioniReferentiString += ",";
+		}
+	}
+		
+	
+	attoResultObj.commissioniNonConsultive = commissioniReferentiString + "," + attoResult.properties["crlatti:commCoreferente"] + "," + 
+		attoResult.properties["crlatti:commRedigente"] + "," + attoResult.properties["crlatti:commDeliberante"]
+
+	
+	var passaggioFolderNode = getLastPassaggio(attoResult);
+	
+	var abbinamentiFolderXpathQuery = "*[@cm:name='Abbinamenti']";
+	var abbinamentiFolderNode = passaggioFolderNode.childrenByXPath(abbinamentiFolderXpathQuery)[0];
+	abbinamenti = abbinamentiFolderNode.getChildAssocsByType("crlatti:abbinamento");
+	
+	abbinamentiString = "";
+	
+	for(var j=0 ; j<abbinamenti.lenght; j++){
+		abbinamentiString += abbinamenti[j].name;
+		if(j!=abbinamenti.length-1){
+			abbinamentiString += ",";
+		}
+	}
+	
+	attoResultObj.elencoAbbinamenti = abbinamentiString;
+	
+	
+	var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
+	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
+	commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
+
+	for(var j=0 ; j<commissioni.lenght; j++){
+
+		var commissioneCorrente = commissioni[j];
+		
+		if(commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Referente" || commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Delibernate"
+			|| commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Redigente") {
+			
+			attoResultObj.dataAssegnazione = commissioneCorrente.properties["crlatti:dataAssegnazioneCommissione"];
+			attoResultObj.esitoVotazioneCommissioneReferente = commissioneCorrente.properties["crlatti:esitoVotazioneCommissione"];
+			attoResultObj.dataVotazioneCommissione = commissioneCorrente.properties["crlatti:dataVotazioneCommissione"];
+			attoResultObj.dataRichiestaIscrizioneAula = commissioneCorrente.properties["crlatti:dataRichiestaIscrizioneAula"];
+		
+			var relatoriXPathQuery = "*[@cm:name='Relatori']";
+			var relatoriCommissioneFolderNode = commissioneCorrente.childrenByXPath(relatoriXPathQuery)[0];
+			
+			var relatoriNode = relatoriCommissioneFolderNode.getChildAssocsByType("crlatti:relatore");
+			
+			attoResultObj.relatore = relatoriNode[0].name;
+			attoResultObj.dataNominaRelatore = relatoriNode[0].properties["crlatti:dataNominaRelatore"];		
+		}
+	}
+	
+
+	attoResultObj.dataScadenza = attoResult.properties["crlatti:dataScadenza"];
+	
+	attoResultObj.esitoVotazioneAula = attoResult.properties["crlatti:esitoVotoAula"];
+	attoResultObj.dataVotazioneAula = attoResult.properties["crlatti:dataSedutaAula"];
+		
+	attoResultObj.numeroPubblicazioneBURL = attoResult.properties["crlatti:numeroPubblicazioneBURL"];
+	attoResultObj.dataPubblicazioneBURL = attoResult.properties["crlatti:dataPubblicazioneBURL"];
+	
+	attoResultObj.numeroDcr = attoResult.properties["crlatti:numeroDcr"];
+	attoResultObj.numeroLcr = attoResult.properties["crlatti:numeroLcr"];
+	
+	attoResultObj.numeroLr = attoResult.properties["crlatti:numeroLr"];
+	attoResultObj.dataLR = attoResult.properties["crlatti:dataLr"];
+	
+	
+	var noteGeneraliFilename = "Note Generali.txt";
+	var noteGeneraliXPathQuery = "*[@cm:name='"+noteGeneraliFilename+"']";
+	var noteGenerali = attoResult.childrenByXPath(noteGeneraliXPathQuery)[0];
+	
+	if(noteGenerali!=null){
+		attoResultObj.notePresentazioneAssegnazione = noteGenerali.content;
+	}
+	
+	attiResultsObj.push(attoResultObj);
+	
+}
+
+
+
+
+
+model.atti = attiResultsObj;
