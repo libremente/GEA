@@ -5,7 +5,7 @@
    { 
    	"legislatura" : 
 	   {
-		"nome":"${legislaturaNode.name}"
+		"nome":"${legislaturaNode}"
 	   }
    }<#if legislaturaNode_has_next>,</#if>
    </#list>
