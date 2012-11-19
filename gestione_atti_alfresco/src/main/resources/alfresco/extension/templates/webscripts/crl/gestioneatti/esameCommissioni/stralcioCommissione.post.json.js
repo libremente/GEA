@@ -71,7 +71,7 @@ if(checkIsNotNull(id)){
 			commissioneFolderNode.save();
 			
 			// passaggio di stato per l'atto in caso di commissione Referente
-			if(""+ruoloCommissione+""=="Referente") {
+			if(canChangeStatoAtto(ruoloCommissione)) {
 				attoNode.properties["crlatti:statoAtto"] = statoAtto;
 				attoNode.save();
 			}
