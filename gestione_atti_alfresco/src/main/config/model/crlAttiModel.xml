@@ -144,7 +144,7 @@
 					<title>Commissione Co-Referente</title>
 					<type>d:text</type>
 				</property>
-				<property name="crlatti:commRedigentre">
+				<property name="crlatti:commRedigente">
 					<title>Commissione Redigente</title>
 					<type>d:text</type>
 				</property>
@@ -559,8 +559,24 @@
 					<type>d:int</type>
 					<multiple>true</multiple>
 				</property>
+				<property name="crlatti:dataInizioLegislatura">
+					<title>Data Inizio Legislatura</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataFineLegislatura">
+					<title>Data Fine Legislatura</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:correnteLegislatura">
+					<title>Corrente</title>
+					<type>d:boolean</type>
+				</property>
 			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
 		</type>
+
 
 		<type name="crlatti:firmatarioAnagrafica">
 			<title>Firmatario Anagrafica</title>
@@ -593,7 +609,33 @@
 					<title>Gruppo</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:codiceGruppoConsigliereAnagrafica">
+					<title>Codice Gruppo</title>
+					<type>d:text</type>
+				</property>
 			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		
+		<type name="crlatti:gruppoConsiliareAnagrafica">
+			<title>Gruppo consiliare</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:codiceGruppoConsiliareAnagrafica">
+					<title>Codice</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:nomeGruppoConsiliareAnagrafica">
+					<title>Nome</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
 		</type>
 		
 		
@@ -1273,6 +1315,17 @@
 				<property name="crlatti:idProtocolloAtto">
 					<title>ID protocollo atto</title>
 					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:importatoDaAnagrafica">
+			<title>Importato da protocollo</title>
+			<description>Aspetto creato per la sincronizzazione con il database dell'anagrafica</description>
+			<properties>
+				<property name="crlatti:idAnagrafica">
+					<title>ID anagrafica</title>
+					<type>d:int</type>
 				</property>
 			</properties>
 		</aspect>
