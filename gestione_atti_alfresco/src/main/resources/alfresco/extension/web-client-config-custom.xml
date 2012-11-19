@@ -602,7 +602,10 @@
 
 	<config evaluator="node-type" condition="crlatti:legislaturaAnagrafica">
 		<property-sheet>
-			<show-property name="crlatti:anni" />
+			<show-property name="crlatti:dataInizioLegislatura" />
+			<show-property name="crlatti:dataFineLegislatura" />
+			<show-property name="crlatti:correnteLegislatura" />
+			<show-property name="crlatti:idAnagrafica" />
 		</property-sheet>
 	</config>
 
