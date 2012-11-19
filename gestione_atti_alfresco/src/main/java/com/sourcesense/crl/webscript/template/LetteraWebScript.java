@@ -26,7 +26,6 @@ import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
 
-import com.sourcesense.crl.job.DataExtractor;
 
 
 public class LetteraWebScript extends AbstractWebScript {
