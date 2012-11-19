@@ -47,6 +47,14 @@ public class LegislaturaServiceManager implements ServiceManager {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public List<Legislatura> getAll(){
+		
+		List<Legislatura> listLegislature = legislaturaService.getAllLegislatura(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_legislature",null));
+		return listLegislature;
+	}
+	
+	
 
 	@Override
 	public Map<String, String> findAll() {

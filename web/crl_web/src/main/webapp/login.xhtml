@@ -16,6 +16,7 @@
 		draggable="false" closable="false">
 		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
 	</p:dialog>
+	
 	<p:panelGrid
 		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
 		id="loginpanel">
@@ -83,7 +84,10 @@
 			<p:column colspan="3" style="align:center">
 
 				<p:commandButton id="insertattobtn" value="Accedi"
-					update="loginpanel" action="#{loginController.login()}" />
+					update="loginpanel,errorMsg" action="#{loginController.login()}" />
+					
+				<p:growl id="errorMsg" showDetail="true" sticky="false" />	
+					
 			</p:column>
 		</p:row>
 

@@ -224,6 +224,11 @@
 									</p:column>
 
 									<p:column headerText="Annulla">
+									
+									     <c:set
+											value="#{ attoBean.getNumeroPassaggi() > 1 }"
+											var="passaggi" />
+									
 										<c:set
 											value="#{ commissione.stato ne 'Votato' and 
                                                   commissione.stato ne 'Trasmesso' and
@@ -231,7 +236,7 @@
                                                  }"
 											var="annullabile" />
 
-										<p:commandButton rendered="#{annullabile}"
+										<p:commandButton rendered="#{annullabile and not passaggi}"
 											oncomplete="annullaCommissioneDialog.show()" icon="undo-icon">
 											<f:setPropertyActionListener
 												value="#{commissione.descrizione}"
@@ -245,13 +250,13 @@
 									<p:column headerText="Modifica">
 										<c:set var="updatable"
 											value="${ (commissione.stato != 'Assegnato') and  (commissione.stato != 'Annullato' ) }" />
-										<p:rowEditor rendered="${updatable}" />
+										<p:rowEditor rendered="${updatable  and not passaggi}" />
 									</p:column>
 
 									<p:column headerText="Elimina">
 
 
-										<p:commandButton rendered="#{annullabile}"
+										<p:commandButton rendered="#{annullabile  and not passaggi}"
 											oncomplete="commissioneDialog.show()" icon="delete-icon">
 
 											<f:setPropertyActionListener

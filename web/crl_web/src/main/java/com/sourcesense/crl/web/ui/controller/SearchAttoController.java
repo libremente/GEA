@@ -104,6 +104,9 @@ public class SearchAttoController {
 	private String listaLavoro;
 	
 	
+	
+	
+	
 
 	private List<Atto> listAtti = new ArrayList<Atto>();
 	
@@ -300,15 +303,11 @@ public class SearchAttoController {
 		setStati(statoAttoServiceManager.findAll());
 		setTipiChiusura(tipoChiusuraServiceManager.findAll());
 		setTipiIniziative(tipoIniziativaServiceManager.findAll());
-
-		// TODO:
-		// setEsitiVotoAula(votazioneServiceManager.findAllEsitoVotoAula());
-		// setEsitoVotoCommissioneReferente(votazioneServiceManager.findAllEsitoVotoCommissioneReferente());
-
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.findAll());
-
-		//setListAtti(attoServiceManager.initListAtti());
+		
+		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
+		
 		setListAtti(attoServiceManager.searchAtti(atto));
 		
 	}

@@ -12,6 +12,7 @@ import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
 import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 import com.sourcesense.crl.business.service.rest.UserService;
+import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.util.URLBuilder;
 
 
@@ -27,7 +28,7 @@ public class UserServiceManager implements ServiceManager {
 
 
 
-	public User authenticate(User user) {
+	public User authenticate(User user) throws ServiceAuthenticationException{
 
 		urlBuilder.setAlfrescoSessionTicket(userService.getAuthenticationToken(urlBuilder.buildURL("alfresco_context_url","alfresco_authentication"),user));
 

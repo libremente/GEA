@@ -1,5 +1,6 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -12,6 +13,7 @@ import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.UserServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
+import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
@@ -30,6 +32,8 @@ public class LoginController {
 
 	public String login() {
 
+		try{
+		
 		User sessionUser = userServiceManager.authenticate(user);
 
 		if (sessionUser != null) {
@@ -45,9 +49,30 @@ public class LoginController {
 			return "pretty:Home";
 
 		} else {
-
+            
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Utente e password errati ",
+							""));
+			
 			return null;
 
+		}
+		
+		}catch (ServiceAuthenticationException ex){
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Utente e password errati ",
+							""));
+			
+			return null;
 		}
 
 	}

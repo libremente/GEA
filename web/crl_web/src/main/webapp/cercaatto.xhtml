@@ -18,41 +18,40 @@
 
 	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
 		draggable="false" closable="false">
-		<p:graphicImage  value="resources/img/ajax_loading_bar.gif" />
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
 	</p:dialog>
 
-	
-	
-	
+
+
+
 	<p:confirmDialog id="confirmTableDialog"
-		message="Scegli Colonne da visualizzare"
-		header="Layout lista" 
+		message="Scegli Colonne da visualizzare" header="Layout lista"
 		widgetVar="tableDialog" style="">
-        <p:scrollPanel style="width:250px;height:250px">  
-		<p:dataTable id="listaColonne"  var="col" 
-			value="#{userBean.colonneTotali}" 
-			>
-			<p:column >
-				<f:facet name="header">Nome</f:facet>
-				<h:outputText value="#{col.nome}" />
-			</p:column>
-			
-			<c:set  value="#{(col.attoProperty ne 'numeroAtto') or (col.attoProperty ne 'tipo')}" var="readonly">
-			</c:set>
-			
-	        <p:column >
-				<f:facet name="header">Visibile</f:facet>
-				<p:selectBooleanCheckbox rendered="#{readonly}" value="#{col.visible}"></p:selectBooleanCheckbox>
-			</p:column> 	
-		
-		
-		</p:dataTable>
+		<p:scrollPanel style="width:250px;height:250px">
+			<p:dataTable id="listaColonne" var="col"
+				value="#{userBean.colonneTotali}">
+				<p:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{col.nome}" />
+				</p:column>
+
+				<c:set
+					value="#{(col.attoProperty ne 'numeroAtto') or (col.attoProperty ne 'tipo')}"
+					var="readonly">
+				</c:set>
+
+				<p:column>
+					<f:facet name="header">Visibile</f:facet>
+					<p:selectBooleanCheckbox rendered="#{readonly}"
+						value="#{col.visible}"></p:selectBooleanCheckbox>
+				</p:column>
+
+
+			</p:dataTable>
 		</p:scrollPanel>
 		<p:commandButton id="confirmCommissione" value="Salva"
 			oncomplete="tableDialog.hide()"
-			action="#{userBean.refreshColonneUser}"
-			
-			update="listaAtti" />
+			action="#{userBean.refreshColonneUser}" update="listaAtti" />
 
 
 		<p:commandButton id="declineCommissione" value="Annulla"
@@ -109,7 +108,7 @@
 								<p:column style="width: 20%;">
 									<p:selectOneMenu id="legislatura"
 										value="#{searchAttoController.legislatura}">
-										<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
+										<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
 										<f:selectItems value="#{searchAttoController.legislature}" />
 									</p:selectOneMenu>
 								</p:column>
@@ -168,7 +167,16 @@
 									<p:selectOneMenu id="tipoiniziativa"
 										value="#{searchAttoController.tipoiniziativa}">
 										<f:selectItem itemLabel="Scegli Tipo Iniziativa" itemValue="" />
-										<f:selectItems value="#{searchAttoController.tipiIniziative}" />
+										<f:selectItem itemLabel="Consiliare" itemValue="Consiliare" />
+										<f:selectItem itemLabel="Popolare" itemValue="Popolare" />
+										<f:selectItem itemLabel="d'Ufficio" itemValue="d'Ufficio" />
+										<f:selectItem itemLabel="Consiglio delle Autonomie locali"
+											itemValue="Consiglio delle Autonomie locali" />
+										<f:selectItem itemLabel="Presidente della Giunta"
+											itemValue="Presidente della Giunta" />
+										<f:selectItem itemLabel="Giunta" itemValue="Giunta" />
+										<f:selectItem itemLabel="Commissione europea"
+											itemValue="Commissione europea" />
 									</p:selectOneMenu>
 								</p:column>
 							</p:row>
@@ -237,9 +245,26 @@
 								</p:column>
 								<p:column style="width: 20%;">
 
-									<p:selectOneMenu id="tipoChiusura">
+									<p:selectOneMenu id="tipoChiusura" value="#{searchAttoController.tipoChiusura}">
 										<f:selectItem itemLabel="Scegli Tipo Chiusura" itemValue="" />
-										<f:selectItems value="#{searchAttoController.tipiChiusura}" />
+										<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
+										<f:selectItem itemLabel="Approvato e Trasmesso alla Giunta"
+											itemValue="Approvato e Trasmesso alla Giunta" />
+
+										<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
+										<f:selectItem itemLabel="Rifiutato e trasmesso alla Giunta"
+											itemValue="Rifiutato e trasmesso alla Giunta" />
+										<f:selectItem itemLabel="Inammissibile"
+											itemValue="Inammissibile" />
+
+										<f:selectItem itemLabel="Ritirato dai promotori"
+											itemValue="Ritirato dai promotori" />
+										<f:selectItem itemLabel="Abbinato ad altro atto"
+											itemValue="Abbinato ad altro atto" />
+										<f:selectItem itemLabel="Per decadenza (fine legislatura)"
+											itemValue="Per decadenza (fine legislatura)" />
+										<f:selectItem itemLabel="Per motivi diversi"
+											itemValue="Per motivi diversi" />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -252,11 +277,13 @@
 								</p:column>
 								<p:column style="width: 20%;">
 									<h:outputLabel for="dataPubblicazione_da" value="da: " />
-									<p:calendar size="10" locale="it" id="dataPubblicazione_da" />
+									<p:calendar  size="10" locale="it" id="dataPubblicazione_da" 
+									value="#{searchAttoController.dataPubblicazioneDa}" />
 								</p:column>
 								<p:column style="width: 20%;">
 									<h:outputLabel for="dataPbblicazione_a" value="a: " />
-									<p:calendar size="10" locale="it" id="dataPbblicazione_a" />
+									<p:calendar size="10" locale="it" id="dataPbblicazione_a" 
+									value="#{searchAttoController.dataPubblicazioneA}"/>
 								</p:column>
 
 							</p:row>
@@ -270,12 +297,29 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="esitoVotoComRef">
+									<p:selectOneMenu id="esitoVotoComRef" 
+									value="#{searchAttoController.esitoVotoCommissioneReferente}">
 										<f:selectItem
 											itemLabel="Scegli Esito Voto Commissione Referente"
 											itemValue="" />
-										<f:selectItems
-											value="#{searchAttoController.esitiVotoCommissioneReferente}" />
+										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
+
+										<f:selectItem itemLabel="Non Deliberato"
+											itemValue="Non Deliberato" />
+
+										<f:selectItem itemLabel="Proposto non passaggio all'esame"
+											itemValue="Proposto non passaggio all'esame" />
+
+										<f:selectItem itemLabel="Archiviazione"
+											itemValue="Archiviazione" />
+
+										<f:selectItem itemLabel="Proposta di RIS"
+											itemValue="Proposta di RIS" />
+
+										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
+
+										<f:selectItem itemLabel="Presa d'atto "
+											itemValue="Presa d'atto" />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -288,11 +332,13 @@
 								</p:column>
 								<p:column>
 									<h:outputLabel for="dataSedutaSC_da" value="da: " />
-									<p:calendar size="10" locale="it" id="dataSedutaSC_da" />
+									<p:calendar size="10" locale="it" id="dataSedutaSC_da" 
+									value="#{searchAttoController.dataSedutaSCDa}"/>
 								</p:column>
 								<p:column>
 									<h:outputLabel for="dataSedutaSC_a" value="a: " />
-									<p:calendar size="10" locale="it" id="dataSedutaSC_a" />
+									<p:calendar size="10" locale="it" id="dataSedutaSC_a"
+									value="#{searchAttoController.dataSedutaSCA}" />
 								</p:column>
 
 							</p:row>
@@ -305,9 +351,13 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="esitoVotoAula">
+									<p:selectOneMenu id="esitoVotoAula" value="#{searchAttoController.esitoVotoAula}">
 										<f:selectItem itemLabel="Scegli Esito Voto Aula" itemValue="" />
-										<f:selectItems value="#{searchAttoController.esitiVotoAula}" />
+										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
+										<f:selectItem itemLabel="Approvato non passaggio all'esame"
+											itemValue="Approvato non passaggio all'esame" />
+										<f:selectItem itemLabel="Respinto dall'aula"
+											itemValue="Respinto dall'aula" />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -320,11 +370,13 @@
 								</p:column>
 								<p:column>
 									<h:outputLabel for="dataSedutaComm_da" value="da: " />
-									<p:calendar size="10" locale="it" id="dataSedutaComm_da" />
+									<p:calendar size="10" locale="it" id="dataSedutaComm_da" 
+									value="#{searchAttoController.dataSedutaCommissioneDa}" />
 								</p:column>
 								<p:column>
 									<h:outputLabel for="dataSedutaComm_a" value="a: " />
-									<p:calendar size="10" locale="it" id="dataSedutaComm_a" />
+									<p:calendar size="10" locale="it" id="dataSedutaComm_a" 
+									value="#{searchAttoController.dataSedutaCommissioneA}" />
 								</p:column>
 
 							</p:row>
@@ -338,7 +390,8 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="commissioneReferente">
+									<p:selectOneMenu id="commissioneReferente"  
+									value="#{searchAttoController.commissioneReferente}">
 										<f:selectItem itemLabel="Scegli Commissione Referente"
 											itemValue="" />
 										<f:selectItems
@@ -355,11 +408,13 @@
 								</p:column>
 								<p:column>
 									<h:outputLabel for="dataSedutaAula_da" value="da: " />
-									<p:calendar size="10" locale="it" id="dataSedutaAula_da" />
+									<p:calendar size="10" locale="it" id="dataSedutaAula_da" 
+									value="#{searchAttoController.dataSedutaAulaDa}" />
 								</p:column>
 								<p:column>
 									<h:outputLabel for="dataSedutaAula_a" value="a: " />
-									<p:calendar size="10" locale="it" id="dataSedutaAula_a" />
+									<p:calendar size="10" locale="it" id="dataSedutaAula_a" 
+									value="#{searchAttoController.dataSedutaAulaA}" />
 								</p:column>
 
 							</p:row>
@@ -373,7 +428,8 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="commissioneConsultiva">
+									<p:selectOneMenu id="commissioneConsultiva" 
+									value="#{searchAttoController.commissioneConsultiva}" >
 										<f:selectItem itemLabel="Scegli Commissione Consultiva"
 											itemValue="" />
 										<f:selectItems
@@ -388,7 +444,8 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="relatore">
+									<p:selectOneMenu id="relatore" 
+									value="#{searchAttoController.relatore}"  >
 										<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
 										<f:selectItems value="#{searchAttoController.relatori}" />
 									</p:selectOneMenu>
@@ -401,13 +458,13 @@
 
 									<h:outputLabel for="redigente" value="Redigente: " />
 
-									<p:selectBooleanCheckbox id="redigente" />
+									<p:selectBooleanCheckbox id="redigente" value="#{searchAttoController.redigente}" />
 								</p:column>
 								<p:column>
 
 									<h:outputLabel for="deliberante" value="Deliberante: " />
 
-									<p:selectBooleanCheckbox id="deliberante" />
+									<p:selectBooleanCheckbox id="deliberante" value="#{searchAttoController.deliberante}"  />
 
 								</p:column>
 								<p:column>
@@ -418,11 +475,13 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="organismoStatutario">
+									<p:selectOneMenu id="organismoStatutario" 
+									value="#{searchAttoController.organismoStatutario}" >
 										<f:selectItem itemLabel="Scegli Organismo Statutario"
 											itemValue="" />
 										<f:selectItems
-											value="#{searchAttoController.organismiStatutari}" />
+											value="#{searchAttoController.organismiStatutari}" 
+											 />
 									</p:selectOneMenu>
 
 								</p:column>
@@ -433,7 +492,8 @@
 
 									<h:outputLabel for="numeroLCR" value="Numero LCR: " />
 
-									<p:inputText id="numeroLCR" size="5" maxlength="5" />
+									<p:inputText id="numeroLCR" size="5" maxlength="5" 
+									value="#{searchAttoController.numeroLCR}" />
 								</p:column>
 								<p:column>
 
@@ -448,7 +508,8 @@
 								</p:column>
 								<p:column>
 
-									<p:inputText id="soggettoConsultato" />
+									<p:inputText id="soggettoConsultato" 
+									value="#{searchAttoController.soggettoConsultato}" />
 
 
 								</p:column>
@@ -459,12 +520,14 @@
 
 									<h:outputLabel for="numeroLR" value="Numero LR: " />
 
-									<p:inputText id="numeroLR" size="5" maxlength="5" />
+									<p:inputText id="numeroLR" size="5" maxlength="5" 
+									value="#{searchAttoController.numeroLR}" />
 								</p:column>
 								<p:column>
 
 									<h:outputLabel for="anno" value="Anno: " />
-									<p:inputText id="anno" size="4" maxlength="4" />
+									<p:inputText id="anno" size="4" maxlength="4" 
+									value="#{searchAttoController.anno}" />
 
 								</p:column>
 								<p:column>
@@ -482,26 +545,27 @@
 							<p:row>
 								<p:column>
 
-									<h:outputLabel for="abbonamento" value="Abbonamento: " />
+									<h:outputLabel for="abbonamento" value="Abbinamento: " />
 
-									<p:selectBooleanCheckbox id="abbonamento" />
+									<p:selectBooleanCheckbox id="abbonamento" value="#{searchAttoController.abbinamento}" />
 								</p:column>
 								<p:column>
 
 									<h:outputLabel for="stralcio" value="Stralcio: " />
-									<p:selectBooleanCheckbox id="stralcio" />
+									<p:selectBooleanCheckbox id="stralcio" 
+									value="#{searchAttoController.stralcio}" />
 
 								</p:column>
 								<p:column colspan="3">
 
 									<h:outputLabel for="emendato" value="Emendato: " />
-									<p:selectBooleanCheckbox id="emendato" />
+									<p:selectBooleanCheckbox id="emendato" value="#{searchAttoController.emendato}" />
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<h:outputLabel for="rinviato" value="Rinviato: " />
-									<p:selectBooleanCheckbox id="rinviato" />
+									<p:selectBooleanCheckbox id="rinviato" value="#{searchAttoController.rinviato}" />
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<h:outputLabel for="sospeso" value="Sospeso: " />
-									<p:selectBooleanCheckbox id="sospeso" />
+									<p:selectBooleanCheckbox id="sospeso" value="#{searchAttoController.sospeso}" />
 
 								</p:column>
 
@@ -545,7 +609,8 @@
 									actionListener="#{searchAttoController.searchAtti}" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
-									<p:dataExporter type="xls" target="listaAtti"  postProcessor="#{searchAttoController.postProcessXLS}"
+									<p:dataExporter type="xls" target="listaAtti"
+										postProcessor="#{searchAttoController.postProcessXLS}"
 										fileName="lista_atti" />
 								</h:commandLink>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -593,9 +658,11 @@
 
 
 
-		<p style="text-align:right">
-				
-			<p:graphicImage style="cursor: hand; cursor: pointer; " height="30" width="30" value="resources/img/columns.jpeg"  onclick="tableDialog.show()"/>	
+		<p style="text-align: right">
+
+			<p:graphicImage style="cursor: hand; cursor: pointer; " height="30"
+				width="30" value="resources/img/columns.jpeg"
+				onclick="tableDialog.show()" />
 		</p>
 
 
@@ -610,28 +677,28 @@
 
 			<p:column headerText="N.Atto" sortBy="#{atto.numeroAtto}">
 				<c:set value="#{atto.id}" var="idAttoParam" />
-				
-				<p:commandLink 
+
+				<p:commandLink
 					action="#{searchAttoController.attoDetail(idAttoParam)}"
 					update="listaAtti">
 					<h:outputText value="#{atto.numeroAtto}" />
 				</p:commandLink>
 			</p:column>
-			
-			<p:columns value="#{userBean.colonneUser}" var="column" columnIndexVar="colIndex"   
-                    sortBy="#{atto[column.attoProperty]}" >  
-            
-            
-            
-            <f:facet name="header">  
+
+			<p:columns value="#{userBean.colonneUser}" var="column"
+				columnIndexVar="colIndex" sortBy="#{atto[column.attoProperty]}">
+
+
+
+				<f:facet name="header">  
                 #{column.nome}  
-            </f:facet>  
-  
-             <h:outputText value="#{atto[column.attoProperty]}" />   
-             
-             </p:columns>  
-			
-			
+            </f:facet>
+
+				<h:outputText value="#{atto[column.attoProperty]}" />
+
+			</p:columns>
+
+
 			<!-- <p:column headerText="Oggetto" sortBy="#{atto.oggetto}">
 				<h:outputText value="#{atto.oggetto}" />
 			</p:column>

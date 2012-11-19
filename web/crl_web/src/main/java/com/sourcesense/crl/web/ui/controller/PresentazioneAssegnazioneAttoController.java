@@ -150,6 +150,7 @@ public class PresentazioneAssegnazioneAttoController {
 	@PostConstruct
 	protected void init() {
 		setFirmatari(personaleServiceManager.findAllFirmatario());
+		setGruppiConsiliari(personaleServiceManager.getGruppiConsiliari());
 		setCommissioni(commissioneServiceManager.findAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setTipiIniziativa(tipoIniziativaServiceManager.findAll());

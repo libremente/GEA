@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Firmatario;
+import com.sourcesense.crl.business.model.GruppoConsiliare;
 import com.sourcesense.crl.business.model.Legislatura;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
@@ -41,6 +42,19 @@ public class PersonaleServiceManager implements ServiceManager{
 	public boolean remove(Object object) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	
+	public List<GruppoConsiliare> getGruppiConsiliari(){
+		
+		
+
+		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_gruppi_consiliari",null));
+
+		
+		
+		return listGruppiConsiliari;
+		
 	}
 
 	public Map<String, String> findAllFirmatario() {

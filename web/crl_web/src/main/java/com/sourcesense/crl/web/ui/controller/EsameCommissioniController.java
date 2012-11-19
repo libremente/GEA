@@ -240,7 +240,8 @@ public class EsameCommissioniController {
 		return (commissioneUser.getRuolo().equals(Commissione.RUOLO_REFERENTE)
 				|| commissioneUser.getRuolo().equalsIgnoreCase(
 						Commissione.RUOLO_REDIGENTE) || commissioneUser
-				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE));
+				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE) || commissioneUser
+				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_COREFERENTE));
 
 	}
 
@@ -780,7 +781,7 @@ public class EsameCommissioniController {
 
 		for (Componente element : membriComitatoList) {
 
-			if (element.getDataUscita() != null) {
+			if (element.getDataUscita() == null) {
 
 				return true;
 			}

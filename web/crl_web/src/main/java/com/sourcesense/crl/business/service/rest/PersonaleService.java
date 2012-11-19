@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.Firmatario;
+import com.sourcesense.crl.business.model.GruppoConsiliare;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
@@ -37,6 +38,47 @@ public class PersonaleService {
 	 ObjectMapper objectMapper;
 
 
+	
+	public List<GruppoConsiliare> getListGruppiConsiliari(String url) {
+		List<GruppoConsiliare> listGruppiConsiliari =null;
+
+		try {
+			WebResource webResource = client.resource(url);
+
+			ClientResponse response = webResource.accept(
+					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listGruppiConsiliari = objectMapper.readValue(responseMsg,
+					new TypeReference<List<GruppoConsiliare>>() {
+			});
+
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return listGruppiConsiliari;
+	}
+
+	
 	public List<Firmatario> getAllFirmatario(String url) {
 		List<Firmatario> listFirmatari =null;
 

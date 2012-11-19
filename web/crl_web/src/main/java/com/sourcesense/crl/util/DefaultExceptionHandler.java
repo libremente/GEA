@@ -3,6 +3,7 @@ package com.sourcesense.crl.util;
 import java.util.Iterator;
 
 import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.application.ProjectStage;
 import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandler;
@@ -95,6 +96,18 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 					
 					LOG.error( errorMsg, t.getCause().getCause().getCause());
 					redirectPage = errorpage+"?error="+errorMsg;
+					
+				} else if (t.getCause().getCause().getCause() instanceof ServiceAuthenticationException){	
+					
+					FacesContext jsfcontext = FacesContext.getCurrentInstance();
+					jsfcontext.addMessage(
+							null,
+							new FacesMessage(
+									FacesMessage.SEVERITY_ERROR,
+									"Attenzione ! Utente e password errati ",
+									""));
+					
+					
 
 				} else {
 

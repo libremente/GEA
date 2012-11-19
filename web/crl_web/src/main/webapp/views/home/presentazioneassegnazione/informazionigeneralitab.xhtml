@@ -389,10 +389,10 @@
 
 							<p:column>
 								<p:selectOneMenu id="gruppoconsiliare"
-									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}">
+									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}" >
 									<f:selectItem itemLabel="Scegli Gruppo" itemValue="" />
-									<f:selectItems
-										value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
+									<f:selectItems value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}"  var="gruppo" 
+									itemLabel="#{gruppo.descrizione}" />
 								</p:selectOneMenu>
 							</p:column>
 

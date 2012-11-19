@@ -100,6 +100,8 @@ public class AttoBean implements Serializable {
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
 	private String noteNoteAllegatiPresentazioneAssegnazione;
+	
+	
 
 	private List<Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
 	private List<Commissione> commissioni = new ArrayList<Commissione>();
@@ -107,6 +109,12 @@ public class AttoBean implements Serializable {
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 
+	public int getNumeroPassaggi(){
+		
+		return this.atto.getPassaggi().size();
+	}
+	
+	
 	public boolean containCommissione(String commissione) {
 
 		// le commissioni sono definite nel primo passaggio
