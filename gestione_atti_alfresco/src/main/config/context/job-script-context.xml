@@ -15,11 +15,12 @@
     <bean id="crlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
         <property name="url" value="jdbc:jtds:sqlserver://212.54.226.116:1433;DatabaseName=dbconsiglieri" />
+ 	<!--	<property name="url" value="jdbc:jtds:sqlserver://192.168.1.130:1433/dbConsiglieri;instance=SQLEXPRESS" /> -->
         <property name="username" value="SourceSense" />
         <property name="password" value="SSense2012" />
     </bean>
 
-    <bean id="dataExtractor" class="com.sourcesense.crl.job.DataExtractor">
+    <bean id="dataExtractor" class="com.sourcesense.crl.job.anagrafica.DataExtractor">
         <property name="dataSource">
             <ref bean="crlDataSource" />
         </property>
@@ -31,7 +32,7 @@
         </property>
     </bean>
 
-	<bean id="crlImportScriptBean" parent="baseJavaScriptExtension" class="com.sourcesense.crl.job.AnagraficaImportScript">
+	<bean id="crlImportScriptBean" parent="baseJavaScriptExtension" class="com.sourcesense.crl.job.anagrafica.AnagraficaImportScript">
 	    <property name="extensionName">
 	        <value>crlImporter</value>
 	    </property>
@@ -43,6 +44,9 @@
         </property>
 		<property name="nodeService">
             <ref bean="NodeService" />
+        </property>
+        <property name="authorityService">
+            <ref bean="AuthorityService" />
         </property>
         <property name="dataExtractor">
             <ref bean="dataExtractor" />
@@ -109,7 +113,7 @@
             <value>PATH:"/app:company_home"</value> 
         </property>
         <property name="cronExpression">
-            <value>0 0/2 * * * ?</value>
+            <value>0 0/5 * * * ?</value>
         </property>
         <property name="jobName">
             <value>jobD</value>
