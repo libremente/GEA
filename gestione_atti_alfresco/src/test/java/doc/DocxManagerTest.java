@@ -87,7 +87,7 @@ public class DocxManagerTest extends TestCase {
 			this.docxManager = new DocxManager(inp);
 			
 			XWPFDocument documentGenerated = this.docxManager
-					.fillTemplate(luceneDocs);
+					.fillTemplate(luceneDocs,false);
 			URL testTableOutput = getClass().getResource("");
 			String path = testTableOutput.getPath();
 			File out = new File(path + "/docxManagerOutput2.docx");
