@@ -54,7 +54,7 @@ public class DocxManager {
 	 * @param luceneDocs
 	 * @return
 	 */
-	public XWPFDocument fillTemplate(List<LuceneMockDocument> luceneDocs){
+	public XWPFDocument fillTemplate(List<LuceneMockDocument> luceneDocs,boolean onlyValues){
 		List<XWPFTable> tables = document.getTables();
 		for (int k = 0; k < luceneDocs.size(); k++) {
 			XWPFTable newTable = tables.get(k);
@@ -68,10 +68,12 @@ public class DocxManager {
 				field = fields.get(i);
 				value = values.get(i);
 				currentRow = newTable.getRow(i);
-				currentRow.getCell(0).setText(field);
+				if(!onlyValues)
+					currentRow.getCell(0).setText(field);
 				currentRow.getCell(1).setText(value);
 			}
 		}
 		return document;
 	}
+	
 }
