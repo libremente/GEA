@@ -1,13 +1,9 @@
 package com.sourcesense.crl.webscript.report.office;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
-import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -16,6 +12,12 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 import com.sourcesense.crl.webscript.report.lucene.LuceneMockDocument;
 
+/**
+ * This class represents a Docx Manager to replicate and fill simple document with table in input
+ * 
+ * @author Alessandro Benedetti
+ *
+ */
 public class DocxManager {
 
 	private XWPFDocument document;
