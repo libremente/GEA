@@ -39,7 +39,6 @@ public class DocxManager {
 		for (int k = 0; k < n-1; k++) {
 			XWPFParagraph createParagraph = document.createParagraph();
 			XWPFRun run = createParagraph.createRun();
-			run.setText("Table " + (k + 2));
 			run.addBreak();
 			XWPFTable currentTable = document.createTable();
 			currentTable = tableExt;
