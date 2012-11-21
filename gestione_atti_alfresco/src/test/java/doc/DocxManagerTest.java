@@ -42,7 +42,7 @@ public class DocxManagerTest extends TestCase {
 	public void testDuplicationTemplate() {
 		try {
 			XWPFDocument documentGenerated = this.docxManager
-					.generateFromTemplate(10);
+					.generateFromTemplate(17,5);
 			URL testTableOutput = getClass().getResource("");
 			String path = testTableOutput.getPath();
 			File out = new File(path + "/docxManagerOutput.docx");
@@ -52,7 +52,7 @@ public class DocxManagerTest extends TestCase {
 			fos.flush();
 			fos.close();
 			List<XWPFTable> tables = documentGenerated.getTables();
-			assertEquals(10,tables.size());
+			assertEquals(17,tables.size());
 			for(int i=0;i<tables.size();i++){
 				assertEquals(6,tables.get(i).getNumberOfRows());
 			}
@@ -69,7 +69,7 @@ public class DocxManagerTest extends TestCase {
 	 * */
 	public void testFillTemplate() {
 		List<LuceneMockDocument> luceneDocs = new ArrayList<LuceneMockDocument>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 17; i++) {
 			LuceneMockDocument newDoc = new LuceneMockDocument();
 			for (int k = 0; k < 6; k++) {
 				String field = "Doc" + i + " f" + k;
@@ -78,7 +78,7 @@ public class DocxManagerTest extends TestCase {
 			}
 			luceneDocs.add(newDoc);
 		}
-		assertEquals(10, luceneDocs.size());
+		assertEquals(17, luceneDocs.size());
 		try {
 			URL testTable = getClass().getResource(
 					"/doc/docxManagerOutput.docx");
@@ -97,7 +97,7 @@ public class DocxManagerTest extends TestCase {
 			fos.flush();
 			fos.close();
 			List<XWPFTable> tables = documentGenerated.getTables();
-			assertEquals(10,tables.size());
+			assertEquals(17,tables.size());
 			for(int i=0;i<tables.size();i++){
 				XWPFTable xwpfTable = tables.get(i);
 				assertEquals(6,xwpfTable.getNumberOfRows());
