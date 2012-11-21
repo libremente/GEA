@@ -33,16 +33,18 @@ public class DocxManager {
 	 * @param luceneDocs
 	 * @return
 	 */
-	public XWPFDocument generateFromTemplate(int n) {
+	public XWPFDocument generateFromTemplate(int n,int kpage) {
 		List<XWPFTable> tables = document.getTables();
 		XWPFTable tableExt = tables.get(0);
-		for (int k = 0; k < n-1; k++) {
+		for (int k = 1; k < n; k++) {
 			XWPFParagraph createParagraph = document.createParagraph();
+			if(k%kpage==0)
+				createParagraph.setPageBreak(true);
 			XWPFRun run = createParagraph.createRun();
 			run.addBreak();
 			XWPFTable currentTable = document.createTable();
 			currentTable = tableExt;
-			document.setTable(document.getTablePos(0) + (k+1), currentTable);
+			document.setTable(document.getTablePos(0) + k, currentTable);
 		}
 	
 	return document;
