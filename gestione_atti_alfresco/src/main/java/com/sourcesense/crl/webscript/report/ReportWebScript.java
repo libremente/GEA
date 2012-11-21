@@ -61,7 +61,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
 	    	String nomeLettera = tipoTemplate.split(":")[1];
     				
     		// Set response
-            res.setContentType("application/ms-word");
+            res.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
             GregorianCalendar gc = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             res.setHeader( "Content-Disposition", "attachment; filename=\""+nomeLettera+"_"+sdf.format(gc.getTime())+".doc\"" );
