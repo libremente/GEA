@@ -40,7 +40,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     	try {
     
 	    	// Get json properties
-	    	String json=(String)req.getParameter("Json");
+	    	String json=(String)req.getParameter("json");
     		String tipoTemplate = (String)req.getParameter("tipoTemplate");
     		
 			// Search document template node	
