@@ -69,7 +69,7 @@ public class AttoServiceManager implements ServiceManager {
 		return attoService
 				.parametricSearch(attoInit, urlBuilder.buildAlfrescoURL(
 						"alfresco_context_url",
-						"alf_list_atto_ricerca_semplice", null));
+						"alf_list_atto_ricerca_avanzata", null));
 
 	}
 	
