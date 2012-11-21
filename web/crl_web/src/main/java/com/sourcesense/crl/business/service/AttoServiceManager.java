@@ -58,7 +58,7 @@ public class AttoServiceManager implements ServiceManager {
 						"alfresco_context_url",
 						"alf_list_atto_ricerca_avanzata", null));
 	}
-
+       
 	public List<Atto> initListAtti() {
 		
 		AttoSearch attoInit = new AttoSearch();
