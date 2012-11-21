@@ -7,7 +7,7 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.search.SearchService;
 
-public class ReportBaseCommand implements ReportCommand {
+public abstract class ReportBaseCommand implements ReportCommand {
 	protected ContentService contentService;
 	protected SearchService searchService;
 	protected NodeService nodeService;
@@ -52,10 +52,7 @@ public class ReportBaseCommand implements ReportCommand {
 
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef,
-			NodeRef attoNodeRef, String gruppo) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract byte[] generate(byte[] templateByteArray,String json) throws IOException;
+	
 
 }

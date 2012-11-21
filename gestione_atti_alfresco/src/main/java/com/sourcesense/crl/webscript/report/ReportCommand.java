@@ -6,5 +6,5 @@ import org.alfresco.service.cmr.repository.NodeRef;
 
 public interface ReportCommand {
 
-	byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo)  throws IOException;
+	byte[] generate(byte[] templateByteArray,String json)  throws IOException;
 }
