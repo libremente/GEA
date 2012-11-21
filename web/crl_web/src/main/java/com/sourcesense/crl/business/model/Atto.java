@@ -61,6 +61,8 @@ public class Atto implements Cloneable
 	}
 
 
+	
+	private boolean pubblico;
 
 	private String id;
 	private String nome;
@@ -917,6 +919,14 @@ public class Atto implements Cloneable
 
 	public void setNumeroLcr(String numeroLcr) {
 		this.numeroLcr = numeroLcr;
+	}
+
+	public boolean isPubblico() {
+		return pubblico;
+	}
+
+	public void setPubblico(boolean pubblico) {
+		this.pubblico = pubblico;
 	}
 	
 	

@@ -63,7 +63,7 @@
 								<p:column>
 									<h:outputLabel for="isPubblico" value="Pubblico: " />
 									<p:selectBooleanCheckbox id="isPubblico"
-										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}" >
 										<p:ajax event="change" immediate="true"></p:ajax>
 									</p:selectBooleanCheckbox>
 								</p:column>
@@ -269,6 +269,21 @@
 					</p:inputText>
 				</p:column>
 			</p:row> -->
+			
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Pubblicazione atto: " />
+				</p:column>
+				
+				<p:column colspan="3">
+					<p:selectBooleanCheckbox readonly="false" id="ispubblico"
+						value="#{presentazioneAssegnazioneAttoController.attoPubblico}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+			
+			</p:row>
 
 		</p:panelGrid>
 

@@ -7,7 +7,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:of="http://omnifaces.org/functions">
+
+
+<c:choose>
+
+<c:when test="#{navigationBean.gestioneSeduteConsultazioniAula()}">
+ <c:set var="numeroVerbale" value="Numero ODG"></c:set>
+</c:when>
+<c:otherwise>
+<c:set var="numeroVerbale" value="Numero Verbale"></c:set>
+</c:otherwise>
+</c:choose>
+
+
 
 <p:panelGrid styleClass="infoTable" id="inserisciSeduta">
 	<p:row>
@@ -99,8 +113,10 @@
 									#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}
 									
 								</p:column>
-
-								<p:column headerText="Numero Verbale" style="width:100px"
+                                
+                                
+                                 
+								<p:column headerText="#{numeroVerbale}" style="width:100px"
 									sortBy="#{seduta.numVerbale}">
 									#{seduta.numVerbale}
 								</p:column>
@@ -155,7 +171,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<h:outputLabel for="numVerbale" value="Num. verbale: " />
+							<h:outputLabel for="numVerbale" value="#{numeroVerbale} : " />
 						</p:column>
 						<p:column>
 							<p:inputText size="10" id="numVerbale"

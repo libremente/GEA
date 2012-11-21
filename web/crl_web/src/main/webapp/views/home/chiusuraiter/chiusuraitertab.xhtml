@@ -151,7 +151,7 @@
 <script>
 
 	
-if ( #{navigationBean.isGuest()}==true) {
+if ( #{navigationBean.isGuest()}==true || #{navigationBean.isCommissioneConsultiva()}==true) {
 	$.blockUI.defaults.overlayCSS.opacity = 0; 
 	$('#blockedIter').block({ message: null } );}
 </script>

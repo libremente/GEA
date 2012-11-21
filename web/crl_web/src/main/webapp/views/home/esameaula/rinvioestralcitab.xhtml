@@ -88,8 +88,9 @@
 
 							<p:column>
 
-								<p:commandButton value="Salva" oncomplete="confirmRinvioCommDialog.show()"
-									disabled="#{navigationBean.isSessionAttoChiuso()}"  />
+								<p:commandButton value="Salva"
+									oncomplete="confirmRinvioCommDialog.show()"
+									disabled="#{navigationBean.isSessionAttoChiuso()}" />
 
 							</p:column>
 						</p:row>
@@ -106,7 +107,7 @@
 					collapsed="false" toggleable="true" toggleSpeed="500">
 
 					<p:panelGrid styleClass="infoTable" id="stralciGrid">
-						<p:row>
+						<!-- 		<p:row>
 							<p:column>
 			Data seduta:
 			</p:column>
@@ -117,7 +118,7 @@
 										listener="#{esameAulaController.updateStralciHandler}" />
 								</p:calendar>
 							</p:column>
-						</p:row>
+						</p:row> -->
 						<p:row>
 							<p:column>
 			Data Stralcio:

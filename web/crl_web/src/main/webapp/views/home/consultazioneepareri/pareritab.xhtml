@@ -6,6 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:pe="http://primefaces.org/ui/extensions">
@@ -108,9 +109,12 @@
 							<h:outputText value="#{organismo.parere.esito}" />
 						</p:column>
 
-					<p:column>
-						<f:facet name="header">Allegati</f:facet>
+                     
 
+					<p:column>
+					    <c:set value="#{organismo.parere.allegati.size() >0}" var="allegati" />
+						<f:facet name="header">Allegati</f:facet>
+                        <p:graphicImage rendered="#{allegati}" value="/resources/img/document.jpeg" />    
 					</p:column>
 
 

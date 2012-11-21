@@ -62,6 +62,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private Map<String, String> tipiIniziativa = new HashMap<String, String>();
 
+	private boolean attoPubblico;
+	
 	private Date dataPresaInCarico;
 	private String numeroAtto;
 	private String classificazione;
@@ -412,6 +414,8 @@ public class PresentazioneAssegnazioneAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
+		
+		
 		attoBean.getAtto().setClassificazione(this.atto.getClassificazione());
 		attoBean.getAtto().setOggetto(this.atto.getOggetto());
 		attoBean.getAtto().setNumeroRepertorio(atto.getNumeroRepertorio());
@@ -1610,5 +1614,15 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setFirmatariOrder(String firmatariOrder) {
 		this.firmatariOrder = firmatariOrder;
 	}
+
+	public boolean isAttoPubblico() {
+		return this.atto.isPubblico();
+	}
+
+	public void setAttoPubblico(boolean attoPubblico) {
+		this.atto.setPubblico(attoPubblico);
+	}
+	
+	
 
 }

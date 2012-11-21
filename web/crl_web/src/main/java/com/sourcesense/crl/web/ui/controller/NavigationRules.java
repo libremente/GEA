@@ -196,7 +196,7 @@ public class NavigationRules {
 	}
 
 	public boolean gestioneSeduteConsultazioniAula() {
-		return userBean.getUser().getSessionGroup().getNome().equals("Aula");
+		return "Aula".equals(userBean.getUser().getSessionGroup().getNome());
 	}
 
 	public boolean isCommissioneUpdateEnabled(){
