@@ -68,8 +68,8 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 			firstRow.getCell(0).setText("1x2");
 
 			XWPFTableRow secondRow = newTable.getRow(0);
-			secondRow.getCell(0).setText("1x1");
-			secondRow.getCell(0).setText("1x2");
+			secondRow.getCell(0).setText("2x1");
+			secondRow.getCell(0).setText("2x2");
 		}
 		return document;
 	}

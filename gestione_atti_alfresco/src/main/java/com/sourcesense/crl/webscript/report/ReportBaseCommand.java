@@ -36,6 +36,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	protected List<String> tipiAttoLucene;
 	protected String ruoloCommissioneLuceneField;
+	protected String organismo;
 	protected List<String> commissioniJson;
 	protected List<String> relatoriJson;
 
@@ -59,6 +60,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 				"commissioni");
 	}
 
+	protected void initOrganismo(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.organismo=JsonUtils.retieveElementFromJson(rootJson, "organismo");
+	}
 	protected void initRelatori(String json) throws JSONException{
 		JSONObject rootJson = new JSONObject(json);
 		this.relatoriJson=JsonUtils.retieveArrayListFromJson(rootJson,
