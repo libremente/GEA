@@ -63,8 +63,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
 	/**
 	 * qui vanno inseriti nella table, presa dal template solo 8:
-	 * tipo atto- numero atto- competenza - iniziativa -firmatari- oggetto - data assegnazione - altri pareri - data valutazione - esito votazione 
-	 * -elenco relatori, sono una lista all'interno di una cella
+	 * tipo atto- numero atto- oggetto - iniziativa -firmatari- data assegnazione - 
 	 * 
 	 * 
 	 * 
