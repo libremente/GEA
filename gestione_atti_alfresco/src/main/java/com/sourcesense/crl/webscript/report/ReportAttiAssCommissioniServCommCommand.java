@@ -47,11 +47,13 @@ public class ReportAttiAssCommissioniServCommCommand extends ReportBaseCommand {
 			// costruire n query quanti i tipi di atto? vanno messi nel path?
 			//per il momento per commissioni ho semplicemente messo il toString della lista che si traduce in valori separati da spazio
 			//per aggiungere gli OR basta creare un metodo che prendendo in input una lista di stringhe
-			//riporta una stringa con la concat e gli OR in mezzo, non facevo in tempo prima di pranzo
+			//riporta una stringa con la concat e gli OR in mezzo
+			// va valutato come gestire la data
 			for(int i=0;i<tipiAttoLucene.size();i++){
 			queryRes = searchService.query(Repository.getStoreRef(), 
 					SearchService.LANGUAGE_LUCENE, "TYPE:\""+tipiAttoLucene.get(i)+"\" AND "+ruoloCommissioneLuceneField+":\""+commissioniJson+"\"");
 			}
+			
 									 
 			// obtain resultSet Length and cycle on it to repeat template
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
@@ -152,6 +154,15 @@ public class ReportAttiAssCommissioniServCommCommand extends ReportBaseCommand {
 		 */
 	}
 
+	/**
+	 * qui vanno inseriti nella table, presa dal template solo 8:
+	 * tipo atto- numero atto- competenza - iniziativa- oggetto - data assegnazione - data valutazione - commissione referente
+	 * 
+	 * @param finalDocStream
+	 * @param queryRes
+	 * @return
+	 * @throws IOException
+	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ResultSet queryRes) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
@@ -161,6 +172,10 @@ public class ReportAttiAssCommissioniServCommCommand extends ReportBaseCommand {
 			XWPFTableRow firstRow = newTable.getRow(0);
 			firstRow.getCell(0).setText("1x1");
 			firstRow.getCell(0).setText("1x2");
+			
+			XWPFTableRow secondRow = newTable.getRow(0);
+			secondRow.getCell(0).setText("1x1");
+			secondRow.getCell(0).setText("1x2");
 		}
 		return document;
 	}
