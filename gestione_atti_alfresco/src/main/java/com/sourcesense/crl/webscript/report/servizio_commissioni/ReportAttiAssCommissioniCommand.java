@@ -1,4 +1,4 @@
-package com.sourcesense.crl.webscript.report;
+package com.sourcesense.crl.webscript.report.servizio_commissioni;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,10 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.office.DocxManager;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
 
-public class ReportAttiAssCommissioniServCommCommand extends ReportBaseCommand {
+public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
 	@Override
 	public byte[] generate(byte[] templateByteArray, String json)
@@ -30,20 +31,8 @@ public class ReportAttiAssCommissioniServCommCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			JSONObject rootJson = new JSONObject(json);
-			// extract the tipiAtto list from the json string
-			List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(rootJson,
-					"tipiAtto");
-			// convert the list in the lucene format
-			List<String> tipiAttoLucene = this
-					.convertToLuceneTipiAtto(tipiAttoJson);
-			//extract the ruoloCommissione element from json
-			String ruoloCommissioneJson=JsonUtils.retieveElementFromJson(rootJson,"ruoloCommissione");
-			//converts the ruoloCommissione to a lucene field
-			String ruoloCommissioneLuceneField=super.json2luceneField.get(ruoloCommissioneJson);
-			//extract the commissioni list from json
-			List<String> commissioniJson = JsonUtils.retieveArrayListFromJson(rootJson,
-					"commissioni");
+			this.initCommonParams(json);
+			//data di assegnazione in intervallo
 			ResultSet queryRes=null;
 			// costruire n query quanti i tipi di atto? vanno messi nel path?
 			//per il momento per commissioni ho semplicemente messo il toString della lista che si traduce in valori separati da spazio

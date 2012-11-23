@@ -36,8 +36,10 @@ public class JsonUtils {
 		List<String> tipiAttoList = new ArrayList<String>();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String jsonElement = jsonArray.getString(i).trim();
-			if (!jsonElement.equals(""))
+			if (!jsonElement.equals("")&&jsonElement.contains(":\""))
 				tipiAttoList.add(extractJsonSingleValue(jsonElement));
+			else
+				tipiAttoList.add(jsonElement);
 		}
 		return tipiAttoList;
 	}
