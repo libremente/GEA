@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.sourcesense.crl.webscript.report.office.DocxManager;
+import com.sourcesense.crl.webscript.report.util.JsonUtils;
 
 public class ReportConferenzeCommand extends ReportBaseCommand {
 
@@ -28,17 +29,17 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 			DocxManager docxManager = new DocxManager(is);
 			JSONObject rootJson = new JSONObject(json);
 			// extract the tipiAtto list from the json string
-			List<String> tipiAttoJson = this.retieveArrayListFromJson(rootJson,
+			List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(rootJson,
 					"tipiAtto");
 			// convert the list in the lucene format
 			List<String> tipiAttoLucene = this
 					.convertToLuceneTipiAtto(tipiAttoJson);
 			//extract the ruoloCommissione element from json
-			String ruoloCommissioneJson=this.retieveElementFromJson(rootJson,"ruoloCommissione");
+			String ruoloCommissioneJson=JsonUtils.retieveElementFromJson(rootJson,"ruoloCommissione");
 			//converts the ruoloCommissione to a lucene field
 			String ruoloCommissioneLuceneField=super.json2luceneField.get(ruoloCommissioneJson);
 			//extract the commissioni list from json
-			List<String> commissioniJson = this.retieveArrayListFromJson(rootJson,
+			List<String> commissioniJson = JsonUtils.retieveArrayListFromJson(rootJson,
 					"commissioni");
 			ResultSet queryRes=null;
 			// costruire n query quanti i tipi di atto? vanno messi nel path?

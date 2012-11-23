@@ -97,54 +97,6 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return new ByteArrayInputStream(ostream.toByteArray());
 	}
 	
-	/**
-	 * return a simple element for the current JsonObj and elementname
-	 * 
-	 * @param root
-	 * @param arrayName
-	 * @return
-	 * @throws JSONException
-	 */
-	protected String retieveElementFromJson(JSONObject root, String elementName)
-			throws JSONException {
-		String elementValue = root.getString(elementName);
-		return elementValue;
-	}
-
-	/**
-	 * return the ArrayList of elements for the current JsonObj and arrayName
-	 * 
-	 * @param root
-	 * @param arrayName
-	 * @return
-	 * @throws JSONException
-	 */
-	protected List<String> retieveArrayListFromJson(JSONObject root,
-			String arrayName) throws JSONException {
-		JSONArray jsonArray = root.getJSONArray(arrayName);
-		List<String> tipiAttoList = new ArrayList<String>();
-		for (int i = 0; i < jsonArray.length(); i++) {
-			String jsonElement = jsonArray.getString(i).trim();
-			if (!jsonElement.equals(""))
-				tipiAttoList.add(this.extractJsonSingleValue(jsonElement));
-		}
-		return tipiAttoList;
-	}
-
-	/**
-	 * Returns the value for this single json element in this form :
-	 * "tipoAtto":"PDL"
-	 * 
-	 * @param tipoAtto
-	 * @return
-	 */
-	protected String extractJsonSingleValue(String jsonElement) {
-		int indexFieldValueSeparator = jsonElement.indexOf(":");
-		int indexValueEnd = jsonElement.lastIndexOf("\"");
-		return jsonElement.substring(indexFieldValueSeparator + 2,
-				indexValueEnd);
-	}
-	
 	protected List<String> convertToLuceneTipiAtto(List<String> tipiAttoJson) {
 		List<String> luceneTipiAttoList = new ArrayList<String>();
 		for (String jsonType : tipiAttoJson) {
