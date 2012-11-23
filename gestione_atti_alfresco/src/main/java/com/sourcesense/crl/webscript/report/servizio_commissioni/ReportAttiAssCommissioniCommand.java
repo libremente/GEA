@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
@@ -78,9 +79,10 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		List<XWPFTable> tables = document.getTables();
 		for (int k = 0; k < queryRes.length(); k++) {
+			NodeRef currentNodeRef = queryRes.getNodeRef(k);
 			XWPFTable newTable = tables.get(k);
 			XWPFTableRow firstRow = newTable.getRow(0);
-			firstRow.getCell(0).setText("1x1");
+
 			firstRow.getCell(0).setText("1x2");
 
 			XWPFTableRow secondRow = newTable.getRow(0);
