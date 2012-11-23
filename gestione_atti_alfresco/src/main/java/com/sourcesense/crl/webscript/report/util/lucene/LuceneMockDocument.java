@@ -1,4 +1,4 @@
-package com.sourcesense.crl.webscript.report.lucene;
+package com.sourcesense.crl.webscript.report.util.lucene;
 
 import java.util.ArrayList;
 import java.util.List;

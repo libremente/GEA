@@ -14,7 +14,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.json.JSONException;
 
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
-import com.sourcesense.crl.webscript.report.office.DocxManager;
+import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
