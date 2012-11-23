@@ -16,7 +16,7 @@ import org.json.JSONException;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
-public class ReportConferenzeCommand extends ReportBaseCommand {
+public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
 	@Override
 	public byte[] generate(byte[] templateByteArray, String json)
@@ -26,22 +26,14 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			this.initCommonParams(json);
-			// data assegnazione
+			this.initTipiAttoLucene(json);
+			// data ritiro
 			ResultSet queryRes = null;
-			// costruire n query quanti i tipi di atto? vanno messi nel path?
-			// per il momento per commissioni ho semplicemente messo il toString
-			// della lista che si traduce in valori separati da spazio
-			// per aggiungere gli OR basta creare un metodo che prendendo in
-			// input una lista di stringhe
-			// riporta una stringa con la concat e gli OR in mezzo
-			// va valutato come gestire la data
+	
 			for (int i = 0; i < tipiAttoLucene.size(); i++) {
 				queryRes = searchService.query(Repository.getStoreRef(),
 						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ tipiAttoLucene.get(i) + "\" AND "
-								+ ruoloCommissioneLuceneField + ":\""
-								+ commissioniJson + "\"");
+								+ tipiAttoLucene.get(i));
 			}
 
 			// obtain resultSet Length and cycle on it to repeat template
@@ -65,7 +57,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
 	/**
 	 * qui vanno inseriti nella table, presa dal template solo 6: tipo atto-
-	 * numero atto- oggetto - iniziativa -firmatari- data assegnazione -
+	 * numero atto- iniziativa -firmatari- oggetto-data presentazione- data revoca
 	 * 
 	 * 
 	 * 

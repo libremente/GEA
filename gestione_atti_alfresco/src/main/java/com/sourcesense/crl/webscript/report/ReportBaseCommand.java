@@ -37,6 +37,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected List<String> tipiAttoLucene;
 	protected String ruoloCommissioneLuceneField;
 	protected List<String> commissioniJson;
+	protected List<String> relatoriJson;
 
 	/**
 	 * init the common params : List<String> tipiAttoLucene; String
@@ -46,11 +47,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	 */
 	protected void initCommonParams(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		// extract the tipiAtto list from the json string
-		List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
-				rootJson, "tipiAtto");
-		// convert the list in the lucene format
-		this.tipiAttoLucene = this.convertToLuceneTipiAtto(tipiAttoJson);
+		initTipiAttoLucene(json);
 		// extract the ruoloCommissione element from json
 		String ruoloCommissioneJson = JsonUtils.retieveElementFromJson(
 				rootJson, "ruoloCommissione");
@@ -62,6 +59,24 @@ public abstract class ReportBaseCommand implements ReportCommand {
 				"commissioni");
 	}
 
+	protected void initRelatori(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.relatoriJson=JsonUtils.retieveArrayListFromJson(rootJson,
+				"relatori");
+	}
+	/**
+	 * @param rootJson
+	 * @throws JSONException
+	 */
+	protected void initTipiAttoLucene(String json) throws JSONException {
+		JSONObject rootJson = new JSONObject(json);
+		// extract the tipiAtto list from the json string
+		List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
+				rootJson, "tipiAtto");
+		// convert the list in the lucene format
+		this.tipiAttoLucene = this.convertToLuceneTipiAtto(tipiAttoJson);
+	}
+
 	/**
 	 * init a simple map that link json names to lucene names
 	 * */
@@ -71,7 +86,6 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		json2luceneField.put(RUOLO_COMM_COREFERENTE, "crlatti:commCoreferente");
 		json2luceneField.put(RUOLO_COMM_CONSULTIVA, "crlatti:commConsultiva");
 		json2luceneField.put(RUOLO_COMM_REDIGENTE, "crlatti:commRedigente");
-		json2luceneField.put(RUOLO_COMM_DELIBERANTE, "crlatti:commDeliberante");
 
 	}
 
