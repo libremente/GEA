@@ -50,7 +50,7 @@ public class ReportAttiAssCommissioniServCommCommand extends ReportBaseCommand {
 			//riporta una stringa con la concat e gli OR in mezzo, non facevo in tempo prima di pranzo
 			for(int i=0;i<tipiAttoLucene.size();i++){
 			queryRes = searchService.query(Repository.getStoreRef(), 
-					SearchService.LANGUAGE_LUCENE, "PATH:\""+tipiAttoLucene.get(i)+"\" AND "+ruoloCommissioneLuceneField+":\""+commissioniJson+"\"");
+					SearchService.LANGUAGE_LUCENE, "TYPE:\""+tipiAttoLucene.get(i)+"\" AND "+ruoloCommissioneLuceneField+":\""+commissioniJson+"\"");
 			}
 									 
 			// obtain resultSet Length and cycle on it to repeat template
