@@ -2,9 +2,7 @@ package com.sourcesense.crl.webscript.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.alfresco.service.cmr.search.ResultSet;
@@ -13,7 +11,6 @@ import org.alfresco.web.bean.repository.Repository;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,90 +71,10 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
 	}
 
-	private List<String> convertToLuceneTipiAtto(List<String> tipiAttoJson) {
-		List<String> luceneTipiAttoList = new ArrayList<String>();
-		for (String jsonType : tipiAttoJson) {
-			String luceneValueType = "{" + super.CRL_ATTI_MODEL + "}"
-					+ jsonType;
-			luceneTipiAttoList.add(luceneValueType);
-		}
-		return luceneTipiAttoList;
-	}
-
-	/**
-	 * return a simple element for the current JsonObj and elementname
-	 * 
-	 * @param root
-	 * @param arrayName
-	 * @return
-	 * @throws JSONException
-	 */
-	public String retieveElementFromJson(JSONObject root, String elementName)
-			throws JSONException {
-		String elementValue = root.getString(elementName);
-		return elementValue;
-	}
-
-	/**
-	 * return the ArrayList of elements for the current JsonObj and arrayName
-	 * 
-	 * @param root
-	 * @param arrayName
-	 * @return
-	 * @throws JSONException
-	 */
-	public List<String> retieveArrayListFromJson(JSONObject root,
-			String arrayName) throws JSONException {
-		JSONArray jsonArray = root.getJSONArray(arrayName);
-		List<String> tipiAttoList = new ArrayList<String>();
-		for (int i = 0; i < jsonArray.length(); i++) {
-			String jsonElement = jsonArray.getString(i).trim();
-			if (!jsonElement.equals(""))
-				tipiAttoList.add(this.extractJsonSingleValue(jsonElement));
-		}
-		return tipiAttoList;
-	}
-
-	/**
-	 * Returns the value for this single json element in this form :
-	 * "tipoAtto":"PDL"
-	 * 
-	 * @param tipoAtto
-	 * @return
-	 */
-	private String extractJsonSingleValue(String jsonElement) {
-		int indexFieldValueSeparator = jsonElement.indexOf(":");
-		int indexValueEnd = jsonElement.lastIndexOf("\"");
-		return jsonElement.substring(indexFieldValueSeparator + 2,
-				indexValueEnd);
-	}
-
-	/**
-	 * @param generatedDocument
-	 * @return
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 */
-	private ByteArrayInputStream saveTemp(XWPFDocument generatedDocument)
-			throws IOException, FileNotFoundException {
-		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-		generatedDocument.write(ostream);
-		return new ByteArrayInputStream(ostream.toByteArray());
-		/*
-		 * usually duplicated template became useful only after disk save and
-		 * re-import URL testTableOutput = getClass().getResource(""); String
-		 * path = testTableOutput.getPath(); File out = new File(path +
-		 * "/attiTemp.docx"); out.createNewFile(); FileOutputStream fos = new
-		 * FileOutputStream(out); generatedDocument.write(fos); fos.flush();
-		 * fos.close(); FileInputStream reader=new FileInputStream(out); return
-		 * reader;
-		 */
-	}
-
 	/**
 	 * qui vanno inseriti nella table, presa dal template solo 8:
 	 * tipo atto- numero atto- competenza - iniziativa -firmatari- oggetto - data assegnazione - altri pareri - data valutazione - esito votazione 
-	 * -elenco relatori
+	 * -elenco relatori, sono una lista all'interno di una cella
 	 * 
 	 * 
 	 * 
