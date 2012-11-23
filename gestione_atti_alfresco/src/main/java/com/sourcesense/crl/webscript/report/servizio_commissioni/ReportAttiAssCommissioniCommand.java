@@ -65,6 +65,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 	}
 
 	/**
+	 * ipotizzo field già presenti nella table, quindi inseriamo solo value
 	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
 	 * numero atto- competenza - iniziativa- oggetto - data assegnazione - data
 	 * valutazione - commissione referente
