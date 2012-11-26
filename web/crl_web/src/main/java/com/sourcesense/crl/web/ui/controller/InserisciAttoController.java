@@ -57,6 +57,8 @@ public class InserisciAttoController {
 	private String legislatura;
 	
 	private String anno;
+	
+	private boolean tipologiaVisible;
 
 	private Map<String, String> tipiAtto = new HashMap<String, String>();
 
@@ -90,6 +92,13 @@ public class InserisciAttoController {
             setTipologie(tipoAttoServiceManager.findTipologieByTipoAtto(atto.getTipoAtto()));  
         else  
         	tipologie = new HashMap<String, String>();  
+        
+        if(atto.getTipoAtto().equals("DOC") || atto.getTipoAtto().equals("REF"))
+        {
+        	setTipologiaVisible(true);
+        	} else {
+        		setTipologiaVisible(false);
+        	}
     }  
 	
 	
@@ -138,6 +147,8 @@ public class InserisciAttoController {
 	          
 	      
 	}
+	
+
 	
 	
 	public AttoServiceManager getAttoServiceManager() {
@@ -271,6 +282,24 @@ public class InserisciAttoController {
 	public void setAnno(String anno) {
 		this.atto.setAnno(anno);
 	}
+
+
+
+
+	public boolean isTipologiaVisible() {
+		return tipologiaVisible;
+	}
+
+
+
+
+	public void setTipologiaVisible(boolean tipologiaVisible) {
+		this.tipologiaVisible = tipologiaVisible;
+	}
+
+
+	
+	
 	
 
 }
