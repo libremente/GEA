@@ -39,6 +39,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected String organismo;
 	protected List<String> commissioniJson;
 	protected List<String> relatoriJson;
+	protected String firmatario;
+	protected String tipologiaFirma;
 
 	/**
 	 * init the common params : List<String> tipiAttoLucene; String
@@ -60,10 +62,20 @@ public abstract class ReportBaseCommand implements ReportCommand {
 				"commissioni");
 	}
 
+	protected void initFirmatario(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.firmatario=JsonUtils.retieveElementFromJson(rootJson, "firmatario");
+	}
+	
+	protected void initTipoFirma(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.tipologiaFirma=JsonUtils.retieveElementFromJson(rootJson, "tipologiaFirma");
+	}
 	protected void initOrganismo(String json) throws JSONException{
 		JSONObject rootJson = new JSONObject(json);
 		this.organismo=JsonUtils.retieveElementFromJson(rootJson, "organismo");
 	}
+	
 	protected void initRelatori(String json) throws JSONException{
 		JSONObject rootJson = new JSONObject(json);
 		this.relatoriJson=JsonUtils.retieveArrayListFromJson(rootJson,
