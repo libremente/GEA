@@ -26,7 +26,9 @@
 		<f:facet name="header">
 			<p:row>
 				<p:column style="text-align:left" colspan="4">
+				
 						Inserisci Atto:
+			    
 			    </p:column>
 			</p:row>
 		</f:facet>
@@ -43,12 +45,16 @@
 
 		<p:row>
 			<p:column>
+			<p:panel style="border: 0px; margin: 0px 0px 0px 0px;">
 				<h:outputLabel for="numeroatto" value="Numero Atto: *" />
+				</p:panel>
 			</p:column>
 			<p:column>
+			<p:panel style="border: 0px;">
 				<p:inputText id="numeroatto"
 					value="#{inserisciAttoController.numeroAtto}" required="true"
 					requiredMessage="Numero Atto obbligatorio" />
+			</p:panel>
 			</p:column>
 			<p:column>
 				<p:message for="numeroatto" display="icon" />
@@ -58,35 +64,40 @@
 
 		<p:row>
 			<p:column>
+			<p:panel style="border: 0px;">
 				<h:outputLabel for="tipoatto" value="Tipo atto: *" />
+			</p:panel>
 			</p:column>
 
 			<p:column>
-
+<p:panel style="border: 0px;">
 				<p:selectOneMenu id="tipoatto"
 					value="#{inserisciAttoController.tipoAtto}" required="true"
 					requiredMessage="Tipo Atto obbligatorio">
 					<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
 					<f:selectItems value="#{inserisciAttoController.tipiAtto}" />
-					<p:ajax update=":insertForm:insertattopanel"
+					<p:ajax update="tipologiaPanel1, tipologiaPanel2"
 						listener="#{inserisciAttoController.handleTipoAttoChange}" />
 
 				</p:selectOneMenu>
+</p:panel>
 			</p:column>
 
 			
 		</p:row>
 
 
-		<p:row rendered="#{inserisciAttoController.isTipologiaVisible()}">
-
+		<p:row >
+		
+		
 				<p:column>
-
+				<p:panel id="tipologiaPanel1" visible="#{inserisciAttoController.isTipologiaVisible()}" style="border: 0px;">
 					<h:outputLabel for="tipologia" value="Tipologia: " />
+					</p:panel>
 				</p:column>
 
 				<p:column>
-
+<p:panel id="tipologiaPanel2" visible="#{inserisciAttoController.isTipologiaVisible()}" style="border: 0px;">
 
 					<p:selectOneMenu id="tipologia"
 						value="#{inserisciAttoController.tipologia}">
@@ -95,24 +106,30 @@
 						<f:selectItems value="#{inserisciAttoController.tipologie}" />
 
 					</p:selectOneMenu>
-
+</p:panel>
 				</p:column>
+				
+			
 			
 		</p:row>
 
 
 		<p:row>
 			<p:column>
+			<p:panel style="border: 0px;">
 				<h:outputLabel for="legislatura" value="Legislatura: *" />
+			</p:panel>
 			</p:column>
 
 			<p:column>
+			<p:panel style="border: 0px;">
 				<p:selectOneMenu id="legislatura"
 					value="#{inserisciAttoController.legislatura}" required="true"
 					requiredMessage="Legislatura obbligatoria">
 					<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
 					<f:selectItems value="#{inserisciAttoController.legislature}" />
 				</p:selectOneMenu>
+			</p:panel>
 			</p:column>
 
 			<p:column>
@@ -136,20 +153,5 @@
 
 
 </h:form>
-<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
-<script>
-function showTipologia(){
-if ( #{inserisciAttoController.isTipologiaVisible()}==true ) {
-	$('#tipologiaDiv').hide();
-	location.reload();}
-else {
-	$('#tipologiaDiv').show();
-	location.reload();}
-}
 
-
-
-
-
-</script>
 </html>
