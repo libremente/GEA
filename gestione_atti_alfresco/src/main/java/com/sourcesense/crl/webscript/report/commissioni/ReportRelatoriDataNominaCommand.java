@@ -64,9 +64,8 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 	/**
 	 * ipotizzo field già presenti nella table, quindi inseriamo solo value
 	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
-	 * numero atto- competenza - iniziativa- oggetto - data assegnazione - altri pareri - commissione referente
-	 * commissioni consultive
-	 * 
+	 * commissione - data nomina - consigliere - tipo atto - numero atto - oggetto
+	 * elenco relatori
 	 * @param finalDocStream
 	 * @param queryRes
 	 * @return
