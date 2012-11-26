@@ -29,19 +29,21 @@ public class DocxManager {
 	/**
 	 * Extracts the table from the input Docx ( template) and copy the table n
 	 * times ( n is the size of luceneDocs in input)
-	 * 
+	 * @param breakBetween TODO
 	 * @param luceneDocs
+	 * 
 	 * @return
 	 */
-	public XWPFDocument generateFromTemplate(int n,int kpage) {
+	public XWPFDocument generateFromTemplate(int n,int kpage, boolean breakBetween) {
 		List<XWPFTable> tables = document.getTables();
 		XWPFTable tableExt = tables.get(0);
 		for (int k = 1; k < n; k++) {
 			XWPFParagraph createParagraph = document.createParagraph();
 			if(k%kpage==0)
 				createParagraph.setPageBreak(true);
+			if(breakBetween){
 			XWPFRun run = createParagraph.createRun();
-			run.addBreak();
+			run.addBreak();}
 			XWPFTable currentTable = document.createTable();
 			currentTable = tableExt;
 			document.setTable(document.getTablePos(0) + k, currentTable);
@@ -57,20 +59,24 @@ public class DocxManager {
 	 */
 	public XWPFDocument fillTemplate(List<LuceneMockDocument> luceneDocs,boolean onlyValues){
 		List<XWPFTable> tables = document.getTables();
-		for (int k = 0; k < luceneDocs.size(); k++) {
+		int tablesNumber = tables.size();
+		for (int k = 0; k < tablesNumber; k++) {
 			XWPFTable newTable = tables.get(k);
+			int numberOfRows = newTable.getNumberOfRows();
 			LuceneMockDocument luceneMockDocument = luceneDocs.get(k);
 			List<String> fields = luceneMockDocument.getFields();
 			List<String> values = luceneMockDocument.getValues();
 			XWPFTableRow currentRow;
 			String field;
 			String value;
-			for (int i = 0; i < fields.size(); i++) {
+			
+			for (int i = 0; i < numberOfRows; i++) {
 				field = fields.get(i);
 				value = values.get(i);
 				currentRow = newTable.getRow(i);
 				if(!onlyValues)
 					currentRow.getCell(0).setText(field);
+				if(currentRow!=null&&currentRow.getCell(1)!=null)
 				currentRow.getCell(1).setText(value);
 			}
 		}

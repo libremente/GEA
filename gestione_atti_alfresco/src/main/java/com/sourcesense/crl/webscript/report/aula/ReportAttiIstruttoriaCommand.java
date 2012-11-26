@@ -34,12 +34,12 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			for (int i = 0; i < tipiAttoLucene.size(); i++) {
 				queryRes = searchService.query(Repository.getStoreRef(),
 						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ tipiAttoLucene.get(i) +"\"");
+								+ tipiAttoLucene.get(i) + "\"");
 			}
 
 			// obtain resultSet Length and cycle on it to repeat template
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					queryRes.length(), 4);
+					queryRes.length(), 4, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -57,10 +57,11 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * ipotizzo field già presenti nella table, quindi inseriamo solo value
-	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
-	 * numero atto- abbinamenti - oggetto atto - iniziativa - firmatari - descrizione iniziativa - 
-	 * commissione referente - relatore - relazione scritta - note generali aula
+	 * ipotizzo field già presenti nella table, quindi inseriamo solo value qui
+	 * vanno inseriti nella table, presa dal template solo 8: tipo atto- numero
+	 * atto- abbinamenti - oggetto atto - iniziativa - firmatari - descrizione
+	 * iniziativa - commissione referente - relatore - relazione scritta - note
+	 * generali aula
 	 * 
 	 * @param finalDocStream
 	 * @param queryRes

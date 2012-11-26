@@ -38,7 +38,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 									 
 			// obtain resultSet Length and cycle on it to repeat template
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					queryRes.length(), 5);
+					queryRes.length(), 5, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 

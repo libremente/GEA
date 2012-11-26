@@ -27,7 +27,8 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			this.initTipiAttoLucene(json);//// che hanno almeno il secondo passaggio?
+			this.initTipiAttoLucene(json);// // che hanno almeno il secondo
+											// passaggio?
 			ResultSet queryRes = null;
 			for (int i = 0; i < tipiAttoLucene.size(); i++) {
 				queryRes = searchService.query(Repository.getStoreRef(),
@@ -39,7 +40,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 
 			// obtain resultSet Length and cycle on it to repeat template
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					queryRes.length(), 5);
+					queryRes.length(), 5, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -57,9 +58,9 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * ipotizzo field già presenti nella table, quindi inseriamo solo value
-	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
-	 * numero atto- oggetto atto - data rinvio - relatore - commissione referente - 
+	 * ipotizzo field già presenti nella table, quindi inseriamo solo value qui
+	 * vanno inseriti nella table, presa dal template solo 8: tipo atto- numero
+	 * atto- oggetto atto - data rinvio - relatore - commissione referente -
 	 * data termine - motivazione rinvio - note generali aula
 	 * 
 	 * @param finalDocStream
