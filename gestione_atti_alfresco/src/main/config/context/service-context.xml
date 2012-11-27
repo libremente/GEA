@@ -116,6 +116,10 @@
 	         </props>
 	         <props>
 	            <prop key="path">/${spaces.company_home.childname}/cm:CRL/cm:Gestione_x0020_Atti</prop>
+	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/report-templates.acp</prop>
+	         </props>
+	         <props>
+	            <prop key="path">/${spaces.company_home.childname}/cm:CRL/cm:Gestione_x0020_Atti</prop>
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/sedute.acp</prop>
 	         </props> 
 	         <props>
