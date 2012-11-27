@@ -15,7 +15,7 @@
 	    </property>
 	</bean> 
 	
-	<bean id="ReportAttiAssCommissioniCommand" class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiAssCommissioniCommand" parent="reportBaseCommand" />
+	<bean id="reportAttiAssCommissioniServCommCommand" class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiAssCommissioniCommand" parent="reportBaseCommand" />
 	
 
 	<bean id="webscript.crl.gestioneatti.report.report.get" class="com.sourcesense.crl.webscript.report.ReportWebScript" parent="webscript"> 
@@ -31,7 +31,7 @@
 	    
 	    <property name="reportCommandMap">
             <map>
-                <entry key="ReportAttiAssCommissioniCommand" value-ref="ReportAttiAssCommissioniCommand"/>
+                <entry key="crlreport:ReportAttiAssCommissioniServComm" value-ref="reportAttiAssCommissioniServCommCommand"/>
             </map>
         </property>
 	    
