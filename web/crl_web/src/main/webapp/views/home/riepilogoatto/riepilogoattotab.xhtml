@@ -267,8 +267,8 @@
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Relatore: " />
-				<c:forEach items="#{riepilogoAttoController.commissioneSelected.relatori}" var="relatore">
-				  <br/>&nbsp;&nbsp;&nbsp;<h:outputText value="#{relatore.nome} - #{relatore.gruppoConsiliare} " />
+				<c:forEach items="#{riepilogoAttoController.relatoriAttivi}" var="relatore">
+				  <br/>&nbsp;&nbsp;&nbsp;<h:outputText value="#{relatore.descrizione} - #{relatore.gruppoConsiliare} " />
 				</c:forEach>
 				
 				

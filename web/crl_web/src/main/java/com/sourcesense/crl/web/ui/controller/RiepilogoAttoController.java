@@ -15,6 +15,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Organo;
 import com.sourcesense.crl.business.model.Passaggio;
+import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
@@ -36,6 +37,8 @@ public class RiepilogoAttoController {
 	
 	private List<Abbinamento> abbinamentiAttivi = new ArrayList<Abbinamento>();
 	private List<Abbinamento> abbinamentiList = new ArrayList<Abbinamento>();
+	private List<Relatore> relatoriAttivi = new ArrayList<Relatore>();
+	private List<Relatore> relatoriList = new ArrayList<Relatore>();
 
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
@@ -73,8 +76,9 @@ public class RiepilogoAttoController {
 		}
 		
 		abbinamentiList = Clonator.cloneList(attoBean.getLastPassaggio().getAbbinamenti());
-		
+		relatoriList =Clonator.cloneList(commissioneSelected.getRelatori());
 		filtraAbbinamenti();
+		filtraRelatori();
 		
 		trasmissioneAdAulaAbilited();
 		
@@ -109,6 +113,17 @@ public class RiepilogoAttoController {
 
 				abbinamentiAttivi.add(element);
 				
+			}
+		}
+	}
+	
+	public void filtraRelatori(){
+		
+		for (Relatore element: relatoriList) {
+			
+			if ( element.getDataUscita() == null ) {
+				
+				relatoriAttivi.add(element);
 			}
 		}
 	}
@@ -219,6 +234,18 @@ public class RiepilogoAttoController {
 
 	public void setAbbinamentiAttivi(List<Abbinamento> abbinamentiAttivi) {
 		this.abbinamentiAttivi = abbinamentiAttivi;
+	}
+
+
+
+	public List<Relatore> getRelatoriAttivi() {
+		return relatoriAttivi;
+	}
+
+
+
+	public void setRelatoriAttivi(List<Relatore> relatoriAttivi) {
+		this.relatoriAttivi = relatoriAttivi;
 	}
 
 	
