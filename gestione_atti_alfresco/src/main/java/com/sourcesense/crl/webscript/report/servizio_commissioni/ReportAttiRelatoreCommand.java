@@ -3,9 +3,11 @@ package com.sourcesense.crl.webscript.report.servizio_commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -28,21 +30,25 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			DocxManager docxManager = new DocxManager(is);
 			this.initCommonParams(json);
 			this.initRelatori(json);
-			// data nomina relatore
-			ResultSet queryRes = null;
-			//dubbio, possibile che i field lucene , ad esempio rlatori, siano crlatti:relatori ?
-			//in lucene la query come magari ricorderai è field:value, quindi qui avremo i : anche dentro 
+			this.initDataNominaRelatoreDa(json);
+			this.initDataNominaRelatoreA(json);
 			
-			for (String commissione:this.commissioniJson) {
-				queryRes = searchService.query(Repository.getStoreRef(),
-						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
-								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
-								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
-								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
-								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ]\""
-								);
+			ResultSet queryRes = null;
+			//sorting gruppo per relatore - ordine alfabetico - sottogruppo per tipo atto - ordinato per numero
+			 String sortField1 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
+			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
+			 for (String tipoAtto:this.tipiAttoLucene) {
+				SearchParameters sp = new SearchParameters();
+				//sp.addStore(attoNodeRef.getStoreRef());
+				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				String query="TYPE:\""
+						+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
+						+ tipoAtto   + "\" AND @crlatti\\:dataRitiro:["
+						+this.dataRitiroDa+" TO "+
+						this.dataRitiroA+" ]\"";
+				sp.setQuery(query);
+				sp.addSort(sortField1, false);
+				allSearches.add(sp);
 			}
 
 			// obtain resultSet Length and cycle on it to repeat template

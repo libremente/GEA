@@ -3,9 +3,11 @@ package com.sourcesense.crl.webscript.report.servizio_commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -27,13 +29,23 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 			this.initTipiAttoLucene(json);
-			// data ritiro
+			this.initDataRitiroDa(json);
+			this.initDataRitiroA(json);
 			ResultSet queryRes = null;
-	
-			for (int i = 0; i < tipiAttoLucene.size(); i++) {
-				queryRes = searchService.query(Repository.getStoreRef(),
-						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ tipiAttoLucene.get(i));
+			 String sortField1 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
+			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
+			 for (String tipoAtto:this.tipiAttoLucene) {
+				SearchParameters sp = new SearchParameters();
+				//sp.addStore(attoNodeRef.getStoreRef());
+				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				String query="TYPE:\""
+						+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
+						+ tipoAtto   + "\" AND @crlatti\\:dataRitiro:["
+						+this.dataRitiroDa+" TO "+
+						this.dataRitiroA+" ]\"";
+				sp.setQuery(query);
+				sp.addSort(sortField1, false);
+				allSearches.add(sp);
 			}
 
 			// obtain resultSet Length and cycle on it to repeat template
