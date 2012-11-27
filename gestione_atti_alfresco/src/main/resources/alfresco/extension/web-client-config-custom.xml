@@ -70,7 +70,7 @@
 			<type name="crltemplate:letteraTrasmissioneORGAula"/>
 			<type name="crltemplate:letteraConvalidaORGAula"/>
 			<type name="crltemplate:letteraTrasmissioneBURLAula"/>
-			<type name="crlreport:crlreport:ReportAttiAssCommissioniServComm"/>
+			<type name="crlreport:reportAttiAssCommissioniServComm"/>
 		</content-types>
 	</config>
 
@@ -145,7 +145,7 @@
 			<type name="crltemplate:letteraTrasmissioneORGAula"/>
 			<type name="crltemplate:letteraConvalidaORGAula"/>
 			<type name="crltemplate:letteraTrasmissioneBURLAula"/>
-   			<type name="crlreport:crlreport:ReportAttiAssCommissioniServComm"/>
+   			<type name="crlreport:reportAttiAssCommissioniServComm"/>
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
@@ -216,7 +216,7 @@
 			<type name="crltemplate:letteraTrasmissioneORGAula"/>
 			<type name="crltemplate:letteraConvalidaORGAula"/>
 			<type name="crltemplate:letteraTrasmissioneBURLAula"/>
-			<type name="crlreport:crlreport:ReportAttiAssCommissioniServComm"/>
+			<type name="crlreport:reportAttiAssCommissioniServComm"/>
 		</specialise-types>
 		<aspects>
          	<aspect name="crlatti:tipizzabile" />
