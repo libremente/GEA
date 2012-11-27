@@ -13,9 +13,6 @@
 	    <property name="nodeService">
 	    	<ref bean="NodeService" />
 	    </property>
-	    <property name="serviceRegistry">
-            <ref bean="ServiceRegistry"/>
-        </property>
 	</bean> 
 	
 	<bean id="ReportAttiAssCommissioniCommand" class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiAssCommissioniCommand" parent="reportBaseCommand" />
@@ -34,7 +31,7 @@
 	    
 	    <property name="reportCommandMap">
             <map>
-                <entry key="ReportAttiAssCommissioniCommand" value-ref="ReportAttiAssCommissioni"/>
+                <entry key="ReportAttiAssCommissioniCommand" value-ref="ReportAttiAssCommissioniCommand"/>
             </map>
         </property>
 	    
