@@ -30,9 +30,16 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			//data votazione
 			ResultSet queryRes=null;
 
-			for(int i=0;i<tipiAttoLucene.size();i++){
-			queryRes = searchService.query(Repository.getStoreRef(), 
-					SearchService.LANGUAGE_LUCENE, "TYPE:\""+tipiAttoLucene.get(i)+"\" AND "+ruoloCommissioneLuceneField+":\""+commissioniJson+"\"");
+			for (String commissione:this.commissioniJson) {
+				queryRes = searchService.query(Repository.getStoreRef(),
+						SearchService.LANGUAGE_LUCENE, "TYPE:\""
+								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
+								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
+								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
+								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
+								+this.dataAssegnazioneCommReferenteDa+" TO "+
+								this.dataAssegnazioneCommReferenteA+" ]\""
+								);
 			}
 			
 									 

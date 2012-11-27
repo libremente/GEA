@@ -30,12 +30,16 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			this.initTipiAttoLucene(json);// // che hanno almeno il secondo
 											// passaggio?
 			ResultSet queryRes = null;
-			for (int i = 0; i < tipiAttoLucene.size(); i++) {
+			for (String commissione:this.commissioniJson) {
 				queryRes = searchService.query(Repository.getStoreRef(),
 						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ tipiAttoLucene.get(i) + "\" AND "
-								+ ruoloCommissioneLuceneField + ":\""
-								+ commissioniJson + "\"");
+								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
+								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
+								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
+								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
+								+this.dataAssegnazioneCommReferenteDa+" TO "+
+								this.dataAssegnazioneCommReferenteA+" ]\""
+								);
 			}
 
 			// obtain resultSet Length and cycle on it to repeat template
