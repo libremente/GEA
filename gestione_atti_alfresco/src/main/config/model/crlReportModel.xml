@@ -38,6 +38,96 @@
 			<parent>crlreport:reportServComm</parent>
 		</type>
 		
+		<type name="crlreport:reportAttiIniziativaConsPerConsServComm">
+			<title>Report Atti di iniziativa consiliare per consigliere</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiInviatiOrganiEsterniServComm">
+			<title>Report Atti inviati a organi esterni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiLicenziatiServComm">
+			<title>Report Atti licenziati</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiRelatoreServComm">
+			<title>Report Atti per relatore</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiRitiratiRevocatiServComm">
+			<title>Report Atti ritirati e revocati</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportComposizioneCommissioniServComm">
+			<title>Report Composizione commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportConferenzeServComm">
+			<title>Report Conferenze (Atti in istruttoria)</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<!-- Commissioni -->
+		
+		<type name="crlreport:reportComm">
+			<title>Report Commissioni</title>
+			<parent>crlreport:report</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiAssCommissioniComm">
+			<title>Report Atti Assegnati alle Commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiIstruttoriaCommissioniComm">
+			<title>Report Atti in istruttoria alle commissioni per tipo atto</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiLicenziatiComm">
+			<title>Report Atti licenziati dalle commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<type name="crlreport:reportRelatoriDataNominaComm">
+			<title>Report dei relatori nominati in commissione per data nomina</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<!-- Aula -->
+		
+		<type name="crlreport:reportAula">
+			<title>Report Aula</title>
+			<parent>crlreport:report</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiIstruttoriaAula">
+			<title>Report Atti istruttoria </title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiRinviatiAula">
+			<title>Report Atti rinviati alle commissioni </title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		<type name="crlreport:reportDCRAula">
+			<title>Report DCR </title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		<type name="crlreport:reportLCRAula">
+			<title>Report LCR </title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		
 	</types>
 	
 	
