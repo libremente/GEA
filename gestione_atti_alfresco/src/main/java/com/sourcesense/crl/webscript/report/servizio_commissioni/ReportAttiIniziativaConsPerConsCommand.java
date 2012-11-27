@@ -33,12 +33,16 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			// data assegnazione commissione referente
 			ResultSet queryRes = null;
 
-			for (int i = 0; i < tipiAttoLucene.size(); i++) {
+			for (String commissione:this.commissioniJson) {
 				queryRes = searchService.query(Repository.getStoreRef(),
-						SearchService.LANGUAGE_LUCENE, "crlatti:firmatario:\""
-								+ this.firmatario + "\" AND "
-								+ ruoloCommissioneLuceneField + ":\""// tipologia Firma field?
-								+ this.tipologiaFirma+ "\"");
+						SearchService.LANGUAGE_LUCENE, "TYPE:\""
+								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
+								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
+								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
+								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
+								+this.dataAssegnazioneCommReferenteDa+" TO "+
+								this.dataAssegnazioneCommReferenteA+" ]\""
+								);
 			}
 
 			// obtain resultSet Length and cycle on it to repeat template
