@@ -37,6 +37,7 @@ public class ChiusuraIterController {
 	private String numeroLr;
 	private Date dataLr;
 	private String urlLeggiRegionali;
+	private String numeroDcr;
 	
 	AttoBean attoBean;
 
@@ -186,6 +187,16 @@ public String tipoChiusuraPar() {
 
 	public void setDataLr(Date dataLr) {
 		this.atto.setDataLR(dataLr);
+	}
+
+	
+	public String getNumeroDcr() {
+		return atto.getNumeroDcr();
+	}
+
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.atto.setNumeroDcr(numeroDcr);
 	}
 
 

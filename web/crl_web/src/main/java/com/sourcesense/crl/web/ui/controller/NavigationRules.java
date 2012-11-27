@@ -188,6 +188,10 @@ public class NavigationRules {
 	public boolean isSessionAttoPDL() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDL");
 	}
+	
+	public boolean isSessionAttoPDA() {
+		return attoBean.getTipoAtto().equalsIgnoreCase("PDA");
+	}
 
 	public boolean gestioneSeduteConsultazioniCommissione() {
 		// TODO

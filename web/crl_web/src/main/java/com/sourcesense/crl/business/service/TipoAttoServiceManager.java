@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.service;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,21 @@ public class TipoAttoServiceManager implements ServiceManager {
         for (TipoAtto tipoAtto : listTipiAtto) {
 			
         	tipiAtto.put(tipoAtto.getDescrizione(),tipoAtto.getCodice() );
+        	
+		}
+		return tipiAtto;
+	}
+	
+    public List<String> getAll() {
+		
+		
+    	List<String> tipiAtto = new ArrayList<String>();
+		
+		List<TipoAtto> listTipiAtto = tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
+		
+        for (TipoAtto tipoAtto : listTipiAtto) {
+			
+        	tipiAtto.add(tipoAtto.getDescrizione());
         	
 		}
 		return tipiAtto;

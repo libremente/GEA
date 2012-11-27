@@ -84,6 +84,20 @@ public class PersonaleServiceManager implements ServiceManager{
 		return relatori;
 	}
 	
+	public Map<String, String> findAllMembriComitato() {
+		Map<String, String> relatori = new HashMap<String, String>();
+
+		List<Relatore> listRelatori = personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+
+		for (Relatore relatore : listRelatori) {
+
+			relatori.put(relatore.getDescrizione(), relatore.getDescrizione());
+
+		}
+		return relatori;
+	}
+	
+	
 	public List<Firmatario> findFirmatariByAtto(Atto atto) {
 		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_atto", new String[] { atto.getId() }));
 	}

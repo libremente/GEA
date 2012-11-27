@@ -178,11 +178,11 @@
 					<p:row>
 						<p:column>Numero DCR:</p:column>
 						<p:column>
-							<p:inputText size="5" maxlength="5" id="numeroDcr"
-								value="#{esameAulaController.numeroDcr}">
+							<p:inputMask  id="numeroDcr"
+								value="#{esameAulaController.numeroDcr}" mask="#{esameAulaController.atto.legislatura}/999">
 								<p:ajax event="change"
 									listener="#{esameAulaController.updateVotazioneHandler}" />
-							</p:inputText>
+							</p:inputMask>
 						</p:column>
 						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">Numero LCR:</p:column>
 						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">

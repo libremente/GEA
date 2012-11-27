@@ -62,7 +62,7 @@ public class Atto implements Cloneable
 
 
 	
-	private boolean pubblico;
+	private boolean pubblico=true;
 
 	private String id;
 	private String nome;

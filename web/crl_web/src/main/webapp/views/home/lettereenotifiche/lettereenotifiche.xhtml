@@ -21,11 +21,12 @@
 			<div id="blockedLettere">
 				<p:fieldset legend="Tipo di notifiche" toggleable="true"
 					toggleSpeed="500">
+					
 					<p:panelGrid styleClass="infoTable" id="tiponotifichepanel">
 						<p:row>
 							<p:column>
 
-								<p:tree style="width:90%"
+								<p:tree style="width:100%"
 									value="#{lettereNotificheController.root}" var="node"
 									dynamic="true" cache="false" selectionMode="single"
 									selection="#{lettereNotificheController.selectedNode}"

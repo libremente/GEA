@@ -191,7 +191,7 @@ public class EsameCommissioniController {
 
 		// Liste per combo
 		setRelatori(personaleServiceManager.findAllRelatore());
-		// TODO setMembriComitato(personaleServiceManager.findAll())
+	    setMembriComitato(personaleServiceManager.findAllMembriComitato());
 
 		// Bean atto di sessione
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1152,7 +1152,10 @@ public class EsameCommissioniController {
 				.getSessionMap().get("attoBean"));
 
 		String stato = atto.getStato();
-
+        
+		
+		
+		
 		// Check se annulla votazione
 		if (checkAnnullaCommissione()) {
 
@@ -1201,14 +1204,18 @@ public class EsameCommissioniController {
 		context.addMessage(null, new FacesMessage(
 				"Registrazione Votazione salvata con successo", ""));
 		
-		//Se deliberante forward su chiusura iter
-		if(Commissione.RUOLO_DELIBERANTE.equals(commissioneUser.getRuolo())){
-			
+		//Se deliberante e PDA forward su chiusura iter
+		if(Commissione.RUOLO_DELIBERANTE.equals(commissioneUser.getRuolo()) 
+				&& atto.getTipoAtto().equals("PDA")){
+			return "pretty:Chiusura_Iter";
 		}else{
 			return null;	
 		}
-		return null;
+		
 	}
+	
+	
+	
 
 	private boolean checkAnnullaCommissione() {
 

@@ -165,6 +165,24 @@ public class CommissioneServiceManager implements ServiceManager{
 		return commissioni;
 		
 	}
+    
+    
+    
+	public List<String> getAll() {
+		
+		List<String> commissioni = new ArrayList<String>();
+
+		List<Commissione> listCommissioni = commissioneService.getAllCommissioni(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_commissioni",null));
+
+		for (Commissione commissione : listCommissioni) {
+
+			commissioni.add(commissione.getDescrizione());
+
+		}
+		return commissioni;
+		
+	}
+    
 	
 	/*public Map<String, String> findAllCommissioneReferente() {
 		Map<String, String> commissioniReferenti = new HashMap<String, String>();

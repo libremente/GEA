@@ -117,11 +117,22 @@
 						value="#{chiusuraIterController.dataLr}" />
 				</p:column>
 			</p:row>
+			
+			<p:row rendered="#{navigationBean.isCommissioneDeliberante() and navigationBean.isSessionAttoPDA()}">
+						<p:column><b><h:outputLabel for="numeroDcr" value="Numero DCR: " /></b></p:column>
+						<p:column>
+							<p:inputMask  id="numeroDcr" 
+								value="#{chiusuraIterController.numeroDcr}"  mask="#{chiusuraIterController.atto.legislatura}/999/9999">
+							</p:inputMask>
+						</p:column>
+			</p:row>
+			
+			
 
            <p:row>
 				<p:column colspan="2">
 				    
-					<p:commandLink  value="Link Leggi Regionali"  action="#{chiusuraIterController.createLeggeRegionaleLink}" 
+					<p:commandLink target="_blank" value="Link Leggi Regionali"  action="#{chiusuraIterController.createLeggeRegionaleLink}" 
 					update="chiusuraIterMsg"
 					/>
 				</p:column>
