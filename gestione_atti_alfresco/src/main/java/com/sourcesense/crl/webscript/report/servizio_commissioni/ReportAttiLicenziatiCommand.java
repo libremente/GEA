@@ -3,9 +3,11 @@ package com.sourcesense.crl.webscript.report.servizio_commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -29,25 +31,25 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			this.initCommonParams(json);
 			this.initDataVotazioneCommReferenteDa(json);
 			this.initDataVotazioneCommReferenteA(json);
-			
-			//data licenziamento
-			ResultSet queryRes=null;
-			// costruire n query quanti i tipi di atto? vanno messi nel path?
-			//per il momento per commissioni ho semplicemente messo il toString della lista che si traduce in valori separati da spazio
-			//per aggiungere gli OR basta creare un metodo che prendendo in input una lista di stringhe
-			//riporta una stringa con la concat e gli OR in mezzo
-			// va valutato come gestire la data
-			for (String commissione:this.commissioniJson) {
-				queryRes = searchService.query(Repository.getStoreRef(),
-						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
-								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
-								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
-								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
-								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ]\""
-								);
+			ResultSet queryRes = null;
+			 String sortField1 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
+			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
+			 for (String tipoAtto:this.tipiAttoLucene) {
+				SearchParameters sp = new SearchParameters();
+				//sp.addStore(attoNodeRef.getStoreRef());
+				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				String query="TYPE:\""
+						+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
+						+ tipoAtto   + "\" AND @crlatti\\:ruoloCommissione:"
+						+ this.ruoloCommissione  +"\" AND @cm\\:name:"
+						+ this.commissioniJson+"\" AND @crlatti\\:dataVotazioneCommissione:["
+						+this.dataVotazioneCommReferenteDa+" TO "+
+						this.dataVotazioneCommReferenteA+" ]\"";
+				sp.setQuery(query);
+				sp.addSort(sortField1, false);
+				allSearches.add(sp);
 			}
+			
 			
 									 
 			// obtain resultSet Length and cycle on it to repeat template
