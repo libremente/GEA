@@ -45,7 +45,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     		
 			// Search document template node	
 			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
-					SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"");
+					SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Reports//*\" AND TYPE:\""+tipoTemplate+"\"");
 			
 			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
 
