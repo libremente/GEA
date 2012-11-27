@@ -35,9 +35,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected static final String RUOLO_COMM_DELIBERANTE = "Deliberante";
 
 	protected List<String> tipiAttoLucene;
-	protected String ruoloCommissioneLuceneField;
+	protected String ruoloCommissione;
 	protected String organismo;
 	protected List<String> commissioniJson;
+	
+	protected String dataAssegnazioneCommReferenteDa;
+	protected String dataAssegnazioneCommReferenteA;
 	protected List<String> relatoriJson;
 	protected String firmatario;
 	protected String tipologiaFirma;
@@ -52,19 +55,30 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		JSONObject rootJson = new JSONObject(json);
 		initTipiAttoLucene(json);
 		// extract the ruoloCommissione element from json
-		String ruoloCommissioneJson = JsonUtils.retieveElementFromJson(
+		this.ruoloCommissione = JsonUtils.retieveElementFromJson(
 				rootJson, "ruoloCommissione");
 		// converts the ruoloCommissione to a lucene field
-		this.ruoloCommissioneLuceneField = this.json2luceneField
-				.get(ruoloCommissioneJson);
 		// extract the commissioni list from json
 		this.commissioniJson = JsonUtils.retieveArrayListFromJson(rootJson,
 				"commissioni");
+		this.initDataAssegnazioneCommReferenteDa(json);
+		this.initDataAssegnazioneCommReferenteA(json);
+		
 	}
 
 	protected void initFirmatario(String json) throws JSONException{
 		JSONObject rootJson = new JSONObject(json);
 		this.firmatario=JsonUtils.retieveElementFromJson(rootJson, "firmatario");
+	}
+	
+	protected void initDataAssegnazioneCommReferenteDa(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataAssegnazioneCommReferenteDa=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneCommReferenteDa");
+	}
+	
+	protected void initDataAssegnazioneCommReferenteA(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataAssegnazioneCommReferenteA=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneCommReferenteA");
 	}
 	
 	protected void initTipoFirma(String json) throws JSONException{
@@ -96,6 +110,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	/**
 	 * init a simple map that link json names to lucene names
+	 * deprecated
 	 * */
 	public void initJson2lucene() {
 		json2luceneField = new HashMap<String, String>();
