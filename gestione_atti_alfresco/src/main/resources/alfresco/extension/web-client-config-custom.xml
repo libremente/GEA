@@ -533,7 +533,11 @@
 			<show-property name="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
 			<show-property name="crlatti:dataIntesaClausolaValutEsame" />
 			<show-property name="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
-			<show-property name="crlatti:noteClausolaValutativaEsame" />	
+			<show-property name="crlatti:noteClausolaValutativaEsame" />
+			
+			<show-property name="crlatti:nomeAttoCommissione" />
+			<show-property name="crlatti:tipoAttoCommissione" />
+				
 		</property-sheet>
 	</config>
 
@@ -638,6 +642,7 @@
 			<show-property name="crlatti:statoAtto" />
 			<show-property name="crlatti:dataPresaInCarico"/>
 			<show-property name="crlatti:numeroAtto" />
+			<show-property name="crlatti:estensioneAtto" />
 			<show-property name="crlatti:dataIniziativa" />
 			<show-property name="crlatti:numeroProtocollo" />
 			<show-property name="crlatti:tipoIniziativa" />
@@ -693,6 +698,7 @@
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
 			<show-property name="crlatti:numeroAtto" />
+			<show-property name="crlatti:estensioneAtto" />
 			<show-property name="crlatti:dataIniziativa" />
 			<show-property name="crlatti:numeroProtocollo" />
 			<show-property name="crlatti:tipoIniziativa" />
@@ -730,6 +736,7 @@
 			<show-property name="crlatti:dataLr" />
 			<show-property name="crlatti:numeroPubblicazioneBURL" />
 			<show-property name="crlatti:dataPubblicazioneBURL" />
+			<show-property name="crlatti:pubblico" />
 
 		</property-sheet>
 	</config>

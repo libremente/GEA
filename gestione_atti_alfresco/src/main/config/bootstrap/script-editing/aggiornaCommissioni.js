@@ -1,5 +1,10 @@
 var commissioni = space.getChildAssocsByType("crlatti:commissione");
 
+
+
+// Ridondanza delle informazioni sui ruoli delle commissioni direttamente sul nodo atto
+// Per consentire le ricerche lucene relative alle commissioni direttamente sui nodi atto
+
 var commConsultivaAtto = new Array();
 var commReferenteAtto = new Array();
 var commCoReferenteAtto = new Array();
@@ -54,3 +59,6 @@ if(commDeliberanteAtto.length>0) {
 }
 
 attoNode.save();
+
+
+

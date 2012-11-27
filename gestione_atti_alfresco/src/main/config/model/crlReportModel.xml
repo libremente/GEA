@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="crltemplate:gestioneTemplateModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>CRL Template Model</description>
+	<author>Sourcesense</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	
+	<namespaces>
+		<namespace uri="http://www.regione.lombardia.it/content/model/report/1.0"
+			prefix="crlreport" />
+	</namespaces>
+
+	<types>
+	
+		<type name="crlreport:report">
+			<title>Report</title>
+			<parent>cm:content</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni -->
+	
+		<type name="crlreport:reportServComm">
+			<title>Report Servizio Commissioni</title>
+			<parent>crlreport:report</parent>
+		</type>
+		
+		<type name="crlreport:ReportAttiAssCommissioniServCommCommand">
+			<title>Report Atti Assegnati alle Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+	</types>
+	
+	
+
+</model>

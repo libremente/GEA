@@ -21,6 +21,11 @@ if(checkIsNotNull(id)){
 	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
 	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
+	var commissioniAnnullateXPathQuery = "*[@cm:name='CommissioniAnnullate']";
+	var commissioniAnnullateFolderNode = passaggioFolderNode.childrenByXPath(commissioniAnnullateXPathQuery)[0];
+	
+	var commissioniAnnullateResults = commissioniAnnullateFolderNode.getChildAssocsByType("crlatti:commissione")
+	
 	var numeroCommissioni = commissioni.length();
 	for (var j=0; j<numeroCommissioni; j++){
 		var commissione = commissioni.get(j).get("commissione");
@@ -82,10 +87,47 @@ if(checkIsNotNull(id)){
 		commissioneNode.save();
 		
 		
-		attoNode.setPermission("Coordinator", "GROUP_"+descrizione);
+		// Gestione delle commissioni annullate. 
+		// Le commissioni annullate vengono spostate nella cartella commissioniAnnullate 
+		// in fase di update viene effettuato un controllo su alcune proprietà per capire se le commmissioni sono state già annullate 
+		// (cioè sono già presenti nella cartella commissioniAnnullate) o devono essere annullate per la prima volta
 		
+		if(commissioneNode.properties["crlatti:statoCommissione"] == "Annullato"){
+					
+			var check = false;
+			
+			for(var k=0; k<commissioniAnnullateResults.length; k++) {
+				
+				commissioneAnnullata = commissioniAnnullateResults[k];
+				var nomeCommissioneAnnullata = commissioneAnnullata.properties["cm:name"];
+				
+				// controllo su nomecommissione, dataAssegnazione, dataAnnullo, ruolo
+				if(nomeCommissioneAnnullata.indexOf(commissioneNode.properties["cm:name"]) == 0 &&
+						commissioneNode.properties["crlatti:dataAssegnazioneCommissione"].getTime()  == commissioneAnnullata.properties["crlatti:dataAssegnazioneCommissione"].getTime() &&
+						commissioneNode.properties["crlatti:dataAnnulloCommissione"].getTime() == commissioneAnnullata.properties["crlatti:dataAnnulloCommissione"].getTime() &&
+						commissioneNode.properties["crlatti:ruoloCommissione"] == commissioneAnnullata.properties["crlatti:ruoloCommissione"]){
+					
+					check = true;					
+				}
+				
+			}
+			
+			if(!check){
+				commissioneNode.move(commissioniAnnullateFolderNode);
+				var timestamp = new Date().getTime();
+				commissioneNode.name = descrizione+"#"+timestamp;
+				commissioneNode.save();
+			}else{
+				commissioneNode.remove();
+			}
+			
+			
+		}else{
+			// se non è stata annullata inserisco i permessi sulla cartella dell'atto per la commissione
+			attoNode.setPermission("Coordinator", "GROUP_"+descrizione);
+		}
 		
-		
+
 	}
 	
 	//verifica commissioni da cancellare

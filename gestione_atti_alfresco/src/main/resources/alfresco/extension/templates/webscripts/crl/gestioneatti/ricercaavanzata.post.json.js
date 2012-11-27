@@ -23,7 +23,7 @@ var dataIniziativaA = atto.get("dataIniziativaA");
 var tipoChiusura = atto.get("tipoChiusura");
 var esitoVotoComRef = atto.get("esitoVotoCommissioneReferente");
 var esitoVotoAula = atto.get("esitoVotoAula");
-var commReferente = atto.get("commissioneConsultiva");
+var commReferente = atto.get("commissioneReferente");
 var commConsultiva = atto.get("commissioneConsultiva");
 var redigente = atto.get("redigente");
 var deliberante = atto.get("deliberante");
@@ -322,18 +322,35 @@ for(var i=0; i< attiResults.length; i++){
 	attoResultObj.oggetto = attoResult.properties["crlatti:oggetto"];
 	attoResultObj.primoFirmatario = attoResult.properties["crlatti:primoFirmatario"];
 	attoResultObj.stato = attoResult.properties["crlatti:statoAtto"];
-	attoResultObj.elencoFirmatari = attoResult.properties["crlatti:firmatari"];
 	attoResultObj.tipoIniziativa = attoResult.properties["crlatti:tipoIniziativa"];
 	attoResultObj.dataPresentazione = attoResult.properties["crlatti:dataIniziativa"];
 	attoResultObj.tipoChiusura = attoResult.properties["crlatti:tipoChiusura"];
 	
+		
+	var elencoFirmatariArray = attoResult.properties["crlatti:firmatari"];
+	var elencoFirmatariString = "";
+	
+	if(elencoFirmatariArray!=null) {
+		for(var j=0; j<elencoFirmatariArray.length; j++){
+			elencoFirmatariString += elencoFirmatariArray[j];
+			if(j!=elencoFirmatariArray.length-1){
+				elencoFirmatariString += ",";
+			}
+		}
+	}
+	
+	attoResultObj.elencoFirmatari = elencoFirmatariString
+	
+	
 	var commissioniConsultiveArray = attoResult.properties["crlatti:commConsultiva"];
 	var commissioniConsultiveString = "";
 	
-	for(var j=0; j<commissioniConsultiveArray.length; j++){
-		commissioniConsultiveString += commissioniConsultiveArray[j];
-		if(j!=commissioniConsultiveArray.length-1){
-			commissioniConsultiveString += ",";
+	if(commissioniConsultiveArray!=null) {
+		for(var j=0; j<commissioniConsultiveArray.length; j++){
+			commissioniConsultiveString += commissioniConsultiveArray[j];
+			if(j!=commissioniConsultiveArray.length-1){
+				commissioniConsultiveString += ",";
+			}
 		}
 	}
 	
@@ -342,10 +359,12 @@ for(var i=0; i< attiResults.length; i++){
 	var commissioniReferentiArray = attoResult.properties["crlatti:commReferente"];
 	var commissioniReferentiString = "";
 	
-	for(var j=0; j<commissioniReferentiArray.length; j++){
-		commissioniReferentiString += commissioniReferentiArray[j];
-		if(j!=commissioniReferentiArray.length-1){
-			commissioniReferentiString += ",";
+	if (commissioniReferentiArray!=null){
+		for(var j=0; j<commissioniReferentiArray.length; j++){
+			commissioniReferentiString += commissioniReferentiArray[j];
+			if(j!=commissioniReferentiArray.length-1){
+				commissioniReferentiString += ",";
+			}
 		}
 	}
 		

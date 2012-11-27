@@ -13,12 +13,15 @@ var assegnazione = filterParam(atto.get("assegnazione"));
 var numeroDgr = filterParam(atto.get("numeroDgr"));
 var dataDgr = filterParam(atto.get("dataDgr"));
 var firmatari = filterParam(atto.get("firmatari"));
+var pubblico = filterParam(atto.get("pubblico"));
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
 	attoNode.properties["crlatti:classificazione"] = classificazione;
 	attoNode.properties["crlatti:oggetto"] = oggetto;
 	attoNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
+	attoNode.properties["crlatti:pubblico"] = pubblico;
+
 	
 	if(checkIsNotNull(dataRepertorio)){
 		var dataRepertorioSplitted = dataRepertorio.split("-");

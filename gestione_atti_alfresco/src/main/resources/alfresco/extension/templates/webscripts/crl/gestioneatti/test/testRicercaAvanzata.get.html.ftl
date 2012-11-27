@@ -14,7 +14,7 @@
 				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("POST", "http://localhost:8080/alfresco/service/crl/atto/ricerca/avanzata?alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://localhost:9080/alfresco/service/crl/atto/ricerca/avanzata?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(atto);
 	}
@@ -83,10 +83,10 @@
 			"dataIniziativaDa" : ""+dataIniziativaDa+"",
 			"dataIniziativaA" : ""+dataIniziativaA+"",
 			"tipoChiusura" : ""+tipoChiusura+"",
-			"esitoVotoComRef" : ""+esitoVotoComRef+"",
+			"esitoVotoCommissioneReferente" : ""+esitoVotoComRef+"",
 			"esitoVotoAula" : ""+esitoVotoAula+"",
-			"commReferente" : ""+commReferente+"",
-			"commConsultiva" : ""+commConsultiva+"",
+			"commissioneReferente" : ""+commReferente+"",
+			"commissioneConsultiva" : ""+commConsultiva+"",
 			"redigente" : ""+redigente+"",
 			"deliberante" : ""+deliberante+"",
 			"numeroLcr" : ""+numeroLcr+"",
@@ -96,10 +96,10 @@
 			"stralcio" : ""+stralcio+"",
 			"dataPubblicazioneDa" : ""+dataPubblicazioneDa+"",
 			"dataPubblicazioneA" : ""+dataPubblicazioneA+"",
-			"dataSedutaScDa" : ""+dataSedutaScDa+"",
-			"dataSedutaScA" : ""+dataSedutaScA+"",
-			"dataSedutaCommDa" : ""+dataSedutaCommDa+"",
-			"dataSedutaCommA" : ""+dataSedutaCommA+"",
+			"dataSedutaSCDa" : ""+dataSedutaScDa+"",
+			"dataSedutaSCA" : ""+dataSedutaScA+"",
+			"dataSedutaCommissioneDa" : ""+dataSedutaCommDa+"",
+			"dataSedutaCommissioneA" : ""+dataSedutaCommA+"",
 			"dataSedutaAulaDa" : ""+dataSedutaAulaDa+"",
 			"dataSedutaAulaA" : ""+dataSedutaAulaA+"",
 			"relatore" : ""+relatore+"",

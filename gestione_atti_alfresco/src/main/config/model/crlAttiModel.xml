@@ -66,6 +66,10 @@
 					<title>Numero</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:estensioneAtto">
+					<title>Estensione</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:dataIniziativa">
 					<title>Data iniziativa</title>
 					<type>d:date</type>
@@ -226,6 +230,7 @@
 				</property>
 			</properties>
 			<mandatory-aspects>
+				<aspect>crlatti:pubblicabile</aspect>
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:protocollato</aspect>
 			</mandatory-aspects>
@@ -768,6 +773,14 @@
 				</property>
 				<property name="crlatti:quorumEsameCommissione">
 					<title>Quorum</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:nomeAttoCommissione">
+					<title>Nome Atto (numero + estensione)</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipoAttoCommissione">
+					<title>Tipo Atto</title>
 					<type>d:text</type>
 				</property>
 			</properties>
