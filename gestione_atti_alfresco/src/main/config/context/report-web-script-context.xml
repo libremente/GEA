@@ -31,7 +31,7 @@
 	    
 	    <property name="reportCommandMap">
             <map>
-                <entry key="crlreport:ReportAttiAssCommissioniServComm" value-ref="reportAttiAssCommissioniServCommCommand"/>
+                <entry key="crlreport:reportAttiAssCommissioniServComm" value-ref="reportAttiAssCommissioniServCommCommand"/>
             </map>
         </property>
 	    

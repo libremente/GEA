@@ -33,7 +33,7 @@
 			<parent>crlreport:report</parent>
 		</type>
 		
-		<type name="crlreport:ReportAttiAssCommissioniServComm">
+		<type name="crlreport:reportAttiAssCommissioniServComm">
 			<title>Report Atti Assegnati alle Commissioni</title>
 			<parent>crlreport:reportServComm</parent>
 		</type>
