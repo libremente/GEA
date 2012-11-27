@@ -538,6 +538,7 @@
 			<show-property name="crlatti:noteClausolaValutativaEsame" />
 			
 			<show-property name="crlatti:nomeAttoCommissione" />
+			<show-property name="crlatti:numeroAttoCommissione" />
 			<show-property name="crlatti:tipoAttoCommissione" />
 				
 		</property-sheet>

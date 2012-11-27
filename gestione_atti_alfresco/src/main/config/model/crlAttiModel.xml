@@ -779,6 +779,10 @@
 					<title>Nome Atto (numero + estensione)</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:numeroAttoCommissione">
+					<title>Numero Atto</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:tipoAttoCommissione">
 					<title>Tipo Atto</title>
 					<type>d:text</type>
