@@ -3,6 +3,7 @@ package com.sourcesense.crl.webscript.report.servizio_commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.alfresco.service.cmr.repository.NodeRef;
@@ -31,16 +32,24 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			this.initCommonParams(json);
 			// data di assegnazione in intervallo
 			ResultSet queryRes = null;
+			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAtto";
+			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
+			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
 			for (String commissione:this.commissioniJson) {
-				queryRes = searchService.query(Repository.getStoreRef(),
-						SearchService.LANGUAGE_LUCENE, "TYPE:\""
+				SearchParameters sp = new SearchParameters();
+				//sp.addStore(attoNodeRef.getStoreRef());
+				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				String query="TYPE:\""
 								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
 								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
 								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
 								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
 								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ]\""
-								);
+								this.dataAssegnazioneCommReferenteA+" ]\"";
+				sp.setQuery(query);
+				sp.addSort(sortField1, false);
+				sp.addSort(sortField2, false);
+				allSearches.add(sp);
 			}
 			/*
 			SearchParameters sp = new SearchParameters();

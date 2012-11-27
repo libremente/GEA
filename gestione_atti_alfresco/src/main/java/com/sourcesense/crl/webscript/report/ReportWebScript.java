@@ -82,5 +82,37 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
         		responseOutputStream = null;
     		}
     	}
-    }  
+    }
+
+public ContentService getContentService() {
+	return contentService;
+}
+
+public void setContentService(ContentService contentService) {
+	this.contentService = contentService;
+}
+
+public SearchService getSearchService() {
+	return searchService;
+}
+
+public void setSearchService(SearchService searchService) {
+	this.searchService = searchService;
+}
+
+public NodeService getNodeService() {
+	return nodeService;
+}
+
+public void setNodeService(NodeService nodeService) {
+	this.nodeService = nodeService;
+}
+
+public Map<String, ReportCommand> getReportCommandMap() {
+	return reportCommandMap;
+}
+
+public void setReportCommandMap(Map<String, ReportCommand> reportCommandMap) {
+	this.reportCommandMap = reportCommandMap;
+}  
 }
