@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<model name="crltemplate:gestioneTemplateModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+<model name="crlreport:gestioneReportModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
 
-	<description>CRL Template Model</description>
+	<description>CRL Report Model</description>
 	<author>Sourcesense</author>
 	<version>1.0</version>
 
