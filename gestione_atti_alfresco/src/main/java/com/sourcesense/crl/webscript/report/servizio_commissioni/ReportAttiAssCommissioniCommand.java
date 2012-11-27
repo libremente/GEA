@@ -35,7 +35,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			ResultSet queryRes = null;
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
 			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
-			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
+			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			for (String commissione:this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				//sp.addStore(attoNodeRef.getStoreRef());
@@ -50,7 +50,8 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
 				sp.addSort(sortField2, false);
-				allSearches.add(sp);
+				ResultSet currentResults = this.searchService.query(sp);
+				allSearches.add(currentResults);
 			}
 			/*
 			SearchParameters sp = new SearchParameters();
