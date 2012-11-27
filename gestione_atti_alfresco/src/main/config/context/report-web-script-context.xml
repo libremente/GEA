@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+	<bean id="reportBaseCommand" class="com.sourcesense.crl.webscript.report.ReportBaseCommand" abstract="true"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	    <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
+	</bean> 
+	
+	<bean id="ReportAttiAssCommissioniCommand" class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiAssCommissioniCommand" parent="reportBaseCommand" />
+	
+
+	<bean id="webscript.crl.gestioneatti.report.report.get" class="com.sourcesense.crl.webscript.report.ReportWebScript" parent="webscript"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	    
+	    <property name="reportCommandMap">
+            <map>
+                <entry key="ReportAttiAssCommissioniCommand" value-ref="ReportAttiAssCommissioni"/>
+            </map>
+        </property>
+	    
+	    
+	    
+	    
+	</bean> 
+	
+	
+
+</beans>
