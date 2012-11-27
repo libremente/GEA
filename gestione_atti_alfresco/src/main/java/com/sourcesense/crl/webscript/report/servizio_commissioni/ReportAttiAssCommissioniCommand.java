@@ -30,7 +30,8 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 			this.initCommonParams(json);
-			// data di assegnazione in intervallo
+			this.initDataAssegnazioneCommReferenteDa(json);
+			this.initDataAssegnazioneCommReferenteA(json);
 			ResultSet queryRes = null;
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAtto";
 			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAtto";

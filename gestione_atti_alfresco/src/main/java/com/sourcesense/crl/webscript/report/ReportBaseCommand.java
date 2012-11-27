@@ -41,6 +41,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	
 	protected String dataAssegnazioneCommReferenteDa;
 	protected String dataAssegnazioneCommReferenteA;
+	
+	protected String dataVotazioneCommReferenteDa;
+	protected String dataVotazioneCommReferenteA;
+	
 	protected List<String> relatoriJson;
 	protected String firmatario;
 	protected String tipologiaFirma;
@@ -61,8 +65,6 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		// extract the commissioni list from json
 		this.commissioniJson = JsonUtils.retieveArrayListFromJson(rootJson,
 				"commissioni");
-		this.initDataAssegnazioneCommReferenteDa(json);
-		this.initDataAssegnazioneCommReferenteA(json);
 		
 	}
 
@@ -79,6 +81,16 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected void initDataAssegnazioneCommReferenteA(String json) throws JSONException{
 		JSONObject rootJson = new JSONObject(json);
 		this.dataAssegnazioneCommReferenteA=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneCommReferenteA");
+	}
+	
+	protected void initDataVotazioneCommReferenteDa(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataVotazioneCommReferenteDa=JsonUtils.retieveElementFromJson(rootJson, "dataVotazioneCommReferenteDa");
+	}
+	
+	protected void initDataVotazioneCommReferenteA(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataVotazioneCommReferenteA=JsonUtils.retieveElementFromJson(rootJson, "dataVotazioneCommReferenteA");
 	}
 	
 	protected void initTipoFirma(String json) throws JSONException{

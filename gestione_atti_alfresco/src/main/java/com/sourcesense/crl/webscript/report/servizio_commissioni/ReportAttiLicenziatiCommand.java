@@ -27,6 +27,9 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 			this.initCommonParams(json);
+			this.initDataVotazioneCommReferenteDa(json);
+			this.initDataVotazioneCommReferenteA(json);
+			
 			//data licenziamento
 			ResultSet queryRes=null;
 			// costruire n query quanti i tipi di atto? vanno messi nel path?
