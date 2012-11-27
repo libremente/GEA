@@ -53,15 +53,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				ResultSet currentResults = this.searchService.query(sp);
 				allSearches.add(currentResults);
 			}
-			/*
-			SearchParameters sp = new SearchParameters();
-	        sp.addStore(attoNodeRef.getStoreRef());
-	        sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-	        sp.setQuery("PATH:\""+luceneAttoNodePath+"/cm:Pareri/*\" AND TYPE:\""+parereType+"\"");
-	        String field = "{"+CRL_ATTI_MODEL+"}"+PROP_DATA_ASSEGNAZIONE_PARERE;
-	        sp.addSort(field, false);*/
-
-			// obtain resultSet Length and cycle on it to repeat template
+			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
 					queryRes.length(), 5, false);
 			// convert to input stream
