@@ -33,8 +33,8 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
 			ResultSet queryRes = null;
-			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAtto";
-			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
+			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
+			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
 			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
 			for (String commissione:this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
