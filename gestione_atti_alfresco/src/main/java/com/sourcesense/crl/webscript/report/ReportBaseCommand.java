@@ -214,6 +214,17 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return luceneTipiAttoList;
 	}
 
+	/**
+	 * return the right syntax for Alfresco lucene query on list
+	 * @param field
+	 * @param list
+	 * @return
+	 */
+	protected static String convertListToString(String field,List<String> list){
+		String stringSpaced = list.toString().replaceAll(", ", ",");
+		String stringReplaced = stringSpaced.replaceAll(",","\" OR "+field+":\"");
+		return "("+field+":\""+stringReplaced.substring(1, stringReplaced.length()-1)+"\")";
+	}
 	@Override
 	public abstract byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
 			throws IOException;

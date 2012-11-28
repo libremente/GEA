@@ -43,12 +43,11 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				sp.addStore(attoNodeRef);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				String query="TYPE:\""
-								+ "crlatti:commissione" + "\" AND @crlatti\\:tipoAttoCommissione:"
-								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
-								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
+								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""
+								+ this.ruoloCommissione  +"\" AND @cm\\:name:\""
 								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
 								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ]\"";
+								this.dataAssegnazioneCommReferenteA+" ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
 				sp.addSort(sortField2, false);
