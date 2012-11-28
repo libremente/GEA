@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.alfresco.service.cmr.repository.ContentService;
-import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.SearchService;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.json.JSONArray;
@@ -215,7 +215,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	@Override
-	public abstract byte[] generate(byte[] templateByteArray, String json)
+	public abstract byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
 			throws IOException;
 
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
@@ -19,7 +20,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportDCRCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
 			throws IOException {
 		ByteArrayOutputStream ostream = null;
 		ByteArrayInputStream is = new ByteArrayInputStream(templateByteArray);

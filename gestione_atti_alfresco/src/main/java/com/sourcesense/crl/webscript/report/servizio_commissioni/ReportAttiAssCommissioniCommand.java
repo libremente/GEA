@@ -7,7 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
@@ -22,7 +24,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
 			throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
@@ -38,7 +40,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			for (String commissione:this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
-				//sp.addStore(attoNodeRef.getStoreRef());
+				sp.addStore(attoNodeRef);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				String query="TYPE:\""
 								+ "crlatti:commissione" + "\" AND @crlatti\\:tipoAttoCommissione:"
@@ -55,12 +57,12 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			}
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					queryRes.length(), 5, false);
+					10/*this.retrieveLenght(allSearches)*/, 5, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					queryRes);
+					allSearches);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -79,16 +81,26 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 	 * valutazione - commissione referente
 	 * 
 	 * @param finalDocStream
-	 * @param queryRes
+	 * @param allSearches
 	 * @return
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet queryRes) throws IOException {
+			List<ResultSet> allSearches) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
+		for(ResultSet resultSet:allSearches){
+			for(int i=0;i<resultSet.length();i++){
+				ResultSetRow row = resultSet.getRow(i);
+						System.out.println("ID " + i+" "+row.getNodeRef());
+			}
+			}
+		
+			
+		
+		/*
 		List<XWPFTable> tables = document.getTables();
-		for (int k = 0; k < queryRes.length(); k++) {
-			NodeRef currentNodeRef = queryRes.getNodeRef(k);
+		for (int k = 0; k < allSearches.length(); k++) {
+			NodeRef currentNodeRef = allSearches.getNodeRef(k);
 			XWPFTable newTable = tables.get(k);
 			XWPFTableRow firstRow = newTable.getRow(0);
 
@@ -97,7 +109,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			XWPFTableRow secondRow = newTable.getRow(0);
 			secondRow.getCell(0).setText("1x1");
 			secondRow.getCell(0).setText("1x2");
-		}
+		}*/
 		return document;
 	}
 }

@@ -13,6 +13,7 @@ import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
@@ -54,8 +55,14 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
 	    	templateInputStream = reader.getContentInputStream();
 	    	byte[] templateByteArray = IOUtils.toByteArray(templateInputStream);
     		
+	    	StoreRef searchStoreRef=null;
+    		List<StoreRef> stores = nodeService.getStores();
+    		for(StoreRef store:stores){
+    			if(store.toString().equals("workspace://SpacesStore"))
+    				searchStoreRef=store;
+    		}
     		
-	    	byte[] documentFilledByteArray = reportCommandMap.get(tipoTemplate).generate(templateByteArray,json);
+	    	byte[] documentFilledByteArray = reportCommandMap.get(tipoTemplate).generate(templateByteArray,json, searchStoreRef);
 	    	
 	    	
 	    	String nomeLettera = tipoTemplate.split(":")[1];
@@ -70,7 +77,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
             responseOutputStream.write(documentFilledByteArray);        
             
     	}catch(Exception e) {
-    		logger.error("Exception details: "+e.getMessage());
+    		logger.error("Unable to generate document from template",e);
     		throw new WebScriptException("Unable to generate document from template");
     	}finally {
     		if(templateInputStream != null) {

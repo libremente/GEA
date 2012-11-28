@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
@@ -21,7 +22,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
 			throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
