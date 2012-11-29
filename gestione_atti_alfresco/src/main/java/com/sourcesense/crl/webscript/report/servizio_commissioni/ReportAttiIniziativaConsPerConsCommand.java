@@ -3,20 +3,21 @@ package com.sourcesense.crl.webscript.report.servizio_commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
-import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.ResultSetRow;
+import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
-import org.alfresco.web.bean.repository.Repository;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.json.JSONException;
 
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
+
+
 
 public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
@@ -30,30 +31,42 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			DocxManager docxManager = new DocxManager(is);
 			this.initFirmatario(json);
 			this.initTipoFirma(json);
-			// data di presentazione
-			// data assegnazione commissione referente
+			this.initDataAssegnazioneCommReferenteDa(json);
+			this.initDataAssegnazioneCommReferenteA(json);
+			this.initDataPresentazioneDa(json);
+			this.initDataPresentazioneA(json);
 			ResultSet queryRes = null;
-
+			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
+			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
+			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
+			 //gruppo per consigliere?
 			for (String commissione:this.commissioniJson) {
-				queryRes = searchService.query(Repository.getStoreRef(),
-						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
-								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
-								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
+				SearchParameters sp = new SearchParameters();
+				sp.addStore(attoNodeRef);
+				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				String query="TYPE:\""
+								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""
+								+ this.ruoloCommissione  +"\" AND @cm\\:name:\""
 								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
 								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ]\""
-								);
+								this.dataAssegnazioneCommReferenteA+" ] AND @crlatti\\:dataPresentazione:["
+										+this.dataPresentazioneDa+" TO "+
+										this.dataPresentazioneA+" ]";
+				sp.setQuery(query);
+				sp.addSort(sortField1, false);
+				sp.addSort(sortField2, false);
+				ResultSet currentResults = this.searchService.query(sp);
+				allSearches.add(currentResults);
 			}
 
-			// obtain resultSet Length and cycle on it to repeat template
+			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					queryRes.length(), 5, false);
+					10/*this.retrieveLenght(allSearches)*/, 5, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					queryRes);
+					allSearches);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -77,11 +90,21 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet queryRes) throws IOException {
+			List<ResultSet> allSearches) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
+		for(ResultSet resultSet:allSearches){
+			for(int i=0;i<resultSet.length();i++){
+				ResultSetRow row = resultSet.getRow(i);
+						System.out.println("ID " + i+" "+row.getNodeRef());
+			}
+			}
+		
+			
+		
+		/*
 		List<XWPFTable> tables = document.getTables();
-		for (int k = 0; k < queryRes.length(); k++) {
-			NodeRef currentNodeRef = queryRes.getNodeRef(k);
+		for (int k = 0; k < allSearches.length(); k++) {
+			NodeRef currentNodeRef = allSearches.getNodeRef(k);
 			XWPFTable newTable = tables.get(k);
 			XWPFTableRow firstRow = newTable.getRow(0);
 
@@ -90,7 +113,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			XWPFTableRow secondRow = newTable.getRow(0);
 			secondRow.getCell(0).setText("1x1");
 			secondRow.getCell(0).setText("1x2");
-		}
+		}*/
 		return document;
 	}
 }
