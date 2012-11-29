@@ -61,7 +61,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					10/*this.retrieveLenght(allSearches)*/, 5, false);
+					this.retrieveLenght(allSearches), 5, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
