@@ -813,12 +813,14 @@ public class EsameCommissioniController {
 		Target target = new Target();
 		target.setCommissione(commissioneUser.getDescrizione());
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-
+        
+		boolean statoChange = atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE) || 
+				atto.getStato().equals(StatoAtto.PRESO_CARICO_COMMISSIONE) ||
+				atto.getStato().equals(StatoAtto.NOMINATO_RELATORE); 
+		
 		if (canChangeStatoAtto() && isOneMembroAttivo) {
 			
-			if(atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE) || 
-					atto.getStato().equals(StatoAtto.PRESO_CARICO_COMMISSIONE) ||
-					atto.getStato().equals(StatoAtto.NOMINATO_RELATORE)){
+			if(statoChange){
 			  atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
 			}
 			
@@ -836,9 +838,7 @@ public class EsameCommissioniController {
 				.salvaComitatoRistrettoEsameCommissioni(esameCommissione);
 
 		if (canChangeStatoAtto() && isNominatoRelatore()) {
-			if(atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE) || 
-					atto.getStato().equals(StatoAtto.PRESO_CARICO_COMMISSIONE) ||
-					atto.getStato().equals(StatoAtto.NOMINATO_RELATORE)){
+			if(statoChange){
 			attoBean.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
 			}
 		}

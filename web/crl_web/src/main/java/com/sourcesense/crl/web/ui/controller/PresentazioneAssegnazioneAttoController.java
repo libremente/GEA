@@ -63,7 +63,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private Map<String, String> tipiIniziativa = new HashMap<String, String>();
 
 	private boolean attoPubblico;
-	
+
 	private Date dataPresaInCarico;
 	private String numeroAtto;
 	private String classificazione;
@@ -414,8 +414,6 @@ public class PresentazioneAssegnazioneAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		
-		
 		attoBean.getAtto().setClassificazione(this.atto.getClassificazione());
 		attoBean.getAtto().setOggetto(this.atto.getOggetto());
 		attoBean.getAtto().setNumeroRepertorio(atto.getNumeroRepertorio());
@@ -487,10 +485,16 @@ public class PresentazioneAssegnazioneAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
+		boolean changeStato = atto.getStato().equals(StatoAtto.PRESO_CARICO_SC)
+				|| atto.getStato().equals(StatoAtto.PROTOCOLLATO);
+
 		// se Ammissibile : OK altrimenti KO
 		if ("ammissibile".equalsIgnoreCase(atto.getValutazioneAmmissibilita())) {
 
-			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			if (changeStato) {
+				atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			}
+
 			attoServiceManager.salvaAmmissibilitaPresentazione(atto);
 			attoBean.getAtto().setValutazioneAmmissibilita(
 					atto.getValutazioneAmmissibilita());
@@ -522,7 +526,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 		} else {
 
-			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			if (changeStato) {
+				atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+			}
 			attoServiceManager.salvaAmmissibilitaPresentazione(atto);
 			attoBean.getAtto().setValutazioneAmmissibilita(
 					atto.getValutazioneAmmissibilita());
@@ -651,30 +657,28 @@ public class PresentazioneAssegnazioneAttoController {
 				break;
 			}
 		}
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
-		int countActive = 0;
-		
-		for (Commissione element : commissioniList) {
-			if (    (element.getRuolo().equals(Commissione.RUOLO_REFERENTE)
-					||element.getRuolo().equals(Commissione.RUOLO_REDIGENTE)
-					||element.getRuolo().equals(Commissione.RUOLO_COREFERENTE)
-					||element.getRuolo().equals(Commissione.RUOLO_DELIBERANTE))
-					&& !element.getStato().equals(Commissione.STATO_ANNULLATO)
-					) {
 
-					countActive++;
-				    break;
+		int countActive = 0;
+
+		for (Commissione element : commissioniList) {
+			if ((element.getRuolo().equals(Commissione.RUOLO_REFERENTE)
+					|| element.getRuolo().equals(Commissione.RUOLO_REDIGENTE)
+					|| element.getRuolo().equals(Commissione.RUOLO_COREFERENTE) || element
+					.getRuolo().equals(Commissione.RUOLO_DELIBERANTE))
+					&& !element.getStato().equals(Commissione.STATO_ANNULLATO)) {
+
+				countActive++;
+				break;
 			}
 		}
-		
-		
-        if(commissioniList.size()==0 || countActive== 0){
-		    	
-        	atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
+
+		if (commissioniList.size() == 0 || countActive == 0) {
+
+			atto.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
 			attoBean.setStato(StatoAtto.VERIFICATA_AMMISSIBILITA);
 		}
 
@@ -1050,48 +1054,48 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public void spostaAllegati() {
-		
-		int conta =0;
-		
-		List <Allegato> allegatiTemp = new ArrayList<Allegato>();
-		
+
+		int conta = 0;
+
+		List<Allegato> allegatiTemp = new ArrayList<Allegato>();
+
 		for (Allegato allegato : allegatiList) {
-			
-			if(allegato.isTesto()){
-				
-				TestoAtto attoRec = attoServiceManager.changeAllegatoPresentazioneAssegnazione(allegato);
+
+			if (allegato.isTesto()) {
+
+				TestoAtto attoRec = attoServiceManager
+						.changeAllegatoPresentazioneAssegnazione(allegato);
 				testiAttoList.add(attoRec);
-			    conta ++;
-			}else {
-				
+				conta++;
+			} else {
+
 				allegatiTemp.add(allegato);
-				
+
 			}
 		}
-		
+
 		allegatiList.clear();
 		setAllegatiList(allegatiTemp);
-		
+
 		// TODO Service logic
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
-		if(conta==0){
-		
+		if (conta == 0) {
+
 			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Attenzione ! Selezionare almeno un Allegato ", ""));
-		}else{
-			
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Selezionare almeno un Allegato ", ""));
+		} else {
+
 			context.addMessage(null, new FacesMessage(
 					"Testi Atto salvati con successo", ""));
-			
+
 		}
 	}
-	
-	
-	
+
 	// Getters & Setters******************************************************
 
 	public PersonaleServiceManager getPersonaleServiceManager() {
@@ -1665,7 +1669,5 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setAttoPubblico(boolean attoPubblico) {
 		this.atto.setPubblico(attoPubblico);
 	}
-	
-	
 
 }
