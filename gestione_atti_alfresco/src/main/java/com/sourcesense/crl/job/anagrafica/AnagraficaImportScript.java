@@ -10,13 +10,10 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.cmr.security.AuthorityService;
-import org.alfresco.service.cmr.security.AuthorityType;
-import org.alfresco.service.cmr.security.PersonService;
 import org.alfresco.web.bean.repository.Repository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +62,10 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 logger.info("Proprieta' '"+Constant.PROP_DATA_INIZIO_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getFrom()+"'");
                 nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_FINE_LEGISLATURA, legislature.getTo());
                 logger.info("Proprieta' '"+Constant.PROP_DATA_FINE_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getTo()+"'");
+                
+
+                // set content property to empty string for Share visualization in Alfresco Community Edition
+                nodeService.setProperty(legislatureFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, "");
         	}
         }
    
@@ -165,6 +166,8 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 logger.info("Proprieta' '"+Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getName()+"'");
                 nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA, group.getCode());
                 logger.info("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getCode()+"'");
+                // set content property to empty string for Share visualization in Alfresco Community Edition
+                nodeService.setProperty(groupFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, "");
             }
             
             
@@ -296,7 +299,9 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
         logger.debug("Proprieta' '"+Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getGroupName()+"'");
         nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getCodeGroupName());
         logger.debug("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getCodeGroupName()+"'");
-        
+
+        // set content property to empty string for Share visualization in Alfresco Community Edition
+        nodeService.setProperty(councilorFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, "");
         return  councilorFileInfo.getNodeRef();
     }
     
