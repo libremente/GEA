@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -80,9 +81,19 @@ public class InserisciEACController {
 	@PostConstruct
 	private void initializeValues(){
 		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
 		
+		if(attoBean.getAttoEAC()!=null){
+			
+			atto = (AttoEAC)attoBean.getAttoEAC().clone();
+			attoBean.setAttoEAC(null);
+		}
 		
 	}
+	
+	
 	
     
 	public void inserisciAtto() {
@@ -126,9 +137,7 @@ public class InserisciEACController {
 			try {
 				allegatoRet = attoServiceManager
 						.uploadAllegatoEAC(
-								((AttoBean) FacesContext.getCurrentInstance()
-										.getExternalContext().getSessionMap()
-										.get("attoBean")).getAtto(), event
+								atto, event
 										.getFile().getInputstream(), allegatoRet);
 				
 				
@@ -137,7 +146,7 @@ public class InserisciEACController {
 			}
 
 			
-			allegatiEAC.add(allegatoRet);
+			atto.getAllegati().add(allegatoRet);
 		}
 	}
 

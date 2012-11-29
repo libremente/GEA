@@ -10,7 +10,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-<h:form>
+<h:form enctype="multipart/form-data">
 
  <p:ajaxStatus onstart="statusDialog.show();"
 		onsuccess="statusDialog.hide();" />
@@ -27,7 +27,7 @@
 				<p:column >
 					<h:outputLabel for="isPubblico" value="Pubblico: " />
 					<p:selectBooleanCheckbox id="isPubblicoAllegato"
-						value="#{inserisciEACController.currentFilePubblico}">
+						value="#{inserisciMISController.currentFilePubblico}">
 						<p:ajax event="change" immediate="true"></p:ajax>
 					</p:selectBooleanCheckbox>
 				</p:column>
@@ -37,7 +37,7 @@
 					<p:fileUpload label="Carica Allegato"
 						oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
 						update="listaAllegati "
-						fileUploadListener="#{inserisciEACController.uploadAllegato}" />
+						fileUploadListener="#{inserisciMISController.uploadAllegatoParere}" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -77,6 +77,26 @@
 				</p:column>
 
 			</p:row>
+
+
+           <p:row>
+				<p:column style="width: 25%;">
+					<h:outputLabel for="legislatura" value="Legislatura: *" />
+				</p:column>
+				<p:column style="width: 25%;">
+					<p:selectOneMenu id="legislatura"
+					value="#{inserisciMISController.legislatura}" required="true"
+					requiredMessage="Legislatura obbligatoria">
+					<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
+					<f:selectItems value="#{inserisciMISController.legislature}" />
+				</p:selectOneMenu>
+				</p:column>
+				<p:column colspan="2">
+					<p:message for="legislatura" display="icon" />
+				</p:column>
+
+			</p:row> 
+
 
 			<p:row>
 				<p:column style="width: 25%;">
@@ -277,7 +297,7 @@
 			<p:row>
 
 			<p:column colspan="2">
-				<p:commandButton ajax="false" update="insertattopanel"
+				<p:commandButton ajax="false" update="insertattopanel" disabled="#{navigationBean.isMISDisabled()}"
 					id="insertattobtn" value="Salva"
 					action="#{inserisciMISController.inserisciAtto}" />
 			</p:column>
@@ -297,7 +317,7 @@
 				<p:column>
 
 
-					 <p:commandButton value="Carica Allegato"
+					 <p:commandButton value="Carica Allegato" disabled="#{navigationBean.isMISDisabled()}"
 						oncomplete="uploadAllegatoAttributesDialog.show()">
 					</p:commandButton>
 					
@@ -307,7 +327,7 @@
 				<p:column colspan="4">
 
 					<h:dataTable id="listaAllegati"
-						value="#{inserisciMISController.allegatiMIS}" var="allegato"
+						value="#{inserisciMISController.atto.allegati}" var="allegato"
 						styleClass="generalInfoTab grey-text">
 
 						<h:column>
@@ -364,7 +384,8 @@
 </div>
 
 </h:form>
-<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+
+<!-- <script type="text/javascript" src="resources/javascript/blockUI.js"></script>
 <script>
 if (("#{attoBean.getAtto()}").length) {
 	$('#blockedUploadMis').block({ message: 'Atto non ancora creato.', css: {
@@ -386,5 +407,5 @@ if (("#{attoBean.getAtto()}").length) {
 	
 };
 
-</script>
+</script> -->
 </html>

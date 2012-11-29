@@ -222,6 +222,81 @@ public class AttoService {
 		return atto;
 	}
 
+	
+	
+	public AttoEAC findEACById(String url) {
+		AttoEAC atto = null;
+
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource
+				.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException("Errore - "
+					+ response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+		String responseMsg = response.getEntity(String.class);
+		
+		try {
+			
+			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			atto = objectMapper.readValue(responseMsg, AttoEAC.class);
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+
+		return atto;
+	}
+	
+	public AttoMIS findMISById(String url) {
+		AttoMIS atto = null;
+
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource
+				.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException("Errore - "
+					+ response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+		String responseMsg = response.getEntity(String.class);
+		
+		try {
+			
+			atto = objectMapper.readValue(responseMsg, AttoMIS.class);
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+
+		return atto;
+	}
+	
+	
+	
 	public ArrayList<Atto> findAll() {
 
 		// TODO

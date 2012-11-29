@@ -6,7 +6,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
-public class AttoMIS extends Atto {
+public class AttoMIS extends Atto implements Cloneable{
 	
 	
 	private String numeroRepertorio;

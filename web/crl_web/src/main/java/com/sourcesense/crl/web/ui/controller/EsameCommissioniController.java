@@ -306,6 +306,17 @@ public class EsameCommissioniController {
 
 		loadData(passaggioSelected, attoBean);
 	}
+	
+	
+	private Commissione findCommissione(String nome) {
+
+		for (Commissione element : commissioniList) {
+			if (element.getDescrizione().equals(nome)) {
+				return element;
+			}
+		}
+		return null;
+	}
 
 	private void loadData(Passaggio passaggioIn, AttoBean attoBean) {
 
@@ -346,18 +357,7 @@ public class EsameCommissioniController {
 
 	}
 
-	/*
-     * 
-     * */
-	private Commissione findCommissione(String nome) {
-
-		for (Commissione element : commissioniList) {
-			if (element.getDescrizione().equals(nome)) {
-				return element;
-			}
-		}
-		return null;
-	}
+	
 
 	public void updateRelatoriHandler() {
 		setStatoCommitRelatori(CRLMessage.COMMIT_UNDONE);

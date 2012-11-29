@@ -395,7 +395,9 @@ public class SearchAttoController {
 	
 	
 	
-	public String attoDetail(String idAttoParam) {
+	
+	
+	public String attoDetail(String idAttoParam, String tipo) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = (AttoBean) context
@@ -405,22 +407,25 @@ public class SearchAttoController {
 						AttoBean.class).getValue(context.getELContext());
 
 		
-		Atto attoRet = attoServiceManager.findById(idAttoParam);
+		Atto attoRet = null;
 		
-		if("MIS".equalsIgnoreCase(attoRet.getTipoAtto())){
+		if("MIS".equalsIgnoreCase(tipo)){
 			
-			attoBean.setAttoMIS((AttoMIS)attoRet);
+			
+			attoBean.setAttoMIS(attoServiceManager.findMISById(idAttoParam));
 			return "pretty:Inserimento_MIS";
 			
-		}else if("EAC".equalsIgnoreCase(attoRet.getTipoAtto())){
+		}else if("EAC".equalsIgnoreCase(tipo)){
 			
-			attoBean.setAttoEAC((AttoEAC)attoRet);
+			
+		
+			attoBean.setAttoEAC(attoServiceManager.findEACById(idAttoParam));
 			return "pretty:Inserimento_EAC";
 			
 			
 		}else {
-		
-			attoBean.setAtto(attoRet);
+			
+			attoBean.setAtto(attoServiceManager.findById(idAttoParam));
 			attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
 			attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
 			attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));

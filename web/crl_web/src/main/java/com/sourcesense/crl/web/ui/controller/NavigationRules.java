@@ -58,6 +58,22 @@ public class NavigationRules {
 	}
 	
 	
+	public boolean isEACDisabled(){
+		
+		return !("ServizioCommissioni".equals(userBean.getUserGroupName())
+				|| "ADMINISTRATORS".equals(userBean.getUserGroupName())) ;
+	}
+	
+	
+	
+    public boolean isMISDisabled(){
+		
+    	return !("CPCV".equals(userBean.getUserGroupName())
+				|| "ADMINISTRATORS".equals(userBean.getUserGroupName())) ;
+		
+	}
+	
+	
 	public boolean presaCaricoAulaDisabled() {
 
 		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)

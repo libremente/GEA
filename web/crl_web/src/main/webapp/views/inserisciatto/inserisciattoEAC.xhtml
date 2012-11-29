@@ -10,7 +10,7 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-<h:form>
+<h:form enctype="multipart/form-data">
 
  <p:ajaxStatus onstart="statusDialog.show();"
 		onsuccess="statusDialog.hide();" />
@@ -36,7 +36,7 @@
 								<p:fileUpload label="Carica Allegato"
 									oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
 									update="listaAllegati "
-									fileUploadListener="#{inserisciEACController.uploadAllegato}" />
+									fileUploadListener="#{inserisciEACController.uploadAllegatoParere}" />
 							</p:column>
 						</p:row>
 						<p:row>
@@ -116,7 +116,7 @@
 
 			<p:column colspan="2">
 				<p:commandButton ajax="false" update="insertattopanel"
-					id="insertattobtn" value="Salva"
+					id="insertattobtn" value="Salva" disabled="#{navigationBean.isEACDisabled()}"
 					action="#{inserisciEACController.inserisciAtto}" />
 			</p:column>
 		</p:row>
@@ -135,7 +135,7 @@
 				<p:column colspan="3">
 
 
-					<p:commandButton value="Carica Allegato"
+					<p:commandButton value="Carica Allegato" disabled="#{navigationBean.isEACDisabled()}"
 						oncomplete="uploadAllegatoAttributesDialog.show()">
 					</p:commandButton>
 
@@ -145,7 +145,7 @@
 				<p:column colspan="4">
 
 					<h:dataTable id="listaAllegati"
-						value="#{inserisciEACController.allegatiEAC}" var="allegato"
+						value="#{inserisciEACController.atto.allegati}" var="allegato"
 						styleClass="generalInfoTab grey-text">
 
 						<h:column>
@@ -222,7 +222,7 @@
 							oncomplete="collegamentoAttoSindacatoDialog.hide()"
 							action="#{inserisciEACController.removeCollegamentoAttoSindacato}"
 							update="listaCollegamentiAttiSindacati" />
-						<p:commandButton id="declineCollegamentoAttoSindacato"
+						<p:commandButton id="declineCollegamentoAttoSindacato" 
 							value="Annulla" onclick="collegamentoAttoSindacatoDialog.hide()"
 							type="button" />
 					</p:confirmDialog>
@@ -267,7 +267,7 @@
 							</p:column>
 
 							<p:column>
-								<p:commandButton value="Aggiungi"
+								<p:commandButton value="Aggiungi" disabled="#{navigationBean.isEACDisabled()}"
 									action="#{inserisciEACController.addCollegamentoAttoSindacato}"
 									id="addCollegamentoAttoSindacato"
 									update="listaCollegamentiAttiSindacati, attiIndirizzoMsg"
@@ -317,7 +317,7 @@
 
 						<p:column headerText="Azioni" style="width:125px">
 
-							<p:commandButton
+							<p:commandButton disabled="#{navigationBean.isEACDisabled()}"
 								oncomplete="collegamentoAttoSindacatoDialog.show()"
 								icon="delete-icon">
 								<f:setPropertyActionListener value="#{collegamento.numeroAtto}"
@@ -341,7 +341,7 @@
 
 
 </h:form>
-<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<!--<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
 <script>
 if (("#{attoBean.getAtto()}").length) {
 	$('#blockedUploadEac').block({ message: 'Atto non ancora creato.', css: {
@@ -363,5 +363,5 @@ if (("#{attoBean.getAtto()}").length) {
 	
 };
 
-</script>
+</script>-->
 </html>

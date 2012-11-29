@@ -13,6 +13,10 @@ public class AttoEAC extends Atto {
 	private String note;
 	
 	
+	
+	
+	
+	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAtto() {
 		return dataAtto;

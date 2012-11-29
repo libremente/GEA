@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -50,6 +51,9 @@ public class InserisciMISController {
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
 	
+	@ManagedProperty(value = "#{legislaturaServiceManager}")
+	private LegislaturaServiceManager legislaturaServiceManager;
+	
 	private AttoMIS atto = new AttoMIS();
 
 	private String numeroRepertorio;
@@ -68,6 +72,7 @@ public class InserisciMISController {
 	private Date dataEsameRapportoFinale;
 	private Date dataTrasmissioneCommissioni;
 	private String note;
+	private String legislatura;
 	
 	private String allegatoMISToDelete;
 	private boolean currentFilePubblico;
@@ -75,12 +80,30 @@ public class InserisciMISController {
 	private List<Allegato> allegatiMIS = new ArrayList<Allegato>();
 	private Map<String, String> commissioni = new HashMap<String, String>();
 	
+	private Map<String, String> legislature = new HashMap<String, String>();
+	
 	@PostConstruct
 	private void initializeValues(){
 		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		if(attoBean.getAttoMIS()!=null){
+			
+			atto = (AttoMIS)attoBean.getAttoMIS().clone();
+			attoBean.setAttoMIS(null);
+		}
+		
+		
 		setCommissioni(commissioneServiceManager.findAll());
+		setLegislature(legislaturaServiceManager.findAll());
 		
 	}
+	
+	
+	
+	
 	
 	
 	public void inserisciAtto() {
@@ -125,9 +148,7 @@ public class InserisciMISController {
 			try {
 				allegatoRet = attoServiceManager
 						.uploadAllegatoMIS(
-								((AttoBean) FacesContext.getCurrentInstance()
-										.getExternalContext().getSessionMap()
-										.get("attoBean")).getAtto(), event
+								atto, event
 										.getFile().getInputstream(), allegatoRet);
 				
 			} catch (IOException e) {
@@ -135,7 +156,7 @@ public class InserisciMISController {
 			}
 
 			
-			allegatiMIS.add(allegatoRet);
+			atto.getAllegati().add(allegatoRet);
 		}
 	}
 
@@ -204,17 +225,6 @@ public class InserisciMISController {
 		this.atto.setTipoAtto(tipoAtto);
 	}
 	
-
-	public String getLegislatura() {
-		return this.atto.getLegislatura();
-	}
-
-
-
-	public void setLegislatura(String legislatura) {
-		this.atto.setLegislatura(legislatura);
-	}
-
 
 
 	public String getAnno() {
@@ -441,8 +451,35 @@ public class InserisciMISController {
 		this.currentFilePubblico = currentFilePubblico;
 	}
 	
+	public Map<String, String> getLegislature() {
+		//return legislaturaServiceManager.findAll();
+		return this.legislature;
+	}
+
+	public void setLegislature(Map<String, String> legislature) {
+		this.legislature = legislature;
+	}
 	
+	public LegislaturaServiceManager getLegislaturaServiceManager() {
+		return legislaturaServiceManager;
+	}
+
+
+	public void setLegislaturaServiceManager(
+			LegislaturaServiceManager legislaturaServiceManager) {
+		this.legislaturaServiceManager = legislaturaServiceManager;
+	}
 	
+	public String getLegislatura() {
+		return this.atto.getLegislatura();
+	}
+
+
+
+	public void setLegislatura(String legislatura) {
+		this.atto.setLegislatura(legislatura);
+	}
+
 	
 
 }

@@ -93,13 +93,13 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 	
-	public Allegato uploadAllegatoMIS(Atto atto, InputStream stream, Allegato allegato) {
+	public Allegato uploadAllegatoMIS(AttoMIS atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 	
-	public Allegato uploadAllegatoEAC(Atto atto, InputStream stream, Allegato allegato) {
+	public Allegato uploadAllegatoEAC(AttoEAC atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
@@ -155,6 +155,17 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
 	}
     
+	
+	public AttoEAC findEACById(String id) {
+		return attoService.findEACById(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
+	}
+	
+	
+	public AttoMIS findMISById(String id) {
+		return attoService.findMISById(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
+	}
 	
 
 	public void presaInCaricoSC(Atto atto) {

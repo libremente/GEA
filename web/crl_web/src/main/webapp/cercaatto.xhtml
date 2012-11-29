@@ -677,9 +677,9 @@
 
 			<p:column headerText="N.Atto" sortBy="#{atto.numeroAtto}">
 				<c:set value="#{atto.id}" var="idAttoParam" />
-
+                <c:set value="#{atto.tipo}" var="tipoAttoParam" />
 				<p:commandLink
-					action="#{searchAttoController.attoDetail(idAttoParam)}"
+					action="#{searchAttoController.attoDetail(idAttoParam,tipoAttoParam)}"
 					update="listaAtti">
 					<h:outputText value="#{atto.numeroAtto}" />
 				</p:commandLink>
