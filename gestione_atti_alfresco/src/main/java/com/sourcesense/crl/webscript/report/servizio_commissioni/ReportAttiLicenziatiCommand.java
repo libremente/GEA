@@ -23,7 +23,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
 			throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
@@ -38,7 +38,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			 for (String tipoAtto:this.tipiAttoLucene) {
 				SearchParameters sp = new SearchParameters();
-				sp.addStore(attoNodeRef);
+				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				String query="TYPE:\""
 						+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:\""

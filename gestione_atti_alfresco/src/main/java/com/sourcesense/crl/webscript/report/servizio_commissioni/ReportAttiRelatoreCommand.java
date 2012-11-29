@@ -22,7 +22,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
 			throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
@@ -40,10 +40,10 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
 			 for (String tipoAtto:this.tipiAttoLucene) {
 				SearchParameters sp = new SearchParameters();
-				//sp.addStore(attoNodeRef.getStoreRef());
+				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				String query="TYPE:\""
-						+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
+						+ "crlattI:atto" + "\" AND @crlatti\\:tipoAtto:"
 						+ tipoAtto   + "\" AND @crlatti\\:dataRitiro:["
 						+this.dataRitiroDa+" TO "+
 						this.dataRitiroA+" ]\"";

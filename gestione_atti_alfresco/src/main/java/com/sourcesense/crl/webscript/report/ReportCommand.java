@@ -6,5 +6,5 @@ import org.alfresco.service.cmr.repository.StoreRef;
 
 public interface ReportCommand {
 
-	byte[] generate(byte[] templateByteArray,String json, StoreRef attoNodeRef)  throws IOException;
+	byte[] generate(byte[] templateByteArray,String json, StoreRef spacesStore)  throws IOException;
 }

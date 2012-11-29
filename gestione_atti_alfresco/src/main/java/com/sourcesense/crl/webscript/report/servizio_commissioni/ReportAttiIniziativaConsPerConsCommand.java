@@ -22,7 +22,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
 			throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
@@ -42,7 +42,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			 //gruppo per consigliere?
 			for (String commissione:this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
-				sp.addStore(attoNodeRef);
+				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				String query="TYPE:\""
 								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""

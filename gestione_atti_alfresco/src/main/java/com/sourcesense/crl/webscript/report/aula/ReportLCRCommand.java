@@ -21,7 +21,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportLCRCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
 			throws IOException {
 		ByteArrayOutputStream ostream;
 		ostream = null;

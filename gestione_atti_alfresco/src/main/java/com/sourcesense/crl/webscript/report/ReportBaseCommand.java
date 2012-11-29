@@ -71,7 +71,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	
 	@Override
-	public abstract byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
+	public abstract byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
 			throws IOException;
 	
 	/**

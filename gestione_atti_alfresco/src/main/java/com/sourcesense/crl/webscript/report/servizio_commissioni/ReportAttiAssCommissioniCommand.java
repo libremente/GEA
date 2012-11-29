@@ -24,7 +24,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
+	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
 			throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
@@ -34,14 +34,15 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			this.initCommonParams(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
-			ResultSet queryRes = null;
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
 			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
 			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			for (String commissione:this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
-				sp.addStore(attoNodeRef);
+				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				//va valutata nei campi multi valued la possibilità di fare ricerche per frase 
+				//esatta o meno
 				String query="TYPE:\""
 								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""
 								+ this.ruoloCommissione  +"\" AND @cm\\:name:\""
