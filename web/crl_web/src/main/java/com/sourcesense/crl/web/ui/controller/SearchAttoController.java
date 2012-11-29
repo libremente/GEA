@@ -485,11 +485,11 @@ public class SearchAttoController {
 	}
 
 	public String getNumeroprotocollo() {
-		return this.atto.getNumeroProtocollo();
+		return this.atto.getNumeroRepertorio();
 	}
 
 	public void setNumeroprotocollo(String numeroprotocollo) {
-		this.atto.setNumeroProtocollo(numeroprotocollo);
+		this.atto.setNumeroRepertorio(numeroprotocollo);
 	}
 
 	public String getTipoiniziativa() {

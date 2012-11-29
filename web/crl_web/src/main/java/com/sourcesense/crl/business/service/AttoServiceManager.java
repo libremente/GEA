@@ -112,11 +112,22 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_upload_allegato_consultazioni", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_CONSULTAZIONE);
 	}
 	
+	
+	
 	public Allegato uploadAllegatoPareri(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegatoParere(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_upload_allegato_pareri", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_PARERE);
 	}
+	
+	
+	public TestoAtto changeAllegatoPresentazioneAssegnazione (Allegato allegato){
+		
+		
+		return attoService.changeAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_change_allegato", new String[] { allegato.getId() }));
+		
+	} 
 	
 	
 	public AttoMIS persistMIS(Object object) {

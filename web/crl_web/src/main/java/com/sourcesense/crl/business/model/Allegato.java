@@ -35,6 +35,7 @@ public class Allegato implements Cloneable{
 	private String descrizione;
 	private String downloadUrl;
 	private boolean pubblico;
+	private boolean testo;
 	private String tipoAllegato;
 	private String id;
 	private String mimetype;
@@ -167,6 +168,14 @@ public class Allegato implements Cloneable{
 
 	public void setConsultazione(String consultazione) {
 		this.consultazione = consultazione;
+	}
+
+	public boolean isTesto() {
+		return testo;
+	}
+
+	public void setTesto(boolean testo) {
+		this.testo = testo;
 	}
 	
 	

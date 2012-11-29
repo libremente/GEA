@@ -199,8 +199,7 @@ public class AttoService {
 					+ response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 		String responseMsg = response.getEntity(String.class);
-		System.out.println("JSON:"+responseMsg);
-
+		
 		try {
 			
 			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
@@ -424,6 +423,42 @@ public class AttoService {
 	}
 
 	
+	public TestoAtto changeAllegato(String url) {
+
+		TestoAtto attoRecord = null;
+
+		try {
+
+			WebResource webResource = client.resource(url);
+			
+			ClientResponse response = webResource.post(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			attoRecord = objectMapper.readValue(responseMsg, TestoAtto.class);
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return attoRecord;
+	}
+	
+	
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti = null;
 
@@ -473,7 +508,6 @@ public class AttoService {
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
 					false);
 			String json = objectMapper.writeValueAsString(atto);
-			System.out.println("JSON ATTO=="+json);
 			ClientResponse response = webResource.type(
 					MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
@@ -483,6 +517,9 @@ public class AttoService {
 						+ response.getStatus()
 						+ ": Alfresco non raggiungibile ");
 			}
+			
+			String responseMsg = response.getEntity(String.class);
+			
 		} catch (JsonMappingException e) {
 
 			throw new ServiceNotAvailableException(this.getClass()

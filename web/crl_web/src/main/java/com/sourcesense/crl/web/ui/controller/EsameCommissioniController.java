@@ -815,8 +815,15 @@ public class EsameCommissioniController {
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 
 		if (canChangeStatoAtto() && isOneMembroAttivo) {
-			atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+			
+			if(atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE) || 
+					atto.getStato().equals(StatoAtto.PRESO_CARICO_COMMISSIONE) ||
+					atto.getStato().equals(StatoAtto.NOMINATO_RELATORE)){
+			  atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+			}
+			
 			commissioneUser.setStato(Commissione.STATO_COMITATO_RISTRETTO);
+		
 		}
 
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
@@ -829,7 +836,11 @@ public class EsameCommissioniController {
 				.salvaComitatoRistrettoEsameCommissioni(esameCommissione);
 
 		if (canChangeStatoAtto() && isNominatoRelatore()) {
+			if(atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE) || 
+					atto.getStato().equals(StatoAtto.PRESO_CARICO_COMMISSIONE) ||
+					atto.getStato().equals(StatoAtto.NOMINATO_RELATORE)){
 			attoBean.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+			}
 		}
 		attoBean.getLastPassaggio().setCommissioni(
 				Clonator.cloneList(commissioniList));

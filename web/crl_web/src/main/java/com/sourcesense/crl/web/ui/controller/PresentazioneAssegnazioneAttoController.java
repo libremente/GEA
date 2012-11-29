@@ -1049,6 +1049,49 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	public void spostaAllegati() {
+		
+		int conta =0;
+		
+		List <Allegato> allegatiTemp = new ArrayList<Allegato>();
+		
+		for (Allegato allegato : allegatiList) {
+			
+			if(allegato.isTesto()){
+				
+				TestoAtto attoRec = attoServiceManager.changeAllegatoPresentazioneAssegnazione(allegato);
+				testiAttoList.add(attoRec);
+			    conta ++;
+			}else {
+				
+				allegatiTemp.add(allegato);
+				
+			}
+		}
+		
+		allegatiList.clear();
+		setAllegatiList(allegatiTemp);
+		
+		// TODO Service logic
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		setStatoCommitNote(CRLMessage.COMMIT_DONE);
+
+		if(conta==0){
+		
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Selezionare almeno un Allegato ", ""));
+		}else{
+			
+			context.addMessage(null, new FacesMessage(
+					"Testi Atto salvati con successo", ""));
+			
+		}
+	}
+	
+	
+	
 	// Getters & Setters******************************************************
 
 	public PersonaleServiceManager getPersonaleServiceManager() {
