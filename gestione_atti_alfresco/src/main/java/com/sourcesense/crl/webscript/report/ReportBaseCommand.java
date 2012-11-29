@@ -12,6 +12,7 @@ import java.util.Map;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
+import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.json.JSONArray;
@@ -51,11 +52,68 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected String dataNominaRelatoreDa;
 	protected String dataNominaRelatoreA;
 	
+	protected String dataPresentazioneDa;
+	protected String dataPresentazioneA;
+	
+	protected String dataAssegnazioneParereDa;
+	protected String dataAssegnazioneParereA;
+	
+	
+	
 	
 	protected List<String> relatoriJson;
 	protected String firmatario;
 	protected String tipologiaFirma;
 
+
+
+	
+
+	
+	@Override
+	public abstract byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
+			throws IOException;
+	
+	/**
+	 * return the right syntax for Alfresco lucene query on list
+	 * @param field
+	 * @param list
+	 * @return
+	 */
+	protected static String convertListToString(String field,List<String> list){
+		String stringSpaced = list.toString().replaceAll(", ", ",");
+		String stringReplaced = stringSpaced.replaceAll(",","\" OR "+field+":\"");
+		return "("+field+":\""+stringReplaced.substring(1, stringReplaced.length()-1)+"\")";
+	}
+	/**
+	 * @param generatedDocument
+	 * @return
+	 * @throws IOException
+	 * @throws FileNotFoundException
+	 */
+	protected ByteArrayInputStream saveTemp(XWPFDocument generatedDocument)
+			throws IOException, FileNotFoundException {
+		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+		generatedDocument.write(ostream);
+		return new ByteArrayInputStream(ostream.toByteArray());
+	}
+
+	protected List<String> convertToLuceneTipiAtto(List<String> tipiAttoJson) {
+		List<String> luceneTipiAttoList = new ArrayList<String>();
+		for (String jsonType : tipiAttoJson) {
+			String luceneValueType = "{" + CRL_ATTI_MODEL + "}" + jsonType;
+			luceneTipiAttoList.add(luceneValueType);
+		}
+		return luceneTipiAttoList;
+	}
+	
+	protected int retrieveLenght( List<ResultSet> allSearches) {
+		int count=0;
+		for(ResultSet currentRes:allSearches){
+			count+=currentRes.length();
+		}
+		return count;
+	}
 	/**
 	 * init the common params : List<String> tipiAttoLucene; String
 	 * ruoloCommissioneLuceneField; List<String> commissioniJson;
@@ -78,6 +136,26 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected void initFirmatario(String json) throws JSONException{
 		JSONObject rootJson = new JSONObject(json);
 		this.firmatario=JsonUtils.retieveElementFromJson(rootJson, "firmatario");
+	}
+	
+	protected void initDataAssegnazioneParereDa(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataAssegnazioneParereDa=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneParereDa");
+	}
+	
+	protected void initDataAssegnazioneParereA(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataAssegnazioneParereA=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneParereA");
+	}
+	
+	protected void initDataPresentazioneDa(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataPresentazioneDa=JsonUtils.retieveElementFromJson(rootJson, "dataPresentazioneDa");
+	}
+	
+	protected void initDataPresentazioneA(String json) throws JSONException{
+		JSONObject rootJson = new JSONObject(json);
+		this.dataPresentazioneA=JsonUtils.retieveElementFromJson(rootJson, "dataPresentazioneA");
 	}
 	
 	protected void initDataNominaRelatoreDa(String json) throws JSONException{
@@ -146,6 +224,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		// convert the list in the lucene format
 		this.tipiAttoLucene = this.convertToLuceneTipiAtto(tipiAttoJson);
 	}
+	
+
 
 	/**
 	 * init a simple map that link json names to lucene names
@@ -191,42 +271,5 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	public void setNodeService(NodeService nodeService) {
 		this.nodeService = nodeService;
 	}
-
-	/**
-	 * @param generatedDocument
-	 * @return
-	 * @throws IOException
-	 * @throws FileNotFoundException
-	 */
-	protected ByteArrayInputStream saveTemp(XWPFDocument generatedDocument)
-			throws IOException, FileNotFoundException {
-		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-		generatedDocument.write(ostream);
-		return new ByteArrayInputStream(ostream.toByteArray());
-	}
-
-	protected List<String> convertToLuceneTipiAtto(List<String> tipiAttoJson) {
-		List<String> luceneTipiAttoList = new ArrayList<String>();
-		for (String jsonType : tipiAttoJson) {
-			String luceneValueType = "{" + CRL_ATTI_MODEL + "}" + jsonType;
-			luceneTipiAttoList.add(luceneValueType);
-		}
-		return luceneTipiAttoList;
-	}
-
-	/**
-	 * return the right syntax for Alfresco lucene query on list
-	 * @param field
-	 * @param list
-	 * @return
-	 */
-	protected static String convertListToString(String field,List<String> list){
-		String stringSpaced = list.toString().replaceAll(", ", ",");
-		String stringReplaced = stringSpaced.replaceAll(",","\" OR "+field+":\"");
-		return "("+field+":\""+stringReplaced.substring(1, stringReplaced.length()-1)+"\")";
-	}
-	@Override
-	public abstract byte[] generate(byte[] templateByteArray, String json, StoreRef attoNodeRef)
-			throws IOException;
 
 }
