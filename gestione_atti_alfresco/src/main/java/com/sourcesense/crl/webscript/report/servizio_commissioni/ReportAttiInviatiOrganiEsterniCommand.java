@@ -34,7 +34,6 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneParereDa(json);
 			this.initDataAssegnazioneParereA(json);
 			
-			ResultSet queryRes = null;
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
 			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
 			 List<ResultSet> allSearches=new LinkedList<ResultSet>();

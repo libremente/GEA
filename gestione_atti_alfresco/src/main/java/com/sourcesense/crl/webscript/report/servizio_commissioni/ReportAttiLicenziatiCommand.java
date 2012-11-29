@@ -33,7 +33,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			this.initCommonParams(json);
 			this.initDataVotazioneCommReferenteDa(json);
 			this.initDataVotazioneCommReferenteA(json);
-			ResultSet queryRes = null;
+
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
 			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			 for (String tipoAtto:this.tipiAttoLucene) {

@@ -3,11 +3,14 @@ package com.sourcesense.crl.webscript.report.commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.ResultSetRow;
+import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -29,35 +32,37 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 			this.initCommonParams(json);
-			// data di assegnazione in intervallo
-			ResultSet queryRes = null;
-			// costruire n query quanti i tipi di atto? vanno messi nel path?
-			// per il momento per commissioni ho semplicemente messo il toString
-			// della lista che si traduce in valori separati da spazio
-			// per aggiungere gli OR basta creare un metodo che prendendo in
-			// input una lista di stringhe
-			// riporta una stringa con la concat e gli OR in mezzo
-			// va valutato come gestire la data
+			this.initDataAssegnazioneCommReferenteDa(json);
+			this.initDataAssegnazioneCommReferenteA(json);
+			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
+			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
+			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			for (String commissione:this.commissioniJson) {
-				queryRes = searchService.query(Repository.getStoreRef(),
-						SearchService.LANGUAGE_LUCENE, "TYPE:\""
-								+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:"
-								+ this.tipiAttoLucene   + "\" AND @crlatti\\:ruoloCommissione:"
-								+ this.ruoloCommissione  +"\" AND @cm\\:name:"
+				SearchParameters sp = new SearchParameters();
+				sp.addStore(spacesStore);
+				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				//va valutata nei campi multi valued la possibilità di fare ricerche per frase 
+				//esatta o meno
+				String query="TYPE:\""
+								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""
+								+ this.ruoloCommissione  +"\" AND @cm\\:name:\""
 								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
 								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ]\""
-								);
+								this.dataAssegnazioneCommReferenteA+" ]";
+				sp.setQuery(query);
+				sp.addSort(sortField1, false);
+				sp.addSort(sortField2, false);
+				ResultSet currentResults = this.searchService.query(sp);
+				allSearches.add(currentResults);
 			}
-
-			// obtain resultSet Length and cycle on it to repeat template
+			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					queryRes.length(), 5, false);
+					this.retrieveLenght(allSearches), 5, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					queryRes);
+					allSearches);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -68,7 +73,6 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 		return ostream.toByteArray();
 
 	}
-
 	/**
 	 * ipotizzo field già presenti nella table, quindi inseriamo solo value
 	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
@@ -82,11 +86,21 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet queryRes) throws IOException {
+			List<ResultSet> allSearches) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
+		for(ResultSet resultSet:allSearches){
+			for(int i=0;i<resultSet.length();i++){
+				ResultSetRow row = resultSet.getRow(i);
+						System.out.println("ID " + i+" "+row.getNodeRef());
+			}
+			}
+		
+			
+		
+		/*
 		List<XWPFTable> tables = document.getTables();
-		for (int k = 0; k < queryRes.length(); k++) {
-			NodeRef currentNodeRef = queryRes.getNodeRef(k);
+		for (int k = 0; k < allSearches.length(); k++) {
+			NodeRef currentNodeRef = allSearches.getNodeRef(k);
 			XWPFTable newTable = tables.get(k);
 			XWPFTableRow firstRow = newTable.getRow(0);
 
@@ -95,7 +109,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 			XWPFTableRow secondRow = newTable.getRow(0);
 			secondRow.getCell(0).setText("1x1");
 			secondRow.getCell(0).setText("1x2");
-		}
+		}*/
 		return document;
 	}
 }

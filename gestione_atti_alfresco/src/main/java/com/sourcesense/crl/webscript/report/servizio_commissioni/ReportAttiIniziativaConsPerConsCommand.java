@@ -35,7 +35,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneCommReferenteA(json);
 			this.initDataPresentazioneDa(json);
 			this.initDataPresentazioneA(json);
-			ResultSet queryRes = null;
+
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
 			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
 			 List<ResultSet> allSearches=new LinkedList<ResultSet>();

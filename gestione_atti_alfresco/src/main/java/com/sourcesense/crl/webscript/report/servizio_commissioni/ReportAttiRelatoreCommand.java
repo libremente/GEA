@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.web.bean.repository.Repository;
@@ -34,10 +35,9 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			this.initDataNominaRelatoreDa(json);
 			this.initDataNominaRelatoreA(json);
 			
-			ResultSet queryRes = null;
 			//sorting gruppo per relatore - ordine alfabetico - sottogruppo per tipo atto - ordinato per numero
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
-			 List<SearchParameters> allSearches=new LinkedList<SearchParameters>();
+			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			 for (String tipoAtto:this.tipiAttoLucene) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
@@ -49,19 +49,18 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 						this.dataRitiroA+" ]\"";
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
-				allSearches.add(sp);
+				ResultSet currentResults = this.searchService.query(sp);
+				allSearches.add(currentResults);
 			}
+			 XWPFDocument generatedDocument = docxManager.generateFromTemplate(
+						this.retrieveLenght(allSearches), 5, false);
+				// convert to input stream
+				ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
-			// obtain resultSet Length and cycle on it to repeat template
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					queryRes.length(), 5, false);
-			// convert to input stream
-			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
-
-			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					queryRes);
-			ostream = new ByteArrayOutputStream();
-			finalDocument.write(ostream);
+				XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
+						allSearches);
+				ostream = new ByteArrayOutputStream();
+				finalDocument.write(ostream);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -82,19 +81,30 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet queryRes) throws IOException {
+			List<ResultSet> allSearches) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
+		for(ResultSet resultSet:allSearches){
+			for(int i=0;i<resultSet.length();i++){
+				ResultSetRow row = resultSet.getRow(i);
+						System.out.println("ID " + i+" "+row.getNodeRef());
+			}
+			}
+		
+			
+		
+		/*
 		List<XWPFTable> tables = document.getTables();
-		for (int k = 0; k < queryRes.length(); k++) {
+		for (int k = 0; k < allSearches.length(); k++) {
+			NodeRef currentNodeRef = allSearches.getNodeRef(k);
 			XWPFTable newTable = tables.get(k);
 			XWPFTableRow firstRow = newTable.getRow(0);
-			firstRow.getCell(0).setText("1x1");
+
 			firstRow.getCell(0).setText("1x2");
 
 			XWPFTableRow secondRow = newTable.getRow(0);
-			secondRow.getCell(0).setText("2x1");
-			secondRow.getCell(0).setText("2x2");
-		}
+			secondRow.getCell(0).setText("1x1");
+			secondRow.getCell(0).setText("1x2");
+		}*/
 		return document;
 	}
 }
