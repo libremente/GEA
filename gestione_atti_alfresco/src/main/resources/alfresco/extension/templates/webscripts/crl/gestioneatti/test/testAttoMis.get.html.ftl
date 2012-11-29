@@ -23,6 +23,7 @@
 		var currentForm = document.forms[0];
 		var id = currentForm.id.value;
 		var numeroAtto = currentForm.numeroAtto.value;
+		var legislatura = currentForm.legislatura.value;
 		var tipoAtto = currentForm.tipoAtto.options[currentForm.tipoAtto.selectedIndex].value;
 		var note = currentForm.note.value;
 		var dataIniziativaComitato = currentForm.dataIniziativaComitato.value;
@@ -51,15 +52,16 @@
 			"dataIntesa" : ""+dataIntesa+"",
 			"dataRispostaComitato" : ""+dataRispostaComitato+"",
 			"dataApprovazioneProgetto" : ""+dataApprovazioneProgetto+"",
-			"dataApprovazioneUdp" : ""+dataApprovazioneUdp+"",
+			"dataApprovazioneUdP" : ""+dataApprovazioneUdp+"",
 			"numeroAttoUdp" : ""+numeroAttoUdp+"",
 			"istitutoIncaricato" : ""+istitutoIncaricato+"",
-			"scadenzaMv" : ""+scadenzaMv+"",
+			"dataScadenzaMV" : ""+scadenzaMv+"",
 			"dataEsameRapportoFinale" : ""+dataEsameRapportoFinale+"",
-			"dataTrasmissioneACommissioni" : ""+dataTrasmissioneACommissioni+"",
+			"dataTrasmissioneCommissioni" : ""+dataTrasmissioneACommissioni+"",
 			"note" : ""+note+"",
-			"legislatura" : "",
-			"tipologia" : ""
+			"legislatura" : ""+legislatura+"",
+			"tipologia" : "",
+			"stato": ""
 			}
 		};
 		
@@ -97,6 +99,10 @@
 				
 				</select>
 			</td>
+		</tr>
+		<tr>
+			<td>Legislatura:</td>
+			<td><input type="text" name="legislatura" value="IX"></td>
 		</tr>
 		<tr>
 			<td>Data iniziativa comitato:</td>

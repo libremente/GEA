@@ -4,7 +4,7 @@ var legislaturePath = "/app:company_home" +
 	"/cm:"+search.ISO9075Encode("Anagrafica") +
 	"/cm:"+search.ISO9075Encode("Legislature") + "/*";
 
-var luceneQuery = "PATH:\""+legislaturePath+"\"";
+var luceneQuery = "PATH:\""+legislaturePath+"\" AND TYPE:\"crlatti:legislaturaAnagrafica\"";
 var legislatureResults = search.luceneSearch(luceneQuery);
 
 var legislatureArrayTemp = new Array();

@@ -86,10 +86,21 @@ if(checkIsNotNull(tipoAttoString)){
 
 luceneQuery += "AND TYPE:\""+type+"\"";
 
-if(checkIsNotNull(legislatura)){
-	luceneQuery = verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:legislatura:\""+legislatura+"\"";
+if(type=="crlatti:atto" || type=="crlatti:attoEAC"){
+	
+	if(checkIsNotNull(legislatura)){
+		luceneQuery = verifyAND(luceneQuery);
+		luceneQuery += "( @crlatti\\:legislatura:\""+legislatura+"\" OR @crlatti\\:legislatura:\"nd\" )";
+	}
 }
+else{
+	
+	if(checkIsNotNull(legislatura)){
+		luceneQuery = verifyAND(luceneQuery);
+		luceneQuery += "@crlatti\\:legislatura:\""+legislatura+"\"";
+	}
+}
+
 
 if(checkIsNotNull(stato)){
 	luceneQuery = verifyAND(luceneQuery);
@@ -372,50 +383,55 @@ for(var i=0; i< attiResults.length; i++){
 	attoResultObj.commissioniNonConsultive = commissioniReferentiString + "," + attoResult.properties["crlatti:commCoreferente"] + "," + 
 		attoResult.properties["crlatti:commRedigente"] + "," + attoResult.properties["crlatti:commDeliberante"]
 
-	
-	var passaggioFolderNode = getLastPassaggio(attoResult);
-	
-	var abbinamentiFolderXpathQuery = "*[@cm:name='Abbinamenti']";
-	var abbinamentiFolderNode = passaggioFolderNode.childrenByXPath(abbinamentiFolderXpathQuery)[0];
-	abbinamenti = abbinamentiFolderNode.getChildAssocsByType("crlatti:abbinamento");
-	
-	abbinamentiString = "";
-	
-	for(var j=0 ; j<abbinamenti.lenght; j++){
-		abbinamentiString += abbinamenti[j].name;
-		if(j!=abbinamenti.length-1){
-			abbinamentiString += ",";
+	if(attoResult.typeShort != "crlatti:attoMis" && attoResult.typeShort != "crlatti:attoEac") {
+		
+		var passaggioFolderNode = getLastPassaggio(attoResult);
+		
+		var abbinamentiFolderXpathQuery = "*[@cm:name='Abbinamenti']";
+		var abbinamentiFolderNode = passaggioFolderNode.childrenByXPath(abbinamentiFolderXpathQuery)[0];
+		abbinamenti = abbinamentiFolderNode.getChildAssocsByType("crlatti:abbinamento");
+		
+		abbinamentiString = "";
+		
+		for(var j=0 ; j<abbinamenti.lenght; j++){
+			abbinamentiString += abbinamenti[j].name;
+			if(j!=abbinamenti.length-1){
+				abbinamentiString += ",";
+			}
 		}
+		
+		attoResultObj.elencoAbbinamenti = abbinamentiString;
+		
+		
+		var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
+		var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
+		commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
+
+		for(var j=0 ; j<commissioni.lenght; j++){
+
+			var commissioneCorrente = commissioni[j];
+			
+			if(commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Referente" || commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Delibernate"
+				|| commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Redigente") {
+				
+				attoResultObj.dataAssegnazione = commissioneCorrente.properties["crlatti:dataAssegnazioneCommissione"];
+				attoResultObj.esitoVotazioneCommissioneReferente = commissioneCorrente.properties["crlatti:esitoVotazioneCommissione"];
+				attoResultObj.dataVotazioneCommissione = commissioneCorrente.properties["crlatti:dataVotazioneCommissione"];
+				attoResultObj.dataRichiestaIscrizioneAula = commissioneCorrente.properties["crlatti:dataRichiestaIscrizioneAula"];
+			
+				var relatoriXPathQuery = "*[@cm:name='Relatori']";
+				var relatoriCommissioneFolderNode = commissioneCorrente.childrenByXPath(relatoriXPathQuery)[0];
+				
+				var relatoriNode = relatoriCommissioneFolderNode.getChildAssocsByType("crlatti:relatore");
+				
+				attoResultObj.relatore = relatoriNode[0].name;
+				attoResultObj.dataNominaRelatore = relatoriNode[0].properties["crlatti:dataNominaRelatore"];		
+			}
+		}
+		
+		
 	}
 	
-	attoResultObj.elencoAbbinamenti = abbinamentiString;
-	
-	
-	var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
-	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
-	commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
-
-	for(var j=0 ; j<commissioni.lenght; j++){
-
-		var commissioneCorrente = commissioni[j];
-		
-		if(commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Referente" || commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Delibernate"
-			|| commissioneCorrente.properties["crlatti:ruoloCommissione"] == "Redigente") {
-			
-			attoResultObj.dataAssegnazione = commissioneCorrente.properties["crlatti:dataAssegnazioneCommissione"];
-			attoResultObj.esitoVotazioneCommissioneReferente = commissioneCorrente.properties["crlatti:esitoVotazioneCommissione"];
-			attoResultObj.dataVotazioneCommissione = commissioneCorrente.properties["crlatti:dataVotazioneCommissione"];
-			attoResultObj.dataRichiestaIscrizioneAula = commissioneCorrente.properties["crlatti:dataRichiestaIscrizioneAula"];
-		
-			var relatoriXPathQuery = "*[@cm:name='Relatori']";
-			var relatoriCommissioneFolderNode = commissioneCorrente.childrenByXPath(relatoriXPathQuery)[0];
-			
-			var relatoriNode = relatoriCommissioneFolderNode.getChildAssocsByType("crlatti:relatore");
-			
-			attoResultObj.relatore = relatoriNode[0].name;
-			attoResultObj.dataNominaRelatore = relatoriNode[0].properties["crlatti:dataNominaRelatore"];		
-		}
-	}
 	
 
 	attoResultObj.dataScadenza = attoResult.properties["crlatti:dataScadenza"];

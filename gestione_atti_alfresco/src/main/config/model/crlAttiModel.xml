@@ -576,6 +576,10 @@
 					<title>Corrente</title>
 					<type>d:boolean</type>
 				</property>
+				<property name="crlatti:chiusuraLegislatura">
+					<title>Chiudi Legislatura</title>
+					<type>d:boolean</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:importatoDaAnagrafica</aspect>

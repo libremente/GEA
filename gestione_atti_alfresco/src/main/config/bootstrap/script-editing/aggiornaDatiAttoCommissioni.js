@@ -15,7 +15,7 @@ if(atto.properties["crlatti:estensione"]!=null){
 
 document.properties["crlatti:nomeAttoCommissione"] = nomeAtto;
 document.properties["crlatti:numeroAttoCommissione"] = atto.properties["crlatti:numeroAtto"];
-document.properties["crlatti:tipoAttoCommissione"] = atto.typeShort;
+document.properties["crlatti:tipoAttoCommissione"] = atto.typeShort.substring(12);
 
 
 document.save();

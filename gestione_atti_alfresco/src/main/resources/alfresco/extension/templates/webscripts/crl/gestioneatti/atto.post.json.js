@@ -88,6 +88,8 @@ if(nodeType=="crlatti:attoEac"){
 	eacAttoFolderNode.name = numeroAtto;
 	eacAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
 	eacAttoFolderNode.properties["crlatti:noteEac"] = note;
+	eacAttoFolderNode.properties["crlatti:legislatura"] = "nd";
+
 	
 	if(checkIsNotNull(dataAtto)){
 		var dataAttoSplitted = dataAtto.split("-");
@@ -103,7 +105,7 @@ if(nodeType=="crlatti:attoEac"){
 	//gestione inserimento e modifica dell'atto di tipo MIS
 	var id = atto.get("id");
 	
-	
+	var numeroRepertorio = atto.get("numeroRepertorio");
 	var dataIniziativaComitato = atto.get("dataIniziativaComitato");
 	var dataPropostaCommissione = atto.get("dataPropostaCommissione");
 	var commissioneCompetente = atto.get("commissioneCompetente");
@@ -119,36 +121,43 @@ if(nodeType=="crlatti:attoEac"){
 	var dataTrasmissioneACommissioni = atto.get("dataTrasmissioneCommissioni");
 	var note = atto.get("note");
 	
-	var misRootPath = gestioneAttiPath + "/cm:MIS";
-	var misRootFolderNode = search.luceneSearch("PATH:\""+misRootPath+"\"")[0];
+	
+	//creazione dello spazio legislatura
+	var legislaturaPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(legislatura);
+	var legislaturaLuceneQuery = "PATH:\""+legislaturaPath+"\"";
+	var legislaturaResults = search.luceneSearch(legislaturaLuceneQuery);
+	
+	var legislaturaFolderNode = null;
+	if(legislaturaResults!=null && legislaturaResults.length>0){
+		legislaturaFolderNode = legislaturaResults[0];
+	} else {
+		var gestioneAttiLuceneQuery = "PATH:\""+gestioneAttiPath+"\"";
+		var gestioneAttiFolderNode = search.luceneSearch(gestioneAttiLuceneQuery)[0];
+		legislaturaFolderNode = gestioneAttiFolderNode.createFolder(legislatura);
+	}
 	
 	//creazione spazio anno
-	var misAnnoPath = misRootPath + "/cm:" + search.ISO9075Encode(anno);
-	var misAnnoLuceneQuery = "PATH:\""+misAnnoPath+"\"";
-	var misAnnoResults = search.luceneSearch(misAnnoLuceneQuery);
-	var misAnnoFolderNode = null;
-	if(misAnnoResults!=null && misAnnoResults.length>0){
-		misAnnoFolderNode = misAnnoResults[0];
+	var annoPath = legislaturaPath + "/cm:" + search.ISO9075Encode(anno);
+	var annoLuceneQuery = "PATH:\""+annoPath+"\"";
+	var annoResults = search.luceneSearch(annoLuceneQuery);
+	var annoFolderNode = null;
+	if(annoResults!=null && annoResults.length>0){
+		annoFolderNode = annoResults[0];
 	} else {
-		misAnnoFolderNode = misRootFolderNode.createFolder(anno);
+		annoFolderNode = legislaturaFolderNode.createFolder(anno);
 	}
 	
 	//creazione spazio mese
-	var misMesePath = misAnnoPath + "/cm:" + search.ISO9075Encode(mese);
-	var misMeseLuceneQuery = "PATH:\""+misMesePath+"\"";
-	var misMeseResults = search.luceneSearch(misMeseLuceneQuery);
-	var misMeseFolderNode = null;
-	if(misMeseResults!=null && misMeseResults.length>0){
-		misMeseFolderNode = misMeseResults[0];
+	var mesePath = annoPath + "/cm:" + search.ISO9075Encode(mese);
+	var meseLuceneQuery = "PATH:\""+mesePath+"\"";
+	var meseResults = search.luceneSearch(meseLuceneQuery);
+	var meseFolderNode = null;
+	if(meseResults!=null && meseResults.length>0){
+		meseFolderNode = meseResults[0];
 	} else {
-		misMeseFolderNode = misAnnoFolderNode.createFolder(mese);
+		meseFolderNode = annoFolderNode.createFolder(mese);
 	}
 	
-	//verifica esistenza del folder dell'atto MIS
-	var misAttoPath = misMesePath + "/cm:" + search.ISO9075Encode(numeroAtto);
-	var misAttoLuceneQuery = "PATH:\""+misAttoPath+"\"";
-	var misAttoResults = search.luceneSearch(misAttoLuceneQuery);
-	var misAttoFolderNode = null;
 	
 	if(checkIsNotNull(id)){
 		misAttoFolderNode = utils.getNodeFromString(id);
@@ -156,7 +165,7 @@ if(nodeType=="crlatti:attoEac"){
 		//creazione dell'atto di tipo MIS
 		var misAttoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:AttoMis\"";
 		var misAttoSpaceTemplateNode = search.luceneSearch(misAttoSpaceTemplateQuery)[0];
-		misAttoFolderNode = misAttoSpaceTemplateNode.copy(misMeseFolderNode,true);
+		misAttoFolderNode = misAttoSpaceTemplateNode.copy(meseFolderNode,true);
 	}
 	
 	//metadati
@@ -217,7 +226,9 @@ if(nodeType=="crlatti:attoEac"){
 	}
 	
 	misAttoFolderNode.name = numeroAtto;
+	misAttoFolderNode.properties["crlatti:legislatura"] = legislatura;
 	misAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
+	misAttoFolderNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
 	misAttoFolderNode.properties["crlatti:noteMis"] = note;
 	misAttoFolderNode.properties["crlatti:commissioneCompetenteMis"] = commissioneCompetente;
 	misAttoFolderNode.properties["crlatti:esitoVotoIntesaMis"] = esitoVotoIntesa;

@@ -41,6 +41,16 @@
                     	<cm:authorityName>GROUP_Commissioni</cm:authorityName>
                  	</view:properties>
               	</cm:authorityContainer>
+              	<cm:authorityContainer view:childName="cm:GROUP_CPCV">
+                 	<view:aspects>
+                    	<sys:referenceable />
+                 	</view:aspects>
+                 	<view:properties>
+                    	<sys:node-uuid>GROUP_CPCV</sys:node-uuid>
+                    	<cm:name>GROUP_CPCV</cm:name>
+                    	<cm:authorityName>GROUP_CPCV</cm:authorityName>
+                 	</view:properties>
+              	</cm:authorityContainer>
            	</sys:children>
 		</view:associations>
 	 </view:reference>
@@ -64,6 +74,11 @@
                  	view:pathref="${system.authorities_container.childname}/cm:GROUP_Commissioni"
                  	view:childName="cm:GROUP_Commissioni" />
            	</cm:inZone>
+           	<cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_CPCV"
+                 	view:childName="cm:GROUP_CPCV" />
+           	</cm:inZone>
        	</view:associations>
 	</view:reference>
     
@@ -85,6 +100,11 @@
               	<view:reference
                  	view:pathref="${system.authorities_container.childname}/cm:GROUP_Commissioni"
                  	view:childName="cm:GROUP_Commissioni" />
+           	</cm:inZone>
+           	<cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_CPCV"
+                 	view:childName="cm:GROUP_CPCV" />
            	</cm:inZone>
         </view:associations>
     </view:reference>

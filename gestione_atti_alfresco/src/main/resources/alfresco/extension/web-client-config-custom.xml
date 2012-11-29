@@ -687,6 +687,7 @@
 			<show-property name="crlatti:dataInizioLegislatura" />
 			<show-property name="crlatti:dataFineLegislatura" />
 			<show-property name="crlatti:correnteLegislatura" />
+			<show-property name="crlatti:chiusuraLegislatura" />
 			<show-property name="crlatti:idAnagrafica" />
 		</property-sheet>
 	</config>
