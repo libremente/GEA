@@ -12,7 +12,10 @@
 			<ref bean="ContentService" />
 		</property>
 		<property name="nodeService">
-			<ref bean="NodeService" />
+			<ref bean="NodeService" />		
+		</property>
+		<property name="dictionaryService">
+			<ref bean="DictionaryService" />
 		</property>
 	</bean>
 
@@ -96,6 +99,9 @@
 		</property>
 		<property name="nodeService">
 			<ref bean="NodeService" />
+		</property>
+		<property name="dictionaryService">
+			<ref bean="DictionaryService" />
 		</property>
 
 		<property name="reportCommandMap">
