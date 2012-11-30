@@ -74,6 +74,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 		return ostream.toByteArray();
 
 	}
+	
 	/**
 	 * ipotizzo field già presenti nella table, quindi inseriamo solo value
 	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-

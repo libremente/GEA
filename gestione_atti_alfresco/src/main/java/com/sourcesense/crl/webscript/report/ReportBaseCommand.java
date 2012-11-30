@@ -4,31 +4,39 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.repository.ContentService;
+import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
+import org.alfresco.service.namespace.QName;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
 
 public abstract class ReportBaseCommand implements ReportCommand {
 	protected ContentService contentService;
 	protected SearchService searchService;
 	protected NodeService nodeService;
+	protected DictionaryService dictionaryService;
 	protected Map<String, String> json2luceneField;
 
 	protected static final String CRL_ATTI_MODEL = "http://www.regione.lombardia.it/content/model/atti/1.0";
-
+	protected final static String DATA_FORMAT="dd/MM/yyyy";
 	protected static final String RUOLO_COMM_REFERENTE = "Referente";
 	protected static final String RUOLO_COMM_COREFERENTE = "Co-Referente";
 	protected static final String RUOLO_COMM_CONSULTIVA = "Consultiva";
@@ -82,7 +90,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	 */
 	protected static String convertListToString(String field,List<String> list){
 		String stringSpaced = list.toString().replaceAll(", ", ",");
-		String stringReplaced = stringSpaced.replaceAll(",","\" OR "+field+":\"");
+		String stringReplaced = stringSpaced.replaceAll(",","\" OR "+field.replaceFirst("\\:", "\\\\:")+":\"");
 		return "("+field+":\""+stringReplaced.substring(1, stringReplaced.length()-1)+"\")";
 	}
 	/**
@@ -107,12 +115,17 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return luceneTipiAttoList;
 	}
 	
-	protected int retrieveLenght( List<ResultSet> allSearches) {
+	protected int retrieveLenght( ArrayListMultimap<String, NodeRef> group2atti) {
 		int count=0;
-		for(ResultSet currentRes:allSearches){
-			count+=currentRes.length();
+		for(String group:group2atti.keySet()){
+			count+=group2atti.get(group).size();
 		}
 		return count;
+	}
+	
+	protected int retrieveLenght(List<ResultSet> allSearches) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	/**
 	 * init the common params : List<String> tipiAttoLucene; String
@@ -222,10 +235,31 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
 				rootJson, "tipiAtto");
 		// convert the list in the lucene format
-		this.tipiAttoLucene = this.convertToLuceneTipiAtto(tipiAttoJson);
+		this.tipiAttoLucene = tipiAttoJson;
 	}
 	
+	protected String checkDateEmpty(Date attributeDate){
+		if(attributeDate==null)
+			return "";
+		else{
+			SimpleDateFormat dateFormatter=new SimpleDateFormat(DATA_FORMAT);
+			return dateFormatter.format(attributeDate);
+		}
+		
+	}
+	
+protected String checkStringEmpty(String attribute){
+	if(attribute==null)
+		return "";
+	else
+		return attribute;
+		
+	}
 
+protected Serializable getNodeRefProperty(Map<QName, Serializable> properties,String attribute){
+	return properties
+			.get(QName.createQName(CRL_ATTI_MODEL,attribute));
+}
 
 	/**
 	 * init a simple map that link json names to lucene names
@@ -270,6 +304,14 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	public void setNodeService(NodeService nodeService) {
 		this.nodeService = nodeService;
+	}
+	
+	public DictionaryService getDictionaryService() {
+		return dictionaryService;
+	}
+
+	public void setDictionaryService(DictionaryService dictionaryService) {
+		this.dictionaryService = dictionaryService;
 	}
 
 }

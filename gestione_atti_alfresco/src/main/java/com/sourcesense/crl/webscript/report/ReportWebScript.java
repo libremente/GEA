@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.NodeRef;
@@ -29,6 +30,7 @@ public class ReportWebScript extends AbstractWebScript {
 	private ContentService contentService;
 	private SearchService searchService;
 	private NodeService nodeService;
+	private DictionaryService dictionaryService;
 	private Map<String, ReportCommand> reportCommandMap;
 
 	private static Log logger = LogFactory.getLog(ReportWebScript.class);
@@ -71,7 +73,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
             res.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
             GregorianCalendar gc = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            res.setHeader( "Content-Disposition", "attachment; filename=\""+nomeLettera+"_"+sdf.format(gc.getTime())+".doc\"" );
+            res.setHeader( "Content-Disposition", "attachment; filename=\""+nomeLettera+"_"+sdf.format(gc.getTime())+".docx\"" );
     		
     		responseOutputStream = res.getOutputStream();
             responseOutputStream.write(documentFilledByteArray);        
@@ -121,5 +123,13 @@ public Map<String, ReportCommand> getReportCommandMap() {
 
 public void setReportCommandMap(Map<String, ReportCommand> reportCommandMap) {
 	this.reportCommandMap = reportCommandMap;
+}
+
+public DictionaryService getDictionaryService() {
+	return dictionaryService;
+}
+
+public void setDictionaryService(DictionaryService dictionaryService) {
+	this.dictionaryService = dictionaryService;
 }  
 }

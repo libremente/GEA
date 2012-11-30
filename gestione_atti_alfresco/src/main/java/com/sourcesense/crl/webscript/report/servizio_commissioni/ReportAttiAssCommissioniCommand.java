@@ -3,29 +3,34 @@ package com.sourcesense.crl.webscript.report.servizio_commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
-import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
-import org.alfresco.web.bean.repository.Repository;
+import org.alfresco.service.namespace.QName;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.json.JSONException;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
-			throws IOException {
+	public byte[] generate(byte[] templateByteArray, String json,
+			StoreRef spacesStore) throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
 			ByteArrayInputStream is = new ByteArrayInputStream(
@@ -34,35 +39,43 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			this.initCommonParams(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
-			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
-			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
-			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
-			for (String commissione:this.commissioniJson) {
+			String sortField1 = "{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
+			String sortField2 = "{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			Map<String, ResultSet> commissione2results = Maps.newHashMap();
+			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				//va valutata nei campi multi valued la possibilità di fare ricerche per frase 
-				//esatta o meno
-				String query="TYPE:\""
-								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""
-								+ this.ruoloCommissione  +"\" AND @cm\\:name:\""
-								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
-								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ]";
+				String query = "TYPE:\""
+						+ "crlatti:commissione"
+						+ "\" AND "
+						+ convertListToString("@crlatti\\:tipoAttoCommissione",
+								this.tipiAttoLucene)
+						+ " AND @crlatti\\:ruoloCommissione:\""
+						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ commissione
+						+ "\" AND @crlatti\\:dataAssegnazioneCommissione:["
+						+ this.dataAssegnazioneCommReferenteDa + " TO "
+						+ this.dataAssegnazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
 				sp.addSort(sortField2, false);
 				ResultSet currentResults = this.searchService.query(sp);
-				allSearches.add(currentResults);
+				commissione2results.put(commissione, currentResults);
 			}
+			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
+			ArrayListMultimap<String, NodeRef> commissione2atti = this
+					.retrieveAtti(commissione2results, spacesStore,
+							atto2commissione);
+
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(allSearches), 5, false);
+					this.retrieveLenght(commissione2atti), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					allSearches);
+					commissione2atti, atto2commissione);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -75,41 +88,117 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * ipotizzo field già presenti nella table, quindi inseriamo solo value
-	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
-	 * numero atto- competenza - iniziativa- oggetto - data assegnazione - data
-	 * valutazione - commissione referente
+	 * Extract the information from the result set, retrieving Atti
+	 * @param commissione2results
+	 *            - String commissione -> ResultSet
+	 * @param spacesStore
+	 *            - current space store of search
+	 * @param atto2commissione
+	 *            - NodeRef type Atto -> NodeRef type Commissione
+	 * @return
+	 */
+	private ArrayListMultimap<String, NodeRef> retrieveAtti(
+			Map<String, ResultSet> commissione2results, StoreRef spacesStore,
+			Map<NodeRef, NodeRef> atto2commissione) {
+		ArrayListMultimap<String, NodeRef> commissione2atti = ArrayListMultimap
+				.create();
+		for (String commissione : commissione2results.keySet()) {
+			ResultSet commissioneResults = commissione2results.get(commissione);
+			int resultLength = commissioneResults.length();
+			for (int i = 0; i < resultLength; i++) {
+				NodeRef commissioneNodeRef = commissioneResults.getNodeRef(i);
+				NodeRef attoNodeRef = commissioneNodeRef;
+				boolean check = false;
+				while (!check) {// look for Atto in type hierarchy
+					ChildAssociationRef childAssociationRef = nodeService
+							.getPrimaryParent(attoNodeRef);
+					attoNodeRef = childAssociationRef.getParentRef();
+					QName nodeRefType = nodeService.getType(attoNodeRef);
+					QName attoRefType = QName.createQName(CRL_ATTI_MODEL,
+							"atto");
+					check = dictionaryService.isSubClass(nodeRefType,
+							attoRefType);
+				}
+				commissione2atti.put(commissione, attoNodeRef);
+				atto2commissione.put(attoNodeRef, commissioneNodeRef);
+
+			}
+
+		}
+		return commissione2atti;
+	}
+
+	/**
+	 * fills the docx template,correctly replicated with the values extracted
+	 * from the NodeRef in input (AttoNodeRef- CommissioneNodeRef)
 	 * 
 	 * @param finalDocStream
-	 * @param allSearches
+	 *            - docx stream
+	 * @param commissione2atti
+	 *            - String commissione -> list NodeRef type Atto
+	 * @param atto2commissione
+	 *            - NodeRef type Atto -> NodeRef type Commissione
 	 * @return
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			List<ResultSet> allSearches) throws IOException {
+			ArrayListMultimap<String, NodeRef> commissione2atti,
+			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
-		for(ResultSet resultSet:allSearches){
-			for(int i=0;i<resultSet.length();i++){
-				ResultSetRow row = resultSet.getRow(i);
-						System.out.println("ID " + i+" "+row.getNodeRef());
-			}
-			}
-		
-			
-		
-		/*
+		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
-		for (int k = 0; k < allSearches.length(); k++) {
-			NodeRef currentNodeRef = allSearches.getNodeRef(k);
-			XWPFTable newTable = tables.get(k);
-			XWPFTableRow firstRow = newTable.getRow(0);
+		for (String commissione : commissione2atti.keySet()) {
+			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+				XWPFTable currentTable = tables.get(tableIndex);
+				Map<QName, Serializable> attoProperties = nodeService
+						.getProperties(currentAtto);
+				Map<QName, Serializable> commissioneProperties = nodeService
+						.getProperties(atto2commissione.get(currentAtto));
 
-			firstRow.getCell(0).setText("1x2");
+				// from Atto
+				String numeroAtto = (String) this.getNodeRefProperty(
+						attoProperties, "numeroAtto");
+				String iniziativa = (String) this.getNodeRefProperty(
+						attoProperties, "descrizioneIniziativa");
+				String oggetto = (String) this.getNodeRefProperty(
+						attoProperties, "oggetto");
+				ArrayList<String> commReferenteList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "commReferente");
+				String commReferente = "";
+				for (String commissioneReferenteMulti : commReferenteList)
+					commReferente += commissioneReferenteMulti + " ";
+				// from Commissione
+				String tipoAtto = (String) this.getNodeRefProperty(
+						commissioneProperties, "tipoAttoCommissione");
+				Date dateAssegnazioneCommissione = (Date) this
+						.getNodeRefProperty(commissioneProperties,
+								"dataAssegnazioneCommissione");
+				Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(
+						commissioneProperties, "dataVotazioneCommissione");
+				String ruoloCommissione = (String) this.getNodeRefProperty(
+						commissioneProperties, "ruoloCommissione");
 
-			XWPFTableRow secondRow = newTable.getRow(0);
-			secondRow.getCell(0).setText("1x1");
-			secondRow.getCell(0).setText("1x2");
-		}*/
+				currentTable.getRow(0).getCell(1)
+						.setText(this.checkStringEmpty(numeroAtto));
+				currentTable.getRow(1).getCell(1)
+						.setText(this.checkStringEmpty(ruoloCommissione));
+				currentTable.getRow(2).getCell(1)
+						.setText(this.checkStringEmpty(iniziativa));
+				currentTable.getRow(3).getCell(1)
+						.setText(this.checkStringEmpty(oggetto));
+				currentTable
+						.getRow(4)
+						.getCell(1)
+						.setText(
+								this.checkDateEmpty(dateAssegnazioneCommissione));
+				currentTable.getRow(5).getCell(1)
+						.setText(this.checkDateEmpty(dateVotazioneCommissione));
+				currentTable.getRow(6).getCell(1)
+						.setText(this.checkStringEmpty(commReferente));
+				tableIndex++;
+			}
+		}
+
 		return document;
 	}
 }
