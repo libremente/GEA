@@ -820,7 +820,7 @@ public class EsameCommissioniController {
 		
 		if (canChangeStatoAtto() && isOneMembroAttivo) {
 			
-			if(statoChange){
+					if(statoChange){
 			  atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
 			}
 			
@@ -964,20 +964,20 @@ public class EsameCommissioniController {
 				abbinamento.setIdAtto(atto.getId());
 				abbinamento.setIdAttoAbbinato(idAbbinamento);
 				abbinamento.setAbbinato(true);
-				abbinamento.setNumeroAttoAbbinato(attoDaAbbinare
-						.getNumeroAtto());
+				abbinamento.setNumeroAttoAbbinato(attoDaAbbinare.getNumeroAtto());
 				abbinamento.setTipoAttoAbbinato(attoDaAbbinare.getTipoAtto());
 				abbinamentiList.add(abbinamento);
-
 				setIdAbbinamentoSelected(idAbbinamento);
 				showAbbinamentoDetail();
 				updateAbbinamentiHandler();
+
+				
 			}
 		}
 	}
 
 	public void removeAbbinamento() {
-
+		
 		for (Abbinamento element : abbinamentiList) {
 
 			if (element.getIdAttoAbbinato().equals(abbinamentoToDelete)) {
@@ -1069,8 +1069,7 @@ public class EsameCommissioniController {
 			gestioneAbbinamento.setTarget(target);
 			abbinamentoServiceManager.salvaAbbinamento(gestioneAbbinamento);
 
-			mergeAbbinamento(abbinamentoSelected, attoBean.getLastPassaggio()
-					.getAbbinamenti());
+			mergeAbbinamento(abbinamentoSelected, attoBean.getAbbinamenti());
 
 			setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage(
@@ -1083,6 +1082,7 @@ public class EsameCommissioniController {
 			abbinamentoSelected.setTipoTesto(tipoTesto);
 			abbinamentoSelected.setDataAbbinamento(dataAbbinamento);
 			abbinamentoSelected.setNote(noteAbbinamento);
+			abbinamentoSelected.setDataDisabbinamento(null);
 
 			GestioneAbbinamento gestioneAbbinamento = new GestioneAbbinamento();
 			Target target = new Target();
@@ -1104,13 +1104,17 @@ public class EsameCommissioniController {
 
 	private void mergeAbbinamento(Abbinamento abbinamento,
 			List<Abbinamento> abbinamentiSession) {
+		
 		for (Abbinamento element : abbinamentiSession) {
+			
 			if (element.getIdAttoAbbinato().equals(
 					abbinamento.getIdAttoAbbinato())) {
-				element.setTipoTesto(getTipoTesto());
-				element.setDataAbbinamento(getDataAbbinamento());
-				element.setDataDisabbinamento(getDataDisabbinamento());
-				element.setNote(getNoteAbbinamento());
+				
+				element.setTipoTesto(abbinamento.getTipoTesto());
+				element.setDataAbbinamento(abbinamento.getDataAbbinamento());
+				element.setDataDisabbinamento(abbinamento.getDataDisabbinamento());
+				element.setNote(abbinamento.getNote());
+				
 				return;
 			}
 		}

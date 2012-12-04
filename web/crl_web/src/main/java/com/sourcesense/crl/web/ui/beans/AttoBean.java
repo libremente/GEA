@@ -104,6 +104,7 @@ public class AttoBean implements Serializable {
 	
 
 	private List<Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
+	private List<Abbinamento> abbinamentiAttivi = new ArrayList<Abbinamento>();
 	private List<Commissione> commissioni = new ArrayList<Commissione>();
 
 	@ManagedProperty(value = "#{attoServiceManager}")
@@ -948,6 +949,24 @@ public class AttoBean implements Serializable {
 	public List<Abbinamento> getAbbinamenti() {
 		return getLastPassaggio().getAbbinamenti();
 	}
+	
+	public List<Abbinamento> getAbbinamentiAttivi() {
+				
+		
+		abbinamentiAttivi.clear();
+		
+		for (Abbinamento element : getAbbinamenti()) {
+
+			if (element.getDataDisabbinamento() == null) {
+
+				abbinamentiAttivi.add((Abbinamento)element.clone());
+				
+			}
+		}
+		
+		return abbinamentiAttivi;
+	}
+
 
 	public List<Commissione> getCommissioni() {
 		return getLastPassaggio().getCommissioni();

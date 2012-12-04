@@ -35,7 +35,6 @@ public class RiepilogoAttoController {
 	private String nomeCommissione;
 	private String commissioneSelectedName;
 	
-	private List<Abbinamento> abbinamentiAttivi = new ArrayList<Abbinamento>();
 	private List<Abbinamento> abbinamentiList = new ArrayList<Abbinamento>();
 	private List<Relatore> relatoriAttivi = new ArrayList<Relatore>();
 	private List<Relatore> relatoriList = new ArrayList<Relatore>();
@@ -77,7 +76,6 @@ public class RiepilogoAttoController {
 		
 		abbinamentiList = Clonator.cloneList(attoBean.getLastPassaggio().getAbbinamenti());
 		relatoriList =Clonator.cloneList(commissioneSelected.getRelatori());
-		filtraAbbinamenti();
 		filtraRelatori();
 		
 		trasmissioneAdAulaAbilited();
@@ -105,18 +103,7 @@ public class RiepilogoAttoController {
 
 	}
 	
-	public void filtraAbbinamenti() {
 
-		for (Abbinamento element : abbinamentiList) {
-
-			if (element.getDataDisabbinamento() == null) {
-
-				abbinamentiAttivi.add(element);
-				
-			}
-		}
-	}
-	
 	public void filtraRelatori(){
 		
 		for (Relatore element: relatoriList) {
@@ -227,16 +214,6 @@ public class RiepilogoAttoController {
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
 	}
-
-	public List<Abbinamento> getAbbinamentiAttivi() {
-		return abbinamentiAttivi;
-	}
-
-	public void setAbbinamentiAttivi(List<Abbinamento> abbinamentiAttivi) {
-		this.abbinamentiAttivi = abbinamentiAttivi;
-	}
-
-
 
 	public List<Relatore> getRelatoriAttivi() {
 		return relatoriAttivi;

@@ -751,7 +751,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 			<p:row>
 			<p:column>
 					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva"
-						update="listaAbbinamenti, abbinamentiMsg , :informationForm:informationBar"
+						update="listaAbbinamenti, abbinamentiMsg , :informationForm"
 						action="#{esameCommissioniController.salvaAbbinamentoDisabbinamento}" />
 				</p:column>
 			</p:row>

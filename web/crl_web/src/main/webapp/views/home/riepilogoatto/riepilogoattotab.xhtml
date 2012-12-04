@@ -135,7 +135,7 @@
 			<p:column colspan="3">
 
 				<p:dataTable styleClass="generalInfoTab grey-text"
-					value="#{riepilogoAttoController.abbinamentiAttivi}" var="abbinamento" >
+					value="#{attoBean.getAbbinamentiAttivi()}" var="abbinamento" >
 
 					<p:column sortBy="#{abbinamento.tipoAttoAbbinato}">
 						<f:facet name="header">Abbinamenti</f:facet>
