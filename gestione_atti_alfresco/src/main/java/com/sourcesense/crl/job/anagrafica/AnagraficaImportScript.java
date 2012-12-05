@@ -10,6 +10,7 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.cmr.security.AuthorityService;
+import org.alfresco.service.cmr.security.AuthorityType;
 import org.alfresco.web.bean.repository.Repository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -131,7 +132,7 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
             logger.info("Trovati " + groupNodesResultSet.length() + " gruppi consiliari nel repository");
             
 
-            /* Delete all groups on Alfresco repository */
+            /* Delete all groups folder node on Alfresco repository */
             if (groupNodesResultSet.length() > 0) {
                 for (ChildAssociationRef groupNodeRef : groupNodesResultSet.getChildAssocRefs()) {
                     fileFolderService.delete(groupNodeRef.getChildRef());
@@ -199,7 +200,7 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 	String committeName = councilor.getCommitteeNames().get(k);
                 	
                 	// replace all not alpha or digit character
-                	committeName = committeName.replaceAll("[^a-zA-Z0-9]+","");
+                	//committeName = committeName.replaceAll("[^a-zA-Z0-9]+","");
                 	
                 	/* if committe does not exist...create it and insert the NodeRef in map */
                 	if(!committesMap.containsKey(committeName)){
@@ -210,10 +211,11 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 		/* create alfresco authority (group) named as "LEGISLATURA_NomeCommissione" if does not exist */
                 		String alfrescoGroupName = nomeLegislaturaCorrente + "_" + committeName;
                 		
-//                		if(authorityService.getAuthorityNodeRef(alfrescoGroupName)==null){
-//                			authorityService.createAuthority(AuthorityType.GROUP, alfrescoGroupName);
-//                			authorityService.addAuthority(Constant.GROUP_COMMISSIONI, "GROUP_"+alfrescoGroupName);
-//                		}
+                		if(authorityService.getAuthorityNodeRef("GROUP_"+alfrescoGroupName)==null){
+                			authorityService.createAuthority(AuthorityType.GROUP, alfrescoGroupName);
+                			authorityService.addAuthority(Constant.GROUP_COMMISSIONI, "GROUP_"+alfrescoGroupName);
+                			logger.info("Creata l'authority '"+alfrescoGroupName+"'"); 
+                		}
                 		
                 		
                 		

@@ -129,3 +129,36 @@ function canChangeStatoAtto(ruoloCommissione) {
 	}
 
 }
+
+function getLegislaturaCorrente(){
+	
+	var legislaturaCorrente = null;
+	
+	var legislaturePath = "/app:company_home" +
+	"/cm:"+search.ISO9075Encode("CRL") +
+	"/cm:"+search.ISO9075Encode("Gestione Atti") +
+	"/cm:"+search.ISO9075Encode("Anagrafica") +
+	"/cm:"+search.ISO9075Encode("Legislature") + "/*";
+
+	var luceneQuery = "PATH:\""+legislaturePath+"\" AND TYPE:\"crlatti:legislaturaAnagrafica\"";
+	var legislatureResults = search.luceneSearch(luceneQuery);
+
+	var legislatureArrayTemp = new Array();
+
+	for(var i=0; i<legislatureResults.length; i++){
+		if(legislatureResults[i].properties["crlatti:correnteLegislatura"] == true){
+			legislatureArrayTemp.push(legislatureResults[i].properties["cm:name"]);
+		}
+	}
+	
+	if(legislatureArrayTemp.length>1){
+		logger.error("Piu' di una legislatura attiva presente. Non e' stato possibile determinare la legislatura attiva.")
+	}else if(legislatureArrayTemp.length==0){
+		logger.error("Nessuna legislatura attiva presente.. Non e' stato possibile determinare la legislatura attiva.") 
+	}else{
+		legislaturaCorrente = legislatureArrayTemp[0];
+	}
+	
+	return legislaturaCorrente;
+	
+}

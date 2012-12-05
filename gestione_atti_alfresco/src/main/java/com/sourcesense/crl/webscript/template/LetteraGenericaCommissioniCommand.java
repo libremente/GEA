@@ -35,7 +35,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
 		String nomeTemplate = templateType.getLocalName();
     	
     	// Set properties from atto
-    	String numeroAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO));
+    	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO))).toString();
     	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
     	String numeroRepertorio = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_REPERTORIO));
     	String numeroDgr = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_DGR));

@@ -329,6 +329,8 @@ for(var i=0; i< attiResults.length; i++){
 
 	attoResultObj.tipo =  attoResult.typeShort.substring(12,15);
 	
+	
+	attoResultObj.name = attoResult.name;
 	attoResultObj.numeroAtto = attoResult.properties["crlatti:numeroAtto"];
 	attoResultObj.oggetto = attoResult.properties["crlatti:oggetto"];
 	attoResultObj.primoFirmatario = attoResult.properties["crlatti:primoFirmatario"];

@@ -2,8 +2,9 @@
 
 var atto = json.get("atto");
 var legislatura = atto.get("legislatura");
-var tipologia = atto.get("tipologia");
+var tipologia = filterParam(atto.get("tipologia"));
 var numeroAtto = atto.get("numeroAtto");
+var estensioneAtto = atto.get("estensioneAtto");
 var tipoAtto = atto.get("tipoAtto");
 var stato = atto.get("stato");
 var dataImportazione = new Date();
@@ -85,8 +86,9 @@ if(nodeType=="crlatti:attoEac"){
 		eacAttoFolderNode = eacAttoSpaceTemplateNode.copy(eacMeseFolderNode,true);
 	}
 	
-	eacAttoFolderNode.name = numeroAtto;
+	eacAttoFolderNode.name = numeroAtto+estensioneAtto;
 	eacAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
+	eacAttoFolderNode.properties["crlatti:estensioneAtto"] = estensioneAtto;
 	eacAttoFolderNode.properties["crlatti:noteEac"] = note;
 	eacAttoFolderNode.properties["crlatti:legislatura"] = "nd";
 
@@ -158,6 +160,17 @@ if(nodeType=="crlatti:attoEac"){
 		meseFolderNode = annoFolderNode.createFolder(mese);
 	}
 	
+	//creazione spazio tipo
+	var tipoPath = mesePath + "/cm:" + search.ISO9075Encode(tipoAtto);
+	var tipoLuceneQuery = "PATH:\""+tipoPath+"\"";
+	var tipoResults = search.luceneSearch(tipoLuceneQuery);
+	var tipoFolderNode = null;
+	if(tipoResults!=null && tipoResults.length>0){
+		tipoFolderNode = tipoResults[0];
+	} else {
+		tipoFolderNode = meseFolderNode.createFolder(tipoAtto);
+	}
+	
 	
 	if(checkIsNotNull(id)){
 		misAttoFolderNode = utils.getNodeFromString(id);
@@ -165,7 +178,7 @@ if(nodeType=="crlatti:attoEac"){
 		//creazione dell'atto di tipo MIS
 		var misAttoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:AttoMis\"";
 		var misAttoSpaceTemplateNode = search.luceneSearch(misAttoSpaceTemplateQuery)[0];
-		misAttoFolderNode = misAttoSpaceTemplateNode.copy(meseFolderNode,true);
+		misAttoFolderNode = misAttoSpaceTemplateNode.copy(tipoFolderNode,true);
 	}
 	
 	//metadati
@@ -225,9 +238,10 @@ if(nodeType=="crlatti:attoEac"){
 		misAttoFolderNode.properties["crlatti:dataTrasmissioneACommissioniMis"] = dataTrasmissioneACommissioniParsed;
 	}
 	
-	misAttoFolderNode.name = numeroAtto;
+	misAttoFolderNode.name = numeroAtto+estensioneAtto;
 	misAttoFolderNode.properties["crlatti:legislatura"] = legislatura;
 	misAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
+	misAttoFolderNode.properties["crlatti:estensioneAtto"] = estensioneAtto;
 	misAttoFolderNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
 	misAttoFolderNode.properties["crlatti:noteMis"] = note;
 	misAttoFolderNode.properties["crlatti:commissioneCompetenteMis"] = commissioneCompetente;
@@ -276,8 +290,19 @@ if(nodeType=="crlatti:attoEac"){
 		meseFolderNode = annoFolderNode.createFolder(mese);
 	}
 	
+	//creazione spazio tipo
+	var tipoPath = mesePath + "/cm:" + search.ISO9075Encode(tipoAtto);
+	var tipoLuceneQuery = "PATH:\""+tipoPath+"\"";
+	var tipoResults = search.luceneSearch(tipoLuceneQuery);
+	var tipoFolderNode = null;
+	if(tipoResults!=null && tipoResults.length>0){
+		tipoFolderNode = tipoResults[0];
+	} else {
+		tipoFolderNode = meseFolderNode.createFolder(tipoAtto);
+	}
+	
 	//verifica esistenza del folder dell'atto
-	var attoPath = mesePath + "/cm:" + search.ISO9075Encode(numeroAtto);
+	var attoPath = tipoPath + "/cm:" + search.ISO9075Encode(numeroAtto);
 	var attoLuceneQuery = "PATH:\""+attoPath+"\"";
 	var attoResults = search.luceneSearch(attoLuceneQuery);
 	if(attoResults!=null && attoResults.length>0){
@@ -289,14 +314,16 @@ if(nodeType=="crlatti:attoEac"){
 		//creazione del nodo
 		var attoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Atto\"";
 		var attoSpaceTemplateNode = search.luceneSearch(attoSpaceTemplateQuery)[0];
-		var attoFolderNode = attoSpaceTemplateNode.copy(meseFolderNode,true);
-		attoFolderNode.name = numeroAtto;
+		var attoFolderNode = attoSpaceTemplateNode.copy(tipoFolderNode,true);
+		attoFolderNode.name = numeroAtto+estensioneAtto;
 		attoFolderNode.specializeType(nodeType);
 		attoFolderNode.properties["crlatti:legislatura"] = legislatura;
 		attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
+		attoFolderNode.properties["crlatti:estensioneAtto"] = estensioneAtto;
 		attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 		attoFolderNode.properties["crlatti:anno"] = anno;
 		attoFolderNode.properties["crlatti:statoAtto"] = stato;
+		attoFolderNode.properties["crlatti:pubblico"] = true;
 		attoFolderNode.save();
 		
 		if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){

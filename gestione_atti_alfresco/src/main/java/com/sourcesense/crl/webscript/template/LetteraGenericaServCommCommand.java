@@ -40,7 +40,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 		String nomeTemplate = templateType.getLocalName();
     	
     	// Set properties from atto
-    	String numeroAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO));
+    	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO))).toString();
     	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
     	String iniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_TIPO_INIZIATIVA));
     	String descrizioneIniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_DESCRIZIONE_INIZIATIVA));

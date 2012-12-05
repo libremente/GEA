@@ -21,151 +21,11 @@ if(username=="protocollo" || username=="admin"){
 	if(checkIsNotNull(tipoAtto)) {
 	
 		if(tipoAtto=="EAC"){
-			//gestione importazione atti di tipo EAC
-			
-			var dataAtto = atto.get("dataAtto");
-			var note = atto.get("note");
-			
-			if(checkIsNotNull(numeroAtto) && checkIsNotNull(idProtocollo)){
-				
-				//verifica esistenza del folder dell'atto
-				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto);
-				var attoLuceneQuery = "PATH:\""+attoPath+"\"";
-				var attoResults = search.luceneSearch(attoLuceneQuery);
-					
-				var eacAttoFolderNode = null;
-				if(attoResults!=null && attoResults.length>0){
-					//atto presente
-					eacAttoFolderNode = attoResults[0];
-				} else {
-					//creazione del nodo del nuovo atto
-					var attoEacSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:AttoEac\"";
-					var attoEacSpaceTemplateNode = search.luceneSearch(attoEacSpaceTemplateQuery)[0];
-					eacAttoFolderNode = attoEacSpaceTemplateNode.copy(importProtocolloFolderNode,true);
-				}
-				
-				eacAttoFolderNode.name = numeroAtto;
-				eacAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
-				eacAttoFolderNode.properties["crlatti:noteEac"] = note;
-				eacAttoFolderNode.properties["crlatti:idProtocollo"] = idProtocollo;
-				
-				if(checkIsNotNull(dataAtto)){
-					var dataAttoSplitted = dataAtto.split("-");
-					var dataAttoParsed = new Date(dataAttoSplitted[0],dataAttoSplitted[1]-1,dataAttoSplitted[2]);
-					eacAttoFolderNode.properties["crlatti:dataAtto"] = dataAttoParsed;
-				}
-				
-				eacAttoFolderNode.save();
-				eacAttoFolderNode.addAspect("crlatti:importatoDaProtocollo");
-				model.atto = eacAttoFolderNode;
+			// atto EAC non importato da protocollo
 			}
 			
 		} else if(tipoAtto=="MIS"){
-			//gestione importazione atti di tipo MIS
-			if(checkIsNotNull(numeroAtto) 
-					&& checkIsNotNull(idProtocollo)){
-				
-				var dataIniziativaComitato = atto.get("dataIniziativaComitato");
-				var dataPropostaCommissione = atto.get("dataPropostaCommissione");
-				var commissioneCompetente = atto.get("commissioneCompetente");
-				var esitoVotoIntesa = atto.get("esitoVotoIntesa");
-				var dataIntesa = atto.get("dataIntesa");
-				var dataRispostaComitato = atto.get("dataRispostaComitato");
-				var dataApprovazioneProgetto = atto.get("dataApprovazioneProgetto");
-				var dataApprovazioneUdp = atto.get("dataApprovazioneUdp");
-				var numeroAttoUdp = atto.get("numeroAttoUdp");
-				var istitutoIncaricato = atto.get("istitutoIncaricato");
-				var scadenzaMv = atto.get("scadenzaMv");
-				var dataEsameRapportoFinale = atto.get("dataEsameRapportoFinale");
-				var dataTrasmissioneACommissioni = atto.get("dataTrasmissioneACommissioni");
-				var note = atto.get("note");
-				
-				//verifica esistenza del folder dell'atto
-				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto);
-				var attoLuceneQuery = "PATH:\""+attoPath+"\"";
-				var attoResults = search.luceneSearch(attoLuceneQuery);
-					
-				var misAttoFolderNode = null;
-				if(attoResults!=null && attoResults.length>0){
-					//atto presente
-					misAttoFolderNode = attoResults[0];
-				} else {
-					//creazione del nodo del nuovo atto
-					var attoMisSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:AttoMis\"";
-					var attoMisSpaceTemplateNode = search.luceneSearch(attoMisSpaceTemplateQuery)[0];
-					misAttoFolderNode = attoMisSpaceTemplateNode.copy(importProtocolloFolderNode,true);
-				}
-				
-				misAttoFolderNode.name = numeroAtto;
-				misAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
-				
-				//date
-				if(checkIsNotNull(dataIniziativaComitato)){
-					var dataIniziativaComitatoSplitted = dataIniziativaComitato.split("-");
-					var dataIniziativaComitatoParsed = new Date(dataIniziativaComitatoSplitted[0],dataIniziativaComitatoSplitted[1]-1,dataIniziativaComitatoSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataIniziativaComitatoMis"] = dataIniziativaComitatoParsed;
-				}
-				
-				if(checkIsNotNull(dataPropostaCommissione)){
-					var dataPropostaCommissioneSplitted = dataPropostaCommissione.split("-");
-					var dataPropostaCommissioneParsed = new Date(dataPropostaCommissioneSplitted[0],dataPropostaCommissioneSplitted[1]-1,dataPropostaCommissioneSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataPropostaCommissioneMis"] = dataPropostaCommissioneParsed;
-				}
-				
-				if(checkIsNotNull(dataIntesa)){
-					var dataIntesaSplitted = dataIntesa.split("-");
-					var dataIntesaSplittedParsed = new Date(dataIntesaSplitted[0],dataIntesaSplitted[1]-1,dataIntesaSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataIntesaMis"] = dataIntesaSplittedParsed;
-				}
-				
-				if(checkIsNotNull(dataRispostaComitato)){
-					var dataRispostaComitatoSplitted = dataRispostaComitato.split("-");
-					var dataRispostaComitatoParsed = new Date(dataRispostaComitatoSplitted[0],dataRispostaComitatoSplitted[1]-1,dataRispostaComitatoSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataRispostaComitatoMis"] = dataRispostaComitatoParsed;
-				}
-				
-				if(checkIsNotNull(dataApprovazioneProgetto)){
-					var dataApprovazioneProgettoSplitted = dataApprovazioneProgetto.split("-");
-					var dataApprovazioneProgettoParsed = new Date(dataApprovazioneProgettoSplitted[0],dataApprovazioneProgettoSplitted[1]-1,dataApprovazioneProgettoSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataApprovazioneProgettoMis"] = dataApprovazioneProgettoParsed;
-				}
-				
-				if(checkIsNotNull(dataApprovazioneUdp)){
-					var dataApprovazioneUdpSplitted = dataApprovazioneUdp.split("-");
-					var dataApprovazioneUdpParsed = new Date(dataApprovazioneUdpSplitted[0],dataApprovazioneUdpSplitted[1]-1,dataApprovazioneUdpSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataApprovazioneUdpMis"] = dataApprovazioneUdpParsed;
-				}
-				
-				if(checkIsNotNull(scadenzaMv)){
-					var scadenzaMvSplitted = scadenzaMv.split("-");
-					var scadenzaMvParsed = new Date(scadenzaMvSplitted[0],scadenzaMvSplitted[1]-1,scadenzaMvSplitted[2]);
-					misAttoFolderNode.properties["crlatti:scadenzaMvMis"] = scadenzaMvParsed;
-				}
-				
-				if(checkIsNotNull(dataEsameRapportoFinale)){
-					var dataEsameRapportoFinaleSplitted = dataEsameRapportoFinale.split("-");
-					var dataEsameRapportoFinaleParsed = new Date(dataEsameRapportoFinaleSplitted[0],dataEsameRapportoFinaleSplitted[1]-1,dataEsameRapportoFinaleSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataEsameRapportoFinaleMis"] = dataEsameRapportoFinaleParsed;
-				}
-				
-				if(checkIsNotNull(dataTrasmissioneACommissioni)){
-					var dataTrasmissioneACommissioniSplitted = dataTrasmissioneACommissioni.split("-");
-					var dataTrasmissioneACommissioniParsed = new Date(dataTrasmissioneACommissioniSplitted[0],dataTrasmissioneACommissioniSplitted[1]-1,dataTrasmissioneACommissioniSplitted[2]);
-					misAttoFolderNode.properties["crlatti:dataTrasmissioneACommissioniMis"] = dataTrasmissioneACommissioniParsed;
-				}
-				
-				misAttoFolderNode.name = numeroAtto;
-				misAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
-				misAttoFolderNode.properties["crlatti:noteMis"] = note;
-				misAttoFolderNode.properties["crlatti:commissioneCompetenteMis"] = commissioneCompetente;
-				misAttoFolderNode.properties["crlatti:esitoVotoIntesaMis"] = esitoVotoIntesa;
-				misAttoFolderNode.properties["crlatti:numeroAttoUdpMis"] = numeroAttoUdp;
-				misAttoFolderNode.properties["crlatti:istitutoIncaricatoMis"] = istitutoIncaricato;
-				misAttoFolderNode.properties["crlatti:idProtocollo"] = idProtocollo;
-				misAttoFolderNode.save();
-				misAttoFolderNode.addAspect("crlatti:importatoDaProtocollo");
-				
-				model.atto = misAttoFolderNode;
+			// atto MIS non importato da protocollo
 			}
 			
 		} else {
@@ -237,10 +97,11 @@ if(username=="protocollo" || username=="admin"){
 					attoFolderNode = attoSpaceTemplateNode.copy(importProtocolloFolderNode,true);
 				}
 					
-				attoFolderNode.name = numeroAtto;
+				attoFolderNode.name = numeroAtto+estensioneAtto;
 				attoFolderNode.specializeType(nodeType);
 				attoFolderNode.properties["crlatti:legislatura"] = legislatura;
 				attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
+				attoFolderNode.properties["crlatti:estensioneAtto"] = estensioneAtto;
 				attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 				attoFolderNode.properties["crlatti:anno"] = anno;
 				attoFolderNode.properties["crlatti:idProtocollo"] = idProtocollo;
@@ -251,6 +112,7 @@ if(username=="protocollo" || username=="admin"){
 				attoFolderNode.properties["crlatti:tipoIniziativa"] = tipoIniziativa;
 				attoFolderNode.properties["crlatti:descrizioneIniziativa"] = descrizioneIniziativa;
 				attoFolderNode.properties["crlatti:assegnazione"] = assegnazione;
+				attoFolderNode.properties["crlatti:pubblico"] = true;
 				
 				//dataRepertorio
 				if(checkIsNotNull(dataRepertorio)){

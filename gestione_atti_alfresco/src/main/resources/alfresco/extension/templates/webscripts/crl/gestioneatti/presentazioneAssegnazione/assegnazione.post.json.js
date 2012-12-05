@@ -36,31 +36,6 @@ if(checkIsNotNull(id)){
 		var stato = filterParam(commissione.get("stato"));
 		var dataAnnullo = filterParam(commissione.get("dataAnnullo"));
 		
-		//verifica l'esistenza della commissione all'interno del folder Commissioni
-		var existCommissioneXPathQuery = "*[@cm:name='"+descrizione+"']";
-		var commissioneEsistenteResults = commissioniFolderNode.childrenByXPath(existCommissioneXPathQuery);
-		var commissioneNode = null;
-		if(commissioneEsistenteResults!=null && commissioneEsistenteResults.length>0){
-			commissioneNode = commissioneEsistenteResults[0];
-		} else {
-			
-
-			//commissioneNode = commissioniFolderNode.createNode(descrizione,"crlatti:commissione");
-			
-			// copia la cartella commissione dagli space template e la rinomina
-			
-			var commissioneSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Commissione\"";
-			var commissioneSpaceTemplateNode = search.luceneSearch(commissioneSpaceTemplateQuery)[0];
-			
-			
-			// deep copy con secondo argomento = true
-			commissioneSpaceTemplateNode.copy(commissioniFolderNode, true);
-			
-			var commissioneXPathQuery = "*[@cm:name='Commissione']";
-			commissioneNode = commissioniFolderNode.childrenByXPath(commissioneXPathQuery)[0];
-			commissioneNode.properties["cm:name"] = descrizione;
-		}
-		
 		var dataPropostaParsed = null;
 		if(checkIsNotNull(dataProposta)){
 			var dataPropostaSplitted = dataProposta.split("-");
@@ -79,21 +54,22 @@ if(checkIsNotNull(id)){
 			dataAnnulloParsed = new Date(dataAnnulloSplitted[0],dataAnnulloSplitted[1]-1,dataAnnulloSplitted[2]);
 		}
 		
-		commissioneNode.properties["crlatti:dataAssegnazioneCommissione"] = dataAssegnazioneParsed;
-		commissioneNode.properties["crlatti:dataAnnulloCommissione"] = dataAnnulloParsed;
-		commissioneNode.properties["crlatti:dataPropostaCommissione"] = dataPropostaParsed;
-		commissioneNode.properties["crlatti:ruoloCommissione"] = ruolo;
-		commissioneNode.properties["crlatti:statoCommissione"] = stato;
-		commissioneNode.save();
+		
+		//verifica l'esistenza della commissione all'interno del folder Commissioni
+		var existCommissioneXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var commissioneEsistenteResults = commissioniFolderNode.childrenByXPath(existCommissioneXPathQuery);
+		var commissioneNode = null;
 		
 		
-		// Gestione delle commissioni annullate. 
-		// Le commissioni annullate vengono spostate nella cartella commissioniAnnullate 
-		// in fase di update viene effettuato un controllo su alcune proprietà per capire se le commmissioni sono state già annullate 
-		// (cioè sono già presenti nella cartella commissioniAnnullate) o devono essere annullate per la prima volta
-		
-		if(commissioneNode.properties["crlatti:statoCommissione"] == "Annullato"){
-					
+		// se lo stato della commissione è Annullato allora la commissione esiste già nel repository
+		if(stato == "Annullato"){
+			
+			
+			// Gestione delle commissioni annullate. 
+			// Le commissioni annullate vengono spostate nella cartella commissioniAnnullate 
+			// in fase di update viene effettuato un controllo su alcune proprietà per capire se le commmissioni sono state già annullate 
+			// (cioè sono già presenti nella cartella commissioniAnnullate) o devono essere annullate per la prima volta
+			
 			var check = false;
 			
 			for(var k=0; k<commissioniAnnullateResults.length; k++) {
@@ -102,30 +78,64 @@ if(checkIsNotNull(id)){
 				var nomeCommissioneAnnullata = commissioneAnnullata.properties["cm:name"];
 				
 				// controllo su nomecommissione, dataAssegnazione, dataAnnullo, ruolo
-				if(nomeCommissioneAnnullata.indexOf(commissioneNode.properties["cm:name"]) == 0 &&
-						commissioneNode.properties["crlatti:dataAssegnazioneCommissione"].getTime()  == commissioneAnnullata.properties["crlatti:dataAssegnazioneCommissione"].getTime() &&
-						commissioneNode.properties["crlatti:dataAnnulloCommissione"].getTime() == commissioneAnnullata.properties["crlatti:dataAnnulloCommissione"].getTime() &&
-						commissioneNode.properties["crlatti:ruoloCommissione"] == commissioneAnnullata.properties["crlatti:ruoloCommissione"]){
+				if(nomeCommissioneAnnullata.indexOf(descrizione) == 0 &&
+						dataAssegnazioneParsed.getTime()  == commissioneAnnullata.properties["crlatti:dataAssegnazioneCommissione"].getTime() &&
+						dataAnnulloParsed.getTime() == commissioneAnnullata.properties["crlatti:dataAnnulloCommissione"].getTime() &&
+						ruolo == commissioneAnnullata.properties["crlatti:ruoloCommissione"]){
 					
-					check = true;					
+					// prendo il nodo relativo alla commissione precedentemente annullata
+					commissioneNode = commissioneAnnullata;
+					check = true;
+					break;
 				}
-				
 			}
 			
+			
 			if(!check){
+				commissioneNode = commissioneEsistenteResults[0];
 				commissioneNode.move(commissioniAnnullateFolderNode);
 				var timestamp = new Date().getTime();
 				commissioneNode.name = descrizione+"#"+timestamp;
 				commissioneNode.save();
-			}else{
-				commissioneNode.remove();
 			}
 			
 			
+		
 		}else{
-			// se non è stata annullata inserisco i permessi sulla cartella dell'atto per la commissione
-			attoNode.setPermission("Coordinator", "GROUP_"+descrizione);
+			
+			
+			if(commissioneEsistenteResults!=null && commissioneEsistenteResults.length>0){
+				commissioneNode = commissioneEsistenteResults[0];
+			} else {
+				
+
+				//commissioneNode = commissioniFolderNode.createNode(descrizione,"crlatti:commissione");
+				
+				// copia la cartella commissione dagli space template e la rinomina
+				
+				var commissioneSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Commissione\"";
+				var commissioneSpaceTemplateNode = search.luceneSearch(commissioneSpaceTemplateQuery)[0];			
+				
+				// deep copy con secondo argomento = true
+				commissioneSpaceTemplateNode.copy(commissioniFolderNode, true);
+				
+				var commissioneXPathQuery = "*[@cm:name='Commissione']";
+				commissioneNode = commissioniFolderNode.childrenByXPath(commissioneXPathQuery)[0];
+				commissioneNode.properties["cm:name"] = descrizione;
+			}
+			
+			attoNode.setPermission("Coordinator", "GROUP_"+getLegislaturaCorrente()+"_"+descrizione);
+			
 		}
+		
+	
+		
+		commissioneNode.properties["crlatti:dataAssegnazioneCommissione"] = dataAssegnazioneParsed;
+		commissioneNode.properties["crlatti:dataAnnulloCommissione"] = dataAnnulloParsed;
+		commissioneNode.properties["crlatti:dataPropostaCommissione"] = dataPropostaParsed;
+		commissioneNode.properties["crlatti:ruoloCommissione"] = ruolo;
+		commissioneNode.properties["crlatti:statoCommissione"] = stato;
+		commissioneNode.save();
 		
 
 	}
@@ -142,7 +152,8 @@ if(checkIsNotNull(id)){
 		for (var q=0; q<numeroCommissioni; q++){
 			var commissione = commissioni.get(q).get("commissione");
 			var descrizione = filterParam(commissione.get("descrizione"));
-			if(""+descrizione+""==""+commissioneNelRepository.name+""){
+			var stato = filterParam(commissione.get("stato"));
+			if(""+descrizione+""==""+commissioneNelRepository.name+"" && ""+stato+""!="Annullato"){
 				trovato = true;
 				break
 			}

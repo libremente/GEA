@@ -22,6 +22,7 @@
 	function creaAttoCustom(){
 		var currentForm = document.forms[0];
 		var numeroAtto = currentForm.numeroAtto.value;
+		var estensioneAtto = currentForm.estensioneAtto.value;
 		var tipologia = currentForm.tipologia.value;
 		var tipoAtto = currentForm.tipoAtto.options[currentForm.tipoAtto.selectedIndex].value;
 		var legislatura = currentForm.legislatura.options[currentForm.legislatura.selectedIndex].value;
@@ -29,6 +30,7 @@
 		var attoCustom = {
 		"atto" : {
 			"numeroAtto" : ""+numeroAtto+"",
+			"estensioneAtto" : ""+estensioneAtto+"",
 			"tipoAtto" : ""+tipoAtto+"",
 			"tipologia" : ""+tipologia+"",
 			"legislatura" : ""+legislatura+"",
@@ -53,6 +55,12 @@
 			<td>Numero atto:</td>
 			<td>
 				<input type="text" name="numeroAtto">
+			</td>
+		</tr>
+		<tr>
+			<td>Estensione atto:</td>
+			<td>
+				<input type="text" name="estensioneAtto">
 			</td>
 		</tr>
 		<tr>

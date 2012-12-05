@@ -51,6 +51,26 @@
                     	<cm:authorityName>GROUP_CPCV</cm:authorityName>
                  	</view:properties>
               	</cm:authorityContainer>
+              	<cm:authorityContainer view:childName="cm:GROUP_CRLAdmin">
+                 	<view:aspects>
+                    	<sys:referenceable />
+                 	</view:aspects>
+                 	<view:properties>
+                    	<sys:node-uuid>GROUP_CRLAdmin</sys:node-uuid>
+                    	<cm:name>GROUP_CRLAdmin</cm:name>
+                    	<cm:authorityName>GROUP_CRLAdmin</cm:authorityName>
+                 	</view:properties>
+              	</cm:authorityContainer>
+              	<cm:authorityContainer view:childName="cm:GROUP_CRLGuest">
+                 	<view:aspects>
+                    	<sys:referenceable />
+                 	</view:aspects>
+                 	<view:properties>
+                    	<sys:node-uuid>GROUP_CRLGuest</sys:node-uuid>
+                    	<cm:name>GROUP_CRLGuest</cm:name>
+                    	<cm:authorityName>GROUP_CRLGuest</cm:authorityName>
+                 	</view:properties>
+              	</cm:authorityContainer>
            	</sys:children>
 		</view:associations>
 	 </view:reference>
@@ -79,6 +99,16 @@
                  	view:pathref="${system.authorities_container.childname}/cm:GROUP_CPCV"
                  	view:childName="cm:GROUP_CPCV" />
            	</cm:inZone>
+           	<cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_CRLAdmin"
+                 	view:childName="cm:GROUP_CRLAdmin" />
+           	</cm:inZone>
+           	 <cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_CRLGuest"
+                 	view:childName="cm:GROUP_CRLGuest" />
+           	</cm:inZone>
        	</view:associations>
 	</view:reference>
     
@@ -105,6 +135,16 @@
               	<view:reference
                  	view:pathref="${system.authorities_container.childname}/cm:GROUP_CPCV"
                  	view:childName="cm:GROUP_CPCV" />
+           	</cm:inZone>
+           	<cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_CRLAdmin"
+                 	view:childName="cm:GROUP_CRLAdmin" />
+           	</cm:inZone>
+           	<cm:inZone>
+              	<view:reference
+                 	view:pathref="${system.authorities_container.childname}/cm:GROUP_CRLGuest"
+                 	view:childName="cm:GROUP_CRLGuest" />
            	</cm:inZone>
         </view:associations>
     </view:reference>

@@ -5,7 +5,7 @@
    	{ 
    		"gruppoUtente" : 
     		{
-			"nome" : "${gruppo.properties['cm:authorityName']}"
+			"nome" : "${gruppo}"
    		}
    	}<#if gruppo_has_next>,</#if>
    </#list>

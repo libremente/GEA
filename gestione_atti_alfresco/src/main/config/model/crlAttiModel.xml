@@ -64,7 +64,7 @@
 				</property>
 				<property name="crlatti:numeroAtto">
 					<title>Numero</title>
-					<type>d:text</type>
+					<type>d:int</type>
 				</property>
 				<property name="crlatti:estensioneAtto">
 					<title>Estensione</title>

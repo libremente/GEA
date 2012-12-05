@@ -6,7 +6,7 @@
 	"nome" : "${atto.name}",
 	"tipoAtto" : "${tipoAtto}",
 	"pubblico" : "<#if atto.properties["crlatti:pubblico"]?exists>${atto.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
-	"numeroAtto" : "<#if atto.properties["crlatti:numeroAtto"]?exists>${atto.properties["crlatti:numeroAtto"]}<#else></#if>",
+	"numeroAtto" : "<#if atto.properties["crlatti:numeroAtto"]?exists>${atto.properties["crlatti:numeroAtto"]?string("0")}<#else></#if>",
 	"tipologia" : "<#if atto.properties["crlatti:tipologia"]?exists>${atto.properties["crlatti:tipologia"]}<#else></#if>",
 	"legislatura" : "<#if atto.properties["crlatti:legislatura"]?exists>${atto.properties["crlatti:legislatura"]}<#else></#if>",
 	"stato" : "<#if atto.properties["crlatti:statoAtto"]?exists>${atto.properties["crlatti:statoAtto"]}<#else></#if>",

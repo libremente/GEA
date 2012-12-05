@@ -7,7 +7,7 @@
 		   {
 		    "id" : "<#if atto.id?exists>${atto.id}<#else></#if>",
 			"tipo" : "<#if atto.tipo?exists>${atto.tipo}<#else></#if>",
-			"numeroAtto" : "<#if atto.numeroAtto?exists>${atto.numeroAtto}<#else></#if>",
+			"numeroAtto" : "<#if atto.name?exists>${atto.name}<#else></#if>",
 			"oggetto" : "<#if atto.oggetto?exists>${atto.oggetto}<#else></#if>",
 			"primoFirmatario" : "<#if atto.primoFirmatario?exists>${atto.primoFirmatario}<#else></#if>",
 			"dataPresentazione" : "<#if atto.dataPresentazione?exists>${atto.dataPresentazione?string("yyyy-MM-dd")}<#else></#if>",
