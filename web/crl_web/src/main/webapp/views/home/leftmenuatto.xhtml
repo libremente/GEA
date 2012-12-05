@@ -15,12 +15,12 @@
 <p:menu>
 	<p:submenu label="Fasi di Processo">
 	    <p:menuitem value="Riepilogo Atto" url="/atto" />
-		<p:menuitem value="Presentazione e Assegnazione" url="/presentazioneassegnazione"  />
+      <p:menuitem value="Presentazione e Assegnazione" url="/presentazioneassegnazione" disabled="#{navigationBean.presentazioneAssegnazioneDisabled()}"  />
 		<p:menuitem value="Esame Commissioni" url="/esamecommissioni" disabled="#{navigationBean.esameCommissioniDisabled()}"  />
 		<p:menuitem value="Esame Aula" url="/esameaula"  disabled="#{navigationBean.esameAulaDisabled()}" />
 		<p:menuitem value="Chiusura Iter" url="/chiusuraiter" disabled="#{navigationBean.chiusuraIterDisabled()}" />
-		<p:menuitem value="Consultazioni e Pareri" url="/consultazioneepareri" />
-		<p:menuitem value="Collegamenti" url="/collegamenti" />
+    <p:menuitem value="Consultazioni e Pareri" url="/consultazioneepareri" disabled="#{navigationBean.consultazioniEPareriDisabled()}"/>
+    <p:menuitem value="Collegamenti" url="/collegamenti"  disabled="#{navigationBean.collegamentiDisabled()}"/>
 		<p:menuitem value="Lettere e Notifiche" url="/lettereenotifiche" />
 		
 	</p:submenu>
