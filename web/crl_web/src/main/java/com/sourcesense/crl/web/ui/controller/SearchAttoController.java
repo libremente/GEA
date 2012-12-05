@@ -27,6 +27,7 @@ import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.ColonnaAtto;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.util.LazyAttoDataModel;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -105,12 +106,28 @@ public class SearchAttoController {
 	
 	
 	
-	
-	
+	private String numeroDGR;
+	private String numeroDcr;
+	private Date dataDGR;
+	private Date dataLR;
+	private Date dataAssegnazioneA;
+	private Date dataAssegnazioneDa;
+	private Date dataChiusuraDa;
+	private Date dataChiusuraA;
+	private String commissione1;
+	private String commissione2;
+	private String commissione3;
+	private String ruoloCommissione1;
+	private String ruoloCommissione2;
+	private String ruoloCommissione3;
 
 	private List<Atto> listAtti = new ArrayList<Atto>();
 	
 	private String numeroAtto;
+	
+	private String numeroAttoDa;
+	
+	private String numeroAttoA;
 
 	private Date dataIniziativaDa;
 
@@ -139,11 +156,7 @@ public class SearchAttoController {
 	private String esitoVotoCommissioneReferente;
 
 	private String esitoVotoAula;
-
-	private String commissioneReferente;
-
-	private String commissioneConsultiva;
-
+	
 	private boolean redigente;
 
 	private boolean deliberante;
@@ -182,6 +195,8 @@ public class SearchAttoController {
 
 	private boolean emendato;
 
+	private boolean emendatoAula;
+	
 	private boolean rinviato;
 
 	private boolean sospeso;
@@ -204,10 +219,8 @@ public class SearchAttoController {
 
 	private Map<String, String> esitiVotoAula = new HashMap<String, String>();
 
-	private Map<String, String> commissioniReferenti = new HashMap<String, String>();
-
-	private Map<String, String> commissioniConsultive = new HashMap<String, String>();
-
+	private Map<String, String> commissioni = new HashMap<String, String>();
+	
 	private Map<String, String> relatori = new HashMap<String, String>();
 
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
@@ -222,7 +235,7 @@ public class SearchAttoController {
 		//LAVORAZIONE
         if("inlavorazione".equals(listaLavoro)){
         	
-        	if(userBean.getUser().getSessionGroup().getNome().startsWith("Commissione")){
+        	if(userBean.getUser().getSessionGroup().isCommissione()){
         	
         		
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
@@ -233,7 +246,7 @@ public class SearchAttoController {
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
         	    
         	
-        	}else if("Aula".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
         		
         		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
@@ -242,7 +255,7 @@ public class SearchAttoController {
         	    
         		
         		
-        	}else if("ServizioCommissioni".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        	}else if(GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
         		
         		atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
@@ -255,18 +268,18 @@ public class SearchAttoController {
         //LAVORATI
         }else if("lavorati".equals(listaLavoro)){
         	
-        	if(userBean.getUser().getSessionGroup().getNome().startsWith("Commissione")){
+        	if(userBean.getUser().getSessionGroup().isCommissione()){
             	
         		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
         	
-        	}else if("Aula".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
         		
         		atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
         		
-        	}else if("ServizioCommissioni".equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        	}else if(GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
         		
         		atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
          	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
@@ -285,17 +298,12 @@ public class SearchAttoController {
 		
 		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
 		
-		setListAtti(attoServiceManager.searchAtti(atto));
-		
-		
 	}
 
 	@PostConstruct
 	protected void initLazyModel() {
 
-		setCommissioniReferenti(commissioneServiceManager
-				.findAll());
-		setCommissioniConsultive(commissioneServiceManager
+		setCommissioni(commissioneServiceManager
 				.findAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setFirmatari(personaleServiceManager.findAllFirmatario());
@@ -307,7 +315,8 @@ public class SearchAttoController {
 		setLegislature(legislaturaServiceManager.findAll());
 		
 		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
-		
+		atto.setCommissioneReferente("");
+		atto.setCommissioneConsultiva("");
 		setListAtti(attoServiceManager.searchAtti(atto));
 		
 	}
@@ -447,6 +456,26 @@ public class SearchAttoController {
 
 	public void setNumeroAtto(String numeroAtto) {
 		this.atto.setNumeroAtto(numeroAtto);
+	}
+
+	
+	
+	
+	
+	public String getNumeroAttoDa() {
+		return this.atto.getNumeroAttoDa();
+	}
+
+	public void setNumeroAttoDa(String numeroAttoDa) {
+		this.atto.setNumeroAttoDa(numeroAttoDa);
+	}
+
+	public String getNumeroAttoA() {
+		return this.atto.getNumeroAttoA();
+	}
+
+	public void setNumeroAttoA(String numeroAttoA) {
+		this.atto.setNumeroAttoA(numeroAttoA);
 	}
 
 	public Date getDataIniziativaDa() {
@@ -589,7 +618,7 @@ public class SearchAttoController {
 		this.atto.setEsitoVotoAula(esitoVotoAula);
 	}
 
-	public String getCommissioneReferente() {
+	/*public String getCommissioneReferente() {
 		return this.atto.getCommissioneReferente();
 	}
 
@@ -603,7 +632,7 @@ public class SearchAttoController {
 
 	public void setCommissioneConsultiva(String commissioneConsultiva) {
 		this.atto.setCommissioneConsultiva(commissioneConsultiva);
-	}
+	}*/
 
 	public boolean isRedigente() {
 		return this.atto.isRedigente();
@@ -725,6 +754,23 @@ public class SearchAttoController {
 		this.atto.setDataSedutaAulaA(dataSedutaAulaA);
 	}
 
+	public Date getDataChiusuraA() {
+		return this.atto.getDataChiusuraA();
+	}
+
+	public void setDataChiusuraA(Date dataSedutaAulaA) {
+		this.atto.setDataChiusuraA(dataSedutaAulaA);
+	}
+	
+	public Date getDataChiusuraDa() {
+		return this.atto.getDataChiusuraDa();
+	}
+
+	public void setDataChiusuraDa(Date dataSedutaAulaA) {
+		this.atto.setDataChiusuraDa(dataSedutaAulaA);
+	}
+	
+	
 	public String getRelatore() {
 		return this.atto.getRelatore();
 	}
@@ -755,6 +801,48 @@ public class SearchAttoController {
 
 	public void setEmendato(boolean emendato) {
 		this.atto.setEmendato(emendato);
+	}
+
+	public boolean isEmendatoAula() {
+		return this.atto.isEmendatoAula();
+	}
+
+	public void setEmendatoAula(boolean emendatoAula) {
+		this.atto.setEmendatoAula(emendatoAula);
+	}
+	
+	
+	public String getNumeroDcr() {
+		return this.atto.getNumeroDcr();
+	}
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.atto.setNumeroDcr(numeroDcr);
+	}
+	
+	
+	public String getNumeroDGR() {
+		return this.atto.getNumeroDGR();
+	}
+
+	public void setNumeroDGR(String numeroDGR) {
+		this.atto.setNumeroDGR(numeroDGR);
+	}
+
+	public Date getDataAssegnazioneA() {
+		return atto.getDataAssegnazioneA();
+	}
+
+	public void setDataAssegnazioneA(Date dataAssegnazioneA) {
+		this.atto.setDataAssegnazioneA(dataAssegnazioneA);
+	}
+
+	public Date getDataAssegnazioneDa() {
+		return atto.getDataAssegnazioneDa();
+	}
+
+	public void setDataAssegnazioneDa(Date dataAssegnazioneDa) {
+		this.atto.setDataAssegnazioneDa(dataAssegnazioneDa);
 	}
 
 	public boolean isRinviato() {
@@ -838,23 +926,15 @@ public class SearchAttoController {
 		this.esitiVotoAula = esitiVotoAula;
 	}
 
-	public Map<String, String> getCommissioniReferenti() {
-		return commissioniReferenti;
+	public Map<String, String> getCommissioni() {
+		return commissioni;
 	}
 
-	public void setCommissioniReferenti(Map<String, String> commissioniReferenti) {
-		this.commissioniReferenti = commissioniReferenti;
+	public void setCommissioni(Map<String, String> commissioniReferenti) {
+		this.commissioni = commissioniReferenti;
 	}
 
-	public Map<String, String> getCommissioniConsultive() {
-		return commissioniConsultive;
-	}
-
-	public void setCommissioniConsultive(
-			Map<String, String> commissioniConsultive) {
-		this.commissioniConsultive = commissioniConsultive;
-	}
-
+	
 	public Map<String, String> getRelatori() {
 		return relatori;
 	}
@@ -968,6 +1048,75 @@ public class SearchAttoController {
 		this.listaLavoro = listaLavoro;
 	}
 
+	public Date getDataDGR() {
+		return atto.getDataDGR();
+	}
+
+	public void setDataDGR(Date dataDGR) {
+		this.atto.setDataDGR(dataDGR);
+	}
+
+	public Date getDataLR() {
+		return atto.getDataLR();
+	}
+
+	public void setDataLR(Date dataLR) {
+		this.atto.setDataDGR(dataLR);
+	}
+	
+	public String getCommissione1() {
+		return atto.getCommissione1();
+	}
+
+	public void setCommissione1(String commissione1) {
+		this.atto.setCommissione1 (commissione1);
+	}
+
+	public String getCommissione2() {
+		return atto.getCommissione2();
+	}
+
+	public void setCommissione2(String commissione2) {
+		this.atto.setCommissione2 (commissione2);
+	}
+
+	public String getCommissione3() {
+		return atto.getCommissione3();
+	}
+
+	public void setCommissione3(String commissione3) {
+		this.atto.setCommissione3 (commissione3);
+	}
+
+	public String getRuoloCommissione1() {
+		return atto.getRuoloCommissione1();
+	}
+
+	public void setRuoloCommissione1(String ruoloCommissione1) {
+		this.atto.setRuoloCommissione1 (ruoloCommissione1);
+		
+	}
+
+	public String getRuoloCommissione2() {
+		return atto.getRuoloCommissione2();
+	}
+
+	public void setRuoloCommissione2(String ruoloCommissione2) {
+		this.atto.setRuoloCommissione2 (ruoloCommissione2);
+	}
+
+	public String getRuoloCommissione3() {
+		return atto.getRuoloCommissione3();
+	}
+
+	public void setRuoloCommissione3(String ruoloCommissione3) {
+		this.atto.setRuoloCommissione3 (ruoloCommissione3);
+	}
+
+	
+	
+	
+	
 	
 	
 }

@@ -45,16 +45,12 @@
 
 		<p:row>
 			<p:column>
-			<p:panel style="border: 0px; margin: 0px 0px 0px 0px;">
 				<h:outputLabel for="numeroatto" value="Numero Atto: *" />
-				</p:panel>
 			</p:column>
 			<p:column>
-			<p:panel style="border: 0px;">
 				<p:inputText id="numeroatto"
 					value="#{inserisciAttoController.numeroAtto}" required="true"
 					requiredMessage="Numero Atto obbligatorio" />
-			</p:panel>
 			</p:column>
 			<p:column>
 				<p:message for="numeroatto" display="icon" />
@@ -62,32 +58,40 @@
 
 		</p:row>
 
+        <p:row>
+			<p:column>
+				<h:outputLabel for="numeroatto" value="Estensione Atto: " />
+			</p:column>
+			<p:column>
+				<p:inputText id="estensioneatto"
+					value="#{inserisciAttoController.estensioneAtto}" />
+			</p:column>
+			<p:column>
+			
+			</p:column>
+
+		</p:row>
+
 		<p:row>
 			<p:column>
-			<p:panel style="border: 0px;">
 				<h:outputLabel for="tipoatto" value="Tipo atto: *" />
-			</p:panel>
 			</p:column>
 
 			<p:column>
-<p:panel style="border: 0px;">
 				<p:selectOneMenu id="tipoatto"
 					value="#{inserisciAttoController.tipoAtto}" required="true"
 					requiredMessage="Tipo Atto obbligatorio">
 					<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
 					<f:selectItems value="#{inserisciAttoController.tipiAtto}" />
-					<p:ajax update="tipologiaPanel1, tipologiaPanel2"
-						listener="#{inserisciAttoController.handleTipoAttoChange}" />
-
+					
 				</p:selectOneMenu>
-</p:panel>
 			</p:column>
 
 			
 		</p:row>
 
 
-		<p:row >
+<!-- 		<p:row >
 		
 		
 				<p:column>
@@ -97,7 +101,7 @@
 				</p:column>
 
 				<p:column>
-<p:panel id="tipologiaPanel2" visible="#{inserisciAttoController.isTipologiaVisible()}" style="border: 0px;">
+               <p:panel id="tipologiaPanel2" visible="#{inserisciAttoController.isTipologiaVisible()}" style="border: 0px;">
 
 					<p:selectOneMenu id="tipologia"
 						value="#{inserisciAttoController.tipologia}">
@@ -111,25 +115,21 @@
 				
 			
 			
-		</p:row>
+		</p:row> -->
 
 
 		<p:row>
 			<p:column>
-			<p:panel style="border: 0px;">
 				<h:outputLabel for="legislatura" value="Legislatura: *" />
-			</p:panel>
 			</p:column>
 
 			<p:column>
-			<p:panel style="border: 0px;">
 				<p:selectOneMenu id="legislatura"
 					value="#{inserisciAttoController.legislatura}" required="true"
 					requiredMessage="Legislatura obbligatoria">
 					<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
 					<f:selectItems value="#{inserisciAttoController.legislature}" />
 				</p:selectOneMenu>
-			</p:panel>
 			</p:column>
 
 			<p:column>

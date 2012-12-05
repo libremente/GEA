@@ -34,7 +34,24 @@ public class UserServiceManager implements ServiceManager {
 
 		User sessionUser = userService.completeAuthentication(urlBuilder.buildAlfrescoURL("alfresco_context_url","alf_gruppi_utente",null),user);
         
-		sessionUser.setSessionGroup(sessionUser.getGruppi().get(0));
+		//Se gruppo vuoto errore
+		if(sessionUser.getGruppi().get(0)==null){
+			
+			sessionUser.setSessionGroup(null);
+		}else{
+			
+			String nomeGruppo = sessionUser.getGruppi().get(0).getNome();
+			
+			//se commissione comincia con COMM_
+			if(nomeGruppo.startsWith("COMM_")){
+				
+				sessionUser.getGruppi().get(0).setCommissione(true);
+				sessionUser.getGruppi().get(0).setNome(nomeGruppo.substring(nomeGruppo.indexOf("_")+1));
+				
+			}
+			sessionUser.setSessionGroup(sessionUser.getGruppi().get(0));
+		}
+		
 		
 		if(urlBuilder.getAlfrescoSessionTicket()!=null){
 			return sessionUser;

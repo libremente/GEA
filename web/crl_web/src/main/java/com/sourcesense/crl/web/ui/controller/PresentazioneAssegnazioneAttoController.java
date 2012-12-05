@@ -651,7 +651,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 		for (Commissione element : commissioniList) {
 
-			if (element.getDescrizione().equals(commissioneToDelete)) {
+			if (element.getDescrizione().equals(commissioneToDelete) &&
+					element.getDataAnnullo()==null) {
 
 				commissioniList.remove(element);
 				break;

@@ -58,6 +58,9 @@ public class InserisciAttoController {
 	
 	private String anno;
 	
+	private String estensioneAtto;
+	
+	
 	private boolean tipologiaVisible;
 
 	private Map<String, String> tipiAtto = new HashMap<String, String>();
@@ -295,6 +298,20 @@ public class InserisciAttoController {
 
 	public void setTipologiaVisible(boolean tipologiaVisible) {
 		this.tipologiaVisible = tipologiaVisible;
+	}
+
+
+
+
+	public String getEstensioneAtto() {
+		return atto.getEstensioneAtto();
+	}
+
+
+
+
+	public void setEstensioneAtto(String estensioneAtto) {
+		this.atto.setEstensioneAtto(estensioneAtto);
 	}
 
 

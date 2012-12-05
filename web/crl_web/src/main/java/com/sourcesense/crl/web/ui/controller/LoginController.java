@@ -38,6 +38,20 @@ public class LoginController {
 
 		if (sessionUser != null) {
 			
+			if(sessionUser.getSessionGroup()==null){
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(
+						null,
+						new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Attenzione ! Utentenza non valida per la corrente legislatura ",
+								""));
+				
+				return null;
+				
+			}
+			
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = (UserBean) context
 					.getApplication()
@@ -50,6 +64,9 @@ public class LoginController {
 
 		} else {
             
+			
+			
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
 					null,

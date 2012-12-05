@@ -70,6 +70,8 @@ public class AttoService {
 			String responseMsg = response.getEntity(String.class);
 			attoRet = objectMapper.readValue(responseMsg, Atto.class);
 			atto.setId(attoRet.getId());
+			atto.setNumeroAtto(attoRet.getNumeroAtto());
+			
 			}
 
 		} catch (JsonMappingException e) {

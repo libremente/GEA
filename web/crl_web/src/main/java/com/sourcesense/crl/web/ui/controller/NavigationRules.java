@@ -2,6 +2,7 @@ package com.sourcesense.crl.web.ui.controller;
 
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.StatoAtto;
 
 import javax.annotation.PostConstruct;
@@ -61,15 +62,15 @@ public class NavigationRules {
 	public boolean isEACDisabled(){
 		
 		return !("ServizioCommissioni".equals(userBean.getUserGroupName())
-				|| "ADMINISTRATORS".equals(userBean.getUserGroupName())) ;
+				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName())) ;
 	}
 	
 	
 	
     public boolean isMISDisabled(){
 		
-    	return !("CPCV".equals(userBean.getUserGroupName())
-				|| "ADMINISTRATORS".equals(userBean.getUserGroupName())) ;
+    	return !(GruppoUtente.CPCV.equals(userBean.getUserGroupName())
+				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName())) ;
 		
 	}
 	
@@ -92,8 +93,8 @@ public class NavigationRules {
 	
 	public boolean presentazioneAssegnazioneDisabled() {
 
-		if ("ServizioCommissioni".equals(userBean.getUserGroupName())
-				|| "ADMINISTRATORS".equals(userBean.getUserGroupName())) {
+		if (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
+				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName())) {
 			return false;
 		} else {
 			return true;
@@ -104,7 +105,7 @@ public class NavigationRules {
 	public boolean esameCommissioniDisabled() {
 
 		if ((attoBean.containCommissione(userBean.getUser().getSessionGroup()
-				.getNome()) || "ADMINISTRATORS".equals(userBean
+				.getNome()) || GruppoUtente.ADMIN.equals(userBean
 				.getUserGroupName()))
 				&& attoBean.getLastPassaggio().getCommissioni().size() > 0) {
 			return false;
@@ -131,7 +132,7 @@ public class NavigationRules {
 
 	public boolean esameAulaDisabled() {
 
-		if (("Aula".equals(userBean.getUserGroupName()) || "ADMINISTRATORS"
+		if ((GruppoUtente.AULA.equals(userBean.getUserGroupName()) || GruppoUtente.ADMIN
 				.equals(userBean.getUserGroupName()))
 				&& !(attoBean.getTipoAtto().equals("PAR")
 						|| attoBean.getTipoAtto().equals("REL")
@@ -211,12 +212,11 @@ public class NavigationRules {
 
 	public boolean gestioneSeduteConsultazioniCommissione() {
 		// TODO
-		return userBean.getUser().getSessionGroup().getNome()
-				.startsWith("Commissione");
+		return userBean.getUser().getSessionGroup().isCommissione();
 	}
 
 	public boolean gestioneSeduteConsultazioniAula() {
-		return "Aula".equals(userBean.getUser().getSessionGroup().getNome());
+		return GruppoUtente.AULA.equals(userBean.getUser().getSessionGroup().getNome());
 	}
 
 	public boolean isCommissioneUpdateEnabled(){
@@ -276,7 +276,7 @@ public class NavigationRules {
 		
 		
 		
-		if (userBean.getUser().getSessionGroup().getNome().equals("Guest")){
+		if (userBean.getUser().getSessionGroup().getNome().equals(GruppoUtente.GUEST)){
 			return true;
 		}
 		

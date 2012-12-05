@@ -62,7 +62,7 @@ public class Atto implements Cloneable
 
 
 	
-	private boolean pubblico=true;
+	private boolean pubblico;
 
 	private String id;
 	private String nome;
@@ -74,6 +74,8 @@ public class Atto implements Cloneable
 	private Date   dataPubblicazione;
 	private Date   dataSedutaSc;
 	private Date dataIniziativa;
+	
+	private String estensioneAtto;
 	
 	private String stato;
 	private String numeroAtto;
@@ -927,6 +929,14 @@ public class Atto implements Cloneable
 
 	public void setPubblico(boolean pubblico) {
 		this.pubblico = pubblico;
+	}
+
+	public String getEstensioneAtto() {
+		return estensioneAtto;
+	}
+
+	public void setEstensioneAtto(String estensioneAtto) {
+		this.estensioneAtto = estensioneAtto;
 	}
 	
 	

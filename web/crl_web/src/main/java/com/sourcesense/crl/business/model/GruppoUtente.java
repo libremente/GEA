@@ -18,9 +18,26 @@ import org.springframework.beans.factory.annotation.Configurable;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class GruppoUtente {
-
+	
+	
+	public static final String SERVIZIO_COMMISSIONI = ""; 
+	public static final String AULA = "";
+	public static final String ADMIN = "";
+	public static final String GUEST = "";
+	public static final String CPCV = "";
+	
+	
+	/*Servizio commissioni
+	Commissioni (vari ruoli)
+	Aula
+	CPCV
+	Giunta per il regolamento
+	Guest (sola lettura)
+	Amministratore
+*/
     private List<Seduta> sedute = new ArrayList<Seduta>();
     private String nome;
+    private boolean commissione;
 
     @Override
     public String toString() {
@@ -42,4 +59,14 @@ public class GruppoUtente {
     public void setSedute(List<Seduta> sedute) {
         this.sedute = sedute;
     }
+
+	public boolean isCommissione() {
+		return commissione;
+	}
+
+	public void setCommissione(boolean commissione) {
+		this.commissione = commissione;
+	}
+    
+    
 }
