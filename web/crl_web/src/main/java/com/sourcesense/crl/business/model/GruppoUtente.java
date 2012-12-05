@@ -20,11 +20,11 @@ import org.springframework.beans.factory.annotation.Configurable;
 public class GruppoUtente {
 	
 	
-	public static final String SERVIZIO_COMMISSIONI = ""; 
-	public static final String AULA = "";
-	public static final String ADMIN = "";
-	public static final String GUEST = "";
-	public static final String CPCV = "";
+	public static final String SERVIZIO_COMMISSIONI = "ServizioCommissioni"; 
+	public static final String AULA = "Aula";
+	public static final String ADMIN = "CRLAdmin";
+	public static final String GUEST = "CRLGuest";
+	public static final String CPCV = "CPCV";
 	
 	
 	/*Servizio commissioni
