@@ -105,11 +105,11 @@
 
 					<p:row>
 						<p:column>
-							<h:outputText style="font-weight: bold;" value="Aiuti Stato: " />
+							<h:outputText style="font-weight: bold;" value="Aiuti Stato: " rendered="#{navigationBean.isSessionAttoPDL() or navigationBean.isSessionAttoPDA() or navigationBean.isSessionAttoPLP()}"/>
 						</p:column>
 						<p:column>
 							<p:selectBooleanCheckbox id="aiutistato"
-								value="#{presentazioneAssegnazioneAttoController.aiutiStato}">
+								value="#{presentazioneAssegnazioneAttoController.aiutiStato}" rendered="#{navigationBean.isSessionAttoPDL() or navigationBean.isSessionAttoPDA() or navigationBean.isSessionAttoPLP()}">
 								<p:ajax event="change"
 									listener="#{presentazioneAssegnazioneAttoController.updateAmmissibilitaHandler}" />
 							</p:selectBooleanCheckbox>
@@ -117,11 +117,11 @@
 
 						<p:column>
 							<h:outputText style="font-weight: bold;"
-								value="Norma finanziaria: " />
+								value="Norma finanziaria: " rendered="#{navigationBean.isSessionAttoPDL()}" />
 						</p:column>
-						<p:column>
+						<p:column >
 							<p:selectBooleanCheckbox id="normafinanziaria"
-								value="#{presentazioneAssegnazioneAttoController.normaFinanziaria}">
+								value="#{presentazioneAssegnazioneAttoController.normaFinanziaria}" rendered="#{navigationBean.isSessionAttoPDL()}">
 								<p:ajax event="change"
 									listener="#{presentazioneAssegnazioneAttoController.updateAmmissibilitaHandler}" />
 							</p:selectBooleanCheckbox>
@@ -131,11 +131,11 @@
 					<p:row>
 						<p:column>
 							<h:outputText style="font-weight: bold;"
-								value="Richiesta urgenza: " />
+								value="Richiesta urgenza: " rendered="#{navigationBean.isSessionAttoPDL()}" />
 						</p:column>
 						<p:column>
 							<p:selectBooleanCheckbox id="richiestaurgenza"
-								value="#{presentazioneAssegnazioneAttoController.richiestaUrgenza}">
+								value="#{presentazioneAssegnazioneAttoController.richiestaUrgenza}" rendered="#{navigationBean.isSessionAttoPDL()}">
 								<p:ajax event="change"
 									listener="#{presentazioneAssegnazioneAttoController.updateAmmissibilitaHandler}" />
 							</p:selectBooleanCheckbox>
@@ -145,25 +145,25 @@
 					<p:row>
 						<p:column>
 							<h:outputText style="font-weight: bold;"
-								value="Votazione urgenza: " />
+								value="Votazione urgenza: " rendered="#{navigationBean.isSessionAttoPDL()}" />
 						</p:column>
 						<p:column>
 							<p:selectBooleanCheckbox id="votazioneurgenza"
-								value="#{presentazioneAssegnazioneAttoController.votazioneUrgenza}">
+								value="#{presentazioneAssegnazioneAttoController.votazioneUrgenza}" rendered="#{navigationBean.isSessionAttoPDL()}">
 								<p:ajax event="change"
 									listener="#{presentazioneAssegnazioneAttoController.updateAmmissibilitaHandler}" />
 							</p:selectBooleanCheckbox>
 						</p:column>
 						<p:column>
 							<b> <h:outputLabel for="datavotazioneurgenza"
-									value="Data votazione urgenza: " />
+									value="Data votazione urgenza: " rendered="#{navigationBean.isSessionAttoPDL()}" />
 							</b>
 						</p:column>
 
 						<p:column>
 							<p:calendar size="10" locale="it" id="datavotazioneurgenza"
 								pattern="dd/MM/yyyy"
-								value="#{presentazioneAssegnazioneAttoController.dataVotazioneUrgenza}">
+								value="#{presentazioneAssegnazioneAttoController.dataVotazioneUrgenza}" rendered="#{navigationBean.isSessionAttoPDL()}">
 								<p:ajax event="dateSelect"
 									listener="#{presentazioneAssegnazioneAttoController.updateAmmissibilitaHandler()}" />
 							</p:calendar>

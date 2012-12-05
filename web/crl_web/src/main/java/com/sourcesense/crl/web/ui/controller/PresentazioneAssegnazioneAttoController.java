@@ -1046,7 +1046,7 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setNotePresentazioneAssegnazione(
 				atto.getNotePresentazioneAssegnazione());
 		attoBean.getAtto().setLinksPresentazioneAssegnazione(linksList);
-
+	
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(

@@ -40,8 +40,19 @@ public class AttoRecordServiceManager implements ServiceManager {
 		return attoRecordService.getFile(urlBuilder.buildAlfrescoDownloadURL(
 				"alfresco_dwnl_direct_context_url", fileToDownload, null));
 	}
+
 	
+	public Allegato updateAllegato(Atto atto, Allegato allegato) {
+
+		return attoRecordService.updateAllegato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_update_allegato", null),atto, allegato);
+	}
 	
+	public TestoAtto updateTestoAtto(Atto atto, TestoAtto testoAtto) {
+
+		return attoRecordService.updateTestoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_update_testo", null),atto, testoAtto);
+	}
 	
 	
 	

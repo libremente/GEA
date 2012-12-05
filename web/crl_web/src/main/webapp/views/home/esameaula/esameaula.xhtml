@@ -40,13 +40,13 @@
 			<ui:include src="./votazionetab.xhtml" />
 		</p:tab>
 
-		<p:tab id="tab2" title="Emendamenti">
+		<p:tab rendered="#{navigationBean.isSessionAttoPDL()}" id="tab2" title="Emendamenti">
 
 			<ui:include src="./emendamentitab.xhtml" />
 
 		</p:tab>
 
-		<p:tab id="tab3" title="Rinvio e Stralci">
+		<p:tab rendered="#{!navigationBean.isSessionAttoDOC()}" id="tab3" title="Rinvio e Stralci">
 
 
 			<ui:include src="./rinvioestralcitab.xhtml" />

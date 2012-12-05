@@ -92,7 +92,9 @@
 						<p:column colspan="4">
 							<p:dataTable id="listaEmendamenti"
 								value="#{esameAulaController.emendamentiList}" var="emendamento"
-								styleClass="generalInfoTab grey-text">
+								styleClass="generalInfoTab grey-text" editable="true">
+								
+								<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 								<p:column sortBy="#{emendamento.nome}">
 									<f:facet name="header">Emendamento</f:facet>
@@ -108,8 +110,18 @@
 
 								<p:column sortBy="#{emendamento.pubblico}">
 									<f:facet name="header">Pubblico</f:facet>
-									<h:outputText value="si" rendered="#{emendamento.pubblico}" />
-									<h:outputText value="no" rendered="#{!emendamento.pubblico}" />
+									<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{emendamento.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!emendamento.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{emendamento.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
 								</p:column>
 
 								<p:column>
@@ -136,6 +148,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
 						</p:column>
 
 

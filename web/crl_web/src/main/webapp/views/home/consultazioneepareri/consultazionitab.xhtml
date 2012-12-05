@@ -401,7 +401,9 @@
 
 								<p:dataTable id="listaDocumentazioneConsultazione" 
 									value="#{consultazioniPareriController.consultazioneSelected.allegati}"
-									var="allegato" styleClass="generalInfoTab grey-text">
+									var="allegato" styleClass="generalInfoTab grey-text" editable="true">
+									
+									<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 									<p:column sortBy="#{allegato.nome}">
 										<f:facet name="header">Documentazione allegata</f:facet>
@@ -415,8 +417,19 @@
 
 									<p:column sortBy="#{allegato.pubblico}">
 										<f:facet name="header">Pubblico</f:facet>
-										<h:outputText value="si" rendered="#{allegato.pubblico}" />
-										<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+										
+										<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{allegato.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!allegato.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{allegato.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
 									</p:column>
 
 									<p:column>
@@ -446,6 +459,10 @@
 										</p:commandButton>
 
 									</p:column>
+									
+									<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
+						</p:column>
 
 
 								</p:dataTable>

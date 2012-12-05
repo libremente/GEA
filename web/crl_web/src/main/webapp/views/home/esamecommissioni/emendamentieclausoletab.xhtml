@@ -133,7 +133,9 @@
 						<p:column colspan="4">
 							<p:dataTable id="listaEmendamenti"
 								value="#{esameCommissioniController.emendamentiList}"
-								var="emendamento" styleClass="generalInfoTab grey-text">
+								var="emendamento" styleClass="generalInfoTab grey-text" editable="true">
+								
+								<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 								<p:column sortBy="#{emendamento.nome}">
 									<f:facet name="header">Emendamento</f:facet>
@@ -148,8 +150,19 @@
 
 								<p:column sortBy="#{emendamento.pubblico}">
 									<f:facet name="header">Pubblico</f:facet>
-									<h:outputText value="si" rendered="#{emendamento.pubblico}" />
-									<h:outputText value="no" rendered="#{!emendamento.pubblico}" />
+									
+									<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{emendamento.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!emendamento.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{emendamento.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
 								</p:column>
 
 								<p:column>
@@ -175,6 +188,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
 						</p:column>
 
 
@@ -382,8 +399,9 @@
 	</p:row>
 	<p:row>
 		<p:column>
+		
 			<p:fieldset styleClass="fieldSetTab" legend="Clausola Valutativa:"
-				collapsed="false" toggleable="true" toggleSpeed="500">
+				collapsed="false" toggleable="true" toggleSpeed="500" rendered="#{navigationBean.isSessionAttoPDL()}">
 
 				<p:panelGrid styleClass="infoTable" id="clausolaValutativaGrid">
 					<p:row>
@@ -462,37 +480,48 @@
 					</p:row>
 					<p:row>
 						<p:column colspan="4">
-							<h:dataTable id="listaTestiClausola"
-								value="#{esameCommissioniController.testiClausolaList}"
-								var="testoClausola" styleClass="generalInfoTab grey-text">
+					
+							
+							<p:dataTable id="listaTestiClausola"
+						value="#{esameCommissioniController.testiClausolaList}"
+						var="testoClausola" styleClass="generalInfoTab grey-text" editable="true">
+						
+						<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+						
+						
+						<p:column sortBy="#{testoClausola.nome}">
+							<f:facet name="header">Testo Dell'Atto</f:facet>
+							<h:outputText value="#{testoClausola.nome}" />
+						</p:column>
+						
+						<p:column sortBy="#{testoClausola.mimetype}">
+							<f:facet name="header">Formato</f:facet>
+							<h:outputText
+								value="#{fn:substring(testoClausola.nome, fn:indexOf(testoClausola.nome,'.') ,fn:length(testoClausola.nome) )}" />
 
-								<h:column>
-									<f:facet name="header">Testo Dell'Atto</f:facet>
-							#{testoClausola.nome}
-						</h:column>
+							<h:outputText value="#{testoAtto.mimetype}" />
 
-								<h:column>
-									<f:facet name="header">Formato</f:facet>
-									#{testoClausola.mimetype}
 
-								</h:column>
-
-								<h:column>
-									<f:facet name="header">Pubblico</f:facet>
-									<h:outputText value="si" rendered="#{testoClausola.pubblico}" />
-									<h:outputText value="no" rendered="#{!testoClausola.pubblico}" />
-								</h:column>
-
-								<h:column>
-									<f:facet name="header">Elimina</f:facet>
-									<p:commandButton oncomplete="testoClausolaDialog.show()"
-										icon="delete-icon">
-
-										<f:setPropertyActionListener value="#{testoClausola.id}"
-											target="#{esameCommissioniController.testoClausolaToDelete}" />
-									</p:commandButton>
-								</h:column>
-								<h:column>
+						</p:column>
+						
+						<p:column sortBy="#{testoClausola.pubblico}">
+							<f:facet name="header">Pubblico</f:facet>
+							<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{testoClausola.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!testoClausola.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{testoClausola.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
+							
+						</p:column>
+						
+						<p:column>
 							<f:facet name="header">Download</f:facet>
 
 							<p:commandButton id="downloadLinkestoClausola" icon="detail-icon"
@@ -506,10 +535,25 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
-						</h:column>
+						</p:column>
 
+						<p:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="testoClausolaDialog.show()"
+								icon="delete-icon">
 
-							</h:dataTable>
+								<f:setPropertyActionListener value="#{testoClausola.id}"
+									target="#{esameCommissioniController.testoClausolaToDelete}" />
+							</p:commandButton>
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
+						</p:column>
+						
+						
+						</p:dataTable>
+							
 						</p:column>
 					</p:row>
 				</p:panelGrid>

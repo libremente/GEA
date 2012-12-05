@@ -47,7 +47,7 @@
 
 		</p:tab>
 
-		<p:tab rendered="#{!navigationBean.isCommissioneConsultiva()}" id="tab2" title="Abbinamenti">
+		<p:tab rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.abbinamentiEnabled()}" id="tab2" title="Abbinamenti">
 
 			<ui:include src="abbinamentitab.xhtml" />
 		</p:tab>
@@ -60,7 +60,7 @@
 		
 		
 
-		<p:tab rendered="#{navigationBean.isCommissioneReferente() and navigationBean.isSessionAttoPDL()}" id="tab4" title="Emendamenti e Clausole">
+		<p:tab rendered="#{navigationBean.isCommissioneReferente() and navigationBean.emendamentiClausoleEnabled()}" id="tab4" title="Emendamenti e Clausole">
 
 
 			<ui:include src="./emendamentieclausoletab.xhtml" />
@@ -68,7 +68,7 @@
 
 		</p:tab>
 		
-		<p:tab rendered="#{!navigationBean.isCommissioneConsultiva()}" id="tab5" title="Stralci">
+		<p:tab rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.isSessionAttoPDL()}" id="tab5" title="Stralci">
 
 
 			<ui:include src="./stralcitab.xhtml" />

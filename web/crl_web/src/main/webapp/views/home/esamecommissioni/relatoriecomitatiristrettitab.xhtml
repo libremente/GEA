@@ -486,7 +486,9 @@
 
 					<p:dataTable id="listaTestiComitatoRistretto"
 						value="#{esameCommissioniController.testiComitatoRistrettoList}"
-						var="testoComitato" styleClass="generalInfoTab grey-text">
+						var="testoComitato" styleClass="generalInfoTab grey-text" editable="true">
+						
+						<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 						<p:column sortBy="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}">
 							<f:facet name="header">Data Seduta</f:facet>
@@ -507,8 +509,20 @@
 
 						<p:column sortBy="#{testoComitato.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
-							<h:outputText value="si" rendered="#{testoComitato.pubblico}" />
-							<h:outputText value="no" rendered="#{!testoComitato.pubblico}" />
+							
+							<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{testoComitato.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!testoComitato.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{testoComitato.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
+						
 						</p:column>
 
 						<p:column>
@@ -534,6 +548,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
 						</p:column>
 
 

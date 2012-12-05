@@ -129,6 +129,37 @@ public class NavigationRules {
 		}
 
 	}
+	
+	public boolean emendamentiClausoleEnabled() {
+		
+		if (attoBean.getTipoAtto().equals("PDA")
+				|| attoBean.getTipoAtto().equals("PLP")
+				|| attoBean.getTipoAtto().equals("PRE")
+				|| attoBean.getTipoAtto().equals("REF")
+				|| attoBean.getTipoAtto().equals("REL")
+				|| attoBean.getTipoAtto().equals("PDL"))
+
+		{
+			return true;
+		} else {
+			return false;
+		}
+		
+		
+	}
+	
+	public boolean abbinamentiEnabled() {
+		
+		if (attoBean.getTipoAtto().equals("PDL") || attoBean.getTipoAtto().equals("PLP"))
+
+		{
+			return true;
+		} else {
+			return false;
+		}
+		
+		
+	}
 
 	public boolean esameAulaDisabled() {
 
@@ -140,6 +171,48 @@ public class NavigationRules {
 						|| attoBean.getTipoAtto().equals("EAC")
 						|| attoBean.getTipoAtto().equals("MIS"))
 						|| ! attoBean.getTipologia().equalsIgnoreCase("PRS")
+
+		) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
+	public boolean stralciAulaEnabled() {
+
+		if (attoBean.getTipoAtto().equals("PDA")
+						|| attoBean.getTipoAtto().equals("PLP")
+						|| attoBean.getTipoAtto().equals("PRE")
+						|| attoBean.getTipoAtto().equals("REF")
+
+		) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
+	public boolean pubblicazioneBurlEnabled() {
+
+		if (attoBean.getTipoAtto().equals("INP")
+						|| attoBean.getTipoAtto().equals("PAR")
+						|| attoBean.getTipoAtto().equals("REL")
+
+		) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
+	public boolean testoAttoVotatoEnabled() {
+
+		if (attoBean.getTipoAtto().equals("REL")
+						|| attoBean.getTipoAtto().equals("INP")
 
 		) {
 			return false;
@@ -206,8 +279,16 @@ public class NavigationRules {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDL");
 	}
 	
+	public boolean isSessionAttoDOC() {
+		return attoBean.getTipoAtto().equalsIgnoreCase("DOC");
+	}
+	
 	public boolean isSessionAttoPDA() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDA");
+	}
+	
+	public boolean isSessionAttoPLP() {
+		return attoBean.getTipoAtto().equalsIgnoreCase("PLP");
 	}
 
 	public boolean gestioneSeduteConsultazioniCommissione() {

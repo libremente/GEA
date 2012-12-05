@@ -314,7 +314,9 @@
 
 					<p:dataTable id="listaTestiAtto"
 						value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
-						var="testoAtto" styleClass="generalInfoTab grey-text">
+						var="testoAtto" styleClass="generalInfoTab grey-text" editable="true">
+						
+						<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 						<p:column sortBy="#{testoAtto.nome}">
 							<f:facet name="header">Testo Dell'Atto</f:facet>
@@ -324,8 +326,7 @@
 						<p:column sortBy="#{testoAtto.mimetype}">
 							<f:facet name="header">Formato</f:facet>
 
-							<h:outputText
-								value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.') ,fn:length(testoAtto.nome) )}" />
+							
 
 							<h:outputText value="#{testoAtto.mimetype}" />
 
@@ -334,8 +335,19 @@
 
 						<p:column sortBy="#{testoAtto.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
-							<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
-							<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+							<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{testoAtto.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!testoAtto.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{testoAtto.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
+							
 						</p:column>
 
 						<p:column>
@@ -362,6 +374,10 @@
 								<f:setPropertyActionListener value="#{testoAtto.id}"
 									target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
 							</p:commandButton>
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
 						</p:column>
 
 

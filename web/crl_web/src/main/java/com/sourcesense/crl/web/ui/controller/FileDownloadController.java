@@ -9,10 +9,14 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import com.sourcesense.crl.business.model.Allegato;
+import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
+import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 
 @ManagedBean(name = "fileDownloadController")
@@ -28,6 +32,27 @@ public class FileDownloadController {
 	private String fileMimetype;
 	private StreamedContent file;
 
+	
+	
+	public void fileUpdate(RowEditEvent event){
+	    System.out.println("EDIT LISTENER");
+	    System.out.println("Obj"+event.getObject().getClass().getCanonicalName());
+	   
+	    if (event.getObject() instanceof Allegato) {
+	    	
+	    	attoRecordServiceManager.updateAllegato(((AttoBean) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap()
+					.get("attoBean")).getAtto(),(Allegato) event.getObject());
+	    	
+	    } else if (event.getObject() instanceof TestoAtto) {
+	    	
+	    	attoRecordServiceManager.updateTestoAtto(((AttoBean) FacesContext.getCurrentInstance()
+					.getExternalContext().getSessionMap()
+					.get("attoBean")).getAtto(),(TestoAtto) event.getObject());
+	    	
+	    }
+	    
+	}
 	
 
 	public StreamedContent getFile() {

@@ -223,7 +223,7 @@
 		</p:panelGrid>
 	</p:fieldset>
 	
-	<p:fieldset legend="#{esameCommissioniController.testoParereEspressoAttoVotato()}" collapsed="false"
+	<p:fieldset rendered="#{navigationBean.testoAttoVotatoEnabled()}" legend="#{esameCommissioniController.testoParereEspressoAttoVotato()}" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="testoattovotatopanel">
 			<p:row>
@@ -241,7 +241,9 @@
 				<p:column colspan="4">
 					<p:dataTable id="listaTestiAtto"
 						value="#{esameCommissioniController.testiAttoVotatoList}"
-						var="testoAttoVotato" styleClass="generalInfoTab grey-text">
+						var="testoAttoVotato" styleClass="generalInfoTab grey-text" editable="true">
+						
+						<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 						<p:column sortBy="#{testoAttoVotato.nome}">
 							<f:facet name="header">Testo Dell'Atto</f:facet>
@@ -257,8 +259,18 @@
 
 						<p:column sortBy="#{testoAttoVotato.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
-							<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
-							<h:outputText value="no" rendered="#{!testoAttoVotato.pubblico}" />
+							<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{testoAttoVotato.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!testoAttoVotato.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{testoAttoVotato.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
 						</p:column>
 
 						<p:column>
@@ -284,6 +296,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
 						</p:column>
 
 
@@ -333,7 +349,7 @@
 	</p:fieldset>
 
 	<p:fieldset legend="Trasmissione" collapsed="false" toggleable="true"
-		toggleSpeed="500">
+		toggleSpeed="500" rendered="#{!navigationBean.isSessionAttoPAR()}">
 		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
 			<p:row>
 			<p:column>

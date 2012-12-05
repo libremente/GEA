@@ -121,7 +121,7 @@
 					<p:panelGrid styleClass="infoTable" id="allegatopanel">
 						<p:row>
 
-							<p:column >
+							<p:column>
 
 
 								<p:commandButton value="Carica Allegato"
@@ -130,8 +130,8 @@
 
 							</p:column>
 							<p:column colspan="2">
-							<p:commandButton value="Sposta Testi Atto"
-									action="#{presentazioneAssegnazioneAttoController.spostaAllegati}" 
+								<p:commandButton value="Sposta Testi Atto"
+									action="#{presentazioneAssegnazioneAttoController.spostaAllegati}"
 									update="listaAllegati,noteAllegatiMsg,:presAssForm:tabView:listaTestiAtto">
 								</p:commandButton>
 							</p:column>
@@ -141,7 +141,9 @@
 
 								<p:dataTable id="listaAllegati"
 									value="#{presentazioneAssegnazioneAttoController.allegatiList}"
-									var="allegato" styleClass="generalInfoTab grey-text">
+									var="allegato" styleClass="generalInfoTab grey-text" editable="true">
+									
+									<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 									<p:column sortBy="#{allegato.nome}">
 										<f:facet name="header">Descrizione Allegato</f:facet>
@@ -158,8 +160,17 @@
 
 									<p:column sortBy="#{allegato.pubblico}">
 										<f:facet name="header">Pubblico</f:facet>
-										<h:outputText value="si" rendered="#{allegato.pubblico}" />
-										<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si" rendered="#{allegato.pubblico}" />
+												<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{allegato.pubblico}" />
+											</f:facet>
+										</p:cellEditor>
+
 									</p:column>
 
 									<p:column>
@@ -168,7 +179,7 @@
 											icon="delete-icon">
 
 											<f:setPropertyActionListener value="#{allegato.id}"
-												target="#{presentazioneAssegnazioneAttoController.allegatoToDelete}" />
+													target="#{presentazioneAssegnazioneAttoController.allegatoToDelete}" />
 										</p:commandButton>
 									</p:column>
 									<p:column>
@@ -187,15 +198,20 @@
 										</p:commandButton>
 
 									</p:column>
-									
+
 									<p:column>
 										<f:facet name="header">Testo Atto</f:facet>
 
-										<p:selectBooleanCheckbox id="checkTesto" value="#{allegato.testo}" >    
-											
+										<p:selectBooleanCheckbox id="checkTesto"
+											value="#{allegato.testo}">
+
 										</p:selectBooleanCheckbox>
 
 									</p:column>
+									
+									<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
+						</p:column>
 
 
 								</p:dataTable>

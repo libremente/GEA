@@ -1870,7 +1870,8 @@ public class EsameCommissioniController {
 
 		attoBean.getLastPassaggio().setCommissioni(
 				Clonator.cloneList(getCommissioniList()));
-
+		
+		
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(

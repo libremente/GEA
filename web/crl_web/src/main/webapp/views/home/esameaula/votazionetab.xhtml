@@ -195,6 +195,8 @@
 							</p:column>
 						</p:column>
 					</p:row>
+					
+					
 
 					<p:row>
 						<p:column>
@@ -262,9 +264,12 @@
 				</p:row>
 				<p:row>
 					<p:column colspan="4">
+					
 						<p:dataTable id="listaTestiAtto"
 							value="#{esameAulaController.testiAttoVotatoList}"
-							var="testoAttoVotato" styleClass="generalInfoTab grey-text">
+							var="testoAttoVotato" styleClass="generalInfoTab grey-text" editable="true">
+							
+							<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
 
 							<p:column sortBy="#{testoAttoVotato.nome}">
 								<f:facet name="header">Testo Dell'Atto</f:facet>
@@ -280,8 +285,19 @@
 
 							<p:column sortBy="#{testoAttoVotato.pubblico}">
 								<f:facet name="header">Pubblico</f:facet>
-								<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
-								<h:outputText value="no" rendered="#{!testoAttoVotato.pubblico}" />
+								
+								<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{testoAttoVotato.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!testoAttoVotato.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{testoAttoVotato.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
 							</p:column>
 
 							<p:column>
@@ -308,6 +324,10 @@
 								<p:fileDownload value="#{fileDownloadController.file}" />
 							</p:commandButton>
 
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
 						</p:column>
 
 
