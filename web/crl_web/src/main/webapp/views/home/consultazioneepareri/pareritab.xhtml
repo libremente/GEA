@@ -179,6 +179,19 @@
 										listener="#{consultazioniPareriController.updatePareriHandler}" />
 								</p:calendar>
 							</p:column>
+							<p:column>
+							<b>
+							<h:outputLabel for="commissioneDestinataria" value="Commissione Destinataria: " />
+							</b>
+							</p:column>
+							<p:column>
+							 <p:selectOneMenu id="commissioneDestinataria" value="#{consultazioniPareriController.commissioneDestinataria}">
+												<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
+												
+												<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,15)}" itemValue="#{commissione}" 
+													value="#{consultazioniPareriController.commissioni}" />
+											</p:selectOneMenu>
+							</p:column>
 						</p:row>
 
 						<p:row>

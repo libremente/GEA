@@ -35,6 +35,7 @@ public class Parere implements Cloneable {
 	private String esito;
 	private Date dataRicezioneOrgano;
 	private String note;
+	private String commissioneDestinataria;
 	
 	private List<Allegato> allegati = new ArrayList<Allegato>();
 	
@@ -115,6 +116,14 @@ public class Parere implements Cloneable {
 	}
 	public void setAllegati(List<Allegato> allegati) {
 		this.allegati = allegati;
+	}
+
+	public String getCommissioneDestinataria() {
+		return commissioneDestinataria;
+	}
+
+	public void setCommissioneDestinataria(String commissioneDestinataria) {
+		this.commissioneDestinataria = commissioneDestinataria;
 	}
 	
 	

@@ -49,6 +49,7 @@ public class ConsultazioniPareriController {
 	private String noteParere;
 	private String allegatoParereToDelete;
 	private boolean currentFilePubblico;
+	private String commissioneDestinataria;
 
 	private List<Consultazione> consultazioniList = new ArrayList<Consultazione>();
 	private Consultazione consultazioneSelected;
@@ -252,6 +253,7 @@ public class ConsultazioniPareriController {
 		organismoSelected.getParere().setDataRicezioneParere(getDataRicezioneParere());
 		organismoSelected.getParere().setEsito(getEsito());
 		organismoSelected.getParere().setNote(getNoteParere());
+		organismoSelected.getParere().setCommissioneDestinataria(getCommissioneDestinataria());
 		// parereSelected.setAllegati
 
 		atto.setOrganismiStatutari(organismiList);
@@ -799,6 +801,14 @@ public class ConsultazioniPareriController {
 
 	public void setCommissioneSelected(String commissioneSelected) {
 		this.commissioneSelected = commissioneSelected;
+	}
+
+	public String getCommissioneDestinataria() {
+		return commissioneDestinataria;
+	}
+
+	public void setCommissioneDestinataria(String commissioneDestinataria) {
+		this.commissioneDestinataria = commissioneDestinataria;
 	}
 
 	
