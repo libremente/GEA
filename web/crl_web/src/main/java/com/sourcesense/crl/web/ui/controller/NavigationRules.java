@@ -198,6 +198,15 @@ public class NavigationRules {
 		}
 
 	}
+  
+  public boolean emendamentiEnabled(){
+    return isSessionAttoPDL() || isSessionAttoPDA_UDP();
+  }
+  
+  
+  public boolean rinvioEStralciEnabled(){
+    return (!isSessionAttoDOC() && !isSessionAttoPDA_UDP());
+  }
 	
 	public boolean stralciAulaEnabled() {
 
