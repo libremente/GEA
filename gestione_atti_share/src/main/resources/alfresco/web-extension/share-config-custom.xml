@@ -126,6 +126,7 @@
          <type name="cm:content">
          	<subtype name="crlatti:firmatario"/>
          	<subtype name="crlatti:firmatarioAnagrafica"/>
+         	<subtype name="crlatti:consigliereAnagrafica"/>
          	<subtype name="crlatti:legislaturaAnagrafica"/>
          	<subtype name="crlatti:abbinamento"/>
          	<subtype name="crlatti:allegato"/>
@@ -135,49 +136,65 @@
 			<subtype name="crlatti:membroComitatoRistretto" />
 			<subtype name="crlatti:testoComitatoRistretto"/>
 			<subtype name="crlatti:collegamento" />
+			<subtype name="crlatti:audizione" />
 			
-			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
-			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" />
-			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" />
-			<subtype name="crltemplate:letteraRettificaAssegnazioneServComm" />
-			<subtype name="crltemplate:letteraIntegrazioneCPOServComm" />
-			<subtype name="crltemplate:letteraRitiroServComm" />
-			<subtype name="crltemplate:letteraAggiuntaFirmaServComm" />
-			<subtype name="crltemplate:letteraRitiroFirmaServComm" />
-			<subtype name="crltemplate:letteraAssestamentoBilancioServComm" />
-			<subtype name="crltemplate:letteraBilancioProgrammaticoServComm" />
-			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" />
-			<subtype name="crltemplate:letteraIniziativaPopolareServComm" />
-			<subtype name="crltemplate:letteraRendicontoGeneraleServComm" />
-			<subtype name="crltemplate:letteraLeggeFinanziariaServComm" />
-			<subtype name="crltemplate:letteraDOCAssegnazionePSRServComm" />
-			<subtype name="crltemplate:letteraDOCAssegnazioneDSAServComm" />
-			<subtype name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm" />
-			<subtype name="crltemplate:letteraParereCommissioneServComm" />
-			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaServComm" />
-			<subtype name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm" />
-			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm" />
-			<subtype name="crltemplate:letteraParerePropostaDiRegolamentoServComm" />
-			<subtype name="crltemplate:letteraTrasmissionePDLCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissionePDACommissioni" />
-			<subtype name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissionePARCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissionePLPCommissioni" />
-			<subtype name="crltemplate:letteraPresaAttoRELCommissioni" />
-			<subtype name="crltemplate:letteraIscrizioneRISCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissioneREFCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissioneRISCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni" />
-			<subtype name="crltemplate:letteraTrasmissioneAulaTestoUnico" />
-			<subtype name="crltemplate:letteraTrasmissioneLCRAula" />
-			<subtype name="crltemplate:letteraTrasmissionePDAAula" />
-			<subtype name="crltemplate:letteraTrasmissionePDABilancioAula" />
-			<subtype name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula" />
-			<subtype name="crltemplate:letteraTrasmissioneREFAula" />
-			<subtype name="crltemplate:letteraTrasmissioneORGAula" />
-			<subtype name="crltemplate:letteraConvalidaORGAula" />
-			<subtype name="crltemplate:letteraTrasmissioneBURLAula" />
+			<subtype name="crltemplate:lettera"/>
+			<subtype name="crltemplate:letteraServComm"/>
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm"/>
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm"/>
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm"/>
+			<subtype name="crltemplate:letteraRettificaAssegnazioneServComm"/>
+			<subtype name="crltemplate:letteraIntegrazioneCPOServComm"/>
+			<subtype name="crltemplate:letteraRitiroServComm"/>
+			<subtype name="crltemplate:letteraAggiuntaFirmaServComm"/>		
+			<subtype name="crltemplate:letteraRitiroFirmaServComm"/>
+			<subtype name="crltemplate:letteraAssestamentoBilancioServComm"/>
+			<subtype name="crltemplate:letteraBilancioProgrammaticoServComm"/>
+			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm"/>
+			<subtype name="crltemplate:letteraIniziativaPopolareServComm"/>
+			<subtype name="crltemplate:letteraRendicontoGeneraleServComm"/>
+			<subtype name="crltemplate:letteraLeggeFinanziariaServComm"/>
+			<subtype name="crltemplate:letteraDOCAssegnazionePSRServComm"/>
+			<subtype name="crltemplate:letteraDOCAssegnazioneDSAServComm"/>
+			<subtype name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm"/>
+			<subtype name="crltemplate:letteraParereCommissioneServComm"/>
+			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaServComm"/>
+			<subtype name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm"/>
+			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm"/>
+			<subtype name="crltemplate:letteraParerePropostaDiRegolamentoServComm"/>
+			<subtype name="crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm"/>
+			<subtype name="crltemplate:letteraAssegnazioneInSedeReferentePDAServComm"/>
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm"/>
+			<subtype name="crltemplate:letteraRelazionePresentataDallaGiuntaServComm"/>
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaPREServComm"/>	
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaREFServComm"/>
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaINPServComm"/>
+			<subtype name="crltemplate:letteraCommissioni"/>	
+			<subtype name="crltemplate:letteraTrasmissionePDLCommissioni"/>		
+			<subtype name="crltemplate:letteraTrasmissionePDACommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissionePARCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissionePLPCommissioni"/>
+			<subtype name="crltemplate:letteraPresaAttoRELCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneREFCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneAulaTestoUnico"/>
+			<subtype name="crltemplate:letteraTrasmissioneDocRisDsaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneParereSuDOCCommissioni"/>
+			<subtype name="crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneRISCommissioni"/>
+			<subtype name="crltemplate:letteraAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneLCRAula"/>
+			<subtype name="crltemplate:letteraTrasmissionePDAAula"/>
+			<subtype name="crltemplate:letteraTrasmissionePDABilancioAula"/>
+			<subtype name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneREFAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneORGAula"/>
+			<subtype name="crltemplate:letteraConvalidaORGAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneBURLAula"/>
    			
          </type>
 
@@ -424,6 +441,7 @@
             <show id="crlatti:statoAtto"/>
             <show id="crlatti:dataPresaInCarico"/>
             <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:estensioneAtto"/>
             <show id="crlatti:dataIniziativa"/>
             <show id="crlatti:numeroProtocollo"/>
             <show id="crlatti:tipoIniziativa"/>
@@ -446,6 +464,7 @@
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
             <show id="crlatti:rinviato"/>
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
@@ -483,6 +502,7 @@
             <show id="crlatti:legislatura"/>
             <show id="crlatti:statoAtto"/>
             <show id="crlatti:numeroAtto"/>
+    		<show id="crlatti:estensioneAtto"/>
             <show id="crlatti:dataIniziativa"/>
             <show id="crlatti:numeroProtocollo"/>
             <show id="crlatti:tipoIniziativa"/>
@@ -507,6 +527,7 @@
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
             <show id="crlatti:rinviato"/>
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
@@ -520,6 +541,7 @@
 			<show id="crlatti:dataLr" />
 			<show id="crlatti:numeroPubblicazioneBURL" />
 			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -566,6 +588,7 @@
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
             <show id="crlatti:rinviato"/>
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
@@ -579,6 +602,7 @@
 			<show id="crlatti:dataLr" />
 			<show id="crlatti:numeroPubblicazioneBURL" />
 			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
           </field-visibility>
       </form>
    </forms>
@@ -625,6 +649,7 @@
             <show id="crlatti:soggettoConsultato"/>
             <show id="crlatti:anno"/>
             <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
             <show id="crlatti:rinviato"/>
             <show id="crlatti:sospeso"/>
             <show id="crlatti:abbinamento"/>
@@ -638,6 +663,7 @@
 			<show id="crlatti:dataLr" />
 			<show id="crlatti:numeroPubblicazioneBURL" />
 			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -743,7 +769,11 @@
    	<forms>
    		<form>
    			<field-visibility>
-   				<show id="crlatti:anni" />
+   				<show id="crlatti:dataInizioLegislatura" />
+				<show id="crlatti:dataFineLegislatura" />
+				<show id="crlatti:correnteLegislatura" />
+				<show id="crlatti:chiusuraLegislatura" />
+				<show id="crlatti:idAnagrafica" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -809,6 +839,10 @@
 				<show id="crlatti:dataIntesaClausolaValutEsame" />
 				<show id="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
 				<show id="crlatti:noteClausolaValutativaEsame" />
+				
+				<show id="crlatti:nomeAttoCommissione" />
+				<show id="crlatti:numeroAttoCommissione" />
+				<show id="crlatti:tipoAttoCommissione" />
 	 
    			</field-visibility>
    		</form>
@@ -892,6 +926,7 @@
    				<show id="crlatti:dataFirma" />
          		<show id="crlatti:dataRitiro" />
          		<show id="crlatti:isPrimoFirmatario" />
+         		<show id="crlatti:numeroOrdinamento" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -935,6 +970,7 @@
    				<show id="crlatti:discussaConsultazione"/>
    				<show id="crlatti:dataSedutaConsultazione" />
    				<show id="crlatti:noteConsultazione" />
+   				<show id="crlatti:commissioneConsultazione" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -954,13 +990,37 @@
    	</forms>
    </config>
    
-   <config evaluator="node-type" condition="crlatti:sedutaODG">
+   <config evaluator="node-type" condition="crlatti:attoTrattatoODG">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:previstoAttoTrattatoODG"/>
+   				<show id="crlatti:discussoAttoTrattatoODG" />
+   				<show id="crlatti:attoTrattatoSedutaODG" />
+   				<show id="crlatti:numeroOrdinamento" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crlatti:sedutaODG">
    	<forms>
    		<form>
    			<field-visibility>
    				<show id="crlatti:dataSedutaSedutaODG"/>
    				<show id="crlatti:numVerbaleSedutaODG" />
    				<show id="crlatti:noteSedutaODG" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crlatti:audizione">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:previstoAudizione"/>
+   				<show id="crlatti:discussoAudizione" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -977,7 +1037,8 @@
    	</forms>
    </config>
    
-    <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
+   
+   <config evaluator="node-type" condition="crltemplate:letteraServComm">
    	<forms>
    		<form>
    			<field-visibility>
@@ -987,6 +1048,55 @@
    	</forms>
    </config>
    
+   
+   <config evaluator="node-type" condition="crltemplate:letteraCommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   <config evaluator="node-type" condition="crltemplate:letteraAula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   				<show id="crltemplate:ufficio"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   				<show id="crltemplate:ufficio"/>
+   				<show id="crltemplate:direzione"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneBURLAula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   				<show id="crltemplate:ufficio"/>
+   				<show id="crltemplate:numeroTelFirmatario"/>
+   				<show id="crltemplate:emailFirmatario"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+  
    
    
    
