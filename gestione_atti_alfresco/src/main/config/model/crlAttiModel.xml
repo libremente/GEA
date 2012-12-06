@@ -177,7 +177,11 @@
 					<type>d:int</type>
 				</property>
 				<property name="crlatti:emendato">
-					<title>Emendato</title>
+					<title>Emendato Commissione</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:emendatoAulaAtto">
+					<title>Emendato Aula</title>
 					<type>d:boolean</type>
 				</property>
 				<property name="crlatti:rinviato">
