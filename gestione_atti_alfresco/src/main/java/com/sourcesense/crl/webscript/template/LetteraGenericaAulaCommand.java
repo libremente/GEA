@@ -65,8 +65,9 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand{
 		searchTerms.put("<emailFirmatario>", emailFirmatario);
     	
     	// Set properties from atto
-    	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO))).toString();
-    	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
+		String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO))) + 
+    			((String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_ESTENSIONE_ATTO)));
+       	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
     	
 		searchTerms.put("<numeroAtto>", numeroAtto);
 		searchTerms.put("<oggettoAtto>", oggettoAtto);

@@ -17,5 +17,32 @@
             <value>protocolloLogger</value>
         </property>
     </bean>
+    
+    <bean id="cmisClientScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.CMISClientScript">
+        <property name="extensionName">
+            <value>cmisClient</value>
+        </property>
+        <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
+         <property name="attiIspettiviAlfrescoURL">
+            <value>http://localhost:9080/alfresco</value>
+        </property>
+        <property name="attiIspettiviAlfrescoUser">
+            <value>admin</value>
+        </property>
+        <property name="attiIspettiviAlfrescoPsw">
+            <value>admin</value>
+        </property>
+         <property name="attiIspettiviAlfrescoPath">
+            <value>/Import/</value>
+        </property>
+    </bean>
+    
+    <bean id="crlUtilityScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.CRLUtilityScript">
+        <property name="extensionName">
+            <value>crlUtility</value>
+        </property>
+    </bean>
 	
 </beans>

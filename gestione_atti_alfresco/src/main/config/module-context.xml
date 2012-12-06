@@ -3,7 +3,7 @@
 
 <beans>
 	<import resource="classpath:alfresco/module/${artifactId}/context/service-context.xml" />
-	<import resource="classpath:alfresco/module/${artifactId}/context/job-script-context.xml" /> 
+	<!--  <import resource="classpath:alfresco/module/${artifactId}/context/job-script-context.xml" />   -->
 	<import resource="classpath:alfresco/module/${artifactId}/context/lettere-web-script-context.xml" />
 	<import resource="classpath:alfresco/module/${artifactId}/context/report-web-script-context.xml" />
 	<import resource="classpath:alfresco/module/${artifactId}/context/script-context.xml" />

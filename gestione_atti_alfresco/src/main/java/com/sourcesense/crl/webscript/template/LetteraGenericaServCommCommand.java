@@ -40,7 +40,8 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 		String nomeTemplate = templateType.getLocalName();
     	
     	// Set properties from atto
-    	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO))).toString();
+    	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO))) + 
+    			((String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_ESTENSIONE_ATTO)));
     	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
     	String iniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_TIPO_INIZIATIVA));
     	String descrizioneIniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_DESCRIZIONE_INIZIATIVA));
@@ -88,7 +89,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	
     	// Check for iniziativa popolare
 
-    	if(iniziativa!=null){
+    	if(iniziativa!=null && iniziativa!=""){
 	    	if(iniziativa.equals(INIZIATIVA_CONSILIARE)){
 	    		
 	    		descrizioneIniziativa = "di iniziativa dei Consiglieri regionali: ";

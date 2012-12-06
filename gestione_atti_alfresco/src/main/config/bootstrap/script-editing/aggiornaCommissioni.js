@@ -1,3 +1,5 @@
+<import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
+
 var commissioni = space.getChildAssocsByType("crlatti:commissione");
 
 
@@ -10,6 +12,8 @@ var commReferenteAtto = new Array();
 var commCoReferenteAtto = new Array();
 var commRedigenteAtto = new Array();
 var commDeliberanteAtto = new Array();
+
+var numeroEmendamentiApprovati = 0;
 
 for (var i=0; i<commissioni.length; i++) {
 	
@@ -32,7 +36,18 @@ for (var i=0; i<commissioni.length; i++) {
 	if(commissioni[i].properties["crlatti:ruoloCommissione"] == "Deliberante") {
 		commDeliberanteAtto.push(commissioni[i].name);
 	}
-		
+	
+	// Controllo emendamenti in commissione
+	
+	var numEmendApprovatiMaggiorEsame = filterNumericParam(commissioni[i].properties["crlatti:numEmendApprovatiMaggiorEsame"]);
+	var numEmendApprovatiMinorEsame = filterNumericParam(commissioni[i].properties["crlatti:numEmendApprovatiMinorEsame"]);
+	var numEmendApprovatiGiuntaEsame = filterNumericParam(commissioni[i].properties["crlatti:numEmendApprovatiGiuntaEsame"]);
+	var numEmendApprovatiMistoEsame = filterNumericParam(commissioni[i].properties["crlatti:numEmendApprovatiMistoEsame"]);
+	
+	var numeroEmendamentiApprovatiCommissione =  numEmendApprovatiMaggiorEsame + numEmendApprovatiMinorEsame + numEmendApprovatiGiuntaEsame + numEmendApprovatiMistoEsame;
+	
+	numeroEmendamentiApprovati += numeroEmendamentiApprovatiCommissione;
+	
 }
 
 var passaggioNode = space.parent;
@@ -56,6 +71,13 @@ if(commDeliberanteAtto.length>0) {
 	attoNode.properties["crlatti:deliberante"] = true;
 }else{
 	attoNode.properties["crlatti:deliberante"] = false;
+}
+
+
+if(numeroEmendamentiApprovati>0){
+	attoNode.properties["crlatti:emendato"] = true;
+}else{
+	attoNode.properties["crlatti:emendato"] = false;
 }
 
 attoNode.save();

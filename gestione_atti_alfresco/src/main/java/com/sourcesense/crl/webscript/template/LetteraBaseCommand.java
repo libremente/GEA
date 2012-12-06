@@ -40,6 +40,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected static final String PROP_MESE = "mese";
 	protected static final String PROP_LEGISLATURA = "legislatura";
 	protected static final String PROP_NUM_ATTO = "numeroAtto";
+	protected static final String PROP_ESTENSIONE_ATTO = "estensioneAtto";
 	protected static final String PROP_OGGETTO_ATTO = "oggetto";
 	protected static final String PROP_DESCRIZIONE_INIZIATIVA = "descrizioneIniziativa";
 	protected static final String PROP_TIPO_INIZIATIVA = "tipoIniziativa";
