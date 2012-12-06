@@ -205,13 +205,15 @@ public class SearchAttoController {
 
 	private Map<String, String> tipiAtto = new HashMap<String, String>();
 
-	private Map<String, String> legislature = new HashMap<String, String>();
+	//private Map<String, String> legislature = new HashMap<String, String>();
 
+	private List<String> legislature = new ArrayList<String>();
+	
 	private Map<String, String> stati = new HashMap<String, String>();
 
 	private Map<String, String> tipiIniziative = new HashMap<String, String>();
 
-	private Map<String, String> firmatari = new HashMap<String, String>();
+	
 
 	private Map<String, String> tipiChiusura = new HashMap<String, String>();
 
@@ -219,10 +221,20 @@ public class SearchAttoController {
 
 	private Map<String, String> esitiVotoAula = new HashMap<String, String>();
 
-	private Map<String, String> commissioni = new HashMap<String, String>();
+	//private Map<String, String> commissioni = new HashMap<String, String>();
 	
-	private Map<String, String> relatori = new HashMap<String, String>();
+	private List<String> commissioni = new ArrayList<String>();
 
+	/*private Map<String, String> firmatari = new HashMap<String, String>();
+	
+	private Map<String, String> relatori = new HashMap<String, String>();*/
+
+	
+    private List<String> firmatari = new ArrayList<String>();
+	
+	private List<String> relatori = new ArrayList<String>();
+
+	
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 
 	public void searchAtti() {          
@@ -304,15 +316,15 @@ public class SearchAttoController {
 	protected void initLazyModel() {
 
 		setCommissioni(commissioneServiceManager
-				.findAll());
+				.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
-		setFirmatari(personaleServiceManager.findAllFirmatario());
-		setRelatori(personaleServiceManager.findAllRelatore());
+		setFirmatari(personaleServiceManager.getAllFirmatario());
+		setRelatori(personaleServiceManager.getAllRelatore());
 		setStati(statoAttoServiceManager.findAll());
 		setTipiChiusura(tipoChiusuraServiceManager.findAll());
 		setTipiIniziative(tipoIniziativaServiceManager.findAll());
 		setTipiAtto(tipoAttoServiceManager.findAll());
-		setLegislature(legislaturaServiceManager.findAll());
+		setLegislature(legislaturaServiceManager.list());
 		
 		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
 		atto.setCommissioneReferente("");
@@ -869,16 +881,26 @@ public class SearchAttoController {
 		this.tipiAtto = tipiAtto;
 	}
 
-	public Map<String, String> getLegislature() {
+	/*public Map<String, String> getLegislature() {
 		return legislature;
 	}
 
 	public void setLegislature(Map<String, String> legislature) {
 		this.legislature = legislature;
-	}
+	}*/
 
+	
+	
 	public Map<String, String> getStati() {
 		return stati;
+	}
+
+	public List<String> getLegislature() {
+		return legislature;
+	}
+
+	public void setLegislature(List<String> legislature) {
+		this.legislature = legislature;
 	}
 
 	public void setStati(Map<String, String> stati) {
@@ -893,13 +915,13 @@ public class SearchAttoController {
 		this.tipiIniziative = tipiIniziative;
 	}
 
-	public Map<String, String> getFirmatari() {
+	/*public Map<String, String> getFirmatari() {
 		return firmatari;
 	}
 
 	public void setFirmatari(Map<String, String> firmatari) {
 		this.firmatari = firmatari;
-	}
+	}*/
 
 	public Map<String, String> getTipiChiusura() {
 		return tipiChiusura;
@@ -926,22 +948,31 @@ public class SearchAttoController {
 		this.esitiVotoAula = esitiVotoAula;
 	}
 
-	public Map<String, String> getCommissioni() {
+	/*public Map<String, String> getCommissioni() {
 		return commissioni;
 	}
 
 	public void setCommissioni(Map<String, String> commissioniReferenti) {
 		this.commissioni = commissioniReferenti;
-	}
+	}*/
 
 	
-	public Map<String, String> getRelatori() {
+	public List<String> getCommissioni() {
+		return commissioni;
+	}
+
+	public void setCommissioni(List<String> commissioni) {
+		this.commissioni = commissioni;
+	}
+	
+	
+	/*public Map<String, String> getRelatori() {
 		return relatori;
 	}
 
 	public void setRelatori(Map<String, String> relatori) {
 		this.relatori = relatori;
-	}
+	}*/
 
 	public Map<String, String> getOrganismiStatutari() {
 		return organismiStatutari;
@@ -1111,6 +1142,22 @@ public class SearchAttoController {
 
 	public void setRuoloCommissione3(String ruoloCommissione3) {
 		this.atto.setRuoloCommissione3 (ruoloCommissione3);
+	}
+
+	public List<String> getFirmatari() {
+		return firmatari;
+	}
+
+	public void setFirmatari(List<String> firmatari) {
+		this.firmatari = firmatari;
+	}
+
+	public List<String> getRelatori() {
+		return relatori;
+	}
+
+	public void setRelatori(List<String> relatori) {
+		this.relatori = relatori;
 	}
 
 	

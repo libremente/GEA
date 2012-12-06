@@ -72,9 +72,13 @@ public class EsameCommissioniController {
 	private Passaggio passaggio;
 	private String passaggioSelected;
 
-	private Map<String, String> relatori = new HashMap<String, String>();
-	private Map<String, String> membriComitato = new HashMap<String, String>();
+	/*private Map<String, String> relatori = new HashMap<String, String>();
+	private Map<String, String> membriComitato = new HashMap<String, String>();*/
 
+	private List<Relatore> relatori = new ArrayList<Relatore>();
+	private List<Relatore> membriComitato = new ArrayList<Relatore>();
+	//private Map<String, String> membriComitato = new HashMap<String, String>();
+	
 	private String relatoreToDelete;
 	private Date dataNominaRelatore;
 	private Date dataUscitaRelatore;
@@ -190,8 +194,8 @@ public class EsameCommissioniController {
 	protected void init() {
 
 		// Liste per combo
-		setRelatori(personaleServiceManager.findAllRelatore());
-	    setMembriComitato(personaleServiceManager.findAllMembriComitato());
+		setRelatori(personaleServiceManager.getAllRelatori());
+	    setMembriComitato(personaleServiceManager.getAllMembriComitato());
 
 		// Bean atto di sessione
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -2224,7 +2228,7 @@ public class EsameCommissioniController {
 		this.commissioneUser.setNoteGeneraliEsameCommissione(noteGenerali);
 	}
 
-	public Map<String, String> getRelatori() {
+	/*public Map<String, String> getRelatori() {
 		return relatori;
 	}
 
@@ -2238,10 +2242,28 @@ public class EsameCommissioniController {
 
 	public void setMembriComitato(Map<String, String> membriComitato) {
 		this.membriComitato = membriComitato;
-	}
+	}*/
+	
+	
 
 	public List<Relatore> getRelatoriList() {
 		return relatoriList;
+	}
+
+	public List<Relatore> getRelatori() {
+		return relatori;
+	}
+
+	public void setRelatori(List<Relatore> relatori) {
+		this.relatori = relatori;
+	}
+
+	public List<Relatore> getMembriComitato() {
+		return membriComitato;
+	}
+
+	public void setMembriComitato(List<Relatore> membriComitato) {
+		this.membriComitato = membriComitato;
 	}
 
 	public void setRelatoriList(List<Relatore> relatoriList) {

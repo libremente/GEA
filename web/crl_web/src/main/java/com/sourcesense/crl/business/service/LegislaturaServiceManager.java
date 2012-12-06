@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.service;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +72,21 @@ public class LegislaturaServiceManager implements ServiceManager {
 		return legislature;
 	}
 
+	
+	
+	public List<String> list() {
+		
+		List<String> legislature = new ArrayList<String>();
+		
+		List<Legislatura> listLegislature = legislaturaService.getAllLegislatura(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_legislature",null));
+		
+		for (Legislatura legislatura : listLegislature) {
+
+			legislature.add(legislatura.getNome());
+
+		}
+		return legislature;
+	}
 	
 	
     public Map<String, String> findAnniByLegislatura(String legislatura) {

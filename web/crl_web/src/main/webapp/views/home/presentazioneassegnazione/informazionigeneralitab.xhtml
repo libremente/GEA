@@ -410,11 +410,14 @@
 						</f:facet>
 						<p:row>
 							<p:column>
-								<p:selectOneMenu id="firmatario"
+								<p:selectOneMenu id="firmatario" 
 									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
 									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
-									<f:selectItems
+									<f:selectItems var="firmatario" itemLabel="#{firmatario.descrizione}" 
+									      itemValue="#{firmatario.descrizione}"
 										value="#{presentazioneAssegnazioneAttoController.firmatari}" />
+										<p:ajax update="gruppoconsiliare" 
+						                  listener="#{presentazioneAssegnazioneAttoController.handleFirmatarioChange}" />
 								</p:selectOneMenu>
 							</p:column>
 
@@ -422,8 +425,7 @@
 								<p:selectOneMenu id="gruppoconsiliare"
 									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}" >
 									<f:selectItem itemLabel="Scegli Gruppo" itemValue="" />
-									<f:selectItems value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}"  var="gruppo" 
-									itemLabel="#{gruppo.descrizione}" />
+									<f:selectItems value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}"  />
 								</p:selectOneMenu>
 							</p:column>
 

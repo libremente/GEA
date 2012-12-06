@@ -7,6 +7,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
@@ -228,11 +229,11 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 							<p:row style="width:100%;padding-bottom:7px;">
 
-								<p:column style="width:5%;vertical-align: middle;">
+								<p:column style="vertical-align: middle;">
 
 								   Numero <br /> DGR:
 								</p:column>
-								<p:column style="width:30%">
+								<p:column style="width: 30%" >
 									<p:inputText id="numerodgr"
 										value="#{searchAttoController.numeroDGR}"></p:inputText>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -240,26 +241,28 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 
 
-								<p:column style="vertical-align: middle;width:5%">
-								   Data DGR:
-								</p:column>
-								<p:column style="width:20%">
-									<p:calendar size="8" locale="it" id="datadgr"
-										value="#{searchAttoController.dataDGR}" />
-								</p:column>
+								
 
 
 
-								<p:column style="vertical-align: middle;width:5%">
+								<p:column style="vertical-align: middle;">
 									Data Assegnazione
 								</p:column>
-								<p:column style="width:20%">	
+								<p:column style="width: 30%" >	
 									da:&nbsp; 
 								   <p:calendar size="8" locale="it" id="dataassegnazione_da"
 										value="#{searchAttoController.dataAssegnazioneDa}" />
 									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
 										id="dataassegnazione_a"
 										value="#{searchAttoController.dataAssegnazioneA}" />
+								</p:column>
+								
+								<p:column style="vertical-align: middle;">
+								   Data DGR:
+								</p:column>
+								<p:column >
+									<p:calendar size="8" locale="it" id="datadgr"
+										value="#{searchAttoController.dataDGR}" />
 								</p:column>
 
 							</p:row>
@@ -268,21 +271,22 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 								<p:column style="vertical-align: middle;width:11%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column colspan="3">
+								<p:column >
 
-									<p:selectOneMenu id="commissione1"
+									<p:selectOneMenu style="width:150px" id="commissione1"
 										value="#{searchAttoController.commissione1}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
+										 value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
 								<p:column style="vertical-align: middle;width:10%">
 									Competenza : &nbsp;
 								</p:column>
-								<p:column>
+								<p:column colspan="3">
 
-									<p:selectOneMenu id="ruolo1"
+									<p:selectOneMenu id="ruolo1" style="width:150px"
 										value="#{searchAttoController.ruoloCommissione1}">
 										<f:selectItem itemLabel="Scegli Competenza" itemValue="" />
 										<f:selectItem itemLabel="Referente" itemValue="Referente" />
@@ -301,21 +305,22 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 								<p:column style="vertical-align: middle;width:10%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column colspan="3">
+								<p:column >
 
-									<p:selectOneMenu id="commissione2"
+									<p:selectOneMenu id="commissione2" style="width:150px"
 										value="#{searchAttoController.commissione2}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
+										 value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
 								<p:column style="vertical-align: middle;width:10%">
 									Competenza : &nbsp;
 								</p:column>
-								<p:column>
+								<p:column colspan="3">
 
-									<p:selectOneMenu id="ruolo2"
+									<p:selectOneMenu id="ruolo2" style="width:150px"
 										value="#{searchAttoController.ruoloCommissione1}">
 										<f:selectItem itemLabel="Scegli Competenza" itemValue="" />
 										<f:selectItem itemLabel="Referente" itemValue="Referente" />
@@ -333,21 +338,22 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 								<p:column style="vertical-align: middle;width:10%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column colspan="3">
+								<p:column >
 
-									<p:selectOneMenu id="commissione3"
+									<p:selectOneMenu id="commissione3" style="width:150px"
 										value="#{searchAttoController.commissione3}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
+										 value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
 								<p:column style="vertical-align: middle;width:10%">
 									Competenza : &nbsp;
 								</p:column>
-								<p:column>
+								<p:column colspan="3">
 
-									<p:selectOneMenu id="ruolo3"
+									<p:selectOneMenu id="ruolo3" style="width:150px"
 										value="#{searchAttoController.ruoloCommissione3}">
 										<f:selectItem itemLabel="Scegli Competenza" itemValue="" />
 										<f:selectItem itemLabel="Referente" itemValue="Referente" />
@@ -365,33 +371,9 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 							<p:row>
 
-								<p:column style="vertical-align: middle;width:10%">
-
-									Relatore:
-
-								</p:column>
-								<p:column>
-
-									<p:selectOneMenu id="relatoreSrc"
-										value="#{searchAttoController.relatore}">
-										<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
-										<f:selectItems value="#{searchAttoController.relatori}" />
-									</p:selectOneMenu>
-
-								</p:column>
+								
 
 
-								<p:column style="vertical-align: middle;width:10%">
-
-									Abbinamento:
-
-								</p:column>
-
-								<p:column>
-
-									<p:selectBooleanCheckbox id="abbonamento"
-										value="#{searchAttoController.abbinamento}" />
-								</p:column>
 
 								<p:column style="vertical-align: middle;width:10%">
 
@@ -400,10 +382,10 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="esitoVotoComRef"
+									<p:selectOneMenu id="esitoVotoComRef" style="width:150px"
 										value="#{searchAttoController.esitoVotoCommissioneReferente}">
 										<f:selectItem
-											itemLabel="Scegli Esito Voto Commissione Referente"
+											itemLabel="Scegli Esito"
 											itemValue="" />
 										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
 
@@ -425,6 +407,33 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 											itemValue="Presa d'atto" />
 									</p:selectOneMenu>
 
+								</p:column>
+								
+								<p:column style="vertical-align: middle;width:10%">
+
+									Relatore:
+
+								</p:column>
+								<p:column>
+
+									<p:selectOneMenu id="relatoreSrc" style="width:150px"
+										value="#{searchAttoController.relatore}">
+										<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+										<f:selectItems value="#{searchAttoController.relatori}" />
+									</p:selectOneMenu>
+
+								</p:column>
+								
+								<p:column style="vertical-align: middle;width:10%">
+
+									Abbinamento:
+
+								</p:column>
+
+								<p:column>
+
+									<p:selectBooleanCheckbox id="abbonamento"
+										value="#{searchAttoController.abbinamento}" />
 								</p:column>
 
 							</p:row>
@@ -460,9 +469,9 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 									</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="organismoStatutario"
+									<p:selectOneMenu id="organismoStatutario" style="width:150px"
 										value="#{searchAttoController.organismoStatutario}">
-										<f:selectItem itemLabel="Scegli Organismo Statutario"
+										<f:selectItem itemLabel="Scegli Organismo"
 											itemValue="" />
 										<f:selectItems
 											value="#{searchAttoController.organismiStatutari}" />
@@ -502,7 +511,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="esitoVotoAula"
+									<p:selectOneMenu id="esitoVotoAula" style="width:180px"
 										value="#{searchAttoController.esitoVotoAula}">
 										<f:selectItem itemLabel="Scegli Esito Voto Aula" itemValue="" />
 										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
@@ -514,16 +523,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 								</p:column>
 
-								<p:column style="vertical-align: middle;width:5%">
-									Numero DCR: 
-								 </p:column>
-
-								<p:column>
-
-									<p:inputText id="numeroDcr"
-										value="#{searchAttoController.numeroDcr}" />
-
-								</p:column>
+								
 
 								<p:column>
 
@@ -541,7 +541,16 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 										value="#{searchAttoController.dataSedutaAulaA}" />
 								</p:column>
 
+                                <p:column style="vertical-align: middle;width:5%">
+									Numero DCR: 
+								 </p:column>
 
+								<p:column>
+
+									<p:inputText id="numeroDcr"
+										value="#{searchAttoController.numeroDcr}" />
+
+								</p:column> 
 							</p:row>
 							<p:row>
 
@@ -846,7 +855,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 					<h:outputText style="font-weight: bold;" value="Tipo testo: " />
 				</p:column>
 				<p:column>
-					<p:selectOneMenu value="#{esameCommissioniController.tipoTesto}">
+					<p:selectOneMenu  style="width:150px" value="#{esameCommissioniController.tipoTesto}">
 						<f:selectItem itemLabel="Scegli testo" itemValue="" />
 						<f:selectItem itemLabel="Testo base" itemValue="Testo base" />
 						<f:selectItem itemLabel="Testo unificato"

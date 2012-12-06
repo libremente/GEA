@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,14 +47,24 @@ public class PersonaleServiceManager implements ServiceManager{
 	
 	
 	public List<GruppoConsiliare> getGruppiConsiliari(){
-		
-		
 
 		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_gruppi_consiliari",null));
-
-		
-		
 		return listGruppiConsiliari;
+		
+	}
+	
+	
+	public List<String> findGruppiConsiliari(){
+        List<String> gruppi = new ArrayList<String>();
+		
+		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_gruppi_consiliari",null));
+		for (GruppoConsiliare gruppoConsiliare : listGruppiConsiliari) {
+			
+			
+			gruppi.add(gruppoConsiliare.getDescrizione());
+		}
+		
+		return gruppi;
 		
 	}
 
@@ -69,7 +80,7 @@ public class PersonaleServiceManager implements ServiceManager{
 		}
 		return firmatari;
 	}
-
+     
 	
 	public Map<String, String> findAllRelatore() {
 		Map<String, String> relatori = new HashMap<String, String>();
@@ -84,6 +95,38 @@ public class PersonaleServiceManager implements ServiceManager{
 		return relatori;
 	}
 	
+	
+	
+	public List<String> getAllFirmatario() {
+		List<String> firmatari = new ArrayList<String>();
+
+		List<Firmatario> listFirmatari = personaleService.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari",null));
+
+		for (Firmatario firmatario : listFirmatari) {
+
+			firmatari.add(firmatario.getDescrizione());
+
+		}
+		return firmatari;
+	}
+
+	
+	public List<String>  getAllRelatore() {
+		List<String> relatori = new ArrayList<String>();
+
+		List<Relatore> listRelatori = personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+
+		for (Relatore relatore : listRelatori) {
+
+			relatori.add(relatore.getDescrizione());
+
+		}
+		return relatori;
+	}
+	
+	
+	
+	
 	public Map<String, String> findAllMembriComitato() {
 		Map<String, String> relatori = new HashMap<String, String>();
 
@@ -97,6 +140,18 @@ public class PersonaleServiceManager implements ServiceManager{
 		return relatori;
 	}
 	
+	
+	public List<Relatore> getAllRelatori() {
+		return personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+	}
+	
+	public List<Relatore> getAllMembriComitato() {
+		return personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+	}
+	
+	public List<Firmatario> getAllFirmatari() {
+		return personaleService.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari",null));
+	}
 	
 	public List<Firmatario> findFirmatariByAtto(Atto atto) {
 		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_atto", new String[] { atto.getId() }));

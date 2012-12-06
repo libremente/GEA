@@ -7,6 +7,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
 
 
@@ -288,19 +289,20 @@
 								<p:column style="vertical-align: middle;width:11%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column colspan="3">
+								<p:column >
 
 									<p:selectOneMenu id="commissione1"
 										value="#{searchAttoController.commissione1}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
+										 value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
 								<p:column style="vertical-align: middle;width:10%">
 									Competenza : &nbsp;
 								</p:column>
-								<p:column>
+								<p:column colspan="3">
 
 									<p:selectOneMenu id="ruolo1"
 										value="#{searchAttoController.ruoloCommissione1}">
@@ -321,19 +323,20 @@
 								<p:column style="vertical-align: middle;width:10%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column colspan="3">
+								<p:column >
 
 									<p:selectOneMenu id="commissione2"
 										value="#{searchAttoController.commissione2}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
+										 value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
 								<p:column style="vertical-align: middle;width:10%">
 									Competenza : &nbsp;
 								</p:column>
-								<p:column>
+								<p:column colspan="3">
 
 									<p:selectOneMenu id="ruolo2"
 										value="#{searchAttoController.ruoloCommissione1}">
@@ -353,19 +356,20 @@
 								<p:column style="vertical-align: middle;width:10%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column colspan="3">
+								<p:column >
 
 									<p:selectOneMenu id="commissione3"
 										value="#{searchAttoController.commissione3}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
+										 value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
 								<p:column style="vertical-align: middle;width:10%">
 									Competenza : &nbsp;
 								</p:column>
-								<p:column>
+								<p:column colspan="3">
 
 									<p:selectOneMenu id="ruolo3"
 										value="#{searchAttoController.ruoloCommissione3}">
@@ -423,7 +427,7 @@
 									<p:selectOneMenu id="esitoVotoComRef"
 										value="#{searchAttoController.esitoVotoCommissioneReferente}">
 										<f:selectItem
-											itemLabel="Scegli Esito Voto Commissione Referente"
+											itemLabel="Scegli Esito"
 											itemValue="" />
 										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
 
@@ -590,8 +594,6 @@
 										value="#{searchAttoController.rinviato}" />
 
 								</p:column>
-
-
 
 							</p:row>
 

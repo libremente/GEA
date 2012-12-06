@@ -14,6 +14,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.print.attribute.standard.Severity;
 
 import org.primefaces.event.FileUploadEvent;
@@ -80,13 +82,13 @@ public class PresentazioneAssegnazioneAttoController {
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
 	private String firmatariOrder;
 
-	private Map<String, String> firmatari = new HashMap<String, String>();
-
+	//private Map<String, String> firmatari = new HashMap<String, String>();
+	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
 	private String nomeFirmatario;
 
 	private List<TestoAtto> testiAttoList = new ArrayList<TestoAtto>();
 	private String gruppoConsiliare;
-	private List<GruppoConsiliare> gruppiConsiliari = new ArrayList<GruppoConsiliare>();
+	private List<String> gruppiConsiliari = new ArrayList<String>();
 
 	private Date dataFirma;
 	private Date dataRitiro;
@@ -112,7 +114,8 @@ public class PresentazioneAssegnazioneAttoController {
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
 
-	private Map<String, String> commissioni = new HashMap<String, String>();
+	private List<String> commissioni = new ArrayList<String>();
+	//private Map<String, String> commissioni = new HashMap<String, String>();
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 
 	private String nomeCommissione;
@@ -151,9 +154,11 @@ public class PresentazioneAssegnazioneAttoController {
 
 	@PostConstruct
 	protected void init() {
-		setFirmatari(personaleServiceManager.findAllFirmatario());
-		setGruppiConsiliari(personaleServiceManager.getGruppiConsiliari());
-		setCommissioni(commissioneServiceManager.findAll());
+		//setFirmatari(personaleServiceManager.findAllFirmatario());
+		setFirmatari(personaleServiceManager.getAllFirmatari());
+		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
+		//setCommissioni(commissioneServiceManager.findAll());
+		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setTipiIniziativa(tipoIniziativaServiceManager.findAll());
 
@@ -333,6 +338,23 @@ public class PresentazioneAssegnazioneAttoController {
 				break;
 			}
 		}
+	}
+	
+	
+	public void handleFirmatarioChange(){
+		
+		for (Firmatario firmatario : firmatari) {
+			
+			if(firmatario.getDescrizione().equals(nomeFirmatario)){
+				
+				setGruppoConsiliare(firmatario.getGruppoConsiliare());
+				break;
+			}
+			
+		}
+		
+		
+		
 	}
 
 	public void addFirmatario() {
@@ -1046,7 +1068,7 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setNotePresentazioneAssegnazione(
 				atto.getNotePresentazioneAssegnazione());
 		attoBean.getAtto().setLinksPresentazioneAssegnazione(linksList);
-	
+
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(
@@ -1108,11 +1130,21 @@ public class PresentazioneAssegnazioneAttoController {
 		this.personaleServiceManager = personaleServiceManager;
 	}
 
-	public Map<String, String> getFirmatari() {
+	
+	
+	/*public Map<String, String> getFirmatari() {
 		return firmatari;
 	}
 
 	public void setFirmatari(Map<String, String> firmatari) {
+		this.firmatari = firmatari;
+	}*/
+
+	public List<Firmatario> getFirmatari() {
+		return firmatari;
+	}
+
+	public void setFirmatari(List<Firmatario> firmatari) {
 		this.firmatari = firmatari;
 	}
 
@@ -1124,11 +1156,11 @@ public class PresentazioneAssegnazioneAttoController {
 		this.nomeFirmatario = nomeFirmatario;
 	}
 
-	public List<GruppoConsiliare> getGruppiConsiliari() {
+	public List<String> getGruppiConsiliari() {
 		return gruppiConsiliari;
 	}
 
-	public void setGruppiConsiliari(List<GruppoConsiliare> gruppiConsiliari) {
+	public void setGruppiConsiliari(List<String> gruppiConsiliari) {
 		this.gruppiConsiliari = gruppiConsiliari;
 	}
 
@@ -1188,16 +1220,26 @@ public class PresentazioneAssegnazioneAttoController {
 		this.attoServiceManager = attoServiceManager;
 	}
 
-	public Map<String, String> getCommissioni() {
+	/*public Map<String, String> getCommissioni() {
 		return commissioni;
 	}
 
 	public void setCommissioni(Map<String, String> commissioni) {
 		this.commissioni = commissioni;
-	}
+	}*/
 
+	
+	
 	public CommissioneServiceManager getCommissioneServiceManager() {
 		return commissioneServiceManager;
+	}
+
+	public List<String> getCommissioni() {
+		return commissioni;
+	}
+
+	public void setCommissioni(List<String> commissioni) {
+		this.commissioni = commissioni;
 	}
 
 	public void setCommissioneServiceManager(

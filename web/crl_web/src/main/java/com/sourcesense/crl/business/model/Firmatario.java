@@ -15,7 +15,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("firmatario")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Firmatario extends Personale implements Cloneable ,Comparable <Firmatario>{
+public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 
 	
 	private String nome;
@@ -24,6 +24,9 @@ public class Firmatario extends Personale implements Cloneable ,Comparable <Firm
 	private Date dataRitiro;
 	private boolean primoFirmatario;
 	private String numeroOrdinamento;
+	private String id;
+	private String descrizione;
+	
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -85,6 +88,22 @@ public class Firmatario extends Personale implements Cloneable ,Comparable <Firm
 
 	public void setNumeroOrdinamento(String numeroOrdinamento) {
 		this.numeroOrdinamento = numeroOrdinamento;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 	

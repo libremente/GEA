@@ -6,6 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
@@ -97,10 +98,10 @@
 									</f:facet>
 									<p:row>
 										<p:column>
-											<p:selectOneMenu id="commissione"
-												value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
+											<p:selectOneMenu id="commissione" value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
 												<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-												<f:selectItems
+												
+												<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione.descrizione,0,15)}" itemValue="#{commissione.descrizione}" 
 													value="#{presentazioneAssegnazioneAttoController.commissioni}" />
 											</p:selectOneMenu>
 										</p:column>

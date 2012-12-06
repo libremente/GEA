@@ -193,7 +193,8 @@
 								<p:selectOneMenu id="relatore"
 									value="#{esameCommissioniController.nomeRelatore}">
 									<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
-									<f:selectItems value="#{esameCommissioniController.relatori}" />
+									<f:selectItems var="relatore" itemLabel="#{relatore.descrizione }" itemValue="#{relatore.descrizione}"
+									value="#{esameCommissioniController.relatori}" />
 								</p:selectOneMenu>
 							</p:column>
 
@@ -343,8 +344,7 @@
 								<p:selectOneMenu id="componente"
 									value="#{esameCommissioniController.nomeComponente}">
 									<f:selectItem itemLabel="Scegli Componente" itemValue="" />
-									<f:selectItem itemLabel="Mario Rossi" itemValue="Mario Rossi" />
-									<f:selectItems
+									<f:selectItems var="relatore" itemLabel="#{relatore.descrizione }" itemValue="#{relatore.descrizione}"
 										value="#{esameCommissioniController.membriComitato}" />
 								</p:selectOneMenu>
 							</p:column>
