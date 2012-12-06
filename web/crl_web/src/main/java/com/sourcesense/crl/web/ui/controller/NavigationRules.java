@@ -131,7 +131,7 @@ public class NavigationRules {
   
   
   public boolean collegamentiDisabled(){
-    return isSessionAttoPDA_UDP();
+    return false;
   }
 
 	public boolean isFirmatariEnabled() {
@@ -252,7 +252,7 @@ public class NavigationRules {
 
 	public boolean chiusuraIterDisabled() {
 
-		return isSessionAttoPDA_UDP();
+		return false;
 
 	}
 
