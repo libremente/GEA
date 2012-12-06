@@ -180,16 +180,23 @@
 					<p:selectOneMenu id="tipoiniziativa"
 						value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
 						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
-						<f:selectItem itemLabel="Consiliare" itemValue="Consiliare" />
-						<f:selectItem itemLabel="Popolare" itemValue="Popolare" />
-						<f:selectItem itemLabel="d'Ufficio" itemValue="d'Ufficio" />
+						
+						<f:selectItem itemLabel="Consiliare" itemValue="01_ATTO DI INIZIATIVA CONSILIARE" />
+						
+						<f:selectItem itemLabel="Popolare" itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
+						
+						<f:selectItem itemLabel="d'Ufficio" itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
+						
 						<f:selectItem itemLabel="Consiglio delle Autonomie locali"
-							itemValue="Consiglio delle Autonomie locali" />
+							itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />
+						
 						<f:selectItem itemLabel="Presidente della Giunta"
-							itemValue="Presidente della Giunta" />
-						<f:selectItem itemLabel="Giunta" itemValue="Giunta" />
-						<f:selectItem itemLabel="Commissione europea"
-							itemValue="Commissione europea" />
+							itemValue="06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA" />
+						<f:selectItem itemLabel="Giunta" itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
+						<f:selectItem itemLabel="Iniziativa Commissioni" itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
+						
+						<!-- <f:selectItem itemLabel="Commissione europea"
+							itemValue="Commissione europea" /> -->
 
 
 					</p:selectOneMenu>

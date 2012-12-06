@@ -144,16 +144,24 @@
 									<p:selectOneMenu id="tipoiniziativa"
 										value="#{searchAttoController.tipoiniziativa}">
 										<f:selectItem itemLabel="Scegli Tipo Iniziativa" itemValue="" />
-										<f:selectItem itemLabel="Consiliare" itemValue="Consiliare" />
-										<f:selectItem itemLabel="Popolare" itemValue="Popolare" />
-										<f:selectItem itemLabel="d'Ufficio" itemValue="d'Ufficio" />
+										<f:selectItem itemLabel="Consiliare"
+											itemValue="01_ATTO DI INIZIATIVA CONSILIARE" />
+
+										<f:selectItem itemLabel="Popolare"
+											itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
+
+										<f:selectItem itemLabel="d'Ufficio"
+											itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
+
 										<f:selectItem itemLabel="Consiglio delle Autonomie locali"
-											itemValue="Consiglio delle Autonomie locali" />
+											itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />
+
 										<f:selectItem itemLabel="Presidente della Giunta"
-											itemValue="Presidente della Giunta" />
-										<f:selectItem itemLabel="Giunta" itemValue="Giunta" />
-										<f:selectItem itemLabel="Commissione europea"
-											itemValue="Commissione europea" />
+											itemValue="06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA" />
+										<f:selectItem itemLabel="Giunta"
+											itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
+										<f:selectItem itemLabel="Iniziativa Commissioni"
+											itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
 									</p:selectOneMenu>
 								</p:column>
 
@@ -243,8 +251,8 @@
 
 							<p:row>
 								<p:column style="text-align:left;height:50px" colspan="6">
-						              <b>Ricerca Atto Avanzata - filtri aggiuntivi</b>
-			                        </p:column>
+									<b>Ricerca Atto Avanzata - filtri aggiuntivi</b>
+								</p:column>
 							</p:row>
 
 							<p:row style="width:100%;padding-bottom:7px;">
@@ -289,13 +297,15 @@
 								<p:column style="vertical-align: middle;width:11%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column >
+								<p:column>
 
 									<p:selectOneMenu id="commissione1"
 										value="#{searchAttoController.commissione1}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
-										 value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione"
+											itemLabel="#{fn:substring(commissione,0,25)}.."
+											itemValue="#{commissione}"
+											value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
@@ -323,13 +333,15 @@
 								<p:column style="vertical-align: middle;width:10%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column >
+								<p:column>
 
 									<p:selectOneMenu id="commissione2"
 										value="#{searchAttoController.commissione2}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
-										 value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione"
+											itemLabel="#{fn:substring(commissione,0,25)}.."
+											itemValue="#{commissione}"
+											value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
@@ -356,13 +368,15 @@
 								<p:column style="vertical-align: middle;width:10%">
 									Commissione : &nbsp;
 								</p:column>
-								<p:column >
+								<p:column>
 
 									<p:selectOneMenu id="commissione3"
 										value="#{searchAttoController.commissione3}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,25)}.." itemValue="#{commissione}"
-										 value="#{searchAttoController.commissioni}" />
+										<f:selectItems var="commissione"
+											itemLabel="#{fn:substring(commissione,0,25)}.."
+											itemValue="#{commissione}"
+											value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
 								</p:column>
 
@@ -426,9 +440,7 @@
 
 									<p:selectOneMenu id="esitoVotoComRef"
 										value="#{searchAttoController.esitoVotoCommissioneReferente}">
-										<f:selectItem
-											itemLabel="Scegli Esito"
-											itemValue="" />
+										<f:selectItem itemLabel="Scegli Esito" itemValue="" />
 										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
 
 										<f:selectItem itemLabel="Non Deliberato"
@@ -510,12 +522,12 @@
 							</p:row>
 
 
-                            <p:row>
+							<p:row>
 								<p:column style="text-align:left;height: 50px;" colspan="6">
-						              
-			                     </p:column>
+
+								</p:column>
 							</p:row>
-                             
+
 
 							<p:row>
 
@@ -615,10 +627,10 @@
 
 							</p:row>
 
-                           <p:row>
+							<p:row>
 								<p:column style="text-align:left;height: 50px;" colspan="6">
-						              
-			                     </p:column>
+
+								</p:column>
 							</p:row>
 
 
@@ -660,16 +672,16 @@
 
 							</p:row>
 
-                            <p:row>
-							<p:column style="height: 50px;" colspan="6">
+							<p:row>
+								<p:column style="height: 50px;" colspan="6">
 
-								<p:commandButton type="button" outcome="productDetail"
-									value="Ricerca semplice"
-									onclick="hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')">
+									<p:commandButton type="button" outcome="productDetail"
+										value="Ricerca semplice"
+										onclick="hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')">
 
-								</p:commandButton>
-							</p:column>
-						</p:row>      
+									</p:commandButton>
+								</p:column>
+							</p:row>
 
 						</p:panelGrid>
 
