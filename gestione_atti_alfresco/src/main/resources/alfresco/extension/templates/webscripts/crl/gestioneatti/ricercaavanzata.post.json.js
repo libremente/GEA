@@ -22,8 +22,8 @@ function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissi
 				luceneQuery += "@crlatti\\:commDeliberante:\""+commissioneString+"\"";
 			}
 		}
-		
 	}
+	return luceneQuery;
 }
 
 var atto = json.get("atto");
@@ -43,6 +43,9 @@ var oggetto = atto.get("oggetto");
 var firmatario = atto.get("firmatario");
 var dataIniziativaDa = atto.get("dataIniziativaDa");
 var dataIniziativaA = atto.get("dataIniziativaA");
+
+var dataAssegnazioneDa = atto.get("dataAssegnazioneDa");
+var dataAssegnazioneA = atto.get("dataAssegnazioneA");
 
 var dataChiusuraDa = atto.get("dataChiusuraDa");
 var dataChiusuraA = atto.get("dataChiusuraA");
@@ -205,9 +208,10 @@ if(checkIsNotNull(firmatario)){
 }
 
 //commissioni e ruoli
-creaLuceneQueryCommissioniRuoli(luceneQuery,commissione1,ruoloCommissione1);
-creaLuceneQueryCommissioniRuoli(luceneQuery,commissione2,ruoloCommissione2);
-creaLuceneQueryCommissioniRuoli(luceneQuery,commissione3,ruoloCommissione3);
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione1,ruoloCommissione1);
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione2,ruoloCommissione2);
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione3,ruoloCommissione3);
+
 
 //dataIniziativa
 if(checkIsNotNull(dataIniziativaDa)
@@ -415,6 +419,8 @@ if(checkIsNotNull(statiUtente)){
 		luceneQuery += " ) ";
 	}
 }
+
+protocolloLogger.info(luceneQuery);
 
 var attiResults = search.luceneSearch(luceneQuery);
 
