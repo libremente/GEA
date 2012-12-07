@@ -101,7 +101,7 @@
 											<p:selectOneMenu id="commissione" value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
 												<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
 												
-												<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione.descrizione,0,15)}" itemValue="#{commissione.descrizione}" 
+												<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,15)}" itemValue="#{commissione}" 
 													value="#{presentazioneAssegnazioneAttoController.commissioni}" />
 											</p:selectOneMenu>
 										</p:column>
