@@ -79,7 +79,7 @@
 					<p:row>
 						<p:column>
 							<h:outputLabel for="DataSeduta" value="Data seduta: " />
-							<p:calendar size="10" locale="it_IT" id="DataSeduta" pattern="dd/MM/yyyy"
+							<p:calendar size="10" locale="it" id="DataSeduta" pattern="dd/MM/yyyy"
 								value="#{esameCommissioniController.currentDataSeduta}">
 								<p:ajax event="dateSelect" immediate="true">
 								</p:ajax>
@@ -200,13 +200,13 @@
 
 
 							<p:column>
-								<p:calendar size="10" locale="it_IT" id="dataNominaRelatore"
+								<p:calendar size="10" locale="it" id="dataNominaRelatore"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataNominaRelatore}" />
 							</p:column>
 
 							<p:column>
-								<p:calendar size="10" locale="it_IT" id="dataUscitaRelatore"
+								<p:calendar size="10" locale="it" id="dataUscitaRelatore"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataUscitaRelatore}" />
 							</p:column>
@@ -246,7 +246,7 @@
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 										value="#{relatore.dataNomina}" />
 								</f:facet>
 							</p:cellEditor>
@@ -262,7 +262,7 @@
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 										value="#{relatore.dataUscita}" />
 								</f:facet>
 							</p:cellEditor>
@@ -351,7 +351,7 @@
 
 
 							<p:column>
-								<p:calendar size="10" locale="it_IT" id="dataNominaComponente"
+								<p:calendar size="10" locale="it" id="dataNominaComponente"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataNominaComponente}" />
 							</p:column>
@@ -363,7 +363,7 @@
 							</p:column>
 
 							<p:column>
-								<p:calendar size="10" locale="it_IT" id="dataUscitaComponente"
+								<p:calendar size="10" locale="it" id="dataUscitaComponente"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataUscitaComponente}" />
 							</p:column>
@@ -404,7 +404,7 @@
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 										value="#{componente.dataNomina}" />
 								</f:facet>
 							</p:cellEditor>
@@ -436,7 +436,7 @@
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar size="10" locale="it_IT" pattern="dd/MM/yyyy"
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 										value="#{componente.dataUscita}" />
 								</f:facet>
 							</p:cellEditor>
