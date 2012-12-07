@@ -321,7 +321,7 @@ public class NavigationRules {
       && ("Udp".equalsIgnoreCase(attoBean.getTipoIniziativa()));
     
     // TODO: da rimuovere, condizione per test
-    res = "32".equals(attoBean.getNumeroAtto());
+    res = "4".equals(attoBean.getNumeroAtto());
     
     return res;
   }  

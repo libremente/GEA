@@ -71,7 +71,7 @@
 		</p:column>
 	</p:row>
 	
-	<p:row>
+  <p:row rendered="#{!navigationBean.sessionAttoPDA_UDP}">
 	
 		<p:column>
 		
@@ -366,6 +366,7 @@ $('#blockedVotazione').block({ message: 'Pagina bloccata!<br />Prendere in caric
 
 
 function unblockDiv() { 
+    $('#blockedDati').unblock(); 
     $('#blockedVotazione').unblock(); 
     $('#blockedEmendamenti').unblock(); 
     $('#blockedRinvioStralci').unblock(); 

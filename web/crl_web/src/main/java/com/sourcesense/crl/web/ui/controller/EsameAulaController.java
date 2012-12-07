@@ -32,6 +32,7 @@ import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
+import java.util.Iterator;
 
 @ManagedBean(name = "esameAulaController")
 @ViewScoped
@@ -45,6 +46,9 @@ public class EsameAulaController {
 	
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
+  
+	@ManagedProperty(value = "#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager;  
 	
 	
 	private Atto atto = new Atto();
@@ -61,6 +65,7 @@ public class EsameAulaController {
 	private String noteVotazione;
 	boolean currentFilePubblico;
 	private String testoAttoVotatoToDelete;
+  private String testoAttoToDelete;
 	
 	private List<TestoAtto> testiAttoVotatoList = new ArrayList<TestoAtto>();
 	private List<Allegato> emendamentiList = new ArrayList<Allegato>();
@@ -112,6 +117,7 @@ public class EsameAulaController {
 	private String statoCommitRinvioEsame = CRLMessage.COMMIT_DONE;
 	private String statoCommitStralci = CRLMessage.COMMIT_DONE;
 	private String statoCommitNoteAllegati = CRLMessage.COMMIT_DONE;
+  private String statoCommitDati = CRLMessage.COMMIT_DONE;
 
 	
 	private Aula aulaUser = new Aula();
@@ -172,6 +178,9 @@ public class EsameAulaController {
 	  }
 
 
+  public void updateDatiHandler(){
+    setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
+  }
 
 	public void updateVotazioneHandler() {
 		setStatoCommitVotazione(CRLMessage.COMMIT_UNDONE);
@@ -245,6 +254,16 @@ public class EsameAulaController {
 							"Attenzione ! Le modifiche a Note e Allegati non sono state salvate ",
 							""));
 		}
+    
+		if (statoCommitDati.equals(CRLMessage.COMMIT_UNDONE)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Le modifiche a Dati Atto non sono state salvate ",
+							""));
+		}    
 	}
 
 	// Votazione**************************************************************
@@ -344,6 +363,17 @@ public class EsameAulaController {
 			}
 		}
 	}
+  
+	public void removeTestoAtto() {
+    Iterator<TestoAtto> it = getAtto().getTestiAtto().iterator();
+    while (it.hasNext()){
+      TestoAtto element = it.next();
+      if (element.getId().equals(testoAttoToDelete)){
+        it.remove();
+        break;
+      }
+    }
+	}  
 
 	public String salvaVotazione() {
 		
@@ -1189,6 +1219,13 @@ public class EsameAulaController {
 		this.statoCommitNoteAllegati = statoCommitNoteAllegati;
 	}
 
+  public String getStatoCommitDati() {
+    return statoCommitDati;
+  }
+
+  public void setStatoCommitDati(String statoCommitDati) {
+    this.statoCommitDati = statoCommitDati;
+  }
 
 	public String getTestoAttoVotatoToDelete() {
 		return testoAttoVotatoToDelete;
@@ -1200,6 +1237,13 @@ public class EsameAulaController {
 		this.testoAttoVotatoToDelete = testoAttoVotatoToDelete;
 	}
 
+  public String getTestoAttoToDelete() {
+    return testoAttoToDelete;
+  }
+
+  public void setTestoAttoToDelete(String testAttoToDelete) {
+    this.testoAttoToDelete = testAttoToDelete;
+  }
 
 
 	public String getEmendamentoToDelete() {
@@ -1295,7 +1339,13 @@ public class EsameAulaController {
 		this.aulaServiceManager = aulaServiceManager;
 	}
 
+  public AttoServiceManager getAttoServiceManager() {
+    return attoServiceManager;
+  }
 
+  public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+    this.attoServiceManager = attoServiceManager;
+  }
 
 	public Aula getAulaUser() {
 		return aulaUser;
@@ -1349,7 +1399,32 @@ public class EsameAulaController {
 	}
 
 
-	
+	public void salvaInfoGenerali() {
+		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		attoBean.getAtto().setClassificazione(this.atto.getClassificazione());
+		attoBean.getAtto().setOggetto(this.atto.getOggetto());
+		attoBean.getAtto().setNumeroRepertorio(atto.getNumeroRepertorio());
+		attoBean.getAtto().setDataRepertorio(this.atto.getDataRepertorio());
+		attoBean.getAtto().setTipoIniziativa(atto.getTipoIniziativa());
+		attoBean.getAtto().setDataIniziativa(atto.getDataIniziativa());
+		attoBean.getAtto().setDescrizioneIniziativa(
+				atto.getDescrizioneIniziativa());
+		attoBean.getAtto().setNumeroDgr(atto.getNumeroDgr());
+		attoBean.getAtto().setDataDgr(atto.getDataDgr());
+		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
+
+
+		setStatoCommitDati(CRLMessage.COMMIT_DONE);
+
+		context.addMessage(null, new FacesMessage(
+				"Informazioni Generali salvate con successo", ""));
+
+	}	
 
 
 }
