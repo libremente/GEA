@@ -66,10 +66,10 @@
 			</p:row>
 
 			<p:row>
-				<p:column>
+				<p:column style="text-align:left;">
 					<h:outputLabel for="numeroatto" value="Numero Atto: *" />
 				</p:column>
-				<p:column>
+				<p:column style="text-align:left;">
 					<p:inputText id="numeroatto"
 						value="#{inserisciEACController.numeroAtto}" required="true"
 						requiredMessage="Numero Atto obbligatorio" />
@@ -83,11 +83,11 @@
 
 
 			<p:row>
-				<p:column>
+				<p:column style="text-align:left;">
 					<h:outputLabel for="dataatto" value="Data Atto: *" />
 				</p:column>
 
-				<p:column>
+				<p:column style="text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="dataatto"
 						pattern="dd/MM/yyyy" value="#{inserisciEACController.dataAtto}" />
 				</p:column>
@@ -101,11 +101,11 @@
 
 			<p:row>
 
-				<p:column>
+				<p:column style="text-align:left;">
 					<h:outputLabel for="noteatto" value="Note :" />
 				</p:column>
 
-				<p:column>
+				<p:column style="text-align:left;">
 					<p:inputTextarea rows="5" cols="101"
 						value="#{inserisciEACController.noteAtto}" id="noteatto">
 					</p:inputTextarea>
@@ -114,7 +114,7 @@
 			</p:row>
 			<p:row>
 
-			<p:column colspan="2">
+			<p:column colspan="2" style="text-align:left;">
 				<p:commandButton ajax="false" update="insertattopanel"
 					id="insertattobtn" value="Salva" disabled="#{navigationBean.isEACDisabled()}"
 					action="#{inserisciEACController.inserisciAtto}" />
@@ -132,7 +132,7 @@
 		<p:panelGrid styleClass="infoTable" id="allegatopanel">
 			<p:row>
 
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 
 
 					<p:commandButton value="Carica Allegato" disabled="#{navigationBean.isEACDisabled()}"

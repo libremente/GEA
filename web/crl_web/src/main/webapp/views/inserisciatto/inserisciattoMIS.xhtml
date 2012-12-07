@@ -64,15 +64,15 @@
 			</p:row>
 
 			<p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;" >
 					<h:outputLabel for="numerorepertorio" value="Numero repertorio: *" />
 				</p:column>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:inputText id="numerorepertorio"
 						value="#{inserisciMISController.numeroRepertorio}" required="true"
 						requiredMessage="Numero Repertorio obbligatorio" />
 				</p:column>
-				<p:column colspan="2">
+				<p:column colspan="2" >
 					<p:message for="numerorepertorio" display="icon" />
 				</p:column>
 
@@ -80,10 +80,10 @@
 
 
            <p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="legislatura" value="Legislatura: *" />
 				</p:column>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:selectOneMenu id="legislatura"
 					value="#{inserisciMISController.legislatura}" required="true"
 					requiredMessage="Legislatura obbligatoria">
@@ -99,33 +99,33 @@
 
 
 			<p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="oggetto" value="Oggetto: " />
 				</p:column>
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 					<p:inputText id="oggetto" value="#{inserisciMISController.oggetto}" />
 				</p:column>
 			</p:row>
 
 
 			<p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="datainiziativacomitato"
 						value="Data iniziativa comitato: " />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="datainiziativacomitato"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataIniziativaComitato}" />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="datapropostacommissione"
 						value="Data proposta commissione: " />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="datacropostacommissione"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataPropostaCommissione}" />
@@ -134,11 +134,11 @@
 			</p:row>
 
 			<p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="commissionecomp"
 						value="Commissione competente: " />
 				</p:column>
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 					<p:selectOneMenu id="commissionecomp"
 						value="#{inserisciMISController.commissioneCompetente}">
 						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
@@ -152,11 +152,11 @@
 
 
 			<p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="esitovotoint" value="Esito voto intesa: " />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:selectOneMenu id="esitovotoint"
 						value="#{inserisciMISController.esitoVotoIntesa}">
 						<f:selectItem itemLabel="Scegli esito" itemValue="" />
@@ -165,11 +165,11 @@
 					</p:selectOneMenu>
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataintesa" value="Data intesa: " />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="dataintesa"
 						pattern="dd/MM/yyyy" value="#{inserisciMISController.dataIntesa}" />
 				</p:column>
@@ -179,12 +179,12 @@
 
 			<p:row>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="datarispostaromitato"
 						value="Data risposta Comitato :" />
 				</p:column>
 
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="datarispostaromitato"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataRispostaComitato}" />
@@ -192,12 +192,12 @@
 			</p:row>
 
 			<p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataapprovazioneprogetto"
 						value="Data Approvazione Progetto :" />
 				</p:column>
 
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="dataapprovazioneprogetto"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataApprovazioneProgetto}" />
@@ -205,23 +205,23 @@
 			</p:row>
 
             <p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataapprovazioneUdP"
 						value="Data approvazione Udp: " />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="dataapprovazioneUdP"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataApprovazioneUdP}" />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="numeroattoUdp"
 						value="Numero Atto UdP: *" />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:inputText id="numeroattoUdp" value="#{inserisciMISController.numeroAttoUdp}" />
 				</p:column>
 
@@ -230,21 +230,21 @@
 
             <p:row>
 				
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="istitutoIncaricato"
 						value="Istituto Incaricato: *" />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:inputText id="istitutoIncaricato" value="#{inserisciMISController.istitutoIncaricato}" />
 				</p:column>
 				
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataScadenzaMV"
 						value="Data approvazione Udp: " />
 				</p:column>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="dataScadenzaMV"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataScadenzaMV}" />
@@ -255,12 +255,12 @@
 			</p:row>       
 
             <p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataEsameRapportoFinale"
 						value="Data EsameRapporto Finale :" />
 				</p:column>
 
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="dataEsameRapportoFinale"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataEsameRapportoFinale}" />
@@ -268,12 +268,12 @@
 			</p:row>
 			
 			<p:row>
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataTrasmissioneCommissioni"
 						value="Data Trasmissione Commissioni :" />
 				</p:column>
 
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 					<p:calendar size="10" locale="it_IT" id="dataTrasmissioneCommissioni"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataTrasmissioneCommissioni}" />
@@ -283,11 +283,11 @@
 
 			<p:row>
 
-				<p:column style="width: 25%;">
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="noteatto" value="Note :" />
 				</p:column>
 
-				<p:column colspan="3">
+				<p:column colspan="3" style="text-align:left;">
 					<p:inputTextarea rows="5" cols="101"
 						value="#{inserisciMISController.note}" id="noteatto">
 					</p:inputTextarea>
@@ -296,7 +296,7 @@
 			</p:row>
 			<p:row>
 
-			<p:column colspan="2">
+			<p:column colspan="2" style="text-align:left;">
 				<p:commandButton ajax="false" update="insertattopanel" disabled="#{navigationBean.isMISDisabled()}"
 					id="insertattobtn" value="Salva"
 					action="#{inserisciMISController.inserisciAtto}" />
@@ -314,7 +314,7 @@
 		<p:panelGrid styleClass="infoTable" id="allegatopanel">
 			<p:row>
 
-				<p:column>
+				<p:column style="text-align:left;">
 
 
 					 <p:commandButton value="Carica Allegato" disabled="#{navigationBean.isMISDisabled()}"

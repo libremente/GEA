@@ -63,21 +63,21 @@
 				collapsed="false" toggleable="false">
 
 
-				<p:scrollPanel style="width:430px;height:450px;border:0px;"
+				<p:scrollPanel style="width:430px;height:450px;border:0px;text-align:left;"
 					scrollMode="native">  				
 
 
 					Filtra data:&nbsp;&nbsp;&nbsp;
 					<h:outputLabel for="filtraData_da" value="da " />
 					<p:calendar id="filtraData_da" 
-						value="#{gestioneSeduteController.dataSedutaDa}" locale="it" pattern="dd/MM/yyyy">
+						value="#{gestioneSeduteController.dataSedutaDa}" locale="it" pattern="dd/MM/yyyy" size="10">
 						<p:ajax event="dateSelect" listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
            
                     <h:outputLabel for="filtraData_a" value="a " />
                     <p:calendar id="filtraData_a" 
-						value="#{gestioneSeduteController.dataSedutaA}" locale="it" pattern="dd/MM/yyyy">
+						value="#{gestioneSeduteController.dataSedutaA}" locale="it" pattern="dd/MM/yyyy" size="10">
 						<p:ajax event="dateSelect" listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
@@ -156,12 +156,12 @@
 				<p:panelGrid id="dettagliSeduta"
 					style="width:100%;margin-bottom:7px;">
 					<p:row>
-						<p:column>
+						<p:column style="text-align:left;">
 
 
 							<h:outputLabel for="dataSeduta" value="Data seduta:  " />
 						</p:column>
-						<p:column>
+						<p:column style="text-align:left;">
 							<p:calendar size="10" locale="it" id="dataSeduta"
 								value="#{gestioneSeduteController.dataSeduta}">
 								<p:ajax event="dateSelect"
@@ -170,10 +170,10 @@
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column>
+						<p:column style="text-align:left;">
 							<h:outputLabel for="numVerbale" value="#{numeroVerbale} : " />
 						</p:column>
-						<p:column>
+						<p:column style="text-align:left;"> 
 							<p:inputText size="10" id="numVerbale"
 								value="#{gestioneSeduteController.numVerbale}">
 								<p:ajax event="change"
@@ -183,7 +183,7 @@
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column colspan="2">
+						<p:column colspan="2" style="text-align:left;">
 				Note : 
 				<br />
 							<br />
@@ -195,7 +195,7 @@
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column colspan="4">
+						<p:column colspan="4" style="text-align:left;">
 							<p:panelGrid id="addLinkPanel" styleClass="tableAppend">
 
 								<f:facet name="header">
@@ -231,7 +231,7 @@
 					</p:row>
 
 					<p:row>
-						<p:column colspan="4">
+						<p:column colspan="4" style="text-align:left;">
 
 							<p:dataTable id="listaLinks"
 								value="#{gestioneSeduteController.linksList}" var="link"
@@ -286,7 +286,7 @@
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column>
+						<p:column style="text-align:left;">
 							<p>
 								<p:commandButton value="Aggiungi / Salva"
 									action="#{gestioneSeduteController.salvaAggiungiSeduta}"
