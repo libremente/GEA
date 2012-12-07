@@ -223,7 +223,7 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 				</div>
 
-				<div id="ricercaAvanzataDiv" style="text-align:left">
+				<div id="ricercaAvanzataDiv">
 
 
 
@@ -757,12 +757,17 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 		<p:column headerText="N.Atto">
 			<c:set value="#{atto.id}" var="idAttoParam" />
-			<p:commandLink
-				action="#{searchAttoController.attoDetail(idAttoParam)}"
-				update="listaAtti">
+			<c:set value="#{atto.tipo}" var="tipoAttoParam" />
+			<h:commandLink action="#{searchAttoController.attoDetail()}"
+				target="_blank">
+				<f:setPropertyActionListener
+					target="#{searchAttoController.idAttoSelected}"
+					value="#{idAttoParam}" />
+				<f:setPropertyActionListener
+					target="#{searchAttoController.tipoAttoSelected}"
+					value="#{tipoAttoParam}" />
 				<h:outputText value="#{atto.numeroAtto}" />
-				<!-- <f:param name="numeroatto" value="#{atto.numeroAtto}" /> -->
-			</p:commandLink>
+			</h:commandLink>
 		</p:column>
 		<p:column headerText="N° Protocollo">
 			<h:outputText value="#{atto.numeroProtocollo}" />

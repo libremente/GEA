@@ -35,7 +35,7 @@ public class URLBuilder {
 			url+="&"+ALFRESCO_DWNL_TCKT_PARAM_NAME+alfrescoSessionTicket.getTicket();
 		}
 		
-		return url;
+		return url.replaceAll(" ", "%20");
 	}
 	
 	public  String buildAlfrescoURL(String contextPropertyName,String pathPropertyName,String[] paramsValues){
@@ -54,7 +54,7 @@ public class URLBuilder {
 			url+="&"+ALFRESCO_TCKT_PARAM_NAME+alfrescoSessionTicket.getTicket();
 		}
 		
-		return url;
+		return url.replaceAll(" ", "%20");
 	}
 	
      public  String buildURL(String contextPropertyName,String pathPropertyName){
@@ -77,7 +77,7 @@ public class URLBuilder {
  		
  		url=messageSource.getMessage(contextPropertyName, paramsValues, Locale.ITALY);
  		
- 		return url;
+ 		return url.replaceAll(" ", "%20");
  	} 
 	
 

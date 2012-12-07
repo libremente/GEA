@@ -772,6 +772,9 @@
 			value="#{searchAttoController.listAtti}" rows="10" paginator="true"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 			paginatorAlwaysVisible="false" paginatorPosition="bottom">
+			
+			    
+			
 			<p:column sortBy="#{atto.tipo}">
 				<f:facet name="header">Tipo</f:facet>
 				<h:outputText value="#{atto.tipo}" />
@@ -790,13 +793,15 @@
 			<p:columns value="#{userBean.colonneUser}" var="column"
 				columnIndexVar="colIndex" sortBy="#{atto[column.attoProperty]}">
 
-
+                
 
 				<f:facet name="header">  
                 #{column.nome}  
             </f:facet>
 
-				<h:outputText value="#{atto[column.attoProperty]}" />
+				<h:outputText value="#{atto[column.attoProperty]}" >
+				<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
 
 			</p:columns>
 

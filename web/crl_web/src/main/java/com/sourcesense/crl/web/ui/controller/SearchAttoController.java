@@ -104,7 +104,8 @@ public class SearchAttoController {
 	
 	private String listaLavoro;
 	
-	
+	private String idAttoSelected;
+	private String tipoAttoSelected;
 	
 	private String numeroDGR;
 	private String numeroDcr;
@@ -309,7 +310,7 @@ public class SearchAttoController {
         }		
 		
 		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
-		
+		setListAtti(attoServiceManager.searchAtti(atto));
 	}
 
 	@PostConstruct
@@ -416,6 +417,43 @@ public class SearchAttoController {
 	
 	
 	
+	
+	public String attoDetail() {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = (AttoBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{attoBean}",
+						AttoBean.class).getValue(context.getELContext());
+
+		
+		Atto attoRet = null;
+		
+		if("MIS".equalsIgnoreCase(tipoAttoSelected)){
+			
+			
+			attoBean.setAttoMIS(attoServiceManager.findMISById(idAttoSelected));
+			return "pretty:Inserimento_MIS";
+			
+		}else if("EAC".equalsIgnoreCase(tipoAttoSelected)){
+			
+			
+		
+			attoBean.setAttoEAC(attoServiceManager.findEACById(idAttoSelected));
+			return "pretty:Inserimento_EAC";
+			
+			
+		}else {
+			
+			attoBean.setAtto(attoServiceManager.findById(idAttoSelected));
+			attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+			return "pretty:Riepilogo_Atto";
+			
+		}
+	}
 	
 	
 	public String attoDetail(String idAttoParam, String tipo) {
@@ -1158,6 +1196,24 @@ public class SearchAttoController {
 
 	public void setRelatori(List<String> relatori) {
 		this.relatori = relatori;
+	}
+
+
+
+	public String getIdAttoSelected() {
+		return idAttoSelected;
+	}
+
+	public void setIdAttoSelected(String idAttoSelected) {
+		this.idAttoSelected = idAttoSelected;
+	}
+
+	public String getTipoAttoSelected() {
+		return tipoAttoSelected;
+	}
+
+	public void setTipoAttoSelected(String tipoAttoSelected) {
+		this.tipoAttoSelected = tipoAttoSelected;
 	}
 
 	

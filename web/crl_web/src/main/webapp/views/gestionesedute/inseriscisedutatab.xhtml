@@ -11,6 +11,10 @@
 	xmlns:of="http://omnifaces.org/functions">
 
 
+
+
+
+
 <c:choose>
 
 <c:when test="#{navigationBean.gestioneSeduteConsultazioniAula()}">
@@ -182,6 +186,20 @@
 
 						</p:column>
 					</p:row>
+					
+					
+					<p:row>
+						<p:column  style="text-align:left;">
+			         	Dalle ore : &nbsp; 
+			         	<p:calendar size="5"  locale="it" pattern="HH:mm"></p:calendar>
+						</p:column>
+						<p:column  style="text-align:left;">
+				         &nbsp; alle ore : &nbsp; 
+				         <p:calendar size="5" locale="it" pattern="HH:mm"></p:calendar>
+						</p:column>
+					</p:row>
+					
+					
 					<p:row>
 						<p:column colspan="2" style="text-align:left;">
 				Note : 

@@ -39,7 +39,7 @@ public class SeduteServiceManager implements ServiceManager{
 	}
 	
 	public List<Seduta>  getSedute(String gruppo) {
-		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", new String[]{gruppo}));
+		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", new String[]{gruppo}).replaceAll(" ", "%20"));
 	}
 	
 	public void salvaOdg(Seduta seduta) {
