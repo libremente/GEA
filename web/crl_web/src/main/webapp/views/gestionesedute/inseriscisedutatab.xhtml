@@ -14,15 +14,14 @@
 
 
 
-
 <c:choose>
 
-<c:when test="#{navigationBean.gestioneSeduteConsultazioniAula()}">
- <c:set var="numeroVerbale" value="Numero ODG"></c:set>
-</c:when>
-<c:otherwise>
-<c:set var="numeroVerbale" value="Numero Verbale"></c:set>
-</c:otherwise>
+	<c:when test="#{navigationBean.gestioneSeduteConsultazioniAula()}">
+		<c:set var="numeroVerbale" value="Numero ODG"></c:set>
+	</c:when>
+	<c:otherwise>
+		<c:set var="numeroVerbale" value="Numero Verbale"></c:set>
+	</c:otherwise>
 </c:choose>
 
 
@@ -67,22 +66,27 @@
 				collapsed="false" toggleable="false">
 
 
-				<p:scrollPanel style="width:430px;height:450px;border:0px;text-align:left;"
+				<p:scrollPanel
+					style="width:430px;height:450px;border:0px;text-align:left;"
 					scrollMode="native">  				
 
 
 					Filtra data:&nbsp;&nbsp;&nbsp;
 					<h:outputLabel for="filtraData_da" value="da " />
-					<p:calendar id="filtraData_da" 
-						value="#{gestioneSeduteController.dataSedutaDa}" locale="it" pattern="dd/MM/yyyy" size="10">
-						<p:ajax event="dateSelect" listener="#{gestioneSeduteController.filterDataTable()}"
+					<p:calendar id="filtraData_da"
+						value="#{gestioneSeduteController.dataSedutaDa}" locale="it"
+						pattern="dd/MM/yyyy" size="10">
+						<p:ajax event="dateSelect"
+							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
-           
-                    <h:outputLabel for="filtraData_a" value="a " />
-                    <p:calendar id="filtraData_a" 
-						value="#{gestioneSeduteController.dataSedutaA}" locale="it" pattern="dd/MM/yyyy" size="10">
-						<p:ajax event="dateSelect" listener="#{gestioneSeduteController.filterDataTable()}"
+
+					<h:outputLabel for="filtraData_a" value="a " />
+					<p:calendar id="filtraData_a"
+						value="#{gestioneSeduteController.dataSedutaA}" locale="it"
+						pattern="dd/MM/yyyy" size="10">
+						<p:ajax event="dateSelect"
+							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
 
@@ -117,9 +121,9 @@
 									#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}
 									
 								</p:column>
-                                
-                                
-                                 
+
+
+
 								<p:column headerText="#{numeroVerbale}" style="width:100px"
 									sortBy="#{seduta.numVerbale}">
 									#{seduta.numVerbale}
@@ -131,9 +135,11 @@
 										action="#{gestioneSeduteController.dettaglioOdg}"
 										oncomplete="gestioneSeduteTabs.select(1)" value="ODG"
 										update=":gestioneSeduteForm:gestioneSedute">
+										
 										<f:setPropertyActionListener
 											value="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"
 											target="#{gestioneSeduteController.dataSedutaSelected}" />
+										
 									</p:commandButton>	
 										
 									&nbsp;
@@ -177,7 +183,7 @@
 						<p:column style="text-align:left;">
 							<h:outputLabel for="numVerbale" value="#{numeroVerbale} : " />
 						</p:column>
-						<p:column style="text-align:left;"> 
+						<p:column style="text-align:left;">
 							<p:inputText size="10" id="numVerbale"
 								value="#{gestioneSeduteController.numVerbale}">
 								<p:ajax event="change"
@@ -186,20 +192,20 @@
 
 						</p:column>
 					</p:row>
-					
-					
+
+
 					<p:row>
-						<p:column  style="text-align:left;">
+						<p:column colspan="2" style="text-align:left;">
 			         	Dalle ore : &nbsp; 
-			         	<p:calendar size="5"  locale="it" pattern="HH:mm"></p:calendar>
-						</p:column>
-						<p:column  style="text-align:left;">
-				         &nbsp; alle ore : &nbsp; 
+			         	<p:calendar size="5" locale="it" pattern="HH:mm"></p:calendar>
+						
+				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alle ore : &nbsp;&nbsp;&nbsp; 
+				        &nbsp;&nbsp;&nbsp;
 				         <p:calendar size="5" locale="it" pattern="HH:mm"></p:calendar>
 						</p:column>
 					</p:row>
-					
-					
+
+
 					<p:row>
 						<p:column colspan="2" style="text-align:left;">
 				Note : 
@@ -308,7 +314,9 @@
 							<p>
 								<p:commandButton value="Aggiungi / Salva"
 									action="#{gestioneSeduteController.salvaAggiungiSeduta}"
-									update="listaSedute" />
+									update=":gestioneSeduteForm">
+									
+								</p:commandButton>
 							</p>
 						</p:column>
 					</p:row>

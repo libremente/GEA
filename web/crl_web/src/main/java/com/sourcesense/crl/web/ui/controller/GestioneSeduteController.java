@@ -58,6 +58,8 @@ public class GestioneSeduteController {
 
 	private Date dataSeduta;
 	private String numVerbale;
+	private String dalleOre;
+	private String alleOre;
 	private String note;
 
 	private List<Link> linksList = new ArrayList<Link>();
@@ -106,11 +108,11 @@ public class GestioneSeduteController {
 
 		setDateSeduteList();
 
-		if (!seduteListAll.isEmpty()) {
+		/*if (!seduteListAll.isEmpty()) {
 			setDataSedutaSelected(dateSeduteList.get(0));
 			showSedutaDetail();
 			fillDateSeduteMap();
-		}
+		}*/
 
 	}
 
@@ -377,6 +379,8 @@ public class GestioneSeduteController {
 			// Inserimento
 			if (seduta == null) {
 				seduta = new Seduta();
+				seduta.setDalleOre(getDalleOre());
+				seduta.setAlleOre(getAlleOre());
 				seduta.setDataSeduta(getDataSeduta());
 				seduta.setNumVerbale(getNumVerbale());
 				seduta.setNote(getNote());
@@ -389,10 +393,12 @@ public class GestioneSeduteController {
 				seduteListAll.add(seduta);
 				seduteList.add(seduta);
 
-				// Modifica
+		    // Modifica
 			} else {
 				seduta.setNumVerbale(getNumVerbale());
 				seduta.setNote(getNote());
+				seduta.setDalleOre(getDalleOre());
+				seduta.setAlleOre(getAlleOre());
 				seduta.setLinks(Clonator.cloneList(getLinksList()));
 				gestioneSedute.setSeduta(seduta);
 				seduta = seduteServiceManager.updateSeduta(gestioneSedute);
@@ -403,7 +409,11 @@ public class GestioneSeduteController {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_INFO, "Seduta numero "
 							+ getNumVerbale() + " salvata con successo", ""));
+			
+			
+			refreshInsert();  
 
+		
 		} else {
 
 			context.addMessage(null, new FacesMessage(
@@ -412,6 +422,23 @@ public class GestioneSeduteController {
 		}
 	}
 
+	
+	private void refreshInsert(){
+		
+		
+		setSedutaSelected(null);
+		setDataSeduta(null);
+		setAlleOre(null);
+		setDalleOre(null);
+		setNomeLink(null);
+		setNumVerbale(null);
+		setNote(null);
+		setDescrizioneCollegamento(null);
+		setUrlLink(null);
+		linksList.clear();
+		
+	}
+	
 	// Inserisci ODG***************************************
 
 	public void fillDateSeduteMap() {
@@ -982,4 +1009,23 @@ public class GestioneSeduteController {
 		this.attiTrattatiorder = attiTrattatiorder;
 	}
 
+	public String getDalleOre() {
+		return dalleOre;
+	}
+
+	public void setDalleOre(String dalleOre) {
+		this.dalleOre = dalleOre;
+	}
+
+	public String getAlleOre() {
+		return alleOre;
+	}
+
+	public void setAlleOre(String alleOre) {
+		this.alleOre = alleOre;
+	}
+
+	
+	
+	
 }

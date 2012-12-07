@@ -29,7 +29,8 @@ public class Seduta implements Cloneable{
 		return Pojomatic.toString(this);
 	}
 
-	
+	private String dalleOre;
+	private String alleOre;
 	private String idSeduta;
 	private Date dataSeduta;
 	private String numVerbale;
@@ -107,6 +108,23 @@ public class Seduta implements Cloneable{
 	public void setIdSeduta(String idSeduta) {
 		this.idSeduta = idSeduta;
 	}
+
+	public String getDalleOre() {
+		return dalleOre;
+	}
+
+	public void setDalleOre(String dalleOre) {
+		this.dalleOre = dalleOre;
+	}
+
+	public String getAlleOre() {
+		return alleOre;
+	}
+
+	public void setAlleOre(String alleOre) {
+		this.alleOre = alleOre;
+	}
+	
 	
 	
 	
