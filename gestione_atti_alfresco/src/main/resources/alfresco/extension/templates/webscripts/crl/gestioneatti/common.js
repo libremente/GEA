@@ -6,6 +6,14 @@ function verifyAND(luceneQuery){
 	}
 }
 
+function verifyOR(luceneQuery){
+	if(luceneQuery!=""){
+		return luceneQuery += " OR ";
+	} else {
+		return "";
+	}
+}
+
 function checkIsNotNull(parameterValue){
 	if(parameterValue!=null
 			&& parameterValue!=undefined

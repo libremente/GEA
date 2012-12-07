@@ -1,11 +1,40 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
+function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissione){
+	if(checkIsNotNull(commissione)){
+		if(checkIsNotNull(ruoloCommissione)){
+			var ruoloCommissioneString = ""+ruoloCommissione+"";
+			var commissioneString = ""+commissione+"";
+			if(ruoloCommissioneString=="Referente"){
+				luceneQuery = verifyAND(luceneQuery);
+				luceneQuery += "@crlatti\\:commReferente:\""+commissioneString+"\"";
+			} else if(ruoloCommissioneString=="Co-Referente"){
+				luceneQuery = verifyAND(luceneQuery);
+				luceneQuery += "@crlatti\\:commCoreferente:\""+commissioneString+"\"";
+			} else if(ruoloCommissioneString=="Consultiva"){
+				luceneQuery = verifyAND(luceneQuery);
+				luceneQuery += "@crlatti\\:commConsultiva:\""+commissioneString+"\"";
+			} else if(ruoloCommissioneString=="Redigente"){
+				luceneQuery = verifyAND(luceneQuery);
+				luceneQuery += "@crlatti\\:commRedigente:\""+commissioneString+"\"";
+			} else if(ruoloCommissioneString=="Deliberante"){
+				luceneQuery = verifyAND(luceneQuery);
+				luceneQuery += "@crlatti\\:commDeliberante:\""+commissioneString+"\"";
+			}
+		}
+		
+	}
+}
+
 var atto = json.get("atto");
 
 var tipoAtto = atto.get("tipoAtto");
 var legislatura = atto.get("legislatura");
 var stato = atto.get("stato");
-var numeroAtto = atto.get("numeroAtto");
+
+var numeroAttoDa = atto.get("numeroAttoDa");
+var numeroAttoA = atto.get("numeroAttoA");
+
 var numeroProtocollo = atto.get("numeroProtocollo");
 var tipoIniziativa = atto.get("tipoIniziativa");
 var numeroDcr = atto.get("numeroDcr");
@@ -15,16 +44,24 @@ var firmatario = atto.get("firmatario");
 var dataIniziativaDa = atto.get("dataIniziativaDa");
 var dataIniziativaA = atto.get("dataIniziativaA");
 
-//campi ricerca avanzata
+var dataChiusuraDa = atto.get("dataChiusuraDa");
+var dataChiusuraA = atto.get("dataChiusuraA");
 
-// private String relatore;    
+var dataLr = atto.get("dataLR");
+
+var commissione1 = atto.get("commissione1");
+var commissione2 = atto.get("commissione2");
+var commissione3 = atto.get("commissione3");
+
+var ruoloCommissione1 = atto.get("ruoloCommissione1");
+var ruoloCommissione2 = atto.get("ruoloCommissione2");
+var ruoloCommissione3 = atto.get("ruoloCommissione3");
 
 //pannello sinistra
 var tipoChiusura = atto.get("tipoChiusura");
 var esitoVotoComRef = atto.get("esitoVotoCommissioneReferente");
 var esitoVotoAula = atto.get("esitoVotoAula");
-var commReferente = atto.get("commissioneReferente");
-var commConsultiva = atto.get("commissioneConsultiva");
+
 var redigente = atto.get("redigente");
 var deliberante = atto.get("deliberante");
 var numeroLcr = atto.get("numeroLcr");
@@ -50,13 +87,26 @@ var relatore = atto.get("relatore");
 var organismoStatutario = atto.get("organismoStatutario");
 var soggettoConsultato = atto.get("soggettoConsultato");
 var emendato = atto.get("emendato");
+var emendatoAula = atto.get("emendatoAula");
 var sospeso = atto.get("sospeso");
-var numeroDgr = atto.get("numeroDgr");
+var numeroDgr = atto.get("numeroDGR");
+var dataDgr = atto.get("dataDGR");
+
+var numeroFascicolo = atto.get("numeroRepertorio");
 
 var luceneQuery = "PATH:\"/app:company_home/cm:CRL//*\" ";
 
 var tipoAttoString = ""+tipoAtto+"";
 var type = "crlatti:atto";
+
+var statiUtente = atto.get("statiUtente");
+
+//atto -> statiUtente -> StatoAtto -> descrizione
+//statoAtto = statiUtente
+//ruoliCommissione = singolo metadato
+//numeroRepertorio = numeroFascicolo
+//emendatoAula da ridondare
+//emendato in commissione
 
 if(checkIsNotNull(tipoAttoString)){
 	if(tipoAttoString == "PDL") {
@@ -107,9 +157,21 @@ if(checkIsNotNull(stato)){
 	luceneQuery += "@crlatti\\:statoAtto:\""+stato+"\"";
 }
 
-if(checkIsNotNull(numeroAtto)){
+if(checkIsNotNull(numeroFascicolo)){
 	luceneQuery = verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:numeroAtto:\""+numeroAtto+"\"";
+	luceneQuery += "@crlatti\\:numeroRepertorio:\""+numeroFascicolo+"\"";
+}
+
+//numeroAtto range
+if(checkIsNotNull(numeroAttoDa) && checkIsNotNull(numeroAttoA)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:numeroAtto:["+numeroAttoDa+" TO "+numeroAttoA+"]";
+} else if(checkIsNotNull(numeroAttoDa)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:numeroAtto:["+numeroAttoDa+" TO MAX]";
+} else if(checkIsNotNull(numeroAttoA)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:numeroAtto:[MIN TO "+numeroAttoA+"]";
 }
 
 if(checkIsNotNull(numeroProtocollo)){
@@ -138,9 +200,14 @@ if(checkIsNotNull(oggetto)){
 }
 
 if(checkIsNotNull(firmatario)){
-	verifyAND(luceneQuery);
+	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:firmatari:\""+firmatario+"\"";
 }
+
+//commissioni e ruoli
+creaLuceneQueryCommissioniRuoli(luceneQuery,commissione1,ruoloCommissione1);
+creaLuceneQueryCommissioniRuoli(luceneQuery,commissione2,ruoloCommissione2);
+creaLuceneQueryCommissioniRuoli(luceneQuery,commissione3,ruoloCommissione3);
 
 //dataIniziativa
 if(checkIsNotNull(dataIniziativaDa)
@@ -157,7 +224,20 @@ if(checkIsNotNull(dataIniziativaDa)
 	luceneQuery += "@crlatti\\:dataIniziativa:[MIN TO "+dataIniziativaA+"T00:00:00]";
 }
 
-//ricerca avanzata
+//dataChiusura
+if(checkIsNotNull(dataChiusuraDa)
+		&& checkIsNotNull(dataChiusuraA)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataChiusura:["+dataChiusuraDa+"T00:00:00 TO "+dataChiusuraA+"T00:00:00]";
+} else if(checkIsNotNull(dataChiusuraDa)
+		&& (dataChiusuraA==null || dataChiusuraA==undefined || dataChiusuraA=="")) {
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataChiusura:["+dataChiusuraDa+"T00:00:00 TO MAX]";
+} else if(checkIsNotNull(dataChiusuraA)
+		&& (dataChiusuraDa==null || dataChiusuraDa==undefined || dataChiusuraDa=="")){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataChiusura:[MIN TO "+dataChiusuraA+"T00:00:00]";
+}
 
 //pannello sinistro
 if(checkIsNotNull(tipoChiusura)){
@@ -173,16 +253,6 @@ if(checkIsNotNull(esitoVotoComRef)){
 if(checkIsNotNull(esitoVotoAula)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:esitoVotoAula:\""+esitoVotoAula+"\"";
-}
-
-if(checkIsNotNull(commReferente)){
-	luceneQuery = verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:commReferente:\""+commReferente+"\"";
-}
-
-if(checkIsNotNull(commConsultiva)){
-	luceneQuery = verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:commConsultiva:\""+commConsultiva+"\"";
 }
 
 if(checkIsNotNull(redigente)){
@@ -302,6 +372,11 @@ if(checkIsNotNull(emendato)){
 	luceneQuery += "@crlatti\\:emendato:\""+emendato+"\"";
 }
 
+if(checkIsNotNull(emendatoAula)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:emendatoAulaAtto:\""+emendatoAula+"\"";
+}
+
 if(checkIsNotNull(sospeso)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:sospeso:\""+sospeso+"\"";
@@ -310,6 +385,35 @@ if(checkIsNotNull(sospeso)){
 if(checkIsNotNull(numeroDgr)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:numeroDgr:\""+numeroDgr+"\"";
+}
+
+if(checkIsNotNull(dataDgr)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataDgr:["+dataDgr+"T00:00:00 TO MAX]";
+}
+
+if(checkIsNotNull(dataLr)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataLr:["+dataLr+"T00:00:00 TO MAX]";
+}
+
+//statiUtente - condizioni in OR per Lucene
+if(checkIsNotNull(statiUtente)){
+	var numeroStatiUtente = statiUtente.length();
+	if(numeroStatiUtente>0){
+		luceneQuery += " ( ";
+		for (var j=0; j<numeroStatiUtente; j++){
+			var statoAtto = statiUtente.get(j).get("StatoAtto");
+			if(checkIsNotNull(statoAtto)){
+				var descrizioneStatoAtto = statoAtto.get("descrizione");
+				if(checkIsNotNull(descrizioneStatoAtto)){
+					luceneQuery = verifyOR(luceneQuery);
+					luceneQuery += "@crlatti\\:statoAtto:\""+descrizioneStatoAtto+"\"";
+				}
+			}
+		}
+		luceneQuery += " ) ";
+	}
 }
 
 var attiResults = search.luceneSearch(luceneQuery);
