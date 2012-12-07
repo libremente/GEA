@@ -336,6 +336,59 @@ public class EsameAulaController {
 			testiAttoVotatoList.add(allegatoRet);
 		}
 	}
+  
+	public void uploadTestoAtto(FileUploadEvent event) {
+
+		String fileName = event.getFile().getFileName();
+		if (!checkTestoAtto(fileName)) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
+							+ fileName + " è già stato allegato ", ""));
+
+		} else {
+
+			TestoAtto testoAttoRet = new TestoAtto();
+
+			testoAttoRet.setNome(event.getFile().getFileName());
+			testoAttoRet.setPubblico(currentFilePubblico);
+
+			try {
+				testoAttoRet = attoServiceManager
+						.uploadTestoAttoPresentazioneAssegnazione(
+								((AttoBean) FacesContext.getCurrentInstance()
+										.getExternalContext().getSessionMap()
+										.get("attoBean")).getAtto(), event
+										.getFile().getInputstream(),
+								testoAttoRet);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+
+			attoBean.getAtto().getTestiAtto().add(testoAttoRet);
+
+			currentFilePubblico = false;
+		}
+	}  
+  
+	private boolean checkTestoAtto(String fileName) {
+
+		for (TestoAtto element : getAtto().getTestiAtto()) {
+
+			if (element.getNome().equals(fileName)) {
+
+				return false;
+			}
+
+		}
+
+		return true;
+	}  
 
 	private boolean checkTestoAttoVotato(String fileName) {
 

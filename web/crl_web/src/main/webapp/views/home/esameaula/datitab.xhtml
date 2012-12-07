@@ -23,11 +23,41 @@
     <p:commandButton id="confirmRemoveTestoAtto" value="Conferma"
       oncomplete="removeTestoAttoDialog.hide()"
       action="#{esameAulaController.removeTestoAtto}"
-      update="listaTestiAtto" />
+      update="listaTestiDatiAtto" />
     <p:commandButton id="declineRemoveTestoAtto" value="Annulla"
       onclick="removeTestoAttoDialog.hide()" type="button" />
 
   </p:confirmDialog>
+  
+  <p:confirmDialog id="uploadFileAttributes" header="Caricamento"
+                   widgetVar="uploadFileAttributesDialog" style="width:450px"
+                   message="Allega Testo">
+    <p:panelGrid id="uploadpanel">
+      <p:row>
+        <p:column>
+          <h:outputLabel for="isPubblico" value="Pubblico: " />
+          <p:selectBooleanCheckbox id="isPubblico"
+                                   value="#{esameAulaController.currentFilePubblico}" >
+            <p:ajax event="change" immediate="true"></p:ajax>
+          </p:selectBooleanCheckbox>
+        </p:column>
+      </p:row>
+      <p:row>
+        <p:column>
+          <p:fileUpload label="Carica Testo dell'Atto"
+                        oncomplete="uploadFileAttributesDialog.hide()" auto="false"
+                        update="listaTestiDatiAtto ,datiMsg"
+                        fileUploadListener="#{esameAulaController.uploadTestoAtto}" />
+        </p:column>
+      </p:row>
+      <p:row>
+        <p:column>
+          <p:commandButton id="declineUploadFile" value="Annulla"
+                           onclick="uploadFileAttributesDialog.hide()" type="button" />
+        </p:column>
+      </p:row>
+    </p:panelGrid>
+  </p:confirmDialog>  
 
 <p:panelGrid styleClass="infoTable" id="datiPanel1">
 	<p:row>
