@@ -73,6 +73,12 @@ public class NavigationRules {
 				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName())) ;
 		
 	}
+    
+    public boolean isCPCVUser(){
+		
+    	return (GruppoUtente.CPCV.equals(userBean.getUserGroupName())) ;
+		
+	}
 	
 	
 	public boolean presaCaricoAulaDisabled() {

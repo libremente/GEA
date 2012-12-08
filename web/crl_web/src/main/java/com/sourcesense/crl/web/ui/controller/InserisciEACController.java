@@ -4,6 +4,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoEAC;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
@@ -50,6 +51,10 @@ public class InserisciEACController {
 	                          
 	@ManagedProperty(value = "#{tipoAttoServiceManager}")
 	private  TipoAttoServiceManager tipoAttoServiceManager;
+	
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
+	
 	
 	private Map<String, String> tipiAttoSindacato = new HashMap<String, String>();
 	private Map<String, String> numeriAttoSindacato = new HashMap<String, String>();
@@ -170,7 +175,7 @@ public class InserisciEACController {
 
 			if (element.getId().equals(allegatoEACToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiEAC.remove(element);
 				break;
 			}
@@ -393,6 +398,21 @@ public class InserisciEACController {
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
+	}
+
+
+
+
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+
+
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
 

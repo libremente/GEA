@@ -42,7 +42,7 @@
 				<p:commandButton id="confirmSeduta" value="Conferma"
 					oncomplete="sedutaDialog.hide()"
 					action="#{gestioneSeduteController.removeSeduta}"
-					update="listaSedute, dettagliSeduta" />
+					update=":gestioneSeduteForm" />
 				<p:commandButton id="declineSeduta" value="Annulla"
 					onclick="sedutaDialog.hide()" type="button" />
 
@@ -197,11 +197,11 @@
 					<p:row>
 						<p:column colspan="2" style="text-align:left;">
 			         	Dalle ore : &nbsp; 
-			         	<p:calendar size="5" locale="it" pattern="HH:mm"></p:calendar>
+			         	<p:calendar size="5" locale="it" pattern="HH:mm" value="#{gestioneSeduteController.dalleOre}"></p:calendar>
 						
 				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alle ore : &nbsp;&nbsp;&nbsp; 
 				        &nbsp;&nbsp;&nbsp;
-				         <p:calendar size="5" locale="it" pattern="HH:mm"></p:calendar>
+				         <p:calendar size="5" locale="it" pattern="HH:mm" value="#{gestioneSeduteController.alleOre}"></p:calendar>
 						</p:column>
 					</p:row>
 

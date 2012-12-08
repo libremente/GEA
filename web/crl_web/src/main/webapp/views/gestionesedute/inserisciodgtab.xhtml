@@ -847,7 +847,17 @@
 
 					<p:column sortBy="#{attoTrattato.atto.numeroAtto}"
 						headerText="N.Atto" style="width:125px">
-					#{attoTrattato.atto.numeroAtto}
+					
+				    <c:set value="#{attoTrattato.atto.id}" var="idAttoParam" />
+					<c:set value="#{attoTrattato.atto.tipo}" var="tipoAttoParam" />
+					<h:commandLink  action="#{searchAttoController.attoDetail()}"
+						target="_blank">
+						<f:setPropertyActionListener target="#{searchAttoController.idAttoSelected}" value="#{idAttoParam}"/>
+						<f:setPropertyActionListener target="#{searchAttoController.tipoAttoSelected}" value="#{tipoAttoParam}"/>
+						<h:outputText value="#{attoTrattato.atto.numeroAtto}" />
+					</h:commandLink> 
+				
+				
 				</p:column>
 
 					<p:column sortBy="#{attoTrattato.atto.oggetto}"

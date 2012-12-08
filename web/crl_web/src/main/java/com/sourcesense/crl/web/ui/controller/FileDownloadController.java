@@ -54,6 +54,9 @@ public class FileDownloadController {
 	    
 	}
 	
+	
+	
+	
 
 	public StreamedContent getFile() {
 		String fileToDownload = fileId.replaceAll(":/","") +"/"+ fileName.replaceAll(" ", "%20");

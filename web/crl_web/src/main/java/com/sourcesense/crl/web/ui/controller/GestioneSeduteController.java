@@ -58,8 +58,8 @@ public class GestioneSeduteController {
 
 	private Date dataSeduta;
 	private String numVerbale;
-	private String dalleOre;
-	private String alleOre;
+	private Date dalleOre;
+	private Date alleOre;
 	private String note;
 
 	private List<Link> linksList = new ArrayList<Link>();
@@ -181,6 +181,8 @@ public class GestioneSeduteController {
 			setDataSeduta(sedutaSelected.getDataSeduta());
 			setNumVerbale(sedutaSelected.getNumVerbale());
 			setNote(sedutaSelected.getNote());
+			setDalleOre(sedutaSelected.getDalleOre());
+			setAlleOre(sedutaSelected.getAlleOre());
 			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));
 			
 			setAttiTrattati(Clonator
@@ -271,6 +273,7 @@ public class GestioneSeduteController {
 				seduteServiceManager.deleteSeduta(element.getIdSeduta());
 
 				showSedutaDetail();
+				refreshInsert();
 				break;
 			}
 		}
@@ -1009,19 +1012,19 @@ public class GestioneSeduteController {
 		this.attiTrattatiorder = attiTrattatiorder;
 	}
 
-	public String getDalleOre() {
+	public Date getDalleOre() {
 		return dalleOre;
 	}
 
-	public void setDalleOre(String dalleOre) {
+	public void setDalleOre(Date dalleOre) {
 		this.dalleOre = dalleOre;
 	}
 
-	public String getAlleOre() {
+	public Date getAlleOre() {
 		return alleOre;
 	}
 
-	public void setAlleOre(String alleOre) {
+	public void setAlleOre(Date alleOre) {
 		this.alleOre = alleOre;
 	}
 

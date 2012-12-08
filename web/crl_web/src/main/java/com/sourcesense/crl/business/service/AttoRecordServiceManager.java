@@ -54,7 +54,13 @@ public class AttoRecordServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_update_testo", null),atto, testoAtto);
 	}
 	
-	
+	public void deleteFile(String idFile) {
+		
+		 attoRecordService.deleteFile(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_delete_file", new String[] {idFile}));
+		
+		
+	}
 	
 	
 

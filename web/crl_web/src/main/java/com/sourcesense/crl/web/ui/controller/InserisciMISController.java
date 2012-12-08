@@ -3,6 +3,7 @@ package com.sourcesense.crl.web.ui.controller;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoMIS;
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
@@ -54,6 +55,9 @@ public class InserisciMISController {
 	@ManagedProperty(value = "#{legislaturaServiceManager}")
 	private LegislaturaServiceManager legislaturaServiceManager;
 	
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
+	
 	private AttoMIS atto = new AttoMIS();
 
 	private String numeroRepertorio;
@@ -78,7 +82,7 @@ public class InserisciMISController {
 	private boolean currentFilePubblico;
 	
 	private List<Allegato> allegatiMIS = new ArrayList<Allegato>();
-	private Map<String, String> commissioni = new HashMap<String, String>();
+	private List<String> commissioni = new ArrayList<String>();
 	
 	private Map<String, String> legislature = new HashMap<String, String>();
 	
@@ -96,7 +100,7 @@ public class InserisciMISController {
 		}
 		
 		
-		setCommissioni(commissioneServiceManager.findAll());
+		setCommissioni(commissioneServiceManager.getAll());
 		setLegislature(legislaturaServiceManager.findAll());
 		
 	}
@@ -180,7 +184,7 @@ public class InserisciMISController {
 
 			if (element.getId().equals(allegatoMISToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiMIS.remove(element);
 				break;
 			}
@@ -432,12 +436,12 @@ public class InserisciMISController {
 	}
 
 
-	public Map<String, String> getCommissioni() {
+	public List<String> getCommissioni() {
 		return commissioni;
 	}
 
 
-	public void setCommissioni(Map<String, String> commissioni) {
+	public void setCommissioni(List<String> commissioni) {
 		this.commissioni = commissioni;
 	}
 
@@ -478,6 +482,25 @@ public class InserisciMISController {
 
 	public void setLegislatura(String legislatura) {
 		this.atto.setLegislatura(legislatura);
+	}
+
+
+
+
+
+
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+
+
+
+
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
 	

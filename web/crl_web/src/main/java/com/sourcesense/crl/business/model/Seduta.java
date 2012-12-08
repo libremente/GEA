@@ -7,8 +7,12 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
+import com.sourcesense.crl.util.JsonHourSerializer;
 
 @JsonRootName("seduta")
 @JsonTypeName("seduta")
@@ -29,8 +33,8 @@ public class Seduta implements Cloneable{
 		return Pojomatic.toString(this);
 	}
 
-	private String dalleOre;
-	private String alleOre;
+	private Date dalleOre;
+	private Date alleOre;
 	private String idSeduta;
 	private Date dataSeduta;
 	private String numVerbale;
@@ -42,10 +46,11 @@ public class Seduta implements Cloneable{
 	private List<Audizione> audizioni = new ArrayList<Audizione>();	
 	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 
-
+	@JsonSerialize(using=JsonDateSerializer.class) 
 	public Date getDataSeduta() {
 		return dataSeduta;
 	}
+	
 	public void setDataSeduta(Date dataSeduta) {
 		this.dataSeduta = dataSeduta;
 	}
@@ -109,19 +114,24 @@ public class Seduta implements Cloneable{
 		this.idSeduta = idSeduta;
 	}
 
-	public String getDalleOre() {
+	
+	@JsonSerialize(using=JsonHourSerializer.class)
+	public Date getDalleOre() {
 		return dalleOre;
 	}
-
-	public void setDalleOre(String dalleOre) {
+    
+	@JsonSerialize(using=JsonHourSerializer.class)
+	public void setDalleOre(Date dalleOre) {
 		this.dalleOre = dalleOre;
 	}
 
-	public String getAlleOre() {
+	@JsonSerialize(using=JsonHourSerializer.class)
+	public Date getAlleOre() {
 		return alleOre;
 	}
 
-	public void setAlleOre(String alleOre) {
+	@JsonSerialize(using=JsonHourSerializer.class)
+	public void setAlleOre(Date alleOre) {
 		this.alleOre = alleOre;
 	}
 	

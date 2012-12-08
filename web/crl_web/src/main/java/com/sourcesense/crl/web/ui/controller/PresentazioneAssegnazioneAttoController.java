@@ -33,6 +33,7 @@ import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.model.TestoAtto;
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.OrganismoStatutarioServiceManager;
@@ -61,6 +62,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	@ManagedProperty(value = "#{tipoIniziativaServiceManager}")
 	TipoIniziativaServiceManager tipoIniziativaServiceManager;
+	
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
+	
 
 	private Map<String, String> tipiIniziativa = new HashMap<String, String>();
 
@@ -333,7 +338,7 @@ public class PresentazioneAssegnazioneAttoController {
 		for (TestoAtto element : testiAttoList) {
 
 			if (element.getId().equals(testoAttoToDelete)) {
-
+				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoList.remove(element);
 				break;
 			}
@@ -1002,7 +1007,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
 				break;
 			}
@@ -1713,4 +1718,15 @@ public class PresentazioneAssegnazioneAttoController {
 		this.atto.setPubblico(attoPubblico);
 	}
 
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
+	}
+
+	
+	
 }

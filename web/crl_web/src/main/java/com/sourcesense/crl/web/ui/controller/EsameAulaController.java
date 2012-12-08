@@ -25,6 +25,7 @@ import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.model.TestoAtto;
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.AulaServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
@@ -38,19 +39,18 @@ import java.util.Iterator;
 @ViewScoped
 public class EsameAulaController {
 
-	
-	
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
+
 	@ManagedProperty(value = "#{aulaServiceManager}")
 	private AulaServiceManager aulaServiceManager;
-	
-	
+
 	@ManagedProperty(value = "#{commissioneServiceManager}")
 	private CommissioneServiceManager commissioneServiceManager;
-  
+
 	@ManagedProperty(value = "#{attoServiceManager}")
-	private AttoServiceManager attoServiceManager;  
-	
-	
+	private AttoServiceManager attoServiceManager;
+
 	private Atto atto = new Atto();
 	private Passaggio passaggio;
 	private String passaggioSelected;
@@ -65,15 +65,14 @@ public class EsameAulaController {
 	private String noteVotazione;
 	boolean currentFilePubblico;
 	private String testoAttoVotatoToDelete;
-  private String testoAttoToDelete;
-	
+	private String testoAttoToDelete;
+
 	private List<TestoAtto> testiAttoVotatoList = new ArrayList<TestoAtto>();
 	private List<Allegato> emendamentiList = new ArrayList<Allegato>();
 	private List<Allegato> allegatiList = new ArrayList<Allegato>();
 	private String emendamentoToDelete;
-    private boolean readonly = false; 
-	
-	
+	private boolean readonly = false;
+
 	private int numEmendPresentatiMaggior;
 	private int numEmendPresentatiMinor;
 	private int numEmendPresentatiGiunta;
@@ -103,7 +102,6 @@ public class EsameAulaController {
 
 	private String noteGenerali;
 
-	
 	private String allegatoToDelete;
 
 	private List<Link> linksList = new ArrayList<Link>();
@@ -117,22 +115,23 @@ public class EsameAulaController {
 	private String statoCommitRinvioEsame = CRLMessage.COMMIT_DONE;
 	private String statoCommitStralci = CRLMessage.COMMIT_DONE;
 	private String statoCommitNoteAllegati = CRLMessage.COMMIT_DONE;
-  private String statoCommitDati = CRLMessage.COMMIT_DONE;
+	private String statoCommitDati = CRLMessage.COMMIT_DONE;
 
-	
 	private Aula aulaUser = new Aula();
-	
+
 	@PostConstruct
 	public void init() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		setAtto((Atto) attoBean.getAtto().clone());	
+		setAtto((Atto) attoBean.getAtto().clone());
 
-		aulaUser = (Aula)attoBean.getLastPassaggio().getAula().clone();
-		testiAttoVotatoList = Clonator.cloneList(aulaUser.getTestiAttoVotatoEsameAula());		
-		emendamentiList = Clonator.cloneList(aulaUser.getEmendamentiEsameAula());
+		aulaUser = (Aula) attoBean.getLastPassaggio().getAula().clone();
+		testiAttoVotatoList = Clonator.cloneList(aulaUser
+				.getTestiAttoVotatoEsameAula());
+		emendamentiList = Clonator
+				.cloneList(aulaUser.getEmendamentiEsameAula());
 		allegatiList = Clonator.cloneList(attoBean.getAllegatiAula());
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
 
@@ -142,7 +141,6 @@ public class EsameAulaController {
 		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
 	}
 
-	
 	public void changePassaggio() {
 
 		Passaggio passaggioSelected = null;
@@ -151,36 +149,31 @@ public class EsameAulaController {
 		for (Passaggio passaggioRec : this.atto.getPassaggi()) {
 
 			conta++;
-			
-			if (passaggioRec.getNome().equalsIgnoreCase(
-					this.passaggioSelected)) {
+
+			if (passaggioRec.getNome().equalsIgnoreCase(this.passaggioSelected)) {
 
 				passaggioSelected = passaggioRec;
 				break;
 			}
-			
-			
+
 		}
 
-		
-		if(conta < this.atto.getPassaggi().size()){
-			
+		if (conta < this.atto.getPassaggi().size()) {
+
 			setReadonly(true);
-		}else{
+		} else {
 			setReadonly(false);
-			
+
 		}
 
 		// Ricavo le commisioni dall'ultimo passaggio
 		setAulaUser(passaggioSelected.getAula());
-		
 
-	  }
+	}
 
-
-  public void updateDatiHandler(){
-    setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
-  }
+	public void updateDatiHandler() {
+		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
+	}
 
 	public void updateVotazioneHandler() {
 		setStatoCommitVotazione(CRLMessage.COMMIT_UNDONE);
@@ -201,7 +194,6 @@ public class EsameAulaController {
 	public void updateNoteAllegatiHandler() {
 		setStatoCommitNoteAllegati(CRLMessage.COMMIT_UNDONE);
 	}
-
 
 	public void changeTabHandler() {
 
@@ -254,7 +246,7 @@ public class EsameAulaController {
 							"Attenzione ! Le modifiche a Note e Allegati non sono state salvate ",
 							""));
 		}
-    
+
 		if (statoCommitDati.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(
@@ -263,48 +255,50 @@ public class EsameAulaController {
 							FacesMessage.SEVERITY_ERROR,
 							"Attenzione ! Le modifiche a Dati Atto non sono state salvate ",
 							""));
-		}    
+		}
 	}
 
 	// Votazione**************************************************************
 	public void presaInCarico() {
-		//TODO: alfresco service
+		// TODO: alfresco service
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		String username = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean")).getUsername();
-		
-		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setAula((Aula) aulaUser.clone());
 		atto.setStato(StatoAtto.PRESO_CARICO_AULA);
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-		
+
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
 		esameAula.setAtto(atto);
 		aulaServiceManager.presaInCarico(esameAula);
-		
-		attoBean.getWorkingAula().setDataPresaInCaricoEsameAula(aulaUser.getDataPresaInCaricoEsameAula());
-		attoBean.getWorkingAula().setRelazioneScritta(aulaUser.getRelazioneScritta());
+
+		attoBean.getWorkingAula().setDataPresaInCaricoEsameAula(
+				aulaUser.getDataPresaInCaricoEsameAula());
+		attoBean.getWorkingAula().setRelazioneScritta(
+				aulaUser.getRelazioneScritta());
 		attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
-		
+
 		String numeroAtto = attoBean.getNumeroAtto();
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
-				+ " preso in carico con successo dall' utente " + username,""));
-		
+				+ " preso in carico con successo dall' utente " + username, ""));
+
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
 	}
-
 
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
 		// TODO Service logic
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));  
-		
+				.getSessionMap().get("attoBean"));
+
 		if (!checkTestoAttoVotato(fileName)) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
@@ -316,27 +310,28 @@ public class EsameAulaController {
 			allegatoRet.setNome(event.getFile().getFileName());
 			allegatoRet.setPubblico(currentFilePubblico);
 			allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
-			
 
 			try {
-				//TODO change method
-				allegatoRet = aulaServiceManager.uploadTestoAttoVotatoEsameAula(
-						((AttoBean) FacesContext.getCurrentInstance()
-								.getExternalContext().getSessionMap()
-								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(),
-							allegatoRet);
-				
+				// TODO change method
+				allegatoRet = aulaServiceManager
+						.uploadTestoAttoVotatoEsameAula(
+								((AttoBean) FacesContext.getCurrentInstance()
+										.getExternalContext().getSessionMap()
+										.get("attoBean")).getAtto(), event
+										.getFile().getInputstream(),
+								allegatoRet);
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-            
+
 			setCurrentFilePubblico(false);
-			attoBean.getWorkingAula().getTestiAttoVotatoEsameAula().add(allegatoRet);
+			attoBean.getWorkingAula().getTestiAttoVotatoEsameAula()
+					.add(allegatoRet);
 			testiAttoVotatoList.add(allegatoRet);
 		}
 	}
-  
+
 	public void uploadTestoAtto(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -374,8 +369,8 @@ public class EsameAulaController {
 
 			currentFilePubblico = false;
 		}
-	}  
-  
+	}
+
 	private boolean checkTestoAtto(String fileName) {
 
 		for (TestoAtto element : getAtto().getTestiAtto()) {
@@ -388,7 +383,7 @@ public class EsameAulaController {
 		}
 
 		return true;
-	}  
+	}
 
 	private boolean checkTestoAttoVotato(String fileName) {
 
@@ -411,62 +406,66 @@ public class EsameAulaController {
 			if (element.getId().equals(testoAttoVotatoToDelete)) {
 
 				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoVotatoList.remove(element);
 				break;
 			}
 		}
 	}
-  
+
 	public void removeTestoAtto() {
-    Iterator<TestoAtto> it = getAtto().getTestiAtto().iterator();
-    while (it.hasNext()){
-      TestoAtto element = it.next();
-      if (element.getId().equals(testoAttoToDelete)){
-        it.remove();
-        break;
-      }
-    }
-	}  
+		Iterator<TestoAtto> it = getAtto().getTestiAtto().iterator();
+		while (it.hasNext()) {
+			TestoAtto element = it.next();
+			if (element.getId().equals(testoAttoToDelete)) {
+				attoRecordServiceManager.deleteFile(element.getId());
+				it.remove();
+				break;
+			}
+		}
+	}
 
 	public String salvaVotazione() {
-		
-		String navigation ="" ;
+
+		String navigation = "";
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
-		if(getEsitoVotazione().equals(Aula.ESITO_VOTO_APPROVATO)){
-		
-		    atto.setStato(StatoAtto.VOTATO_AULA);
-		    attoBean.setStato(StatoAtto.VOTATO_AULA);
-		}else{
-			
-			navigation ="pretty:Chiusura_Iter" ;			
+
+		if (getEsitoVotazione().equals(Aula.ESITO_VOTO_APPROVATO)) {
+
+			atto.setStato(StatoAtto.VOTATO_AULA);
+			attoBean.setStato(StatoAtto.VOTATO_AULA);
+		} else {
+
+			navigation = "pretty:Chiusura_Iter";
 		}
-		
+
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setAula((Aula) aulaUser.clone());
 		esameAula.setAtto(atto);
-		
+
 		aulaServiceManager.salvaVotazioneEsameAula(esameAula);
-		
+
 		attoBean.getWorkingAula().setEsitoVotoAula(aulaUser.getEsitoVotoAula());
-		attoBean.getWorkingAula().setTipologiaVotazione(aulaUser.getTipologiaVotazione());
-		attoBean.getWorkingAula().setDataSedutaAula(aulaUser.getDataSedutaAula());
+		attoBean.getWorkingAula().setTipologiaVotazione(
+				aulaUser.getTipologiaVotazione());
+		attoBean.getWorkingAula().setDataSedutaAula(
+				aulaUser.getDataSedutaAula());
 		attoBean.getWorkingAula().setNumeroDcr(aulaUser.getNumeroDcr());
 		attoBean.getWorkingAula().setNumeroLcr(aulaUser.getNumeroLcr());
 		attoBean.getWorkingAula().setEmendato(aulaUser.isEmendato());
 		attoBean.getWorkingAula().setNoteVotazione(aulaUser.getNoteVotazione());
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Votazione salvata con successo", ""));
-		
+		context.addMessage(null, new FacesMessage(
+				"Votazione salvata con successo", ""));
+
 		return navigation;
 	}
-
-
 
 	// Emendamenti************************************************************
 
@@ -475,7 +474,7 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		if (!checkEmendamenti(fileName)) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
@@ -486,25 +485,23 @@ public class EsameAulaController {
 			emendamentoRet.setNome(event.getFile().getFileName());
 			emendamentoRet.setPubblico(currentFilePubblico);
 			emendamentoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
-             
 
 			try {
 				emendamentoRet = aulaServiceManager.uploadEmendamentoEsameAula(
 						((AttoBean) FacesContext.getCurrentInstance()
-								.getExternalContext().getSessionMap() 
-								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(),
-								emendamentoRet);
+								.getExternalContext().getSessionMap()
+								.get("attoBean")).getAtto(), event.getFile()
+								.getInputstream(), emendamentoRet);
 				emendamentoRet.setPubblico(currentFilePubblico);
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			
 			setCurrentFilePubblico(false);
 
-			attoBean.getWorkingAula().getEmendamentiEsameAula().add(emendamentoRet);
+			attoBean.getWorkingAula().getEmendamentiEsameAula()
+					.add(emendamentoRet);
 
 			emendamentiList.add(emendamentoRet);
 		}
@@ -529,109 +526,127 @@ public class EsameAulaController {
 
 			if (element.getId().equals(emendamentoToDelete)) {
 
-				// TODO Alfresco delete
+				
+				attoRecordServiceManager.deleteFile(element.getId());
 				emendamentiList.remove(element);
 				break;
 			}
 		}
 	}
 
-
 	public void totaleEmendPresentati() {
-		numEmendPresentatiTotale = getNumEmendPresentatiGiunta() + getNumEmendPresentatiMaggior() + 
-				getNumEmendPresentatiMinor() + getNumEmendPresentatiMisto();
+		numEmendPresentatiTotale = getNumEmendPresentatiGiunta()
+				+ getNumEmendPresentatiMaggior() + getNumEmendPresentatiMinor()
+				+ getNumEmendPresentatiMisto();
 	}
 
 	public void totaleEmendApprovati() {
-		numEmendApprovatiTotale = getNumEmendApprovatiGiunta() + getNumEmendApprovatiMaggior() +
-				getNumEmendApprovatiMinor() + getNumEmendApprovatiMisto();
+		numEmendApprovatiTotale = getNumEmendApprovatiGiunta()
+				+ getNumEmendApprovatiMaggior() + getNumEmendApprovatiMinor()
+				+ getNumEmendApprovatiMisto();
 	}
 
 	public void totaleNonApprovati() {
-		totaleNonApprovati = getNonAmmissibili() + getDecaduti() + getRitirati() + getRespinti();
+		totaleNonApprovati = getNonAmmissibili() + getDecaduti()
+				+ getRitirati() + getRespinti();
 	}
 
 	public void salvaEmendamenti() {
-		
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-		
+
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setAula((Aula) aulaUser.clone());
 		esameAula.setAtto(atto);
-		
+
 		aulaServiceManager.salvaEmendamentiEsameAula(esameAula);
 
-		
+		attoBean.getWorkingAula().setNumEmendPresentatiMaggiorEsameAula(
+				aulaUser.getNumEmendPresentatiMaggiorEsameAula());
+		attoBean.getWorkingAula().setNumEmendPresentatiMinorEsameAula(
+				aulaUser.getNumEmendPresentatiMinorEsameAula());
+		attoBean.getWorkingAula().setNumEmendPresentatiGiuntaEsameAula(
+				aulaUser.getNumEmendPresentatiGiuntaEsameAula());
+		attoBean.getWorkingAula().setNumEmendPresentatiMistoEsameAula(
+				aulaUser.getNumEmendPresentatiMistoEsameAula());
 
-		attoBean.getWorkingAula().setNumEmendPresentatiMaggiorEsameAula(aulaUser.getNumEmendPresentatiMaggiorEsameAula());
-		attoBean.getWorkingAula().setNumEmendPresentatiMinorEsameAula(aulaUser.getNumEmendPresentatiMinorEsameAula());
-		attoBean.getWorkingAula().setNumEmendPresentatiGiuntaEsameAula(aulaUser.getNumEmendPresentatiGiuntaEsameAula());
-		attoBean.getWorkingAula().setNumEmendPresentatiMistoEsameAula(aulaUser.getNumEmendPresentatiMistoEsameAula());
+		attoBean.getWorkingAula().setNumEmendApprovatiMaggiorEsameAula(
+				aulaUser.getNumEmendApprovatiMaggiorEsameAula());
+		attoBean.getWorkingAula().setNumEmendApprovatiMinorEsameAula(
+				aulaUser.getNumEmendApprovatiMinorEsameAula());
+		attoBean.getWorkingAula().setNumEmendApprovatiGiuntaEsameAula(
+				aulaUser.getNumEmendApprovatiGiuntaEsameAula());
+		attoBean.getWorkingAula().setNumEmendApprovatiMistoEsameAula(
+				aulaUser.getNumEmendApprovatiMistoEsameAula());
 
-		attoBean.getWorkingAula().setNumEmendApprovatiMaggiorEsameAula(aulaUser.getNumEmendApprovatiMaggiorEsameAula());
-		attoBean.getWorkingAula().setNumEmendApprovatiMinorEsameAula(aulaUser.getNumEmendApprovatiMinorEsameAula());
-		attoBean.getWorkingAula().setNumEmendApprovatiGiuntaEsameAula(aulaUser.getNumEmendApprovatiGiuntaEsameAula());
-		attoBean.getWorkingAula().setNumEmendApprovatiMistoEsameAula(aulaUser.getNumEmendApprovatiMistoEsameAula());
+		attoBean.getWorkingAula().setNonAmmissibiliEsameAula(
+				aulaUser.getNonAmmissibiliEsameAula());
+		attoBean.getWorkingAula().setDecadutiEsameAula(
+				aulaUser.getDecadutiEsameAula());
+		attoBean.getWorkingAula().setRitiratiEsameAula(
+				aulaUser.getRitiratiEsameAula());
+		attoBean.getWorkingAula().setRespintiEsameAula(
+				aulaUser.getRespintiEsameAula());
 
-		attoBean.getWorkingAula().setNonAmmissibiliEsameAula(aulaUser.getNonAmmissibiliEsameAula());
-		attoBean.getWorkingAula().setDecadutiEsameAula(aulaUser.getDecadutiEsameAula());
-		attoBean.getWorkingAula().setRitiratiEsameAula(aulaUser.getRitiratiEsameAula());
-		attoBean.getWorkingAula().setRespintiEsameAula(aulaUser.getRespintiEsameAula());
+		attoBean.getWorkingAula().setNoteEmendamentiEsameAula(
+				aulaUser.getNoteEmendamentiEsameAula());
 
-		attoBean.getWorkingAula().setNoteEmendamentiEsameAula(aulaUser.getNoteEmendamentiEsameAula());
-		
 		setStatoCommitEmendamenti(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Emendamenti salvati con successo", ""));
+		context.addMessage(null, new FacesMessage(
+				"Emendamenti salvati con successo", ""));
 	}
-	
+
 	// Rinvio e Starlci******************************************************
-	
+
 	public String salvaRinvioEsame() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
-		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setAula((Aula) aulaUser.clone());
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
 		atto.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
-		
-		
+
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
 		esameAula.setAtto(atto);
-		
-		
-		Passaggio passaggio = aulaServiceManager.salvaRinvioEsameEsameAula(esameAula);
-		
-		
-		attoBean.getWorkingAula().setDataSedutaRinvio(aulaUser.getDataSedutaRinvio());
-		attoBean.getWorkingAula().setDataTermineMassimo(aulaUser.getDataTermineMassimo());
-		attoBean.getWorkingAula().setMotivazioneRinvio(aulaUser.getMotivazioneRinvio());
+
+		Passaggio passaggio = aulaServiceManager
+				.salvaRinvioEsameEsameAula(esameAula);
+
+		attoBean.getWorkingAula().setDataSedutaRinvio(
+				aulaUser.getDataSedutaRinvio());
+		attoBean.getWorkingAula().setDataTermineMassimo(
+				aulaUser.getDataTermineMassimo());
+		attoBean.getWorkingAula().setMotivazioneRinvio(
+				aulaUser.getMotivazioneRinvio());
 		attoBean.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
 		attoBean.getAtto().getPassaggi().add(passaggio);
-		setAtto((Atto) attoBean.getAtto().clone());	
+		setAtto((Atto) attoBean.getAtto().clone());
 		updateStatoCommissioni(attoBean);
 		setStatoCommitRinvioEsame(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Rinvio Esame salvato con successo", ""));
-		
+		context.addMessage(null, new FacesMessage(
+				"Rinvio Esame salvato con successo", ""));
+
 		return "pretty:Esame_Aula";
 	}
-	
-	
-	public void updateStatoCommissioni(AttoBean attoBean){
-		
-		for (Commissione commissione : atto.getPassaggi().get(atto.getPassaggi().size()-1).getCommissioni()) {
-			
-			if(!commissione.getStato().equals(Commissione.STATO_ANNULLATO)){
-				
+
+	public void updateStatoCommissioni(AttoBean attoBean) {
+
+		for (Commissione commissione : atto.getPassaggi()
+				.get(atto.getPassaggi().size() - 1).getCommissioni()) {
+
+			if (!commissione.getStato().equals(Commissione.STATO_ANNULLATO)) {
+
 				commissione.setStato(Commissione.STATO_ASSEGNATO);
 				commissione.setDataPresaInCarico(null);
 				Target target = new Target();
@@ -640,42 +655,47 @@ public class EsameAulaController {
 				EsameCommissione esameCommissione = new EsameCommissione();
 				esameCommissione.setAtto(atto);
 				esameCommissione.setTarget(target);
-				commissioneServiceManager.salvaPresaInCaricoEsameCommissioni(esameCommissione);
+				commissioneServiceManager
+						.salvaPresaInCaricoEsameCommissioni(esameCommissione);
 
-				
 			}
-			
-		}		
+
+		}
 	}
-	
+
 	public void salvaStralci() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
-		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
+
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setAula((Aula) aulaUser.clone());
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-		
+
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
 		esameAula.setAtto(atto);
-		
-		//TODO Check commissioni
-		//TODO Return passaggio da aggiungere a session bean
+
+		// TODO Check commissioni
+		// TODO Return passaggio da aggiungere a session bean
 		aulaServiceManager.salvaStralciEsameAula(esameAula);
-		
-		attoBean.getWorkingAula().setDataSedutaStralcio(aulaUser.getDataSedutaStralcio());
+
+		attoBean.getWorkingAula().setDataSedutaStralcio(
+				aulaUser.getDataSedutaStralcio());
 		attoBean.getWorkingAula().setDataStralcio(aulaUser.getDataStralcio());
-		attoBean.getWorkingAula().setDataIniziativaStralcio(aulaUser.getDataIniziativaStralcio());
+		attoBean.getWorkingAula().setDataIniziativaStralcio(
+				aulaUser.getDataIniziativaStralcio());
 		attoBean.getWorkingAula().setArticoli(aulaUser.getArticoli());
 		attoBean.getWorkingAula().setNoteStralcio(aulaUser.getNoteStralcio());
-		attoBean.getWorkingAula().setQuorumEsameAula(aulaUser.getQuorumEsameAula());
-		
+		attoBean.getWorkingAula().setQuorumEsameAula(
+				aulaUser.getQuorumEsameAula());
+
 		setStatoCommitStralci(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("Stralci salvati con successo", ""));
-	}	
+		context.addMessage(null, new FacesMessage(
+				"Stralci salvati con successo", ""));
+	}
 
 	// Note e Allegati********************************************************
 
@@ -686,7 +706,6 @@ public class EsameAulaController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		
 		if (!checkAllegato(fileName)) {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
@@ -699,17 +718,18 @@ public class EsameAulaController {
 			allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 
 			try {
-				allegatoRet = aulaServiceManager.uploadAllegatoNoteAllegatiEsameAula(
-						((AttoBean) FacesContext.getCurrentInstance()
-								.getExternalContext().getSessionMap()
-								.get("attoBean")).getAtto(), event
-								.getFile().getInputstream(), allegatoRet);
-				
+				allegatoRet = aulaServiceManager
+						.uploadAllegatoNoteAllegatiEsameAula(
+								((AttoBean) FacesContext.getCurrentInstance()
+										.getExternalContext().getSessionMap()
+										.get("attoBean")).getAtto(), event
+										.getFile().getInputstream(),
+								allegatoRet);
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			
 			setCurrentFilePubblico(false);
 			attoBean.getWorkingAula().getAllegatiEsameAula().add(allegatoRet);
 
@@ -737,7 +757,7 @@ public class EsameAulaController {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
 				break;
 			}
@@ -790,32 +810,33 @@ public class EsameAulaController {
 
 		return true;
 	}
-	
-	
+
 	public void salvaNoteEAllegati() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		this.aulaUser.setLinksEsameAula(linksList);
-		atto.getPassaggi().get(atto.getPassaggi().size()-1).setAula((Aula)aulaUser.clone());
-		
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setAula((Aula) aulaUser.clone());
+
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-		
+
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
 		esameAula.setAtto(atto);
 		aulaServiceManager.salvaNoteAllegatiEsameAula(esameAula);
 
-		
-		attoBean.getWorkingAula().setNoteGeneraliEsameAula(aulaUser.getNoteGeneraliEsameAula());
-		attoBean.getWorkingAula().setLinksEsameAula(linksList);		
+		attoBean.getWorkingAula().setNoteGeneraliEsameAula(
+				aulaUser.getNoteGeneraliEsameAula());
+		attoBean.getWorkingAula().setLinksEsameAula(linksList);
 
 		setStatoCommitNoteAllegati(CRLMessage.COMMIT_DONE);
 
-		context.addMessage(null, new FacesMessage("Note e Allegati salvati con successo", ""));
+		context.addMessage(null, new FacesMessage(
+				"Note e Allegati salvati con successo", ""));
 
 	}
 
@@ -825,632 +846,515 @@ public class EsameAulaController {
 		return atto;
 	}
 
-
 	public void setAtto(Atto atto) {
 		this.atto = atto;
 	}
-
 
 	public Date getDataPresaInCarico() {
 		return aulaUser.getDataPresaInCaricoEsameAula();
 	}
 
-
 	public void setDataPresaInCarico(Date dataPresaInCarico) {
 		this.aulaUser.setDataPresaInCaricoEsameAula(dataPresaInCarico);
 	}
-
 
 	public String getRelazioneScritta() {
 		return aulaUser.getRelazioneScritta();
 	}
 
-
 	public void setRelazioneScritta(String relazioneScritta) {
 		this.aulaUser.setRelazioneScritta(relazioneScritta);
 	}
-
 
 	public String getEsitoVotazione() {
 		return aulaUser.getEsitoVotoAula();
 	}
 
-
 	public void setEsitoVotazione(String esitoVotazione) {
 		this.aulaUser.setEsitoVotoAula(esitoVotazione);
 	}
-
 
 	public String getTipologiaVotazione() {
 		return aulaUser.getTipologiaVotazione();
 	}
 
-
 	public void setTipologiaVotazione(String tipologiaVotazione) {
 		this.aulaUser.setTipologiaVotazione(tipologiaVotazione);
 	}
-
 
 	public Date getDataSedutaVotazione() {
 		return aulaUser.getDataSedutaAula();
 	}
 
-
 	public void setDataSedutaVotazione(Date dataSedutaVotazione) {
 		this.aulaUser.setDataSedutaAula(dataSedutaVotazione);
 	}
-
 
 	public String getNumeroDcr() {
 		return aulaUser.getNumeroDcr();
 	}
 
-
 	public void setNumeroDcr(String numeroDcr) {
 		this.aulaUser.setNumeroDcr(numeroDcr);
 	}
-
 
 	public String getNumeroLcr() {
 		return aulaUser.getNumeroLcr();
 	}
 
-
 	public void setNumeroLcr(String numeroLcr) {
 		this.aulaUser.setNumeroLcr(numeroLcr);
 	}
-
 
 	public boolean isEmendato() {
 		return aulaUser.isEmendato();
 	}
 
-
 	public void setEmendato(boolean emendato) {
 		this.aulaUser.setEmendato(emendato);
 	}
-
 
 	public String getNoteVotazione() {
 		return aulaUser.getNoteVotazione();
 	}
 
-
 	public void setNoteVotazione(String noteVotazione) {
 		this.aulaUser.setNoteVotazione(noteVotazione);
 	}
-
 
 	public List<TestoAtto> getTestiAttoVotatoList() {
 		return testiAttoVotatoList;
 	}
 
-
 	public void setTestiAttoVotatoList(List<TestoAtto> testiAttoVotatoList) {
 		this.testiAttoVotatoList = testiAttoVotatoList;
 	}
-
 
 	public List<Allegato> getEmendamentiList() {
 		return emendamentiList;
 	}
 
-
 	public void setEmendamentiList(List<Allegato> emendamentiList) {
 		this.emendamentiList = emendamentiList;
 	}
-
 
 	public int getNumEmendPresentatiMaggior() {
 		return aulaUser.getNumEmendPresentatiMaggiorEsameAula();
 	}
 
-
 	public void setNumEmendPresentatiMaggior(int numEmendPresentatiMaggior) {
-		this.aulaUser.setNumEmendPresentatiMaggiorEsameAula(numEmendPresentatiMaggior);
+		this.aulaUser
+				.setNumEmendPresentatiMaggiorEsameAula(numEmendPresentatiMaggior);
 	}
-
 
 	public int getNumEmendPresentatiMinor() {
 		return aulaUser.getNumEmendPresentatiMinorEsameAula();
 	}
 
-
 	public void setNumEmendPresentatiMinor(int numEmendPresentatiMinor) {
-		this.aulaUser.setNumEmendPresentatiMinorEsameAula(numEmendPresentatiMinor);
+		this.aulaUser
+				.setNumEmendPresentatiMinorEsameAula(numEmendPresentatiMinor);
 	}
-
 
 	public int getNumEmendPresentatiGiunta() {
 		return aulaUser.getNumEmendPresentatiGiuntaEsameAula();
 	}
 
-
 	public void setNumEmendPresentatiGiunta(int numEmendPresentatiGiunta) {
-		this.aulaUser.setNumEmendPresentatiGiuntaEsameAula(numEmendPresentatiGiunta);
+		this.aulaUser
+				.setNumEmendPresentatiGiuntaEsameAula(numEmendPresentatiGiunta);
 	}
-
 
 	public int getNumEmendPresentatiMisto() {
 		return aulaUser.getNumEmendPresentatiMistoEsameAula();
 	}
 
-
 	public void setNumEmendPresentatiMisto(int numEmendPresentatiMisto) {
-		this.aulaUser.setNumEmendPresentatiMistoEsameAula(numEmendPresentatiMisto);
+		this.aulaUser
+				.setNumEmendPresentatiMistoEsameAula(numEmendPresentatiMisto);
 	}
-
 
 	public int getNumEmendPresentatiTotale() {
 		return numEmendPresentatiTotale;
 	}
 
-
 	public void setNumEmendPresentatiTotale(int numEmendPresentatiTotale) {
 		this.numEmendPresentatiTotale = numEmendPresentatiTotale;
 	}
-
 
 	public int getNumEmendApprovatiMaggior() {
 		return aulaUser.getNumEmendApprovatiMaggiorEsameAula();
 	}
 
-
 	public void setNumEmendApprovatiMaggior(int numEmendApprovatiMaggior) {
-		this.aulaUser.setNumEmendApprovatiMaggiorEsameAula(numEmendApprovatiMaggior);
+		this.aulaUser
+				.setNumEmendApprovatiMaggiorEsameAula(numEmendApprovatiMaggior);
 	}
-
 
 	public int getNumEmendApprovatiMinor() {
 		return aulaUser.getNumEmendApprovatiMinorEsameAula();
 	}
 
-
 	public void setNumEmendApprovatiMinor(int numEmendApprovatiMinor) {
-		this.aulaUser.setNumEmendApprovatiMinorEsameAula(numEmendApprovatiMinor);
+		this.aulaUser
+				.setNumEmendApprovatiMinorEsameAula(numEmendApprovatiMinor);
 	}
-
 
 	public int getNumEmendApprovatiGiunta() {
 		return aulaUser.getNumEmendApprovatiGiuntaEsameAula();
 	}
 
-
 	public void setNumEmendApprovatiGiunta(int numEmendApprovatiGiunta) {
-		this.aulaUser.setNumEmendApprovatiGiuntaEsameAula(numEmendApprovatiGiunta);
+		this.aulaUser
+				.setNumEmendApprovatiGiuntaEsameAula(numEmendApprovatiGiunta);
 	}
-
 
 	public int getNumEmendApprovatiMisto() {
 		return aulaUser.getNumEmendApprovatiMistoEsameAula();
 	}
 
-
 	public void setNumEmendApprovatiMisto(int numEmendApprovatiMisto) {
-		this.aulaUser.setNumEmendApprovatiMistoEsameAula(numEmendApprovatiMisto);
+		this.aulaUser
+				.setNumEmendApprovatiMistoEsameAula(numEmendApprovatiMisto);
 	}
-
 
 	public int getNumEmendApprovatiTotale() {
 		return numEmendApprovatiTotale;
 	}
 
-
 	public void setNumEmendApprovatiTotale(int numEmendApprovatiTotale) {
 		this.numEmendApprovatiTotale = numEmendApprovatiTotale;
 	}
-
 
 	public int getNonAmmissibili() {
 		return aulaUser.getNonAmmissibiliEsameAula();
 	}
 
-
 	public void setNonAmmissibili(int nonAmmissibili) {
 		this.aulaUser.setNonAmmissibiliEsameAula(nonAmmissibili);
 	}
-
 
 	public int getDecaduti() {
 		return aulaUser.getDecadutiEsameAula();
 	}
 
-
 	public void setDecaduti(int decaduti) {
 		this.aulaUser.setDecadutiEsameAula(decaduti);
 	}
-
 
 	public int getRitirati() {
 		return aulaUser.getRitiratiEsameAula();
 	}
 
-
 	public void setRitirati(int ritirati) {
 		this.aulaUser.setRitiratiEsameAula(ritirati);
 	}
-
 
 	public int getRespinti() {
 		return aulaUser.getRespintiEsameAula();
 	}
 
-
 	public void setRespinti(int respinti) {
 		this.aulaUser.setRespintiEsameAula(respinti);
 	}
-
 
 	public int getTotaleNonApprovati() {
 		return totaleNonApprovati;
 	}
 
-
 	public void setTotaleNonApprovati(int totaleNonApprovati) {
 		this.totaleNonApprovati = totaleNonApprovati;
 	}
-
 
 	public String getNoteEmendamenti() {
 		return aulaUser.getNoteEmendamentiEsameAula();
 	}
 
-
 	public void setNoteEmendamenti(String noteEmendamenti) {
 		this.aulaUser.setNoteEmendamentiEsameAula(noteEmendamenti);
 	}
-
 
 	public Date getDataSedutaRinvio() {
 		return aulaUser.getDataSedutaRinvio();
 	}
 
-
 	public void setDataSedutaRinvio(Date dataSedutaRinvio) {
 		this.aulaUser.setDataSedutaRinvio(dataSedutaRinvio);
 	}
-
 
 	public Date getDataTermineMassimo() {
 		return aulaUser.getDataTermineMassimo();
 	}
 
-
 	public void setDataTermineMassimo(Date dataTermineMassimo) {
 		this.aulaUser.setDataTermineMassimo(dataTermineMassimo);
 	}
-
 
 	public String getMotivazioneRinvio() {
 		return aulaUser.getMotivazioneRinvio();
 	}
 
-
 	public void setMotivazioneRinvio(String motivazione) {
 		this.aulaUser.setMotivazioneRinvio(motivazione);
 	}
-
 
 	public Date getDataSedutaStralcio() {
 		return aulaUser.getDataSedutaStralcio();
 	}
 
-
 	public void setDataSedutaStralcio(Date dataSedutaStralcio) {
 		this.aulaUser.setDataSedutaStralcio(dataSedutaStralcio);
 	}
-
 
 	public Date getDataStralcio() {
 		return aulaUser.getDataStralcio();
 	}
 
-
 	public void setDataStralcio(Date dataStralcio) {
 		this.aulaUser.setDataStralcio(dataStralcio);
 	}
-
 
 	public Date getDataIniziativaStralcio() {
 		return aulaUser.getDataIniziativaStralcio();
 	}
 
-
 	public void setDataIniziativaStralcio(Date dataIniziativaStralcio) {
 		this.aulaUser.setDataIniziativaStralcio(dataIniziativaStralcio);
 	}
-
 
 	public String getArticoli() {
 		return aulaUser.getArticoli();
 	}
 
-
 	public void setArticoli(String articoli) {
 		this.aulaUser.setArticoli(articoli);
 	}
-
 
 	public String getNoteStralcio() {
 		return aulaUser.getNoteStralcio();
 	}
 
-
 	public void setNoteStralcio(String noteStralcio) {
 		this.aulaUser.setNoteStralcio(noteStralcio);
 	}
 
-
-	
-	
 	public String getQuorum() {
 		return aulaUser.getQuorumEsameAula();
 	}
-
 
 	public void setQuorum(String quorum) {
 		this.aulaUser.setQuorumEsameAula(quorum);
 	}
 
-
 	public String getNoteGenerali() {
 		return aulaUser.getNoteGeneraliEsameAula();
 	}
-
 
 	public void setNoteGenerali(String noteGenerali) {
 		this.aulaUser.setNoteGeneraliEsameAula(noteGenerali);
 	}
 
-
 	public List<Allegato> getAllegatiList() {
 		return allegatiList;
 	}
-
 
 	public void setAllegatiList(List<Allegato> allegatiList) {
 		this.allegatiList = allegatiList;
 	}
 
-
 	public List<Link> getLinksList() {
 		return linksList;
 	}
-
 
 	public void setLinksList(List<Link> linksList) {
 		this.linksList = linksList;
 	}
 
-
 	public String getStatoCommitVotazione() {
 		return statoCommitVotazione;
 	}
-
 
 	public void setStatoCommitVotazione(String statoCommitVotazione) {
 		this.statoCommitVotazione = statoCommitVotazione;
 	}
 
-
 	public String getStatoCommitEmendamenti() {
 		return statoCommitEmendamenti;
 	}
-
 
 	public void setStatoCommitEmendamenti(String statoCommitEmendamenti) {
 		this.statoCommitEmendamenti = statoCommitEmendamenti;
 	}
 
-
 	public String getStatoCommitRinvioEsame() {
 		return statoCommitRinvioEsame;
 	}
-
 
 	public void setStatoCommitRinvioEsame(String statoCommitRinvioEsame) {
 		this.statoCommitRinvioEsame = statoCommitRinvioEsame;
 	}
 
-
 	public String getStatoCommitStralci() {
 		return statoCommitStralci;
 	}
-
 
 	public void setStatoCommitStralci(String statoCommitStralci) {
 		this.statoCommitStralci = statoCommitStralci;
 	}
 
-
 	public String getStatoCommitNoteAllegati() {
 		return statoCommitNoteAllegati;
 	}
-
 
 	public void setStatoCommitNoteAllegati(String statoCommitNoteAllegati) {
 		this.statoCommitNoteAllegati = statoCommitNoteAllegati;
 	}
 
-  public String getStatoCommitDati() {
-    return statoCommitDati;
-  }
+	public String getStatoCommitDati() {
+		return statoCommitDati;
+	}
 
-  public void setStatoCommitDati(String statoCommitDati) {
-    this.statoCommitDati = statoCommitDati;
-  }
+	public void setStatoCommitDati(String statoCommitDati) {
+		this.statoCommitDati = statoCommitDati;
+	}
 
 	public String getTestoAttoVotatoToDelete() {
 		return testoAttoVotatoToDelete;
 	}
 
-
-
 	public void setTestoAttoVotatoToDelete(String testoAttoVotatoToDelete) {
 		this.testoAttoVotatoToDelete = testoAttoVotatoToDelete;
 	}
 
-  public String getTestoAttoToDelete() {
-    return testoAttoToDelete;
-  }
+	public String getTestoAttoToDelete() {
+		return testoAttoToDelete;
+	}
 
-  public void setTestoAttoToDelete(String testAttoToDelete) {
-    this.testoAttoToDelete = testAttoToDelete;
-  }
-
+	public void setTestoAttoToDelete(String testAttoToDelete) {
+		this.testoAttoToDelete = testAttoToDelete;
+	}
 
 	public String getEmendamentoToDelete() {
 		return emendamentoToDelete;
 	}
 
-
-
 	public void setEmendamentoToDelete(String emendamentoToDelete) {
 		this.emendamentoToDelete = emendamentoToDelete;
 	}
-
-
 
 	public String getAllegatoToDelete() {
 		return allegatoToDelete;
 	}
 
-
-
 	public void setAllegatoToDelete(String allegatoToDelete) {
 		this.allegatoToDelete = allegatoToDelete;
 	}
-
-
 
 	public String getNomeLink() {
 		return nomeLink;
 	}
 
-
-
 	public void setNomeLink(String nomeLink) {
 		this.nomeLink = nomeLink;
 	}
-
-
 
 	public String getLinkToDelete() {
 		return linkToDelete;
 	}
 
-
-
 	public void setLinkToDelete(String linkToDelete) {
 		this.linkToDelete = linkToDelete;
 	}
-
-
 
 	public String getUrlLink() {
 		return urlLink;
 	}
 
-
-
 	public void setUrlLink(String urlLink) {
 		this.urlLink = urlLink;
 	}
-
-
 
 	public boolean isPubblico() {
 		return pubblico;
 	}
 
-
-
 	public void setPubblico(boolean pubblico) {
 		this.pubblico = pubblico;
 	}
-
 
 	public boolean isCurrentFilePubblico() {
 		return currentFilePubblico;
 	}
 
-
-
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
 	}
-
-
 
 	public AulaServiceManager getAulaServiceManager() {
 		return aulaServiceManager;
 	}
 
-
-
 	public void setAulaServiceManager(AulaServiceManager aulaServiceManager) {
 		this.aulaServiceManager = aulaServiceManager;
 	}
 
-  public AttoServiceManager getAttoServiceManager() {
-    return attoServiceManager;
-  }
+	public AttoServiceManager getAttoServiceManager() {
+		return attoServiceManager;
+	}
 
-  public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
-    this.attoServiceManager = attoServiceManager;
-  }
+	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
+		this.attoServiceManager = attoServiceManager;
+	}
 
 	public Aula getAulaUser() {
 		return aulaUser;
 	}
 
-
-
 	public void setAulaUser(Aula aulaUser) {
 		this.aulaUser = aulaUser;
 	}
-
 
 	public Passaggio getPassaggio() {
 		return passaggio;
 	}
 
-
 	public void setPassaggio(Passaggio passaggio) {
 		this.passaggio = passaggio;
 	}
-
 
 	public String getPassaggioSelected() {
 		return passaggioSelected;
 	}
 
-
 	public void setPassaggioSelected(String passaggioSelected) {
 		this.passaggioSelected = passaggioSelected;
 	}
-
 
 	public boolean isReadonly() {
 		return readonly;
 	}
 
-
 	public void setReadonly(boolean readonly) {
 		this.readonly = readonly;
 	}
 
-
 	public CommissioneServiceManager getCommissioneServiceManager() {
 		return commissioneServiceManager;
 	}
-
 
 	public void setCommissioneServiceManager(
 			CommissioneServiceManager commissioneServiceManager) {
 		this.commissioneServiceManager = commissioneServiceManager;
 	}
 
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
+	}
 
 	public void salvaInfoGenerali() {
 		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
@@ -1471,16 +1375,11 @@ public class EsameAulaController {
 		attoBean.getAtto().setDataDgr(atto.getDataDgr());
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
 
-
 		setStatoCommitDati(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(
 				"Informazioni Generali salvate con successo", ""));
 
-	}	
-
+	}
 
 }
-
-
-

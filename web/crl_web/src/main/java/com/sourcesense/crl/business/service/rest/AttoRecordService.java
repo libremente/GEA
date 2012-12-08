@@ -77,7 +77,34 @@ public class AttoRecordService {
 		return listTestiAtto;
 
 	}
+	
+	
 
+   public void deleteFile(String url) {
+		
+		
+		WebResource webResource = client.resource(url);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+				false);
+		
+
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+
+			}
+			
+
+				
+	}
+	
+	
 	public List<Allegato> retrieveAllegati(String url) {
 		List<Allegato> listAllegati = null;
 

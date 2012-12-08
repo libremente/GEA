@@ -102,8 +102,11 @@
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="oggetto" value="Oggetto: " />
 				</p:column>
-				<p:column colspan="3" style="text-align:left;">
-					<p:inputText id="oggetto" value="#{inserisciMISController.oggetto}" />
+				<p:column colspan="3"  style="text-align:left;">
+				
+				<p:inputTextarea readonly="false" rows="2" cols="82"
+						value="#{inserisciMISController.oggetto}"/>
+					
 				</p:column>
 			</p:row>
 
@@ -218,7 +221,7 @@
 
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="numeroattoUdp"
-						value="Numero Atto UdP: *" />
+						value="Numero Atto UdP: " />
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">
@@ -232,7 +235,7 @@
 				
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="istitutoIncaricato"
-						value="Istituto Incaricato: *" />
+						value="Istituto Incaricato: " />
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">
@@ -241,7 +244,7 @@
 				
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataScadenzaMV"
-						value="Data approvazione Udp: " />
+						value="Scadenza MV: " />
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">

@@ -88,17 +88,9 @@ public class SeduteService {
 		try {
 			WebResource webResource = client.resource(url);
 			
-			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			objectMapper.getSerializationConfig().setDateFormat(myDateFormat);
 			
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
 				false);
-			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
-					false);
-			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
-					false);
-			//objectMapper.getSerializationConfig().addMixInAnnotations(Commissione.class, Commissione.class);
-			
 			String json = objectMapper.writeValueAsString(gestioneSedute);
 	
 			ClientResponse response = webResource.type(
@@ -143,7 +135,7 @@ public class SeduteService {
 			
 			ClientResponse response = webResource.type(
 					MediaType.APPLICATION_JSON)
-					.delete(ClientResponse.class);
+					.get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "
@@ -199,15 +191,8 @@ public class SeduteService {
 		try {
 			WebResource webResource = client.resource(url);
 			
-			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			objectMapper.getSerializationConfig().setDateFormat(myDateFormat);
-			
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
 				false);
-			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
-					false);
-			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
-					false);
 			
 			String json = objectMapper.writeValueAsString(gestioneSedute);
 	

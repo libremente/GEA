@@ -37,6 +37,7 @@ import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AbbinamentoServiceManager;
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
@@ -60,6 +61,11 @@ public class EsameCommissioniController {
 
 	@ManagedProperty(value = "#{abbinamentoServiceManager}")
 	private AbbinamentoServiceManager abbinamentoServiceManager;
+	
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
+	
+	
 
 	private Atto atto = new Atto();
 
@@ -915,7 +921,7 @@ public class EsameCommissioniController {
 		for (Allegato element : testiComitatoRistrettoList) {
 
 			if (element.getId().equals(testoComitatoToDelete)) {
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				testiComitatoRistrettoList.remove(element);
 				break;
 			}
@@ -1331,7 +1337,7 @@ public class EsameCommissioniController {
 
 			if (element.getId().equals(testoAttoVotatoToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoVotatoList.remove(element);
 				break;
 			}
@@ -1570,7 +1576,7 @@ public class EsameCommissioniController {
 
 			if (element.getId().equals(emendamentoToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				emendamentiList.remove(element);
 				break;
 			}
@@ -1642,7 +1648,7 @@ public class EsameCommissioniController {
 
 			if (element.getId().equals(testoClausolaToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				testiClausolaList.remove(element);
 				break;
 			}
@@ -1800,7 +1806,7 @@ public class EsameCommissioniController {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
-				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
 				break;
 			}
@@ -2793,4 +2799,15 @@ public class EsameCommissioniController {
 		this.numEmendPresentatiCommissione = numEmendPresentatiCommissione;
 	}
 
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
+	}
+
+	
+	
 }

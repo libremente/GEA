@@ -22,6 +22,7 @@ import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.SoggettoInvitato;
 import com.sourcesense.crl.business.model.Target;
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
@@ -34,6 +35,10 @@ public class ConsultazioniPareriController {
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
+	
+	
 	private Atto atto = new Atto();
 
 	private List<OrganismoStatutario> organismiList = new ArrayList<OrganismoStatutario>();
@@ -241,6 +246,7 @@ public class ConsultazioniPareriController {
 			if (element.getId().equals(allegatoParereToDelete)) {
 
 				// TODO Alfresco delete
+				attoRecordServiceManager.deleteFile(element.getId());
 				organismoSelected.getParere().getAllegati().remove(element);
 				break;
 			}
@@ -809,6 +815,15 @@ public class ConsultazioniPareriController {
 
 	public void setCommissioneDestinataria(String commissioneDestinataria) {
 		this.commissioneDestinataria = commissioneDestinataria;
+	}
+
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
 	

@@ -16,8 +16,8 @@ PrimeFaces.locales ['it'] = {
 	     timeOnlyTitle: 'Solo Tempo',
 	     timeText: 'Ora',
 	     hourText: 'Ore',
-	     minuteText: 'Minuto',
-	     secondText: 'Secondo',
+	     minuteText: 'Minuti',
+	     secondText: 'Secondi',
 	     currentText: 'Data Odierna',
 	     ampm: false,
 	     month: 'Mese',
@@ -45,9 +45,29 @@ function dragSortTable(tableId,hiddeId,colIndx) {
 		  console.log(jQuery.trim(nodo.getElementsByTagName('td')[colIndx].getElementsByTagName('div')[0].innerHTML));
 		  
 		  if(i==nodi.length-1){
-		   hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[colIndx].getElementsByTagName('div')[0].innerHTML);
+		    
+			  var nodoTd = nodo.getElementsByTagName('td')[colIndx];
+			  
+			  if (nodoTd.getElementsByTagName('a')[0]){
+			  
+				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('a')[0].innerHTML);
+				  
+			  }else{
+				  
+				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('div')[0].innerHTML);  
+			  }
+		  
 		  }else{
-			  hidden.value += jQuery.trim(nodo.getElementsByTagName('td')[colIndx].getElementsByTagName('div')[0].innerHTML)+ "_";  
+			  
+			  if (nodoTd.getElementsByTagName('a')[0]){
+				  
+				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('a')[0].innerHTML)+ "_"; 
+				  
+			  }else{
+				  
+				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('div')[0].innerHTML)+ "_";  
+			  }
+			    
 			  
 		  }
 		  console.log(hidden.value);
