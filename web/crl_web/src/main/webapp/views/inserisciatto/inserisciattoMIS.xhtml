@@ -12,19 +12,34 @@
 
 <h:form enctype="multipart/form-data">
 
- <p:ajaxStatus onstart="statusDialog.show();"
-		onsuccess="statusDialog.hide();" />
+	
 	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
 		draggable="false" closable="false">
 		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
-	</p:dialog> 
+	</p:dialog>
+
+	<p:confirmDialog id="confirmAllegatoDialog"
+		message="Sei sicuro di voler eliminare l'Allegato ?"
+		header="Cancellazione Allegato" severity="alert"
+		widgetVar="allegatoDialog">
+
+		<p:commandButton id="confirmAllegato" value="Conferma"
+			oncomplete="allegatoDialog.hide()"
+			actionListener="#{inserisciMISController.removeAllegatoParere}"
+			update="listaAllegati" />
+		<p:commandButton id="declineAllegato" value="Annulla"
+			onclick="allegatoDialog.hide()" type="button" />
+
+	</p:confirmDialog>
+
+
 
 	<p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
 		widgetVar="uploadAllegatoAttributesDialog" style="width:450px"
 		message="Allega file">
 		<p:panelGrid id="uploadpanelalleg">
 			<p:row>
-				<p:column >
+				<p:column>
 					<h:outputLabel for="isPubblico" value="Pubblico: " />
 					<p:selectBooleanCheckbox id="isPubblicoAllegato"
 						value="#{inserisciMISController.currentFilePubblico}">
@@ -53,7 +68,7 @@
 
 	<p:fieldset legend="Dati dell' Atto" collapsed="false"
 		toggleable="true" toggleSpeed="500">
-		<p:panelGrid style="width:90%;"  id="insertattopanel">
+		<p:panelGrid style="width:90%;" id="insertattopanel">
 
 			<p:growl id="inserimentoMsg" showDetail="true" sticky="false" />
 
@@ -64,7 +79,7 @@
 			</p:row>
 
 			<p:row>
-				<p:column style="width: 25%; text-align:left;" >
+				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="numerorepertorio" value="Numero repertorio: *" />
 				</p:column>
 				<p:column style="width: 25%; text-align:left;">
@@ -72,41 +87,41 @@
 						value="#{inserisciMISController.numeroRepertorio}" required="true"
 						requiredMessage="Numero Repertorio obbligatorio" />
 				</p:column>
-				<p:column colspan="2" >
+				<p:column colspan="2">
 					<p:message for="numerorepertorio" display="icon" />
 				</p:column>
 
 			</p:row>
 
 
-           <p:row>
+			<p:row>
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="legislatura" value="Legislatura: *" />
 				</p:column>
 				<p:column style="width: 25%; text-align:left;">
 					<p:selectOneMenu id="legislatura"
-					value="#{inserisciMISController.legislatura}" required="true"
-					requiredMessage="Legislatura obbligatoria">
-					<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
-					<f:selectItems value="#{inserisciMISController.legislature}" />
-				</p:selectOneMenu>
+						value="#{inserisciMISController.legislatura}" required="true"
+						requiredMessage="Legislatura obbligatoria">
+						<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
+						<f:selectItems value="#{inserisciMISController.legislature}" />
+					</p:selectOneMenu>
 				</p:column>
 				<p:column colspan="2">
 					<p:message for="legislatura" display="icon" />
 				</p:column>
 
-			</p:row> 
+			</p:row>
 
 
 			<p:row>
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="oggetto" value="Oggetto: " />
 				</p:column>
-				<p:column colspan="3"  style="text-align:left;">
-				
-				<p:inputTextarea readonly="false" rows="2" cols="82"
-						value="#{inserisciMISController.oggetto}"/>
-					
+				<p:column colspan="3" style="text-align:left;">
+
+					<p:inputTextarea readonly="false" rows="2" cols="82"
+						value="#{inserisciMISController.oggetto}" />
+
 				</p:column>
 			</p:row>
 
@@ -207,7 +222,7 @@
 				</p:column>
 			</p:row>
 
-            <p:row>
+			<p:row>
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataapprovazioneUdP"
 						value="Data approvazione Udp: " />
@@ -220,31 +235,31 @@
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">
-					<h:outputLabel for="numeroattoUdp"
-						value="Numero Atto UdP: " />
+					<h:outputLabel for="numeroattoUdp" value="Numero Atto UdP: " />
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">
-					<p:inputText id="numeroattoUdp" value="#{inserisciMISController.numeroAttoUdp}" />
+					<p:inputText id="numeroattoUdp"
+						value="#{inserisciMISController.numeroAttoUdp}" />
 				</p:column>
 
-			</p:row>   
+			</p:row>
 
 
-            <p:row>
-				
+			<p:row>
+
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="istitutoIncaricato"
 						value="Istituto Incaricato: " />
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">
-					<p:inputText id="istitutoIncaricato" value="#{inserisciMISController.istitutoIncaricato}" />
+					<p:inputText id="istitutoIncaricato"
+						value="#{inserisciMISController.istitutoIncaricato}" />
 				</p:column>
-				
+
 				<p:column style="width: 25%; text-align:left;">
-					<h:outputLabel for="dataScadenzaMV"
-						value="Scadenza MV: " />
+					<h:outputLabel for="dataScadenzaMV" value="Scadenza MV: " />
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">
@@ -253,11 +268,11 @@
 						value="#{inserisciMISController.dataScadenzaMV}" />
 				</p:column>
 
-				
 
-			</p:row>       
 
-            <p:row>
+			</p:row>
+
+			<p:row>
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataEsameRapportoFinale"
 						value="Data EsameRapporto Finale :" />
@@ -269,7 +284,7 @@
 						value="#{inserisciMISController.dataEsameRapportoFinale}" />
 				</p:column>
 			</p:row>
-			
+
 			<p:row>
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataTrasmissioneCommissioni"
@@ -281,7 +296,7 @@
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataTrasmissioneCommissioni}" />
 				</p:column>
-			</p:row>    
+			</p:row>
 
 
 			<p:row>
@@ -299,92 +314,93 @@
 			</p:row>
 			<p:row>
 
-			<p:column colspan="2" style="text-align:left;">
-				<p:commandButton ajax="false" update="insertattopanel" disabled="#{navigationBean.isMISDisabled()}"
-					id="insertattobtn" value="Salva"
-					action="#{inserisciMISController.inserisciAtto}" />
-			</p:column>
-		</p:row>
+				<p:column colspan="2" style="text-align:left;">
+					<p:commandButton ajax="false" update="insertattopanel"
+						disabled="#{navigationBean.isMISDisabled()}" id="insertattobtn"
+						value="Salva" action="#{inserisciMISController.inserisciAtto}" />
+				</p:column>
+			</p:row>
 
 
 		</p:panelGrid>
 
 
 	</p:fieldset>
-<div id="blockedUploadMis">
-	<p:fieldset legend="Allegati" collapsed="false" toggleable="true"
-		toggleSpeed="500">
-		<p:panelGrid styleClass="infoTable" id="allegatopanel">
-			<p:row>
+	<div id="blockedUploadMis">
+		<p:fieldset legend="Allegati" collapsed="false" toggleable="true"
+			toggleSpeed="500">
+			<p:panelGrid styleClass="infoTable" id="allegatopanel">
+				<p:row>
 
-				<p:column style="text-align:left;">
+					<p:column style="text-align:left;">
 
 
-					 <p:commandButton value="Carica Allegato" disabled="#{navigationBean.isMISDisabled()}"
-						oncomplete="uploadAllegatoAttributesDialog.show()">
-					</p:commandButton>
-					
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column colspan="4">
+						<p:commandButton value="Carica Allegato"
+							disabled="#{navigationBean.isMISDisabled()}"
+							oncomplete="uploadAllegatoAttributesDialog.show()">
+						</p:commandButton>
 
-					<h:dataTable id="listaAllegati"
-						value="#{inserisciMISController.atto.allegati}" var="allegato"
-						styleClass="generalInfoTab grey-text">
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="4">
 
-						<h:column>
-							<f:facet name="header">Descrizione Allegato</f:facet>
+						<h:dataTable id="listaAllegati"
+							value="#{inserisciMISController.atto.allegati}" var="allegato"
+							styleClass="generalInfoTab grey-text">
+
+							<h:column>
+								<f:facet name="header">Descrizione Allegato</f:facet>
 							#{allegato.nome}
 						</h:column>
 
-						<h:column>
-							<f:facet name="header">Documento</f:facet>
-							<h:outputText
-								value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
+							<h:column>
+								<f:facet name="header">Documento</f:facet>
+								<h:outputText
+									value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
 
-						</h:column>
+							</h:column>
 
-						<h:column>
-							<f:facet name="header">Pubblico</f:facet>
-							<h:outputText value="si" rendered="#{allegato.pubblico}" />
-							<h:outputText value="no" rendered="#{!allegato.pubblico}" />
-						</h:column>
+							<h:column>
+								<f:facet name="header">Pubblico</f:facet>
+								<h:outputText value="si" rendered="#{allegato.pubblico}" />
+								<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+							</h:column>
 
-						<h:column>
-							<f:facet name="header">Elimina</f:facet>
-							<p:commandButton oncomplete="allegatoDialog.show()"
-								icon="delete-icon">
+							<h:column>
+								<f:facet name="header">Elimina</f:facet>
+								<p:commandButton oncomplete="allegatoDialog.show()"
+									icon="delete-icon">
 
-								<f:setPropertyActionListener value="#{allegato.id}"
-									target="#{inserisciMISController.allegatoEACToDelete}" />
-							</p:commandButton>
-						</h:column>
-						<h:column>
-							<f:facet name="header">Download</f:facet>
+									<f:setPropertyActionListener value="#{allegato.id}" 
+										target="#{inserisciMISController.allegatoMISToDelete}" />
+								</p:commandButton>
+							</h:column>
+							<h:column>
+								<f:facet name="header">Download</f:facet>
 
-							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
-								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
-								<f:setPropertyActionListener value="#{allegato.id}"
-									target="#{fileDownloadController.fileId}" />
-								<f:setPropertyActionListener value="#{allegato.nome}"
-									target="#{fileDownloadController.fileName}" />
-								<f:setPropertyActionListener value="#{allegato.mimetype}"
-									target="#{fileDownloadController.fileMimetype}" />
-								<p:fileDownload value="#{fileDownloadController.file}" />
-							</p:commandButton>
+								<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
+									ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+									<f:setPropertyActionListener value="#{allegato.id}"
+										target="#{fileDownloadController.fileId}" />
+									<f:setPropertyActionListener value="#{allegato.nome}"
+										target="#{fileDownloadController.fileName}" />
+									<f:setPropertyActionListener value="#{allegato.mimetype}"
+										target="#{fileDownloadController.fileMimetype}" />
+									<p:fileDownload value="#{fileDownloadController.file}" />
+								</p:commandButton>
 
-						</h:column>
+							</h:column>
 
 
-					</h:dataTable>
-				</p:column>
-			</p:row>
-			
+						</h:dataTable>
+					</p:column>
+				</p:row>
 
-		</p:panelGrid>
-	</p:fieldset>
-</div>
+
+			</p:panelGrid>
+		</p:fieldset>
+	</div>
 
 </h:form>
 

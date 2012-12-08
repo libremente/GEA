@@ -62,10 +62,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 	@ManagedProperty(value = "#{tipoIniziativaServiceManager}")
 	TipoIniziativaServiceManager tipoIniziativaServiceManager;
-	
+
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
-	
 
 	private Map<String, String> tipiIniziativa = new HashMap<String, String>();
 
@@ -87,7 +86,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
 	private String firmatariOrder;
 
-	//private Map<String, String> firmatari = new HashMap<String, String>();
+	// private Map<String, String> firmatari = new HashMap<String, String>();
 	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
 	private String nomeFirmatario;
 
@@ -120,7 +119,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private String noteAmmissibilita;
 
 	private List<String> commissioni = new ArrayList<String>();
-	//private Map<String, String> commissioni = new HashMap<String, String>();
+	// private Map<String, String> commissioni = new HashMap<String, String>();
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 
 	private String nomeCommissione;
@@ -159,10 +158,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	@PostConstruct
 	protected void init() {
-		//setFirmatari(personaleServiceManager.findAllFirmatario());
+		// setFirmatari(personaleServiceManager.findAllFirmatario());
 		setFirmatari(personaleServiceManager.getAllFirmatari());
 		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
-		//setCommissioni(commissioneServiceManager.findAll());
+		// setCommissioni(commissioneServiceManager.findAll());
 		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setTipiIniziativa(tipoIniziativaServiceManager.findAll());
@@ -344,22 +343,19 @@ public class PresentazioneAssegnazioneAttoController {
 			}
 		}
 	}
-	
-	
-	public void handleFirmatarioChange(){
-		
+
+	public void handleFirmatarioChange() {
+
 		for (Firmatario firmatario : firmatari) {
-			
-			if(firmatario.getDescrizione().equals(nomeFirmatario)){
-				
+
+			if (firmatario.getDescrizione().equals(nomeFirmatario)) {
+
 				setGruppoConsiliare(firmatario.getGruppoConsiliare());
 				break;
 			}
-			
+
 		}
-		
-		
-		
+
 	}
 
 	public void addFirmatario() {
@@ -396,8 +392,9 @@ public class PresentazioneAssegnazioneAttoController {
 		for (Firmatario element : firmatariList) {
 
 			if (element.getDescrizione().equals(firmatarioToDelete)) {
-
-				attoServiceManager.removeFirmatario(element);
+				if (element.getId() != null) {
+					attoServiceManager.removeFirmatario(element);
+				}
 				firmatariList.remove(element);
 				break;
 			}
@@ -678,8 +675,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 		for (Commissione element : commissioniList) {
 
-			if (element.getDescrizione().equals(commissioneToDelete) &&
-					element.getDataAnnullo()==null) {
+			if (element.getDescrizione().equals(commissioneToDelete)
+					&& element.getDataAnnullo() == null) {
 
 				commissioniList.remove(element);
 				break;
@@ -1135,15 +1132,12 @@ public class PresentazioneAssegnazioneAttoController {
 		this.personaleServiceManager = personaleServiceManager;
 	}
 
-	
-	
-	/*public Map<String, String> getFirmatari() {
-		return firmatari;
-	}
-
-	public void setFirmatari(Map<String, String> firmatari) {
-		this.firmatari = firmatari;
-	}*/
+	/*
+	 * public Map<String, String> getFirmatari() { return firmatari; }
+	 * 
+	 * public void setFirmatari(Map<String, String> firmatari) { this.firmatari
+	 * = firmatari; }
+	 */
 
 	public List<Firmatario> getFirmatari() {
 		return firmatari;
@@ -1225,16 +1219,13 @@ public class PresentazioneAssegnazioneAttoController {
 		this.attoServiceManager = attoServiceManager;
 	}
 
-	/*public Map<String, String> getCommissioni() {
-		return commissioni;
-	}
+	/*
+	 * public Map<String, String> getCommissioni() { return commissioni; }
+	 * 
+	 * public void setCommissioni(Map<String, String> commissioni) {
+	 * this.commissioni = commissioni; }
+	 */
 
-	public void setCommissioni(Map<String, String> commissioni) {
-		this.commissioni = commissioni;
-	}*/
-
-	
-	
 	public CommissioneServiceManager getCommissioneServiceManager() {
 		return commissioneServiceManager;
 	}
@@ -1727,6 +1718,4 @@ public class PresentazioneAssegnazioneAttoController {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
-	
-	
 }

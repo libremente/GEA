@@ -171,6 +171,10 @@ public class InserisciAttoController {
 	}
 
 	public void setTipiAtto(Map<String, String> tipiAtto) {
+		
+		tipiAtto.remove("EAC - Elenchi di Atti Comunitari");
+		//tipiAtto.remove("MIS");
+		
 		this.tipiAtto = tipiAtto;
 	}
 

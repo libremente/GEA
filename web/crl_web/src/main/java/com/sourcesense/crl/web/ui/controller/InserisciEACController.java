@@ -171,12 +171,12 @@ public class InserisciEACController {
 
 	public void removeAllegatoParere() {
 
-		for (Allegato element : allegatiEAC) {
+		for (Allegato element : getAllegatiEAC()) {
 
 			if (element.getId().equals(allegatoEACToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
-				allegatiEAC.remove(element);
+				getAllegatiEAC().remove(element);
 				break;
 			}
 		}
@@ -304,12 +304,12 @@ public class InserisciEACController {
 
 
 	public List<Allegato> getAllegatiEAC() {
-		return allegatiEAC;
+		return atto.getAllegati();
 	}
 
 
 	public void setAllegatiEAC(List<Allegato> allegatiEAC) {
-		this.allegatiEAC = allegatiEAC;
+		this.atto.setAllegati(allegatiEAC);
 	}
 
 
@@ -317,7 +317,7 @@ public class InserisciEACController {
 		return allegatoEACToDelete;
 	}
 
-	public void setAllegatoEACToDelete(String allegatoParereToDelete) {
+	public void setAllegatoEACToDelete(String allegatoEACToDelete) {
 		this.allegatoEACToDelete = allegatoEACToDelete;
 	}
 

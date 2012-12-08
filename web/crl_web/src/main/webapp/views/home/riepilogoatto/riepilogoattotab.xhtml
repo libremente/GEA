@@ -439,6 +439,11 @@
 				</h:outputText>
 			</p:column>
 		</p:row>
+		<p:row rendered="#{navigationBean.isSessionAttoPDA()}">
+			<p:column colspan="2"><b><h:outputLabel for="numeroDcr" value="Numero DCR: " /></b>
+				<h:outputText id="numeroDcr" value="#{attoBean.atto.numeroDcr}" />
+			</p:column>
+		</p:row>
 	</p:panelGrid>
 </p:fieldset>
 

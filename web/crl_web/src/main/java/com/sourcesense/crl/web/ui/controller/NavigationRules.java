@@ -66,6 +66,13 @@ public class NavigationRules {
 	}
 	
 	
+     public boolean isEACDisabledComm(){
+		
+		return !("ServizioCommissioni".equals(userBean.getUserGroupName())
+				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName())
+				|| userBean.getUser().getSessionGroup().isCommissione()) ;
+	}
+	
 	
     public boolean isMISDisabled(){
 		
@@ -99,36 +106,32 @@ public class NavigationRules {
 	
 	public boolean presentazioneAssegnazioneDisabled() {
     boolean disabled;
-		if (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
-				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName())) {
+    
+		if (!isSessionAttoPDA_UDP() && (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
+				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName()))) {
 			disabled = false;
 		} else {
 			disabled = true;
 		}
     
-    if (! disabled){
-      disabled = isSessionAttoPDA_UDP();
-    }
+    
     return disabled;
 	}
 
 	public boolean esameCommissioniDisabled() {
     
     boolean disabled;
-		if ((attoBean.containCommissione(userBean.getUser().getSessionGroup()
+		if (!isSessionAttoPDA_UDP() && (attoBean.containCommissione(userBean.getUser().getSessionGroup()
 				.getNome()) || GruppoUtente.ADMIN.equals(userBean
 				.getUserGroupName()))
 				&& attoBean.getLastPassaggio().getCommissioni().size() > 0) {
 			disabled = false;
+		
 		} else {
 			disabled = true;
 		}
     
-    if (!disabled){
-      disabled = isSessionAttoPDA_UDP();
-    }
-    
-    return disabled;
+        return disabled;
 	}
   
   public boolean consultazioniEPareriDisabled(){

@@ -777,10 +777,6 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 		</p:column>
 		<p:column headerText="Azioni">
 			<c:set value="#{atto.id}" var="idAttoParam" />
-			<p:commandButton value="Mostra dettagli Atto"
-				action="#{searchAttoController.attoDetail(idAttoParam)}"
-				update="listaAtti" icon="detail-icon" />	
-				&nbsp; &nbsp; &nbsp;
 			<p:commandButton value="Abbina" id="addAbbinamento"
 				action="#{esameCommissioniController.addAbbinamento(idAttoParam)}"
 				update=":presAssForm:tabView:listaAbbinamenti, :presAssForm:tabView:abbinamentiMsg, :presAssForm:tabView:dettagliabbinamentopanel"
@@ -818,7 +814,20 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 
 				<h:column>
 					<f:facet name="header">N. Atto</f:facet>
-					#{abbinamento.numeroAttoAbbinato}
+					<c:set value="#{abbinamento.idAttoAbbinato}" var="idAttoParam" />
+					<c:set value="#{abbinamento.tipoAttoAbbinato}" var="tipoAttoParam" />
+					<h:commandLink action="#{searchAttoController.attoDetail()}"
+						target="_blank">
+						<f:setPropertyActionListener
+							target="#{searchAttoController.idAttoSelected}"
+							value="#{idAttoParam}" />
+						<f:setPropertyActionListener
+							target="#{searchAttoController.tipoAttoSelected}"
+							value="#{tipoAttoParam}" />
+						<h:outputText value="#{abbinamento.numeroAttoAbbinato}" />
+					</h:commandLink>
+					
+					
 				</h:column>
 
 				<h:column>

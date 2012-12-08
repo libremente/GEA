@@ -12,12 +12,24 @@
 
 <h:form enctype="multipart/form-data">
 
- <p:ajaxStatus onstart="statusDialog.show();"
-		onsuccess="statusDialog.hide();" />
-	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+ 	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
 		draggable="false" closable="false">
 		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
 	</p:dialog>  
+
+<p:confirmDialog id="confirmAllegatoDialog"
+		message="Sei sicuro di voler eliminare l'Allegato ?"
+		header="Cancellazione Allegato" severity="alert"
+		widgetVar="allegatoDialog">
+
+		<p:commandButton id="confirmAllegato" value="Conferma"
+			oncomplete="allegatoDialog.hide()"
+			actionListener="#{inserisciEACController.removeAllegatoParere}"
+			update="listaAllegati" />
+		<p:commandButton id="declineAllegato" value="Annulla"
+			onclick="allegatoDialog.hide()" type="button" />
+
+	</p:confirmDialog>
 
     <p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
 					widgetVar="uploadAllegatoAttributesDialog" style="width:450px" message="Allega file">
@@ -267,7 +279,7 @@
 							</p:column>
 
 							<p:column>
-								<p:commandButton value="Aggiungi" disabled="#{navigationBean.isEACDisabled()}"
+								<p:commandButton value="Aggiungi" disabled="#{navigationBean.isEACDisabledComm()}"
 									action="#{inserisciEACController.addCollegamentoAttoSindacato}"
 									id="addCollegamentoAttoSindacato"
 									update="listaCollegamentiAttiSindacati, attiIndirizzoMsg"
@@ -317,7 +329,7 @@
 
 						<p:column headerText="Azioni" style="width:125px">
 
-							<p:commandButton disabled="#{navigationBean.isEACDisabled()}"
+							<p:commandButton disabled="#{navigationBean.isEACDisabledComm()}"
 								oncomplete="collegamentoAttoSindacatoDialog.show()"
 								icon="delete-icon">
 								<f:setPropertyActionListener value="#{collegamento.numeroAtto}"

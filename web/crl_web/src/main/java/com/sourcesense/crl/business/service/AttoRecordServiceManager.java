@@ -42,16 +42,16 @@ public class AttoRecordServiceManager implements ServiceManager {
 	}
 
 	
-	public Allegato updateAllegato(Atto atto, Allegato allegato) {
+	public Allegato updateAllegato(Allegato allegato) {
 
 		return attoRecordService.updateAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_update_allegato", null),atto, allegato);
+				"alfresco_context_url", "alf_update_allegato", null), allegato);
 	}
 	
-	public TestoAtto updateTestoAtto(Atto atto, TestoAtto testoAtto) {
+	public TestoAtto updateTestoAtto(TestoAtto testoAtto) {
 
 		return attoRecordService.updateTestoAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_update_testo", null),atto, testoAtto);
+				"alfresco_context_url", "alf_update_testo", null), testoAtto);
 	}
 	
 	public void deleteFile(String idFile) {

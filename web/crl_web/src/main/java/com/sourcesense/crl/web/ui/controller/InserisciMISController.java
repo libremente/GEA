@@ -180,12 +180,13 @@ public class InserisciMISController {
 
 	public void removeAllegatoParere() {
 
-		for (Allegato element : allegatiMIS) {
+		for (Allegato element : getAllegatiMIS()) {
 
 			if (element.getId().equals(allegatoMISToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
-				allegatiMIS.remove(element);
+				getAllegatiMIS().remove(element);
+				
 				break;
 			}
 		}
@@ -245,7 +246,7 @@ public class InserisciMISController {
 		return allegatoMISToDelete;
 	}
 
-	public void setAllegatoMISToDelete(String allegatoParereToDelete) {
+	public void setAllegatoMISToDelete(String allegatoMISToDelete) {
 		this.allegatoMISToDelete = allegatoMISToDelete;
 	}
 

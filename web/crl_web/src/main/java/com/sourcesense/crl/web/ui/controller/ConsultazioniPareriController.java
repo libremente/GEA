@@ -24,6 +24,7 @@ import com.sourcesense.crl.business.model.SoggettoInvitato;
 import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
+import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -38,11 +39,14 @@ public class ConsultazioniPareriController {
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
 	
+	@ManagedProperty(value = "#{commissioneServiceManager}")
+	private CommissioneServiceManager commissioneServiceManager;
 	
 	private Atto atto = new Atto();
 
 	private List<OrganismoStatutario> organismiList = new ArrayList<OrganismoStatutario>();
 	private List<String> commissioni = new ArrayList<String>();
+	private List<String> commissioniDestinatarie = new ArrayList<String>();
 	private String commissioneSelected;
 	
 	private OrganismoStatutario organismoSelected = new OrganismoStatutario(); 
@@ -92,7 +96,9 @@ public class ConsultazioniPareriController {
 
 		setOrganismiList(new ArrayList<OrganismoStatutario>(
 				Clonator.cloneList(atto.getOrganismiStatutari())));
-
+         
+		setCommissioniDestinatarie(commissioneServiceManager.getAll());
+		
 		if (!organismiList.isEmpty()) {
 			
 			setOrganismoSelected(organismiList.get(0));
@@ -156,6 +162,7 @@ public class ConsultazioniPareriController {
 			setDataRicezioneOrgano(organismoSelected.getParere().getDataRicezioneOrgano());
 			setEsito(organismoSelected.getParere().getEsito());
 			setNoteParere(organismoSelected.getParere().getNote());
+			setCommissioneDestinataria(organismoSelected.getParere().getCommissioneDestinataria());
 			
 		} else {
 			setDataRicezioneParere(null);
@@ -824,6 +831,23 @@ public class ConsultazioniPareriController {
 	public void setAttoRecordServiceManager(
 			AttoRecordServiceManager attoRecordServiceManager) {
 		this.attoRecordServiceManager = attoRecordServiceManager;
+	}
+
+	public List<String> getCommissioniDestinatarie() {
+		return commissioniDestinatarie;
+	}
+
+	public void setCommissioniDestinatarie(List<String> commissioniDestinatarie) {
+		this.commissioniDestinatarie = commissioniDestinatarie;
+	}
+
+	public CommissioneServiceManager getCommissioneServiceManager() {
+		return commissioneServiceManager;
+	}
+
+	public void setCommissioneServiceManager(
+			CommissioneServiceManager commissioneServiceManager) {
+		this.commissioneServiceManager = commissioneServiceManager;
 	}
 
 	

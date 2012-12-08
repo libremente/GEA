@@ -492,7 +492,19 @@
 
 						<p:column sortBy="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}">
 							<f:facet name="header">Data Seduta</f:facet>
-							<h:outputText value="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}" />
+							<h:outputText  />
+						    <p:cellEditor >
+								<f:facet name="output">
+									<h:outputText 
+								value="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}"/>
+								</f:facet>
+								<f:facet  name="input">
+									<p:calendar pattern="dd/MM/yyyy" locale="it"
+									value="#{testoComitato.dataSeduta}" />
+								</f:facet>
+							</p:cellEditor> 
+						
+						
 						</p:column>
 
 						<p:column sortBy="#{testoComitato.nome}">

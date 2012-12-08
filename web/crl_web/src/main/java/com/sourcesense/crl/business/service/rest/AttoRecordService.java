@@ -168,7 +168,7 @@ public class AttoRecordService {
 	}
 	
 		
-	public Allegato updateAllegato(String url,Atto atto, Allegato allegato) {
+	public Allegato updateAllegato(String url,Allegato allegato) {
 		
 		Allegato allegatoRet = null; 
 		
@@ -183,6 +183,9 @@ public class AttoRecordService {
 					MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
 
+			
+			
+			
 			if (response.getStatus() != 200) {
 
 				throw new ServiceNotAvailableException("Errore - "
@@ -214,7 +217,7 @@ public class AttoRecordService {
 		return allegato;
 	}
 	
-public TestoAtto updateTestoAtto(String url,Atto atto, TestoAtto testoAtto) {
+public TestoAtto updateTestoAtto(String url, TestoAtto testoAtto) {
 		
 		TestoAtto testoAttoRet = null; 
 		

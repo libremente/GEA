@@ -30,46 +30,51 @@ PrimeFaces.locales ['it'] = {
 function dragSortTable(tableId,hiddeId,colIndx) {
 	
 	
-
+    
 	var table = document.getElementById(tableId);
 	var hidden = document.getElementById(hiddeId);
 	var nodi = table.getElementsByTagName('tr');
 	
 	hidden.value="";
-	console.log(nodi.length);
-	console.log(nodi);
 	
+	//scorro i tr
 	  for (i = 0; i <nodi.length; i++) {
 		  
+		  //prendo il tr
 		  var nodo = nodi[i];
-		  console.log(jQuery.trim(nodo.getElementsByTagName('td')[colIndx].getElementsByTagName('div')[0].innerHTML));
 		  
-		  if(i==nodi.length-1){
-		    
-			  var nodoTd = nodo.getElementsByTagName('td')[colIndx];
+		//prendo il td
+		  var nodoTd = nodo.getElementsByTagName('td')[colIndx];
+		  
+		  console.log("InnerTD====="+nodoTd.innerHTML);
+		  
+   		  var innerDiv = nodoTd.getElementsByTagName('div')[0];
+		  
+   		  console.log("InnerDiv====="+innerDiv.innerHTML);
+		  
+		  var valore ="";  
 			  
-			  if (nodoTd.getElementsByTagName('a')[0]){
+		  if (innerDiv.getElementsByTagName('a').length > 0){
 			  
-				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('a')[0].innerHTML);
-				  
-			  }else{
-				  
-				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('div')[0].innerHTML);  
-			  }
+			  valore=innerDiv.getElementsByTagName('a')[0].innerHTML;
 		  
 		  }else{
 			  
-			  if (nodoTd.getElementsByTagName('a')[0]){
-				  
-				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('a')[0].innerHTML)+ "_"; 
-				  
-			  }else{
-				  
-				  hidden.value += jQuery.trim(nodoTd.getElementsByTagName('div')[0].innerHTML)+ "_";  
-			  }
-			    
+			  valore=innerDiv.innerHTML;
 			  
 		  }
+		  
+		  
+		  if(i==nodi.length-1){
+		     
+			  hidden.value +=valore;
+		  
+		  }else{
+			  
+			  hidden.value +=valore+"_";
+			  
+		  }
+		  
 		  console.log(hidden.value);
 		  
 	  }

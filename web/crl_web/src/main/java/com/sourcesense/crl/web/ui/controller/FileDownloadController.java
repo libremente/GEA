@@ -35,20 +35,14 @@ public class FileDownloadController {
 	
 	
 	public void fileUpdate(RowEditEvent event){
-	    System.out.println("EDIT LISTENER");
-	    System.out.println("Obj"+event.getObject().getClass().getCanonicalName());
-	   
+	    
 	    if (event.getObject() instanceof Allegato) {
 	    	
-	    	attoRecordServiceManager.updateAllegato(((AttoBean) FacesContext.getCurrentInstance()
-					.getExternalContext().getSessionMap()
-					.get("attoBean")).getAtto(),(Allegato) event.getObject());
+	    	attoRecordServiceManager.updateAllegato((Allegato) event.getObject());
 	    	
 	    } else if (event.getObject() instanceof TestoAtto) {
 	    	
-	    	attoRecordServiceManager.updateTestoAtto(((AttoBean) FacesContext.getCurrentInstance()
-					.getExternalContext().getSessionMap()
-					.get("attoBean")).getAtto(),(TestoAtto) event.getObject());
+	    	attoRecordServiceManager.updateTestoAtto((TestoAtto) event.getObject());
 	    	
 	    }
 	    
