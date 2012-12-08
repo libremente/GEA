@@ -23,6 +23,7 @@ var dataRicezioneParere = filterParam(organismo.get("parere").get("dataRicezione
 var esito = filterParam(organismo.get("parere").get("esito"));
 var dataRicezioneOrgano = filterParam(organismo.get("parere").get("dataRicezioneOrgano"));
 var note = filterParam(organismo.get("parere").get("note"));
+var commissioneDestinataria = filterParam(organismo.get("parere").get("commissioneDestinataria")); 
 
 
 
@@ -63,7 +64,7 @@ if(checkIsNotNull(id)
 	
 	organismoStatutarioNode.properties["crlatti:noteParere"] = note;
 	organismoStatutarioNode.properties["crlatti:esitoParere"] = esito;
-	
+	organismoStatutarioNode.properties["crlatti:commissioneDestinatariaParere"] = commissioneDestinataria;
 	
 	organismoStatutarioNode.save();
 

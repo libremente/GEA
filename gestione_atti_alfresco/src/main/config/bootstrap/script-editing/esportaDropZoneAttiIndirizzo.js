@@ -1,1 +1,0 @@
-var contents = space.getChildAssocsByType("cm:content");

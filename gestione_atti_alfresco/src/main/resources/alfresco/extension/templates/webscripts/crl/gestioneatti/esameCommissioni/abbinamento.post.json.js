@@ -11,6 +11,7 @@ var dataDisabbinamento = filterParam(jsonAbbinamento.get("dataDisabbinamento"));
 var passaggio = json.get("target").get("passaggio");
 
 var abbinamentoNode = null;
+var abbinamentoAttoAbbinato = null;
 
 if(checkIsNotNull(jsonAbbinamento)
 		&& checkIsNotNull(idAtto)
@@ -68,6 +69,41 @@ if(checkIsNotNull(jsonAbbinamento)
 	if(creaAssociazione){
 		abbinamentoNode.createAssociation(attoAbbinatoFolderNode,"crlatti:attoAssociatoAbbinamento");
 	}
+	
+	
+	// Creo abbinamento nell'atto abbinato. L'abbinamento è bidirezionale
+	
+		
+	var passaggioAttoAbbinatoFolderNode = getLastPassaggio(attoAbbinatoFolderNode)
+	
+	var xPathQueryAbbinamentiAttoAbbinato = "*[@cm:name='Abbinamenti']";
+	var abbinamentiAttoAbbinatoFolderNode = passaggioAttoAbbinatoFolderNode.childrenByXPath(xPathQueryAbbinamentiAttoAbbinato)[0];
+	
+	//verifica esistenza abbinamento preesistente
+	var esisteAbbinamentoAttoAbbinatoXPathQuery = "*[@cm:name='"+attoFolderNode.name+"']";
+	var abbinamentoAttoAbbinatoEsistenteResults = abbinamentiAttoAbbinatoFolderNode.childrenByXPath(esisteAbbinamentoAttoAbbinatoXPathQuery);
+	
+	var creaAssociazioneAttoAbbinato = true;
+	if(abbinamentoAttoAbbinatoEsistenteResults!=null && abbinamentoAttoAbbinatoEsistenteResults.length>0){
+		abbinamentoAttoAbbinatoNode = abbinamentoAttoAbbinatoEsistenteResults[0];
+		creaAssociazioneAttoAbbinato = false;
+	} else {
+		abbinamentoAttoAbbinatoNode = abbinamentiAttoAbbinatoFolderNode.createNode(attoFolderNode.name,"crlatti:abbinamento");
+	}
+	
+	
+	abbinamentoAttoAbbinatoNode.properties["crlatti:dataAbbinamento"] = dataAbbinamentoParsed;
+	abbinamentoAttoAbbinatoNode.properties["crlatti:dataDisabbinamento"] = dataDisabbinamentoParsed;
+	abbinamentoAttoAbbinatoNode.properties["crlatti:tipoTestoAbbinamento"] = tipoTesto;
+	abbinamentoAttoAbbinatoNode.properties["crlatti:noteAbbinamento"] = note;
+	abbinamentoAttoAbbinatoNode.save();
+	
+	if(creaAssociazione){
+		abbinamentoAttoAbbinatoNode.createAssociation(attoFolderNode,"crlatti:attoAssociatoAbbinamento");
+	}
+	
+	
+	
 	
 } else {
 	status.code = 400;

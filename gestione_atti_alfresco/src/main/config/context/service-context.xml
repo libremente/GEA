@@ -126,6 +126,10 @@
 	            <prop key="path">/${spaces.company_home.childname}</prop>
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/importSpaces.acp</prop>
 	         </props>
+	         <props>
+	            <prop key="path">/${spaces.company_home.childname}</prop>
+	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/exportSpaces.acp</prop>
+	         </props>
 	         
 	         <props>
 	            <prop key="path">/${spaces.company_home.childname}/cm:CRL/cm:Gestione_x0020_Atti</prop>

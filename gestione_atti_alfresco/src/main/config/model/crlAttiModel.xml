@@ -252,6 +252,7 @@
 				<aspect>crlatti:pubblicabile</aspect>
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:protocollato</aspect>
+				<aspect>crlatti:attiIndirizzoAspect</aspect>
 			</mandatory-aspects>
 		</type>
 		
@@ -516,6 +517,9 @@
 				</property>
 			</properties>
 		</type>
+		
+		
+		
 		
 		<type name="crlatti:relatore">
 			<title>Relatore</title>
@@ -941,6 +945,10 @@
 					<title>Data ricezione Parere</title>
 					<type>d:date</type>
 				</property>
+				<property name="crlatti:commissioneDestinatariaParere">
+					<title>Commissione Destinataria</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:dataRicezioneOrganoParere">
 					<title>Data ricezione organo</title>
 					<type>d:date</type>
@@ -1020,6 +1028,14 @@
 					<title>Data Seduta</title>
 					<type>d:date</type>
 				</property>
+				<property name="crlatti:dalleOreSedutaODG">
+					<title>Dalle ore</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:alleOreSedutaODG">
+					<title>Alle ore</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:numVerbaleSedutaODG">
 					<title>Numero Verbale</title>
 					<type>d:text</type>
@@ -1077,6 +1093,86 @@
 					<type>d:boolean</type>
 				</property>
 			</properties>
+		</type>
+		
+		
+		<type name="crlatti:attoIndirizzo">
+			<title>Atto Indirizzo</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:IdAttoIndirizzo">
+					<title>Id</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:IdLegislaturaAttoIndirizzo">
+					<title>Id legislatura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipoAttoIndirizzo">
+					<title>Tipo Atti</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoIndirizzo">
+					<title>Tipo Atti</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:oggettoAttoIndirizzo">
+					<title>Tipo Atti</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:firmatarioAttoIndirizzo">
+			<title>Firmatario Atto Indirizzo</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:IdFirmatarioAttoIndirizzo">
+					<title>Id Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:idGruppoFirmatarioAttoIndirizzo">
+					<title>Id Gruppo Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:nomeFirmatarioAttoIndirizzo">
+					<title>Nome Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:cognomeFirmatarioAttoIndirizzo">
+					<title>Cognome Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:gruppoFirmatarioAttoIndirizzo">
+					<title>Gruppo Firmatario</title>
+					<type>d:text</type>
+				</property>	
+			</properties>
+		</type>
+		
+		<type name="crlatti:collegamentoAttoIndirizzo">
+			<title>Collegamento Atto Indirizzo</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:descrizioneCollegamentoAttiIndirizzo">
+					<title>Descrizione collegamento</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="crlatti:attoAssociatoCollegamentoAttiIndirizzo">
+				<title>Atto collegato</title>
+				<source>
+					<mandatory>false</mandatory>
+					<many>true</many>
+				</source>
+				<target>
+					<class>crlatti:attoIndirizzo</class>
+					<mandatory>false</mandatory>
+					<many>false</many>
+				</target>
+				</association>
+			</associations>
 		</type>
 		
 	</types>
@@ -1366,6 +1462,17 @@
 				<property name="crlatti:idAnagrafica">
 					<title>ID anagrafica</title>
 					<type>d:int</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:attiIndirizzoAspect">
+			<title>Atti Indirizzo Aspect</title>
+			<description>Aspetto creato per la gestione dell'integrazione con il sistema Atti di Indirizzo</description>
+			<properties>
+				<property name="crlatti:statoExportAttiIndirizzo">
+					<title>Stato Export Atti Indirizzo</title>
+					<type>d:text</type>
 				</property>
 			</properties>
 		</aspect>

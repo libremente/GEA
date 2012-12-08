@@ -1,13 +1,15 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
 
-var seduta = json.get("seduta");
+var seduta = json.get("seduta").get("seduta");
 var dataSeduta = seduta.get("dataSeduta");
+var dalleOre = seduta.get("dalleOre");
+var alleOre = seduta.get("alleOre");
 var numVerbale = seduta.get("numVerbale");
 var note = seduta.get("note");
 var links = seduta.get("links");
 
-var provenienza = json.get("target").get("provenienza");
+var provenienza = json.get("target").get("target").get("provenienza");
 
 
 var gestioneSedutePath = "/app:company_home"+
@@ -87,6 +89,11 @@ if(checkIsNotNull(provenienza)){
 	var dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);
 	
 	sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataSedutaParsed;
+	
+	sedutaFolderNode.properties["crlatti:dalleOreSedutaODG"] = dalleOre;
+	sedutaFolderNode.properties["crlatti:alleOreSedutaODG"] = alleOre;
+
+	
 	sedutaFolderNode.properties["crlatti:numVerbaleSedutaODG"] = numVerbale;
 	sedutaFolderNode.properties["crlatti:noteSedutaODG"] = note;
 	

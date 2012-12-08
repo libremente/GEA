@@ -5,12 +5,14 @@
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatarioAnagrafica" />
 			<type name="crlatti:firmatario" />
+			<type name="crlatti:firmatarioAttoIndirizzo" />
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
 			<type name="crlatti:link" />
 			<type name="crlatti:relatore" />
 			<type name="crlatti:collegamento" />
+			<type name="crlatti:collegamentoAttoIndirizzo" />
 			<type name="crlatti:membroComitatoRistretto" />
 			<type name="crlatti:audizione" />
 			<type name="crltemplate:lettera" />
@@ -95,6 +97,7 @@
 			<type name="crlatti:atto" />
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
+			<type name="crlatti:firmatarioAttoIndirizzo" />
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
@@ -182,6 +185,7 @@
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
 			<type name="crlatti:firmatario" />
+			<type name="crlatti:firmatarioAttoIndirizzo" />
 			<type name="crlatti:abbinamento" />
 			<type name="crlatti:allegato" />
 			<type name="crlatti:testo" />
@@ -301,6 +305,7 @@
 			<type name="crlatti:parere" />
 			<type name="crlatti:consultazione" />
 			<type name="crlatti:sedutaODG" />
+			<type name="crlatti:attoIndirizzo" />
 		</folder-types>
 	</config>
 
@@ -498,6 +503,7 @@
 			<show-property name="crlatti:dataAssegnazioneParere" />
 			<show-property name="crlatti:dataRicezioneParere" />
 			<show-property name="crlatti:dataRicezioneOrganoParere" />
+			<show-property name="crlatti:commissioneDestinatariaParere" />
 			<show-property name="crlatti:noteParere" />
 			<show-property name="crlatti:esitoParere" />
 		</property-sheet>
@@ -735,6 +741,9 @@
 			<show-property name="crlatti:dataLr" />
 			<show-property name="crlatti:numeroPubblicazioneBURL" />
 			<show-property name="crlatti:dataPubblicazioneBURL" />
+			<show-property name="crlatti:pubblico" />
+			<show-property name="crlatti:statoExportAttiIndirizzo" />
+			
 
 		</property-sheet>
 	</config>
@@ -750,6 +759,7 @@
 			<show-property name="crlatti:tipologia" />
 			<show-property name="crlatti:legislatura" />
 			<show-property name="crlatti:statoAtto" />
+			<show-property name="crlatti:dataPresaInCarico" />
 			<show-property name="crlatti:numeroAtto" />
 			<show-property name="crlatti:estensioneAtto" />
 			<show-property name="crlatti:dataIniziativa" />
@@ -791,6 +801,7 @@
 			<show-property name="crlatti:numeroPubblicazioneBURL" />
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
+			<show-property name="crlatti:statoExportAttiIndirizzo" />
 
 		</property-sheet>
 	</config>
@@ -851,13 +862,6 @@
 		<property-sheet>
 			<show-property name="crltemplate:firmatario" />
 			<show-property name="crltemplate:ufficio" />
-		</property-sheet>
-	</config>
-
-	<config evaluator="node-type" condition="crltemplate:letteraAula">
-		<property-sheet>
-			<show-property name="crltemplate:firmatario" />
-			<show-property name="crltemplate:ufficio" />
 			<show-property name="crltemplate:direzione" />
 		</property-sheet>
 	</config>
@@ -870,7 +874,35 @@
 			<show-property name="crltemplate:emailFirmatario" />
 		</property-sheet>
 	</config>
-
+	
+	
+	
+	<config evaluator="node-type" condition="crlatti:attoIndirizzo">
+		<property-sheet>
+			<show-property name="crlatti:IdAttoIndirizzo" />
+			<show-property name="crlatti:IdLegislaturaAttoIndirizzo" />
+			<show-property name="crlatti:tipoAttoIndirizzo" />
+			<show-property name="crlatti:numeroAttoIndirizzo" />
+			<show-property name="crlatti:oggettoAttoIndirizzo" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:firmatarioAttoIndirizzo">
+		<property-sheet>
+			<show-property name="crlatti:IdFirmatarioAttoIndirizzo" />
+			<show-property name="crlatti:idGruppoFirmatarioAttoIndirizzo" />
+			<show-property name="crlatti:nomeFirmatarioAttoIndirizzo" />
+			<show-property name="crlatti:cognomeFirmatarioAttoIndirizzo" />
+			<show-property name="crlatti:gruppoFirmatarioAttoIndirizzo" />
+		</property-sheet>
+	</config>
+	
+	<config evaluator="node-type" condition="crlatti:collegamentoAttoIndirizzo">
+		<property-sheet>
+			<show-property name="crlatti:descrizioneCollegamentoAttiIndirizzo" />
+			<show-property name="crlatti:attoAssociatoCollegamentoAttiIndirizzo" />
+		</property-sheet>
+	</config>
 
 
 	<config evaluator="string-compare" condition="Advanced Search">

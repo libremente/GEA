@@ -12,6 +12,8 @@ var dataLr = filterParam(atto.get("dataLR"));
 var numeroPubblicazioneBURL = filterParam(atto.get("numeroPubblicazioneBURL"));
 var dataPubblicazioneBURL = filterParam(atto.get("dataPubblicazioneBURL"));
 
+var numeroDcr = filterParam(atto.get("numeroDcr"));
+
 
 if(atto!=null
 		&& id!=null
@@ -27,6 +29,7 @@ if(atto!=null
 	attoFolderNode.properties["crlatti:noteChiusura"] = noteChiusuraIter;
 	
 	attoFolderNode.properties["crlatti:numeroLr"] = numeroLr;
+	attoFolderNode.properties["crlatti:numeroDcr"] = numeroDcr;
 	
 	var dataLrSplitted = dataLr.split("-");
 	var dataLrParsed = new Date(dataLrSplitted[0],dataLrSplitted[1]-1,dataLrSplitted[2]);

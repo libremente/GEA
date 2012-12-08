@@ -6,7 +6,7 @@
 	"nome" : "${atto.name}",
 	"tipoAtto" : "${tipoAtto}",
 	"pubblico" : "<#if atto.properties["crlatti:pubblico"]?exists>${atto.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
-	"numeroAtto" : "<#if atto.properties["crlatti:numeroAtto"]?exists>${atto.properties["crlatti:numeroAtto"]?string("0")}<#else></#if>",
+	"numeroAtto" : "${atto.name}",
 	"tipologia" : "<#if atto.properties["crlatti:tipologia"]?exists>${atto.properties["crlatti:tipologia"]}<#else></#if>",
 	"legislatura" : "<#if atto.properties["crlatti:legislatura"]?exists>${atto.properties["crlatti:legislatura"]}<#else></#if>",
 	"stato" : "<#if atto.properties["crlatti:statoAtto"]?exists>${atto.properties["crlatti:statoAtto"]}<#else></#if>",
@@ -33,6 +33,7 @@
 	"assegnazione":"<#if atto.properties["crlatti:assegnazione"]?exists>${atto.properties["crlatti:assegnazione"]}<#else></#if>",
 	"numeroDgr":"<#if atto.properties["crlatti:numeroDgr"]?exists>${atto.properties["crlatti:numeroDgr"]}<#else></#if>",
 	"dataDgr":"<#if atto.properties["crlatti:dataDgr"]?exists>${atto.properties["crlatti:dataDgr"]?string("yyyy-MM-dd")}<#else></#if>",
+	"numeroDcr":"<#if atto.properties["crlatti:numeroDcr"]?exists>${atto.properties["crlatti:numeroDcr"]}<#else></#if>",
 	"tipoChiusura" : "<#if atto.properties["crlatti:tipoChiusura"]?exists>${atto.properties["crlatti:tipoChiusura"]}<#else></#if>",
 	"dataChiusura":"<#if atto.properties["crlatti:dataChiusura"]?exists>${atto.properties["crlatti:dataChiusura"]?string("yyyy-MM-dd")}<#else></#if>",
 	"noteChiusuraIter" : "<#if atto.properties["crlatti:noteChiusuraIter"]?exists>${atto.properties["crlatti:noteChiusuraIter"]}<#else></#if>",
@@ -159,6 +160,7 @@
 						"esito" : "<#if organismoStatutario.properties["crlatti:esitoParere"]?exists>${organismoStatutario.properties["crlatti:esitoParere"]}<#else></#if>",
 						"dataRicezioneOrgano" : "<#if organismoStatutario.properties["crlatti:dataRicezioneOrganoParere"]?exists>${organismoStatutario.properties["crlatti:dataRicezioneOrganoParere"]?string("yyyy-MM-dd")}<#else></#if>",
 						"note" : "<#if organismoStatutario.properties["crlatti:noteParere"]?exists>${organismoStatutario.properties["crlatti:noteParere"]}<#else></#if>",
+						"commissioneDestinataria" : "<#if organismoStatutario.properties["crlatti:commissioneDestinatariaParere"]?exists>${organismoStatutario.properties["crlatti:commissioneDestinatariaParere"]}<#else></#if>",
 						"allegati": [
 							<#assign allegatiParereFolder = organismoStatutario.childrenByXPath["*[@cm:name='Allegati']"][0]>
 							<#assign allegatiParere = allegatiParereFolder.getChildAssocsByType("crlatti:allegato")>

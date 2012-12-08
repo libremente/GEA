@@ -207,6 +207,12 @@
 			<artifactId>jtds</artifactId>
 			<version>1.2.4</version>
 		</dependency>
+
+		 <dependency>
+    		<groupId>org.apache.chemistry.opencmis</groupId>
+    		<artifactId>chemistry-opencmis-client-impl</artifactId>
+    		<version>0.6.0</version>
+ 		</dependency>
     
 		<!--
 			Example Jar dependency: will be properly packed into the AMP /lib

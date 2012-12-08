@@ -8,12 +8,21 @@ if(atto!=null
 		&& stato!=null
 		&& dataPresaInCarico!=null) {
 	
-	var dataPresaInCaricoSplitted = dataPresaInCarico.split("-");
-	var dataPresaInCaricoParsed = new Date(dataPresaInCaricoSplitted[0],dataPresaInCaricoSplitted[1]-1,dataPresaInCaricoSplitted[2]);
-	
 	var attoFolderNode = utils.getNodeFromString(id);
+	
+	// flag per l'export verso il sistema di gestione Atti di Indirizzo
+	// controllo che sia la prima volta che effettuo una presa in carico (dataPresaInCarico non deve essere già valorizzata)
+	if(attoFolderNode.properties["crlatti:dataPresaInCarico"]==null || attoFolderNode.properties["crlatti:dataPresaInCarico"]==""){
+		attoFolderNode.properties["crlatti:statoExportAttiIndirizzo"] = "CREATE";
+	}
+	
+	var dataPresaInCaricoSplitted = dataPresaInCarico.split("-");
+	var dataPresaInCaricoParsed = new Date(dataPresaInCaricoSplitted[0],dataPresaInCaricoSplitted[1]-1,dataPresaInCaricoSplitted[2])	
+
+	
 	attoFolderNode.properties["crlatti:statoAtto"] = stato;
 	attoFolderNode.properties["crlatti:dataPresaInCarico"] = dataPresaInCaricoParsed;
+	
 	attoFolderNode.save();
 	
 } else {

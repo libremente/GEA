@@ -4,7 +4,7 @@ var atto = json.get("atto");
 var legislatura = atto.get("legislatura");
 var tipologia = filterParam(atto.get("tipologia"));
 var numeroAtto = atto.get("numeroAtto");
-var estensioneAtto = atto.get("estensioneAtto");
+var estensioneAtto = filterParam(atto.get("estensioneAtto"));
 var tipoAtto = atto.get("tipoAtto");
 var stato = atto.get("stato");
 var dataImportazione = new Date();
@@ -122,6 +122,7 @@ if(nodeType=="crlatti:attoEac"){
 	var dataEsameRapportoFinale = atto.get("dataEsameRapportoFinale");
 	var dataTrasmissioneACommissioni = atto.get("dataTrasmissioneCommissioni");
 	var note = atto.get("note");
+	var oggetto = filterParam(atto.get("oggetto"));
 	
 	
 	//creazione dello spazio legislatura
@@ -248,6 +249,7 @@ if(nodeType=="crlatti:attoEac"){
 	misAttoFolderNode.properties["crlatti:esitoVotoIntesaMis"] = esitoVotoIntesa;
 	misAttoFolderNode.properties["crlatti:numeroAttoUdpMis"] = numeroAttoUdp;
 	misAttoFolderNode.properties["crlatti:istitutoIncaricatoMis"] = istitutoIncaricato;
+	misAttoFolderNode.properties["crlatti:oggetto"] = oggetto;
 
 	misAttoFolderNode.save();
 	model.atto = misAttoFolderNode;

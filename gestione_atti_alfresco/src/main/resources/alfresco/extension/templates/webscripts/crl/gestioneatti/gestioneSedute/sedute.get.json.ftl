@@ -7,6 +7,8 @@
 	   {
 	    "idSeduta" : "${seduta.nodeRef}",
 		"dataSeduta" : "<#if seduta.properties["crlatti:dataSedutaSedutaODG"]?exists>${seduta.properties["crlatti:dataSedutaSedutaODG"]?string("yyyy-MM-dd")}<#else></#if>",
+		"dalleOre" : "<#if seduta.properties["crlatti:dalleOreSedutaODG"]?exists>${seduta.properties["crlatti:dalleOreSedutaODG"]}<#else></#if>",
+		"alleOre" : "<#if seduta.properties["crlatti:alleOreSedutaODG"]?exists>${seduta.properties["crlatti:alleOreSedutaODG"]}<#else></#if>",		
 		"numVerbale" : "<#if seduta.properties["crlatti:numVerbaleSedutaODG"]?exists>${seduta.properties["crlatti:numVerbaleSedutaODG"]}<#else></#if>",
 		"note" : "<#if seduta.properties["crlatti:noteSedutaODG"]?exists>${seduta.properties["crlatti:noteSedutaODG"]}<#else></#if>",
 		"links":[
@@ -40,7 +42,7 @@
 								"id": "${atto.nodeRef}",
 								"nome": "${atto.name}",
 								"tipoAtto": "${tipoTroncatoMaiuscolo}",
-								"numeroAtto" : "<#if atto.properties["crlatti:numeroAtto"]?exists>${atto.properties["crlatti:numeroAtto"]}<#else></#if>",
+								"numeroAtto" : "${atto.name}",
 								"consultazioni": [
 									<#assign consultazioni = atto.childrenByXPath["*[@cm:name='Consultazioni']"][0]>
 			    					<#assign consultazioniList = consultazioni.getChildAssocsByType("crlatti:consultazione")>

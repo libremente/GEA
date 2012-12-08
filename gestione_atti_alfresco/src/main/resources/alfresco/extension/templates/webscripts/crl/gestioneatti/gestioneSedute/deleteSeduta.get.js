@@ -6,8 +6,7 @@ var idSeduta = args.idSeduta;
 if(checkIsNotNull(idSeduta)){
 	
 	var seduta = utils.getNodeFromString(idSeduta);
-	
-	attoTrattatoNelRepository.remove(seduta);
+	seduta.remove();
 	
 }else{
 	

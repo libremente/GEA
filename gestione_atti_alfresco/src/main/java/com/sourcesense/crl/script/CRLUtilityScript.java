@@ -25,4 +25,21 @@ public class CRLUtilityScript extends BaseScopableProcessorExtension {
         AuthenticationUtil.runAs(job, runAsUsername);
     }
 	
+	
+	public Object sudoWithArgs(final Function func, final Object[] args, String runAsUsername) {
+        final Context context = Context.getCurrentContext();
+        final Scriptable scope = getScope();
+        
+        RunAsWork<Object> job = new RunAsWork<Object>(){
+            @Override
+            public Object doWork() throws Exception {
+           
+                return func.call(context, scope, scope, args);
+            }
+        };
+        
+        return AuthenticationUtil.runAs(job, runAsUsername);
+    }
+
+	
 }

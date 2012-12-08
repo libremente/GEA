@@ -5,6 +5,8 @@ import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
+import org.alfresco.service.cmr.repository.ContentService;
+import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -24,10 +26,10 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
     private static Log logger = LogFactory.getLog(AnagraficaImportScript.class);
 
     private NodeService nodeService;
+    private ContentService contentService;
     private FileFolderService fileFolderService;
     private SearchService searchService;
     private AuthorityService authorityService;
-
     private DataExtractor dataExtractor;
     
    
@@ -63,10 +65,13 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 logger.info("Proprieta' '"+Constant.PROP_DATA_INIZIO_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getFrom()+"'");
                 nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_FINE_LEGISLATURA, legislature.getTo());
                 logger.info("Proprieta' '"+Constant.PROP_DATA_FINE_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getTo()+"'");
+                   
+                // set content property to empty string for Share visualization in Alfresco Community Edition    
+                ContentWriter contentWriter = contentService.getWriter(legislatureFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
+                contentWriter.setMimetype("text/plain");
+                contentWriter.setEncoding("UTF-8");
+                contentWriter.putContent(legislature.getNumber());
                 
-
-                // set content property to empty string for Share visualization in Alfresco Community Edition
-                nodeService.setProperty(legislatureFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, legislature.getNumber());
         	}
         }
    
@@ -167,8 +172,12 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 logger.info("Proprieta' '"+Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getName()+"'");
                 nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA, group.getCode());
                 logger.info("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getCode()+"'");
-                // set content property to empty string for Share visualization in Alfresco Community Edition
-                nodeService.setProperty(groupFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, groupNodeName);
+               
+                // set content property to empty string for Share visualization in Alfresco Community Edition    
+                ContentWriter contentWriter = contentService.getWriter(groupFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
+                contentWriter.setMimetype("text/plain");
+                contentWriter.setEncoding("UTF-8");
+                contentWriter.putContent(groupNodeName);
             }
             
             
@@ -302,8 +311,12 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
         nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getCodeGroupName());
         logger.debug("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getCodeGroupName()+"'");
 
-        // set content property to empty string for Share visualization in Alfresco Community Edition
-        nodeService.setProperty(councilorFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, councilorNodeName);
+	     // set content property to empty string for Share visualization in Alfresco Community Edition    
+        ContentWriter contentWriter = contentService.getWriter(councilorFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
+        contentWriter.setMimetype("text/plain");
+        contentWriter.setEncoding("UTF-8");
+        contentWriter.putContent(councilorNodeName);
+        
         return  councilorFileInfo.getNodeRef();
     }
     
@@ -316,7 +329,15 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
         this.nodeService = nodeService;
     }
 
-    public FileFolderService getFileFolderService() {
+	public ContentService getContentService() {
+		return contentService;
+	}
+
+	public void setContentService(ContentService contentService) {
+		this.contentService = contentService;
+	}
+
+	public FileFolderService getFileFolderService() {
         return fileFolderService;
     }
 
