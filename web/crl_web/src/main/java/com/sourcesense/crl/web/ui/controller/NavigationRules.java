@@ -401,6 +401,24 @@ public class NavigationRules {
 		return false;
 	}
 	
+	public boolean isContinuazioneLavoriReferente() {
+		Commissione commissione = attoBean.getWorkingCommissione(userBean
+				.getUser().getSessionGroup().getNome());
+
+		if (commissione != null
+				&& Commissione.RUOLO_DELIBERANTE.equals(commissione.getRuolo())
+				|| (commissione.getMotivazioniContinuazioneInReferente()!=null && 
+						!"".equals(commissione.getMotivazioniContinuazioneInReferente())
+					)
+					|| commissione.getDataSedutaContinuazioneInReferente()!=null
+						) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	
 	public boolean isGuest(){
 		
 		

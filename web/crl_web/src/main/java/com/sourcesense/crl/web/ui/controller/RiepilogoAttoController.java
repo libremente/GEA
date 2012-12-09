@@ -26,12 +26,19 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 @ViewScoped
 public class RiepilogoAttoController {
 	
+	@ManagedProperty(value = "#{commissioneServiceManager}")
+	private CommissioneServiceManager commissioneServiceManager;
+
+	@ManagedProperty(value = "#{attoServiceManager}")
+	private AttoServiceManager attoServiceManager;
+	
 	AttoBean attoBean;
 
 	private List<Allegato> testiUfficiali;
 	private List<Allegato> altriAllegati;
 	private List<Organo> organiInterni;
 	private List<Organo> altriOrgani;
+	private List<Commissione> commissioni = new ArrayList<Commissione>();
 	private String nomeCommissione;
 	private String commissioneSelectedName;
 	
@@ -39,11 +46,7 @@ public class RiepilogoAttoController {
 	private List<Relatore> relatoriAttivi = new ArrayList<Relatore>();
 	private List<Relatore> relatoriList = new ArrayList<Relatore>();
 
-	@ManagedProperty(value = "#{commissioneServiceManager}")
-	private CommissioneServiceManager commissioneServiceManager;
-
-	@ManagedProperty(value = "#{attoServiceManager}")
-	private AttoServiceManager attoServiceManager;
+	
 
 
 	private Commissione commissioneSelected = new Commissione();
@@ -52,26 +55,22 @@ public class RiepilogoAttoController {
 	protected void init() {
 		
 		
-		
-		
-		
-		// setDocumentiAllegati(AllegatoServiceManager.findTestiUfficiali());
-		// setAltriAllegati(AllegatoServiceManager.findAltriAllegati());
-		// setOrganiInterni(OrganoServiceManager.findOrganiInterni());
-		// setAltriOrgani(OrganoServiceManager.findAltriOrgani());
-
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		
-	
-
-
 		// TODO riempire liste commissioni attoBean =>
 		// attoBean.getAtto().setCommissioni(commissioneServiceManager.findCommissioniByAtto(attoBean.getId()));
 		//
-		if(!attoBean.getAtto().getPassaggi().get(0).getCommissioni().isEmpty()) {
+		
+		/*if(!attoBean.getAtto().getPassaggi().get(0).getCommissioni().isEmpty()) {
 			commissioneSelected = attoBean.getAtto().getPassaggi().get(0).getCommissioni().get(0);
+		}*/
+		
+		commissioni= Clonator.cloneList(attoBean.getLastPassaggio().getCommissioni());
+		
+		if(!commissioni.isEmpty()) {
+			commissioneSelected = commissioni.get(0);
 		}
 		
 		abbinamentiList = Clonator.cloneList(attoBean.getLastPassaggio().getAbbinamenti());
@@ -87,15 +86,12 @@ public class RiepilogoAttoController {
 
 	public void showCommissioneDetail() {
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-
-		for (Commissione commissioneRec : attoBean.getAtto().getPassaggi().get(0).getCommissioni()) {
+		
+		for (Commissione commissioneRec : commissioni) {
 
 			if(commissioneRec.getDescrizione().equals(nomeCommissione)){
 
-				commissioneSelected =	commissioneRec;
+				setCommissioneSelected ((Commissione)commissioneRec.clone());
 				break;
 			}
 
@@ -223,6 +219,18 @@ public class RiepilogoAttoController {
 
 	public void setRelatoriAttivi(List<Relatore> relatoriAttivi) {
 		this.relatoriAttivi = relatoriAttivi;
+	}
+
+
+
+	public List<Commissione> getCommissioni() {
+		return commissioni;
+	}
+
+
+
+	public void setCommissioni(List<Commissione> commissioni) {
+		this.commissioni = commissioni;
 	}
 
 	

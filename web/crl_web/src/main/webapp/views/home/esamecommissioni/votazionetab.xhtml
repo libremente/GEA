@@ -60,6 +60,23 @@
 					</p:confirmDialog>
 					
 					
+					<p:confirmDialog id="confirmCambiaRuoloDialog"
+						message="Conferma passaggio in Referente"
+						header="Cambio Ruolo " severity="alert"
+						widgetVar="confirmCambiaRuoloDialg">
+
+						<p:commandButton id="confirmCambiaRuoloBtn" value="Conferma"
+							oncomplete="confirmCambiaRuoloDialg.hide()"
+							action="#{esameCommissioniController.cambiaRuoloInReferente}"
+						    update="votazioneMsg"/>
+						
+						<p:commandButton id="declineCambiaRuoloDialog" value="Annulla"
+							onclick="confirmCambiaRuoloDialg.hide()" type="button" />
+
+					</p:confirmDialog>
+					
+					
+					
 					<p:confirmDialog id="uploadFileAttributesVotazione"
 						header="Caricamento"
 						widgetVar="uploadFileAttributesVotazioneDialog"
@@ -308,7 +325,7 @@
 			</p:row>
 		</p:panelGrid>
 	</p:fieldset>
-	<p:fieldset rendered="#{navigationBean.isCommissioneDeliberante()}" legend="Continuazione dei lavori in referente"
+	<p:fieldset rendered="#{navigationBean.isContinuazioneLavoriReferente()}" legend="Continuazione dei lavori in referente"
 		collapsed="false" toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="contlavoriinreferentepanel">
 			<p:row>
@@ -341,8 +358,7 @@
 			<p:row>
 				<p:column>
 					<p:commandButton value="Cambia Ruolo"
-						action="#{esameCommissioniController.cambiaRuoloInReferente}"
-						update="votazioneMsg" />
+						oncomplete="confirmCambiaRuoloDialg.show()" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>

@@ -16,331 +16,335 @@
 
 
 <div id="blockedNote">
-<p:panelGrid styleClass="infoTable" id="notePanel">
-	<p:row>
-		<p:column>
-			<p>
-				<!-- Messaggio azioni -->
-				<p:growl id="noteAllegatiMsg" showDetail="true" sticky="false" />
+	<p:panelGrid styleClass="infoTable" id="notePanel">
+		<p:row>
+			<p:column>
+				<p>
+					<!-- Messaggio azioni -->
+					<p:growl id="noteAllegatiMsg" showDetail="true" sticky="false" />
 
 
 
-				<!-- Confirm dialog -->
-				<p:confirmDialog id="confirmAllegatoDialog"
-					message="Sei sicuro di voler eliminare l'Allegato ?"
-					header="Cancellazione Allegato" severity="alert"
-					widgetVar="allegatoDialog">
+					<!-- Confirm dialog -->
+					<p:confirmDialog id="confirmAllegatoDialog"
+						message="Sei sicuro di voler eliminare l'Allegato ?"
+						header="Cancellazione Allegato" severity="alert"
+						widgetVar="allegatoDialog">
 
-					<p:commandButton id="confirmAllegato" value="Conferma"
-						oncomplete="allegatoDialog.hide()"
-						action="#{esameAulaController.removeAllegato}"
-						update="listaAllegati" />
-					<p:commandButton id="declineAllegato" value="Annulla"
-						onclick="allegatoDialog.hide()" type="button" />
+						<p:commandButton id="confirmAllegato" value="Conferma"
+							oncomplete="allegatoDialog.hide()"
+							action="#{esameAulaController.removeAllegato}"
+							update="listaAllegati" />
+						<p:commandButton id="declineAllegato" value="Annulla"
+							onclick="allegatoDialog.hide()" type="button" />
 
-				</p:confirmDialog>
+					</p:confirmDialog>
 
-				<p:confirmDialog id="confirmLinkDialog"
-					message="Sei sicuro di voler eliminare il Link?"
-					header="Cancellazione Link" severity="alert" widgetVar="linkDialog">
+					<p:confirmDialog id="confirmLinkDialog"
+						message="Sei sicuro di voler eliminare il Link?"
+						header="Cancellazione Link" severity="alert"
+						widgetVar="linkDialog">
 
-					<p:commandButton id="confirmLink" value="Conferma"
-						oncomplete="linkDialog.hide()"
-						action="#{esameAulaController.removeLink}"
-						actionListener="#{esameAulaController.updateNoteAllegatiHandler}"
-						update="listaLinks" />
-					<p:commandButton id="declineLink" value="Annulla"
-						onclick="linkDialog.hide()" type="button" />
+						<p:commandButton id="confirmLink" value="Conferma"
+							oncomplete="linkDialog.hide()"
+							action="#{esameAulaController.removeLink}"
+							actionListener="#{esameAulaController.updateNoteAllegatiHandler}"
+							update="listaLinks" />
+						<p:commandButton id="declineLink" value="Annulla"
+							onclick="linkDialog.hide()" type="button" />
 
-				</p:confirmDialog>
-				
-				<p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
-					widgetVar="uploadAllegatoAttributesDialog" style="width:450px" message="Allega file">
-					<p:panelGrid id="uploadpanelalleg">
+					</p:confirmDialog>
+
+					<p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
+						widgetVar="uploadAllegatoAttributesDialog" style="width:450px"
+						message="Allega file">
+						<p:panelGrid id="uploadpanelalleg">
+							<p:row>
+								<p:column>
+									<h:outputLabel for="isPubblico" value="Pubblico: " />
+									<p:selectBooleanCheckbox id="isPubblicoAllegato"
+										value="#{esameAulaController.currentFilePubblico}">
+										<p:ajax event="change" immediate="true"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:fileUpload label="Carica Allegato"
+										oncomplete="uploadAllegatoAttributesDialog.hide()"
+										auto="false" update="listaAllegati ,noteAllegatiMsg"
+										fileUploadListener="#{esameAulaController.uploadAllegato}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:commandButton id="declineUploadAllegato" value="Annulla"
+										onclick="uploadAllegatoAttributesDialog.hide()" type="button" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:confirmDialog>
+				</p>
+			</p:column>
+		</p:row>
+
+
+
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Note:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<b>Note generali: </b>
+					<br />
+					<br />
+					<p:inputTextarea rows="5" cols="101"
+						value="#{esameAulaController.noteGenerali}">
+						<p:ajax event="change"
+							listener="#{esameAulaController.updateNoteAllegatiHandler}" />
+					</p:inputTextarea>
+
+					<h:outputText id="counter" />
+
+
+				</p:fieldset>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Allegati:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<p:panelGrid styleClass="infoTable" id="allegatopanel">
 						<p:row>
-							<p:column>
-								<h:outputLabel for="isPubblico" value="Pubblico: " />
-								<p:selectBooleanCheckbox id="isPubblicoAllegato"
-									value="#{esameAulaController.currentFilePubblico}">
-									<p:ajax event="change" immediate="true"></p:ajax>
-								</p:selectBooleanCheckbox>
+							<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+							<p:column colspan="3">
+
+								<p:commandButton value="Carica Allegato"
+									oncomplete="uploadAllegatoAttributesDialog.show()">
+								</p:commandButton>
 							</p:column>
 						</p:row>
 						<p:row>
-							<p:column>
-								<p:fileUpload label="Carica Allegato"
-									oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
-									update="listaAllegati ,noteAllegatiMsg"
-									fileUploadListener="#{esameAulaController.uploadAllegato}" />
+							<p:column colspan="4">
+
+								<p:dataTable id="listaAllegati"
+									value="#{esameAulaController.allegatiList}" var="allegato"
+									styleClass="generalInfoTab grey-text" editable="true">
+
+									<p:ajax event="rowEdit" update="@this"
+										listener="#{fileDownloadController.fileUpdate}" />
+
+									<p:column sortBy="#{allegato.nome}">
+										<f:facet name="header">Descrizione Allegato</f:facet>
+										<h:outputText value="#{allegato.nome}" />
+									</p:column>
+
+									<p:column
+										sortBy="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}">
+										<f:facet name="header">Azioni</f:facet>
+										<h:outputText
+											value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
+
+									</p:column>
+
+									<p:column sortBy="#{allegato.pubblico}">
+										<f:facet name="header">Pubblico</f:facet>
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si" rendered="#{allegato.pubblico}" />
+												<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{allegato.pubblico}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+										<p:commandButton oncomplete="allegatoDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{allegato.id}"
+												target="#{esameAulaController.allegatoToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Download</f:facet>
+
+										<p:commandButton id="downloadLink" icon="detail-icon"
+											ajax="false"
+											onclick="PrimeFaces.monitorDownload(start, stop)">
+											<f:setPropertyActionListener value="#{allegato.id}"
+												target="#{fileDownloadController.fileId}" />
+											<f:setPropertyActionListener value="#{allegato.nome}"
+												target="#{fileDownloadController.fileName}" />
+											<f:setPropertyActionListener value="#{allegato.mimetype}"
+												target="#{fileDownloadController.fileMimetype}" />
+											<p:fileDownload value="#{fileDownloadController.file}" />
+										</p:commandButton>
+
+									</p:column>
+
+									<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor />
+									</p:column>
+
+
+								</p:dataTable>
 							</p:column>
 						</p:row>
+
+					</p:panelGrid>
+
+					<!-- TODO : upload file al click sul pulsante-->
+
+				</p:fieldset>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Link:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<p:panelGrid styleClass="infoTable" id="linkspanel">
+
+
 						<p:row>
-							<p:column>
-								<p:commandButton id="declineUploadAllegato" value="Annulla"
-									onclick="uploadAllegatoAttributesDialog.hide()" type="button" />
+							<p:column colspan="4">
+								<p:panelGrid id="addLinkPanel" styleClass="tableAppend">
+
+									<f:facet name="header">
+										<p:row>
+											<p:column>Descrizione collegamento</p:column>
+											<p:column>Indirizzo collegamento</p:column>
+											<p:column>Pubblico</p:column>
+											<p:column></p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column>
+											<p:inputText id="link"
+												value="#{esameAulaController.nomeLink}" />
+
+										</p:column>
+
+										<p:column>
+											<p:inputText id="urllink"
+												value="#{esameAulaController.urlLink}" />
+										</p:column>
+
+										<p:column>
+											<p:selectBooleanCheckbox id="pubblico"
+												value="#{esameAulaController.pubblico}" />
+										</p:column>
+
+										<p:column>
+											<p:commandButton value="Aggiungi"
+												action="#{esameAulaController.addLink}" id="addLink"
+												update="listaLinks , noteAllegatiMsg" icon="new-icon" />
+										</p:column>
+
+									</p:row>
+								</p:panelGrid>
+
+
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="4">
+
+								<p:dataTable id="listaLinks"
+									value="#{esameAulaController.linksList}" var="link"
+									styleClass="generalInfoTab grey-text" editable="true">
+
+									<p:column headerText="Descrizione collegamento">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{link.descrizione}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{link.descrizione}" style="width:100%">
+
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Indirizzo collegamento"
+										sortBy="#{link.indirizzo}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputLink value="http://#{link.indirizzo}"
+													target="_blank">
+													<h:outputText value="#{link.indirizzo}" />
+												</h:outputLink>
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{link.indirizzo}" style="width:100%">
+
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+
+
+									</p:column>
+
+
+									<p:column headerText="Pubblico">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si" rendered="#{link.pubblico}" />
+												<h:outputText value="no" rendered="#{!link.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{link.pubblico}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Elimina">
+
+
+										<p:commandButton oncomplete="linkDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{link.descrizione}"
+												target="#{presentazioneAssegnazioneAttoController.linkToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+									<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor />
+									</p:column>
+
+								</p:dataTable>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-				</p:confirmDialog>
-			</p>
-		</p:column>
-	</p:row>
+				</p:fieldset>
+			</p:column>
+		</p:row>
 
 
 
-	<p:row>
-		<p:column>
-			<p:fieldset styleClass="fieldSetTab" legend="Note:" collapsed="false"
-				toggleable="true" toggleSpeed="500">
+		<p:row>
+			<p:column>
 
-				<b>Note generali: </b>
-				<br />
-				<br />
-				<p:inputTextarea rows="5" cols="101"
-					value="#{esameAulaController.noteGenerali}">
-					<p:ajax event="change"
-						listener="#{esameAulaController.updateNoteAllegatiHandler}" />
-				</p:inputTextarea>
+				<p>
+					<p:commandButton value="Salva" id="salvanoteeallegati"
+						action="#{esameAulaController.salvaNoteEAllegati}"
+						update="noteAllegatiMsg" />
+				</p>
+			</p:column>
+		</p:row>
 
-				<h:outputText id="counter" />
-
-
-			</p:fieldset>
-		</p:column>
-	</p:row>
-	<p:row>
-		<p:column>
-			<p:fieldset styleClass="fieldSetTab" legend="Allegati:"
-				collapsed="false" toggleable="true" toggleSpeed="500">
-
-				<p:panelGrid styleClass="infoTable" id="allegatopanel">
-					<p:row>
-						<!-- <p:column>
-					<h:graphicImage alt="add" value="/resources/img/add.png" />
-				</p:column>-->
-						<p:column colspan="3">
-							
-								<p:commandButton value="Carica Allegato"
-								oncomplete="uploadAllegatoAttributesDialog.show()">
-							</p:commandButton>
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column colspan="4">
-
-							<p:dataTable id="listaAllegati"
-								value="#{esameAulaController.allegatiList}"
-								var="allegato" styleClass="generalInfoTab grey-text" editable="true">
-								
-								<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
-
-								<p:column sortBy="#{allegato.nome}">
-									<f:facet name="header">Descrizione Allegato</f:facet>
-							<h:outputText value="#{allegato.nome}" />
-						</p:column>
-
-								<p:column sortBy="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}">
-									<f:facet name="header">Azioni</f:facet>
-									<h:outputText
-										value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
-
-								</p:column>
-
-								<p:column sortBy="#{allegato.pubblico}">
-									<f:facet name="header">Pubblico</f:facet>
-									<p:cellEditor >
-								<f:facet name="output">
-									<h:outputText value="si"
-								rendered="#{allegato.pubblico}" />
-							<h:outputText value="no"
-								rendered="#{!allegato.pubblico}" />
-								</f:facet>
-								<f:facet  name="input">
-									<p:selectBooleanCheckbox 
-									value="#{allegato.pubblico}" />
-								</f:facet>
-							</p:cellEditor> 
-								</p:column>
-
-								<p:column>
-									<f:facet name="header">Elimina</f:facet>
-									<p:commandButton oncomplete="allegatoDialog.show()"
-										icon="delete-icon">
-
-										<f:setPropertyActionListener value="#{allegato.id}"
-											target="#{esameAulaController.allegatoToDelete}" />
-									</p:commandButton>
-								</p:column>
-								
-								<p:column>
-							<f:facet name="header">Download</f:facet>
-
-							<p:commandButton id="downloadLink" icon="detail-icon"
-								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
-								<f:setPropertyActionListener value="#{allegato.id}"
-									target="#{fileDownloadController.fileId}" />
-								<f:setPropertyActionListener value="#{allegato.nome}"
-									target="#{fileDownloadController.fileName}" />
-								<f:setPropertyActionListener value="#{allegato.mimetype}"
-									target="#{fileDownloadController.fileMimetype}" />
-								<p:fileDownload value="#{fileDownloadController.file}" />
-							</p:commandButton>
-
-						</p:column>
-						
-						<p:column headerText="Modifica" style="width:50px">
-							<p:rowEditor   />
-						</p:column>
-
-
-							</p:dataTable>
-						</p:column>
-					</p:row>
-
-				</p:panelGrid>
-
-				<!-- TODO : upload file al click sul pulsante-->
-
-			</p:fieldset>
-		</p:column>
-	</p:row>
-	<p:row>
-		<p:column>
-			<p:fieldset styleClass="fieldSetTab" legend="Link:" collapsed="false"
-				toggleable="true" toggleSpeed="500">
-
-				<p:panelGrid styleClass="infoTable" id="linkspanel">
-
-
-					<p:row>
-						<p:column colspan="4">
-							<p:panelGrid id="addLinkPanel" styleClass="tableAppend">
-
-								<f:facet name="header">
-									<p:row>
-										<p:column>Descrizione collegamento</p:column>
-										<p:column>Indirizzo collegamento</p:column>
-										<p:column>Pubblico</p:column>
-										<p:column></p:column>
-									</p:row>
-								</f:facet>
-								<p:row>
-									<p:column>
-										<p:inputText id="link"
-											value="#{esameAulaController.nomeLink}" />
-
-									</p:column>
-
-									<p:column>
-										<p:inputText id="urllink"
-											value="#{esameAulaController.urlLink}" />
-									</p:column>
-
-									<p:column>
-										<p:selectBooleanCheckbox id="pubblico"
-											value="#{esameAulaController.pubblico}" />
-									</p:column>
-
-									<p:column>
-										<p:commandButton value="Aggiungi"
-											action="#{esameAulaController.addLink}"
-											id="addLink" update="listaLinks , noteAllegatiMsg"
-											icon="new-icon" />
-									</p:column>
-
-								</p:row>
-							</p:panelGrid>
-
-
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column colspan="4">
-
-							<p:dataTable id="listaLinks"
-								value="#{esameAulaController.linksList}"
-								var="link" styleClass="generalInfoTab grey-text" editable="true">
-
-								<p:column headerText="Descrizione collegamento">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="#{link.descrizione}" />
-										</f:facet>
-										<f:facet name="input">
-											<p:inputText value="#{link.descrizione}" style="width:100%">
-
-											</p:inputText>
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
-
-								<p:column headerText="Indirizzo collegamento">
-									<p:cellEditor>
-										<f:facet name="output">
-										<h:outputLink value="#{link.indirizzo}">
-											<h:outputText value="#{link.descrizione}" />
-											</h:outputLink>
-										</f:facet>
-										<f:facet name="input">
-											<p:inputText value="#{link.indirizzo}" style="width:100%">
-
-											</p:inputText>
-										</f:facet>
-									</p:cellEditor>
-									
-										
-								</p:column>
-								
-								<p:column headerText="Pubblico">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputText value="si" rendered="#{link.pubblico}" />
-											<h:outputText value="no" rendered="#{!link.pubblico}" />
-										</f:facet>
-										<f:facet name="input">
-											<p:selectBooleanCheckbox value="#{link.pubblico}" />
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
-
-								<p:column headerText="Elimina">
-									
-
-									<p:commandButton oncomplete="linkDialog.show()"
-										icon="delete-icon">
-
-										<f:setPropertyActionListener value="#{link.descrizione}"
-											target="#{presentazioneAssegnazioneAttoController.linkToDelete}" />
-									</p:commandButton>
-								</p:column>
-								
-								<p:column headerText="Modifica" style="width:50px">
-					<p:rowEditor />
-				</p:column>
-
-							</p:dataTable>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-			</p:fieldset>
-		</p:column>
-	</p:row>
-
-
-
-	<p:row>
-		<p:column>
-
-			<p>
-				<p:commandButton value="Salva" id="salvanoteeallegati"
-					action="#{esameAulaController.salvaNoteEAllegati}"
-					update="noteAllegatiMsg" />
-			</p>
-		</p:column>
-	</p:row>
-
-</p:panelGrid>
+	</p:panelGrid>
 
 </div>
 <script>

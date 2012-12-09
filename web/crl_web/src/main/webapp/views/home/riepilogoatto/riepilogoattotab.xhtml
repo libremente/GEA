@@ -196,14 +196,14 @@
 			<p:column colspan="2">
 
 				<p:dataTable styleClass="generalInfoTab grey-text"
-					value="#{attoBean.commissioni}" var="commissione">
+					value="#{riepilogoAttoController.commissioni}" var="commissione">
 
 					<p:column>
 						<f:facet name="header">
 						</f:facet>
 						<p:commandButton
-							update=":formRiepilogo:tabView:dettaglioCommissione"
-							id="cmdBtn_#{commissione.descrizione}"
+							update=":formRiepilogo:tabView"
+							
 							action="#{riepilogoAttoController.showCommissioneDetail}"
 							icon="detail-icon">
 
@@ -264,40 +264,59 @@
 			</p:column>
 		</p:row>
 
+        <p:row style="height:30px">
+        </p:row> 
 		<p:row>
-			<p:column>
-				<h:outputText style="font-weight: bold;" value="Relatore: " />
-				<c:forEach items="#{riepilogoAttoController.relatoriAttivi}" var="relatore">
-				  <br/>&nbsp;&nbsp;&nbsp;<h:outputText value="#{relatore.descrizione} - #{relatore.gruppoConsiliare} " />
-				</c:forEach>
+		    <p:column colspan="2" width="500">
+		        <h:outputText style="font-weight: bold;" value="Relatore: " />
+		    
 				
+				<p:dataTable style="width:300px" value="#{riepilogoAttoController.commissioneSelected.relatori}" var="relatore">
+				
+				<p:column  >
+						<f:facet name="header">Relatore</f:facet>
+					 <h:outputText value="#{relatore.descrizione}" />
+				</p:column>
+				
+				<p:column  >
+						<f:facet name="header">Data Nomina</f:facet>
+					 <h:outputText value="#{relatore.dataNomina}" >
+					 <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+					 </h:outputText>
+				</p:column>
+				
+				</p:dataTable>
 				
 			</p:column>
 
-			<p:column>
-				<h:outputText style="font-weight: bold;" value="Data Nomina: " />
-				<h:outputText
-					value="#{riepilogoAttoController.commissioneSelected.dataNomina}">
-					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-				</h:outputText>
-			</p:column>
+			
 		</p:row>
-
-		<p:row rendered="#{!navigationBean.isCommissioneConsultiva()}">
-			<p:column colspan="2">
+        <p:row style="height:30px">
+        </p:row> 
+		<p:row rendered="#{ riepilogoAttoController.commissioneSelected.ruolo ne 'Consultiva'}">
+			
+			<p:column colspan="2" width="500">
 				<h:outputText style="font-weight: bold;"
 					value="Membri Comitato Ristretto/Gruppo di lavoro: "  />
 
-				<c:forEach items="#{riepilogoAttoController.commissioneSelected.comitatoRistretto.componenti}" var="componente">
 				
-				<br/>&nbsp;&nbsp;&nbsp;<h:outputText value="#{componente.nome}  " />
-				</c:forEach>
+				<p:dataTable style="width:300px" value="#{riepilogoAttoController.commissioneSelected.comitatoRistretto.componenti}" var="relatore">
+				
+				<p:column  >
+						<f:facet name="header">Componente</f:facet>
+					 <h:outputText value="#{relatore.descrizione}" />
+				</p:column>
+				
+				</p:dataTable>
+				
+				
 
 			</p:column>
 
 
 		</p:row>
-
+        <p:row style="height:30px">
+        </p:row>
 		<p:row rendered="#{ riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' }">
 			<p:column>
 				<h:outputText style="font-weight: bold;"

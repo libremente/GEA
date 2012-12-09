@@ -61,11 +61,9 @@ public class EsameCommissioniController {
 
 	@ManagedProperty(value = "#{abbinamentoServiceManager}")
 	private AbbinamentoServiceManager abbinamentoServiceManager;
-	
+
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
-	
-	
 
 	private Atto atto = new Atto();
 
@@ -78,13 +76,17 @@ public class EsameCommissioniController {
 	private Passaggio passaggio;
 	private String passaggioSelected;
 
-	/*private Map<String, String> relatori = new HashMap<String, String>();
-	private Map<String, String> membriComitato = new HashMap<String, String>();*/
+	/*
+	 * private Map<String, String> relatori = new HashMap<String, String>();
+	 * private Map<String, String> membriComitato = new HashMap<String,
+	 * String>();
+	 */
 
 	private List<Relatore> relatori = new ArrayList<Relatore>();
 	private List<Relatore> membriComitato = new ArrayList<Relatore>();
-	//private Map<String, String> membriComitato = new HashMap<String, String>();
-	
+	// private Map<String, String> membriComitato = new HashMap<String,
+	// String>();
+
 	private String relatoreToDelete;
 	private Date dataNominaRelatore;
 	private Date dataUscitaRelatore;
@@ -201,7 +203,7 @@ public class EsameCommissioniController {
 
 		// Liste per combo
 		setRelatori(personaleServiceManager.getAllRelatori());
-	    setMembriComitato(personaleServiceManager.getAllMembriComitato());
+		setMembriComitato(personaleServiceManager.getAllMembriComitato());
 
 		// Bean atto di sessione
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -249,8 +251,9 @@ public class EsameCommissioniController {
 
 		return (commissioneUser.getRuolo().equals(Commissione.RUOLO_REFERENTE)
 				|| commissioneUser.getRuolo().equalsIgnoreCase(
-						Commissione.RUOLO_REDIGENTE) || commissioneUser
-				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_DELIBERANTE) || commissioneUser
+						Commissione.RUOLO_REDIGENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_DELIBERANTE) || commissioneUser
 				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_COREFERENTE));
 
 	}
@@ -316,8 +319,7 @@ public class EsameCommissioniController {
 
 		loadData(passaggioSelected, attoBean);
 	}
-	
-	
+
 	private Commissione findCommissione(String nome) {
 
 		for (Commissione element : commissioniList) {
@@ -366,8 +368,6 @@ public class EsameCommissioniController {
 		confrontaDataScadenza();
 
 	}
-
-	
 
 	public void updateRelatoriHandler() {
 		setStatoCommitRelatori(CRLMessage.COMMIT_UNDONE);
@@ -817,25 +817,28 @@ public class EsameCommissioniController {
 
 		boolean isOneMembroAttivo = checkOneMembroAttivo(attoBean);
 
-		commissioneUser.getComitatoRistretto().setComponenti(membriComitatoList);
-		commissioneUser.setDataIstituzioneComitato(getDataIstituzioneComitato());
+		commissioneUser.getComitatoRistretto()
+				.setComponenti(membriComitatoList);
+		commissioneUser
+				.setDataIstituzioneComitato(getDataIstituzioneComitato());
 
 		Target target = new Target();
 		target.setCommissione(commissioneUser.getDescrizione());
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-        
-		boolean statoChange = atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE) || 
-				atto.getStato().equals(StatoAtto.PRESO_CARICO_COMMISSIONE) ||
-				atto.getStato().equals(StatoAtto.NOMINATO_RELATORE); 
-		
+
+		boolean statoChange = atto.getStato().equals(
+				StatoAtto.ASSEGNATO_COMMISSIONE)
+				|| atto.getStato().equals(StatoAtto.PRESO_CARICO_COMMISSIONE)
+				|| atto.getStato().equals(StatoAtto.NOMINATO_RELATORE);
+
 		if (canChangeStatoAtto() && isOneMembroAttivo) {
-			
-					if(statoChange){
-			  atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+
+			if (statoChange) {
+				atto.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
 			}
-			
+
 			commissioneUser.setStato(Commissione.STATO_COMITATO_RISTRETTO);
-		
+
 		}
 
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
@@ -848,8 +851,8 @@ public class EsameCommissioniController {
 				.salvaComitatoRistrettoEsameCommissioni(esameCommissione);
 
 		if (canChangeStatoAtto() && isNominatoRelatore()) {
-			if(statoChange){
-			attoBean.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
+			if (statoChange) {
+				attoBean.setStato(StatoAtto.LAVORI_COMITATO_RISTRETTO);
 			}
 		}
 		attoBean.getLastPassaggio().setCommissioni(
@@ -974,20 +977,20 @@ public class EsameCommissioniController {
 				abbinamento.setIdAtto(atto.getId());
 				abbinamento.setIdAttoAbbinato(idAbbinamento);
 				abbinamento.setAbbinato(true);
-				abbinamento.setNumeroAttoAbbinato(attoDaAbbinare.getNumeroAtto());
+				abbinamento.setNumeroAttoAbbinato(attoDaAbbinare
+						.getNumeroAtto());
 				abbinamento.setTipoAttoAbbinato(attoDaAbbinare.getTipoAtto());
 				abbinamentiList.add(abbinamento);
 				setIdAbbinamentoSelected(idAbbinamento);
 				showAbbinamentoDetail();
 				updateAbbinamentiHandler();
 
-				
 			}
 		}
 	}
 
 	public void removeAbbinamento() {
-		
+
 		for (Abbinamento element : abbinamentiList) {
 
 			if (element.getIdAttoAbbinato().equals(abbinamentoToDelete)) {
@@ -1114,17 +1117,18 @@ public class EsameCommissioniController {
 
 	private void mergeAbbinamento(Abbinamento abbinamento,
 			List<Abbinamento> abbinamentiSession) {
-		
+
 		for (Abbinamento element : abbinamentiSession) {
-			
+
 			if (element.getIdAttoAbbinato().equals(
 					abbinamento.getIdAttoAbbinato())) {
-				
+
 				element.setTipoTesto(abbinamento.getTipoTesto());
 				element.setDataAbbinamento(abbinamento.getDataAbbinamento());
-				element.setDataDisabbinamento(abbinamento.getDataDisabbinamento());
+				element.setDataDisabbinamento(abbinamento
+						.getDataDisabbinamento());
 				element.setNote(abbinamento.getNote());
-				
+
 				return;
 			}
 		}
@@ -1177,10 +1181,7 @@ public class EsameCommissioniController {
 				.getSessionMap().get("attoBean"));
 
 		String stato = atto.getStato();
-        
-		
-		
-		
+
 		// Check se annulla votazione
 		if (checkAnnullaCommissione()) {
 
@@ -1228,19 +1229,16 @@ public class EsameCommissioniController {
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Registrazione Votazione salvata con successo", ""));
-		
-		//Se deliberante e PDA forward su chiusura iter
-		if(Commissione.RUOLO_DELIBERANTE.equals(commissioneUser.getRuolo()) 
-				&& atto.getTipoAtto().equals("PDA")){
+
+		// Se deliberante e PDA forward su chiusura iter
+		if (Commissione.RUOLO_DELIBERANTE.equals(commissioneUser.getRuolo())
+				&& atto.getTipoAtto().equals("PDA")) {
 			return "pretty:Chiusura_Iter";
-		}else{
-			return null;	
+		} else {
+			return null;
 		}
-		
+
 	}
-	
-	
-	
 
 	private boolean checkAnnullaCommissione() {
 
@@ -1347,47 +1345,56 @@ public class EsameCommissioniController {
 	public void cambiaRuoloInReferente() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
 
-		commissioneUser.setRuolo(Commissione.RUOLO_REFERENTE);
+		if (getDataSedutaContinuazioneLavori() != null) {
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
 
-		Target target = new Target();
-		target.setCommissione(commissioneUser.getDescrizione());
-		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+			commissioneUser.setRuolo(Commissione.RUOLO_REFERENTE);
 
-		EsameCommissione esameCommissione = new EsameCommissione();
+			Target target = new Target();
+			target.setCommissione(commissioneUser.getDescrizione());
+			target.setPassaggio(attoBean.getLastPassaggio().getNome());
 
-		for (Commissione commissioneRec : atto.getPassaggi()
-				.get(atto.getPassaggi().size() - 1).getCommissioni()) {
+			EsameCommissione esameCommissione = new EsameCommissione();
 
-			if (commissioneRec.getDescrizione().equals(
-					commissioneUser.getDescrizione())) {
+			for (Commissione commissioneRec : atto.getPassaggi()
+					.get(atto.getPassaggi().size() - 1).getCommissioni()) {
 
-				commissioneRec.setRuolo(Commissione.RUOLO_REFERENTE);
-				commissioneRec
-						.setMotivazioniContinuazioneInReferente(motivazioni);
-				commissioneRec
-						.setDataSedutaContinuazioneInReferente(dataSedutaContinuazioneLavori);
+				if (commissioneRec.getDescrizione().equals(
+						commissioneUser.getDescrizione())) {
+
+					
+					commissioneRec.setRuolo(Commissione.RUOLO_REFERENTE);
+					commissioneRec
+							.setMotivazioniContinuazioneInReferente(getMotivazioni());
+					commissioneRec
+							.setDataSedutaContinuazioneInReferente(getDataSedutaContinuazioneLavori());
+				}
 			}
+
+			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+					.setCommissioni(getCommissioniList());
+			esameCommissione.setAtto(atto);
+			esameCommissione.setTarget(target);
+
+			commissioneServiceManager
+					.salvaCambiaRuoloInReferente(esameCommissione);
+
+			attoBean.getLastPassaggio().setCommissioni(commissioniList);
+			setStatoCommitContinuazioneLavori(CRLMessage.COMMIT_DONE);
+			context.addMessage(
+					null,
+					new FacesMessage(
+							"Continuazione dei lavori in referente salvata con successo",
+							""));
+		} else {
+
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Inserire la Data seduta", ""));
+
 		}
-
-		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
-				.setCommissioni(getCommissioniList());
-		esameCommissione.setAtto(atto);
-		esameCommissione.setTarget(target);
-
-		commissioneServiceManager.salvaCambiaRuoloInReferente(esameCommissione);
-
-		attoBean.getAtto().setStato(StatoAtto.VOTATO_COMMISSIONE);
-		attoBean.getLastPassaggio().setCommissioni(commissioniList);
-
-		// TODO
-
-		setStatoCommitContinuazioneLavori(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage(
-				"Continuazione dei lavori in referente salvata con successo",
-				""));
 	}
 
 	public String confermaTrasmissione() {
@@ -1398,17 +1405,17 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		/*Commissione comm = attoBean.getWorkingCommissione(commissioneUser
-				.getDescrizione());*/
+		/*
+		 * Commissione comm = attoBean.getWorkingCommissione(commissioneUser
+		 * .getDescrizione());
+		 */
 
 		if (isPassaggioDiretto()
-				&& (
-				(commissioneUser.getEsitoVotazione() != null
-				&& !commissioneUser.getEsitoVotazione().trim().equals(""))||  
-				(commissioneUser.getQuorumEsameCommissioni() != null
-				&& !commissioneUser.getQuorumEsameCommissioni().trim().equals(""))||
-				(commissioneUser.getDataSedutaCommissione() != null)
-						)) {
+				&& ((commissioneUser.getEsitoVotazione() != null && !commissioneUser
+						.getEsitoVotazione().trim().equals(""))
+						|| (commissioneUser.getQuorumEsameCommissioni() != null && !commissioneUser
+								.getQuorumEsameCommissioni().trim().equals("")) || (commissioneUser
+						.getDataSedutaCommissione() != null))) {
 			context.addMessage(
 					null,
 					new FacesMessage(
@@ -1880,8 +1887,7 @@ public class EsameCommissioniController {
 
 		attoBean.getLastPassaggio().setCommissioni(
 				Clonator.cloneList(getCommissioniList()));
-		
-		
+
 		setStatoCommitNote(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(
@@ -2028,7 +2034,7 @@ public class EsameCommissioniController {
 
 	public void setDataSedutaContinuazioneLavori(
 			Date dataSedutaContinuazioneLavori) {
-		this.commissioneUser.getDataSedutaContinuazioneInReferente();
+		this.commissioneUser.setDataSedutaContinuazioneInReferente(dataSedutaContinuazioneLavori);
 	}
 
 	public String getMotivazioni() {
@@ -2234,23 +2240,17 @@ public class EsameCommissioniController {
 		this.commissioneUser.setNoteGeneraliEsameCommissione(noteGenerali);
 	}
 
-	/*public Map<String, String> getRelatori() {
-		return relatori;
-	}
-
-	public void setRelatori(Map<String, String> relatori) {
-		this.relatori = relatori;
-	}
-
-	public Map<String, String> getMembriComitato() {
-		return membriComitato;
-	}
-
-	public void setMembriComitato(Map<String, String> membriComitato) {
-		this.membriComitato = membriComitato;
-	}*/
-	
-	
+	/*
+	 * public Map<String, String> getRelatori() { return relatori; }
+	 * 
+	 * public void setRelatori(Map<String, String> relatori) { this.relatori =
+	 * relatori; }
+	 * 
+	 * public Map<String, String> getMembriComitato() { return membriComitato; }
+	 * 
+	 * public void setMembriComitato(Map<String, String> membriComitato) {
+	 * this.membriComitato = membriComitato; }
+	 */
 
 	public List<Relatore> getRelatoriList() {
 		return relatoriList;
@@ -2808,6 +2808,4 @@ public class EsameCommissioniController {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
-	
-	
 }

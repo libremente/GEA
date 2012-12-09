@@ -275,21 +275,24 @@
 									</p:cellEditor>
 								</p:column>
 
-								<p:column sortBy="#{link.descrizione}"
-									headerText="Indirizzo collegamento">
-									<p:cellEditor>
-										<f:facet name="output">
-											<h:outputLink value="#{link.indirizzo}">
-												<h:outputText value="#{link.descrizione}" />
-											</h:outputLink>
-										</f:facet>
-										<f:facet name="input">
-											<p:inputText value="#{link.indirizzo}" style="width:100%">
+								<p:column headerText="Indirizzo collegamento"
+										sortBy="#{link.indirizzo}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputLink  value="http://#{link.indirizzo}"  target="_blank">
+													<h:outputText value="#{link.indirizzo}" />
+												</h:outputLink>
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{link.indirizzo}" style="width:100%">
 
-											</p:inputText>
-										</f:facet>
-									</p:cellEditor>
-								</p:column>
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+
+
+									</p:column>
+
 
 								<p:column headerText="Elimina">
 

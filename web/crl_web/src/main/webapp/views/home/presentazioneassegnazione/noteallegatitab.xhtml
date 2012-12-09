@@ -253,8 +253,10 @@
 										</p:column>
 
 										<p:column>
+											
 											<p:inputText id="urllink"
 												value="#{presentazioneAssegnazioneAttoController.urlLink}" />
+										
 										</p:column>
 
 										<p:column>
@@ -302,8 +304,8 @@
 										sortBy="#{link.indirizzo}">
 										<p:cellEditor>
 											<f:facet name="output">
-												<h:outputLink value="#{link.indirizzo}">
-													<h:outputText value="#{link.descrizione}" />
+												<h:outputLink  value="http://#{link.indirizzo}"  target="_blank">
+													<h:outputText value="#{link.indirizzo}" />
 												</h:outputLink>
 											</f:facet>
 											<f:facet name="input">

@@ -88,6 +88,15 @@ public class ChiusuraIterController {
 			String data = formatter.format(getDataLr());
 			String numero = getNumeroLr();
 			try{
+			
+			if(numero.length()<5){
+				String app = "";
+				for(int i=0;i < (5-numero.length());i++){
+					
+					app+="0";
+				}
+				
+			}	
 				
 			String url = attoServiceManager.regioniUrl( data, numero);	
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);

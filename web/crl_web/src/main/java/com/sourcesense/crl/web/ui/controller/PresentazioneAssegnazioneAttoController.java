@@ -396,6 +396,10 @@ public class PresentazioneAssegnazioneAttoController {
 					attoServiceManager.removeFirmatario(element);
 				}
 				firmatariList.remove(element);
+				FacesContext context = FacesContext.getCurrentInstance();
+				AttoBean attoBean = ((AttoBean) context.getExternalContext()
+						.getSessionMap().get("attoBean"));
+				attoBean.getAtto().setFirmatari(new ArrayList<Firmatario>(Clonator.cloneList(firmatariList)));
 				break;
 			}
 		}
@@ -451,7 +455,7 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
 
 		attoBean.getAtto().setFirmatari(
-				Clonator.cloneList(getOrderedFirmatari()));
+				Clonator.cloneList(atto.getFirmatari()));
 
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
