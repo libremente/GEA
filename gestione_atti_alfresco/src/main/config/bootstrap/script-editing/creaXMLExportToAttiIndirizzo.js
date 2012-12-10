@@ -3,7 +3,7 @@ if(document.properties["crlatti:statoExportAttiIndirizzo"]=="CREATE"){
 	
 	crlUtility.sudoWithArgs(creaXMLExport, new Array("CREATE"), "admin");
 
-}else if(document.properties["crlatti:esportabileAttiIndirizzo"]=="UPDATE"){
+}else if(document.properties["crlatti:statoExportAttiIndirizzo"]=="UPDATE"){
 
 	crlUtility.sudoWithArgs(creaXMLExport, new Array("UPDATE"), "admin");
 
@@ -32,6 +32,7 @@ function creaXMLExport(operazione){
 	attoXML.@id_legislatura = id_legislatura;
 	attoXML.@tipo_atto = tipo_Atto;
 	attoXML.@oggetto_atto = oggetto_atto;
+	attoXML.@numero_atto = numero_atto;
 
 	// creazione e valorizzazione del tag <firmatari>
 	firmatari = <firmatari></firmatari>;
@@ -162,7 +163,7 @@ function creaXMLExport(operazione){
 
 	exportNode.content = attoXML;
 
-	document.properties["crlatti:esportabileAttiIndirizzo"] = false;
+	document.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";
 	document.save();
 	
 }

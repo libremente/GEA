@@ -37,6 +37,8 @@ if(checkIsNotNull(id)){
 			creaAssociazione = false;
 		} else {
 			attoTrattatoNode = attiFolderNode.createNode(attoTrattatoFolderNode.name,"crlatti:attoTrattatoODG");
+			attoTrattatoNode.content = attoTrattatoFolderNode.name;
+			attoTrattatoNode.save();
 		}
 	
 		

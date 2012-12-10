@@ -1,6 +1,11 @@
 // proprietà del nodo atto da esportare in formato xml
 	
-crlUtility.sudo(deleteXMLExport, "admin");
+
+if(document.properties["crlatti:statoExportAttiIndirizzo"]=="CREATE" || document.properties["crlatti:statoExportAttiIndirizzo"]=="UPDATE" ){
+	
+	crlUtility.sudo(deleteXMLExport, "admin");
+
+}
 
 
 function deleteXMLExport(){
