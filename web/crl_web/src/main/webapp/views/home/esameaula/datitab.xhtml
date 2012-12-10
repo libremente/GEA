@@ -128,6 +128,20 @@
               </p:column>
             </p:row>
 
+            <p:row rendered="#{navigationBean.sessionAttoPDA_UDP}">
+              <p:column>
+                <h:outputText style="font-weight: bold;" value="Nuovo oggetto: " />
+              </p:column>
+              <p:column colspan="3">
+                <p:inputTextarea readonly="false" rows="2" cols="82"
+                  value="#{esameAulaController.atto.nuovoOggetto}">
+                  <p:ajax event="change"
+                          listener="#{esameAulaController.updateDatiHandler()}" />
+                </p:inputTextarea>
+              </p:column>
+            </p:row>
+            
+            
             <p:row>
               <p:column>
                 <h:outputText style="font-weight: bold;"
@@ -218,7 +232,11 @@
 
             <p:row>
               <p:column>
-                <h:outputText style="font-weight: bold;" value="Numero DGR: " />
+                <h:outputText style="font-weight: bold;" value="Numero DGR: " 
+                  rendered="#{navigationBean.sessionAttoPDA_UDP}"/>
+                
+                <h:outputText style="font-weight: bold;" value="Numero atto di origine: " 
+                  rendered="#{navigationBean.sessionAttoORG}"/>
 
               </p:column>
 
@@ -231,7 +249,12 @@
               </p:column>
 
               <p:column>
-                <b> <h:outputLabel for="datadgr" value="Data DGR: " /> </b>
+                <b> 
+                  <h:outputLabel for="datadgr" value="Data DGR: " 
+                  rendered="#{navigationBean.sessionAttoPDA_UDP}"/> 
+                  <h:outputLabel for="datadgr" value="Data atto di origine: " 
+                    rendered="#{navigationBean.sessionAttoORG}"/>                   
+                </b>
               </p:column>
 
               <p:column>
@@ -376,9 +399,144 @@
 
           </p:panelGrid>
         </p:fieldset>  
+        
+        <p:fieldset legend="Gestione Relatori" collapsed="false"
+          toggleable="true" toggleSpeed="500" rendered="#{navigationBean.sessionAttoORG}">
+
+
+          <p:panelGrid styleClass="infoTable" id="firmataripanel">
+            <p:row>
+              <p:column colspan="6">
+                <p:panelGrid id="addRelatoriPanel" styleClass="tableAppend">
+
+                  <f:facet name="header">
+                    <p:row>
+                      <p:column>Relatore</p:column>
+                      <p:column>Data nomina</p:column>
+                      <p:column>Data fine incarico</p:column>
+                      <p:column></p:column>
+                    </p:row>
+                  </f:facet>
+                  <p:row>
+                    <p:column>
+                      <p:selectOneMenu id="relatore"
+                          value="#{esameAulaController.nomeRelatore}">
+                        <f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+                        <f:selectItems var="relatore" itemLabel="#{relatore.descrizione }" itemValue="#{relatore.descrizione}"
+                        value="#{esameAulaController.relatori}" />
+                      </p:selectOneMenu>
+                    </p:column>
+
+
+                    <p:column>
+                      <p:calendar size="10" locale="it" id="dataNominaRelatore"
+                        pattern="dd/MM/yyyy"
+                        value="#{esameAulaController.dataNominaRelatore}" />
+                    </p:column>
+
+                    <p:column>
+                      <p:calendar size="10" locale="it" id="dataUscitaRelatore"
+                        pattern="dd/MM/yyyy"
+                        value="#{esameAulaController.dataUscitaRelatore}" />
+                    </p:column>
+
+                    <p:column>
+                      <p:commandButton value="Aggiungi"
+                        action="#{esameAulaController.addRelatore}"
+                        id="addRelatore" update="listaRelatori, datiMsg"
+                        icon="new-icon" />
+                    </p:column>
+
+                  </p:row>
+                </p:panelGrid>
+
+
+              </p:column>
+            </p:row>
+
+            <p:row>
+              <p:column colspan="6">
+
+                <p:dataTable id="listaRelatori"
+                  value="#{esameAulaController.relatoriList}" var="relatore"
+                  styleClass="generalInfoTab grey-text" editable="true">
+
+                  <p:column headerText="Relatore" sortBy="#{relatore.descrizione}">
+
+                    <h:outputText value="#{relatore.descrizione}" />
+                  </p:column>
+
+                  <p:column headerText="Data nomina" sortBy="#{relatore.dataNomina}" >
+
+                    <p:cellEditor>
+                      <f:facet name="output">
+                        <h:outputText value="#{relatore.dataNomina}">
+                          <f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                      </f:facet>
+                      <f:facet name="input">
+                        <p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+                          value="#{relatore.dataNomina}" />
+                      </f:facet>
+                    </p:cellEditor>
+
+                  </p:column>
+
+                  <p:column headerText="Data fine incarico" sortBy="#{relatore.dataUscita}">
+
+                    <p:cellEditor>
+                      <f:facet name="output">
+                        <h:outputText value="#{relatore.dataUscita}">
+                          <f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                      </f:facet>
+                      <f:facet name="input">
+                        <p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+                          value="#{relatore.dataUscita}" />
+                      </f:facet>
+                    </p:cellEditor>
+
+
+
+                  </p:column>
+
+                  <p:column headerText="Elimina">
+                    <f:facet name="header">Elimina</f:facet>
+
+                    <p:commandButton oncomplete="relatoreDialog.show()"
+                      icon="delete-icon">
+
+                      <f:setPropertyActionListener value="#{relatore.descrizione}"
+                        target="#{esameAulaController.relatoreToDelete}" />
+                    </p:commandButton>
+                  </p:column>
+
+                  <p:column headerText="Modifica">
+                    <p:rowEditor />
+                  </p:column>
+
+                </p:dataTable>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+                  value="Conferma Relatori"
+                  action="#{esameAulaController.confermaRelatori}"
+                  update="datiMsg, :informationForm:informationBar" />
+              </p:column>
+            </p:row>
+
+
+          </p:panelGrid>
+
+        </p:fieldset>          
       </p:column>
     </p:row>
   </p:panelGrid>
+  
+  
+
 
 	<p>
 		<p:commandButton value="Salva" update="datiMsg"

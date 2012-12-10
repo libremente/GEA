@@ -1,5 +1,7 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import com.sourcesense.crl.business.model.*;
+import com.sourcesense.crl.business.service.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,21 +16,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 
-import com.sourcesense.crl.business.model.Allegato;
-import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.Aula;
-import com.sourcesense.crl.business.model.Commissione;
-import com.sourcesense.crl.business.model.EsameAula;
-import com.sourcesense.crl.business.model.EsameCommissione;
-import com.sourcesense.crl.business.model.Link;
-import com.sourcesense.crl.business.model.Passaggio;
-import com.sourcesense.crl.business.model.StatoAtto;
-import com.sourcesense.crl.business.model.Target;
-import com.sourcesense.crl.business.model.TestoAtto;
-import com.sourcesense.crl.business.service.AttoRecordServiceManager;
-import com.sourcesense.crl.business.service.AttoServiceManager;
-import com.sourcesense.crl.business.service.AulaServiceManager;
-import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -38,6 +25,8 @@ import java.util.Iterator;
 @ManagedBean(name = "esameAulaController")
 @ViewScoped
 public class EsameAulaController {
+	@ManagedProperty(value = "#{personaleServiceManager}")
+	private PersonaleServiceManager personaleServiceManager;  
 
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
@@ -118,6 +107,16 @@ public class EsameAulaController {
 	private String statoCommitDati = CRLMessage.COMMIT_DONE;
 
 	private Aula aulaUser = new Aula();
+  private String nomeRelatore;
+  private List<Relatore> relatori = new ArrayList<Relatore>();
+  private List<Relatore> relatoriList = new ArrayList<Relatore>();  
+  private Date dataNominaRelatore;
+  private Date dataUscitaRelatore;
+  private Object relatoreToDelete;
+  // Commissione dell utente loggato
+	private Commissione commissioneUser = new Commissione();  
+  private List<Commissione> commissioniList = new ArrayList<Commissione>();
+  
 
 	@PostConstruct
 	public void init() {
@@ -139,6 +138,36 @@ public class EsameAulaController {
 		totaleEmendPresentati();
 		totaleNonApprovati();
 		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
+    
+    setRelatori(personaleServiceManager.getAllRelatori());    
+    
+		// Utente di sessione e Commissione di appartenenza
+		UserBean userBean = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean"));    
+    
+		// Ricavo le commisioni dall'ultimo passaggio
+		this.commissioniList = (Clonator.cloneList(attoBean.getLastPassaggio()
+				.getCommissioni()));
+
+		// I dati della commissione relativa all'utente loggato
+		// solo se admin prende la referente o deliberante
+		Commissione commTemp = findCommissione(userBean.getUser()
+				.getSessionGroup().getNome());
+		if (commTemp == null) {
+
+			commTemp = attoBean.getCommissioneReferente();
+
+			if (commTemp == null) {
+
+				commTemp = attoBean.getCommissioneDeliberante();
+
+				if (commTemp == null) {
+					commTemp = new Commissione();
+				}
+			}
+		}
+
+    this.commissioneUser = commTemp;  
 	}
 
 	public void changePassaggio() {
@@ -890,6 +919,54 @@ public class EsameAulaController {
 		this.aulaUser.setDataSedutaAula(dataSedutaVotazione);
 	}
 
+	public String getNomeRelatore() {
+		return nomeRelatore;
+	}
+
+	public void setNomeRelatore(String nomeRelatore) {
+		this.nomeRelatore = nomeRelatore;
+	}
+
+  public Object getRelatoreToDelete() {
+    return relatoreToDelete;
+  }
+
+  public void setRelatoreToDelete(Object relatoreToDelete) {
+    this.relatoreToDelete = relatoreToDelete;
+  }
+
+  public List<Relatore> getRelatoriList() {
+    return relatoriList;
+  }
+
+  public void setRelatoriList(List<Relatore> relatoriList) {
+    this.relatoriList = relatoriList;
+  }
+  
+	public List<Relatore> getRelatori() {
+		return relatori;
+	}
+
+	public void setRelatori(List<Relatore> relatori) {
+		this.relatori = relatori;
+	}  
+  
+	public Date getDataNominaRelatore() {
+		return dataNominaRelatore;
+	}
+
+	public void setDataNominaRelatore(Date dataNominaRelatore) {
+		this.dataNominaRelatore = dataNominaRelatore;
+	}  
+  
+	public Date getDataUscitaRelatore() {
+		return dataUscitaRelatore;
+	}
+
+	public void setDataUscitaRelatore(Date dataUscitaRelatore) {
+		this.dataUscitaRelatore = dataUscitaRelatore;
+	}  
+  
 	public String getNumeroDcr() {
 		return aulaUser.getNumeroDcr();
 	}
@@ -1216,7 +1293,7 @@ public class EsameAulaController {
 
 	public void setStatoCommitDati(String statoCommitDati) {
 		this.statoCommitDati = statoCommitDati;
-	}
+	}  
 
 	public String getTestoAttoVotatoToDelete() {
 		return testoAttoVotatoToDelete;
@@ -1306,6 +1383,14 @@ public class EsameAulaController {
 		this.attoServiceManager = attoServiceManager;
 	}
 
+  public PersonaleServiceManager getPersonaleServiceManager() {
+    return personaleServiceManager;
+  }
+
+  public void setPersonaleServiceManager(PersonaleServiceManager personaleServiceManager) {
+    this.personaleServiceManager = personaleServiceManager;
+  }
+
 	public Aula getAulaUser() {
 		return aulaUser;
 	}
@@ -1381,5 +1466,133 @@ public class EsameAulaController {
 				"Informazioni Generali salvate con successo", ""));
 
 	}
+  
+	public void addRelatore() {
 
+		if (nomeRelatore != null && !nomeRelatore.trim().equals("")) {
+			if (!checkRelatori()) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Relatore "
+								+ nomeRelatore + " già presente ", ""));
+
+			} else {
+				Relatore relatore = new Relatore();
+				relatore.setDescrizione(nomeRelatore);
+				relatore.setDataNomina(dataNominaRelatore);
+				relatore.setDataUscita(dataUscitaRelatore);
+				relatoriList.add(relatore);
+
+				updateDatiHandler();
+			}
+		}
+	}
+  
+  private boolean checkRelatori() {
+    for (Relatore element : relatoriList) {
+      if (element.getDescrizione().equals(nomeRelatore)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+	public void removeRelatore() {
+
+		for (Relatore element : relatoriList) {
+
+			if (element.getDescrizione().equals(relatoreToDelete)) {
+
+				relatoriList.remove(element);
+				updateDatiHandler();
+				break;
+			}
+		}
+	}   
+  
+public void confermaRelatori() {
+
+		// if (relatoriList.size() > 0) {
+
+		commissioneUser.setRelatori(relatoriList);
+
+		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+				.setCommissioni(commissioniList);
+
+		if (canChangeStatoAtto()) {
+
+			if (checkStatiRelatori()) {
+				atto.setStato(StatoAtto.NOMINATO_RELATORE);
+				commissioneUser.setStato(Commissione.STATO_NOMINATO_RELATORE);
+			} else {
+				atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+				commissioneUser.setStato(Commissione.STATO_IN_CARICO);
+			}
+
+		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		Target target = new Target();
+		target.setCommissione(commissioneUser.getDescrizione());
+		target.setPassaggio(attoBean.getLastPassaggio().getNome());
+		EsameCommissione esameCommissione = new EsameCommissione();
+		esameCommissione.setAtto(atto);
+		esameCommissione.setTarget(target);
+
+		commissioneServiceManager
+				.salvaRelatoriEsameCommissioni(esameCommissione);
+
+		attoBean.getLastPassaggio().setCommissioni(
+				Clonator.cloneList(commissioniList));
+
+		if (canChangeStatoAtto()) {
+			if (checkStatiRelatori()) {
+				attoBean.setStato(StatoAtto.NOMINATO_RELATORE);
+			} else {
+				attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
+
+			}
+		}
+
+		setStatoCommitDati(CRLMessage.COMMIT_DONE);
+		context.addMessage(null, new FacesMessage(
+				"Relatori salvati con successo", ""));
+
+		// }
+	}  
+
+	private boolean canChangeStatoAtto() {
+
+		return (commissioneUser.getRuolo().equals(Commissione.RUOLO_REFERENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_REDIGENTE)
+				|| commissioneUser.getRuolo().equalsIgnoreCase(
+						Commissione.RUOLO_DELIBERANTE) || commissioneUser
+				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_COREFERENTE));
+
+	}
+  
+	private boolean checkStatiRelatori() {
+		int annullo = 0;
+
+		for (Relatore relatore : relatoriList) {
+			if (relatore.getDataUscita() != null) {
+				annullo++;
+			}
+		}
+
+		return annullo < relatoriList.size();
+	}  
+  
+	private Commissione findCommissione(String nome) {
+
+		for (Commissione element : commissioniList) {
+			if (element.getDescrizione().equals(nome)) {
+				return element;
+			}
+		}
+		return null;
+	}  
 }

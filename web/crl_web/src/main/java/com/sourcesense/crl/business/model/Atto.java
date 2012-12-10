@@ -69,6 +69,7 @@ public class Atto implements Cloneable
 	private String tipo;
 	private String codice;
 	private String oggetto;
+  private String nuovoOggetto;
 	private String primoFirmatario;
 	private Date   dataPresentazione;
 	private Date   dataPubblicazione;
@@ -215,6 +216,14 @@ public class Atto implements Cloneable
 	public void setOggetto(String oggetto) {
 		this.oggetto = oggetto;
 	}
+
+  public String getNuovoOggetto() {
+    return nuovoOggetto;
+  }
+
+  public void setNuovoOggetto(String nuovoOggetto) {
+    this.nuovoOggetto = nuovoOggetto;
+  }  
 
 	public String getPrimoFirmatario() {
 		
