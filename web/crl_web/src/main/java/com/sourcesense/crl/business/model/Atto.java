@@ -163,6 +163,9 @@ public class Atto implements Cloneable
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;	
 	private String notePresentazioneAssegnazione;
+  
+  private boolean scadenza60gg;
+  private boolean iterAula;
 	
 	
 	private String noteChiusuraIter;
@@ -947,10 +950,21 @@ public class Atto implements Cloneable
 	public void setEstensioneAtto(String estensioneAtto) {
 		this.estensioneAtto = estensioneAtto;
 	}
-	
-	
-	
-	
-	
+
+  public boolean isIterAula() {
+    return iterAula;
+  }
+
+  public void setIterAula(boolean iterAula) {
+    this.iterAula = iterAula;
+  }
+
+  public boolean isScadenza60gg() {
+    return scadenza60gg;
+  }
+
+  public void setScadenza60gg(boolean scadenza60gg) {
+    this.scadenza60gg = scadenza60gg;
+  }
 }
 

@@ -291,6 +291,36 @@
 				</p:column>
 			
 			</p:row>
+      
+      <p:row rendered="#{navigationBean.sessionAttoPAR}">
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Scadenza 60gg: " />
+				</p:column>
+				
+				<p:column colspan="3">
+					<p:selectBooleanCheckbox readonly="false" id="isscadenza60gg"
+            value="#{presentazioneAssegnazioneAttoController.atto.scadenza60gg}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+			
+			</p:row>      
+      
+      <p:row rendered="#{navigationBean.sessionAttoDOC}">
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Iter Aula: " />
+				</p:column>
+				
+				<p:column colspan="3">
+					<p:selectBooleanCheckbox readonly="false" id="isiteraula"
+            value="#{presentazioneAssegnazioneAttoController.atto.iterAula}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+			
+			</p:row>            
 
 		</p:panelGrid>
 
