@@ -35,7 +35,7 @@
 			listener="#{esameAulaController.changeTabHandler}"
 			update=":presAssForm:tabPresAssMsg" />
     
-		<p:tab id="tab0" title="Dati atto" rendered="#{navigationBean.isSessionAttoPDA_UDP()}">
+    <p:tab id="tab0" title="Dati atto" rendered="#{navigationBean.datiAttoEnabled()}">
 
 			<ui:include src="./datitab.xhtml" />
 		</p:tab>

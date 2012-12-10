@@ -107,7 +107,7 @@ public class NavigationRules {
 	public boolean presentazioneAssegnazioneDisabled() {
     boolean disabled;
     
-		if (!isSessionAttoPDA_UDP() && (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
+		if (!isSessionAttoORG() && !isSessionAttoPDA_UDP() && (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
 				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName()))) {
 			disabled = false;
 		} else {
@@ -121,7 +121,8 @@ public class NavigationRules {
 	public boolean esameCommissioniDisabled() {
     
     boolean disabled;
-		if (!isSessionAttoPDA_UDP() && (attoBean.containCommissione(userBean.getUser().getSessionGroup()
+		if (!isSessionAttoORG() && !isSessionAttoPDA_UDP() 
+        && (attoBean.containCommissione(userBean.getUser().getSessionGroup()
 				.getNome()) || GruppoUtente.ADMIN.equals(userBean
 				.getUserGroupName()))
 				&& attoBean.getLastPassaggio().getCommissioni().size() > 0) {
@@ -135,7 +136,7 @@ public class NavigationRules {
 	}
   
   public boolean consultazioniEPareriDisabled(){
-    return isSessionAttoPDA_UDP();
+    return isSessionAttoPDA_UDP() || isSessionAttoORG();
   }
   
   
@@ -213,6 +214,10 @@ public class NavigationRules {
     return isSessionAttoPDL() || isSessionAttoPDA_UDP();
   }
   
+  
+  public boolean datiAttoEnabled(){
+    return isSessionAttoPDA_UDP() || isSessionAttoORG();
+  }
   
   public boolean rinvioEStralciEnabled(){
     return (!isSessionAttoDOC() && !isSessionAttoPDA_UDP());
@@ -331,6 +336,13 @@ public class NavigationRules {
     
     return res;
   }  
+  
+  public boolean isSessionAttoORG(){
+    // TODO: riattivare la condizione reale quando sara' disponibile tipo ORG
+    //return attoBean.getTipoAtto().equalsIgnoreCase("ORG");
+    
+    return attoBean.getTipoAtto().equalsIgnoreCase("INP");
+  }    
 	
 	public boolean isSessionAttoPLP() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PLP");
