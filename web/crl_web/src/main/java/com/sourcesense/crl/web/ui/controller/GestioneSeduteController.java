@@ -395,6 +395,8 @@ public class GestioneSeduteController {
 				setSedutaSelected(seduta);
 				seduteListAll.add(seduta);
 				seduteList.add(seduta);
+				
+				dateSeduteList.add(formatter.format(seduta.getDataSeduta()));
 
 		    // Modifica
 			} else {

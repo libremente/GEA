@@ -768,8 +768,8 @@
 				<p:column headerText="Azioni">
 
 					<p:commandButton
-						action="#{gestioneSeduteController.addAttoTrattato}"
-						value="Aggiungi a Trattati" immediate="true"
+						action="#{gestioneSeduteController.addAttoTrattato}" title="Aggiungi ad Atti Trattati"
+						value="" style="width:25px;height:25px;" immediate="true"
 						update=":gestioneSeduteForm:gestioneSedute" icon="new-icon">
 						<f:setPropertyActionListener value="#{atto.id}"
 							target="#{gestioneSeduteController.attoDaTrattare}" />
@@ -791,6 +791,7 @@
 					
 						<p:selectOneMenu id="selezioneSeduta"
 							value="#{gestioneSeduteController.dataSedutaSelected}">
+							<f:selectItem itemLabel="Seleziona una seduta"></f:selectItem>
 							<f:selectItems value="#{gestioneSeduteController.dateSeduteList}" />
 							<p:ajax event="change"
 								listener="#{gestioneSeduteController.showSedutaDetail}"
