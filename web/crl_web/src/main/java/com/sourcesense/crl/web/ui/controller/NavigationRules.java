@@ -327,10 +327,7 @@ public class NavigationRules {
   
   public boolean isSessionAttoPDA_UDP(){
     boolean res = attoBean.getTipoAtto().equalsIgnoreCase("PDA")
-      && ("Udp".equalsIgnoreCase(attoBean.getTipoIniziativa()));
-    
-    // TODO: da rimuovere, condizione per test
-    res = "4".equals(attoBean.getNumeroAtto());
+      && ("05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equalsIgnoreCase(attoBean.getTipoIniziativa()));
     
     return res;
   }  
