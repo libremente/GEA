@@ -10,6 +10,7 @@ import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 
 import com.sourcesense.crl.util.CRLMessage;
+import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 
@@ -180,13 +181,17 @@ public class InserisciMISController {
 
 	public void removeAllegatoParere() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : getAllegatiMIS()) {
 
 			if (element.getId().equals(allegatoMISToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				getAllegatiMIS().remove(element);
-				
+				attoBean.getAttoMIS().setAllegati(Clonator.cloneList(getAllegatiMIS()));
 				break;
 			}
 		}

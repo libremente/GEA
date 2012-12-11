@@ -248,6 +248,11 @@ public class ConsultazioniPareriController {
 
 	public void removeAllegatoParere() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		
 		for (Allegato element : organismoSelected.getParere().getAllegati()) {
 
 			if (element.getId().equals(allegatoParereToDelete)) {
@@ -255,6 +260,14 @@ public class ConsultazioniPareriController {
 				// TODO Alfresco delete
 				attoRecordServiceManager.deleteFile(element.getId());
 				organismoSelected.getParere().getAllegati().remove(element);
+				for (OrganismoStatutario organ : attoBean.getAtto().getOrganismiStatutari()) {
+					
+					if(organ.getDescrizione().equals(organismoSelected.getDescrizione())){
+						organ.getParere().setAllegati(Clonator.cloneList(organismoSelected.getParere().getAllegati()));
+						break;
+					}
+					
+				}
 				break;
 			}
 		}

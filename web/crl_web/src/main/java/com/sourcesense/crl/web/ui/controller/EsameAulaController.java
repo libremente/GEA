@@ -406,6 +406,10 @@ public class EsameAulaController {
 
 	public void removeTestoAttoVotato() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (TestoAtto element : testiAttoVotatoList) {
 
 			if (element.getId().equals(testoAttoVotatoToDelete)) {
@@ -413,13 +417,20 @@ public class EsameAulaController {
 				// TODO Alfresco delete
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoVotatoList.remove(element);
+				attoBean.getLastPassaggio().getAula().setTestiAttoVotatoEsameAula(Clonator.cloneList(testiAttoVotatoList));
 				break;
 			}
 		}
 	}
 
 	public void removeTestoAtto() {
-		Iterator<TestoAtto> it = getAtto().getTestiAtto().iterator();
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
+		
+		Iterator<TestoAtto> it = getAtto().getTestiAtto().iterator();  
 		while (it.hasNext()) {
 			TestoAtto element = it.next();
 			if (element.getId().equals(testoAttoToDelete)) {
@@ -527,6 +538,10 @@ public class EsameAulaController {
 
 	public void removeEmendamento() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : emendamentiList) {
 
 			if (element.getId().equals(emendamentoToDelete)) {
@@ -534,6 +549,7 @@ public class EsameAulaController {
 				
 				attoRecordServiceManager.deleteFile(element.getId());
 				emendamentiList.remove(element);
+				attoBean.getLastPassaggio().getAula().setEmendamentiEsameAula(Clonator.cloneList(emendamentiList));
 				break;
 			}
 		}
@@ -758,12 +774,17 @@ public class EsameAulaController {
 
 	public void removeAllegato() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : allegatiList) {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
+				attoBean.getLastPassaggio().getAula().setAllegatiEsameAula(Clonator.cloneList(allegatiList));
 				break;
 			}
 		}
@@ -1269,7 +1290,7 @@ public class EsameAulaController {
 
 	public void setStatoCommitDati(String statoCommitDati) {
 		this.statoCommitDati = statoCommitDati;
-	}  
+	}
 
 	public String getTestoAttoVotatoToDelete() {
 		return testoAttoVotatoToDelete;

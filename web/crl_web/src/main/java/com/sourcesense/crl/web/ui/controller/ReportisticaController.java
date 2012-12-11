@@ -29,6 +29,7 @@ import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.OrganismoStatutarioServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
+import com.sourcesense.crl.business.service.ReportServiceManager;
 import com.sourcesense.crl.business.service.StatoAttoServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 import com.sourcesense.crl.business.service.TipoChiusuraServiceManager;
@@ -41,8 +42,6 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 @ViewScoped
 public class ReportisticaController implements Serializable {
 
-	
-	
 	@ManagedProperty(value = "#{tipoAttoServiceManager}")
 	private TipoAttoServiceManager tipoAttoServiceManager;
 
@@ -54,6 +53,10 @@ public class ReportisticaController implements Serializable {
 
 	@ManagedProperty(value = "#{organismoStatutarioServiceManager}")
 	private OrganismoStatutarioServiceManager organismoStatutarioServiceManager;
+	
+	@ManagedProperty(value = "#{reportServiceManager}")
+	private ReportServiceManager reportServiceManager;
+	
 	
 
 	private TreeNode root;
@@ -112,96 +115,103 @@ public class ReportisticaController implements Serializable {
 	private final String ELENCO_ATTI_ISTRUTT = "Elenco Atti Istruttoria";
 	private final String ELENCO_ATTI_RINVIO = "Elenco Atti Rinviati alle Commissioni";
 
-	
-	
 	@PostConstruct
 	public void init() {
 
-		
-		
-		setCommissioniSel(commissioneServiceManager
-				.findAll());
-		
+		setCommissioniSel(commissioneServiceManager.findAll());
+
 		setOrganismi(organismoStatutarioServiceManager.findAll());
 		setFirmatari(personaleServiceManager.findAllFirmatario());
 		setRelatori(personaleServiceManager.findAllRelatore());
 		setTipiAttoSel(tipoAttoServiceManager.findAll());
-		
-		
-		
+
 		root = new DefaultTreeNode("Root", null);
 
 		// SERVIZIO COMISSIONI
 		TreeNode servizioCommissioni = new DefaultTreeNode(
 				"Servizio commissioni", root);
 
-		Report repAttiAsseComm = new Report(ATTI_ASSE_COMM);
+		Report repAttiAsseComm = new Report(ATTI_ASSE_COMM,
+				"crlreport:reportAttiAssCommissioniServComm");
 		TreeNode nodeAttiAsseComm = new DefaultTreeNode("lettera",
 				repAttiAsseComm, servizioCommissioni);
 
-		Report repConf = new Report(CONFERENZE);
+		Report repConf = new Report(CONFERENZE,
+				"crlreport:reportConferenzeServComm");
 		TreeNode nodeConf = new DefaultTreeNode("lettera", repConf,
 				servizioCommissioni);
 
-		Report repAttiLic = new Report(ATTI_LICENZ);
+		Report repAttiLic = new Report(ATTI_LICENZ,
+				"crlreport:reportAttiLicenziatiServComm");
 		TreeNode nodeAttiLic = new DefaultTreeNode("lettera", repAttiLic,
 				servizioCommissioni);
 
-		Report repAttiRit = new Report(ATTI_RITIRATI);
+		Report repAttiRit = new Report(ATTI_RITIRATI,
+				"crlreport:reportAttiRitiratiRevocatiServComm");
 		TreeNode nodeAttiRit = new DefaultTreeNode("lettera", repAttiRit,
 				servizioCommissioni);
 
-		Report repAttiRel = new Report(ATTI_RELATORE);
+		Report repAttiRel = new Report(ATTI_RELATORE,
+				"crlreport:reportAttiRelatoreServComm");
 		TreeNode nodeAttiRel = new DefaultTreeNode("lettera", repAttiRel,
 				servizioCommissioni);
 
-		Report rep = new Report(COMPO_COMMISSIONI);
+		Report rep = new Report(COMPO_COMMISSIONI,
+				"crlreport:reportComposizioneCommissioniServComm");
 		TreeNode nodeLetteraTrasmissioneCommissioneReferente = new DefaultTreeNode(
 				"lettera", rep, servizioCommissioni);
 
-		Report repAttiInvOrg = new Report(ATTI_INV_ORG_EST);
+		Report repAttiInvOrg = new Report(ATTI_INV_ORG_EST,
+				"crlreport:reportAttiInviatiOrganiEsterniServComm");
 		TreeNode nodeAttiInvOrg = new DefaultTreeNode("lettera", repAttiInvOrg,
 				servizioCommissioni);
 
-		Report repAttiInizCons = new Report(ATTI_INIZ_CONSILIARE);
+		Report repAttiInizCons = new Report(ATTI_INIZ_CONSILIARE,
+				"crlreport:reportAttiIniziativaConsPerConsServComm");
 		TreeNode nodeAttiInizCons = new DefaultTreeNode("lettera",
 				repAttiInizCons, servizioCommissioni);
 
 		// COMISSIONI
 		TreeNode commissione = new DefaultTreeNode("Commissione", root);
 
-		Report repAttiIstruttComm = new Report(ATTI_ISTRUTTORIA_COMM);
+		Report repAttiIstruttComm = new Report(ATTI_ISTRUTTORIA_COMM,
+				"crlreport:reportAttiIstruttoriaCommissioniComm");
 		TreeNode nodeAttiIstruttComm = new DefaultTreeNode("lettera",
 				repAttiIstruttComm, commissione);
 
-		Report repAttiAssegComm = new Report(ATTI_ASSEGNATI_COMM);
+		Report repAttiAssegComm = new Report(ATTI_ASSEGNATI_COMM,
+				"crlreport:reportAttiAssCommissioniComm");
 		TreeNode nodeAttiAssegComm = new DefaultTreeNode("lettera",
 				repAttiAssegComm, commissione);
 
-		Report repElencoRel = new Report(ELENCO_RELATORI);
+		Report repElencoRel = new Report(ELENCO_RELATORI,
+				"crlreport:reportRelatoriDataNominaComm");
 		TreeNode nodeElencoRel = new DefaultTreeNode("lettera", repElencoRel,
 				commissione);
 
-		Report repAttiLiceComm = new Report(ATTI_LICENZIATI_COMM);
+		Report repAttiLiceComm = new Report(ATTI_LICENZIATI_COMM,
+				"crlreport:reportAttiLicenziatiComm");
 		TreeNode nodeAttiLiceComm = new DefaultTreeNode("lettera",
 				repAttiLiceComm, commissione);
 
 		// AULA
 		TreeNode aula = new DefaultTreeNode("Aula", root);
 
-		Report repElencoLcr = new Report(ELENCO_LCR);
+		Report repElencoLcr = new Report(ELENCO_LCR, "crlreport:reportLCRAula");
 		TreeNode nodeElencoLcr = new DefaultTreeNode("lettera", repElencoLcr,
 				aula);
 
-		Report repElencoDcr = new Report(ELENCO_DCR);
+		Report repElencoDcr = new Report(ELENCO_DCR, "crlreport:reportDCRAula");
 		TreeNode nodeElencoDcr = new DefaultTreeNode("lettera", repElencoDcr,
 				aula);
 
-		Report repElencoAttiIstr = new Report(ELENCO_ATTI_ISTRUTT);
+		Report repElencoAttiIstr = new Report(ELENCO_ATTI_ISTRUTT,
+				"crlreport:reportAttiIstruttoriaAula");
 		TreeNode nodeElencoAttiIstr = new DefaultTreeNode("lettera",
 				repElencoAttiIstr, aula);
 
-		Report repAttiRinv = new Report(ELENCO_ATTI_RINVIO);
+		Report repAttiRinv = new Report(ELENCO_ATTI_RINVIO,
+				"crlreport:reportAttiRinviatiAula");
 		TreeNode nodeAttiRinv = new DefaultTreeNode("lettera", repAttiRinv,
 				aula);
 
@@ -219,9 +229,8 @@ public class ReportisticaController implements Serializable {
 				|| ELENCO_RELATORI.equals(selectedReport.getNome())
 				|| ATTI_LICENZIATI_COMM.equals(selectedReport.getNome())
 				|| ELENCO_DCR.equals(selectedReport.getNome())
-				|| ELENCO_ATTI_ISTRUTT.equals(selectedReport.getNome())
-				|| ELENCO_ATTI_RINVIO.equals(selectedReport.getNome())
-				);
+				|| ELENCO_ATTI_ISTRUTT.equals(selectedReport.getNome()) || ELENCO_ATTI_RINVIO
+					.equals(selectedReport.getNome()));
 
 	}
 
@@ -233,11 +242,10 @@ public class ReportisticaController implements Serializable {
 				|| ATTI_RELATORE.equals(selectedReport.getNome())
 				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome())
 				|| ATTI_ASSE_COMM.equals(selectedReport.getNome())
-				|| ELENCO_RELATORI.equals(selectedReport.getNome())
-				|| ATTI_LICENZIATI_COMM.equals(selectedReport.getNome())
-				)
-				
-				;
+				|| ELENCO_RELATORI.equals(selectedReport.getNome()) || ATTI_LICENZIATI_COMM
+					.equals(selectedReport.getNome()))
+
+		;
 
 	}
 
@@ -247,10 +255,8 @@ public class ReportisticaController implements Serializable {
 				|| CONFERENZE.equals(selectedReport.getNome())
 				|| ATTI_LICENZ.equals(selectedReport.getNome())
 				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome())
-				|| ATTI_ASSE_COMM.equals(selectedReport.getNome())
-				|| ATTI_LICENZIATI_COMM.equals(selectedReport.getNome())
-				)
-				;
+				|| ATTI_ASSE_COMM.equals(selectedReport.getNome()) || ATTI_LICENZIATI_COMM
+					.equals(selectedReport.getNome()));
 
 	}
 
@@ -259,135 +265,123 @@ public class ReportisticaController implements Serializable {
 		return (ATTI_ASSEGNATI_COMM.equals(selectedReport.getNome())
 				|| CONFERENZE.equals(selectedReport.getNome())
 				|| ATTI_LICENZ.equals(selectedReport.getNome())
-				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome())
-				|| ATTI_ASSE_COMM.equals(selectedReport.getNome())
-				)
-				
-				;
+				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome()) || ATTI_ASSE_COMM
+					.equals(selectedReport.getNome()))
+
+		;
 	}
 
 	public boolean isDataVotazioneCommReferenteVisible() {
 
-		return ( ATTI_LICENZIATI_COMM.equals(selectedReport.getNome()) 
-				)
-				
-				;
+		return (ATTI_LICENZIATI_COMM.equals(selectedReport.getNome()))
+
+		;
 
 	}
 
 	public boolean isDataRitiroVisible() {
 
 		return (ATTI_RITIRATI.equals(selectedReport.getNome()))
-				
-				;
+
+		;
 
 	}
 
 	public boolean isDataNominaRelatoreVisible() {
 
-		return (ATTI_RELATORE.equals(selectedReport.getNome())
-				|| ELENCO_RELATORI.equals(selectedReport.getNome()))
-				
-				;
+		return (ATTI_RELATORE.equals(selectedReport.getNome()) || ELENCO_RELATORI
+				.equals(selectedReport.getNome()))
+
+		;
 
 	}
 
 	public boolean isRelatoriVisible() {
 
-		return (ATTI_RELATORE.equals(selectedReport.getNome())
-				|| ELENCO_RELATORI.equals(selectedReport.getNome()));
+		return (ATTI_RELATORE.equals(selectedReport.getNome()) || ELENCO_RELATORI
+				.equals(selectedReport.getNome()));
 
 	}
 
 	public boolean isOrganismoVisible() {
 
-		return (ATTI_INV_ORG_EST.equals(selectedReport.getNome())
-				 )
-				
-				;
+		return (ATTI_INV_ORG_EST.equals(selectedReport.getNome()))
+
+		;
 	}
 
 	public boolean isDataAssegnazioneParereDaVisible() {
 
 		return (ATTI_INV_ORG_EST.equals(selectedReport.getNome())
-				
-				)
-				
-				;
+
+		)
+
+		;
 
 	}
 
 	public boolean isFirmatarioVisible() {
 
-		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome())
-				 )
-				
-				;
+		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
+
+		;
 
 	}
 
 	public boolean isTipologiaFirmaVisible() {
 
-		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome())
-				)
-				
-				;
+		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
+
+		;
 
 	}
 
 	public boolean isDataPresentazioneVisible() {
 
-		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome())
-				)
-				
-				;
+		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
+
+		;
 
 	}
 
 	public boolean isDataAssegnazioneCommReferenteVisible() {
 
 		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
-				
-				;
+
+		;
 
 	}
 
 	public boolean isDataSedutaVisible() {
 
-		return (ELENCO_LCR.equals(selectedReport.getNome())
-				|| ELENCO_DCR.equals(selectedReport.getNome()) 
-				)
-				
-				;
+		return (ELENCO_LCR.equals(selectedReport.getNome()) || ELENCO_DCR
+				.equals(selectedReport.getNome()))
+
+		;
 
 	}
 
 	public StreamedContent getFile() {
 
-		/*
-		 * if (letteraSelected.getTipoTemplate() != null &&
-		 * !letteraSelected.equals("")) {
-		 * 
-		 * FacesContext context = FacesContext.getCurrentInstance(); AttoBean
-		 * attoBean = ((AttoBean) context.getExternalContext()
-		 * .getSessionMap().get("attoBean"));
-		 * 
-		 * UserBean userBean = ((UserBean) context.getExternalContext()
-		 * .getSessionMap().get("userBean"));
-		 * 
-		 * InputStream stream =
-		 * lettereNotificheServiceManager.getLetteraFile(letteraSelected,
-		 * attoBean.getAtto().getId(),
-		 * userBean.getUser().getSessionGroup().getNome()); StreamedContent file
-		 * = new DefaultStreamedContent(stream, "document",
-		 * letteraSelected.getNome()+".doc"); return file; } else {
-		 * 
-		 * FacesContext context = FacesContext.getCurrentInstance();
-		 * context.addMessage( null, new FacesMessage(
-		 * FacesMessage.SEVERITY_ERROR, "Attenzione ! Selezionare una lettera ",
-		 * "")); return null; }
-		 */
-		return null;
+		if (selectedReport.getTipoTemplate() != null
+				&& !selectedReport.getTipoTemplate().equals("")) {
+
+			
+			InputStream stream = reportServiceManager.getReportFile(selectedReport);
+			StreamedContent file = new DefaultStreamedContent(stream,
+					"document", selectedReport.getNome() + ".docx");
+			return file;
+		
+		} else {
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Selezionare una lettera ", ""));
+			return null;
+		}
+
+		
 	}
 
 	public void onNodeSelect(NodeSelectEvent event) {
@@ -620,8 +614,6 @@ public class ReportisticaController implements Serializable {
 		selectedReport.setDataSedutaA(dataSedutaA);
 	}
 
-	
-
 	public String getRelatore() {
 		return relatore;
 	}
@@ -702,11 +694,14 @@ public class ReportisticaController implements Serializable {
 		this.commissioniSel = commissioniSel;
 	}
 
+	public ReportServiceManager getReportServiceManager() {
+		return reportServiceManager;
+	}
+
+	public void setReportServiceManager(ReportServiceManager reportServiceManager) {
+		this.reportServiceManager = reportServiceManager;
+	}
 	
 	
-	
-	
-	
-	
-	
+
 }

@@ -10,6 +10,7 @@ import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 
 import com.sourcesense.crl.util.CRLMessage;
+import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 
@@ -171,12 +172,17 @@ public class InserisciEACController {
 
 	public void removeAllegatoParere() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : getAllegatiEAC()) {
 
 			if (element.getId().equals(allegatoEACToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				getAllegatiEAC().remove(element);
+				attoBean.getAttoEAC().setAllegati(Clonator.cloneList(getAllegatiEAC()));
 				break;
 			}
 		}
@@ -199,7 +205,7 @@ public class InserisciEACController {
 				collegamento.setNumeroAtto(getNumeroAttoSindacato());
 				collegamento.setTipoAtto(getTipoAttoSindacato());
 				collegamentiAttiSindacato.add(collegamento);
-				
+				inserisciAtto();
 				
 			}
 		}

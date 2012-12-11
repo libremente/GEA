@@ -96,6 +96,8 @@ public class ChiusuraIterController {
 					app+="0";
 				}
 				
+				numero=app+numero;
+				
 			}	
 				
 			String url = attoServiceManager.regioniUrl( data, numero);	

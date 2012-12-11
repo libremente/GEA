@@ -886,12 +886,14 @@ public class EsameCommissioniController {
 			allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 
 			try {
-				allegatoRet = commissioneServiceManager
+				
+			Allegato allegatoAlf = commissioneServiceManager
 						.uploadTestoComitatoRistretto(((AttoBean) FacesContext
 								.getCurrentInstance().getExternalContext()
 								.getSessionMap().get("attoBean")).getAtto(),
 								event.getFile().getInputstream(), allegatoRet);
-
+  
+			allegatoRet.setId(allegatoAlf.getId());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -899,6 +901,8 @@ public class EsameCommissioniController {
 			setCurrentDataSeduta(null);
 			setCurrentFilePubblico(false);
 
+			
+			
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 					.getAllegatiNoteEsameCommissioni().add(allegatoRet);
 			testiComitatoRistrettoList.add(allegatoRet);
@@ -921,11 +925,17 @@ public class EsameCommissioniController {
 
 	public void removeTestoComitato() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : testiComitatoRistrettoList) {
 
 			if (element.getId().equals(testoComitatoToDelete)) {
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiComitatoRistrettoList.remove(element);
+				attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).
+				setAllegatiNoteEsameCommissioni(Clonator.cloneList(testiComitatoRistrettoList));
 				break;
 			}
 		}
@@ -961,14 +971,26 @@ public class EsameCommissioniController {
 
 	public void addAbbinamento(String idAbbinamento) {
 
+		
+		
 		if (!idAbbinamento.trim().equals("")) {
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+			
 			if (!checkAbbinamenti(idAbbinamento)) {
-				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Atto già abbinato ", ""));
 
-			} else {
+			}else if(attoBean.getAtto().getId().equals(idAbbinamento)){ 
+			
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Operazione non possibile ", ""));
+			
+			}else {
 
 				Atto attoDaAbbinare = attoServiceManager
 						.findById(idAbbinamento);
@@ -1331,12 +1353,19 @@ public class EsameCommissioniController {
 
 	public void removeTestoAttoVotato() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (TestoAtto element : testiAttoVotatoList) {
 
 			if (element.getId().equals(testoAttoVotatoToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoVotatoList.remove(element);
+				attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).
+				setTestiAttoVotatoEsameCommissioni(Clonator.cloneList(testiAttoVotatoList));
+				
 				break;
 			}
 		}
@@ -1579,12 +1608,19 @@ public class EsameCommissioniController {
 
 	public void removeEmendamento() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : emendamentiList) {
 
 			if (element.getId().equals(emendamentoToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				emendamentiList.remove(element);
+				attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).
+				setEmendamentiEsameCommissioni(Clonator.cloneList(emendamentiList));
+				
 				break;
 			}
 		}
@@ -1651,12 +1687,19 @@ public class EsameCommissioniController {
 
 	public void removeTestoClausola() {
 
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : testiClausolaList) {
 
 			if (element.getId().equals(testoClausolaToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiClausolaList.remove(element);
+				attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).
+				setTestiClausola(Clonator.cloneList(testiClausolaList));
 				break;
 			}
 		}
@@ -1809,12 +1852,18 @@ public class EsameCommissioniController {
 
 	public void removeAllegato() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : allegatiList) {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
+				attoBean.getWorkingCommissione(commissioneUser.getDescrizione()).
+				setAllegati(Clonator.cloneList(allegatiList));
 				break;
 			}
 		}

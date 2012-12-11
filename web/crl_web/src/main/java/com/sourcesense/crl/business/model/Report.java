@@ -37,7 +37,7 @@ public class Report {
 		
 	}
 	
-    public Report(String nome){
+    public Report(String nome,String tipoTemplate){
 		
     	this.nome = nome;
 		

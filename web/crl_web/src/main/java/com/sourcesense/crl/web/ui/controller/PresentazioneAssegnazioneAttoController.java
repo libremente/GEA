@@ -334,11 +334,16 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void removeTestoAtto() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (TestoAtto element : testiAttoList) {
 
 			if (element.getId().equals(testoAttoToDelete)) {
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoList.remove(element);
+				attoBean.getAtto().setTestiAtto(Clonator.cloneList(testiAttoList));
 				break;
 			}
 		}
@@ -1007,12 +1012,17 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void removeAllegato() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+		
 		for (Allegato element : allegatiList) {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
+				attoBean.getAtto().setAllegati(Clonator.cloneList(allegatiList));
 				break;
 			}
 		}
