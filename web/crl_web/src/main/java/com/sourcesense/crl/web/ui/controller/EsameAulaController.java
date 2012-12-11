@@ -113,9 +113,7 @@ public class EsameAulaController {
   private Date dataNominaRelatore;
   private Date dataUscitaRelatore;
   private Object relatoreToDelete;
-  // Commissione dell utente loggato
-	private Commissione commissioneUser = new Commissione();  
-  private List<Commissione> commissioniList = new ArrayList<Commissione>();
+
   
 
 	@PostConstruct
@@ -133,6 +131,7 @@ public class EsameAulaController {
 				.cloneList(aulaUser.getEmendamentiEsameAula());
 		allegatiList = Clonator.cloneList(attoBean.getAllegatiAula());
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
+    relatoriList = Clonator.cloneList(attoBean.getAtto().getRelatori());
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
@@ -145,29 +144,6 @@ public class EsameAulaController {
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));    
     
-		// Ricavo le commisioni dall'ultimo passaggio
-		this.commissioniList = (Clonator.cloneList(attoBean.getLastPassaggio()
-				.getCommissioni()));
-
-		// I dati della commissione relativa all'utente loggato
-		// solo se admin prende la referente o deliberante
-		Commissione commTemp = findCommissione(userBean.getUser()
-				.getSessionGroup().getNome());
-		if (commTemp == null) {
-
-			commTemp = attoBean.getCommissioneReferente();
-
-			if (commTemp == null) {
-
-				commTemp = attoBean.getCommissioneDeliberante();
-
-				if (commTemp == null) {
-					commTemp = new Commissione();
-				}
-			}
-		}
-
-    this.commissioneUser = commTemp;  
 	}
 
 	public void changePassaggio() {
@@ -1459,6 +1435,7 @@ public class EsameAulaController {
 		attoBean.getAtto().setNumeroDgr(atto.getNumeroDgr());
 		attoBean.getAtto().setDataDgr(atto.getDataDgr());
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
+    attoBean.getAtto().setRelatori(atto.getRelatori());
 
 		setStatoCommitDati(CRLMessage.COMMIT_DONE);
 
@@ -1514,85 +1491,17 @@ public void confermaRelatori() {
 
 		// if (relatoriList.size() > 0) {
 
-		commissioneUser.setRelatori(relatoriList);
+		atto.setRelatori(relatoriList);
 
-		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
-				.setCommissioni(commissioniList);
 
-		if (canChangeStatoAtto()) {
-
-			if (checkStatiRelatori()) {
-				atto.setStato(StatoAtto.NOMINATO_RELATORE);
-				commissioneUser.setStato(Commissione.STATO_NOMINATO_RELATORE);
-			} else {
-				atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
-				commissioneUser.setStato(Commissione.STATO_IN_CARICO);
-			}
-
-		}
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-
-		Target target = new Target();
-		target.setCommissione(commissioneUser.getDescrizione());
-		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-		EsameCommissione esameCommissione = new EsameCommissione();
-		esameCommissione.setAtto(atto);
-		esameCommissione.setTarget(target);
-
-		commissioneServiceManager
-				.salvaRelatoriEsameCommissioni(esameCommissione);
-
-		attoBean.getLastPassaggio().setCommissioni(
-				Clonator.cloneList(commissioniList));
-
-		if (canChangeStatoAtto()) {
-			if (checkStatiRelatori()) {
-				attoBean.setStato(StatoAtto.NOMINATO_RELATORE);
-			} else {
-				attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
-
-			}
-		}
-
-		setStatoCommitDati(CRLMessage.COMMIT_DONE);
+    //attoServiceManager.salvaCollegamenti(atto)
+    
+		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
 		context.addMessage(null, new FacesMessage(
-				"Relatori salvati con successo", ""));
+				"Relatori associati all'atto. Premere Salva per confermare modifiche", ""));
 
 		// }
 	}  
 
-	private boolean canChangeStatoAtto() {
-
-		return (commissioneUser.getRuolo().equals(Commissione.RUOLO_REFERENTE)
-				|| commissioneUser.getRuolo().equalsIgnoreCase(
-						Commissione.RUOLO_REDIGENTE)
-				|| commissioneUser.getRuolo().equalsIgnoreCase(
-						Commissione.RUOLO_DELIBERANTE) || commissioneUser
-				.getRuolo().equalsIgnoreCase(Commissione.RUOLO_COREFERENTE));
-
-	}
-  
-	private boolean checkStatiRelatori() {
-		int annullo = 0;
-
-		for (Relatore relatore : relatoriList) {
-			if (relatore.getDataUscita() != null) {
-				annullo++;
-			}
-		}
-
-		return annullo < relatoriList.size();
-	}  
-  
-	private Commissione findCommissione(String nome) {
-
-		for (Commissione element : commissioniList) {
-			if (element.getDescrizione().equals(nome)) {
-				return element;
-			}
-		}
-		return null;
-	}  
 }
