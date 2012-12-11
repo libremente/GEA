@@ -339,9 +339,9 @@ public class NavigationRules {
   
   public boolean isSessionAttoORG(){
     // TODO: riattivare la condizione reale quando sara' disponibile tipo ORG
-    //return attoBean.getTipoAtto().equalsIgnoreCase("ORG");
+    return attoBean.getTipoAtto().equalsIgnoreCase("ORG");
     
-    return attoBean.getTipoAtto().equalsIgnoreCase("INP");
+    //return attoBean.getTipoAtto().equalsIgnoreCase("INP");
   }    
 	
 	public boolean isSessionAttoPLP() {
