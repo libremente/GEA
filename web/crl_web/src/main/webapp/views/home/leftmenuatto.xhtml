@@ -8,11 +8,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form>
+<h:form id="menuFasiProcessoForm">
 
 <p:growl id="menuMsg" showDetail="true" sticky="false" />
 
-<p:menu>
+<p:menu id="menuFasiProcesso">
 	<p:submenu label="Fasi di Processo">
 	    <p:menuitem value="Riepilogo Atto" url="/atto" />
       <p:menuitem value="Presentazione e Assegnazione" url="/presentazioneassegnazione" disabled="#{navigationBean.presentazioneAssegnazioneDisabled()}"  />

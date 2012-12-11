@@ -457,6 +457,9 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setFirmatari(
 				Clonator.cloneList(atto.getFirmatari()));
 
+    attoBean.getAtto().setIterAula(atto.isIterAula());
+    attoBean.getAtto().setScadenza60gg(atto.isScadenza60gg());
+    
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(

@@ -198,7 +198,10 @@ public class NavigationRules {
 						|| attoBean.getTipoAtto().equals("REL")
 						|| attoBean.getTipoAtto().equals("INP")
 						|| attoBean.getTipoAtto().equals("EAC")
-						|| attoBean.getTipoAtto().equals("MIS"))
+						|| attoBean.getTipoAtto().equals("MIS")
+            || (attoBean.getTipoAtto().equalsIgnoreCase("DOC") 
+              && !attoBean.getAtto().isIterAula()))
+      
 						//TODO Flag
 						//|| ! attoBean.getTipologia().equalsIgnoreCase("PRS")
 
