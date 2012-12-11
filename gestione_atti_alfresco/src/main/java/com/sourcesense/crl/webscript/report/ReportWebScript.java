@@ -1,5 +1,5 @@
 package com.sourcesense.crl.webscript.report;
-
+         
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,6 +21,7 @@ import org.alfresco.web.bean.repository.Repository;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONObject;
 import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
@@ -43,12 +44,16 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     	try {
     
 	    	// Get json properties
-	    	String json=(String)req.getParameter("json");
-    		String tipoTemplate = (String)req.getParameter("tipoTemplate");
-    		
+	    	//String json=(String)req.getParameter("json");
+    		//String tipoTemplate = (String)req.getParameter("tipoTemplate");
+    		String inputString = IOUtils.toString(req.getContent().getReader());
+    	    JSONObject json = new JSONObject(inputString);
+    	    String tipoTemplate = (String)json.get("tipoTemplate");
+    		 
 			// Search document template node	
 			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
-					SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Reports//*\" AND TYPE:\""+tipoTemplate+"\"");
+		    
+		    SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Reports//*\" AND TYPE:\""+tipoTemplate+"\"");
 			
 			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
 
@@ -64,7 +69,21 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     				searchStoreRef=store;
     		}
     		
-	    	byte[] documentFilledByteArray = reportCommandMap.get(tipoTemplate).generate(templateByteArray,json, searchStoreRef);
+    		
+    		/*
+    		 * 
+    		 * Report Json example
+    		 * 
+    		 * {"tipoTemplate":"crlreport:reportAttiAssCommissioniServComm",
+    		 *     "nome":"Atti assegnati alle commissioni","tipiAtto":["PAR","REF","PDA","PDL","PRE"],
+    		 *      "commissioni":[],"ruoloCommissione":"Referente","dataAssegnazioneDa":1355958000000,"dataAssegnazioneA":1355958000000,
+    		 *      "dataVotazioneCommReferenteDa":null,"dataVotazioneCommReferenteA":null,"dataRitiroDa":null,"dataRitiroA":null,
+    		 *      "dataNominaRelatoreDa":null,"dataNominaRelatoreA":null,"relatori":null,"organismo":null,"dataAssegnazioneParereDa":null,
+    		 *      "dataAssegnazioneParereA":null,"firmatario":null,"tipologiaFirma":null,"dataPresentazioneDa":null,"dataPresentazioneA":null,
+    		 *      "dataAssegnazioneCommReferenteDa":null,"dataAssegnazioneCommReferenteA":null,"dataSedutaDa":null,"dataSedutaA":null
+    		 *  }
+    		 */
+	    	byte[] documentFilledByteArray = reportCommandMap.get(tipoTemplate).generate(templateByteArray,json.toString(), searchStoreRef);
 	    	
 	    	
 	    	String nomeLettera = tipoTemplate.split(":")[1];
