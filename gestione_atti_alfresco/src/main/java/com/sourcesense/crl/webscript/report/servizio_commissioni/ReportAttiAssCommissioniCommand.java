@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -91,47 +90,6 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 		}
 		return ostream.toByteArray();
 
-	}
-
-	/**
-	 * Extract the information from the result set, retrieving Atti
-	 * @param commissione2results
-	 *            - String commissione -> ResultSet
-	 * @param spacesStore
-	 *            - current space store of search
-	 * @param atto2commissione
-	 *            - NodeRef type Atto -> NodeRef type Commissione
-	 * @return
-	 */
-	private ArrayListMultimap<String, NodeRef> retrieveAtti(
-			Map<String, ResultSet> commissione2results, StoreRef spacesStore,
-			Map<NodeRef, NodeRef> atto2commissione) {
-		ArrayListMultimap<String, NodeRef> commissione2atti = ArrayListMultimap
-				.create();
-		for (String commissione : commissione2results.keySet()) {
-			ResultSet commissioneResults = commissione2results.get(commissione);
-			int resultLength = commissioneResults.length();
-			for (int i = 0; i < resultLength; i++) {
-				NodeRef commissioneNodeRef = commissioneResults.getNodeRef(i);
-				NodeRef attoNodeRef = commissioneNodeRef;
-				boolean check = false;
-				while (!check) {// look for Atto in type hierarchy
-					ChildAssociationRef childAssociationRef = nodeService
-							.getPrimaryParent(attoNodeRef);
-					attoNodeRef = childAssociationRef.getParentRef();
-					QName nodeRefType = nodeService.getType(attoNodeRef);
-					QName attoRefType = QName.createQName(CRL_ATTI_MODEL,
-							"atto");
-					check = dictionaryService.isSubClass(nodeRefType,
-							attoRefType);
-				}
-				commissione2atti.put(commissione, attoNodeRef);
-				atto2commissione.put(attoNodeRef, commissioneNodeRef);
-
-			}
-
-		}
-		return commissione2atti;
 	}
 
 	/**
