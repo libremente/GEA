@@ -26,6 +26,12 @@ import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
+/**
+ * Report completed
+ * to be tested
+ * @author Alessandro Benedetti
+ *
+ */
 public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
 	@Override
