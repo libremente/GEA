@@ -901,6 +901,13 @@
 
 					<p:column headerText="Modifica" style="width:50px">
 						<p:rowEditor />
+            <p:commandButton update="listaAttiTrattati"
+              action="#{gestioneSeduteController.removeAttoTrattato()}"
+              icon="delete-icon">
+
+              <f:setPropertyActionListener value="#{attoTrattato.atto.id}"
+                target="#{gestioneSeduteController.idAttoTrattatoToDelete}" />
+            </p:commandButton>            
 					</p:column>
 
 				</p:dataTable>
