@@ -11,13 +11,6 @@
 
 <h:form id="presAssForm" enctype="multipart/form-data">
 
-<!--    <p:ajaxStatus onstart="statusDialog.show();"
-		onsuccess="statusDialog.hide();" />
-	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
-		draggable="false" closable="false">
-		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
-	</p:dialog>  -->
-    
     
 	<p:growl id="tabPresAssMsg" showDetail="true" sticky="false" />
 	
@@ -40,48 +33,29 @@
 			update=":presAssForm:tabPresAssMsg" />
 
 		<p:tab id="tab1" title="Relatori e Comitati Ristretti">
-
-
 			<ui:include src="relatoriecomitatiristrettitab.xhtml" />
-
-
 		</p:tab>
 
-		<p:tab rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.abbinamentiEnabled()}" id="tab2" title="Abbinamenti">
-
+		<p:tab id="tab2" rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.abbinamentiEnabled()}"  title="Abbinamenti">
 			<ui:include src="abbinamentitab.xhtml" />
 		</p:tab>
 
 		<p:tab id="tab3" title="Votazione">
-
 			<ui:include src="votazionetab.xhtml" />
-
 		</p:tab>
 		
 		
 
-		<p:tab rendered="#{navigationBean.isCommissioneReferente() and navigationBean.emendamentiClausoleEnabled()}" id="tab4" title="Emendamenti e Clausole">
-
-
+		<p:tab id="tab4" rendered="#{navigationBean.isCommissioneReferente() and navigationBean.emendamentiClausoleEnabled()}"  title="Emendamenti e Clausole">
 			<ui:include src="./emendamentieclausoletab.xhtml" />
-
-
 		</p:tab>
 		
-		<p:tab rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.isSessionAttoPDL()}" id="tab5" title="Stralci">
-
-
+		<p:tab id="tab5" rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.isSessionAttoPDL()}"  title="Stralci">
 			<ui:include src="./stralcitab.xhtml" />
-
-
 		</p:tab>
 
 		<p:tab id="tab6" title="Note e Allegati">
-
-
 			<ui:include src="./noteallegatitab.xhtml" />
-
-
 		</p:tab>
 
 	</p:tabView>

@@ -10,19 +10,14 @@
 
 <h:form id="reportForm">
 
-	<!-- <p:ajaxStatus onstart="statusDialog.show();"
-		onsuccess="statusDialog.hide();" />
-	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
-		draggable="false" closable="false">
-		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
-	</p:dialog> -->
+	
 	<p:growl id="messages" showDetail="true" />
 
-	<p:fieldset legend="Tipo di reports" toggleable="true"
+	<p:fieldset style="text-align: left;"  legend="Tipo di reports" toggleable="true"
 		toggleSpeed="500">
 
 		<p:panelGrid
-			style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
+			style="text-align:left;width:90%;margin-bottom:7px;border:1px solid #4F4F4F;"
 			id="reportisticapanel">
 
 			<f:facet name="header">
@@ -66,7 +61,7 @@
 	</p:fieldset>
 
 
-	<p:fieldset legend="Dettagli Report selezionato" collapsed="false"
+	<p:fieldset style="text-align: left;" legend="Dettagli Report selezionato" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 
 		<p:outputPanel id="dettaglioPan">
@@ -320,7 +315,7 @@
 
 		<p:commandButton value="Genera Report" id="downloadLink" ajax="false"
 			onclick="PrimeFaces.monitorDownload(start, stop)">
-			<p:fileDownload value="#{lettereNotificheController.file}" />
+			<p:fileDownload value="#{reportisticaController.file}" />
 
 		</p:commandButton>
 

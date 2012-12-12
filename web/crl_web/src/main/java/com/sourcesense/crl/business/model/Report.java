@@ -40,6 +40,7 @@ public class Report {
     public Report(String nome,String tipoTemplate){
 		
     	this.nome = nome;
+    	this.tipoTemplate = tipoTemplate;
 		
 	}
 	

@@ -26,7 +26,7 @@ import java.util.Iterator;
 @ViewScoped
 public class EsameAulaController {
 	@ManagedProperty(value = "#{personaleServiceManager}")
-	private PersonaleServiceManager personaleServiceManager;  
+	private PersonaleServiceManager personaleServiceManager;
 
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
@@ -107,14 +107,12 @@ public class EsameAulaController {
 	private String statoCommitDati = CRLMessage.COMMIT_DONE;
 
 	private Aula aulaUser = new Aula();
-  private String nomeRelatore;
-  private List<Relatore> relatori = new ArrayList<Relatore>();
-  private List<Relatore> relatoriList = new ArrayList<Relatore>();  
-  private Date dataNominaRelatore;
-  private Date dataUscitaRelatore;
-  private Object relatoreToDelete;
-
-  
+	private String nomeRelatore;
+	private List<Relatore> relatori = new ArrayList<Relatore>();
+	private List<Relatore> relatoriList = new ArrayList<Relatore>();
+	private Date dataNominaRelatore;
+	private Date dataUscitaRelatore;
+	private Object relatoreToDelete;
 
 	@PostConstruct
 	public void init() {
@@ -131,19 +129,19 @@ public class EsameAulaController {
 				.cloneList(aulaUser.getEmendamentiEsameAula());
 		allegatiList = Clonator.cloneList(attoBean.getAllegatiAula());
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
-    relatoriList = Clonator.cloneList(attoBean.getAtto().getRelatori());
+		relatoriList = Clonator.cloneList(attoBean.getAtto().getRelatori());
 
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
 		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
-    
-    setRelatori(personaleServiceManager.getAllRelatori());    
-    
+
+		setRelatori(personaleServiceManager.getAllRelatori());
+
 		// Utente di sessione e Commissione di appartenenza
 		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));    
-    
+				.getSessionMap().get("userBean"));
+
 	}
 
 	public void changePassaggio() {
@@ -275,10 +273,13 @@ public class EsameAulaController {
 
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setAula((Aula) aulaUser.clone());
-		atto.setStato(StatoAtto.PRESO_CARICO_AULA);
+
+		if (atto.getStato().equals(StatoAtto.TRASMESSO_AULA)) {
+			atto.setStato(StatoAtto.PRESO_CARICO_AULA);
+		}
+
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
-
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
 		esameAula.setAtto(atto);
@@ -288,8 +289,11 @@ public class EsameAulaController {
 				aulaUser.getDataPresaInCaricoEsameAula());
 		attoBean.getWorkingAula().setRelazioneScritta(
 				aulaUser.getRelazioneScritta());
-		attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
 
+		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)) {
+			attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
+		}
+		
 		String numeroAtto = attoBean.getNumeroAtto();
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username, ""));
@@ -409,7 +413,7 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		for (TestoAtto element : testiAttoVotatoList) {
 
 			if (element.getId().equals(testoAttoVotatoToDelete)) {
@@ -417,20 +421,22 @@ public class EsameAulaController {
 				// TODO Alfresco delete
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoVotatoList.remove(element);
-				attoBean.getLastPassaggio().getAula().setTestiAttoVotatoEsameAula(Clonator.cloneList(testiAttoVotatoList));
+				attoBean.getLastPassaggio()
+						.getAula()
+						.setTestiAttoVotatoEsameAula(
+								Clonator.cloneList(testiAttoVotatoList));
 				break;
 			}
 		}
 	}
 
 	public void removeTestoAtto() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
-		
-		Iterator<TestoAtto> it = getAtto().getTestiAtto().iterator();  
+
+		Iterator<TestoAtto> it = getAtto().getTestiAtto().iterator();
 		while (it.hasNext()) {
 			TestoAtto element = it.next();
 			if (element.getId().equals(testoAttoToDelete)) {
@@ -541,15 +547,17 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		for (Allegato element : emendamentiList) {
 
 			if (element.getId().equals(emendamentoToDelete)) {
 
-				
 				attoRecordServiceManager.deleteFile(element.getId());
 				emendamentiList.remove(element);
-				attoBean.getLastPassaggio().getAula().setEmendamentiEsameAula(Clonator.cloneList(emendamentiList));
+				attoBean.getLastPassaggio()
+						.getAula()
+						.setEmendamentiEsameAula(
+								Clonator.cloneList(emendamentiList));
 				break;
 			}
 		}
@@ -777,14 +785,15 @@ public class EsameAulaController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		for (Allegato element : allegatiList) {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
-				attoBean.getLastPassaggio().getAula().setAllegatiEsameAula(Clonator.cloneList(allegatiList));
+				attoBean.getLastPassaggio().getAula()
+						.setAllegatiEsameAula(Clonator.cloneList(allegatiList));
 				break;
 			}
 		}
@@ -924,46 +933,46 @@ public class EsameAulaController {
 		this.nomeRelatore = nomeRelatore;
 	}
 
-  public Object getRelatoreToDelete() {
-    return relatoreToDelete;
-  }
+	public Object getRelatoreToDelete() {
+		return relatoreToDelete;
+	}
 
-  public void setRelatoreToDelete(Object relatoreToDelete) {
-    this.relatoreToDelete = relatoreToDelete;
-  }
+	public void setRelatoreToDelete(Object relatoreToDelete) {
+		this.relatoreToDelete = relatoreToDelete;
+	}
 
-  public List<Relatore> getRelatoriList() {
-    return relatoriList;
-  }
+	public List<Relatore> getRelatoriList() {
+		return relatoriList;
+	}
 
-  public void setRelatoriList(List<Relatore> relatoriList) {
-    this.relatoriList = relatoriList;
-  }
-  
+	public void setRelatoriList(List<Relatore> relatoriList) {
+		this.relatoriList = relatoriList;
+	}
+
 	public List<Relatore> getRelatori() {
 		return relatori;
 	}
 
 	public void setRelatori(List<Relatore> relatori) {
 		this.relatori = relatori;
-	}  
-  
+	}
+
 	public Date getDataNominaRelatore() {
 		return dataNominaRelatore;
 	}
 
 	public void setDataNominaRelatore(Date dataNominaRelatore) {
 		this.dataNominaRelatore = dataNominaRelatore;
-	}  
-  
+	}
+
 	public Date getDataUscitaRelatore() {
 		return dataUscitaRelatore;
 	}
 
 	public void setDataUscitaRelatore(Date dataUscitaRelatore) {
 		this.dataUscitaRelatore = dataUscitaRelatore;
-	}  
-  
+	}
+
 	public String getNumeroDcr() {
 		return aulaUser.getNumeroDcr();
 	}
@@ -1380,13 +1389,14 @@ public class EsameAulaController {
 		this.attoServiceManager = attoServiceManager;
 	}
 
-  public PersonaleServiceManager getPersonaleServiceManager() {
-    return personaleServiceManager;
-  }
+	public PersonaleServiceManager getPersonaleServiceManager() {
+		return personaleServiceManager;
+	}
 
-  public void setPersonaleServiceManager(PersonaleServiceManager personaleServiceManager) {
-    this.personaleServiceManager = personaleServiceManager;
-  }
+	public void setPersonaleServiceManager(
+			PersonaleServiceManager personaleServiceManager) {
+		this.personaleServiceManager = personaleServiceManager;
+	}
 
 	public Aula getAulaUser() {
 		return aulaUser;
@@ -1456,7 +1466,7 @@ public class EsameAulaController {
 		attoBean.getAtto().setNumeroDgr(atto.getNumeroDgr());
 		attoBean.getAtto().setDataDgr(atto.getDataDgr());
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
-    attoBean.getAtto().setRelatori(atto.getRelatori());
+		attoBean.getAtto().setRelatori(atto.getRelatori());
 
 		setStatoCommitDati(CRLMessage.COMMIT_DONE);
 
@@ -1464,7 +1474,7 @@ public class EsameAulaController {
 				"Informazioni Generali salvate con successo", ""));
 
 	}
-  
+
 	public void addRelatore() {
 
 		if (nomeRelatore != null && !nomeRelatore.trim().equals("")) {
@@ -1485,15 +1495,15 @@ public class EsameAulaController {
 			}
 		}
 	}
-  
-  private boolean checkRelatori() {
-    for (Relatore element : relatoriList) {
-      if (element.getDescrizione().equals(nomeRelatore)) {
-        return false;
-      }
-    }
-    return true;
-  }
+
+	private boolean checkRelatori() {
+		for (Relatore element : relatoriList) {
+			if (element.getDescrizione().equals(nomeRelatore)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public void removeRelatore() {
 
@@ -1506,23 +1516,25 @@ public class EsameAulaController {
 				break;
 			}
 		}
-	}   
-  
-public void confermaRelatori() {
+	}
+
+	public void confermaRelatori() {
 
 		// if (relatoriList.size() > 0) {
 
 		atto.setRelatori(relatoriList);
 
-
 		FacesContext context = FacesContext.getCurrentInstance();
-    //attoServiceManager.salvaCollegamenti(atto)
-    
+		// attoServiceManager.salvaCollegamenti(atto)
+
 		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
-		context.addMessage(null, new FacesMessage(
-				"Relatori associati all'atto. Premere Salva per confermare modifiche", ""));
+		context.addMessage(
+				null,
+				new FacesMessage(
+						"Relatori associati all'atto. Premere Salva per confermare modifiche",
+						""));
 
 		// }
-	}  
+	}
 
 }

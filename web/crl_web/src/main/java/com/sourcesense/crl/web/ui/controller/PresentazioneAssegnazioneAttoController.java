@@ -86,7 +86,6 @@ public class PresentazioneAssegnazioneAttoController {
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
 	private String firmatariOrder;
 
-	// private Map<String, String> firmatari = new HashMap<String, String>();
 	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
 	private String nomeFirmatario;
 
@@ -119,7 +118,6 @@ public class PresentazioneAssegnazioneAttoController {
 	private String noteAmmissibilita;
 
 	private List<String> commissioni = new ArrayList<String>();
-	// private Map<String, String> commissioni = new HashMap<String, String>();
 	private List<Commissione> commissioniList = new ArrayList<Commissione>();
 
 	private String nomeCommissione;
@@ -158,10 +156,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 	@PostConstruct
 	protected void init() {
-		// setFirmatari(personaleServiceManager.findAllFirmatario());
 		setFirmatari(personaleServiceManager.getAllFirmatari());
 		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
-		// setCommissioni(commissioneServiceManager.findAll());
 		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setTipiIniziativa(tipoIniziativaServiceManager.findAll());
@@ -206,8 +202,6 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public int sortTable(Object s1, Object s2) {
-		// just print something so I know this function is being invoked:
-		System.out.println("mySort" + s1 + "/" + s2);
 		return ((Date) s1).compareTo((Date) s2);
 	}
 
@@ -263,8 +257,11 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 
 		attoBean.getAtto().setDataPresaInCarico(atto.getDataPresaInCarico());
-		attoBean.getAtto().setStato(StatoAtto.PRESO_CARICO_SC);
-		// TODO Service logic
+
+		if (attoBean.getAtto().getStato().equals(StatoAtto.PROTOCOLLATO)) {
+			attoBean.getAtto().setStato(StatoAtto.PRESO_CARICO_SC);
+		}
+
 		attoServiceManager.presaInCaricoSC(attoBean.getAtto());
 
 		String username = ((UserBean) context.getExternalContext()
@@ -337,13 +334,14 @@ public class PresentazioneAssegnazioneAttoController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		for (TestoAtto element : testiAttoList) {
 
 			if (element.getId().equals(testoAttoToDelete)) {
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoList.remove(element);
-				attoBean.getAtto().setTestiAtto(Clonator.cloneList(testiAttoList));
+				attoBean.getAtto().setTestiAtto(
+						Clonator.cloneList(testiAttoList));
 				break;
 			}
 		}
@@ -404,7 +402,9 @@ public class PresentazioneAssegnazioneAttoController {
 				FacesContext context = FacesContext.getCurrentInstance();
 				AttoBean attoBean = ((AttoBean) context.getExternalContext()
 						.getSessionMap().get("attoBean"));
-				attoBean.getAtto().setFirmatari(new ArrayList<Firmatario>(Clonator.cloneList(firmatariList)));
+				attoBean.getAtto().setFirmatari(
+						new ArrayList<Firmatario>(Clonator
+								.cloneList(firmatariList)));
 				break;
 			}
 		}
@@ -459,12 +459,13 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().setDataDgr(atto.getDataDgr());
 		attoBean.getAtto().setAssegnazione(atto.getAssegnazione());
 
-		attoBean.getAtto().setFirmatari(
-				Clonator.cloneList(atto.getFirmatari()));
+		attoBean.getAtto()
+				.setFirmatari(Clonator.cloneList(atto.getFirmatari()));
 
-    attoBean.getAtto().setIterAula(atto.isIterAula());
-    attoBean.getAtto().setScadenza60gg(atto.isScadenza60gg());
-    
+		attoBean.getAtto().setIterAula(atto.isIterAula());
+		attoBean.getAtto().setScadenza60gg(atto.isScadenza60gg());
+		attoBean.getAtto().setPubblico(atto.isPubblico());   
+		
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(
@@ -524,7 +525,6 @@ public class PresentazioneAssegnazioneAttoController {
 		boolean changeStato = atto.getStato().equals(StatoAtto.PRESO_CARICO_SC)
 				|| atto.getStato().equals(StatoAtto.PROTOCOLLATO);
 
-		// se Ammissibile : OK altrimenti KO
 		if ("ammissibile".equalsIgnoreCase(atto.getValutazioneAmmissibilita())) {
 
 			if (changeStato) {
@@ -1015,14 +1015,15 @@ public class PresentazioneAssegnazioneAttoController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		for (Allegato element : allegatiList) {
 
 			if (element.getId().equals(allegatoToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				allegatiList.remove(element);
-				attoBean.getAtto().setAllegati(Clonator.cloneList(allegatiList));
+				attoBean.getAtto()
+						.setAllegati(Clonator.cloneList(allegatiList));
 				break;
 			}
 		}

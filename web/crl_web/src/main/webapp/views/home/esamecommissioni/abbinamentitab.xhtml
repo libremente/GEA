@@ -15,14 +15,9 @@
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-<script type='text/javascript'>
-window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
-</script>
+
 
 <div id="blockedAbbinamenti">
-
-
-
 
 	<!-- Messaggio azioni -->
 	<p:growl id="abbinamentiMsg" showDetail="true" sticky="false" />
@@ -777,7 +772,8 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 		</p:column>
 		<p:column headerText="Azioni">
 			<c:set value="#{atto.id}" var="idAttoParam" />
-			<p:commandButton value="" id="addAbbinamento" title="Abbina" style="height:25px;width:25px"
+			<p:commandButton value="" id="addAbbinamento" title="Abbina"
+				style="height:25px;width:25px"
 				action="#{esameCommissioniController.addAbbinamento(idAttoParam)}"
 				update=":presAssForm:tabView:listaAbbinamenti, :presAssForm:tabView:abbinamentiMsg, :presAssForm:tabView:dettagliabbinamentopanel"
 				icon="new-icon" />
@@ -826,8 +822,8 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 							value="#{tipoAttoParam}" />
 						<h:outputText value="#{abbinamento.numeroAttoAbbinato}" />
 					</h:commandLink>
-					
-					
+
+
 				</h:column>
 
 				<h:column>
@@ -962,7 +958,10 @@ window.onload = hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 	</p:row>
 
 </div>
-<script>
+<script type='text/javascript'>
+  hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
+</script>
+<script type='text/javascript'>
 
 
 if (! ("#{esameCommissioniController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {

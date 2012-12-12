@@ -377,7 +377,7 @@ public class ReportisticaController implements Serializable {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR,
-					"Attenzione ! Selezionare una lettera ", ""));
+					"Attenzione ! Selezionare un Report ", ""));
 			return null;
 		}
 
