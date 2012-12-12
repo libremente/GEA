@@ -18,7 +18,13 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 
-
+/**
+ * TO DO:
+ * - model change? firmatario-tipologia firma ...
+ * data di presentazione
+ * @author Alessandro Benedetti
+ *
+ */
 public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
 	@Override

@@ -28,7 +28,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 /**
  * TO DO:
  * - scrivere query relatori
- * 
+ *
  * @author Alessandro Benedetti
  *
  */
@@ -166,7 +166,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 							.getNodeRefProperty(attoProperties, "commConsultiva");
 					String commConsultiva = "";
 					for (String commissioneConsultivaMulti : commConsultivaList)
-						commReferente += commissioneConsultivaMulti + " ";
+						commConsultiva += commissioneConsultivaMulti + " ";
 
 					currentTable.getRow(0).getCell(1)
 							.setText(this.checkStringEmpty(tipoAtto));
