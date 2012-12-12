@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.alfresco.service.cmr.dictionary.DictionaryService;
+import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
@@ -36,7 +37,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected Map<String, String> json2luceneField;
 
 	protected static final String CRL_ATTI_MODEL = "http://www.regione.lombardia.it/content/model/atti/1.0";
-	protected final static String DATA_FORMAT="dd/MM/yyyy";
+	protected final static String DATA_FORMAT = "dd/MM/yyyy";
 	protected static final String RUOLO_COMM_REFERENTE = "Referente";
 	protected static final String RUOLO_COMM_COREFERENTE = "Co-Referente";
 	protected static final String RUOLO_COMM_CONSULTIVA = "Consultiva";
@@ -47,52 +48,101 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected String ruoloCommissione;
 	protected String organismo;
 	protected List<String> commissioniJson;
-	
+
 	protected String dataAssegnazioneCommReferenteDa;
 	protected String dataAssegnazioneCommReferenteA;
-	
+
 	protected String dataVotazioneCommReferenteDa;
 	protected String dataVotazioneCommReferenteA;
-	
+
 	protected String dataRitiroDa;
 	protected String dataRitiroA;
-	
+
 	protected String dataNominaRelatoreDa;
 	protected String dataNominaRelatoreA;
-	
+
 	protected String dataPresentazioneDa;
 	protected String dataPresentazioneA;
-	
+
 	protected String dataAssegnazioneParereDa;
 	protected String dataAssegnazioneParereA;
-	
-	
-	
-	
+
 	protected List<String> relatoriJson;
 	protected String firmatario;
 	protected String tipologiaFirma;
 
-
-
-	
-
-	
 	@Override
-	public abstract byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
-			throws IOException;
+	public abstract byte[] generate(byte[] templateByteArray, String json,
+			StoreRef spacesStore) throws IOException;
+
+	/**
+	 * Extract the information from the result set, retrieving Atti
+	 * 
+	 * @param commissione2results
+	 *            - String commissione -> ResultSet
+	 * @param spacesStore
+	 *            - current space store of search
+	 * @param atto2commissione
+	 *            - NodeRef type Atto -> NodeRef type Commissione
+	 * @return
+	 */
+	protected ArrayListMultimap<String, NodeRef> retrieveAtti(
+			Map<String, ResultSet> commissione2results, StoreRef spacesStore,
+			Map<NodeRef, NodeRef> atto2commissione) {
+		ArrayListMultimap<String, NodeRef> commissione2atti = ArrayListMultimap
+				.create();
+		for (String commissione : commissione2results.keySet()) {
+			ResultSet commissioneResults = commissione2results.get(commissione);
+			List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
+			this.retrieveAttiFromList(nodeRefList, spacesStore, atto2commissione, commissione2atti);
+		}
+		return commissione2atti;
+	}
 	
+	protected void retrieveAttiFromList(
+			List<NodeRef> nodeRefList, StoreRef spacesStore,
+			Map<NodeRef, NodeRef> atto2commissione,ArrayListMultimap<String, NodeRef> commissione2atti) {
+		int resultLength = nodeRefList.size();
+		for (int i = 0; i < resultLength; i++) {
+			NodeRef commissioneNodeRef = nodeRefList.get(i);
+			Map<QName, Serializable> commissioneProperties = nodeService
+					.getProperties(commissioneNodeRef);
+			String commissione = (String) this.getNodeRefProperty(
+					commissioneProperties, "name");
+			NodeRef attoNodeRef = commissioneNodeRef;
+			boolean check = false;
+			while (!check) {// look for Atto in type hierarchy
+				ChildAssociationRef childAssociationRef = nodeService
+						.getPrimaryParent(attoNodeRef);
+				attoNodeRef = childAssociationRef.getParentRef();
+				QName nodeRefType = nodeService.getType(attoNodeRef);
+				QName attoRefType = QName.createQName(CRL_ATTI_MODEL,
+						"atto");
+				check = dictionaryService.isSubClass(nodeRefType,
+						attoRefType);
+			}
+			commissione2atti.put(commissione, attoNodeRef);
+			atto2commissione.put(attoNodeRef, commissioneNodeRef);
+
+		}
+	}
+
 	/**
 	 * return the right syntax for Alfresco lucene query on list
+	 * 
 	 * @param field
 	 * @param list
 	 * @return
 	 */
-	protected static String convertListToString(String field,List<String> list){
+	protected static String convertListToString(String field, List<String> list) {
 		String stringSpaced = list.toString().replaceAll(", ", ",");
-		String stringReplaced = stringSpaced.replaceAll(",","\" OR "+field.replaceFirst("\\:", "\\\\:")+":\"");
-		return "("+field+":\""+stringReplaced.substring(1, stringReplaced.length()-1)+"\")";
+		String stringReplaced = stringSpaced.replaceAll(",",
+				"\" OR " + field.replaceFirst("\\:", "\\\\:") + ":\"");
+		return "(" + field + ":\""
+				+ stringReplaced.substring(1, stringReplaced.length() - 1)
+				+ "\")";
 	}
+
 	/**
 	 * @param generatedDocument
 	 * @return
@@ -114,19 +164,20 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		}
 		return luceneTipiAttoList;
 	}
-	
-	protected int retrieveLenght( ArrayListMultimap<String, NodeRef> group2atti) {
-		int count=0;
-		for(String group:group2atti.keySet()){
-			count+=group2atti.get(group).size();
+
+	protected int retrieveLenght(ArrayListMultimap<String, NodeRef> group2atti) {
+		int count = 0;
+		for (String group : group2atti.keySet()) {
+			count += group2atti.get(group).size();
 		}
 		return count;
 	}
-	
+
 	protected int retrieveLenght(List<ResultSet> allSearches) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 	/**
 	 * init the common params : List<String> tipiAttoLucene; String
 	 * ruoloCommissioneLuceneField; List<String> commissioniJson;
@@ -137,94 +188,118 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		JSONObject rootJson = new JSONObject(json);
 		initTipiAttoLucene(json);
 		// extract the ruoloCommissione element from json
-		this.ruoloCommissione = JsonUtils.retieveElementFromJson(
-				rootJson, "ruoloCommissione");
+		this.ruoloCommissione = JsonUtils.retieveElementFromJson(rootJson,
+				"ruoloCommissione");
 		// converts the ruoloCommissione to a lucene field
 		// extract the commissioni list from json
 		this.commissioniJson = JsonUtils.retieveArrayListFromJson(rootJson,
 				"commissioni");
-		
+
 	}
 
-	protected void initFirmatario(String json) throws JSONException{
+	protected void initFirmatario(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.firmatario=JsonUtils.retieveElementFromJson(rootJson, "firmatario");
+		this.firmatario = JsonUtils.retieveElementFromJson(rootJson,
+				"firmatario");
 	}
-	
-	protected void initDataAssegnazioneParereDa(String json) throws JSONException{
+
+	protected void initDataAssegnazioneParereDa(String json)
+			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneParereDa=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneParereDa");
+		this.dataAssegnazioneParereDa = JsonUtils.retieveElementFromJson(
+				rootJson, "dataAssegnazioneParereDa");
 	}
-	
-	protected void initDataAssegnazioneParereA(String json) throws JSONException{
+
+	protected void initDataAssegnazioneParereA(String json)
+			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneParereA=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneParereA");
+		this.dataAssegnazioneParereA = JsonUtils.retieveElementFromJson(
+				rootJson, "dataAssegnazioneParereA");
 	}
-	
-	protected void initDataPresentazioneDa(String json) throws JSONException{
+
+	protected void initDataPresentazioneDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataPresentazioneDa=JsonUtils.retieveElementFromJson(rootJson, "dataPresentazioneDa");
+		this.dataPresentazioneDa = JsonUtils.retieveElementFromJson(rootJson,
+				"dataPresentazioneDa");
 	}
-	
-	protected void initDataPresentazioneA(String json) throws JSONException{
+
+	protected void initDataPresentazioneA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataPresentazioneA=JsonUtils.retieveElementFromJson(rootJson, "dataPresentazioneA");
+		this.dataPresentazioneA = JsonUtils.retieveElementFromJson(rootJson,
+				"dataPresentazioneA");
 	}
-	
-	protected void initDataNominaRelatoreDa(String json) throws JSONException{
+
+	protected void initDataNominaRelatoreDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataNominaRelatoreDa=JsonUtils.retieveElementFromJson(rootJson, "dataNominaRelatoreDa");
+		this.dataNominaRelatoreDa = JsonUtils.retieveElementFromJson(rootJson,
+				"dataNominaRelatoreDa");
 	}
-	
-	protected void initDataNominaRelatoreA(String json) throws JSONException{
+
+	protected void initDataNominaRelatoreA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataNominaRelatoreA=JsonUtils.retieveElementFromJson(rootJson, "dataNominaRelatoreA");
+		this.dataNominaRelatoreA = JsonUtils.retieveElementFromJson(rootJson,
+				"dataNominaRelatoreA");
 	}
-	
-	protected void initDataRitiroDa(String json) throws JSONException{
+
+	protected void initDataRitiroDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataRitiroDa=JsonUtils.retieveElementFromJson(rootJson, "dataRitiroDa");
+		this.dataRitiroDa = JsonUtils.retieveElementFromJson(rootJson,
+				"dataRitiroDa");
 	}
-	
-	protected void initDataRitiroA(String json) throws JSONException{
+
+	protected void initDataRitiroA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataRitiroA=JsonUtils.retieveElementFromJson(rootJson, "dataRitiroA");
+		this.dataRitiroA = JsonUtils.retieveElementFromJson(rootJson,
+				"dataRitiroA");
 	}
-	
-	protected void initDataAssegnazioneCommReferenteDa(String json) throws JSONException{
+
+	protected void initDataAssegnazioneCommReferenteDa(String json)
+			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneCommReferenteDa=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneCommReferenteDa");
+		this.dataAssegnazioneCommReferenteDa = JsonUtils
+				.retieveElementFromJson(rootJson,
+						"dataAssegnazioneCommReferenteDa");
 	}
-	
-	protected void initDataAssegnazioneCommReferenteA(String json) throws JSONException{
+
+	protected void initDataAssegnazioneCommReferenteA(String json)
+			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneCommReferenteA=JsonUtils.retieveElementFromJson(rootJson, "dataAssegnazioneCommReferenteA");
+		this.dataAssegnazioneCommReferenteA = JsonUtils.retieveElementFromJson(
+				rootJson, "dataAssegnazioneCommReferenteA");
 	}
-	
-	protected void initDataVotazioneCommReferenteDa(String json) throws JSONException{
+
+	protected void initDataVotazioneCommReferenteDa(String json)
+			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataVotazioneCommReferenteDa=JsonUtils.retieveElementFromJson(rootJson, "dataVotazioneCommReferenteDa");
+		this.dataVotazioneCommReferenteDa = JsonUtils.retieveElementFromJson(
+				rootJson, "dataVotazioneCommReferenteDa");
 	}
-	
-	protected void initDataVotazioneCommReferenteA(String json) throws JSONException{
+
+	protected void initDataVotazioneCommReferenteA(String json)
+			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataVotazioneCommReferenteA=JsonUtils.retieveElementFromJson(rootJson, "dataVotazioneCommReferenteA");
+		this.dataVotazioneCommReferenteA = JsonUtils.retieveElementFromJson(
+				rootJson, "dataVotazioneCommReferenteA");
 	}
-	
-	protected void initTipoFirma(String json) throws JSONException{
+
+	protected void initTipoFirma(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.tipologiaFirma=JsonUtils.retieveElementFromJson(rootJson, "tipologiaFirma");
+		this.tipologiaFirma = JsonUtils.retieveElementFromJson(rootJson,
+				"tipologiaFirma");
 	}
-	protected void initOrganismo(String json) throws JSONException{
+
+	protected void initOrganismo(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.organismo=JsonUtils.retieveElementFromJson(rootJson, "organismo");
+		this.organismo = JsonUtils
+				.retieveElementFromJson(rootJson, "organismo");
 	}
-	
-	protected void initRelatori(String json) throws JSONException{
+
+	protected void initRelatori(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.relatoriJson=JsonUtils.retieveArrayListFromJson(rootJson,
+		this.relatoriJson = JsonUtils.retieveArrayListFromJson(rootJson,
 				"relatori");
 	}
+
 	/**
 	 * @param rootJson
 	 * @throws JSONException
@@ -237,33 +312,32 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		// convert the list in the lucene format
 		this.tipiAttoLucene = tipiAttoJson;
 	}
-	
-	protected String checkDateEmpty(Date attributeDate){
-		if(attributeDate==null)
+
+	protected String checkDateEmpty(Date attributeDate) {
+		if (attributeDate == null)
 			return "";
-		else{
-			SimpleDateFormat dateFormatter=new SimpleDateFormat(DATA_FORMAT);
+		else {
+			SimpleDateFormat dateFormatter = new SimpleDateFormat(DATA_FORMAT);
 			return dateFormatter.format(attributeDate);
 		}
-		
-	}
-	
-protected String checkStringEmpty(String attribute){
-	if(attribute==null)
-		return "";
-	else
-		return attribute;
-		
+
 	}
 
-protected Serializable getNodeRefProperty(Map<QName, Serializable> properties,String attribute){
-	return properties
-			.get(QName.createQName(CRL_ATTI_MODEL,attribute));
-}
+	protected String checkStringEmpty(String attribute) {
+		if (attribute == null)
+			return "";
+		else
+			return attribute;
+
+	}
+
+	protected Serializable getNodeRefProperty(
+			Map<QName, Serializable> properties, String attribute) {
+		return properties.get(QName.createQName(CRL_ATTI_MODEL, attribute));
+	}
 
 	/**
-	 * init a simple map that link json names to lucene names
-	 * deprecated
+	 * init a simple map that link json names to lucene names deprecated
 	 * */
 	public void initJson2lucene() {
 		json2luceneField = new HashMap<String, String>();
@@ -305,7 +379,7 @@ protected Serializable getNodeRefProperty(Map<QName, Serializable> properties,St
 	public void setNodeService(NodeService nodeService) {
 		this.nodeService = nodeService;
 	}
-	
+
 	public DictionaryService getDictionaryService() {
 		return dictionaryService;
 	}

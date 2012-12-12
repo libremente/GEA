@@ -3,68 +3,88 @@ package com.sourcesense.crl.webscript.report.servizio_commissioni;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
-import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
-import org.alfresco.web.bean.repository.Repository;
+import org.alfresco.service.namespace.QName;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.json.JSONException;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
+/**
+ * TO DO :
+ * String firmatari="";//access child of Atto
+				String altriPareri="";//access child of Atto
+				String esitoValutazione="";//Esito valutazione?
+				String elencoRelatori="";// access child of Commissione
+ * @author Alessandro Benedetti
+ *
+ */
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
-
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
-			throws IOException {
+	public byte[] generate(byte[] templateByteArray, String json,
+			StoreRef spacesStore) throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			/*Init and Sort field*/
 			this.initCommonParams(json);
 			this.initDataVotazioneCommReferenteDa(json);
 			this.initDataVotazioneCommReferenteA(json);
 
 			 String sortField1 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
-			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
-			 for (String tipoAtto:this.tipiAttoLucene) {
+			Map<String, ResultSet> commissione2results = Maps.newHashMap();
+			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query="TYPE:\""
-						+ "crlattI:commissione" + "\" AND @crlatti\\:tipoAtto:\""
-						+ tipoAtto   + "\" AND @crlatti\\:ruoloCommissione:\""
-						+ this.ruoloCommissione+
-						"\" AND "+convertListToString("@cm\\:name:", this.commissioniJson)  + " AND @crlatti\\:dataVotazioneCommissione:["
-						+this.dataVotazioneCommReferenteDa+" TO "+
-						this.dataVotazioneCommReferenteA+" ]\"";
+				String query = "TYPE:\""
+						+ "crlatti:commissione"
+						+ "\" AND "
+						+ convertListToString("@crlatti\\:tipoAttoCommissione",
+								this.tipiAttoLucene)
+						+ " AND @crlatti\\:ruoloCommissione:\""
+						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ commissione
+						+ "\" AND @crlatti\\:dataVotazioneCommissione:["
+						+ this.dataVotazioneCommReferenteDa + " TO "
+						+ this.dataVotazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
 				ResultSet currentResults = this.searchService.query(sp);
-				allSearches.add(currentResults);
+				commissione2results.put(commissione, currentResults);
 			}
-			
-			
-									 
-			// obtain resultSet Length and cycle on it to repeat template
-				XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-						this.retrieveLenght(allSearches), 5, false);
-				// convert to input stream
-				ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
+			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
+			ArrayListMultimap<String, NodeRef> commissione2atti = this
+					.retrieveAtti(commissione2results, spacesStore,
+							atto2commissione);
 
-				XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-						allSearches);
-				ostream = new ByteArrayOutputStream();
-				finalDocument.write(ostream);
+			// obtain as much table as the results spreaded across the resultSet
+			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
+					this.retrieveLenght(commissione2atti), 2, false);
+			// convert to input stream
+			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
+
+			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
+					commissione2atti, atto2commissione);
+			ostream = new ByteArrayOutputStream();
+			finalDocument.write(ostream);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -73,6 +93,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 		return ostream.toByteArray();
 
 	}
+
 
 	/**
 	 * qui vanno inseriti nella table, presa dal template solo 8:
@@ -87,30 +108,77 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			List<ResultSet> allSearches) throws IOException {
+			ArrayListMultimap<String, NodeRef> commissione2atti,
+			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
-		for(ResultSet resultSet:allSearches){
-			for(int i=0;i<resultSet.length();i++){
-				ResultSetRow row = resultSet.getRow(i);
-						System.out.println("ID " + i+" "+row.getNodeRef());
-			}
-			}
-		
-			
-		
-		/*
+		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
-		for (int k = 0; k < allSearches.length(); k++) {
-			NodeRef currentNodeRef = allSearches.getNodeRef(k);
-			XWPFTable newTable = tables.get(k);
-			XWPFTableRow firstRow = newTable.getRow(0);
+		for (String commissione : commissione2atti.keySet()) {
+			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+				XWPFTable currentTable = tables.get(tableIndex);
+				Map<QName, Serializable> attoProperties = nodeService
+						.getProperties(currentAtto);
+				Map<QName, Serializable> commissioneProperties = nodeService
+						.getProperties(atto2commissione.get(currentAtto));
 
-			firstRow.getCell(0).setText("1x2");
+				// from Atto
+				String numeroAtto = (String) this.getNodeRefProperty(
+						attoProperties, "numeroAtto");
+				String iniziativa = (String) this.getNodeRefProperty(
+						attoProperties, "descrizioneIniziativa");
+				String oggetto = (String) this.getNodeRefProperty(
+						attoProperties, "oggetto");
+				ArrayList<String> commReferenteList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "commReferente");
+				String commReferente = "";
+				for (String commissioneReferenteMulti : commReferenteList)
+					commReferente += commissioneReferenteMulti + " ";
+				// from Commissione
+				String tipoAtto = (String) this.getNodeRefProperty(
+						commissioneProperties, "tipoAttoCommissione");
+				Date dateAssegnazioneCommissione = (Date) this
+						.getNodeRefProperty(commissioneProperties,
+								"dataAssegnazioneCommissione");
+				Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(
+						commissioneProperties, "dataVotazioneCommissione");
+				String ruoloCommissione = (String) this.getNodeRefProperty(
+						commissioneProperties, "ruoloCommissione");	
+				String firmatari="";//access child of Atto
+				String altriPareri="";//access child of Atto
+				String esitoValutazione="";//Esito valutazione?
+				String elencoRelatori="";// access child of Commissione
 
-			XWPFTableRow secondRow = newTable.getRow(0);
-			secondRow.getCell(0).setText("1x1");
-			secondRow.getCell(0).setText("1x2");
-		}*/
+				currentTable.getRow(0).getCell(1)
+				.setText(this.checkStringEmpty(tipoAtto));
+	            currentTable.getRow(1).getCell(1)
+						.setText(this.checkStringEmpty(numeroAtto));
+				currentTable.getRow(2).getCell(1)
+						.setText(this.checkStringEmpty(ruoloCommissione));
+				currentTable.getRow(3).getCell(1)
+						.setText(this.checkStringEmpty(iniziativa));
+				currentTable.getRow(4).getCell(1)
+						.setText(this.checkStringEmpty(firmatari));
+				currentTable.getRow(5).getCell(1)
+				.setText(this.checkStringEmpty(oggetto));	
+				currentTable
+						.getRow(6)
+						.getCell(1)
+						.setText(
+								this.checkDateEmpty(dateAssegnazioneCommissione));
+				currentTable.getRow(7).getCell(1)
+				.setText(this.checkStringEmpty(altriPareri));		
+				currentTable.getRow(8).getCell(1)
+						.setText(this.checkDateEmpty(dateVotazioneCommissione));
+				currentTable.getRow(9).getCell(1)
+						.setText(this.checkStringEmpty(esitoValutazione));
+				currentTable.getRow(10).getCell(1)
+				.setText(this.checkStringEmpty(elencoRelatori));
+				
+				
+				tableIndex++;
+			}
+		}
+
 		return document;
 	}
 }
