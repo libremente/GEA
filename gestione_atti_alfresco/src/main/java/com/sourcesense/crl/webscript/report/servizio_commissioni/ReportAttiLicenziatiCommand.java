@@ -28,11 +28,9 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * 
- * TO DO :
- * -Test
- * -Docx template
+ * TO DO : -Test 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	@Override
@@ -43,12 +41,12 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			/*Init and Sort field*/
+			/* Init and Sort field */
 			this.initCommonParams(json);
 			this.initDataVotazioneCommReferenteDa(json);
 			this.initDataVotazioneCommReferenteA(json);
 
-			 String sortField1 = "{"+CRL_ATTI_MODEL+"}numeroAtto";
+			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroAtto";
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
@@ -94,11 +92,11 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 	}
 
-
 	/**
-	 * qui vanno inseriti nella table, presa dal template solo 8:
-	 * tipo atto- numero atto- competenza - iniziativa -firmatari- oggetto - data assegnazione - altri pareri - data valutazione - esito votazione 
-	 * -elenco relatori, sono una lista all'interno di una cella
+	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
+	 * numero atto- competenza - iniziativa -firmatari- oggetto - data
+	 * assegnazione - altri pareri - data valutazione - esito votazione -elenco
+	 * relatori, sono una lista all'interno di una cella
 	 * 
 	 * 
 	 * 
@@ -121,19 +119,19 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
-				
+
 				Map<QName, Serializable> commissioneProperties = nodeService
 						.getProperties(currentCommissione);
 
-				//from Atto
+				// from Atto
 				String numeroAtto = (String) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "descrizioneIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
-				
-				//from Commissione
+
+				// from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
 						commissioneProperties, "tipoAttoCommissione");
 				String esitoValutazione = (String) this.getNodeRefProperty(
@@ -144,54 +142,57 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(
 						commissioneProperties, "dataVotazioneCommissione");
 				String ruoloCommissione = (String) this.getNodeRefProperty(
-						commissioneProperties, "ruoloCommissione");	
-				//from Atto
+						commissioneProperties, "ruoloCommissione");
+				// from Atto
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
 				String firmatari = "";
 				for (String firmatario : firmatariList)
 					firmatari += firmatario + " ";
-				//from Atto
+				// from Atto
 				ArrayList<String> pareriList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties, "organismiStatutari");
+						.getNodeRefProperty(attoProperties,
+								"organismiStatutari");
 				String altriPareri = "";
 				for (String parere : pareriList)
 					altriPareri += parere + " ";
-				//from Commissione
-				String elencoRelatori="";
-				for(int i=0;i<relatori.length();i++){
+				// from Commissione
+				String elencoRelatori = "";
+				for (int i = 0; i < relatori.length(); i++) {
 					NodeRef relatoreNodeRef = relatori.getNodeRef(i);
-					String relatore = (String) nodeService.getProperty(relatoreNodeRef, ContentModel.PROP_NAME);
-					elencoRelatori+=relatore+" ";
+					String relatore = (String) nodeService.getProperty(
+							relatoreNodeRef, ContentModel.PROP_NAME);
+					elencoRelatori += relatore + " ";
 				}
-				
-				currentTable.getRow(0).getCell(1)
-				.setText(this.checkStringEmpty(tipoAtto));
-	            currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(numeroAtto));
+
+				currentTable
+						.getRow(0)
+						.getCell(1)
+						.setText(
+								this.checkStringEmpty(tipoAtto + " "
+										+ numeroAtto));
+				currentTable.getRow(1).getCell(1)
+						.setText(this.checkStringEmpty(oggetto));
 				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(ruoloCommissione));
 				currentTable.getRow(3).getCell(1)
 						.setText(this.checkStringEmpty(iniziativa));
 				currentTable.getRow(4).getCell(1)
 						.setText(this.checkStringEmpty(firmatari));
-				currentTable.getRow(5).getCell(1)
-				.setText(this.checkStringEmpty(oggetto));	
 				currentTable
-						.getRow(6)
+						.getRow(5)
 						.getCell(1)
 						.setText(
 								this.checkDateEmpty(dateAssegnazioneCommissione));
+				currentTable.getRow(6).getCell(1)
+						.setText(this.checkStringEmpty(altriPareri));
 				currentTable.getRow(7).getCell(1)
-				.setText(this.checkStringEmpty(altriPareri));		
+						.setText(this.checkStringEmpty(esitoValutazione));
 				currentTable.getRow(8).getCell(1)
 						.setText(this.checkDateEmpty(dateVotazioneCommissione));
 				currentTable.getRow(9).getCell(1)
-						.setText(this.checkStringEmpty(esitoValutazione));
-				currentTable.getRow(10).getCell(1)
-				.setText(this.checkStringEmpty(elencoRelatori));
-				
-				
+						.setText(this.checkStringEmpty(elencoRelatori));
+
 				tableIndex++;
 			}
 		}

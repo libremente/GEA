@@ -29,7 +29,6 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * 
  * TO DO :
  * -Test
- * -Docx template
  * @author Alessandro Benedetti
  *
  */
@@ -139,18 +138,16 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 					firmatari += firmatario + " ";
 
 				currentTable.getRow(0).getCell(1)
-						.setText(this.checkStringEmpty(tipoAtto));
+						.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
 				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(numeroAtto));
-				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(iniziativa));
-				currentTable.getRow(3).getCell(1)
+				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(firmatari));
-				currentTable.getRow(4).getCell(1)
+				currentTable.getRow(3).getCell(1)
 						.setText(this.checkStringEmpty(oggetto));
-				currentTable.getRow(5).getCell(1)
+				currentTable.getRow(4).getCell(1)
 						.setText(this.checkDateEmpty(datePresentazione));
-				currentTable.getRow(8).getCell(1)
+				currentTable.getRow(5).getCell(1)
 						.setText(this.checkDateEmpty(dateRevoca));
 				tableIndex++;
 			}
