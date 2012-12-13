@@ -26,9 +26,10 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO DO:
- * - test
- * - template docx
+ * 
+ * TO DO :
+ * -Test
+ * -Docx template
  * @author Alessandro Benedetti
  *
  */
@@ -105,6 +106,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
 			Map<NodeRef, NodeRef> atto2commissione) throws IOException {

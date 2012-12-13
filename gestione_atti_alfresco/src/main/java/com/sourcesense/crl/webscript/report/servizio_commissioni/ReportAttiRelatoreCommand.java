@@ -28,6 +28,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 /**
  * TO DO:
  * - scrivere query relatori
+ * SKIP TEMP
  *
  * @author Alessandro Benedetti
  *

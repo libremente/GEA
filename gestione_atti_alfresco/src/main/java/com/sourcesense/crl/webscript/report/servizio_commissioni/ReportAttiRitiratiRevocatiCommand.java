@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,11 +26,12 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO DO:
  * 
- * 
+ * TO DO :
+ * -Test
+ * -Docx template
  * @author Alessandro Benedetti
- * 
+ *
  */
 public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
@@ -100,6 +102,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
 			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
@@ -128,7 +131,12 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 						attoProperties, "dataIniziativa");
 				Date dateRevoca = (Date) this.getNodeRefProperty(
 						attoProperties,"dataChiusura");
-				String firmatari = "";// access child of Atto
+				//child of Atto
+				ArrayList<String> firmatariList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "firmatari");
+				String firmatari = "";
+				for (String firmatario : firmatariList)
+					firmatari += firmatario + " ";
 
 				currentTable.getRow(0).getCell(1)
 						.setText(this.checkStringEmpty(tipoAtto));

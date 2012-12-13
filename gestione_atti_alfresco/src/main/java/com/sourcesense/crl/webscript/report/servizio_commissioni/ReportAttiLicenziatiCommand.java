@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -28,13 +29,8 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 /**
  * 
  * TO DO :
- * OK String firmatari="";//access child of Atto
- * 
-				OK String altriPareri="";//access child of Atto, da atto come firmatari : organismiStatutari
-				OK String esitoValutazione="";//Esito valutazione?
-				
-				OK String elencoRelatori="";// da commisione chiamare metodo getRelatori
-				
+ * -Test
+ * -Docx template
  * @author Alessandro Benedetti
  *
  */
@@ -111,6 +107,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
 			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
@@ -119,28 +116,26 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 		List<XWPFTable> tables = document.getTables();
 		for (String commissione : commissione2atti.keySet()) {
 			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+				NodeRef currentCommissione = atto2commissione.get(currentAtto);
+				ResultSet relatori = this.getRelatori(currentCommissione);
 				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
+				
 				Map<QName, Serializable> commissioneProperties = nodeService
-						.getProperties(atto2commissione.get(currentAtto));
+						.getProperties(currentCommissione);
 
-				// from Atto
+				//from Atto
 				String numeroAtto = (String) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "descrizioneIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
-				ArrayList<String> commReferenteList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties, "commReferente");
-				String commReferente = "";
-				for (String commissioneReferenteMulti : commReferenteList)
-					commReferente += commissioneReferenteMulti + " ";
-				// from Commissione
+				
+				//from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
 						commissioneProperties, "tipoAttoCommissione");
-				
 				String esitoValutazione = (String) this.getNodeRefProperty(
 						commissioneProperties, "esitoVotazioneCommissione");
 				Date dateAssegnazioneCommissione = (Date) this
@@ -150,10 +145,26 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						commissioneProperties, "dataVotazioneCommissione");
 				String ruoloCommissione = (String) this.getNodeRefProperty(
 						commissioneProperties, "ruoloCommissione");	
-				String firmatari="";//access child of Atto
-				String altriPareri="";//access child of Atto
-				String elencoRelatori="";// access child of Commissione
-
+				//from Atto
+				ArrayList<String> firmatariList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "firmatari");
+				String firmatari = "";
+				for (String firmatario : firmatariList)
+					firmatari += firmatario + " ";
+				//from Atto
+				ArrayList<String> pareriList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "organismiStatutari");
+				String altriPareri = "";
+				for (String parere : pareriList)
+					altriPareri += parere + " ";
+				//from Commissione
+				String elencoRelatori="";
+				for(int i=0;i<relatori.length();i++){
+					NodeRef relatoreNodeRef = relatori.getNodeRef(i);
+					String relatore = (String) nodeService.getProperty(relatoreNodeRef, ContentModel.PROP_NAME);
+					elencoRelatori+=relatore+" ";
+				}
+				
 				currentTable.getRow(0).getCell(1)
 				.setText(this.checkStringEmpty(tipoAtto));
 	            currentTable.getRow(1).getCell(1)
