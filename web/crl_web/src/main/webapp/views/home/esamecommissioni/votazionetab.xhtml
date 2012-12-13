@@ -226,15 +226,15 @@
 					</p:inputText>
 				</p:column>
 				<p:column>
-					<h:outputText id="dataScadenzaMessage"
-						value="#{esameCommissioniController.messaggioGiorniScadenza}" />
+					<h:outputText id="dataScadenzaMessage" 
+						style="color:#{esameCommissioniController.messaggioGiorniScadenzaColor};" value="#{esameCommissioniController.messaggioGiorniScadenza}" />
 				</p:column>
 			</p:row>
 			<p:row>
 				<p:column>
 					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Registra"
 						action="#{esameCommissioniController.registraVotazione}"
-						update="votazioneMsg, :informationForm:informationBar" />
+						update="votazioneMsg, :informationForm:informationBar , dataScadenzaMessage" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>

@@ -27,6 +27,15 @@ PrimeFaces.locales ['it'] = {
 	 };
 
 
+
+function showDialog(){
+	
+	printPanelDialog.show();
+	printPanelDialog.hide();
+}
+
+
+
 function dragSortTable(tableId,hiddeId,colIndx) {
 	
 	

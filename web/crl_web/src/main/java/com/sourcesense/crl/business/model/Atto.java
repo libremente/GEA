@@ -10,7 +10,6 @@
  */
 package com.sourcesense.crl.business.model;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,16 +36,15 @@ import com.sourcesense.crl.util.JsonNoteDeserializer;
  */
 /**
  * @author pronetics
- *
+ * 
  */
 @Configurable()
-@XmlRootElement(name="atto")
+@XmlRootElement(name = "atto")
 @JsonRootName("atto")
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Atto implements Cloneable
-{
+public class Atto implements Cloneable {
 	/**
 	 * 
 	 */
@@ -60,8 +58,6 @@ public class Atto implements Cloneable
 		}
 	}
 
-
-	
 	private boolean pubblico;
 
 	private String id;
@@ -69,15 +65,15 @@ public class Atto implements Cloneable
 	private String tipo;
 	private String codice;
 	private String oggetto;
-  private String nuovoOggetto;
+	private String nuovoOggetto;
 	private String primoFirmatario;
-	private Date   dataPresentazione;
-	private Date   dataPubblicazione;
-	private Date   dataSedutaSc;
+	private Date dataPresentazione;
+	private Date dataPubblicazione;
+	private Date dataSedutaSc;
 	private Date dataIniziativa;
-	
+
 	private String estensioneAtto;
-	
+
 	private String stato;
 	private String numeroAtto;
 	private String tipoAtto;
@@ -93,43 +89,44 @@ public class Atto implements Cloneable
 	private String numeroRepertorio;
 	private String descrizioneIniziativa;
 	private String numeroDgr;
-	private Date   dataDgr;
-	private String assegnazione;    
+	private Date dataDgr;
+	private String assegnazione;
 	private Date dataAssegnazione;
 	private String esitoValidazione;
 	private Date dataValidazione;
 	private Date dataAssegnazioneCommissioni;
-	
+
 	private String numeroProtocollo;
 	private String tipoIniziativa;
 	private String firmatario;
 	private String tipoChiusura;
-	
+
 	private boolean redigente;
 	private boolean deliberante;
 	private String numeroLr;
-	private boolean abbinamento;	
+	private boolean abbinamento;
 	private boolean stralcio;
-	private String organismoStatutario;	
-	private String soggettoConsultato;	
-	private boolean rinviato;	
+	private String organismoStatutario;
+	private String soggettoConsultato;
+	private boolean rinviato;
 	private boolean sospeso;
 	private Date dataLR;
 	private String numeroPubblicazioneBURL;
 	private Date dataPubblicazioneBURL;
 	private Date dataChiusura;
 	private String statoChiusura;
-	
-	private List <Organo> organi = new ArrayList<Organo>();
-	private List <Firmatario> firmatari = new ArrayList<Firmatario>();
+
+	private List<Organo> organi = new ArrayList<Organo>();
+	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
 	private String elencoFirmatari;
-	private List <Relatore> relatori = new ArrayList<Relatore>();
+	private List<Relatore> relatori = new ArrayList<Relatore>();
 	private String relatore;
 	private Date dataNominaRelatore;
-	private List <Consultazione> consultazioni = new ArrayList<Consultazione>();
-	private List <Allegato> allegati = new ArrayList<Allegato>();
-	//private List <Allegato> allegatiNotePresentazioneAssegnazione = new ArrayList<Allegato>();
-	
+	private List<Consultazione> consultazioni = new ArrayList<Consultazione>();
+	private List<Allegato> allegati = new ArrayList<Allegato>();
+	// private List <Allegato> allegatiNotePresentazioneAssegnazione = new
+	// ArrayList<Allegato>();
+
 	private String elencoAbbinamenti;
 	private String esitoVotazioneCommissioneReferente;
 	private Date dataVotazioneCommissione;
@@ -139,19 +136,19 @@ public class Atto implements Cloneable
 	private Date dataVotazioneAula;
 	private String numeroDcr;
 	private String numeroLcr;
-	
-	private List <Link> linksPresentazioneAssegnazione = new ArrayList<Link>();
-	
-	private List <OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
-	private List <TestoAtto> testiAtto = new ArrayList<TestoAtto>();
-	
-	private List <Collegamento> collegamenti = new ArrayList<Collegamento>();
-	private List <CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
-	private List <CollegamentoLeggiRegionali> collegamentiLeggiRegionali = new ArrayList<CollegamentoLeggiRegionali>();
-	private List <Passaggio> passaggi = new ArrayList<Passaggio>();
+
+	private List<Link> linksPresentazioneAssegnazione = new ArrayList<Link>();
+
+	private List<OrganismoStatutario> organismiStatutari = new ArrayList<OrganismoStatutario>();
+	private List<TestoAtto> testiAtto = new ArrayList<TestoAtto>();
+
+	private List<Collegamento> collegamenti = new ArrayList<Collegamento>();
+	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali = new ArrayList<CollegamentoLeggiRegionali>();
+	private List<Passaggio> passaggi = new ArrayList<Passaggio>();
 	private String commissioniNonConsultive;
 	private String commissioniConsultive;
-	
+
 	private Date dataPresaInCarico;
 	private String valutazioneAmmissibilita;
 	private Date dataRichiestaInformazioni;
@@ -161,24 +158,24 @@ public class Atto implements Cloneable
 	private boolean richiestaUrgenza;
 	private boolean votazioneUrgenza;
 	private Date dataVotazioneUrgenza;
-	private String noteAmmissibilita;	
+	private String noteAmmissibilita;
 	private String notePresentazioneAssegnazione;
-  
-  private boolean scadenza60gg;
-  private boolean iterAula;
-	
-	
+
+	private boolean scadenza60gg;
+	private boolean iterAula;
+
 	private String noteChiusuraIter;
 
-	public Atto(){
-        Passaggio passaggio = new Passaggio();
-        passaggio.setNome("Passaggio 1");
+	public Atto() {
+		Passaggio passaggio = new Passaggio();
+		passaggio.setNome("Passaggio 1");
 		passaggi.add(passaggio);
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 	public String getId() {
 		return id;
@@ -220,24 +217,24 @@ public class Atto implements Cloneable
 		this.oggetto = oggetto;
 	}
 
-  public String getNuovoOggetto() {
-    return nuovoOggetto;
-  }
+	public String getNuovoOggetto() {
+		return nuovoOggetto;
+	}
 
-  public void setNuovoOggetto(String nuovoOggetto) {
-    this.nuovoOggetto = nuovoOggetto;
-  }  
+	public void setNuovoOggetto(String nuovoOggetto) {
+		this.nuovoOggetto = nuovoOggetto;
+	}
 
 	public String getPrimoFirmatario() {
-		
-    		return primoFirmatario;
+
+		return primoFirmatario;
 	}
 
 	public void setPrimoFirmatario(String primoFirmatario) {
 		this.primoFirmatario = primoFirmatario;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPresentazione() {
 		return dataPresentazione;
 	}
@@ -246,7 +243,7 @@ public class Atto implements Cloneable
 		this.dataPresentazione = dataPresentazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPubblicazione() {
 		return dataPubblicazione;
 	}
@@ -255,7 +252,7 @@ public class Atto implements Cloneable
 		this.dataPubblicazione = dataPubblicazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaSc() {
 		return dataSedutaSc;
 	}
@@ -263,8 +260,6 @@ public class Atto implements Cloneable
 	public void setDataSedutaSc(Date dataSedutaSc) {
 		this.dataSedutaSc = dataSedutaSc;
 	}
-
-	
 
 	public String getStato() {
 		return stato;
@@ -346,7 +341,7 @@ public class Atto implements Cloneable
 		this.nRepertorio = nRepertorio;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRepertorio() {
 		return dataRepertorio;
 	}
@@ -379,7 +374,7 @@ public class Atto implements Cloneable
 		this.numeroDgr = numeroDgr;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataDgr() {
 		return dataDgr;
 	}
@@ -396,7 +391,7 @@ public class Atto implements Cloneable
 		this.assegnazione = assegnazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazione() {
 		return dataAssegnazione;
 	}
@@ -413,7 +408,7 @@ public class Atto implements Cloneable
 		this.esitoValidazione = esitoValidazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataValidazione() {
 		return dataValidazione;
 	}
@@ -421,8 +416,6 @@ public class Atto implements Cloneable
 	public void setDataValidazione(Date dataValidazione) {
 		this.dataValidazione = dataValidazione;
 	}
-
-	
 
 	public String getNumeroProtocollo() {
 		return numeroProtocollo;
@@ -456,7 +449,6 @@ public class Atto implements Cloneable
 		this.tipoChiusura = tipoChiusura;
 	}
 
-	
 	public boolean isRedigente() {
 		return redigente;
 	}
@@ -529,7 +521,7 @@ public class Atto implements Cloneable
 		this.sospeso = sospeso;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataLR() {
 		return dataLR;
 	}
@@ -546,7 +538,7 @@ public class Atto implements Cloneable
 		this.numeroPubblicazioneBURL = numeroPubblicazioneBURL;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPubblicazioneBURL() {
 		return dataPubblicazioneBURL;
 	}
@@ -555,8 +547,7 @@ public class Atto implements Cloneable
 		this.dataPubblicazioneBURL = dataPubblicazioneBURL;
 	}
 
-	
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataChiusura() {
 		return dataChiusura;
 	}
@@ -573,7 +564,6 @@ public class Atto implements Cloneable
 		this.statoChiusura = statoChiusura;
 	}
 
-	
 	public List<Organo> getOrgani() {
 		return organi;
 	}
@@ -598,7 +588,6 @@ public class Atto implements Cloneable
 		this.relatori = relatori;
 	}
 
-	
 	public List<Consultazione> getConsultazioni() {
 		return consultazioni;
 	}
@@ -615,18 +604,15 @@ public class Atto implements Cloneable
 		this.allegati = allegati;
 	}
 
-	
-	
-	/*public List<Allegato> getAllegatiNotePresentazioneAssegnazione() {
-		return allegatiNotePresentazioneAssegnazione;
-	}
-
-	public void setAllegatiNotePresentazioneAssegnazione(
-			List<Allegato> allegatiNotePresentazioneAssegnazione) {
-		this.allegatiNotePresentazioneAssegnazione = allegatiNotePresentazioneAssegnazione;
-	}*/
-
-	
+	/*
+	 * public List<Allegato> getAllegatiNotePresentazioneAssegnazione() { return
+	 * allegatiNotePresentazioneAssegnazione; }
+	 * 
+	 * public void setAllegatiNotePresentazioneAssegnazione( List<Allegato>
+	 * allegatiNotePresentazioneAssegnazione) {
+	 * this.allegatiNotePresentazioneAssegnazione =
+	 * allegatiNotePresentazioneAssegnazione; }
+	 */
 
 	public List<Link> getLinksPresentazioneAssegnazione() {
 		return linksPresentazioneAssegnazione;
@@ -637,13 +623,12 @@ public class Atto implements Cloneable
 		this.linksPresentazioneAssegnazione = linksPresentazioneAssegnazione;
 	}
 
-	
-
 	public List<OrganismoStatutario> getOrganismiStatutari() {
 		return organismiStatutari;
 	}
 
-	public void setOrganismiStatutari(List<OrganismoStatutario> organismiStatutari) {
+	public void setOrganismiStatutari(
+			List<OrganismoStatutario> organismiStatutari) {
 		this.organismiStatutari = organismiStatutari;
 	}
 
@@ -655,9 +640,6 @@ public class Atto implements Cloneable
 		this.testiAtto = testiAtto;
 	}
 
-	
-
-	
 	public String getValutazioneAmmissibilita() {
 		return valutazioneAmmissibilita;
 	}
@@ -666,7 +648,7 @@ public class Atto implements Cloneable
 		this.valutazioneAmmissibilita = valutazioneAmmissibilita;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRichiestaInformazioni() {
 		return dataRichiestaInformazioni;
 	}
@@ -675,7 +657,7 @@ public class Atto implements Cloneable
 		this.dataRichiestaInformazioni = dataRichiestaInformazioni;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRicevimentoInformazioni() {
 		return dataRicevimentoInformazioni;
 	}
@@ -716,7 +698,7 @@ public class Atto implements Cloneable
 		this.votazioneUrgenza = votazioneUrgenza;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataVotazioneUrgenza() {
 		return dataVotazioneUrgenza;
 	}
@@ -729,7 +711,7 @@ public class Atto implements Cloneable
 		return noteAmmissibilita;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNoteAmmissibilita(String noteAmmissibilita) {
 		this.noteAmmissibilita = noteAmmissibilita;
 	}
@@ -738,21 +720,18 @@ public class Atto implements Cloneable
 		return notePresentazioneAssegnazione;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNotePresentazioneAssegnazione(
 			String notePresentazioneAssegnazione) {
 		this.notePresentazioneAssegnazione = notePresentazioneAssegnazione;
 	}
 
-		
-
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPresaInCarico() {
 		return dataPresaInCarico;
 	}
 
-	public void setDataPresaInCarico(
-			Date dataPresaInCarico) {
+	public void setDataPresaInCarico(Date dataPresaInCarico) {
 		this.dataPresaInCarico = dataPresaInCarico;
 	}
 
@@ -760,16 +739,16 @@ public class Atto implements Cloneable
 		return noteChiusuraIter;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNoteChiusuraIter(String noteChiusuraIter) {
 		this.noteChiusuraIter = noteChiusuraIter;
 	}
 
-	public List <Collegamento> getCollegamenti() {
+	public List<Collegamento> getCollegamenti() {
 		return collegamenti;
 	}
 
-	public void setCollegamenti(List <Collegamento> collegamenti) {
+	public void setCollegamenti(List<Collegamento> collegamenti) {
 		this.collegamenti = collegamenti;
 	}
 
@@ -797,10 +776,9 @@ public class Atto implements Cloneable
 
 	public void setPassaggi(List<Passaggio> passaggi) {
 		this.passaggi = passaggi;
-	}	
+	}
 
-	
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataIniziativa() {
 		return dataIniziativa;
 	}
@@ -818,8 +796,8 @@ public class Atto implements Cloneable
 	}
 
 	public String getElencoFirmatari() {
-		
-				return elencoFirmatari;
+
+		return elencoFirmatari;
 	}
 
 	public void setElencoFirmatari(String elencoFirmatari) {
@@ -827,8 +805,7 @@ public class Atto implements Cloneable
 	}
 
 	public String getCommissioniNonConsultive() {
-		
-		
+
 		return commissioniNonConsultive;
 	}
 
@@ -837,7 +814,7 @@ public class Atto implements Cloneable
 	}
 
 	public String getCommissioniConsultive() {
-		
+
 		return commissioniConsultive;
 	}
 
@@ -846,7 +823,7 @@ public class Atto implements Cloneable
 	}
 
 	public String getRelatore() {
-		
+
 		return relatore;
 	}
 
@@ -951,20 +928,19 @@ public class Atto implements Cloneable
 		this.estensioneAtto = estensioneAtto;
 	}
 
-  public boolean isIterAula() {
-    return iterAula;
-  }
+	public boolean isIterAula() {
+		return iterAula;
+	}
 
-  public void setIterAula(boolean iterAula) {
-    this.iterAula = iterAula;
-  }
+	public void setIterAula(boolean iterAula) {
+		this.iterAula = iterAula;
+	}
 
-  public boolean isScadenza60gg() {
-    return scadenza60gg;
-  }
+	public boolean isScadenza60gg() {
+		return scadenza60gg;
+	}
 
-  public void setScadenza60gg(boolean scadenza60gg) {
-    this.scadenza60gg = scadenza60gg;
-  }
+	public void setScadenza60gg(boolean scadenza60gg) {
+		this.scadenza60gg = scadenza60gg;
+	}
 }
-

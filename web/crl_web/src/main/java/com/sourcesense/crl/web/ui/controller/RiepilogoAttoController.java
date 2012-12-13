@@ -46,7 +46,7 @@ public class RiepilogoAttoController {
 	private List<Relatore> relatoriAttivi = new ArrayList<Relatore>();
 	private List<Relatore> relatoriList = new ArrayList<Relatore>();
 
-	
+	private String tipoIniziativa;
 
 
 	private Commissione commissioneSelected = new Commissione();
@@ -59,13 +59,8 @@ public class RiepilogoAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		
-		// TODO riempire liste commissioni attoBean =>
-		// attoBean.getAtto().setCommissioni(commissioneServiceManager.findCommissioniByAtto(attoBean.getId()));
-		//
+		initTipoIniziativa(attoBean.getAtto().getTipoIniziativa());
 		
-		/*if(!attoBean.getAtto().getPassaggi().get(0).getCommissioni().isEmpty()) {
-			commissioneSelected = attoBean.getAtto().getPassaggi().get(0).getCommissioni().get(0);
-		}*/
 		
 		commissioni= Clonator.cloneList(attoBean.getLastPassaggio().getCommissioni());
 		
@@ -82,7 +77,41 @@ public class RiepilogoAttoController {
 		
 	}
 	
-	
+    private void initTipoIniziativa(String tipoIniziativa){
+    	
+    	if("01_ATTO DI INIZIATIVA CONSILIARE".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("Consiliare");
+    		
+    	}else if("03_ATTO DI INIZIATIVA POPOLARE".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("Popolare");
+    		
+    	}else if("05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("d'Ufficio");
+    		
+    	}else if("07_ATTO DI INIZIATIVA AUTONOMIE LOCALI".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("Consiglio delle Autonomie locali");
+  
+  		
+    	}else if("06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("Presidente della Giunta");
+    		
+    	}else if("02_ATTO DI INIZIATIVA GIUNTA".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("Giunta");
+    		
+    	}else if("04_ATTO DI INIZIATIVA COMMISSIONI".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("Iniziativa Commissioni");
+    		
+    	}
+    	
+    	    
+    } 	
 
 	public void showCommissioneDetail() {
 
@@ -231,6 +260,19 @@ public class RiepilogoAttoController {
 
 	public void setCommissioni(List<Commissione> commissioni) {
 		this.commissioni = commissioni;
+	}
+
+
+
+	public String getTipoIniziativa() {
+		
+		return tipoIniziativa;
+	}
+
+
+
+	public void setTipoIniziativa(String tipoIniziativa) {
+		this.tipoIniziativa = tipoIniziativa;
 	}
 
 	

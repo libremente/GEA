@@ -161,11 +161,11 @@
 		</p:column>
 		<p:column>
 			<div id="dataScadenza">
-				<p:calendar size="10" locale="it" id="datascadenza"
+			<p:inputText size="10" readonly="true" id="datascadenza"
 					value="#{esameCommissioniController.dataScadenza}">
-					<p:ajax event="dateSelect"
-						listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
-				</p:calendar>
+				<f:convertDateTime locale="it" pattern="dd/MM/yyyy"></f:convertDateTime>
+			</p:inputText>
+				
 			</div>
 		</p:column>
 	</p:row>
@@ -579,8 +579,7 @@
 					<p>
 						<p:calendar size="10" locale="it" id="datafinelavori"
 							value="#{esameCommissioniController.dataFineLavori}">
-							<p:ajax event="dateSelect"
-								listener="#{esameCommissioniController.updateRelatoriComitatiRistrettiHandler}" />
+							
 						</p:calendar>
 					</p>
 				</p:column>

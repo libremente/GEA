@@ -7,68 +7,77 @@ import java.util.GregorianCalendar;
 
 public class DateUtils {
 
-	public Date generateDataScadenzaParDgr(Date date){
+	public static Date getDataScadenzaPar(Date dataPresaInCarico,
+			boolean isRegolamento) {
+
+		if (isRegolamento) {
+
+			return generateDataScadenzaParRegolamento(dataPresaInCarico);	
+
+		} else {
+
+			return generateDataScadenzaParDgr(dataPresaInCarico);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
-		int i = 0;
-		
-		Calendar c = new GregorianCalendar();
-		c.setTime (date);
-				
-//		c.set(Calendar.DAY_OF_MONTH, 15);
-//		c.set(Calendar.MONTH, 6);
-//		c.set(Calendar.YEAR, 2012);
-		
-		
-		while (i<30){
-			
-			if (c.get(c.DAY_OF_WEEK) != Calendar.SUNDAY && c.get(c.DAY_OF_WEEK) != Calendar.SATURDAY && c.get(c.MONTH) != Calendar.AUGUST){
-				if (!(c.get(c.MONTH) == Calendar.SEPTEMBER && c.get(c.DAY_OF_MONTH) < 16)) {
-				
-		    i ++;
-		} }
-			
-			c.add(Calendar.DAY_OF_YEAR, 1);
-			}
-		
-	
-		//System.out.println(sdf.format( c.getTime() ));
-		return new Date(sdf.format( c.getTime() ) );
-			
-	
+		}
+
 	}
-	
-public Date generateDataScadenzaParRegolamento(Date date){
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
-		int i = 0;
-		
-		Calendar c = new GregorianCalendar();
-		c.setTime (date);
+
+	private static Date generateDataScadenzaParDgr(Date dateIn) {
+		try {
+
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(dateIn);
+			calendar.add(Calendar.DAY_OF_YEAR, 30);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			
+			Date dataStart = sdf.parse("01/08/" + dateIn.getYear());
+			
+			Date dataEnd = sdf.parse("15/09/" + dateIn.getYear());
+			
+			while (calendar.getTime().after(dataStart)
+					&& calendar.getTime().before(dataEnd)) {
+
+				calendar.add(Calendar.DAY_OF_YEAR, 1);
+			}	
 				
-//		c.set(Calendar.DAY_OF_MONTH, 15);
-//		c.set(Calendar.MONTH, 6);
-//		c.set(Calendar.YEAR, 2012);
-		
-		
-		while (i<60){
-			
-			if (c.get(c.DAY_OF_WEEK) != Calendar.SUNDAY && c.get(c.DAY_OF_WEEK) != Calendar.SATURDAY && c.get(c.MONTH) != Calendar.AUGUST){
-				if (!(c.get(c.MONTH) == Calendar.SEPTEMBER && c.get(c.DAY_OF_MONTH) < 16)) {
-				
-		    i ++;
-		} }
-			
-			c.add(Calendar.DAY_OF_YEAR, 1);
-			}
-		
-	
-		//System.out.println(sdf.format( c.getTime() ));
-		return new Date(sdf.format( c.getTime() ) );
-			
-	
+
+			return calendar.getTime();
+
+
+		} catch (Exception e) {
+
+		}
+
+		return null;
+
 	}
-	
+
+	private static Date generateDataScadenzaParRegolamento(Date dateIn) {
+
+		try {
+
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(dateIn);
+			calendar.add(Calendar.DAY_OF_YEAR, 60);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			
+			Date dataStart = sdf.parse("01/08/" + dateIn.getYear());
+			
+			Date dataEnd = sdf.parse("15/09/" + dateIn.getYear());
+			
+			while (calendar.getTime().after(dataStart)
+					&& calendar.getTime().before(dataEnd)) {
+
+				calendar.add(Calendar.DAY_OF_YEAR, 1);
+			}	
+				
+
+			return calendar.getTime();
+
+
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
 }

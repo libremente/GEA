@@ -2,7 +2,9 @@ package com.sourcesense.crl.web.ui.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.primefaces.event.FileUploadEvent;
 
 import com.sourcesense.crl.business.model.Abbinamento;
@@ -43,6 +46,7 @@ import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
+import com.sourcesense.crl.util.DateUtils;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
@@ -75,18 +79,8 @@ public class EsameCommissioniController {
 	// Passaggio selezionato
 	private Passaggio passaggio;
 	private String passaggioSelected;
-
-	/*
-	 * private Map<String, String> relatori = new HashMap<String, String>();
-	 * private Map<String, String> membriComitato = new HashMap<String,
-	 * String>();
-	 */
-
 	private List<Relatore> relatori = new ArrayList<Relatore>();
 	private List<Relatore> membriComitato = new ArrayList<Relatore>();
-	// private Map<String, String> membriComitato = new HashMap<String,
-	// String>();
-
 	private String relatoreToDelete;
 	private Date dataNominaRelatore;
 	private Date dataUscitaRelatore;
@@ -105,6 +99,7 @@ public class EsameCommissioniController {
 	private String materia;
 	private Date dataScadenza;
 	private String messaggioGiorniScadenza;
+	private String messaggioGiorniScadenzaColor;
 	private boolean presenzaComitatoRistretto;
 	private Date dataIstituzioneComitato;
 	private Date dataFineLavori;
@@ -546,23 +541,31 @@ public class EsameCommissioniController {
 	// ristretti***********************************************
 	public void presaInCarico() {
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
 		commissioneUser.setDataPresaInCarico(getDataPresaInCarico());
 		commissioneUser.setMateria(materia);
-		commissioneUser.setDataScadenza(dataScadenza);
+		if (attoBean.getTipoAtto().equals("PAR")) {
+			
+			commissioneUser.setDataScadenza(DateUtils
+					.getDataScadenzaPar(getDataPresaInCarico(),attoBean.getAtto().isScadenza60gg()));
+		
+		}
+		
 		if (commissioneUser.getStato().equals(Commissione.STATO_ASSEGNATO)) {
 			commissioneUser.setStato(Commissione.STATO_IN_CARICO);
 		}
+		
 		// Puo essere modificato solo l'ultimo passaggio
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(getCommissioniList());
 
-		if (canChangeStatoAtto() && atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE)) {
+		if (canChangeStatoAtto()
+				&& atto.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE)) {
 			atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
 		}
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
 
 		Target target = new Target();
 		target.setCommissione(commissioneUser.getDescrizione());
@@ -579,7 +582,8 @@ public class EsameCommissioniController {
 
 		attoBean.getLastPassaggio().setCommissioni(commissioniList);
 
-		if (canChangeStatoAtto() && attoBean.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE)) {
+		if (canChangeStatoAtto()
+				&& attoBean.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE)) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
 		}
 
@@ -1173,25 +1177,55 @@ public class EsameCommissioniController {
 	// Votazione****************************************************************
 
 	public void confrontaDataScadenza() {
-		int giorniDifferenza;
+		
 
-		Date scadenza = getDataScadenza();
-		if (scadenza != null) {
-			long scadenzaLong = scadenza.getTime();
+		if(getDataScadenza()!=null && getDataSedutaRegistrazioneVotazione()==null){
+			
+			long scadenzaLong = getDataScadenza().getTime();
 			long todayLong = (new Date()).getTime();
-
 			long msDifferenza = (scadenzaLong - todayLong);
-			if (msDifferenza < 0) {
-				giorniDifferenza = (int) (msDifferenza / 86400000);
+			int giorniDifferenza = (int) (msDifferenza / 86400000);
+			
+			//oggi
+			if( giorniDifferenza ==0){
+				
+				setMessaggioGiorniScadenza("Attenzione! La scadenza è prevista per oggi");
+				setMessaggioGiorniScadenzaColor("red");
+				
+			//in scadenza	
+			}else if(giorniDifferenza > 1){	
+				
+				setMessaggioGiorniScadenza("Mancano " + giorniDifferenza + " giorni alla scadenza.");
+				setMessaggioGiorniScadenzaColor("green");
+				
+			//scaduto
+			}else{
+				
 				setMessaggioGiorniScadenza("Attenzione! Ritardo di "
 						+ (-giorniDifferenza) + " giorni.");
-
-			} else {
-				giorniDifferenza = 1 + (int) (msDifferenza / 86400000);
-				setMessaggioGiorniScadenza("Mancano " + giorniDifferenza
-						+ " giorni alla scadenza.");
+				setMessaggioGiorniScadenzaColor("red");
+			}
+			
+			
+		}else if(getDataScadenza()!=null && getDataSedutaRegistrazioneVotazione()!=null){
+			
+			long todayLong =getDataSedutaRegistrazioneVotazione().getTime();
+			long scadenzaLong = getDataScadenza().getTime();
+			long msDifferenza = (scadenzaLong - todayLong);
+			int giorniDifferenza = (int) (msDifferenza / 86400000);
+			
+			
+			if(giorniDifferenza<0){
+				setMessaggioGiorniScadenza("Ritardo maturato : "
+						+ (-giorniDifferenza) + " giorni.");
+				setMessaggioGiorniScadenzaColor("red");
+				
 			}
 		}
+		
+		
+		
+		
 	}
 
 	public String registraVotazione() {
@@ -1247,9 +1281,10 @@ public class EsameCommissioniController {
 
 		attoBean.getLastPassaggio().setCommissioni(commissioniList);
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_DONE);
+		confrontaDataScadenza();
 		context.addMessage(null, new FacesMessage(
 				"Registrazione Votazione salvata con successo", ""));
-
+		 
 		// Se deliberante e PDA forward su chiusura iter
 		if (Commissione.RUOLO_DELIBERANTE.equals(commissioneUser.getRuolo())
 				&& atto.getTipoAtto().equals("PDA")) {
@@ -1994,11 +2029,11 @@ public class EsameCommissioniController {
 	}
 
 	public Date getDataScadenza() {
-		return dataScadenza;
+		return commissioneUser.getDataScadenza();
 	}
 
 	public void setDataScadenza(Date dataScadenza) {
-		this.dataScadenza = dataScadenza;
+		this.commissioneUser.setDataScadenza (dataScadenza);
 	}
 
 	public Date getDataFineLavori() {
@@ -2856,4 +2891,14 @@ public class EsameCommissioniController {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
+	public String getMessaggioGiorniScadenzaColor() {
+		return messaggioGiorniScadenzaColor;
+	}
+
+	public void setMessaggioGiorniScadenzaColor(String messaggioGiorniScadenzaColor) {
+		this.messaggioGiorniScadenzaColor = messaggioGiorniScadenzaColor;
+	}
+
+	
+	
 }

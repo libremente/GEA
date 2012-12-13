@@ -206,15 +206,11 @@ public class SearchAttoController {
 
 	private Map<String, String> tipiAtto = new HashMap<String, String>();
 
-	//private Map<String, String> legislature = new HashMap<String, String>();
-
 	private List<String> legislature = new ArrayList<String>();
 	
 	private Map<String, String> stati = new HashMap<String, String>();
 
 	private Map<String, String> tipiIniziative = new HashMap<String, String>();
-
-	
 
 	private Map<String, String> tipiChiusura = new HashMap<String, String>();
 
@@ -222,14 +218,7 @@ public class SearchAttoController {
 
 	private Map<String, String> esitiVotoAula = new HashMap<String, String>();
 
-	//private Map<String, String> commissioni = new HashMap<String, String>();
-	
 	private List<String> commissioni = new ArrayList<String>();
-
-	/*private Map<String, String> firmatari = new HashMap<String, String>();
-	
-	private Map<String, String> relatori = new HashMap<String, String>();*/
-
 	
     private List<String> firmatari = new ArrayList<String>();
 	
@@ -919,16 +908,7 @@ public class SearchAttoController {
 		this.tipiAtto = tipiAtto;
 	}
 
-	/*public Map<String, String> getLegislature() {
-		return legislature;
-	}
-
-	public void setLegislature(Map<String, String> legislature) {
-		this.legislature = legislature;
-	}*/
-
-	
-	
+		
 	public Map<String, String> getStati() {
 		return stati;
 	}

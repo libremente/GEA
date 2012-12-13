@@ -10,7 +10,9 @@ import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -69,7 +71,7 @@ public class InserisciAttoController {
 		
 	};
 
-	private Map<String, String> legislature = new HashMap<String, String>();
+	private List<String> legislature = new ArrayList<String>();
 
 	private Map<String,String> anni = new HashMap<String, String>();
 
@@ -80,7 +82,7 @@ public class InserisciAttoController {
 		
 		//TODO
 		setTipiAtto(tipoAttoServiceManager.findAll());
-		setLegislature(legislaturaServiceManager.findAll());
+		setLegislature(legislaturaServiceManager.list());
 		
 		
 	}
@@ -186,12 +188,11 @@ public class InserisciAttoController {
 		this.tipologie = tipologie;
 	}
 
-	public Map<String, String> getLegislature() {
-		//return legislaturaServiceManager.findAll();
-		return this.legislature;
+	public List<String> getLegislature() {
+		return legislature;
 	}
 
-	public void setLegislature(Map<String, String> legislature) {
+	public void setLegislature(List<String> legislature) {
 		this.legislature = legislature;
 	}
 
