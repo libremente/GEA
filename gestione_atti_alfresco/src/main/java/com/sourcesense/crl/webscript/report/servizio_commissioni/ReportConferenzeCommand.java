@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -25,10 +26,6 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO DO:
- * 
- * Check statoAtto
- * Extract firmatari
  * 
  * @author Alessandro Benedetti
  *
@@ -137,8 +134,12 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 							.getNodeRefProperty(commissioneProperties,
 									"dataAssegnazioneCommissione");
 					//child of Atto
-					String firmatari = (String) this.getNodeRefProperty(
-							attoProperties, "firmatari");
+					ArrayList<String> firmatariList = (ArrayList<String>) this
+							.getNodeRefProperty(attoProperties, "firmatari");
+					String firmatari = "";
+					for (String firmatario : firmatariList)
+						firmatari += firmatario + " ";
+					
 					currentTable.getRow(0).getCell(1)
 							.setText(this.checkStringEmpty(tipoAtto));
 					currentTable.getRow(1).getCell(1)
@@ -168,7 +169,6 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 	 * @return
 	 */
 	private boolean checkStatoAtto(String statoAtto) {
-		// TODO Auto-generated method stub
-		return false;
+		return statoAtto.equals("")||statoAtto.equals("")||statoAtto.equals("")||statoAtto.equals("");
 	}
 }

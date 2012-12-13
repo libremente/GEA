@@ -28,10 +28,13 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 /**
  * 
  * TO DO :
- * String firmatari="";//access child of Atto
-				String altriPareri="";//access child of Atto
-				String esitoValutazione="";//Esito valutazione?
-				String elencoRelatori="";// access child of Commissione
+ * OK String firmatari="";//access child of Atto
+ * 
+				OK String altriPareri="";//access child of Atto, da atto come firmatari : organismiStatutari
+				OK String esitoValutazione="";//Esito valutazione?
+				
+				OK String elencoRelatori="";// da commisione chiamare metodo getRelatori
+				
  * @author Alessandro Benedetti
  *
  */
@@ -63,7 +66,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						+ " AND @crlatti\\:ruoloCommissione:\""
 						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
 						+ commissione
-						+ "\" AND @crlatti\\:dataVotazioneCommissione:["
+						+ "\" AND @crlatti\\:dataSedutaCommAttoCommissione:["
 						+ this.dataVotazioneCommReferenteDa + " TO "
 						+ this.dataVotazioneCommReferenteA + " ]";
 				sp.setQuery(query);
@@ -137,6 +140,9 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				// from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
 						commissioneProperties, "tipoAttoCommissione");
+				
+				String esitoValutazione = (String) this.getNodeRefProperty(
+						commissioneProperties, "esitoVotazioneCommissione");
 				Date dateAssegnazioneCommissione = (Date) this
 						.getNodeRefProperty(commissioneProperties,
 								"dataAssegnazioneCommissione");
@@ -146,7 +152,6 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						commissioneProperties, "ruoloCommissione");	
 				String firmatari="";//access child of Atto
 				String altriPareri="";//access child of Atto
-				String esitoValutazione="";//Esito valutazione?
 				String elencoRelatori="";// access child of Commissione
 
 				currentTable.getRow(0).getCell(1)

@@ -27,8 +27,6 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 /**
  * TO DO:
  * 
- * Date datePresentazione = ? nome attributo data presentazione Date dateRevoca
- * = ? nome attributo data revoca
  * 
  * @author Alessandro Benedetti
  * 
@@ -55,9 +53,11 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				// statoAtto = Chiuso
+				// tipoChiusura = Ritirato dai promotori
 				String query = "TYPE:\"" + "crlatti:commissione"
 						+ "\" AND @crlatti\\:tipoAttoCommissione:\"" + tipoAtto
-						+ "\" AND @crlatti\\:dataRitiro:[" + this.dataRitiroDa
+						+ "\" AND @crlatti\\:dataChiusura:[" + this.dataRitiroDa
 						+ " TO " + this.dataRitiroA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
@@ -125,11 +125,9 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 				String tipoAtto = (String) this.getNodeRefProperty(
 						commissioneProperties, "tipoAttoCommissione");
 				Date datePresentazione = (Date) this.getNodeRefProperty(
-						commissioneProperties, "");// ? nome attributo data
-													// presentazione
+						attoProperties, "dataIniziativa");
 				Date dateRevoca = (Date) this.getNodeRefProperty(
-						commissioneProperties, "");// ? nome attributo data
-													// revoca
+						attoProperties,"dataChiusura");
 				String firmatari = "";// access child of Atto
 
 				currentTable.getRow(0).getCell(1)

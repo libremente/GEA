@@ -20,6 +20,8 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
+import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
+import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.json.JSONArray;
@@ -43,6 +45,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected static final String RUOLO_COMM_CONSULTIVA = "Consultiva";
 	protected static final String RUOLO_COMM_REDIGENTE = "Redigente";
 	protected static final String RUOLO_COMM_DELIBERANTE = "Deliberante";
+	
+	 
+	public static final String PRESO_CARICO_COMMISSIONE="Preso in carico da Commissioni";
+	public static final String NOMINATO_RELATORE="Nominato Relatore";
+	public static final String VOTATO_COMMISSIONE="Votato in Commissione";
+    public static final String LAVORI_COMITATO_RISTRETTO="Lavori Comitato Ristretto";
 
 	protected List<String> tipiAttoLucene;
 	protected String ruoloCommissione;
@@ -97,6 +105,27 @@ public abstract class ReportBaseCommand implements ReportCommand {
 			this.retrieveAttiFromList(nodeRefList, spacesStore, atto2commissione, commissione2atti);
 		}
 		return commissione2atti;
+	}
+	
+public ResultSet getRelatori(NodeRef commissioneNodeRef){
+		
+		NodeRef relatore = null;
+		
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+    	
+        String luceneCommissioneNodePath = nodeService.getPath(commissioneNodeRef).toPrefixString(namespacePrefixResolver);
+
+        String relatoreType = "{"+CRL_ATTI_MODEL+"}"+"relatore";
+        
+		// Get relatore
+    	ResultSet relatoreNodes = searchService.query(commissioneNodeRef.getStoreRef(),
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneCommissioneNodePath+"/cm:Relatori/*\" AND TYPE:\""+relatoreType+"\"");
+
+    	
+		return relatoreNodes; 
 	}
 	
 	protected void retrieveAttiFromList(

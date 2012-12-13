@@ -30,6 +30,13 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * TO DO:
  * - Consiglieri from Commissione?
  * 
+ * fare query su anagrafica commissioni, poi nel result set ciclare su ogni figlio dei noderef
+ *ogni figlio è un consigliere da cui estrarre crlatti:nomeConsigliereAnagrafica
+[12/12/12 5:57:43 PM] Federico Montinaro: crlatti:cognomeConsigliereAnagrafica
+[12/12/12 5:57:54 PM] Federico Montinaro: crlatti:codiceGruppoConsigliereAnagrafica
+
+la carica non c'è
+ * 
  * @author Alessandro Benedetti
  *
  */
@@ -51,7 +58,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 						+ "crlatti:commissione\"";
 				sp.setQuery(query);
 				ResultSet commissioniResult = this.searchService.query(sp);
-		
+				
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(commissioniResult.length(), 2, false);
