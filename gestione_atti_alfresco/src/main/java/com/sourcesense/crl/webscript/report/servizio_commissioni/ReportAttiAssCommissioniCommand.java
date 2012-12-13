@@ -107,6 +107,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
 			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
@@ -145,21 +146,23 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						commissioneProperties, "ruoloCommissione");
 
 				currentTable.getRow(0).getCell(1)
-						.setText(this.checkStringEmpty(numeroAtto));
+				.setText(this.checkStringEmpty(tipoAtto));
 				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(ruoloCommissione));
+						.setText(this.checkStringEmpty(numeroAtto));
 				currentTable.getRow(2).getCell(1)
-						.setText(this.checkStringEmpty(iniziativa));
+						.setText(this.checkStringEmpty(ruoloCommissione));
 				currentTable.getRow(3).getCell(1)
+						.setText(this.checkStringEmpty(iniziativa));
+				currentTable.getRow(4).getCell(1)
 						.setText(this.checkStringEmpty(oggetto));
 				currentTable
-						.getRow(4)
+						.getRow(5)
 						.getCell(1)
 						.setText(
 								this.checkDateEmpty(dateAssegnazioneCommissione));
-				currentTable.getRow(5).getCell(1)
-						.setText(this.checkDateEmpty(dateVotazioneCommissione));
 				currentTable.getRow(6).getCell(1)
+						.setText(this.checkDateEmpty(dateVotazioneCommissione));
+				currentTable.getRow(7).getCell(1)
 						.setText(this.checkStringEmpty(commReferente));
 				tableIndex++;
 			}
