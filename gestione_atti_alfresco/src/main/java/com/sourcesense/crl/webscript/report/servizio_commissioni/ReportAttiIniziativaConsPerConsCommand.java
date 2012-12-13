@@ -22,6 +22,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * TO DO:
  * - model change? firmatario-tipologia firma ...
  * data di presentazione
+ * SKIP TEMP
  * @author Alessandro Benedetti
  *
  */

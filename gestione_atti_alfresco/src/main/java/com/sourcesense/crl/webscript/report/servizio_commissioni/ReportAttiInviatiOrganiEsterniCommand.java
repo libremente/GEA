@@ -30,6 +30,8 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * - ? data assegnazione from atto
  * - elenco altri pareri 
  * - data assegnazione parere
+ * 
+ * SKIP TEMP
  * @author Alessandro Benedetti
  *
  */
@@ -103,6 +105,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
 			Map<NodeRef, NodeRef> atto2parere) throws IOException {
@@ -137,6 +140,13 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 				String commConsultiva = "";
 				for (String commissioneConsultivaMulti : commConsultivaList)
 					commConsultiva += commissioneConsultivaMulti + " ";
+				
+				//from Atto
+				ArrayList<String> pareriList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "organismiStatutari");
+				String altriPareri = "";
+				for (String parere : pareriList)
+					altriPareri += parere + " ";
 				
 				Date dateAssegnazioneCommissione =null;// ? data assegnazione from atto
 				

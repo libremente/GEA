@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -27,16 +28,10 @@ import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 /**
- * TO DO:
- * - Consiglieri from Commissione?
  * 
- * fare query su anagrafica commissioni, poi nel result set ciclare su ogni figlio dei noderef
- *ogni figlio è un consigliere da cui estrarre crlatti:nomeConsigliereAnagrafica
-[12/12/12 5:57:43 PM] Federico Montinaro: crlatti:cognomeConsigliereAnagrafica
-[12/12/12 5:57:54 PM] Federico Montinaro: crlatti:codiceGruppoConsigliereAnagrafica
-
-la carica non c'è
- * 
+ * TO DO :
+ * -Test
+ * -Docx template
  * @author Alessandro Benedetti
  *
  */
@@ -54,8 +49,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query = "TYPE:\""
-						+ "crlatti:commissione\"";
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"";
 				sp.setQuery(query);
 				ResultSet commissioniResult = this.searchService.query(sp);
 				
@@ -101,18 +95,30 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 				// from Commissione
 				String nomeCommissione = (String) this.getNodeRefProperty(
 						commissioneProperties, "name");
+				List<ChildAssociationRef> consiglieriAssList = nodeService.getChildAssocs(currentCommissione);
+				String consiglieri = "";
+				String currentConsigliere="";
+				for(ChildAssociationRef consigliereAss:consiglieriAssList){
+					NodeRef consigliereRef = consigliereAss.getChildRef();
+					Map<QName, Serializable> consigliereProperties = nodeService
+							.getProperties(consigliereRef);
+					String nomeConsigliere=(String) this.getNodeRefProperty(
+							consigliereProperties, "nomeConsigliereAnagrafica");
+					String cognomeConsigliere=(String) this.getNodeRefProperty(
+							consigliereProperties, "cognomeConsigliereAnagrafica");
+					String codice=(String) this.getNodeRefProperty(
+							consigliereProperties, "codiceGruppoConsigliereAnagrafica");
+					currentConsigliere=nomeConsigliere+" "+cognomeConsigliere+" "+codice;
+					consiglieri+=currentConsigliere+" \n";
+					
+				}
 				
 				
-				ArrayList<String> consigliereList = (ArrayList<String>) this
-						.getNodeRefProperty(commissioneProperties, "consiglieri");
-				String consigliere = "";
-				for (String consigliereListElem : consigliereList)
-					consigliere += consigliereListElem + " ";
 				
 				currentTable.getRow(0).getCell(1)
 						.setText(this.checkStringEmpty(nomeCommissione));
 				currentTable.getRow(1).getCell(1)
-				.setText(this.checkStringEmpty(consigliere));
+				.setText(this.checkStringEmpty(consiglieri));
 				tableIndex++;
 			}
 		

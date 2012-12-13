@@ -27,10 +27,9 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * 
- * 
- * Report completed
- * to be tested
- * 
+ * TO DO :
+ * -Test
+ * -Docx template
  * @author Alessandro Benedetti
  *
  */
