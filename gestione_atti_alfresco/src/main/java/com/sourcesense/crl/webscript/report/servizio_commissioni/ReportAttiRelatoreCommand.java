@@ -167,18 +167,17 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 							.getNodeRefProperty(attoProperties, "commConsultiva");
 					String commConsultiva = "";
 					for (String commissioneConsultivaMulti : commConsultivaList)
-						commConsultiva += commissioneConsultivaMulti + " ";
+						commConsultiva += commissioneConsultivaMulti + ",";
 
-					currentTable.getRow(0).getCell(1)
-							.setText(this.checkStringEmpty(tipoAtto));
-					currentTable.getRow(1).getCell(1)
+					
+					currentTable.getRow(0).getCell(0)
 							.setText(this.checkStringEmpty(numeroAtto));
-					currentTable.getRow(2).getCell(1)
+					currentTable.getRow(0).getCell(1)
 							.setText(this.checkStringEmpty(oggetto));
-					currentTable.getRow(3).getCell(1)
+					currentTable.getRow(1).getCell(2)
 					.setText(this.checkStringEmpty(commReferente));
-					currentTable.getRow(4).getCell(1)
-					.setText(this.checkStringEmpty(commConsultiva));
+					currentTable.getRow(2).getCell(2)
+					.setText(this.checkStringEmpty(commConsultiva.substring(0, commConsultiva.length()-1)));
 					
 					tableIndex++;
 				}
