@@ -29,7 +29,6 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * 
  * TO DO :
  * -Test
- * -Docx template
  * @author Alessandro Benedetti
  *
  */
@@ -146,23 +145,21 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						commissioneProperties, "ruoloCommissione");
 
 				currentTable.getRow(0).getCell(1)
-				.setText(this.checkStringEmpty(tipoAtto));
+						.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
 				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(numeroAtto));
-				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(ruoloCommissione));
-				currentTable.getRow(3).getCell(1)
+				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(iniziativa));
-				currentTable.getRow(4).getCell(1)
+				currentTable.getRow(3).getCell(1)
 						.setText(this.checkStringEmpty(oggetto));
 				currentTable
-						.getRow(5)
+						.getRow(4)
 						.getCell(1)
 						.setText(
 								this.checkDateEmpty(dateAssegnazioneCommissione));
-				currentTable.getRow(6).getCell(1)
+				currentTable.getRow(5).getCell(1)
 						.setText(this.checkDateEmpty(dateVotazioneCommissione));
-				currentTable.getRow(7).getCell(1)
+				currentTable.getRow(6).getCell(1)
 						.setText(this.checkStringEmpty(commReferente));
 				tableIndex++;
 			}
