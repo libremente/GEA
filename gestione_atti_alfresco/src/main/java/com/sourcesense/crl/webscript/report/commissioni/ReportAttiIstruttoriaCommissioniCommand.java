@@ -27,7 +27,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * -? data nomina relatori?
+ * -Test
+ * -Docx
  * 
  * @author Alessandro Benedetti
  * 
@@ -138,13 +139,19 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					Date dateAssegnazioneCommissione = (Date) this
 							.getNodeRefProperty(commissioneProperties,
 									"dataAssegnazioneCommissione");
-					// from Commissione
 					String elencoRelatori = "";
+					String elencoDateNomina = "";
 					for (int i = 0; i < relatori.length(); i++) {
 						NodeRef relatoreNodeRef = relatori.getNodeRef(i);
+						Map<QName, Serializable> relatoreProperties = nodeService
+								.getProperties(relatoreNodeRef);
+						Date dateNomina = (Date) this.getNodeRefProperty(
+								relatoreProperties, "dataNominaRelatore");
 						String relatore = (String) nodeService.getProperty(
 								relatoreNodeRef, ContentModel.PROP_NAME);
-						elencoRelatori += relatore + " ";
+						String dateNominaString = this.checkDateEmpty(dateNomina);
+						elencoRelatori += relatore + " \n ";
+						elencoDateNomina += dateNominaString + " \n ";
 					}
 
 					ArrayList<String> commReferenteList = (ArrayList<String>) this
@@ -183,6 +190,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 							.setText(this.checkStringEmpty(commConsultiva));
 					currentTable.getRow(6).getCell(1)
 							.setText(this.checkStringEmpty(elencoRelatori));
+					currentTable.getRow(6).getCell(2)
+					.setText(this.checkStringEmpty(elencoDateNomina));
 
 					tableIndex++;
 				}
