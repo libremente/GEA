@@ -86,44 +86,6 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * Extract only valuable commissioni from the ones extracted from the
-	 * Relatori
-	 * 
-	 * @param relatoriResults
-	 * @return
-	 */
-	private List<NodeRef> retrieveCommissioniFromRelatori(
-			ResultSet relatoriResults) {
-		List<NodeRef> commissioni=Lists.newArrayList();
-		int resultLength = relatoriResults.length();
-		for (int i = 0; i < resultLength; i++) {
-			NodeRef relatoreNodeRef = relatoriResults.getNodeRef(i);
-			Map<QName, Serializable> relatoreProperties = nodeService
-					.getProperties(relatoreNodeRef);
-			NodeRef commissioneNodeRef = relatoreNodeRef;
-			boolean check = false;
-			while (!check) {// look for Atto in type hierarchy
-				ChildAssociationRef childAssociationRef = nodeService
-						.getPrimaryParent(commissioneNodeRef);
-				commissioneNodeRef = childAssociationRef.getParentRef();
-				QName nodeRefType = nodeService.getType(commissioneNodeRef);
-				QName attoRefType = QName.createQName(CRL_ATTI_MODEL,
-						"commissione");
-				check = dictionaryService.isSubClass(nodeRefType,
-						attoRefType);
-			}
-			Map<QName, Serializable> commissioneProperties = nodeService
-					.getProperties(commissioneNodeRef);
-			String commissione = (String) this.getNodeRefProperty(
-					commissioneProperties, "name");
-			if(this.checkCommissione(commissione))
-				commissioni.add(commissioneNodeRef);
-
-		}
-		return commissioni;
-	}
-
-	/**
 	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
 	 * numero atto- competenza - iniziativa- oggetto - data assegnazione - data
 	 * valutazione - commissione referente
@@ -198,14 +160,4 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 		return this.tipiAttoLucene.contains(tipoAtto);
 	}
 	
-	/**
-	 * check if the "tipoAtto" in input is good, related to the selection of
-	 * tipoAtto good
-	 * 
-	 * @param tipoAtto
-	 * @return
-	 */
-	private boolean checkCommissione(String commissione) {
-		return this.commissioniJson.contains(commissione);
-	}
 }

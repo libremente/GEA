@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +14,11 @@ import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
-import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
-import org.alfresco.web.bean.repository.Repository;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -32,8 +28,9 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * -? data nomina relatori?
+ * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
@@ -55,7 +52,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				//solo atti da preso in carico a votato dalla commissione
+				// solo atti da preso in carico a votato dalla commissione
 				String query = "TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
@@ -126,7 +123,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 						.getProperties(currentCommissione);
 
 				// from Atto
-				String statoAtto=(String) this.getNodeRefProperty(
+				String statoAtto = (String) this.getNodeRefProperty(
 						attoProperties, "statoAtto");
 				if (this.checkStatoAtto(statoAtto)) {
 					String numeroAtto = (String) this.getNodeRefProperty(
@@ -149,41 +146,44 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 								relatoreNodeRef, ContentModel.PROP_NAME);
 						elencoRelatori += relatore + " ";
 					}
-					
+
 					ArrayList<String> commReferenteList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "commReferente");
 					String commReferente = "";
 					for (String commissioneReferenteMulti : commReferenteList)
 						commReferente += commissioneReferenteMulti + " ";
-					
+
 					ArrayList<String> commConsultivaList = (ArrayList<String>) this
-							.getNodeRefProperty(attoProperties, "commConsultiva");
+							.getNodeRefProperty(attoProperties,
+									"commConsultiva");
 					String commConsultiva = "";
 					for (String commissioneConsultivaMulti : commConsultivaList)
 						commConsultiva += commissioneConsultivaMulti + " ";
-					
-					
-					
-					currentTable.getRow(0).getCell(1)
-							.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
+
+					currentTable
+							.getRow(0)
+							.getCell(1)
+							.setText(
+									this.checkStringEmpty(tipoAtto + " "
+											+ numeroAtto));
 					currentTable.getRow(1).getCell(1)
-					.setText(this.checkStringEmpty(iniziativa));
+							.setText(this.checkStringEmpty(iniziativa));
 					currentTable.getRow(2).getCell(1)
 							.setText(this.checkStringEmpty(oggetto));
-					
+
 					currentTable
 							.getRow(3)
 							.getCell(1)
 							.setText(
 									this.checkDateEmpty(dateAssegnazioneCommissione));
-					
+
 					currentTable.getRow(4).getCell(1)
-					.setText(this.checkStringEmpty(commReferente));
+							.setText(this.checkStringEmpty(commReferente));
 					currentTable.getRow(5).getCell(1)
-					.setText(this.checkStringEmpty(commConsultiva));
+							.setText(this.checkStringEmpty(commConsultiva));
 					currentTable.getRow(6).getCell(1)
-					.setText(this.checkStringEmpty(elencoRelatori));
-					
+							.setText(this.checkStringEmpty(elencoRelatori));
+
 					tableIndex++;
 				}
 			}
@@ -194,10 +194,14 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
 	/**
 	 * Check if the statoAtto is comprehended between "preso in carico e votato"
+	 * 
 	 * @param statoAtto
 	 * @return
 	 */
 	private boolean checkStatoAtto(String statoAtto) {
-		return statoAtto.equals(PRESO_CARICO_COMMISSIONE)||statoAtto.equals(VOTATO_COMMISSIONE)||statoAtto.equals(NOMINATO_RELATORE)||statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
+		return statoAtto.equals(PRESO_CARICO_COMMISSIONE)
+				|| statoAtto.equals(VOTATO_COMMISSIONE)
+				|| statoAtto.equals(NOMINATO_RELATORE)
+				|| statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
 	}
 }
