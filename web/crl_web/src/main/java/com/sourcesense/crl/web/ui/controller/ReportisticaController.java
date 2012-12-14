@@ -264,7 +264,6 @@ public class ReportisticaController implements Serializable {
 
 		return (ATTI_ASSEGNATI_COMM.equals(selectedReport.getNome())
 				|| CONFERENZE.equals(selectedReport.getNome())
-				|| ATTI_LICENZ.equals(selectedReport.getNome())
 				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome()) || ATTI_ASSE_COMM
 					.equals(selectedReport.getNome()))
 
@@ -273,7 +272,8 @@ public class ReportisticaController implements Serializable {
 
 	public boolean isDataVotazioneCommReferenteVisible() {
 
-		return (ATTI_LICENZIATI_COMM.equals(selectedReport.getNome()))
+		return (ATTI_LICENZIATI_COMM.equals(selectedReport.getNome())
+				|| ATTI_LICENZ.equals(selectedReport.getNome()))
 
 		;
 
