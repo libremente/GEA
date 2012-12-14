@@ -15,6 +15,8 @@ import org.pojomatic.annotations.AutoProperty;
 @AutoProperty
 public class CollegamentoAttiSindacato implements Cloneable{
 	
+	
+	private String idAtto;
 	private String descrizione;
 	private String tipoAtto;
 	private String numeroAtto;
@@ -83,6 +85,16 @@ public class CollegamentoAttiSindacato implements Cloneable{
 	public void setFirmatari(List<Firmatario> firmatari) {
 		this.firmatari = firmatari;
 	}
+
+	public String getIdAtto() {
+		return idAtto;
+	}
+
+	public void setIdAtto(String idAtto) {
+		this.idAtto = idAtto;
+	}
+	
+	
 	
 	
 }

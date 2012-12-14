@@ -37,6 +37,7 @@ public class CollegamentiController {
 	private Map<String, String> numeriAttoSindacato = new HashMap<String, String>();
 	
 	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	
 	private String tipoAttoSindacato;
 	private String numeroAttoSindacato;
 	private String descrizioneAttoSindacato;
@@ -66,7 +67,7 @@ public class CollegamentiController {
 		setAtto((Atto) attoBean.getAtto().clone());	
 		
 		setAttiCollegatiList(Clonator.cloneList(atto.getCollegamenti()));
-		setCollegamentiAttiSindacato(Clonator.cloneList(atto.getCollegamentiAttiSindacato()));
+		setCollegamentiAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setCollegamentiLeggiRegionali(Clonator.cloneList(atto.getCollegamentiLeggiRegionali()));
 	}
 	

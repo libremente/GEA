@@ -15,6 +15,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoEAC;
 import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.ConsultazioneParere;
 import com.sourcesense.crl.business.model.Firmatario;
@@ -166,6 +167,13 @@ public class AttoServiceManager implements ServiceManager {
 		return attoService.findMISById(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
 	}
+	
+	
+	public List<CollegamentoAttiSindacato> findAllAttiSindacato() {
+		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_retrieve_atti_indirizzo",null));
+	}
+	
 	
 
 	public void presaInCaricoSC(Atto atto) {
