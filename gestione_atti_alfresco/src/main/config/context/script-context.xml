@@ -18,24 +18,15 @@
         </property>
     </bean>
     
-    <bean id="cmisClientScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.CMISClientScript">
+    <bean id="attiIndirizzoExportLoggerScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.AttiIndirizzoExportLoggerScript">
         <property name="extensionName">
-            <value>cmisClient</value>
+            <value>attiIndirizzoExportLogger</value>
         </property>
-        <property name="serviceRegistry">
-            <ref bean="ServiceRegistry"/>
-        </property>
-         <property name="attiIspettiviAlfrescoURL">
-            <value>http://localhost:9080/alfresco</value>
-        </property>
-        <property name="attiIspettiviAlfrescoUser">
-            <value>admin</value>
-        </property>
-        <property name="attiIspettiviAlfrescoPsw">
-            <value>admin</value>
-        </property>
-         <property name="attiIspettiviAlfrescoPath">
-            <value>/Import/</value>
+    </bean>
+    
+    <bean id="attiIndirizzoImportLoggerScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.AttiIndirizzoImportLoggerScript">
+        <property name="extensionName">
+            <value>attiIndirizzoImportLogger</value>
         </property>
     </bean>
     

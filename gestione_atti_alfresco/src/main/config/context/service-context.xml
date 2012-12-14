@@ -133,7 +133,7 @@
 	         
 	         <props>
 	            <prop key="path">/${spaces.company_home.childname}/cm:CRL/cm:Gestione_x0020_Atti</prop>
-	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/eacMisSpaces.acp</prop>
+	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/eacSpace.acp</prop>
 	         </props>
 	         
 	         <props>

@@ -3,8 +3,20 @@
 
 <beans>
 	<import resource="classpath:alfresco/module/${artifactId}/context/service-context.xml" />
-	<import resource="classpath:alfresco/module/${artifactId}/context/job-script-context.xml" />
 	<import resource="classpath:alfresco/module/${artifactId}/context/lettere-web-script-context.xml" />
 	<import resource="classpath:alfresco/module/${artifactId}/context/report-web-script-context.xml" />
 	<import resource="classpath:alfresco/module/${artifactId}/context/script-context.xml" />
+	<import resource="classpath:alfresco/module/${artifactId}/context/behaviour-context.xml" />
+	
+	
+	
+	<!-- Modulo per l'integrazione del sistema di gestione Anagrafica -->
+	<!-- <import resource="classpath:alfresco/module/${artifactId}/context/anagrafica-import-job-script-context.xml" /> --> 
+	
+	
+	
+	<!-- Moduli per l'integrazione del sistema di gestione degli Atti di Indirizzo -->
+	<import resource="classpath:alfresco/module/${artifactId}/context/atti-indirizzo-export-job-script-context.xml" />
+	<import resource="classpath:alfresco/module/${artifactId}/context/atti-indirizzo-import-job-script-context.xml" />
+	
 </beans>

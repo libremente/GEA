@@ -778,7 +778,7 @@
 					<title>Stato</title>
 					<type>d:text</type>
 				</property>
-					<property name="crlatti:dataSedutaStralcioCommissione">
+				<property name="crlatti:dataSedutaStralcioCommissione">
 					<title>Data seduta stralcio</title>
 					<type>d:date</type>
 				</property>
@@ -814,6 +814,10 @@
 					<title>Tipo Atto</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:dataSedutaCommAttoCommissione">
+					<title>Data Seduta Commissione Atto</title>
+					<type>d:date</type>
+				</property>	
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:emendamentiAspect</aspect>
@@ -1109,15 +1113,15 @@
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:tipoAttoIndirizzo">
-					<title>Tipo Atti</title>
+					<title>Tipo Atto</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:numeroAttoIndirizzo">
-					<title>Tipo Atti</title>
+					<title>Numero Atti</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:oggettoAttoIndirizzo">
-					<title>Tipo Atti</title>
+					<title>Oggetto Atto</title>
 					<type>d:text</type>
 				</property>
 			</properties>
@@ -1125,7 +1129,7 @@
 		
 		<type name="crlatti:firmatarioAttoIndirizzo">
 			<title>Firmatario Atto Indirizzo</title>
-			<parent>cm:folder</parent>
+			<parent>cm:content</parent>
 			<properties>
 				<property name="crlatti:IdFirmatarioAttoIndirizzo">
 					<title>Id Firmatario</title>
@@ -1465,6 +1469,7 @@
 				</property>
 			</properties>
 		</aspect>
+		
 		
 		<aspect name="crlatti:attiIndirizzoAspect">
 			<title>Atti Indirizzo Aspect</title>

@@ -12,19 +12,6 @@
 	language governing permissions and limitations under the License. -->
 <beans>
 
-    <bean id="crlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
-        <property name="url" value="jdbc:jtds:sqlserver://212.54.226.116:1433;DatabaseName=dbconsiglieri" />
- 		<!-- <property name="url" value="jdbc:jtds:sqlserver://192.168.1.130:1433/dbConsiglieri;instance=SQLEXPRESS" /> -->
-        <property name="username" value="SourceSense" />
-        <property name="password" value="SSense2012" />
-    </bean>
-
-    <bean id="dataExtractor" class="com.sourcesense.crl.job.anagrafica.DataExtractor">
-        <property name="dataSource">
-            <ref bean="crlDataSource" />
-        </property>
-    </bean>
 
     <bean id="templateActionModelFactory" class="org.alfresco.repo.action.scheduled.FreeMarkerWithLuceneExtensionsModelFactory">
         <property name="serviceRegistry">
@@ -32,34 +19,31 @@
         </property>
     </bean>
 
-	<bean id="crlImportScriptBean" parent="baseJavaScriptExtension" class="com.sourcesense.crl.job.anagrafica.AnagraficaImportScript">
-	    <property name="extensionName">
-	        <value>crlImporter</value>
-	    </property>
-        <property name="fileFolderService">
-            <ref bean="FileFolderService" />
+	 <bean id="cmisClientScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.CMISClientScript">
+        <property name="extensionName">
+            <value>cmisClient</value>
         </property>
-		<property name="searchService">
-            <ref bean="SearchService" />
+        <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
         </property>
-		<property name="nodeService">
-            <ref bean="NodeService" />
+         <property name="attiIspettiviAlfrescoURL">
+            <value>http://localhost:9080/alfresco</value>
         </property>
-        <property name="contentService">
-            <ref bean="ContentService" />
+        <property name="attiIspettiviAlfrescoUser">
+            <value>admin</value>
         </property>
-        <property name="authorityService">
-            <ref bean="AuthorityService" />
+        <property name="attiIspettiviAlfrescoPsw">
+            <value>admin</value>
         </property>
-        <property name="dataExtractor">
-            <ref bean="dataExtractor" />
+         <property name="attiIspettiviAlfrescoPath">
+            <value>/Import/</value>
         </property>
     </bean>
 
   <!--
-    Execute the script /Company Home/Data Dictionary/Scripts/anagraficaImport.js
+    Execute the script /Company Home/Data Dictionary/Scripts/attiIndirizzoExporter.js
     -->
-    <bean id="runScriptAction" class="org.alfresco.repo.action.scheduled.SimpleTemplateActionDefinition">
+    <bean id="runAttiIndirizzoExportScriptAction" class="org.alfresco.repo.action.scheduled.SimpleTemplateActionDefinition">
         <property name="actionName">
             <value>script</value>
         </property>
@@ -70,7 +54,7 @@
                         <value>script-ref</value>
                     </key>
                     <!-- Note that as of Alfresco 4.0, due to a  Spring upgrade, the FreeMarker ${foo} entries must be escaped --> 
-                    <value>\$\{selectSingleNode('workspace://SpacesStore', 'lucene', 'PATH:"/app:company_home/app:dictionary/app:scripts/cm:anagraficaImport.js"' )\}</value>
+                    <value>\$\{selectSingleNode('workspace://SpacesStore', 'lucene', 'PATH:"/app:company_home/app:dictionary/app:scripts/cm:attiIndirizzoExporter.js"' )\}</value>
                 </entry>
             </map>
         </property>
@@ -88,10 +72,8 @@
         </property>
     </bean>
     
-    <!--
-   Run the script every minute - select the single node company home that is not used ...
-    -->
-    <bean id="runScript" class="org.alfresco.repo.action.scheduled.CronScheduledQueryBasedTemplateActionDefinition">
+   
+    <bean id="runAttiIndirizzoExportScript" class="org.alfresco.repo.action.scheduled.CronScheduledQueryBasedTemplateActionDefinition">
         <property name="transactionMode">
             <value>UNTIL_FIRST_FAILURE</value>
         </property>
@@ -116,16 +98,16 @@
             <value>PATH:"/app:company_home"</value> 
         </property>
         <property name="cronExpression">
-            <value>0 0/2 * * * ?</value>
+            <value>0 0/5 * * * ? 2099</value>  <!-- <value>0 0 6 * * ? 2099</value> add 2099 after ? to disable -->
         </property>
         <property name="jobName">
-            <value>jobD</value>
+            <value>jobAttiIndirizzoExport</value>
         </property>
         <property name="jobGroup">
             <value>jobGroup</value>
         </property>
         <property name="triggerName">
-            <value>triggerD</value>
+            <value>triggerAttiIndirizzoExport</value>
         </property>
         <property name="triggerGroup">
             <value>triggerGroup</value>
@@ -140,7 +122,7 @@
             <ref bean="templateActionModelFactory"/>
         </property>
         <property name="templateActionDefinition">
-            <ref bean="runScriptAction"/> <!-- This is name of the action (bean) that gets run -->
+            <ref bean="runAttiIndirizzoExportScriptAction"/> <!-- This is name of the action (bean) that gets run -->
         </property>
         <property name="transactionService">
             <ref bean="TransactionService"/>
@@ -149,6 +131,7 @@
             <value>System</value>
         </property>
     </bean>
+    
     
     
 </beans>

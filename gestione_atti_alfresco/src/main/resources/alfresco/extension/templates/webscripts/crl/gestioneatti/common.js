@@ -170,3 +170,50 @@ function getLegislaturaCorrente(){
 	return legislaturaCorrente;
 	
 }
+
+
+function getNumeroLegislaturaByIdAnagrafica(idAnagrafica){
+	
+	var numeroLegislatura = null;
+	
+	var legislaturePath = "/app:company_home" +
+	"/cm:"+search.ISO9075Encode("CRL") +
+	"/cm:"+search.ISO9075Encode("Gestione Atti") +
+	"/cm:"+search.ISO9075Encode("Anagrafica") +
+	"/cm:"+search.ISO9075Encode("Legislature") + "/*";
+	
+	var luceneQuery = "PATH:\""+legislaturePath+"\" AND TYPE:\"crlatti:legislaturaAnagrafica\"";
+	luceneQuery += "AND  @crlatti\\:idAnagrafica:\""+idAnagrafica+"\"";
+	
+	var legislatureResults = search.luceneSearch(luceneQuery);
+	
+	if( legislatureResults!=null && legislatureResults.length>0){
+		numeroLegislatura = legislatureResults[0].name;
+	}
+	
+	return numeroLegislatura;
+	
+}
+
+function getIdAnagraficaLegislaturaByNumero(numeroLegislatura){
+	
+	var idLegislatura = null;
+	
+	var legislaturePath = "/app:company_home" +
+	"/cm:"+search.ISO9075Encode("CRL") +
+	"/cm:"+search.ISO9075Encode("Gestione Atti") +
+	"/cm:"+search.ISO9075Encode("Anagrafica") +
+	"/cm:"+search.ISO9075Encode("Legislature") + "/*";
+	
+	var luceneQuery = "PATH:\""+legislaturePath+"\" AND TYPE:\"crlatti:legislaturaAnagrafica\"";
+	luceneQuery += "AND  @cm\\:name:\""+numeroLegislatura+"\"";
+	
+	var legislatureResults = search.luceneSearch(luceneQuery);
+	
+	if( legislatureResults!=null && legislatureResults.length>0){
+		idLegislatura = legislatureResults[0].properties["crlatti:idAnagrafica"];
+	}
+	
+	return idLegislatura;
+	
+}

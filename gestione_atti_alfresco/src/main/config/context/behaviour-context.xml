@@ -13,18 +13,21 @@
 <beans>
     
     
-    <bean id="com.sourcesense.crl.behaviour.AttoNodeBehaviour" class="com.sourcesense.crl.behaviour.AttoNodeBehaviour" init-method="init">
-    	<property name="nodeService">
-    		<ref bean="nodeService"/>
-    	</property>
+    <bean id="com.sourcesense.crl.behaviour.AttoFolderBehaviour" class="com.sourcesense.crl.behaviour.AttoFolderBehaviour" init-method="init">
     	<property name="policyComponent">
     		<ref bean="policyComponent"/>
     	</property>
-    	<property name="authenticationService">
-    		<ref bean="authenticationService"/>
+    	<property name="nodeService">
+    		<ref bean="nodeService"/>
     	</property>
-    	<property name="permissionService">
-    		<ref bean="permissionService"/>
+    	<property name="searchService">
+    		<ref bean="searchService"/>
+    	</property>
+    	<property name="fileFolderService">
+    		<ref bean="fileFolderService"/>
+    	</property>
+    	<property name="contentService">
+    		<ref bean="contentService"/>
     	</property>
     </bean>  
     
