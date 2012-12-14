@@ -73,6 +73,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	protected String dataAssegnazioneParereDa;
 	protected String dataAssegnazioneParereA;
+	
+	protected String dataSedutaDa;
+	protected String dataSedutaA;
 
 	protected List<String> relatoriJson;
 	protected String firmatario;
@@ -285,6 +288,18 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		JSONObject rootJson = new JSONObject(json);
 		this.firmatario = JsonUtils.retieveElementFromJson(rootJson,
 				"firmatario");
+	}
+	protected void initDataSedutaDa(String json)
+			throws JSONException {
+		JSONObject rootJson = new JSONObject(json);
+		this.dataSedutaDa = JsonUtils.retieveElementFromJson(
+				rootJson, "dataSedutaDa");
+	}
+	protected void initDataSedutaA(String json)
+			throws JSONException {
+		JSONObject rootJson = new JSONObject(json);
+		this.dataSedutaA = JsonUtils.retieveElementFromJson(
+				rootJson, "dataSedutaA");
 	}
 
 	protected void initDataAssegnazioneParereDa(String json)
