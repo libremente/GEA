@@ -26,6 +26,13 @@ import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
+/**
+ * TO DO:
+ * -Test
+ * -Docx
+ * @author Alessandro Benedetti
+ *
+ */
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 	public byte[] generate(byte[] templateByteArray, String json,

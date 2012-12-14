@@ -27,8 +27,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * -Test
- * -Docx
+ * ?- firmatari? no nelle specifiche, si nell'esempio pdf
+ *- Test
  * 
  * @author Alessandro Benedetti
  * 
@@ -149,7 +149,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 								relatoreProperties, "dataNominaRelatore");
 						String relatore = (String) nodeService.getProperty(
 								relatoreNodeRef, ContentModel.PROP_NAME);
-						String dateNominaString = this.checkDateEmpty(dateNomina);
+						String dateNominaString = this
+								.checkDateEmpty(dateNomina);
 						elencoRelatori += relatore + " \n ";
 						elencoDateNomina += dateNominaString + " \n ";
 					}
@@ -167,31 +168,28 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					for (String commissioneConsultivaMulti : commConsultivaList)
 						commConsultiva += commissioneConsultivaMulti + " ";
 
-					currentTable
-							.getRow(0)
-							.getCell(1)
-							.setText(
-									this.checkStringEmpty(tipoAtto + " "
-											+ numeroAtto));
+					currentTable.getRow(0).getCell(1)
+							.setText(this.checkStringEmpty(tipoAtto));
+					currentTable.getRow(0).getCell(2)
+							.setText(this.checkStringEmpty(numeroAtto));
 					currentTable.getRow(1).getCell(1)
-							.setText(this.checkStringEmpty(iniziativa));
+					.setText(this.checkStringEmpty(oggetto));
 					currentTable.getRow(2).getCell(1)
-							.setText(this.checkStringEmpty(oggetto));
-
+							.setText(this.checkStringEmpty(iniziativa));
 					currentTable
 							.getRow(3)
 							.getCell(1)
 							.setText(
 									this.checkDateEmpty(dateAssegnazioneCommissione));
 
-					currentTable.getRow(4).getCell(1)
+					currentTable.getRow(3).getCell(3)
 							.setText(this.checkStringEmpty(commReferente));
-					currentTable.getRow(5).getCell(1)
+					currentTable.getRow(4).getCell(3)
 							.setText(this.checkStringEmpty(commConsultiva));
-					currentTable.getRow(6).getCell(1)
+					currentTable.getRow(5).getCell(1)
 							.setText(this.checkStringEmpty(elencoRelatori));
-					currentTable.getRow(6).getCell(2)
-					.setText(this.checkStringEmpty(elencoDateNomina));
+					currentTable.getRow(5).getCell(3)
+							.setText(this.checkStringEmpty(elencoDateNomina));
 
 					tableIndex++;
 				}
