@@ -47,7 +47,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			String query = "TYPE:\""
 					+ "crlatti:atto"
 					+ "\" AND "
-					+ convertListToString("@crlatti\\:tipoAttoCommissione",
+					+ convertListToString("@crlatti\\:tipoAtto",
 							this.tipiAttoLucene)
 					+ "AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
 					+ " TO " + this.dataSedutaA + " ]";
