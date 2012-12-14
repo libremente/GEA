@@ -732,7 +732,7 @@
 		</p:panelGrid>
 
 
-		<p:panelGrid id="listaLavoroPanel"
+		<p:panelGrid id="listaLavoroPanel" rendered="#{!navigationBean.isGuest() }"
 			style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F">
 
 			<p:row>
@@ -743,7 +743,7 @@
 						value="#{searchAttoController.listaLavoro}">
 						<f:selectItem itemLabel="Tutti gli Atti" itemValue="tutti" />
 						<f:selectItem itemLabel="In lavorazione" itemValue="inlavorazione" />
-						<f:selectItem itemLabel="Lavorati" itemValue="lavorati" />
+						<f:selectItem itemDisabled="#{navigationBean.isCPCVUser() }" itemLabel="Lavorati" itemValue="lavorati" />
 					</p:selectOneMenu>
 
 				</p:column>

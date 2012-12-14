@@ -244,10 +244,8 @@ public class SearchAttoController {
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_COMMISSIONE));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
         	    
-        	
         	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
         		
         		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
@@ -255,14 +253,17 @@ public class SearchAttoController {
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
         	    
-        		
-        		
         	}else if(GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
         		
         		atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+        		
+        	}else if(GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        		
+        		
+        		atto.setTipoAtto("MIS");
         		
         	}
         
@@ -276,6 +277,7 @@ public class SearchAttoController {
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
         	
         	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
         		
@@ -293,7 +295,10 @@ public class SearchAttoController {
        	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
        	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
        	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
-         	    
+       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
+       	     
+        	}else if(GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+        		
         	}
         	
         }		
