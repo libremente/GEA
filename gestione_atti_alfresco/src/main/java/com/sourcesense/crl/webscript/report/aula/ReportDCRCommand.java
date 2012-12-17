@@ -36,7 +36,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			this.initTipiAttoLucene(json);
+			this.initTipiAttoLuceneAtto(json);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
 			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroDcr";
@@ -44,13 +44,10 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "TYPE:\""
-					+ "crlatti:atto"
-					+ "\" AND "
-					+ convertListToString("@crlatti\\:tipoAtto",
-							this.tipiAttoLucene)
-					+ "AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
-					+ " TO " + this.dataSedutaA + " ]";
+			String query =convertListToString("TYPE",
+							this.tipiAttoLucene);
+					//+ "AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
+					//+ " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);
 			sp.addSort(sortField1, false);
 			ResultSet attiResults = this.searchService.query(sp);
@@ -109,11 +106,11 @@ public class ReportDCRCommand extends ReportBaseCommand {
 					"numeroDcr");
 			Date dateSeduta = (Date) this.getNodeRefProperty(attoProperties,
 					"dataSedutaAula");
-			String numeroAtto = (String) this.getNodeRefProperty(
+			String numeroAtto =""+ (Integer) this.getNodeRefProperty(
 					attoProperties, "numeroAtto");
 			String oggetto = (String) this.getNodeRefProperty(attoProperties,
 					"oggetto");
-			String emendato = (String) this.getNodeRefProperty(attoProperties,
+			String emendato =""+ (Boolean) this.getNodeRefProperty(attoProperties,
 					"emendatoAulaAtto");
 
 			String numeroBurl = (String) this.getNodeRefProperty(

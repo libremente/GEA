@@ -23,6 +23,7 @@ import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -263,7 +264,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	protected int retrieveLenght(List<ResultSet> allSearches) {
 		// TODO Auto-generated method stub
-		return 0;
+		return allSearches.size();
 	}
 
 	/**
@@ -358,14 +359,14 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		JSONObject rootJson = new JSONObject(json);
 		this.dataAssegnazioneCommReferenteDa = JsonUtils
 				.retieveElementFromJson(rootJson,
-						"dataAssegnazioneCommReferenteDa");
+						"dataAssegnazioneDa");
 	}
 
 	protected void initDataAssegnazioneCommReferenteA(String json)
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
 		this.dataAssegnazioneCommReferenteA = JsonUtils.retieveElementFromJson(
-				rootJson, "dataAssegnazioneCommReferenteA");
+				rootJson, "dataAssegnazioneA");
 	}
 
 	protected void initDataVotazioneCommReferenteDa(String json)
@@ -412,6 +413,25 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		// convert the list in the lucene format
 		this.tipiAttoLucene = tipiAttoJson;
 	}
+	
+	protected void initTipiAttoLuceneAtto(String json) throws JSONException {
+		JSONObject rootJson = new JSONObject(json);
+		this.tipiAttoLucene=Lists.newArrayList();
+		// extract the tipiAtto list from the json string
+		List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
+				rootJson, "tipiAtto");
+		for(String tipoAtto:tipiAttoJson){
+			String caseSensAtto=this.reverseCase(tipoAtto);
+			this.tipiAttoLucene.add("crlatti:atto"+caseSensAtto);
+		}
+	}
+
+	private String reverseCase(String tipoAtto) {
+		String lowercase=tipoAtto.toLowerCase();
+		String capitalize = StringUtils.capitalize(lowercase);
+		return capitalize;
+	}
+
 
 	protected String checkDateEmpty(Date attributeDate) {
 		if (attributeDate == null)
