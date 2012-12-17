@@ -264,7 +264,8 @@
 
 		<p:row>
 			<p:column colspan="2">
-				<h:outputText style="font-weight: bold;"
+				<h:outputText style="font-weight: bold;" rendered="#{not empty riepilogoAttoController.commissioneSelected.descrizione}"
+				
 					value="#{riepilogoAttoController.commissioneSelected.descrizione}: " />
 
 			</p:column>

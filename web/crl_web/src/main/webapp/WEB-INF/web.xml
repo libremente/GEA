@@ -50,7 +50,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-
    <filter>
       <filter-name>LoginFilter</filter-name>
       <filter-class>com.sourcesense.crl.business.security.LoginFilter</filter-class>
@@ -59,7 +58,7 @@
     <filter-mapping>
       <filter-name>LoginFilter</filter-name>
       <url-pattern>/*</url-pattern>
-   </filter-mapping>
+   </filter-mapping> 
 
    <listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>

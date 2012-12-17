@@ -3,6 +3,10 @@ package com.sourcesense.crl.business.model;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.sourcesense.crl.util.JsonDateSerializer;
+
 public class Report {
 
 	private String tipoTemplate;
@@ -70,48 +74,64 @@ public class Report {
 	public void setRuoloCommissione(String ruoloCommissione) {
 		this.ruoloCommissione = ruoloCommissione;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazioneDa() {
 		return dataAssegnazioneDa;
 	}
 	public void setDataAssegnazioneDa(Date dataAssegnazioneDa) {
 		this.dataAssegnazioneDa = dataAssegnazioneDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazioneA() {
 		return dataAssegnazioneA;
 	}
 	public void setDataAssegnazioneA(Date dataAssegnazioneA) {
 		this.dataAssegnazioneA = dataAssegnazioneA;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataVotazioneCommReferenteDa() {
 		return dataVotazioneCommReferenteDa;
 	}
 	public void setDataVotazioneCommReferenteDa(Date dataVotazioneCommReferenteDa) {
 		this.dataVotazioneCommReferenteDa = dataVotazioneCommReferenteDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataVotazioneCommReferenteA() {
 		return dataVotazioneCommReferenteA;
 	}
 	public void setDataVotazioneCommReferenteA(Date dataVotazioneCommReferenteA) {
 		this.dataVotazioneCommReferenteA = dataVotazioneCommReferenteA;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRitiroDa() {
 		return dataRitiroDa;
 	}
 	public void setDataRitiroDa(Date dataRitiroDa) {
 		this.dataRitiroDa = dataRitiroDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRitiroA() {
 		return dataRitiroA;
 	}
 	public void setDataRitiroA(Date dataRitiroA) {
 		this.dataRitiroA = dataRitiroA;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataNominaRelatoreDa() {
 		return dataNominaRelatoreDa;
 	}
 	public void setDataNominaRelatoreDa(Date dataNominaRelatoreDa) {
 		this.dataNominaRelatoreDa = dataNominaRelatoreDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataNominaRelatoreA() {
 		return dataNominaRelatoreA;
 	}
@@ -130,12 +150,16 @@ public class Report {
 	public void setOrganismo(String organismo) {
 		this.organismo = organismo;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazioneParereDa() {
 		return dataAssegnazioneParereDa;
 	}
 	public void setDataAssegnazioneParereDa(Date dataAssegnazioneParereDa) {
 		this.dataAssegnazioneParereDa = dataAssegnazioneParereDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazioneParereA() {
 		return dataAssegnazioneParereA;
 	}
@@ -154,18 +178,24 @@ public class Report {
 	public void setTipologiaFirma(String tipologiaFirma) {
 		this.tipologiaFirma = tipologiaFirma;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPresentazioneDa() {
 		return dataPresentazioneDa;
 	}
 	public void setDataPresentazioneDa(Date dataPresentazioneDa) {
 		this.dataPresentazioneDa = dataPresentazioneDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPresentazioneA() {
 		return dataPresentazioneA;
 	}
 	public void setDataPresentazioneA(Date dataPresentazioneA) {
 		this.dataPresentazioneA = dataPresentazioneA;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazioneCommReferenteDa() {
 		return dataAssegnazioneCommReferenteDa;
 	}
@@ -173,6 +203,8 @@ public class Report {
 			Date dataAssegnazioneCommReferenteDa) {
 		this.dataAssegnazioneCommReferenteDa = dataAssegnazioneCommReferenteDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazioneCommReferenteA() {
 		return dataAssegnazioneCommReferenteA;
 	}
@@ -180,12 +212,16 @@ public class Report {
 			Date dataAssegnazioneCommReferenteA) {
 		this.dataAssegnazioneCommReferenteA = dataAssegnazioneCommReferenteA;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaDa() {
 		return dataSedutaDa;
 	}
 	public void setDataSedutaDa(Date dataSedutaDa) {
 		this.dataSedutaDa = dataSedutaDa;
 	}
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaA() {
 		return dataSedutaA;
 	}

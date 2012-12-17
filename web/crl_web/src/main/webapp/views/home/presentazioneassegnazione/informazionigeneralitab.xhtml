@@ -63,7 +63,7 @@
 								<p:column>
 									<h:outputLabel for="isPubblico" value="Pubblico: " />
 									<p:selectBooleanCheckbox id="isPubblico"
-										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}" >
+										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
 										<p:ajax event="change" immediate="true"></p:ajax>
 									</p:selectBooleanCheckbox>
 								</p:column>
@@ -160,8 +160,8 @@
 
 				<p:column>
 
-					<p:calendar disabled="true" readonly="false" size="10"
-						locale="it" id="datarepertorio" pattern="dd/MM/yyyy"
+					<p:calendar disabled="true" readonly="false" size="10" locale="it"
+						id="datarepertorio" pattern="dd/MM/yyyy"
 						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
 
 					</p:calendar>
@@ -180,21 +180,26 @@
 					<p:selectOneMenu id="tipoiniziativa"
 						value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
 						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
-						
-						<f:selectItem itemLabel="Consiliare" itemValue="01_ATTO DI INIZIATIVA CONSILIARE" />
-						
-						<f:selectItem itemLabel="Popolare" itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
-						
-						<f:selectItem itemLabel="d'Ufficio" itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
-						
+
+						<f:selectItem itemLabel="Consiliare"
+							itemValue="01_ATTO DI INIZIATIVA CONSILIARE" />
+
+						<f:selectItem itemLabel="Popolare"
+							itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
+
+						<f:selectItem itemLabel="d'Ufficio"
+							itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
+
 						<f:selectItem itemLabel="Consiglio delle Autonomie locali"
 							itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />
-						
+
 						<f:selectItem itemLabel="Presidente della Giunta"
 							itemValue="06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA" />
-						<f:selectItem itemLabel="Giunta" itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
-						<f:selectItem itemLabel="Iniziativa Commissioni" itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
-						
+						<f:selectItem itemLabel="Giunta"
+							itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
+						<f:selectItem itemLabel="Iniziativa Commissioni"
+							itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
+
 						<!-- <f:selectItem itemLabel="Commissione europea"
 							itemValue="Commissione europea" /> -->
 
@@ -255,8 +260,7 @@
 				<p:column>
 
 
-					<p:calendar size="10" locale="it" id="datadgr"
-						pattern="dd/MM/yyyy"
+					<p:calendar size="10" locale="it" id="datadgr" pattern="dd/MM/yyyy"
 						value="#{presentazioneAssegnazioneAttoController.dataDgr}">
 
 					</p:calendar>
@@ -276,12 +280,13 @@
 					</p:inputText>
 				</p:column>
 			</p:row> -->
-			
+
 			<p:row>
 				<p:column>
-					<h:outputText style="font-weight: bold;" value="Pubblicazione atto: " />
+					<h:outputText style="font-weight: bold;"
+						value="Pubblicazione atto: " />
 				</p:column>
-				
+
 				<p:column colspan="3">
 					<p:selectBooleanCheckbox readonly="false" id="ispubblico"
 						value="#{presentazioneAssegnazioneAttoController.attoPubblico}">
@@ -289,38 +294,38 @@
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
 					</p:selectBooleanCheckbox>
 				</p:column>
-			
+
 			</p:row>
-      
-      <p:row rendered="#{navigationBean.sessionAttoPAR}">
+
+			<p:row rendered="#{navigationBean.sessionAttoPAR}">
 				<p:column>
 					<h:outputText style="font-weight: bold;" value="Scadenza 60gg: " />
 				</p:column>
-				
+
 				<p:column colspan="3">
 					<p:selectBooleanCheckbox readonly="false" id="isscadenza60gg"
-            value="#{presentazioneAssegnazioneAttoController.atto.scadenza60gg}">
+						value="#{presentazioneAssegnazioneAttoController.atto.scadenza60gg}">
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
 					</p:selectBooleanCheckbox>
 				</p:column>
-			
-			</p:row>      
-      
-      <p:row rendered="#{navigationBean.sessionAttoDOC}">
+
+			</p:row>
+
+			<p:row rendered="#{navigationBean.sessionAttoDOC}">
 				<p:column>
 					<h:outputText style="font-weight: bold;" value="Iter Aula: " />
 				</p:column>
-				
+
 				<p:column colspan="3">
 					<p:selectBooleanCheckbox readonly="false" id="isiteraula"
-            value="#{presentazioneAssegnazioneAttoController.atto.iterAula}">
+						value="#{presentazioneAssegnazioneAttoController.atto.iterAula}">
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
 					</p:selectBooleanCheckbox>
 				</p:column>
-			
-			</p:row>            
+
+			</p:row>
 
 		</p:panelGrid>
 
@@ -351,9 +356,11 @@
 
 					<p:dataTable id="listaTestiAtto"
 						value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
-						var="testoAtto" styleClass="generalInfoTab grey-text" editable="true">
-						
-						<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+						var="testoAtto" styleClass="generalInfoTab grey-text"
+						editable="true">
+
+						<p:ajax event="rowEdit" update="@this"
+							listener="#{fileDownloadController.fileUpdate}" />
 
 						<p:column sortBy="#{testoAtto.nome}">
 							<f:facet name="header">Testo Dell'Atto</f:facet>
@@ -363,7 +370,7 @@
 						<p:column sortBy="#{testoAtto.mimetype}">
 							<f:facet name="header">Formato</f:facet>
 
-							
+
 
 							<h:outputText value="#{testoAtto.mimetype}" />
 
@@ -372,19 +379,16 @@
 
 						<p:column sortBy="#{testoAtto.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
-							<p:cellEditor >
+							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="si"
-								rendered="#{testoAtto.pubblico}" />
-							<h:outputText value="no"
-								rendered="#{!testoAtto.pubblico}" />
+									<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+									<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
 								</f:facet>
-								<f:facet  name="input">
-									<p:selectBooleanCheckbox 
-									value="#{testoAtto.pubblico}" />
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{testoAtto.pubblico}" />
 								</f:facet>
-							</p:cellEditor> 
-							
+							</p:cellEditor>
+
 						</p:column>
 
 						<p:column>
@@ -412,9 +416,9 @@
 									target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
 							</p:commandButton>
 						</p:column>
-						
+
 						<p:column headerText="Modifica" style="width:50px">
-							<p:rowEditor   />
+							<p:rowEditor />
 						</p:column>
 
 
@@ -447,22 +451,24 @@
 						</f:facet>
 						<p:row>
 							<p:column>
-								<p:selectOneMenu id="firmatario" 
+								<p:selectOneMenu id="firmatario"
 									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
 									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
-									<f:selectItems var="firmatario" itemLabel="#{firmatario.descrizione}" 
-									      itemValue="#{firmatario.descrizione}"
+									<f:selectItems var="firmatario"
+										itemLabel="#{firmatario.descrizione}"
+										itemValue="#{firmatario.descrizione}"
 										value="#{presentazioneAssegnazioneAttoController.firmatari}" />
-										<p:ajax update="gruppoconsiliare" 
-						                  listener="#{presentazioneAssegnazioneAttoController.handleFirmatarioChange}" />
+									<p:ajax update="gruppoconsiliare"
+										listener="#{presentazioneAssegnazioneAttoController.handleFirmatarioChange}" />
 								</p:selectOneMenu>
 							</p:column>
 
 							<p:column>
 								<p:selectOneMenu id="gruppoconsiliare"
-									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}" >
+									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}">
 									<f:selectItem itemLabel="Scegli Gruppo" itemValue="" />
-									<f:selectItems value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}"  />
+									<f:selectItems
+										value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
 								</p:selectOneMenu>
 							</p:column>
 
@@ -486,8 +492,8 @@
 							<p:column>
 								<p:commandButton value="Aggiungi"
 									action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
-									id="addFirmatario" update=":presAssForm:tabView , presaCaricoMsg"
-									icon="new-icon" />
+									id="addFirmatario"
+									update=":presAssForm:tabView , presaCaricoMsg" icon="new-icon" />
 							</p:column>
 
 						</p:row>
@@ -503,7 +509,7 @@
 					<p:dataTable id="listaFirmatari" widgetVar="tableFirmatari"
 						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
 						var="firmatarioAdd" styleClass="generalInfoTab grey-text"
-						 editable="true">
+						editable="true">
 
 						<p:column headerText="" style="width:20px">
 							<p:graphicImage value="/resources/img/dad.jpeg" />
@@ -522,7 +528,8 @@
 								</f:facet>
 								<f:facet name="input">
 									<p:selectOneMenu value="#{firmatarioAdd.gruppoConsiliare}">
-										<f:selectItems value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
+										<f:selectItems
+											value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
 									</p:selectOneMenu>
 								</f:facet>
 							</p:cellEditor>
@@ -563,21 +570,21 @@
 							sortBy="#{firmatarioAdd.primoFirmatario}">
 
 
-                            <p:cellEditor>
+							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="si"
-								rendered="#{firmatarioAdd.primoFirmatario}" />
-							<h:outputText value="no"
-								rendered="#{!firmatarioAdd.primoFirmatario}" />
+										rendered="#{firmatarioAdd.primoFirmatario}" />
+									<h:outputText value="no"
+										rendered="#{!firmatarioAdd.primoFirmatario}" />
 								</f:facet>
 								<f:facet name="input">
-									<p:selectBooleanCheckbox 
-									value="#{firmatarioAdd.primoFirmatario}" />
+									<p:selectBooleanCheckbox
+										value="#{firmatarioAdd.primoFirmatario}" />
 								</f:facet>
-							</p:cellEditor>     
+							</p:cellEditor>
 
 
-							
+
 						</p:column>
 
 						<p:column headerText="Elimina" style="width:50px">
@@ -592,16 +599,16 @@
 						</p:column>
 
 						<p:column headerText="Modifica" style="width:50px">
-							<p:rowEditor  />
+							<p:rowEditor />
 						</p:column>
 
-						
+
 					</p:dataTable>
-					
+
 					<p:inputText type="hidden" id="hidOrder"
-					value="#{presentazioneAssegnazioneAttoController.firmatariOrder}">
-				</p:inputText>
-					
+						value="#{presentazioneAssegnazioneAttoController.firmatariOrder}">
+					</p:inputText>
+
 					<script type="text/javascript">
                          $(function() {
 			
@@ -617,30 +624,35 @@
 					</script>
 				</p:column>
 
-				
+
 
 
 			</p:row>
 
 
 
-			<p:row>
+			<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 				<p:column>
 
 				</p:column>
 
 				<p:column colspan="5">
-					<p:commandLink value="Creazione lettera di aggiunta firma" />
+					<h:outputLink value="lettereenotifiche">
+					      
+					         Creazione lettera di aggiunta firma
+					</h:outputLink>
 				</p:column>
 			</p:row>
 
-			<p:row>
+			<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 				<p:column>
 
 				</p:column>
 
 				<p:column colspan="5">
-					<p:commandLink value="Creazione lettera di ritiro firma" />
+					<h:outputLink value="lettereenotifiche">
+					Creazione lettera di ritiro firma
+					</h:outputLink>
 				</p:column>
 			</p:row>
 
@@ -661,7 +673,8 @@
 	</p:fieldset>
 
 	<p>
-		<p:commandButton value="Salva" update="presaCaricoMsg, :menuFasiProcessoForm:menuFasiProcesso"
+		<p:commandButton value="Salva"
+			update="presaCaricoMsg, :menuFasiProcessoForm:menuFasiProcesso"
 			actionListener="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}" />
 
 	</p>
