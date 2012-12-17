@@ -26,7 +26,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * TO TEST : 
+ * Manca Data Chiusura nell'oggetto Commissione per poter testare
  * @author Alessandro Benedetti
  *
  */
