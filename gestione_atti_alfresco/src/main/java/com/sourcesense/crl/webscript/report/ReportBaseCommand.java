@@ -52,7 +52,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	public static final String NOMINATO_RELATORE = "Nominato Relatore";
 	public static final String VOTATO_COMMISSIONE = "Votato in Commissione";
 	public static final String LAVORI_COMITATO_RISTRETTO = "Lavori Comitato Ristretto";
-
+	public static final String CHIUSO = "Chiuso";
+	public static final String RITIRATO = "Ritirato dai promotori";
+	
+	
+	
 	protected List<String> tipiAttoLucene;
 	protected String ruoloCommissione;
 	protected String organismo;
