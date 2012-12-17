@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
@@ -21,7 +22,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * TO TEST : OK
  * @author Alessandro Benedetti
  * 
  */
@@ -42,7 +43,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 
 		// obtain as much table as the results spreaded across the resultSet
 		XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-				commissioniResult.length(), 2, false);
+				commissioniResult.length(), 5, false);
 		// convert to input stream
 		ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -79,8 +80,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 					.getProperties(currentCommissione);
 
 			// from Commissione
-			String nomeCommissione = (String) this.getNodeRefProperty(
-					commissioneProperties, "name");
+			String nomeCommissione =(String) nodeService.getProperty(currentCommissione, ContentModel.PROP_NAME);
 			List<ChildAssociationRef> consiglieriAssList = nodeService
 					.getChildAssocs(currentCommissione);
 			String consiglieri = "";
@@ -102,9 +102,9 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 
 			}
 
-			currentTable.getRow(0).getCell(1)
+			currentTable.getRow(0).getCell(0)
 					.setText(this.checkStringEmpty(nomeCommissione));
-			currentTable.getRow(1).getCell(1)
+			currentTable.getRow(1).getCell(0)
 					.setText(this.checkStringEmpty(consiglieri));
 			tableIndex++;
 		}
