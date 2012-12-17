@@ -89,6 +89,9 @@
 			<type name="crlreport:reportAttiRinviatiAula" />
 			<type name="crlreport:reportDCRAula" />
 			<type name="crlreport:reportLCRAula" />
+			<!-- Odg -->
+			<type name="crlodg:odgGenericoCommissioniDocument" />
+			<type name="crlodg:odgGenericoAulaDocument" />
 		</content-types>
 	</config>
 
@@ -181,6 +184,9 @@
 			<type name="crlreport:reportAttiRinviatiAula" />
 			<type name="crlreport:reportDCRAula" />
 			<type name="crlreport:reportLCRAula" />
+			<!-- Odg -->
+			<type name="crlodg:odgGenericoCommissioniDocument" />
+			<type name="crlodg:odgGenericoAulaDocument" />
 		</subtypes>
 		<specialise-types>
 			<type name="crlatti:legislaturaAnagrafica" />
@@ -271,6 +277,9 @@
 			<type name="crlreport:reportAttiRinviatiAula" />
 			<type name="crlreport:reportDCRAula" />
 			<type name="crlreport:reportLCRAula" />
+			<!-- Odg -->
+			<type name="crlodg:odgGenericoCommissioniDocument" />
+			<type name="crlodg:odgGenericoAulaDocument" />
 		</specialise-types>
 		<aspects>
 			<aspect name="crlatti:tipizzabile" />

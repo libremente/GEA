@@ -89,7 +89,7 @@
 		parent="reportBaseCommand" />
 
 
-	<bean id="webscript.crl.gestioneatti.report.report.get" class="com.sourcesense.crl.webscript.report.ReportWebScript"
+	<bean id="webscript.crl.gestioneatti.report.report.post" class="com.sourcesense.crl.webscript.report.ReportWebScript"
 		parent="webscript">
 		<property name="searchService">
 			<ref bean="SearchService" />

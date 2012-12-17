@@ -41,6 +41,7 @@
                 <value>alfresco/module/crl_gestione_atti_alfresco/model/crlAttiModel.xml</value>
                 <value>alfresco/module/crl_gestione_atti_alfresco/model/crlTemplateModel.xml</value>
                 <value>alfresco/module/crl_gestione_atti_alfresco/model/crlReportModel.xml</value>
+                <value>alfresco/module/crl_gestione_atti_alfresco/model/crlOdgDocumentModel.xml</value>
             </list>
         </property>
     </bean>
