@@ -5,15 +5,21 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.alfresco.model.ContentModel;
+import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
+import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
+import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -29,6 +35,9 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * 
  */
 public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
+
+	private static final String SEP = ", ";
+	private static final String ABBINAMENTI_SPACE_NAME = "Abbinamenti";
 
 	@Override
 	public byte[] generate(byte[] templateByteArray, String json,
@@ -107,7 +116,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				// from Atto
 				QName nodeRefType = nodeService.getType(currentAtto);
 				String tipoAtto = (String) nodeRefType.getLocalName();
-				String abbinamenti = "";
+				String abbinamenti = getAbbinamenti(currentAtto);
 				String numeroAtto = (String) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String oggetto = (String) this.getNodeRefProperty(
@@ -125,7 +134,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				for (String commissioneReferenteMulti : commReferenteList)
 					commReferente += commissioneReferenteMulti + " ";
 				String relatore = (String) this.getNodeRefProperty(
-						attoProperties, "oggetto");
+						attoProperties, "relatori");
 				String relazioneScritta = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
 				String noteGenerali = (String) this.getNodeRefProperty(
@@ -157,6 +166,58 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 		}
 
 		return document;
+	}
+	
+	// Search last "passaggio" function
+	public NodeRef getLastPassaggio(NodeRef attoNodeRef){
+		
+		NodeRef passaggio = null;
+
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+
+		
+    	String luceneAttoNodePath = nodeService.getPath(attoNodeRef).toPrefixString(namespacePrefixResolver);
+				
+	  	ResultSet passaggiNodes = searchService.query(attoNodeRef.getStoreRef(), 
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneAttoNodePath+"/cm:Passaggi/*\"");
+   
+	  	int numeroPassaggio = 0;
+	  	String nomePassaggio = "";
+	  	int passaggioMax = 0;
+		for(int i=0; i<passaggiNodes.length(); i++) {
+			
+			nomePassaggio = (String) nodeService.getProperty(passaggiNodes.getNodeRef(i), ContentModel.PROP_NAME);
+			numeroPassaggio = Integer.parseInt(nomePassaggio.substring(9));
+			
+			if(numeroPassaggio > passaggioMax) {
+				passaggioMax = numeroPassaggio;
+				passaggio = passaggiNodes.getNodeRef(i) ;
+			}
+			
+		}
+		
+		return passaggio;
+	}
+
+	/**
+	 * Restituisce stringa valorizzata con tutti i nomi degli abbinamenti separati da virgola
+	 * @param currentAtto
+	 * @return abbinamento1, abbinamento2, abbinamento3, etc..
+	 */
+	private String getAbbinamenti(NodeRef currentAtto) {
+		String abbinamentiValue = StringUtils.EMPTY;
+		NodeRef passaggio = getLastPassaggio(currentAtto);
+		NodeRef abbinamentiFolderNode =  nodeService.getChildByName(passaggio, ContentModel.ASSOC_CONTAINS, ABBINAMENTI_SPACE_NAME);
+		List<ChildAssociationRef> abbinamenti = nodeService.getChildAssocs(abbinamentiFolderNode);
+		for (Iterator<ChildAssociationRef> iterator = abbinamenti.iterator(); iterator.hasNext();) {
+			ChildAssociationRef childAssociationRef = (ChildAssociationRef) iterator.next();
+			NodeRef abbinamento = childAssociationRef.getChildRef();
+			abbinamentiValue += (String) nodeService.getProperty(abbinamento,ContentModel.PROP_NAME) + SEP;
+		}
+		return abbinamentiValue;
 	}
 
 	/**
