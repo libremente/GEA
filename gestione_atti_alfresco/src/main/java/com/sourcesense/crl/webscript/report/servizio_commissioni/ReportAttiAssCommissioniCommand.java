@@ -131,6 +131,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
+				if(commReferenteList!=null)
 				for (String commissioneReferenteMulti : commReferenteList)
 					commReferente += commissioneReferenteMulti + " ";
 				// from Commissione

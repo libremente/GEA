@@ -26,10 +26,11 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * TO TEST:
+ * -OK (organismi statuari forse sono assenti nei nostri dati )
  * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
@@ -121,8 +122,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						.getProperties(atto2commissione.get(currentAtto));
 
 				// from Atto
-				String numeroAtto = (String) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "descrizioneIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
@@ -130,8 +132,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
-				for (String commissioneReferenteMulti : commReferenteList)
-					commReferente += commissioneReferenteMulti + " ";
+				if (commReferenteList != null)
+					for (String commissioneReferenteMulti : commReferenteList)
+						commReferente += commissioneReferenteMulti + " ";
 				// from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
 						commissioneProperties, "tipoAttoCommissione");
@@ -145,18 +148,23 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						.getNodeRefProperty(attoProperties,
 								"organismiStatutari");
 				String altriPareri = "";
-				for (String parere : pareriList)
-					altriPareri += parere + " ";
-				
+				if (pareriList != null)
+					for (String parere : pareriList)
+						altriPareri += parere + " ";
+
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
 				String commConsultiva = "";
-				for (String commissioneConsultivaMulti : commConsultivaList)
-					commConsultiva += commissioneConsultivaMulti + ",";
-				
+				if (commConsultivaList != null)
+					for (String commissioneConsultivaMulti : commConsultivaList)
+						commConsultiva += commissioneConsultivaMulti + ",";
 
-				currentTable.getRow(0).getCell(1)
-						.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
+				currentTable
+						.getRow(0)
+						.getCell(1)
+						.setText(
+								this.checkStringEmpty(tipoAtto + " "
+										+ numeroAtto));
 				currentTable.getRow(1).getCell(1)
 						.setText(this.checkStringEmpty(ruoloCommissione));
 				currentTable.getRow(2).getCell(1)
@@ -168,16 +176,19 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						.getCell(1)
 						.setText(
 								this.checkDateEmpty(dateAssegnazioneCommissione));
-				
+
 				currentTable.getRow(5).getCell(1)
-				.setText(this.checkStringEmpty(altriPareri));
-				
+						.setText(this.checkStringEmpty(altriPareri));
+
 				currentTable.getRow(6).getCell(1)
 						.setText(this.checkStringEmpty(commReferente));
-				currentTable.getRow(7).getCell(1)
-				.setText(this.checkStringEmpty(commConsultiva.substring(0, commConsultiva.length()-1)));
-				
-				
+				currentTable
+						.getRow(7)
+						.getCell(1)
+						.setText(
+								this.checkStringEmpty(commConsultiva.substring(
+										0, commConsultiva.length() - 1)));
+
 				tableIndex++;
 			}
 		}
