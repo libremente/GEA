@@ -135,8 +135,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 					commReferente += commissioneReferenteMulti + " ";
 				String relatore = (String) this.getNodeRefProperty(
 						attoProperties, "relatori");
-				String relazioneScritta = (String) this.getNodeRefProperty(
-						attoProperties, "oggetto");
+				String relazioneScritta = getRelazioneScritta(currentAtto);
 				String noteGenerali = (String) this.getNodeRefProperty(
 						attoProperties, "noteChiusura");
 				currentTable
@@ -168,6 +167,11 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 		return document;
 	}
 	
+	private String getRelazioneScritta(NodeRef currentAtto) {
+		NodeRef aulaFolder =  nodeService.getChildByName(currentAtto, ContentModel.ASSOC_CONTAINS, "Aula");
+		return (String) nodeService.getProperty(aulaFolder, QName.createQName(CRL_ATTI_MODEL,"relazioneScrittaAula"));
+	}
+
 	// Search last "passaggio" function
 	public NodeRef getLastPassaggio(NodeRef attoNodeRef){
 		
