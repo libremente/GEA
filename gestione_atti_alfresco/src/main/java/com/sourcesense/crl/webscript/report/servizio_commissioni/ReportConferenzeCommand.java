@@ -27,9 +27,9 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * TO TEST
- * JSON
+ * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportConferenzeCommand extends ReportBaseCommand {
 
@@ -41,28 +41,32 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			/* init json params */
 			this.initCommonParams(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
+			/* sorting fields */
 			String sortField1 = "{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
 			String sortField2 = "{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			/* query grouped by commissione */
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				//solo atti da preso in carico a votato dalla commissione
-				String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",
 								this.tipiAttoLucene)
 						+ " AND @crlatti\\:ruoloCommissione:\""
-						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ this.ruoloCommissione
+						+ "\" AND @cm\\:name:\""
 						+ commissione
 						+ "\" AND @crlatti\\:dataAssegnazioneCommissione:["
-						+ this.dataAssegnazioneCommReferenteDa + " TO "
+						+ this.dataAssegnazioneCommReferenteDa
+						+ " TO "
 						+ this.dataAssegnazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
@@ -77,7 +81,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+					this.retrieveLenght(commissione2atti), 4, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -119,13 +123,14 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 						.getProperties(currentAtto);
 				Map<QName, Serializable> commissioneProperties = nodeService
 						.getProperties(atto2commissione.get(currentAtto));
-
+				/* extracting values from Alfresco */
 				// from Atto
-				String statoAtto=(String) this.getNodeRefProperty(
+				String statoAtto = (String) this.getNodeRefProperty(
 						attoProperties, "statoAtto");
 				if (this.checkStatoAtto(statoAtto)) {
-					String numeroAtto = (String) this.getNodeRefProperty(
-							attoProperties, "numeroAtto");
+					String numeroAtto = ""
+							+ (Integer) this.getNodeRefProperty(attoProperties,
+									"numeroAtto");
 					String iniziativa = (String) this.getNodeRefProperty(
 							attoProperties, "descrizioneIniziativa");
 					String oggetto = (String) this.getNodeRefProperty(
@@ -136,15 +141,21 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 					Date dateAssegnazioneCommissione = (Date) this
 							.getNodeRefProperty(commissioneProperties,
 									"dataAssegnazioneCommissione");
-					//child of Atto
+					// child of Atto
 					ArrayList<String> firmatariList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "firmatari");
 					String firmatari = "";
-					for (String firmatario : firmatariList)
-						firmatari += firmatario + " ";
-					
-					currentTable.getRow(0).getCell(1)
-							.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
+					if (firmatariList != null)
+						for (String firmatario : firmatariList)
+							firmatari += firmatario + " ";
+
+					/* writing values in the table */
+					currentTable
+							.getRow(0)
+							.getCell(1)
+							.setText(
+									this.checkStringEmpty(tipoAtto + " "
+											+ numeroAtto));
 					currentTable.getRow(1).getCell(1)
 							.setText(this.checkStringEmpty(oggetto));
 					currentTable.getRow(2).getCell(1)
@@ -166,10 +177,14 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
 	/**
 	 * Check if the statoAtto is comprehended between "preso in carico e votato"
+	 * 
 	 * @param statoAtto
 	 * @return
 	 */
 	private boolean checkStatoAtto(String statoAtto) {
-		return statoAtto.equals(PRESO_CARICO_COMMISSIONE)||statoAtto.equals(VOTATO_COMMISSIONE)||statoAtto.equals(NOMINATO_RELATORE)||statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
+		return statoAtto.equals(PRESO_CARICO_COMMISSIONE)
+				|| statoAtto.equals(VOTATO_COMMISSIONE)
+				|| statoAtto.equals(NOMINATO_RELATORE)
+				|| statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
 	}
 }

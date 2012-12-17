@@ -53,7 +53,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				// solo atti da preso in carico a votato dalla commissione
-				String query = "TYPE:\""
+				String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
+						" AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",

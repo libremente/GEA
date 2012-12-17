@@ -26,10 +26,10 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST : 
- * Manca Data Chiusura nell'oggetto Commissione per poter testare
+ * TO TEST : Manca Data Chiusura nell'oggetto Commissione per poter testare
+ * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
@@ -41,11 +41,12 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			/* Init and sorting */
+			/* init json params */
 			this.initTipiAttoLucene(json);
 			this.initDataRitiroDa(json);
 			this.initDataRitiroA(json);
 
+			/* sorting field */
 			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroAtto";
 
 			Map<String, ResultSet> tipoAtto2results = Maps.newHashMap();
@@ -53,13 +54,13 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				// statoAtto = Chiuso
-				// tipoChiusura = Ritirato dai promotori
-				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\"" + "crlatti:commissione"
-						+ "\" AND @crlatti\\:tipoAttoCommissione:\"" + tipoAtto
-						+ "\" AND @crlatti\\:dataChiusura:[" + this.dataRitiroDa
-						+ " TO " + this.dataRitiroA + " ]";
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
+						+ "crlatti:commissione"
+						+ "\" AND @crlatti\\:tipoAttoCommissione:\""
+						+ tipoAtto
+						+ "\" AND @crlatti\\:dataChiusura:["
+						+ this.dataRitiroDa + " TO " + this.dataRitiroA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
 				ResultSet currentResults = this.searchService.query(sp);
@@ -115,44 +116,66 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 						.getProperties(currentAtto);
 				Map<QName, Serializable> commissioneProperties = nodeService
 						.getProperties(atto2commissione.get(currentAtto));
-
-				// from Atto
-				String numeroAtto = (String) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
-				String iniziativa = (String) this.getNodeRefProperty(
-						attoProperties, "descrizioneIniziativa");
-				String oggetto = (String) this.getNodeRefProperty(
-						attoProperties, "oggetto");
-				// from Commissione
-				String tipoAtto = (String) this.getNodeRefProperty(
-						commissioneProperties, "tipoAttoCommissione");
-				Date datePresentazione = (Date) this.getNodeRefProperty(
-						attoProperties, "dataIniziativa");
-				Date dateRevoca = (Date) this.getNodeRefProperty(
-						attoProperties,"dataChiusura");
-				//child of Atto
-				ArrayList<String> firmatariList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari = "";
-				for (String firmatario : firmatariList)
-					firmatari += firmatario + " ";
-
-				currentTable.getRow(0).getCell(1)
-						.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
-				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(iniziativa));
-				currentTable.getRow(2).getCell(1)
-						.setText(this.checkStringEmpty(firmatari));
-				currentTable.getRow(3).getCell(1)
-						.setText(this.checkStringEmpty(oggetto));
-				currentTable.getRow(4).getCell(1)
-						.setText(this.checkDateEmpty(datePresentazione));
-				currentTable.getRow(5).getCell(1)
-						.setText(this.checkDateEmpty(dateRevoca));
-				tableIndex++;
+				String statoAtto = (String) this.getNodeRefProperty(
+						attoProperties, "statoAtto");
+				String tipoChiusura = (String) this.getNodeRefProperty(
+						attoProperties, "tipoChiusura");
+				if (this.checkStatoAtto(statoAtto, tipoChiusura)) {
+					// from Atto
+					String numeroAtto = ""
+							+ (Integer) this.getNodeRefProperty(attoProperties,
+									"numeroAtto");
+					String iniziativa = (String) this.getNodeRefProperty(
+							attoProperties, "descrizioneIniziativa");
+					String oggetto = (String) this.getNodeRefProperty(
+							attoProperties, "oggetto");
+					// from Commissione
+					String tipoAtto = (String) this.getNodeRefProperty(
+							commissioneProperties, "tipoAttoCommissione");
+					Date datePresentazione = (Date) this.getNodeRefProperty(
+							attoProperties, "dataIniziativa");
+					Date dateRevoca = (Date) this.getNodeRefProperty(
+							attoProperties, "dataChiusura");
+					// child of Atto
+					ArrayList<String> firmatariList = (ArrayList<String>) this
+							.getNodeRefProperty(attoProperties, "firmatari");
+					String firmatari = "";
+					if (firmatariList != null)
+						for (String firmatario : firmatariList)
+							firmatari += firmatario + " ";
+					currentTable
+							.getRow(0)
+							.getCell(1)
+							.setText(
+									this.checkStringEmpty(tipoAtto + " "
+											+ numeroAtto));
+					currentTable.getRow(1).getCell(1)
+							.setText(this.checkStringEmpty(iniziativa));
+					currentTable.getRow(2).getCell(1)
+							.setText(this.checkStringEmpty(firmatari));
+					currentTable.getRow(3).getCell(1)
+							.setText(this.checkStringEmpty(oggetto));
+					currentTable.getRow(4).getCell(1)
+							.setText(this.checkDateEmpty(datePresentazione));
+					currentTable.getRow(5).getCell(1)
+							.setText(this.checkDateEmpty(dateRevoca));
+					tableIndex++;
+				}
 			}
 		}
 
 		return document;
 	}
+
+	/**
+	 * Check if the statoAtto is "Chiuso" and tipoChiusura is
+	 * "Ritirato dai promotori"
+	 * 
+	 * @param statoAtto
+	 * @return
+	 */
+	private boolean checkStatoAtto(String statoAtto, String tipoChiusura) {
+		return statoAtto.equals(CHIUSO) && tipoChiusura.equals(RITIRATO);
+	}
+
 }

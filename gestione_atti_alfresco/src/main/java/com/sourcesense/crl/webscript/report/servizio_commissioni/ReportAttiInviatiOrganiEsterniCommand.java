@@ -28,7 +28,6 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * 
  * TO DO :
  * - ? data assegnazione from atto
- * - elenco altri pareri 
  * - data assegnazione parere
  * 
  * SKIP TEMP
@@ -45,9 +44,11 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			/*init json params*/
 			this.initOrganismo(json);
 			this.initDataAssegnazioneParereDa(json);
 			this.initDataAssegnazioneParereA(json);
+			/*sorting field*/
 			String sortField1 = "{" + CRL_ATTI_MODEL
 					+ "}organismoStatutarioParere";
 			SearchParameters sp = new SearchParameters();

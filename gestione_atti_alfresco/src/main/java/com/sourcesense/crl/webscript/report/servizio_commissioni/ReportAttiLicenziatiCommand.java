@@ -41,12 +41,13 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			/* Init and Sort field */
+			/*init json params*/
 			this.initCommonParams(json);
 			this.initDataVotazioneCommReferenteDa(json);
 			this.initDataVotazioneCommReferenteA(json);
-
+			/*sorting field*/
 			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroAtto";
+			/*query grouped by commissione*/
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
@@ -123,9 +124,9 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 				Map<QName, Serializable> commissioneProperties = nodeService
 						.getProperties(currentCommissione);
-
+				/*Extracting values from Alfresco*/
 				// from Atto
-				String numeroAtto = (String) this.getNodeRefProperty(
+				String numeroAtto = ""+(Integer) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "descrizioneIniziativa");
@@ -148,6 +149,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
 				String firmatari = "";
+				if(firmatariList!=null)
 				for (String firmatario : firmatariList)
 					firmatari += firmatario + " ";
 				// from Atto
@@ -155,6 +157,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						.getNodeRefProperty(attoProperties,
 								"organismiStatutari");
 				String altriPareri = "";
+				if(pareriList!=null)
 				for (String parere : pareriList)
 					altriPareri += parere + " ";
 				// from Commissione
@@ -165,7 +168,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 							relatoreNodeRef, ContentModel.PROP_NAME);
 					elencoRelatori += relatore + " ";
 				}
-
+				/*Writing values in the table*/
 				currentTable
 						.getRow(0)
 						.getCell(1)

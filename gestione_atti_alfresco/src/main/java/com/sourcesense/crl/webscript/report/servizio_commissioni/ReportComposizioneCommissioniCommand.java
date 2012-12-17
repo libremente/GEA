@@ -22,7 +22,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST : OK
+ * GET OK
+ * 
  * @author Alessandro Benedetti
  * 
  */
@@ -37,6 +38,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 		SearchParameters sp = new SearchParameters();
 		sp.addStore(spacesStore);
 		sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+		/* query from anagrafica */
 		String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"";
 		sp.setQuery(query);
 		ResultSet commissioniResult = this.searchService.query(sp);
@@ -76,11 +78,9 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 		List<XWPFTable> tables = document.getTables();
 		for (NodeRef currentCommissione : commissioniResult.getNodeRefs()) {
 			XWPFTable currentTable = tables.get(tableIndex);
-			Map<QName, Serializable> commissioneProperties = nodeService
-					.getProperties(currentCommissione);
-
 			// from Commissione
-			String nomeCommissione =(String) nodeService.getProperty(currentCommissione, ContentModel.PROP_NAME);
+			String nomeCommissione = (String) nodeService.getProperty(
+					currentCommissione, ContentModel.PROP_NAME);
 			List<ChildAssociationRef> consiglieriAssList = nodeService
 					.getChildAssocs(currentCommissione);
 			String consiglieri = "";
