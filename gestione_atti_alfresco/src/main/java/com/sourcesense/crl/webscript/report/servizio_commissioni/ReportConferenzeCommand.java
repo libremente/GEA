@@ -28,9 +28,6 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 /**
  * GET OK
  * 
- * Bug : vengono create tante tabelle quanti gli atti complessivi non filtrati
- * per stato
- * 
  * @author Alessandro Benedetti
  * 
  */
@@ -121,7 +118,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 		List<XWPFTable> tables = document.getTables();
 		for (String commissione : commissione2atti.keySet()) {
 			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
-				XWPFTable currentTable = tables.get(tableIndex);
+				
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
 				Map<QName, Serializable> commissioneProperties = nodeService
@@ -131,6 +128,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 				String statoAtto = (String) this.getNodeRefProperty(
 						attoProperties, "statoAtto");
 				if (this.checkStatoAtto(statoAtto)) {
+					XWPFTable currentTable = tables.get(tableIndex);
 					String numeroAtto = ""
 							+ (Integer) this.getNodeRefProperty(attoProperties,
 									"numeroAtto");
