@@ -44,11 +44,11 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     	try {
     
 	    	// Get json properties
-	    	//String json=(String)req.getParameter("json");
-    		//String tipoTemplate = (String)req.getParameter("tipoTemplate");
-    		String inputString = IOUtils.toString(req.getContent().getReader());
-    	    JSONObject json = new JSONObject(inputString);
-    	    String tipoTemplate = (String)json.get("tipoTemplate");
+	    	String json=(String)req.getParameter("json");
+    		String tipoTemplate = (String)req.getParameter("tipoTemplate");
+    		//String inputString = IOUtils.toString(req.getContent().getReader());
+    	    //JSONObject json = new JSONObject(inputString);
+    	    //String tipoTemplate = (String)json.get("tipoTemplate");
     		 
 			// Search document template node	
 			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
@@ -83,7 +83,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     		 *      "dataAssegnazioneCommReferenteDa":null,"dataAssegnazioneCommReferenteA":null,"dataSedutaDa":null,"dataSedutaA":null
     		 *  }
     		 */
-	    	byte[] documentFilledByteArray = reportCommandMap.get(tipoTemplate).generate(templateByteArray,json.toString(), searchStoreRef);
+	    	byte[] documentFilledByteArray = reportCommandMap.get(tipoTemplate).generate(templateByteArray,json, searchStoreRef);
 	    	
 	    	
 	    	String nomeLettera = tipoTemplate.split(":")[1];

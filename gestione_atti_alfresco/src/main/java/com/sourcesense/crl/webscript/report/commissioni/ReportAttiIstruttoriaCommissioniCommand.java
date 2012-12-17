@@ -27,8 +27,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * ?- firmatari? no nelle specifiche, si nell'esempio pdf
- *- Test
+ * TO TEST
  * 
  * @author Alessandro Benedetti
  * 

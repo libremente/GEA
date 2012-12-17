@@ -27,8 +27,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * 
- * TO DO : -Test 
+ TO TEST
  * @author Alessandro Benedetti
  * 
  */

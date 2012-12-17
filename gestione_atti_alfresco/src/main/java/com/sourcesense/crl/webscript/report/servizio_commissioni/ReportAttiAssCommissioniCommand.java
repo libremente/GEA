@@ -27,8 +27,8 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * 
- * TO DO :
- * -Test
+ * TO TEST
+ * JSON
  * @author Alessandro Benedetti
  *
  */

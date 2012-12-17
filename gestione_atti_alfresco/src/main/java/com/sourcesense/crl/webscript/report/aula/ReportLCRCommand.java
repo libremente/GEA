@@ -23,6 +23,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * TO TEST partially
  * -? Check pdl -?noteGenerali = (String) this.getNodeRefProperty(
  * attoProperties, "noteChiusura");
  * 
