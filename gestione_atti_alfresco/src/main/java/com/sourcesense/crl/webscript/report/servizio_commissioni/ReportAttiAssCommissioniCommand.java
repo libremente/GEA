@@ -27,8 +27,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * 
- * TO TEST
- * JSON
+ * TO TEST:OK
  * @author Alessandro Benedetti
  *
  */
@@ -123,7 +122,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						.getProperties(atto2commissione.get(currentAtto));
 
 				// from Atto
-				String numeroAtto = (String) this.getNodeRefProperty(
+				String numeroAtto =""+(Integer) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "descrizioneIniziativa");
