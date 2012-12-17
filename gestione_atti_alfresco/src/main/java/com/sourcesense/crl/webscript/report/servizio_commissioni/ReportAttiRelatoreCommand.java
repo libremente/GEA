@@ -29,6 +29,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * TO DO:
  * - scrivere query relatori
  * SKIP TEMP
+ * Bug : vengono create tante tabelle quanti gli atti complessivi non filtrati per stato
  *
  * @author Alessandro Benedetti
  *

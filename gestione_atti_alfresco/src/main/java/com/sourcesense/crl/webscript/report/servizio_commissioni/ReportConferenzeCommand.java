@@ -26,7 +26,9 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * GET OK
+ * 
+ * Bug : vengono create tante tabelle quanti gli atti complessivi non filtrati per stato
  * 
  * @author Alessandro Benedetti
  * 
