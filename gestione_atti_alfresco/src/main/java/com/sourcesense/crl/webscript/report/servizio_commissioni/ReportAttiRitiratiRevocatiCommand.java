@@ -54,7 +54,8 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				// statoAtto = Chiuso
 				// tipoChiusura = Ritirato dai promotori
-				String query = "TYPE:\"" + "crlatti:commissione"
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
+						" AND TYPE:\"" + "crlatti:commissione"
 						+ "\" AND @crlatti\\:tipoAttoCommissione:\"" + tipoAtto
 						+ "\" AND @crlatti\\:dataChiusura:[" + this.dataRitiroDa
 						+ " TO " + this.dataRitiroA + " ]";

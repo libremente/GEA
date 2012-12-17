@@ -51,7 +51,8 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query="TYPE:\""
+				String query="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
+						" AND TYPE:\""
 								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""
 								+ this.ruoloCommissione  +"\" AND @cm\\:name:\""
 								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["

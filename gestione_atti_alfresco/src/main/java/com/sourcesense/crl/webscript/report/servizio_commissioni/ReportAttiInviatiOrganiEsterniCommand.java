@@ -53,7 +53,8 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "TYPE:\"crlatti:parere"
+			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
+					"AND TYPE:\"crlatti:parere"
 					+ "\" AND @crlatti\\:organismoStatutarioParere:\""
 					+ this.organismo
 					+ "\" AND @crlatti\\:dataAssegnazioneParere:["
