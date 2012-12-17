@@ -44,11 +44,13 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     	try {
     
 	    	// Get json properties
-	    	String json=(String)req.getParameter("json");
-    		String tipoTemplate = (String)req.getParameter("tipoTemplate");
-    		//String inputString = IOUtils.toString(req.getContent().getReader());
-    	    //JSONObject json = new JSONObject(inputString);
-    	    //String tipoTemplate = (String)json.get("tipoTemplate");
+//	    	String json=(String)req.getParameter("json");
+//    		String tipoTemplate = (String)req.getParameter("tipoTemplate");
+    		
+    		
+    		String json = IOUtils.toString(req.getContent().getReader());
+    	    JSONObject jsonObj = new JSONObject(json);
+    	    String tipoTemplate = (String)jsonObj.get("tipoTemplate");
     		 
 			// Search document template node	
 			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
