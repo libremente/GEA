@@ -22,6 +22,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * GET OK
  * -? noteVotazione ="";//?
  * 
  * @author Alessandro Benedetti

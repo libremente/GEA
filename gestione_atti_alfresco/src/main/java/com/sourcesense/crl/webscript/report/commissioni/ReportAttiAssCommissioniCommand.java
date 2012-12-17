@@ -26,9 +26,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST:
- * -OK (organismi statuari forse sono assenti nei nostri dati )
- * 
+ * GET OK 
  * @author Alessandro Benedetti
  * 
  */
