@@ -45,9 +45,8 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 			String query =convertListToString("TYPE",
-							this.tipiAttoLucene);
-					//+ "AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
-					//+ " TO " + this.dataSedutaA + " ]";
+							this.tipiAttoLucene) +" AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
+					+ " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);
 			sp.addSort(sortField1, false);
 			ResultSet attiResults = this.searchService.query(sp);
