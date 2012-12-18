@@ -45,7 +45,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query =convertListToString("TYPE",
+			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "+convertListToString("TYPE",
 							this.tipiAttoLucene) +" AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
 					+ " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);

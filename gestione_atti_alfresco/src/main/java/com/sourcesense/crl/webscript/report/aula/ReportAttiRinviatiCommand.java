@@ -23,8 +23,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * ?. che hanno almeno il secondo passaggio? , basta attributo rinviato? ?-
- * dateRinvio,dateTermine Stanno dentro Aula, come raggiungerli?
+ * TO TEST ?. che hanno almeno il secondo passaggio? , basta attributo rinviato?
+ * ?- dateRinvio,dateTermine Stanno dentro Aula, come raggiungerli?
  * 
  * @author Alessandro Benedetti
  * 
@@ -45,7 +45,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "TYPE:\""
+			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\""
 					+ "crlatti:atto\" AND "
 					+ convertListToString("@crlatti\\:tipoAtto",
 							this.tipiAttoLucene)
@@ -97,24 +97,19 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			XWPFTable currentTable = tables.get(tableIndex);
 			Map<QName, Serializable> attoProperties = nodeService
 					.getProperties(currentAtto);
-			String statoAtto = (String) this.getNodeRefProperty(attoProperties,
-					"statoAtto");
 			QName nodeRefType = nodeService.getType(currentAtto);
 			String tipoAtto = (String) nodeRefType.getLocalName();
-			String abbinamenti = "";
-			String numeroAtto = (String) this.getNodeRefProperty(
-					attoProperties, "numeroAtto");
+			String numeroAtto = ""
+					+ (Integer) this.getNodeRefProperty(attoProperties,
+							"numeroAtto");
 			String oggetto = (String) this.getNodeRefProperty(attoProperties,
 					"oggetto");
-			String iniziativa = (String) this.getNodeRefProperty(
-					attoProperties, "descrizioneIniziativa");
-
 			ArrayList<String> commReferenteList = (ArrayList<String>) this
 					.getNodeRefProperty(attoProperties, "commReferente");
 			String commReferente = "";
-			if(commReferenteList!=null)
-			for (String commissioneReferenteMulti : commReferenteList)
-				commReferente += commissioneReferenteMulti + " ";
+			if (commReferenteList != null)
+				for (String commissioneReferenteMulti : commReferenteList)
+					commReferente += commissioneReferenteMulti + " ";
 			Date dateRinvio = (Date) this.getNodeRefProperty(attoProperties,
 					"dataRinvio");
 			Date dateTermine = (Date) this.getNodeRefProperty(attoProperties,
@@ -123,6 +118,9 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 					attoProperties, "noteChiusura");
 			String motivazioneRinvio = (String) this.getNodeRefProperty(
 					attoProperties, "noteChiusura");
+			String relatore = (String) this.getNodeRefProperty(attoProperties,
+					"relatori");
+
 			currentTable
 					.getRow(0)
 					.getCell(1)
@@ -132,13 +130,15 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			currentTable.getRow(2).getCell(1)
 					.setText(this.checkDateEmpty(dateRinvio));
 			currentTable.getRow(3).getCell(1)
+					.setText(this.checkStringEmpty(relatore));
+			currentTable.getRow(4).getCell(1)
 					.setText(this.checkStringEmpty(commReferente));
-			currentTable.getRow(3).getCell(1)
+			currentTable.getRow(5).getCell(1)
 					.setText(this.checkDateEmpty(dateTermine));
 
-			currentTable.getRow(4).getCell(1)
+			currentTable.getRow(6).getCell(1)
 					.setText(this.checkStringEmpty(motivazioneRinvio));
-			currentTable.getRow(5).getCell(1)
+			currentTable.getRow(7).getCell(1)
 					.setText(this.checkStringEmpty(noteGenerali));
 			tableIndex++;
 		}

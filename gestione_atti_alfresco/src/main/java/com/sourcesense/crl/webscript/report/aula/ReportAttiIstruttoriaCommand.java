@@ -28,6 +28,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * TO TEST
  * ?- abbinamenti ?- firmatari solo se iniziativa consiliare ?- doppia
  * iniziativa ?- relatore e relazione scritta, da anagrafca?
  * 
@@ -56,7 +57,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "TYPE:\""
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\""
 					+ "crlatti:atto"
 					+ "\" AND "
 					+ convertListToString("@crlatti\\:tipoAtto",
@@ -106,18 +107,19 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
 		for (int i = 0; i < atti.length(); i++) {
-			NodeRef currentAtto = atti.getNodeRef(i);
-			XWPFTable currentTable = tables.get(tableIndex);
+			/*Extract values from Alfresco*/
+			NodeRef currentAtto = atti.getNodeRef(i);			
 			Map<QName, Serializable> attoProperties = nodeService
 					.getProperties(currentAtto);
 			String statoAtto = (String) this.getNodeRefProperty(attoProperties,
 					"statoAtto");
 			if (this.checkStatoAtto(statoAtto)) {
+				XWPFTable currentTable = tables.get(tableIndex);
 				// from Atto
 				QName nodeRefType = nodeService.getType(currentAtto);
 				String tipoAtto = (String) nodeRefType.getLocalName();
 				String abbinamenti = getAbbinamenti(currentAtto);
-				String numeroAtto = (String) this.getNodeRefProperty(
+				String numeroAtto =""+ (Integer) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String oggetto = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
@@ -126,18 +128,21 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
 				String firmatari = "";
+				if(firmatariList!=null)
 				for (String firmatario : firmatariList)
 					firmatari += firmatario + " ";
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
+				if(commReferenteList!=null)
 				for (String commissioneReferenteMulti : commReferenteList)
 					commReferente += commissioneReferenteMulti + " ";
 				String relatore = (String) this.getNodeRefProperty(
 						attoProperties, "relatori");
 				String relazioneScritta = getRelazioneScritta(currentAtto);
 				String noteGenerali = (String) this.getNodeRefProperty(
-						attoProperties, "noteChiusura");
+						attoProperties, "noteChiusura");			
+			/*write values in table*/
 				currentTable
 						.getRow(0)
 						.getCell(1)
@@ -150,15 +155,17 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 						.setText(this.checkStringEmpty(oggetto));
 				currentTable.getRow(3).getCell(1)
 						.setText(this.checkStringEmpty(iniziativa));
-				currentTable.getRow(7).getCell(1)
+				currentTable.getRow(4).getCell(1)
 						.setText(this.checkStringEmpty(firmatari));
-				currentTable.getRow(8).getCell(1)
+				currentTable.getRow(5).getCell(1)
+				.setText(this.checkStringEmpty(iniziativa));
+				currentTable.getRow(6).getCell(1)
 						.setText(this.checkStringEmpty(commReferente));
-				currentTable.getRow(9).getCell(1)
+				currentTable.getRow(7).getCell(1)
 						.setText(this.checkStringEmpty(relatore));
-				currentTable.getRow(10).getCell(1)
+				currentTable.getRow(7).getCell(3)
 						.setText(this.checkStringEmpty(relazioneScritta));
-				currentTable.getRow(11).getCell(1)
+				currentTable.getRow(8).getCell(1)
 						.setText(this.checkStringEmpty(noteGenerali));
 				tableIndex++;
 			}

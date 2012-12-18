@@ -47,7 +47,7 @@ public class ReportLCRCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "TYPE:\"crlatti:attoPdl\" AND @crlatti\\:dataSedutaAula:["
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\"crlatti:attoPdl\" AND @crlatti\\:dataSedutaAula:["
 					+ this.dataSedutaDa + " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
