@@ -1467,11 +1467,7 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		/*
-		 * Commissione comm = attoBean.getWorkingCommissione(commissioneUser
-		 * .getDescrizione());
-		 */
-
+		
 		if (isPassaggioDiretto()
 				&& ((commissioneUser.getEsitoVotazione() != null && !commissioneUser
 						.getEsitoVotazione().trim().equals(""))
@@ -1499,19 +1495,19 @@ public class EsameCommissioniController {
 			attoBean.getLastPassaggio().setCommissioni(
 					Clonator.cloneList(getCommissioniList()));
 
-			if (atto.getTipoAtto().equals("IND")
+			if (atto.getTipoAtto().equals("INP")
 					|| atto.getTipoAtto().equals("PAR")
-					|| atto.getTipoAtto().equals("REL")) {
+					|| atto.getTipoAtto().equals("REL")
+					|| (atto.getTipoAtto().equals("REL") && !atto.isIterAula()) 
+					|| (atto.getTipoAtto().equals("PDA")
+							&& commissioneUser.getRuolo().equals(
+									Commissione.RUOLO_DELIBERANTE))) {
 
 				risultato = "pretty:Chiusura_Iter";
-
-			} else if (atto.getTipoAtto().equals("IND")
-					&& commissioneUser.getRuolo().equals(
-							Commissione.RUOLO_DELIBERANTE)) {
-
-				risultato = "pretty:Chiusura_Iter";
-
-			} else if (canChangeStatoAtto()) {
+			
+			}  
+			
+			if (canChangeStatoAtto()) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 				atto.setStato(StatoAtto.TRASMESSO_AULA);
 

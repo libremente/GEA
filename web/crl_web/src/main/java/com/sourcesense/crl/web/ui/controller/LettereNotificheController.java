@@ -115,7 +115,7 @@ public class LettereNotificheController implements Serializable{
 				.setTipoTemplate("crltemplate:letteraIntegrazioneCPOServComm");
 		letteraIntegrazioneCPOServComm
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraIntegrazioneCPOServComm.xhtml");
-		letteraIntegrazioneCPOServComm.setNome("Lettera Integrazione CPO");
+		letteraIntegrazioneCPOServComm.setNome("Lettera integrazione richiesta parere Organo statutario");
 		letteraIntegrazioneCPOServComm.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteraIntegrazioneCPOServComm = new DefaultTreeNode(
 				"lettera", letteraIntegrazioneCPOServComm, nodeServCommPDL);
@@ -580,13 +580,13 @@ public class LettereNotificheController implements Serializable{
 		// AULA
 		TreeNode nodeAula = new DefaultTreeNode("Aula", root);
 
-		Lettera letteraAula = new Lettera();
+		/*Lettera letteraAula = new Lettera();
 		letteraAula.setTipoTemplate("crltemplate:letteraAula");
 		letteraAula.setUrlView("./lettere/aula/letteraAula.xhtml");
 		letteraAula.setNome("Lettera Aula");
 		letteraAula.setAuthorities(true, true, false, false, false);
 		TreeNode nodeLetteraAula = new DefaultTreeNode("lettera", letteraAula,
-				nodeAula);
+				nodeAula);*/
 
 		Lettera letteraTrasmissioneLCR = new Lettera();
 		letteraTrasmissioneLCR

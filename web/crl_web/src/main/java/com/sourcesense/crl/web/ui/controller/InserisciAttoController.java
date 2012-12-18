@@ -137,7 +137,7 @@ public class InserisciAttoController {
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));
+					FacesMessage.SEVERITY_ERROR, "ATTENZIONE: atti di tipo diverso possono prendere lo stesso numero", ""));
 			return null;
 			
 		}else {
