@@ -29,7 +29,6 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * GET OK
- * a capo?
  * 
  * @author Alessandro Benedetti
  * 

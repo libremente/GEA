@@ -27,6 +27,14 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * TO DO:
  * -? scrivere query relatori ?
  * SKIP TEMP
+ * 
+ * abbiamo una table per ogni data : 
+ * Per ogni data abbiamo n relatori e per ciascuno n atti :
+ * |data:| dataValue|
+ * |RelatoreA|Atti con a capo|
+ * |RelatoreB|Atti con a capo|
+ * 
+ * Quindi per ognuno creiamo riga in più.
  *
  * @author Alessandro Benedetti
  *
@@ -132,7 +140,6 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 					String commConsultiva = "";
 					for (String commissioneConsultivaMulti : commConsultivaList)
 						commConsultiva += commissioneConsultivaMulti + ",";
-
 					currentTable.getRow(0).getCell(0)
 							.setText(this.checkStringEmpty(numeroAtto));
 					currentTable.getRow(0).getCell(1)

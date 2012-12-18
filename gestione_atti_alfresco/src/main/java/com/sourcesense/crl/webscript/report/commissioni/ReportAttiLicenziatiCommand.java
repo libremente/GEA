@@ -22,14 +22,13 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO DO:
- * -Test
- * -Docx
+ * TO TEST
  * @author Alessandro Benedetti
  *
  */
@@ -82,7 +81,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					commissione2atti, atto2commissione);
+					commissione2atti, atto2commissione,docxManager);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -103,6 +102,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	 * 
 	 * 
 	 * @param finalDocStream
+	 * @param docxManager 
 	 * @param queryRes
 	 * @return
 	 * @throws IOException
@@ -110,7 +110,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
-			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
+			Map<NodeRef, NodeRef> atto2commissione, DocxManager docxManager) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -126,7 +126,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						.getProperties(currentCommissione);
 
 				// from Atto
-				String numeroAtto = (String) this.getNodeRefProperty(
+				String numeroAtto = ""+(Integer) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "descrizioneIniziativa");
@@ -147,12 +147,6 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				String firmatari = "";
 				for (String firmatario : firmatariList)
 					firmatari += firmatario + " ";
-				ArrayList<String> pareriList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties,
-								"organismiStatutari");
-				String altriPareri = "";
-				for (String parere : pareriList)
-					altriPareri += parere + " ";
 
 				// from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
@@ -168,9 +162,8 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						commissioneProperties, "ruoloCommissione");
 				// from Atto
 
-				// from Commissione
-				String elencoRelatori = "";
-				String elencoDateNomina = "";
+				List<String> elencoRelatori =Lists.newArrayList();
+				List<String> elencoDateNomina =Lists.newArrayList();
 				for (int i = 0; i < relatori.length(); i++) {
 					NodeRef relatoreNodeRef = relatori.getNodeRef(i);
 					Map<QName, Serializable> relatoreProperties = nodeService
@@ -179,9 +172,10 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 							relatoreProperties, "dataNominaRelatore");
 					String relatore = (String) nodeService.getProperty(
 							relatoreNodeRef, ContentModel.PROP_NAME);
-					String dateNominaString = this.checkDateEmpty(dateNomina);
-					elencoRelatori += relatore + " \n ";
-					elencoDateNomina += dateNominaString + " \n ";
+					String dateNominaString = this
+							.checkDateEmpty(dateNomina);
+					elencoRelatori.add(relatore);
+					elencoDateNomina.add(dateNominaString);
 				}
 
 				currentTable
@@ -191,13 +185,13 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 								this.checkStringEmpty(tipoAtto + " "
 										+ numeroAtto));
 				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(ruoloCommissione));
+				.setText(this.checkStringEmpty(oggetto));
 				currentTable.getRow(2).getCell(1)
-						.setText(this.checkStringEmpty(iniziativa));
+						.setText(this.checkStringEmpty(ruoloCommissione));
 				currentTable.getRow(3).getCell(1)
-						.setText(this.checkStringEmpty(firmatari));
+						.setText(this.checkStringEmpty(iniziativa));
 				currentTable.getRow(4).getCell(1)
-						.setText(this.checkStringEmpty(oggetto));
+						.setText(this.checkStringEmpty(firmatari));
 				currentTable
 						.getRow(5)
 						.getCell(1)
@@ -213,13 +207,11 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						.setText(this.checkDateEmpty(dateBurl));
 				currentTable.getRow(10).getCell(1)
 						.setText(this.checkStringEmpty(numeroLr));
-				currentTable.getRow(11).getCell(1)
+				currentTable.getRow(10).getCell(3)
 						.setText(this.checkDateEmpty(dateLr));
-				currentTable.getRow(12).getCell(1)
-						.setText(this.checkStringEmpty(elencoRelatori));
-				currentTable.getRow(12).getCell(2)
-						.setText(this.checkStringEmpty(elencoDateNomina));
-
+				docxManager.insertListInCell(currentTable.getRow(11).getCell(1), elencoRelatori);
+                docxManager.insertListInCell(currentTable.getRow(11).getCell(3), elencoDateNomina);
+				
 				tableIndex++;
 			}
 		}
