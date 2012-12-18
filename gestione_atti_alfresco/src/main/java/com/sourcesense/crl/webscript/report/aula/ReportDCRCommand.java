@@ -40,7 +40,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			this.initTipiAttoLuceneAtto(json);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroDcr";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroDcr";
 
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
@@ -49,11 +49,11 @@ public class ReportDCRCommand extends ReportBaseCommand {
 							this.tipiAttoLucene) +" AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
 					+ " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);
-			sp.addSort(sortField1, false);
+			sp.addSort(sortField1, true);
 			ResultSet attiResults = this.searchService.query(sp);
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					attiResults.length(), 2, false);
+					attiResults.length(), 1, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 

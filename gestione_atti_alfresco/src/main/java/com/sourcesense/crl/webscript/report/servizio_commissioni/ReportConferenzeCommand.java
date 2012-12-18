@@ -46,8 +46,8 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
 			/* sorting fields */
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
-			String sortField2 = "{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
+			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
 			/* query grouped by commissione */
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {

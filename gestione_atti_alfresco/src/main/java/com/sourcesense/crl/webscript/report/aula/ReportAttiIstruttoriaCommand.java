@@ -50,8 +50,8 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			this.initTipiAttoLucene(json);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}tipoAtto";
-			String sortField2 = "{" + CRL_ATTI_MODEL + "}numeroAtto";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAtto";
+			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);

@@ -49,7 +49,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneParereDa(json);
 			this.initDataAssegnazioneParereA(json);
 			/*sorting field*/
-			String sortField1 = "{" + CRL_ATTI_MODEL
+			String sortField1 = "@{" + CRL_ATTI_MODEL
 					+ "}organismoStatutarioParere";
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);

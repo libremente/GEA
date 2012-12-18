@@ -45,7 +45,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 			this.initDataNominaRelatoreDa(json);
 			this.initDataNominaRelatoreA(json);
 
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}nome";// odine
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}nome";// odine
 																// alfabetico
 
 			SearchParameters sp = new SearchParameters();

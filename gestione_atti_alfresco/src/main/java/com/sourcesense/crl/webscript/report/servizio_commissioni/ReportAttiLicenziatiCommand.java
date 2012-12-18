@@ -46,7 +46,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			this.initDataVotazioneCommReferenteDa(json);
 			this.initDataVotazioneCommReferenteA(json);
 			/*sorting field*/
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroAtto";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 			/*query grouped by commissione*/
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {

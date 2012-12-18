@@ -43,8 +43,8 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			this.initDataPresentazioneDa(json);
 			this.initDataPresentazioneA(json);
 
-			 String sortField1 = "{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
-			 String sortField2 = "{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
+			 String sortField1 = "@{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
+			 String sortField2 = "@{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
 			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
 			 //gruppo per consigliere?
 			for (String commissione:this.commissioniJson) {

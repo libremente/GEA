@@ -27,7 +27,6 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * TO TEST : Manca Data Chiusura nell'oggetto Commissione per poter testare
- * Bug : vengono create tante tabelle quanti gli atti complessivi non filtrati per stato
  * @author Alessandro Benedetti
  * 
  */
@@ -47,7 +46,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 			this.initDataRitiroA(json);
 
 			/* sorting field */
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroAtto";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 
 			Map<String, ResultSet> tipoAtto2results = Maps.newHashMap();
 			for (String tipoAtto : this.tipiAttoLucene) {
@@ -111,7 +110,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 		List<XWPFTable> tables = document.getTables();
 		for (String commissione : commissione2atti.keySet()) {
 			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
-				XWPFTable currentTable = tables.get(tableIndex);
+				
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
 				Map<QName, Serializable> commissioneProperties = nodeService
@@ -121,6 +120,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 				String tipoChiusura = (String) this.getNodeRefProperty(
 						attoProperties, "tipoChiusura");
 				if (this.checkStatoAtto(statoAtto, tipoChiusura)) {
+					XWPFTable currentTable = tables.get(tableIndex);
 					// from Atto
 					String numeroAtto = ""
 							+ (Integer) this.getNodeRefProperty(attoProperties,
@@ -167,6 +167,25 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 		return document;
 	}
 
+	protected int retrieveLenght(
+			ArrayListMultimap<String, NodeRef> commissione2atti) {
+		int count = 0;
+		for (String commissione : commissione2atti.keySet()) {
+			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+				Map<QName, Serializable> attoProperties = nodeService
+						.getProperties(currentAtto);
+				String statoAtto = (String) this.getNodeRefProperty(
+						attoProperties, "statoAtto");
+				String tipoChiusura = (String) this.getNodeRefProperty(
+						attoProperties, "tipoChiusura");
+				if (this.checkStatoAtto(statoAtto,tipoChiusura)) {
+					count++;
+				}
+			}
+
+		}
+		return count;
+	}
 	/**
 	 * Check if the statoAtto is "Chiuso" and tipoChiusura is
 	 * "Ritirato dai promotori"

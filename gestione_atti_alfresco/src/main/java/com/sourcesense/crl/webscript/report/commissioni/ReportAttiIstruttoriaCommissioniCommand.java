@@ -45,8 +45,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 			this.initCommonParams(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
-			String sortField2 = "{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
+			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
@@ -127,7 +127,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 				String statoAtto = (String) this.getNodeRefProperty(
 						attoProperties, "statoAtto");
 				if (this.checkStatoAtto(statoAtto)) {
-					String numeroAtto = (String) this.getNodeRefProperty(
+					String numeroAtto = ""+(Integer) this.getNodeRefProperty(
 							attoProperties, "numeroAtto");
 					String iniziativa = (String) this.getNodeRefProperty(
 							attoProperties, "descrizioneIniziativa");
@@ -158,6 +158,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					ArrayList<String> commReferenteList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "commReferente");
 					String commReferente = "";
+					if(commReferenteList!=null)
 					for (String commissioneReferenteMulti : commReferenteList)
 						commReferente += commissioneReferenteMulti + " ";
 
@@ -165,6 +166,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 							.getNodeRefProperty(attoProperties,
 									"commConsultiva");
 					String commConsultiva = "";
+					if(commConsultivaList!=null)
 					for (String commissioneConsultivaMulti : commConsultivaList)
 						commConsultiva += commissioneConsultivaMulti + " ";
 
@@ -210,5 +212,23 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 				|| statoAtto.equals(VOTATO_COMMISSIONE)
 				|| statoAtto.equals(NOMINATO_RELATORE)
 				|| statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
+	}
+	
+	protected int retrieveLenght(
+			ArrayListMultimap<String, NodeRef> commissione2atti) {
+		int count = 0;
+		for (String commissione : commissione2atti.keySet()) {
+			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+				Map<QName, Serializable> attoProperties = nodeService
+						.getProperties(currentAtto);
+				String statoAtto = (String) this.getNodeRefProperty(
+						attoProperties, "statoAtto");
+				if (this.checkStatoAtto(statoAtto)) {
+					count++;
+				}
+			}
+
+		}
+		return count;
 	}
 }

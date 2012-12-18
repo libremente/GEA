@@ -23,9 +23,9 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST partially
- * -? Check pdl -?noteGenerali = (String) this.getNodeRefProperty(
- * attoProperties, "noteChiusura");
+ * GET OK
+ * -?noteGenerali = (String)
+ * this.getNodeRefProperty( attoProperties, "noteChiusura");
  * 
  * @author Alessandro Benedetti
  * 
@@ -42,22 +42,19 @@ public class ReportLCRCommand extends ReportBaseCommand {
 			DocxManager docxManager = new DocxManager(is);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}numeroLcr";
+			String sortField1 ="@{" + CRL_ATTI_MODEL + "}numeroLcr";
 
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "TYPE:\"" + "crlatti:commissione"
-					+ "\" AND @crlatti\\:tipoAttoCommissione=\"" + "{"
-					+ CRL_ATTI_MODEL + "}Pdl"
-					+ "\" AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
-					+ " TO " + this.dataSedutaA + " ]";
+			String query = "TYPE:\"crlatti:attoPdl\" AND @crlatti\\:dataSedutaAula:["
+					+ this.dataSedutaDa + " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);
-			sp.addSort(sortField1, false);
+			sp.addSort(sortField1, true);
 			ResultSet attiResults = this.searchService.query(sp);
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					attiResults.length(), 2, false);
+					attiResults.length(), 1, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -108,16 +105,17 @@ public class ReportLCRCommand extends ReportBaseCommand {
 					"numeroDcr");
 			Date dateSeduta = (Date) this.getNodeRefProperty(attoProperties,
 					"dataSedutaAula");
-			String numeroAtto = (String) this.getNodeRefProperty(
+			String numeroAtto = ""+(Integer) this.getNodeRefProperty(
 					attoProperties, "numeroAtto");
 			String oggetto = (String) this.getNodeRefProperty(attoProperties,
 					"oggetto");
 			ArrayList<String> commReferenteList = (ArrayList<String>) this
 					.getNodeRefProperty(attoProperties, "commReferente");
 			String commReferente = "";
-			for (String commissioneReferenteMulti : commReferenteList)
-				commReferente += commissioneReferenteMulti + " ";
-			String emendato = (String) this.getNodeRefProperty(attoProperties,
+			if (commReferenteList != null)
+				for (String commissioneReferenteMulti : commReferenteList)
+					commReferente += commissioneReferenteMulti + " ";
+			String emendato = ""+(Boolean) this.getNodeRefProperty(attoProperties,
 					"emendatoAulaAtto");
 
 			String numeroBurl = (String) this.getNodeRefProperty(
@@ -157,7 +155,7 @@ public class ReportLCRCommand extends ReportBaseCommand {
 					.setText(this.checkStringEmpty(numeroBurl));
 			currentTable.getRow(10).getCell(1)
 					.setText(this.checkDateEmpty(dateBurl));
-			currentTable.getRow(12).getCell(1)
+			currentTable.getRow(11).getCell(1)
 					.setText(this.checkStringEmpty(noteGenerali));
 
 			tableIndex++;

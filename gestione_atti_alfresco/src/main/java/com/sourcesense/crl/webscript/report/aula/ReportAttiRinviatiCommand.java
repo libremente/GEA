@@ -39,8 +39,8 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 			this.initTipiAttoLucene(json);
-			String sortField1 = "{" + CRL_ATTI_MODEL + "}tipoAtto";
-			String sortField2 = "{" + CRL_ATTI_MODEL + "}numeroAtto";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAtto";
+			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
@@ -112,6 +112,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			ArrayList<String> commReferenteList = (ArrayList<String>) this
 					.getNodeRefProperty(attoProperties, "commReferente");
 			String commReferente = "";
+			if(commReferenteList!=null)
 			for (String commissioneReferenteMulti : commReferenteList)
 				commReferente += commissioneReferenteMulti + " ";
 			Date dateRinvio = (Date) this.getNodeRefProperty(attoProperties,
