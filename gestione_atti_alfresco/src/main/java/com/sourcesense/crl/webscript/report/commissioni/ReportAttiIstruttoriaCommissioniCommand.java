@@ -22,12 +22,14 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * GET OK
+ * a capo?
  * 
  * @author Alessandro Benedetti
  * 
@@ -78,12 +80,12 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+					this.retrieveLenght(commissione2atti), 1, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					commissione2atti, atto2commissione);
+					commissione2atti, atto2commissione,docxManager);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -102,6 +104,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 	 * 
 	 * 
 	 * @param finalDocStream
+	 * @param docxManager 
 	 * @param queryRes
 	 * @return
 	 * @throws IOException
@@ -109,7 +112,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
-			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
+			Map<NodeRef, NodeRef> atto2commissione, DocxManager docxManager) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -117,7 +120,6 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
 				NodeRef currentCommissione = atto2commissione.get(currentAtto);
 				ResultSet relatori = this.getRelatori(currentCommissione);
-				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
 				Map<QName, Serializable> commissioneProperties = nodeService
@@ -127,6 +129,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 				String statoAtto = (String) this.getNodeRefProperty(
 						attoProperties, "statoAtto");
 				if (this.checkStatoAtto(statoAtto)) {
+					XWPFTable currentTable = tables.get(tableIndex);
 					String numeroAtto = ""+(Integer) this.getNodeRefProperty(
 							attoProperties, "numeroAtto");
 					String iniziativa = (String) this.getNodeRefProperty(
@@ -139,8 +142,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					Date dateAssegnazioneCommissione = (Date) this
 							.getNodeRefProperty(commissioneProperties,
 									"dataAssegnazioneCommissione");
-					String elencoRelatori = "";
-					String elencoDateNomina = "";
+					List<String> elencoRelatori =Lists.newArrayList();
+					List<String> elencoDateNomina =Lists.newArrayList();
 					for (int i = 0; i < relatori.length(); i++) {
 						NodeRef relatoreNodeRef = relatori.getNodeRef(i);
 						Map<QName, Serializable> relatoreProperties = nodeService
@@ -151,8 +154,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 								relatoreNodeRef, ContentModel.PROP_NAME);
 						String dateNominaString = this
 								.checkDateEmpty(dateNomina);
-						elencoRelatori += relatore + " \n ";
-						elencoDateNomina += dateNominaString + " \n ";
+						elencoRelatori.add(relatore);
+						elencoDateNomina.add(dateNominaString);
 					}
 
 					ArrayList<String> commReferenteList = (ArrayList<String>) this
@@ -188,11 +191,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 							.setText(this.checkStringEmpty(commReferente));
 					currentTable.getRow(4).getCell(3)
 							.setText(this.checkStringEmpty(commConsultiva));
-					currentTable.getRow(5).getCell(1)
-							.setText(this.checkStringEmpty(elencoRelatori));
-					currentTable.getRow(5).getCell(3)
-							.setText(this.checkStringEmpty(elencoDateNomina));
-
+					docxManager.insertListInCell(currentTable.getRow(5).getCell(1), elencoRelatori);
+                    docxManager.insertListInCell(currentTable.getRow(5).getCell(3), elencoDateNomina);
 					tableIndex++;
 				}
 			}

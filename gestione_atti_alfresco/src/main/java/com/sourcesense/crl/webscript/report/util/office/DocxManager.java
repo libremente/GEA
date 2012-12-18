@@ -8,6 +8,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 import com.sourcesense.crl.webscript.report.util.lucene.LuceneMockDocument;
@@ -92,5 +93,14 @@ public class DocxManager {
 		}
 		return document;
 	}
+	
+	public void insertListInCell(XWPFTableCell currentCell,List<String> myStrings)
+	{
+	XWPFParagraph para = currentCell.getParagraphs().get(0);
+	for(String text : myStrings){
+	    XWPFRun run = para.createRun();
+	    run.setText(text.trim());
+	    run.addBreak();
+	}}
 
 }
