@@ -108,11 +108,11 @@ public class GestioneSeduteController {
 
 		setDateSeduteList();
 
-		/*if (!seduteListAll.isEmpty()) {
-			setDataSedutaSelected(dateSeduteList.get(0));
-			showSedutaDetail();
-			fillDateSeduteMap();
-		}*/
+		/*
+		 * if (!seduteListAll.isEmpty()) {
+		 * setDataSedutaSelected(dateSeduteList.get(0)); showSedutaDetail();
+		 * fillDateSeduteMap(); }
+		 */
 
 	}
 
@@ -152,19 +152,27 @@ public class GestioneSeduteController {
 	public void filterDataTable() {
 
 		seduteList.clear();
+
 		for (Seduta seduta : seduteListAll) {
 
-			if (getDataSedutaDa() != null
-					&& seduta.getDataSeduta().compareTo(dataSedutaDa) < 0) {
+			
+			
+			if (    getDataSedutaDa() != null
+					&& getDataSedutaA() != null
+					&& seduta.getDataSeduta().getTime() - dataSedutaDa.getTime() >= 0 
+					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime()  <= 86399999) {
+				
+				seduteList.add((Seduta) seduta.clone());
 
-				continue;
+			} else if (getDataSedutaDa() != null 
+					   && getDataSedutaA() == null
+					   && seduta.getDataSeduta().getTime() - dataSedutaDa.getTime() >= 0) {
 
-			} else if (getDataSedutaA() != null
-					&& seduta.getDataSeduta().compareTo(dataSedutaA) > 0) {
+				seduteList.add((Seduta) seduta.clone());
 
-				continue;
-
-			} else {
+			} else if (getDataSedutaDa() == null 
+					   && getDataSedutaA() != null
+					   && seduta.getDataSeduta().getTime() - dataSedutaA.getTime()  <= 86399999) {
 
 				seduteList.add((Seduta) seduta.clone());
 			}
@@ -184,11 +192,11 @@ public class GestioneSeduteController {
 			setDalleOre(sedutaSelected.getDalleOre());
 			setAlleOre(sedutaSelected.getAlleOre());
 			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));
-			
+
 			setAttiTrattati(Clonator
 					.cloneList(sedutaSelected.getAttiTrattati()));
 			Collections.sort(attiTrattati);
-			
+
 			setAttiSindacato(Clonator.cloneList(sedutaSelected
 					.getAttiSindacato()));
 
@@ -395,10 +403,10 @@ public class GestioneSeduteController {
 				setSedutaSelected(seduta);
 				seduteListAll.add(seduta);
 				seduteList.add(seduta);
-				
+
 				dateSeduteList.add(formatter.format(seduta.getDataSeduta()));
 
-		    // Modifica
+				// Modifica
 			} else {
 				seduta.setNumVerbale(getNumVerbale());
 				seduta.setNote(getNote());
@@ -414,11 +422,9 @@ public class GestioneSeduteController {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_INFO, "Seduta numero "
 							+ getNumVerbale() + " salvata con successo", ""));
-			
-			
-			refreshInsert();  
 
-		
+			refreshInsert();
+
 		} else {
 
 			context.addMessage(null, new FacesMessage(
@@ -427,10 +433,8 @@ public class GestioneSeduteController {
 		}
 	}
 
-	
-	private void refreshInsert(){
-		
-		
+	private void refreshInsert() {
+
 		setSedutaSelected(null);
 		setDataSeduta(null);
 		setAlleOre(null);
@@ -441,9 +445,9 @@ public class GestioneSeduteController {
 		setDescrizioneCollegamento(null);
 		setUrlLink(null);
 		linksList.clear();
-		
+
 	}
-	
+
 	// Inserisci ODG***************************************
 
 	public void fillDateSeduteMap() {
@@ -528,8 +532,6 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-
-	
 
 	public void addAudizione() {
 
@@ -633,9 +635,9 @@ public class GestioneSeduteController {
 
 			sedutaSelected.setAttiTrattati(Clonator
 					.cloneList(getOrderedAttiTrattati()));
-			
+
 			Collections.sort(attiTrattati);
-			
+
 			sedutaSelected.setAudizioni(Clonator.cloneList(getAudizioni()));
 
 			sedutaSelected.setConsultazioniAtti(Clonator
@@ -680,8 +682,8 @@ public class GestioneSeduteController {
 					}
 				}
 			}
-		}else{
-			
+		} else {
+
 			int i = 0;
 			for (AttoTrattato attoTrattato : getAttiTrattati()) {
 				if (i < 10) {
@@ -691,7 +693,7 @@ public class GestioneSeduteController {
 				}
 				i++;
 			}
-			
+
 		}
 
 		Collections.sort(attiTrattati);
@@ -1030,7 +1032,4 @@ public class GestioneSeduteController {
 		this.alleOre = alleOre;
 	}
 
-	
-	
-	
 }

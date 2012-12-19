@@ -57,7 +57,6 @@ public class ReportisticaController implements Serializable {
 	@ManagedProperty(value = "#{reportServiceManager}")
 	private ReportServiceManager reportServiceManager;
 	
-	
 
 	private TreeNode root;
 	private TreeNode selectedNode;
