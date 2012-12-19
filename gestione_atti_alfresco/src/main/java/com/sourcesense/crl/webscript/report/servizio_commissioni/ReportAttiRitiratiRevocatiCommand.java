@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +20,13 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST : Manca Data Chiusura nell'oggetto Commissione per poter testare
+ * TO TEST
+ * 
  * @author Alessandro Benedetti
  * 
  */
@@ -41,43 +41,37 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 			/* init json params */
-			this.initTipiAttoLucene(json);
+			this.initTipiAttoLuceneAtto(json);
 			this.initDataRitiroDa(json);
 			this.initDataRitiroA(json);
 
 			/* sorting field */
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 
-			Map<String, ResultSet> tipoAtto2results = Maps.newHashMap();
+			List<ResultSet> tipiAtto = Lists.newArrayList();
 			for (String tipoAtto : this.tipiAttoLucene) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
 						+ " AND TYPE:\""
-						+ "crlatti:commissione"
-						+ "\" AND @crlatti\\:tipoAttoCommissione:\""
 						+ tipoAtto
 						+ "\" AND @crlatti\\:dataChiusura:["
 						+ this.dataRitiroDa + " TO " + this.dataRitiroA + " ]";
 				sp.setQuery(query);
-				sp.addSort(sortField1, false);
-				ResultSet currentResults = this.searchService.query(sp);
-				tipoAtto2results.put(tipoAtto, currentResults);
+				sp.addSort(sortField1, true);
+				ResultSet attiResult = this.searchService.query(sp);
+				tipiAtto.add(attiResult);
 			}
-			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
-			ArrayListMultimap<String, NodeRef> commissione2atti = this
-					.retrieveAtti(tipoAtto2results, spacesStore,
-							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+					this.retrieveLenght(tipiAtto), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					commissione2atti, atto2commissione);
+					tipiAtto);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -103,23 +97,22 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ArrayListMultimap<String, NodeRef> commissione2atti,
-			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
+			List<ResultSet> tipiAtto) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
-		for (String commissione : commissione2atti.keySet()) {
-			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
-				
+		for (ResultSet atti : tipiAtto) {
+			for (int i = 0; i < atti.length(); i++) {
+				NodeRef currentAtto = atti.getNodeRef(i);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
-				Map<QName, Serializable> commissioneProperties = nodeService
-						.getProperties(atto2commissione.get(currentAtto));
 				String statoAtto = (String) this.getNodeRefProperty(
 						attoProperties, "statoAtto");
 				String tipoChiusura = (String) this.getNodeRefProperty(
 						attoProperties, "tipoChiusura");
 				if (this.checkStatoAtto(statoAtto, tipoChiusura)) {
+					QName nodeRefType = nodeService.getType(currentAtto);
+					String tipoAtto = (String) nodeRefType.getLocalName();
 					XWPFTable currentTable = tables.get(tableIndex);
 					// from Atto
 					String numeroAtto = ""
@@ -129,9 +122,6 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 							attoProperties, "descrizioneIniziativa");
 					String oggetto = (String) this.getNodeRefProperty(
 							attoProperties, "oggetto");
-					// from Commissione
-					String tipoAtto = (String) this.getNodeRefProperty(
-							commissioneProperties, "tipoAttoCommissione");
 					Date datePresentazione = (Date) this.getNodeRefProperty(
 							attoProperties, "dataIniziativa");
 					Date dateRevoca = (Date) this.getNodeRefProperty(
@@ -178,7 +168,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 						attoProperties, "statoAtto");
 				String tipoChiusura = (String) this.getNodeRefProperty(
 						attoProperties, "tipoChiusura");
-				if (this.checkStatoAtto(statoAtto,tipoChiusura)) {
+				if (this.checkStatoAtto(statoAtto, tipoChiusura)) {
 					count++;
 				}
 			}
@@ -186,6 +176,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 		}
 		return count;
 	}
+
 	/**
 	 * Check if the statoAtto is "Chiuso" and tipoChiusura is
 	 * "Ritirato dai promotori"

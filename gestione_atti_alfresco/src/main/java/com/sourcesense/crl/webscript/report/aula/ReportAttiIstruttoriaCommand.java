@@ -28,9 +28,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
- * ?- firmatari solo se iniziativa consiliare ?- doppia
- * iniziativa 
+ * TO TEST relazione scritta -> bianca note Generali Aula -> metterlo vuoto
  * 
  * @author Alessandro Benedetti
  * 
@@ -57,12 +55,14 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "+convertListToString("TYPE",
-							this.tipiAttoLucene) +" AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "
+					+ convertListToString("TYPE", this.tipiAttoLucene)
+					+ " AND @crlatti\\:dataSedutaAula:["
+					+ this.dataSedutaDa
 					+ " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);
-			sp.addSort(sortField1, false);
-			sp.addSort(sortField2, false);
+			sp.addSort(sortField1, true);
+			sp.addSort(sortField2, true);
 			ResultSet attiResults = this.searchService.query(sp);
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
@@ -103,8 +103,8 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
 		for (int i = 0; i < atti.length(); i++) {
-			/*Extract values from Alfresco*/
-			NodeRef currentAtto = atti.getNodeRef(i);			
+			/* Extract values from Alfresco */
+			NodeRef currentAtto = atti.getNodeRef(i);
 			Map<QName, Serializable> attoProperties = nodeService
 					.getProperties(currentAtto);
 			String statoAtto = (String) this.getNodeRefProperty(attoProperties,
@@ -115,29 +115,38 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				QName nodeRefType = nodeService.getType(currentAtto);
 				String tipoAtto = (String) nodeRefType.getLocalName();
 				String abbinamenti = getAbbinamenti(currentAtto);
-				String numeroAtto =""+ (Integer) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
 				String oggetto = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
 				String iniziativa = (String) this.getNodeRefProperty(
-						attoProperties, "descrizioneIniziativa");
+						attoProperties, "tipoIniziativa");
+				String descrizioneIniziativa = (String) this
+						.getNodeRefProperty(attoProperties, "tipoIniziativa");
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
 				String firmatari = "";
-				if(firmatariList!=null)
-				for (String firmatario : firmatariList)
-					firmatari += firmatario + " ";
+				if (firmatariList != null)
+					for (String firmatario : firmatariList)
+						firmatari += firmatario + " ";
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
-				if(commReferenteList!=null)
-				for (String commissioneReferenteMulti : commReferenteList)
-					commReferente += commissioneReferenteMulti + " ";
-				String relatore ="relatoreAttivo";
-				String relazioneScritta = getRelazioneScritta(currentAtto);
-				String noteGenerali = (String) this.getNodeRefProperty(
-						attoProperties, "noteChiusura");			
-			/*write values in table*/
+				if (commReferenteList != null)
+					for (String commissioneReferenteMulti : commReferenteList)
+						commReferente += commissioneReferenteMulti + " ";
+
+				ArrayList<String> relatoriList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "relatori");
+				String relatori = "";
+				if (relatoriList != null)
+					for (String relatore : relatoriList)
+						relatori += relatore + ", ";
+
+				String relazioneScritta = "";// to complete
+				String noteGenerali = "";// to complete
+				/* write values in table */
 				currentTable
 						.getRow(0)
 						.getCell(1)
@@ -153,11 +162,11 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				currentTable.getRow(4).getCell(1)
 						.setText(this.checkStringEmpty(firmatari));
 				currentTable.getRow(5).getCell(1)
-				.setText(this.checkStringEmpty(iniziativa));
+						.setText(this.checkStringEmpty(descrizioneIniziativa));
 				currentTable.getRow(6).getCell(1)
 						.setText(this.checkStringEmpty(commReferente));
 				currentTable.getRow(7).getCell(1)
-						.setText(this.checkStringEmpty(relatore));
+						.setText(this.checkStringEmpty(relatori));
 				currentTable.getRow(7).getCell(3)
 						.setText(this.checkStringEmpty(relazioneScritta));
 				currentTable.getRow(8).getCell(1)
@@ -168,61 +177,79 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 
 		return document;
 	}
-	
+
 	private String getRelazioneScritta(NodeRef currentAtto) {
-		/*c'è un qualche problema qui, viene fuori un nodeRef Null*/
-		NodeRef aulaFolder =  nodeService.getChildByName(currentAtto, ContentModel.ASSOC_CONTAINS, "Aula");
-		return (String) nodeService.getProperty(aulaFolder, QName.createQName(CRL_ATTI_MODEL,"relazioneScrittaAula"));
+		/* c'è un qualche problema qui, viene fuori un nodeRef Null */
+		NodeRef aulaFolder = nodeService.getChildByName(currentAtto,
+				ContentModel.ASSOC_CONTAINS, "Aula");
+		return (String) nodeService.getProperty(aulaFolder,
+				QName.createQName(CRL_ATTI_MODEL, "relazioneScrittaAula"));
 	}
 
 	// Search last "passaggio" function
-	public NodeRef getLastPassaggio(NodeRef attoNodeRef){
-		
+	public NodeRef getLastPassaggio(NodeRef attoNodeRef) {
+
 		NodeRef passaggio = null;
 
-		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
-        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
-        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
-        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(
+				null);
+		namespacePrefixResolver.registerNamespace(
+				NamespaceService.SYSTEM_MODEL_PREFIX,
+				NamespaceService.SYSTEM_MODEL_1_0_URI);
+		namespacePrefixResolver.registerNamespace(
+				NamespaceService.CONTENT_MODEL_PREFIX,
+				NamespaceService.CONTENT_MODEL_1_0_URI);
+		namespacePrefixResolver.registerNamespace(
+				NamespaceService.APP_MODEL_PREFIX,
+				NamespaceService.APP_MODEL_1_0_URI);
 
-		
-    	String luceneAttoNodePath = nodeService.getPath(attoNodeRef).toPrefixString(namespacePrefixResolver);
-				
-	  	ResultSet passaggiNodes = searchService.query(attoNodeRef.getStoreRef(), 
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneAttoNodePath+"/cm:Passaggi/*\"");
-   
-	  	int numeroPassaggio = 0;
-	  	String nomePassaggio = "";
-	  	int passaggioMax = 0;
-		for(int i=0; i<passaggiNodes.length(); i++) {
-			
-			nomePassaggio = (String) nodeService.getProperty(passaggiNodes.getNodeRef(i), ContentModel.PROP_NAME);
+		String luceneAttoNodePath = nodeService.getPath(attoNodeRef)
+				.toPrefixString(namespacePrefixResolver);
+
+		ResultSet passaggiNodes = searchService.query(
+				attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
+				"PATH:\"" + luceneAttoNodePath + "/cm:Passaggi/*\"");
+
+		int numeroPassaggio = 0;
+		String nomePassaggio = "";
+		int passaggioMax = 0;
+		for (int i = 0; i < passaggiNodes.length(); i++) {
+
+			nomePassaggio = (String) nodeService.getProperty(
+					passaggiNodes.getNodeRef(i), ContentModel.PROP_NAME);
 			numeroPassaggio = Integer.parseInt(nomePassaggio.substring(9));
-			
-			if(numeroPassaggio > passaggioMax) {
+
+			if (numeroPassaggio > passaggioMax) {
 				passaggioMax = numeroPassaggio;
-				passaggio = passaggiNodes.getNodeRef(i) ;
+				passaggio = passaggiNodes.getNodeRef(i);
 			}
-			
+
 		}
-		
+
 		return passaggio;
 	}
 
 	/**
-	 * Restituisce stringa valorizzata con tutti i nomi degli abbinamenti separati da virgola
+	 * Restituisce stringa valorizzata con tutti i nomi degli abbinamenti
+	 * separati da virgola
+	 * 
 	 * @param currentAtto
 	 * @return abbinamento1, abbinamento2, abbinamento3, etc..
 	 */
 	private String getAbbinamenti(NodeRef currentAtto) {
 		String abbinamentiValue = StringUtils.EMPTY;
 		NodeRef passaggio = getLastPassaggio(currentAtto);
-		NodeRef abbinamentiFolderNode =  nodeService.getChildByName(passaggio, ContentModel.ASSOC_CONTAINS, ABBINAMENTI_SPACE_NAME);
-		List<ChildAssociationRef> abbinamenti = nodeService.getChildAssocs(abbinamentiFolderNode);
-		for (Iterator<ChildAssociationRef> iterator = abbinamenti.iterator(); iterator.hasNext();) {
-			ChildAssociationRef childAssociationRef = (ChildAssociationRef) iterator.next();
+		NodeRef abbinamentiFolderNode = nodeService.getChildByName(passaggio,
+				ContentModel.ASSOC_CONTAINS, ABBINAMENTI_SPACE_NAME);
+		List<ChildAssociationRef> abbinamenti = nodeService
+				.getChildAssocs(abbinamentiFolderNode);
+		for (Iterator<ChildAssociationRef> iterator = abbinamenti.iterator(); iterator
+				.hasNext();) {
+			ChildAssociationRef childAssociationRef = (ChildAssociationRef) iterator
+					.next();
 			NodeRef abbinamento = childAssociationRef.getChildRef();
-			abbinamentiValue += (String) nodeService.getProperty(abbinamento,ContentModel.PROP_NAME) + SEP;
+			abbinamentiValue += (String) nodeService.getProperty(abbinamento,
+					ContentModel.PROP_NAME) + SEP;
 		}
 		return abbinamentiValue;
 	}

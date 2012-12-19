@@ -133,7 +133,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 							+ (Integer) this.getNodeRefProperty(attoProperties,
 									"numeroAtto");
 					String iniziativa = (String) this.getNodeRefProperty(
-							attoProperties, "descrizioneIniziativa");
+							attoProperties, "tipoIniziativa");
 					String oggetto = (String) this.getNodeRefProperty(
 							attoProperties, "oggetto");
 					// from Commissione

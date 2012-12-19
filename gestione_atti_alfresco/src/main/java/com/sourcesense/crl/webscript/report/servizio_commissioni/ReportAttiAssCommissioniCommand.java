@@ -66,8 +66,8 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						+ this.dataAssegnazioneCommReferenteDa + " TO "
 						+ this.dataAssegnazioneCommReferenteA + " ]";
 				sp.setQuery(query);
-				sp.addSort(sortField1, false);
-				sp.addSort(sortField2, false);
+				sp.addSort(sortField1, true);
+				sp.addSort(sortField2, true);
 				ResultSet currentResults = this.searchService.query(sp);
 				commissione2results.put(commissione, currentResults);
 			}
@@ -128,7 +128,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				String numeroAtto =""+(Integer) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
-						attoProperties, "descrizioneIniziativa");
+						attoProperties, "tipoIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
 				ArrayList<String> commReferenteList = (ArrayList<String>) this

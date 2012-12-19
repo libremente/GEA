@@ -67,7 +67,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						+ this.dataVotazioneCommReferenteDa + " TO "
 						+ this.dataVotazioneCommReferenteA + " ]";
 				sp.setQuery(query);
-				sp.addSort(sortField1, false);
+				sp.addSort(sortField1, true);
 				ResultSet currentResults = this.searchService.query(sp);
 				commissione2results.put(commissione, currentResults);
 			}
@@ -131,7 +131,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				String numeroAtto = ""+(Integer) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
-						attoProperties, "descrizioneIniziativa");
+						attoProperties, "tipoIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
 				String numeroBurl = (String) this.getNodeRefProperty(

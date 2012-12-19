@@ -23,8 +23,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST ?. che hanno almeno il secondo passaggio? , basta attributo rinviato?
- * ?- dateRinvio,dateTermine Stanno dentro Aula, come raggiungerli?
+ * TO TEST
  * 
  * @author Alessandro Benedetti
  * 
@@ -51,8 +50,8 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 							this.tipiAttoLucene)
 					+ "AND @crlatti\\:rinviato:\"true\"";
 			sp.setQuery(query);
-			sp.addSort(sortField1, false);
-			sp.addSort(sortField2, false);
+			sp.addSort(sortField1, true);
+			sp.addSort(sortField2, true);
 			ResultSet attiResults = this.searchService.query(sp);
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
@@ -110,16 +109,16 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			if (commReferenteList != null)
 				for (String commissioneReferenteMulti : commReferenteList)
 					commReferente += commissioneReferenteMulti + " ";
-			Date dateRinvio = (Date) this.getNodeRefProperty(attoProperties,
-					"dataRinvio");
-			Date dateTermine = (Date) this.getNodeRefProperty(attoProperties,
-					"dataChiusura");
-			String noteGenerali = (String) this.getNodeRefProperty(
-					attoProperties, "noteChiusura");
-			String motivazioneRinvio = (String) this.getNodeRefProperty(
-					attoProperties, "noteChiusura");
-			String relatore = (String) this.getNodeRefProperty(attoProperties,
-					"relatori");
+			Date dateRinvio =null; //(Date) this.getNodeRefProperty(attoProperties,"dataRinvio");
+			Date dateTermine =null;// (Date) this.getNodeRefProperty(attoProperties,"dataChiusura");
+			String noteGenerali ="";
+			String motivazioneRinvio ="";
+			ArrayList<String> relatoriList = (ArrayList<String>) this
+					.getNodeRefProperty(attoProperties, "relatori");
+			String relatori = "";
+			if (relatoriList != null)
+				for (String relatore : relatoriList)
+					relatori += relatore + ", ";
 
 			currentTable
 					.getRow(0)
@@ -130,12 +129,11 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			currentTable.getRow(2).getCell(1)
 					.setText(this.checkDateEmpty(dateRinvio));
 			currentTable.getRow(3).getCell(1)
-					.setText(this.checkStringEmpty(relatore));
+					.setText(this.checkStringEmpty(relatori));
 			currentTable.getRow(4).getCell(1)
 					.setText(this.checkStringEmpty(commReferente));
 			currentTable.getRow(5).getCell(1)
 					.setText(this.checkDateEmpty(dateTermine));
-
 			currentTable.getRow(6).getCell(1)
 					.setText(this.checkStringEmpty(motivazioneRinvio));
 			currentTable.getRow(7).getCell(1)
