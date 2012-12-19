@@ -74,7 +74,7 @@
 			</div>
 		</p:column>
 		<p:column><div id="presaInCaricoDiv">
-			<p:commandButton disabled="#{navigationBean.presaCaricoAulaDisabled()}" value="Presa in carico" 
+			<p:commandButton value="Presa in carico" 
 			action="#{esameAulaController.presaInCarico}"
 			update="datiMsg , :informationForm:informationBar" oncomplete="unblockDiv()"/>
 			</div>
@@ -185,7 +185,7 @@
   
                   <f:selectItem itemLabel="Popolare" itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
               
-                  <f:selectItem itemLabel="d'Ufficio" itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
+                  <f:selectItem itemLabel="Ufficio di Presidenza" itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
               
                   <f:selectItem itemLabel="Consiglio delle Autonomie locali"
                   itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />

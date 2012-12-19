@@ -234,6 +234,9 @@ public class SearchAttoController {
 				.getSessionMap().get("userBean"));
 
 		
+		
+		atto.getStatiUtente().clear();
+		
 		//LAVORAZIONE
         if("inlavorazione".equals(listaLavoro)){
         	
@@ -324,6 +327,45 @@ public class SearchAttoController {
 		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
 		atto.setCommissioneReferente("");
 		atto.setCommissioneConsultiva("");
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean"));
+
+		
+		atto.getStatiUtente().clear();
+		
+		if(userBean.getUser().getSessionGroup().isCommissione()){
+        	
+    		
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+    	    
+    	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+    		
+    		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+    	    
+    	}else if(GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+    		
+    		atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
+    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+    		
+    	}else if(GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
+    		
+    		
+    		atto.setTipoAtto("MIS");
+    		
+    	}
+		
+		
 		setListAtti(attoServiceManager.searchAtti(atto));
 		
 	}

@@ -139,7 +139,7 @@
 		<p:column></p:column>
 		<p:column></p:column>
 	</p:row>
-	<p:row>
+	<!-- <p:row>
 		<p:column>
 			<h:outputText style="font-weight: bold;" value="Materia: " />
 
@@ -153,7 +153,7 @@
 				</p:inputText>
 			</div>
 		</p:column>
-	</p:row>
+	</p:row>-->
 	<p:row rendered="#{navigationBean.isSessionAttoPAR()}">
 		<p:column>
 			<b> <h:outputLabel for="datascadenza" value="Data scadenza: " />
@@ -302,7 +302,7 @@
 		</p:panelGrid>
 
 	</p:fieldset>
-	<p:fieldset rendered="#{!navigationBean.isCommissioneConsultiva()}"
+	<p:fieldset rendered="#{!navigationBean.isCommissioneConsultiva()  and !navigationBean.isSessionAttoPAR()}"
 		legend="Gestione comitati ristretti/Gruppi di lavoro" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable"

@@ -89,7 +89,7 @@ public class RiepilogoAttoController {
     		
     	}else if("05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equals(tipoIniziativa)){
     		
-    		setTipoIniziativa("d'Ufficio");
+    		setTipoIniziativa("Ufficio di Presidenza");
     		
     	}else if("07_ATTO DI INIZIATIVA AUTONOMIE LOCALI".equals(tipoIniziativa)){
     		

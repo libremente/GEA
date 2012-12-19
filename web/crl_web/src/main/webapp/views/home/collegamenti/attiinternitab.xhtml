@@ -127,7 +127,7 @@
 										<f:selectItem itemLabel="Popolare"
 											itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
 
-										<f:selectItem itemLabel="d'Ufficio"
+										<f:selectItem itemLabel="Ufficio di Presidenza"
 											itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
 
 										<f:selectItem itemLabel="Consiglio delle Autonomie locali"
@@ -739,6 +739,25 @@
 					</p:panelGrid>
 				</p:column>
 			</p:row>
+		</p:panelGrid>
+		
+		<p:panelGrid id="listaLavoroPanel" rendered="#{!navigationBean.isGuest() }"
+			style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F">
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="listaLavoro" value="Lista di Lavoro : "
+						style="valign:middle" />
+					<p:selectOneMenu id="listaLavoro"
+						value="#{searchAttoController.listaLavoro}">
+						<f:selectItem itemLabel="In lavorazione" itemValue="inlavorazione" />
+						<f:selectItem itemDisabled="#{navigationBean.isCPCVUser() }" itemLabel="Lavorati" itemValue="lavorati" />
+						<f:selectItem itemLabel="Tutti gli Atti" itemValue="tutti" />						
+					</p:selectOneMenu>
+
+				</p:column>
+			</p:row>
+
 		</p:panelGrid>
 
 		<!-- Pannello ricerca end -->

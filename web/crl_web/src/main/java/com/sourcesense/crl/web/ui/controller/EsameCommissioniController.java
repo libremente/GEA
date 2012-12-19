@@ -1498,7 +1498,7 @@ public class EsameCommissioniController {
 			if (atto.getTipoAtto().equals("INP")
 					|| atto.getTipoAtto().equals("PAR")
 					|| atto.getTipoAtto().equals("REL")
-					|| (atto.getTipoAtto().equals("REL") && !atto.isIterAula()) 
+					|| (atto.getTipoAtto().equals("DOC") && !atto.isIterAula()) 
 					|| (atto.getTipoAtto().equals("PDA")
 							&& commissioneUser.getRuolo().equals(
 									Commissione.RUOLO_DELIBERANTE))) {
