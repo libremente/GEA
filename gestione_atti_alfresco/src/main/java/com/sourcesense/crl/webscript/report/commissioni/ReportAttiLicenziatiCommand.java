@@ -28,7 +28,9 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ TO TEST:
+ Manca dentro commissione il campo dataSedutaCommAttoCommissione per poter testare
+ * 
  * @author Alessandro Benedetti
  *
  */

@@ -29,8 +29,8 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * TO TEST
- * ?- abbinamenti ?- firmatari solo se iniziativa consiliare ?- doppia
- * iniziativa ?- relatore e relazione scritta, da anagrafca?
+ * ?- firmatari solo se iniziativa consiliare ?- doppia
+ * iniziativa 
  * 
  * @author Alessandro Benedetti
  * 
@@ -48,7 +48,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			this.initTipiAttoLucene(json);
+			this.initTipiAttoLuceneAtto(json);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAtto";
@@ -57,12 +57,8 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\""
-					+ "crlatti:atto"
-					+ "\" AND "
-					+ convertListToString("@crlatti\\:tipoAtto",
-							this.tipiAttoLucene)
-					+ "AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "+convertListToString("TYPE",
+							this.tipiAttoLucene) +" AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
 					+ " TO " + this.dataSedutaA + " ]";
 			sp.setQuery(query);
 			sp.addSort(sortField1, false);
@@ -137,8 +133,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				if(commReferenteList!=null)
 				for (String commissioneReferenteMulti : commReferenteList)
 					commReferente += commissioneReferenteMulti + " ";
-				String relatore = (String) this.getNodeRefProperty(
-						attoProperties, "relatori");
+				String relatore ="relatoreAttivo";
 				String relazioneScritta = getRelazioneScritta(currentAtto);
 				String noteGenerali = (String) this.getNodeRefProperty(
 						attoProperties, "noteChiusura");			
@@ -175,6 +170,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 	}
 	
 	private String getRelazioneScritta(NodeRef currentAtto) {
+		/*c'è un qualche problema qui, viene fuori un nodeRef Null*/
 		NodeRef aulaFolder =  nodeService.getChildByName(currentAtto, ContentModel.ASSOC_CONTAINS, "Aula");
 		return (String) nodeService.getProperty(aulaFolder, QName.createQName(CRL_ATTI_MODEL,"relazioneScrittaAula"));
 	}
