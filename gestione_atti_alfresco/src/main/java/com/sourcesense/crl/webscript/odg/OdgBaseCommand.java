@@ -20,6 +20,7 @@ import org.alfresco.service.namespace.RegexQNamePattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sourcesense.crl.util.AttoUtil;
 import com.sourcesense.crl.webscript.template.LetteraGenericaAulaCommand;
 
 
@@ -29,24 +30,12 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	protected SearchService searchService;
 	protected NodeService nodeService;
 	protected ServiceRegistry serviceRegistry;
+	protected AttoUtil attoUtil;
 	
 	private static Log logger = LogFactory.getLog(OdgBaseCommand.class);
 	
-	// crl namespaces
-	protected static final String CRL_ATTI_MODEL = "http://www.regione.lombardia.it/content/model/atti/1.0";
-	
-	// crl type
-	protected static final String TYPE_LEGISLATURA = "legislaturaAnagrafica";
 	
 	
-	// crl properties
-	protected static final String PROP_DATA_SEDUTA = "dataSedutaSedutaODG";
-	protected static final String PROP_ORARIO_INIZIO_SEDUTA = "dalleOreSedutaODG";
-	protected static final String PROP_ORARIO_FINE_SEDUTA = "alleOreSedutaODG";
-	protected static final String PROP_OGGETTO_ATTO = "oggetto";
-	
-	// crl associations
-	protected static final String ASSOC_ATTO_TRATTATO_SEDUTA = "attoTrattatoSedutaODG";
 	
 	
 	
@@ -65,28 +54,6 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	}
 	
 	
-	public NodeRef getLegislaturaCorrente(){
-		
-		NodeRef legislatura = null;
-    	
-        String legislaturaType = "{"+CRL_ATTI_MODEL+"}"+TYPE_LEGISLATURA;
-        
-        StoreRef storeRef = new StoreRef("workspace://SpacesStore");
-        
-		// Get legislature
-    	ResultSet legislatureNodes = searchService.query(storeRef,
-  				SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/*\" AND TYPE:\""+legislaturaType+"\" AND @crlatti\\:correnteLegislatura:\"true\"");
-		
-    	if(legislatureNodes.length() > 1){
-			logger.error("Piu' di una legislatura attiva presente. Non e' stato possibile determinare la legislatura attiva.");
-		}else if(legislatureNodes.length() == 0){
-			logger.error("Nessuna legislatura attiva presente.. Non e' stato possibile determinare la legislatura attiva.");
-		}else{
-			legislatura = legislatureNodes.getNodeRef(0);
-		}
-    	
-    	return legislatura;
-	}
 	
 	
 	
@@ -110,7 +77,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
    
     		
     		List<AssociationRef> attiTrattatiAssociati = nodeService.getTargetAssocs(attoTrattatoODGNodeRef,
-    				QName.createQName(CRL_ATTI_MODEL, ASSOC_ATTO_TRATTATO_SEDUTA));
+    				QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.ASSOC_ATTO_TRATTATO_SEDUTA));
     		
     		if(attiTrattatiAssociati.size() > 0){
     			attiTrattati.add(attiTrattatiAssociati.get(0).getTargetRef());    		}
@@ -121,7 +88,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	}
 	
 
-
+	
 
 	public ContentService getContentService() {
         return contentService;
@@ -154,5 +121,14 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	public void setServiceRegistry(ServiceRegistry serviceRegistry) {
 		this.serviceRegistry = serviceRegistry;
 	}
+
+	public AttoUtil getAttoUtil() {
+		return attoUtil;
+	}
+
+	public void setAttoUtil(AttoUtil attoUtil) {
+		this.attoUtil = attoUtil;
+	}
     
+	
 }

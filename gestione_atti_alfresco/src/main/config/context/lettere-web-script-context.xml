@@ -3,6 +3,15 @@
 
 <beans>
 
+	   <bean id="attoUtil" class="com.sourcesense.crl.util.AttoUtil"> 
+			<property name="searchService">
+				<ref bean="SearchService" />
+			</property>
+	    	<property name="nodeService">
+	    		<ref bean="NodeService" />
+	    	</property>
+		</bean> 
+
 	<bean id="letteraBaseCommand" class="com.sourcesense.crl.webscript.template.LetteraBaseCommand" abstract="true"> 
 		<property name="searchService">
 			<ref bean="SearchService" />
@@ -16,6 +25,9 @@
 	    <property name="serviceRegistry">
             <ref bean="ServiceRegistry"/>
         </property>
+        <property name="attoUtil">
+			<ref bean="attoUtil" />
+		</property>
 	</bean> 
 	
 	<bean id="letteraGenericaServCommCommand" class="com.sourcesense.crl.webscript.template.LetteraGenericaServCommCommand" parent="letteraBaseCommand" />

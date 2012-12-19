@@ -90,114 +90,36 @@ public class TemplateFiller {
 
 	 }
 	 
-	 
-	 
-//	 public static byte[] searchAndReplaceDocx(byte[] documentByteArray , HashMap<String, String> replacements) throws IOException {
-//	  	
-//		 try{
-//		 
-//		 XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(documentByteArray));
-//		 	
-//		 
-//			
-//         List<XWPFParagraph> paragraphs = document.getParagraphs();
-//
-//			// Recover a Set of the keys in the HashMap
-//			Set<String> keySet = replacements.keySet();
-//			XWPFParagraph paragraph;
-//		
-//			XWPFRun run = null;
-//			Iterator<String> keySetIterator = null;
-//			String text = null;
-//			String key = null;
-//			String value = null;
-//		
-//			// Step through each Paragraph
-//			for(int i = 0; i < paragraphs.size(); i++) {
-//				paragraph = paragraphs.get(i);
-//				
-//				 List<XWPFRun> runs = paragraph.getRuns();
-//				
-//				for(int j=0; j < runs.size(); j++) {
-//					
-//					run = runs.get(j);
-//					
-//					// Get the text from the CharacterRun 
-//					text = run.getText(0);
-//					
-//					// KeySet Iterator
-//					if(text!=null){
-//						keySetIterator = keySet.iterator();
-//						while(keySetIterator.hasNext()) {
-//			
-//							// check the key in CharacterRuns text
-//						    key = keySetIterator.next();
-//						    if(text.contains(key)) {
-//						    	
-//						    	// replace term
-//						    	if(replacements.get(key)!=null){
-//						    		value = replacements.get(key);
-//						    	}else{
-//						    		value = "";
-//						    	}
-//						        int start = text.indexOf(key);
-//						        
-//						        String newText = text.replaceAll(key, value);
-//						        
-//						        
-//						        // charRun.replaceText(key, value, start);
-//						        
-//						        run.setText(newText,0);
-//						        //saveTemp(document);
-//						    }
-//						}
-//					}
-//				}
-//			}
-//
-//			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-//			document.write(ostream);
-//			return ostream.toByteArray();
-//			
-//		 }catch (Exception e) {
-//			 e.printStackTrace();
-//			 return null;
-//		 }
-//
-//	 }
-	 
-	
-	 
-	 
-//	 public static byte[] createAttiTrattatiRows(byte[] documentByteArray ,List<NodeRef> attiTrattati) throws IOException {
-//	  		
-//		 
-//		 XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(documentByteArray));
-//		 List<XWPFParagraph> paragraphs = document.getParagraphs();
-//
-//		 List<XWPFTable> tables = document.getTables();
-//		 
-//		 for (int x=0; x<tables.size();x++) {
-//			 XWPFTable table = tables.get(x);
-//			 
-//			 List<XWPFTableRow> tableRows = table.getRows();
-//
-//			 table.insertNewTableRow(0);
-//		 
-//		 }	 
-//		 
-//			
-//			
-//			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-//			document.write(ostream);
-//			return ostream.toByteArray();
-//			
-//			
-//			
-//
-//	 }
-	 
-	 
+	 public static byte[] createAttiTrattatiRows(byte[] documentByteArray ,List<NodeRef> attiTrattati) throws IOException {
+	  		
+		 
+			HWPFDocument document = new HWPFDocument(new ByteArrayInputStream(documentByteArray));
+
+			Range docRange = document.getRange();
+			int numParagraphs = docRange.numParagraphs();
+			
+			Paragraph paragraph = null;
+			CharacterRun charRun = null;
+				
+			// Step through each Paragraph
+			for(int i = 0; i < numParagraphs; i++) {
+				paragraph = docRange.getParagraph(i);
+				
+				
+				
+				 
+			}
+				
+				
+			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+			document.write(ostream);
+			return ostream.toByteArray();
+			
+			
+			
+
+	 }
+
 	 
 	 
 
