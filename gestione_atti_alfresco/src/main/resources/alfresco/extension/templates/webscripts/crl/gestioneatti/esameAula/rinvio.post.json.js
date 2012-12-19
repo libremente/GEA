@@ -67,7 +67,7 @@ if(checkIsNotNull(id)
 	var passaggioSpaceTemplateNode = search.luceneSearch(passaggioSpaceTemplateQuery)[0];
 	var nuovoPassaggioFolderNode = passaggioSpaceTemplateNode.copy(passaggiFolderNode, true); // deep copy
 	
-	nuovoPassaggioFolderNode.properties["cm:name"] = "Passaggio"+indiceNuovoPassaggio;
+	nuovoPassaggioFolderNode.name = "Passaggio"+indiceNuovoPassaggio;
 	nuovoPassaggioFolderNode.save();
 	
 	// creo le commissioni e popolo i metadati già decisi in presentazione e assegnazione (prendo i dati del passaggio corrente)
@@ -95,7 +95,7 @@ if(checkIsNotNull(id)
 		var commissioneTempNode = nuoveCommissioniFolderNode.childrenByXPath(commissioneXPathQuery)[0];
 		
 		// setting dei valori iniziali della commissione a partire dai valori assegnati alla commissione nel passaggio corrente
-		commissioneTempNode.properties["cm:name"] = commissioneNodeList[i].properties["cm:name"];
+		commissioneTempNode.name = commissioneNodeList[i].properties["cm:name"];
 		commissioneTempNode.properties["crlatti:dataAssegnazioneCommissione"] = commissioneNodeList[i].properties["crlatti:dataAssegnazioneCommissione"];
 		commissioneTempNode.properties["crlatti:dataAnnulloCommissione"] = commissioneNodeList[i].properties["crlatti:dataAnnulloCommissione"];
 		commissioneTempNode.properties["crlatti:dataPropostaCommissione"] = commissioneNodeList[i].properties["crlatti:dataPropostaCommissione"];

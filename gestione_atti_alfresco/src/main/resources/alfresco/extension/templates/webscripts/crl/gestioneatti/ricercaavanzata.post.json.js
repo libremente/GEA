@@ -405,14 +405,19 @@ if(checkIsNotNull(dataLr)){
 if(checkIsNotNull(statiUtente)){
 	var numeroStatiUtente = statiUtente.length();
 	if(numeroStatiUtente>0){
+		luceneQuery = verifyAND(luceneQuery);
 		luceneQuery += " ( ";
 		for (var j=0; j<numeroStatiUtente; j++){
-			var statoAtto = statiUtente.get(j).get("StatoAtto");
+			var statoAtto = statiUtente.get(j).get("statoAtto");
 			if(checkIsNotNull(statoAtto)){
 				var descrizioneStatoAtto = statoAtto.get("descrizione");
 				if(checkIsNotNull(descrizioneStatoAtto)){
-					luceneQuery = verifyOR(luceneQuery);
+					//luceneQuery = verifyOR(luceneQuery);
 					luceneQuery += "@crlatti\\:statoAtto:\""+descrizioneStatoAtto+"\"";
+					if(j<numeroStatiUtente-1){
+						luceneQuery = verifyOR(luceneQuery);
+					}
+					
 				}
 			}
 		}

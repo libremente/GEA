@@ -121,7 +121,7 @@ if(checkIsNotNull(id)){
 				
 				var commissioneXPathQuery = "*[@cm:name='Commissione']";
 				commissioneNode = commissioniFolderNode.childrenByXPath(commissioneXPathQuery)[0];
-				commissioneNode.properties["cm:name"] = descrizione;
+				commissioneNode.name = descrizione;
 			}
 			
 			attoNode.setPermission("Coordinator", "GROUP_"+getLegislaturaCorrente()+"_"+descrizione);
@@ -226,7 +226,7 @@ if(checkIsNotNull(id)){
 			
 			var parereXPathQuery = "*[@cm:name='Parere']";
 			parereNode = pareriFolderNode.childrenByXPath(parereXPathQuery)[0];
-			parereNode.properties["cm:name"] = descrizione;
+			parereNode.name = descrizione;
 			
 		}
 		

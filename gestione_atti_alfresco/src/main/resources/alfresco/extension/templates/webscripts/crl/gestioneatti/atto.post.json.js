@@ -350,7 +350,7 @@ if(nodeType=="crlatti:attoEac"){
 		var passaggioSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Passaggio\"";
 		var passaggioSpaceTemplateNode = search.luceneSearch(passaggioSpaceTemplateQuery)[0];
 		var passaggioFolderNode = passaggioSpaceTemplateNode.copy(passaggiFolderNode, true); // deep copy
-		passaggioFolderNode.properties["cm:name"] = "Passaggio1";
+		passaggioFolderNode.name = "Passaggio1";
 		passaggioFolderNode.save();
 		
 		model.atto = attoFolderNode;

@@ -106,7 +106,7 @@ if(checkIsNotNull(provenienza)){
 		var linksFolderNode = sedutaFolderNode.childrenByXPath(linksFolderXPathQuery)[0];
 		
 		for (var i=0; i<links.length(); i++){
-			var link = links.get(i);
+			var link = links.get(i).get("link");
 			var descrizione = link.get("descrizione");
 			var indirizzo = link.get("indirizzo");
 			

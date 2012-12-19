@@ -50,7 +50,7 @@ if(checkIsNotNull(id)){
 			
 			var consXPathQuery = "*[@cm:name='Consultazione']";
 			consultazioneNode = consultazioniFolderNode.childrenByXPath(consXPathQuery)[0];
-			consultazioneNode.properties["cm:name"] = descrizione;
+			consultazioneNode.name = descrizione;
 			
 			// creo la seduta con la data della consultazione per la commissione corrente
 			
