@@ -365,7 +365,7 @@
 	</p:fieldset>
 
 	<p:fieldset legend="Trasmissione" collapsed="false" toggleable="true"
-		toggleSpeed="500" rendered="#{!navigationBean.isSessionAttoPAR()}">
+		toggleSpeed="500" rendered="#{navigationBean.canTransmitToAula()}">
 		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
 			<p:row>
 			<p:column>

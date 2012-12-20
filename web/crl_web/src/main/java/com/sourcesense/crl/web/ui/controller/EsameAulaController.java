@@ -274,7 +274,13 @@ public class EsameAulaController {
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setAula((Aula) aulaUser.clone());
 
-		if (atto.getStato().equals(StatoAtto.TRASMESSO_AULA)) {
+		if (atto.getStato().equals(StatoAtto.TRASMESSO_AULA)
+				|| ( "PDA".equals(atto.getTipoAtto()) 
+					&& "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equals(atto.getTipoIniziativa()) )
+				|| "ORG".equals(atto.getTipoAtto())	
+				)
+				
+				 {
 			atto.setStato(StatoAtto.PRESO_CARICO_AULA);
 		}
 
@@ -290,7 +296,11 @@ public class EsameAulaController {
 		attoBean.getWorkingAula().setRelazioneScritta(
 				aulaUser.getRelazioneScritta());
 
-		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)) {
+		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)
+				|| ( "PDA".equals(attoBean.getTipoAtto()) 
+						&& "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equals(attoBean.getTipoIniziativa()) )
+					|| "ORG".equals(attoBean.getTipoAtto())	
+				) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
 		}
 		
@@ -1520,18 +1530,17 @@ public class EsameAulaController {
 
 	public void confermaRelatori() {
 
-		// if (relatoriList.size() > 0) {
 
 		atto.setRelatori(relatoriList);
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		// attoServiceManager.salvaCollegamenti(atto)
+		attoServiceManager.salvaRelatoriAula(atto);
 
 		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
 		context.addMessage(
 				null,
 				new FacesMessage(
-						"Relatori associati all'atto. Premere Salva per confermare modifiche",
+						"Relatori associati all'atto. ",
 						""));
 
 		// }

@@ -216,6 +216,13 @@ public class AttoServiceManager implements ServiceManager {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_collegamenti", null), atto);
 	}
 	
+	
+	
+	
+	public void salvaRelatoriAula(Atto atto) {
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_relatori_aula", null), atto);
+	}
+	
 	public void chiusuraAtto(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_chiusura_atto", null), atto);
 	}

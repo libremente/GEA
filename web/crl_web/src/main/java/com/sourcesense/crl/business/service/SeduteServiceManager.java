@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.service;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.GestioneSedute;
+import com.sourcesense.crl.business.model.Report;
 import com.sourcesense.crl.business.model.Seduta;
 import com.sourcesense.crl.business.service.rest.AulaService;
 import com.sourcesense.crl.business.service.rest.SeduteService;
@@ -44,6 +46,13 @@ public class SeduteServiceManager implements ServiceManager{
 	
 	public void salvaOdg(Seduta seduta) {
 		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
+	}
+	
+	
+	public InputStream getODGFile(String tipoTemplate,String idSeduta,String gruppo ) {
+        //alf_retrieve_report_bin=crl/template/report/creareport?json={0}&tipoTemplate={1} 
+		return seduteService.getFile(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,gruppo}));
 	}
 	
 	

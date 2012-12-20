@@ -81,6 +81,22 @@
 		</p:column>
 		
 	</p:row>  
+	
+	<p:row >
+		<p:column>
+		Relazione scritta:
+		</p:column>
+		<p:column><div id="relazioneScrittaDiv">
+			<p:selectOneMenu id="relazioneScrittapdaorg"
+				value="#{esameAulaController.relazioneScritta}">
+				<f:selectItem itemLabel="Sì" itemValue="Sì" />
+				<f:selectItem itemLabel="No" itemValue="No" />
+				<p:ajax event="change"
+					listener="#{esameAulaController.updateVotazioneHandler}" />
+			</p:selectOneMenu></div>
+		</p:column>
+	</p:row>
+	
 </p:panelGrid>
 
 <div id="blockedDati">
@@ -564,5 +580,30 @@ $('#blockedDati').block({ message: 'Pagina bloccata!<br />Prendere in carico per
 	'border-radius':		'10px'
 }, });
 };
+
+
+
+function unblockDiv() { 
+    $('#blockedDati').unblock(); 
+    $('#blockedVotazione').unblock(); 
+    $('#blockedEmendamenti').unblock(); 
+    $('#blockedRinvioStralci').unblock(); 
+    $('#blockedNote').unblock(); 
+    location.reload();
+   };
+   
+if ( #{navigationBean.esameAulaDisabled()}==true) {
+   $.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#presaInCaricoDiv').block({ message: null } );
+   $('#DataPresaInCaricoDiv').block({ message: null } );
+   $('#relazioneScrittaDiv').block({ message: null } );}
+   
+if ( #{esameAulaController.readonly}==true || #{navigationBean.isGuest()}==true) {
+	   $.blockUI.defaults.overlayCSS.opacity = 0; 
+	   $('#presaInCaricoDiv').block({ message: null } );
+	   $('#DataPresaInCaricoDiv').block({ message: null } );
+	   $('#relazioneScrittaDiv').block({ message: null } );
+	   $('#blockedVotazione').block({ message: null } );}
+
 </script>
 </html>

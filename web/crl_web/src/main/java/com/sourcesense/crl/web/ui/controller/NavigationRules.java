@@ -214,7 +214,7 @@ public class NavigationRules {
 	}
   
   public boolean emendamentiEnabled(){
-    return isSessionAttoPDL() || isSessionAttoPDA_UDP();
+    return isSessionAttoPDL() || isSessionAttoPDA_UDP() || isSessionAttoORG();
   }
   
   
@@ -223,7 +223,7 @@ public class NavigationRules {
   }
   
   public boolean rinvioEStralciEnabled(){
-    return (!isSessionAttoDOC() && !isSessionAttoPDA_UDP());
+    return (!isSessionAttoDOC() && !isSessionAttoPDA_UDP() && !isSessionAttoORG());
   }
 	
 	public boolean stralciAulaEnabled() {
@@ -327,6 +327,32 @@ public class NavigationRules {
 	
 	public boolean isSessionAttoDOC() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("DOC");
+	}
+	
+	
+	public boolean isNotSessionAttoDOCAula() {
+		return attoBean.getTipoAtto().equalsIgnoreCase("DOC") 
+	    && !attoBean.getAtto().isIterAula();
+	}
+	
+	public boolean canTransmitToAula(){
+		
+		
+		if (isCommissioneConsultiva() ){
+			
+			return false;
+		}
+        
+		if(isSessionAttoPAR()){
+			
+			return false;
+		}
+		
+		
+		
+		
+		return true;
+		
 	}
 	
 	public boolean isSessionAttoPDA() {

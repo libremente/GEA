@@ -71,7 +71,7 @@
 		</p:column>
 	</p:row>
 	
-  <p:row rendered="#{!navigationBean.sessionAttoPDA_UDP}">
+  <p:row rendered="#{!navigationBean.sessionAttoPDA_UDP and !navigationBean.isSessionAttoORG()}">
 	
 		<p:column>
 		
@@ -94,7 +94,7 @@
 		</p:column>
 		
 	</p:row>
-	<p:row>
+	<p:row rendered="#{!navigationBean.sessionAttoPDA_UDP and !navigationBean.isSessionAttoORG()}">
 		<p:column>
 		Relazione scritta:
 		</p:column>
@@ -277,7 +277,7 @@
 						</p:column>
 
 							<p:column sortBy="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}">
-								<f:facet name="header">Azioni</f:facet>
+								<f:facet name="header">Formato</f:facet>
 								<h:outputText
 									value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
 

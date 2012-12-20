@@ -1,5 +1,6 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import java.io.InputStream;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoTrattato;
@@ -66,6 +70,8 @@ public class GestioneSeduteController {
 	private String linkToDelete;
 	private String nomeLink;
 	private String urlLink;
+
+	private StreamedContent file;
 
 	private List<Date> dateSedute = new ArrayList<Date>();
 
@@ -155,24 +161,24 @@ public class GestioneSeduteController {
 
 		for (Seduta seduta : seduteListAll) {
 
-			
-			
-			if (    getDataSedutaDa() != null
+			if (getDataSedutaDa() != null
 					&& getDataSedutaA() != null
-					&& seduta.getDataSeduta().getTime() - dataSedutaDa.getTime() >= 0 
-					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime()  <= 86399999) {
-				
-				seduteList.add((Seduta) seduta.clone());
-
-			} else if (getDataSedutaDa() != null 
-					   && getDataSedutaA() == null
-					   && seduta.getDataSeduta().getTime() - dataSedutaDa.getTime() >= 0) {
+					&& seduta.getDataSeduta().getTime()
+							- dataSedutaDa.getTime() >= 0
+					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
 
 				seduteList.add((Seduta) seduta.clone());
 
-			} else if (getDataSedutaDa() == null 
-					   && getDataSedutaA() != null
-					   && seduta.getDataSeduta().getTime() - dataSedutaA.getTime()  <= 86399999) {
+			} else if (getDataSedutaDa() != null
+					&& getDataSedutaA() == null
+					&& seduta.getDataSeduta().getTime()
+							- dataSedutaDa.getTime() >= 0) {
+
+				seduteList.add((Seduta) seduta.clone());
+
+			} else if (getDataSedutaDa() == null
+					&& getDataSedutaA() != null
+					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
 
 				seduteList.add((Seduta) seduta.clone());
 			}
@@ -699,6 +705,51 @@ public class GestioneSeduteController {
 		Collections.sort(attiTrattati);
 		return attiTrattati;
 
+	}
+
+	public StreamedContent getFile() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		if (sedutaSelected != null) {
+
+			UserBean userBean = ((UserBean) context.getExternalContext()
+					.getSessionMap().get("userBean"));
+
+			String tipoTemplate = "";
+			String gruppo = userBean.getUser().getSessionGroup().getNome();
+			String nomeFile = "";
+			Format formatter = new SimpleDateFormat("dd_MM_yyyy");
+			
+			if (GruppoUtente.AULA.equals(gruppo)) {
+
+				tipoTemplate = "crlodg:odgGenericoAulaDocument";
+				nomeFile = "ODG_Aula_" + formatter.format(sedutaSelected.getDataSeduta()) ;
+
+			} else {
+
+				tipoTemplate = "crlodg:odgGenericoCommissioniDocument";
+				nomeFile = "ODG_"+gruppo+"_" + formatter.format(sedutaSelected.getDataSeduta()) ;
+			}
+
+			InputStream stream = seduteServiceManager.getODGFile(tipoTemplate,
+					sedutaSelected.getIdSeduta(), gruppo);
+			StreamedContent file = new DefaultStreamedContent(stream,
+					"document", nomeFile + ".docx");
+			return file;
+
+		} else {
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Selezionare una Seduta ", ""));
+
+			return null;
+		}
+
+	}
+	
+	public void setFile(StreamedContent file) {
+		this.file = file;
 	}
 
 	// Getters & Setters***********************************

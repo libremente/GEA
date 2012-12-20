@@ -30,7 +30,7 @@
 
 				<p:commandButton id="confirmAttoTrattato" value="Conferma"
 					oncomplete="attoTrattatoDialog.hide()"
-					action="#{gestioneSeduteController.removeAttoTrattato}"
+					action="#{gestioneSeduteController.removeAttoTrattato()}"
 					update="listaAttiTrattati" />
 				<p:commandButton id="declineAttoTrattato" value="Annulla"
 					onclick="attoTrattatoDialog.hide()" type="button" />
@@ -58,8 +58,8 @@
 
 						<div>
 
-						
-					<p:panelGrid id="searchPanel" style="text-align:left;">
+
+							<p:panelGrid id="searchPanel" style="text-align:left;">
 
 								<p:messages id="msgs" />
 
@@ -222,8 +222,8 @@
 
 
 
-						
-					<p:panelGrid id="RicercaAvanzataPanel" style="text-align:left">
+
+							<p:panelGrid id="RicercaAvanzataPanel" style="text-align:left">
 
 								<p:row>
 									<p:column style="text-align:left;height:50px" colspan="6">
@@ -751,10 +751,14 @@
 					<!-- target="_blank" onclick="window.open('atto?numeroatto=#{atto.numeroAtto}', '_blank');window.focus(); return false;"-->
 					<c:set value="#{atto.id}" var="idAttoParam" />
 					<c:set value="#{atto.tipo}" var="tipoAttoParam" />
-					<h:commandLink  action="#{searchAttoController.attoDetail()}"
+					<h:commandLink action="#{searchAttoController.attoDetail()}"
 						target="_blank">
-						<f:setPropertyActionListener target="#{searchAttoController.idAttoSelected}" value="#{idAttoParam}"/>
-						<f:setPropertyActionListener target="#{searchAttoController.tipoAttoSelected}" value="#{tipoAttoParam}"/>
+						<f:setPropertyActionListener
+							target="#{searchAttoController.idAttoSelected}"
+							value="#{idAttoParam}" />
+						<f:setPropertyActionListener
+							target="#{searchAttoController.tipoAttoSelected}"
+							value="#{tipoAttoParam}" />
 						<h:outputText value="#{atto.numeroAtto}" />
 					</h:commandLink>
 				</p:column>
@@ -768,8 +772,9 @@
 				<p:column headerText="Azioni">
 
 					<p:commandButton
-						action="#{gestioneSeduteController.addAttoTrattato}" title="Aggiungi ad Atti Trattati"
-						value="" style="width:25px;height:25px;" immediate="true"
+						action="#{gestioneSeduteController.addAttoTrattato}"
+						title="Aggiungi ad Atti Trattati" value=""
+						style="width:25px;height:25px;" immediate="true"
 						update=":gestioneSeduteForm:gestioneSedute" icon="new-icon">
 						<f:setPropertyActionListener value="#{atto.id}"
 							target="#{gestioneSeduteController.attoDaTrattare}" />
@@ -799,9 +804,10 @@
 						</p:selectOneMenu>
 					</p:column>
 					<p:column>
-						<h:commandLink value="Stampa ODG" id="stampaODG">
-
-						</h:commandLink>
+						<p:commandButton value="Stampa ODG" id="stampaODG" 
+						onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false" >               
+			                  <p:fileDownload value="#{gestioneSeduteController.file}" />
+						</p:commandButton>
 					</p:column>
 				</p:row>
 				<p:row>
@@ -813,7 +819,8 @@
 								<th>Ordine del Giorno per la seduta del <h:outputText
 										value="#{gestioneSeduteController.dataSedutaSelected}">
 										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText></th>
+									</h:outputText>
+								</th>
 
 							</thead>
 						</table>
@@ -848,18 +855,22 @@
 
 					<p:column sortBy="#{attoTrattato.atto.numeroAtto}"
 						headerText="N.Atto" style="width:125px">
-					
-				    <c:set value="#{attoTrattato.atto.id}" var="idAttoParam" />
-					<c:set value="#{attoTrattato.atto.tipo}" var="tipoAttoParam" />
-					<h:commandLink  action="#{searchAttoController.attoDetail()}"
-						target="_blank">
-						<f:setPropertyActionListener target="#{searchAttoController.idAttoSelected}" value="#{idAttoParam}"/>
-						<f:setPropertyActionListener target="#{searchAttoController.tipoAttoSelected}" value="#{tipoAttoParam}"/>
-						<h:outputText value="#{attoTrattato.atto.numeroAtto}" />
-					</h:commandLink> 
-				
-				
-				</p:column>
+
+						<c:set value="#{attoTrattato.atto.id}" var="idAttoParam" />
+						<c:set value="#{attoTrattato.atto.tipo}" var="tipoAttoParam" />
+						<h:commandLink action="#{searchAttoController.attoDetail()}"
+							target="_blank">
+							<f:setPropertyActionListener
+								target="#{searchAttoController.idAttoSelected}"
+								value="#{idAttoParam}" />
+							<f:setPropertyActionListener
+								target="#{searchAttoController.tipoAttoSelected}"
+								value="#{tipoAttoParam}" />
+							<h:outputText value="#{attoTrattato.atto.numeroAtto}" />
+						</h:commandLink>
+
+
+					</p:column>
 
 					<p:column sortBy="#{attoTrattato.atto.oggetto}"
 						headerText="Oggetto" style="width:125px">
@@ -901,13 +912,18 @@
 
 					<p:column headerText="Modifica" style="width:50px">
 						<p:rowEditor />
-            <p:commandButton update="listaAttiTrattati"
-              action="#{gestioneSeduteController.removeAttoTrattato()}"
-              icon="delete-icon">
 
-              <f:setPropertyActionListener value="#{attoTrattato.atto.id}"
-                target="#{gestioneSeduteController.idAttoTrattatoToDelete}" />
-            </p:commandButton>            
+					</p:column>
+
+					<p:column headerText="Elimina">
+
+						<p:commandButton update="listaAttiTrattati"
+							oncomplete="attoTrattatoDialog.show()"
+							icon="delete-icon">
+
+							<f:setPropertyActionListener value="#{attoTrattato.atto.id}"
+								target="#{gestioneSeduteController.idAttoTrattatoToDelete}" />
+						</p:commandButton>
 					</p:column>
 
 				</p:dataTable>

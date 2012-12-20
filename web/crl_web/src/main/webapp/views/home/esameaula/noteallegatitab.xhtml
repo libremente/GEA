@@ -16,7 +16,7 @@
 
 
 <div id="blockedNote">
-	<p:panelGrid styleClass="infoTable" id="notePanel">
+	<p:panelGrid styleClass="infoTable" id="notePanel">               
 		<p:row>
 			<p:column>
 				<p>
@@ -144,7 +144,7 @@
 
 									<p:column
 										sortBy="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}">
-										<f:facet name="header">Azioni</f:facet>
+										<f:facet name="header">Formato</f:facet>
 										<h:outputText
 											value="#{fn:substring(allegato.nome, fn:indexOf(allegato.nome,'.') ,fn:length(allegato.nome) )}" />
 

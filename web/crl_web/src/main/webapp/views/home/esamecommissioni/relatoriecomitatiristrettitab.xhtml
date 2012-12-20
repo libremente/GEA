@@ -79,7 +79,8 @@
 					<p:row>
 						<p:column>
 							<h:outputLabel for="DataSeduta" value="Data seduta: " />
-							<p:calendar size="10" locale="it" id="DataSeduta" pattern="dd/MM/yyyy"
+							<p:calendar size="10" locale="it" id="DataSeduta"
+								pattern="dd/MM/yyyy"
 								value="#{esameCommissioniController.currentDataSeduta}">
 								<p:ajax event="dateSelect" immediate="true">
 								</p:ajax>
@@ -161,14 +162,16 @@
 		</p:column>
 		<p:column>
 			<div id="dataScadenza">
-			<p:calendar id="datascadenza" value="#{esameCommissioniController.dataScadenza}" locale="it" pattern="dd/MM/yyyy">
-			
-			</p:calendar>
-			<!-- <p:inputText size="10" readonly="true" id="datascadenza"
+				<p:calendar id="datascadenza" size="10"
+					value="#{esameCommissioniController.dataScadenza}" locale="it"
+					pattern="dd/MM/yyyy">
+
+				</p:calendar>
+				<!-- <p:inputText size="10" readonly="true" id="datascadenza"
 					value="#{esameCommissioniController.dataScadenza}">
 				<f:convertDateTime locale="it" pattern="dd/MM/yyyy"></f:convertDateTime>
 			</p:inputText>-->
-				
+
 			</div>
 		</p:column>
 	</p:row>
@@ -196,8 +199,10 @@
 								<p:selectOneMenu id="relatore"
 									value="#{esameCommissioniController.nomeRelatore}">
 									<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
-									<f:selectItems var="relatore" itemLabel="#{relatore.descrizione }" itemValue="#{relatore.descrizione}"
-									value="#{esameCommissioniController.relatori}" />
+									<f:selectItems var="relatore"
+										itemLabel="#{relatore.descrizione }"
+										itemValue="#{relatore.descrizione}"
+										value="#{esameCommissioniController.relatori}" />
 								</p:selectOneMenu>
 							</p:column>
 
@@ -240,8 +245,8 @@
 							<h:outputText value="#{relatore.descrizione}" />
 						</p:column>
 
-						<p:column headerText="Data nomina" sortBy="#{relatore.dataNomina}" >
- 							
+						<p:column headerText="Data nomina" sortBy="#{relatore.dataNomina}">
+
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{relatore.dataNomina}">
@@ -256,7 +261,8 @@
 
 						</p:column>
 
-						<p:column headerText="Data fine incarico" sortBy="#{relatore.dataUscita}">
+						<p:column headerText="Data fine incarico"
+							sortBy="#{relatore.dataUscita}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -305,26 +311,27 @@
 		</p:panelGrid>
 
 	</p:fieldset>
-	<p:fieldset rendered="#{!navigationBean.isCommissioneConsultiva()  and !navigationBean.isSessionAttoPAR()}"
-		legend="Gestione comitati ristretti/Gruppi di lavoro" collapsed="false"
-		toggleable="true" toggleSpeed="500">
+	<p:fieldset
+		rendered="#{!navigationBean.isCommissioneConsultiva()  and !navigationBean.isSessionAttoPAR()}"
+		legend="Gestione comitati ristretti/Gruppi di lavoro"
+		collapsed="false" toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable"
 			id="gestionecomitatiristrettipanel">
 			<p:row>
-				
+
 				<p:column style="width:200px">
 
 					<b> <h:outputLabel for="dataistituzionecomitato"
 							value="Data istituzione Comitato: " /> </b>
 				</p:column>
-				<p:column  colspan="5">
+				<p:column colspan="5">
 					<p>
 						<p:calendar size="10" locale="it" id="dataistituzionecomitato"
 							value="#{esameCommissioniController.dataIstituzioneComitato}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
 						</p:calendar>
-					</p> 
+					</p>
 				</p:column>
 
 			</p:row>
@@ -347,7 +354,9 @@
 								<p:selectOneMenu id="componente"
 									value="#{esameCommissioniController.nomeComponente}">
 									<f:selectItem itemLabel="Scegli Componente" itemValue="" />
-									<f:selectItems var="relatore" itemLabel="#{relatore.descrizione }" itemValue="#{relatore.descrizione}"
+									<f:selectItems var="relatore"
+										itemLabel="#{relatore.descrizione }"
+										itemValue="#{relatore.descrizione}"
 										value="#{esameCommissioniController.membriComitato}" />
 								</p:selectOneMenu>
 							</p:column>
@@ -393,12 +402,14 @@
 						var="componente" styleClass="generalInfoTab grey-text"
 						editable="true">
 
-						<p:column headerText="Componenti" sortBy="#{componente.descrizione}">
-						
-							<h:outputText value="#{componente.descrizione}" />
-    			       </p:column>
+						<p:column headerText="Componenti"
+							sortBy="#{componente.descrizione}">
 
-						<p:column headerText="Data nomina" sortBy="#{componente.dataNomina}">
+							<h:outputText value="#{componente.descrizione}" />
+						</p:column>
+
+						<p:column headerText="Data nomina"
+							sortBy="#{componente.dataNomina}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -415,7 +426,8 @@
 
 						</p:column>
 
-						<p:column headerText="Coordinatore" sortBy="#{componente.coordinatore}">
+						<p:column headerText="Coordinatore"
+							sortBy="#{componente.coordinatore}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -430,7 +442,8 @@
 
 						</p:column>
 
-						<p:column headerText="Data fine incarico" sortBy="#{componente.dataUscita}">
+						<p:column headerText="Data fine incarico"
+							sortBy="#{componente.dataUscita}">
 
 							<p:cellEditor>
 								<f:facet name="output">
@@ -477,7 +490,7 @@
 				</p:column>
 			</p:row>
 			<p:row>
-				
+
 				<p:column colspan="3">
 					<p:commandButton value="Carica Testo del Comitato Ristretto"
 						oncomplete="uploadFileAttributesDialog.show()">
@@ -489,25 +502,28 @@
 
 					<p:dataTable id="listaTestiComitatoRistretto"
 						value="#{esameCommissioniController.testiComitatoRistrettoList}"
-						var="testoComitato" styleClass="generalInfoTab grey-text" editable="true">
-						
-						<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+						var="testoComitato" styleClass="generalInfoTab grey-text"
+						editable="true">
 
-						<p:column sortBy="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}">
+						<p:ajax event="rowEdit" update="@this"
+							listener="#{fileDownloadController.fileUpdate}" />
+
+						<p:column
+							sortBy="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}">
 							<f:facet name="header">Data Seduta</f:facet>
-							<h:outputText  />
-						    <p:cellEditor >
+							<h:outputText />
+							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText 
-								value="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}"/>
+									<h:outputText
+										value="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}" />
 								</f:facet>
-								<f:facet  name="input">
+								<f:facet name="input">
 									<p:calendar pattern="dd/MM/yyyy" locale="it"
-									value="#{testoComitato.dataSeduta}" />
+										value="#{testoComitato.dataSeduta}" />
 								</f:facet>
-							</p:cellEditor> 
-						
-						
+							</p:cellEditor>
+
+
 						</p:column>
 
 						<p:column sortBy="#{testoComitato.nome}">
@@ -515,7 +531,8 @@
 							<h:outputText value="#{testoComitato.nome}" />
 						</p:column>
 
-						<p:column sortBy="#{fn:substring(testoComitato.nome, fn:indexOf(testoComitato.nome,'.')+1 ,fn:length(testoComitato.nome) )}">
+						<p:column
+							sortBy="#{fn:substring(testoComitato.nome, fn:indexOf(testoComitato.nome,'.')+1 ,fn:length(testoComitato.nome) )}">
 							<f:facet name="header">Formato</f:facet>
 							<h:outputText
 								value="#{fn:substring(testoComitato.nome, fn:indexOf(testoComitato.nome,'.')+1 ,fn:length(testoComitato.nome) )}" />
@@ -524,20 +541,17 @@
 
 						<p:column sortBy="#{testoComitato.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
-							
-							<p:cellEditor >
+
+							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="si"
-								rendered="#{testoComitato.pubblico}" />
-							<h:outputText value="no"
-								rendered="#{!testoComitato.pubblico}" />
+									<h:outputText value="si" rendered="#{testoComitato.pubblico}" />
+									<h:outputText value="no" rendered="#{!testoComitato.pubblico}" />
 								</f:facet>
-								<f:facet  name="input">
-									<p:selectBooleanCheckbox 
-									value="#{testoComitato.pubblico}" />
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{testoComitato.pubblico}" />
 								</f:facet>
-							</p:cellEditor> 
-						
+							</p:cellEditor>
+
 						</p:column>
 
 						<p:column>
@@ -564,9 +578,9 @@
 							</p:commandButton>
 
 						</p:column>
-						
+
 						<p:column headerText="Modifica" style="width:50px">
-							<p:rowEditor   />
+							<p:rowEditor />
 						</p:column>
 
 
@@ -582,7 +596,7 @@
 					<p>
 						<p:calendar size="10" locale="it" id="datafinelavori"
 							value="#{esameCommissioniController.dataFineLavori}">
-							
+
 						</p:calendar>
 					</p>
 				</p:column>

@@ -10,7 +10,7 @@
 
 <h:form id="presAssForm" enctype="multipart/form-data">
 
-<!-- <p:ajaxStatus onstart="statusDialog.show();"
+	<!-- <p:ajaxStatus onstart="statusDialog.show();"
 		onsuccess="statusDialog.hide();" />
 	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
 		draggable="false" closable="false">
@@ -20,13 +20,14 @@
 	<p:growl id="tabPresAssMsg" showDetail="true" sticky="false" />
 
 
-	<p:selectOneMenu id="indicatorePassaggioCommissione" style="align: right" 
-	             value="#{esameAulaController.passaggioSelected}" >
-	    <f:selectItems value="#{attoBean.getPassaggi()}"  />
-	    
-	    <p:ajax update="tabView" listener="#{esameAulaController.changePassaggio}" />  
+	<p:selectOneMenu id="indicatorePassaggioCommissione"
+		style="align: right" value="#{esameAulaController.passaggioSelected}">
+		<f:selectItems value="#{attoBean.getPassaggi()}" />
+
+		<p:ajax update="tabView"
+			listener="#{esameAulaController.changePassaggio}" />
 	</p:selectOneMenu>
-	
+
 	<br />
 	<br />
 
@@ -34,25 +35,28 @@
 		<p:ajax event="tabChange"
 			listener="#{esameAulaController.changeTabHandler}"
 			update=":presAssForm:tabPresAssMsg" />
-    
-    <p:tab id="tab0" title="Dati atto" rendered="#{navigationBean.datiAttoEnabled()}">
+
+		<p:tab id="tab0" title="Dati atto"
+			rendered="#{navigationBean.datiAttoEnabled()}">
 
 			<ui:include src="./datitab.xhtml" />
 		</p:tab>
-    
+
 
 		<p:tab id="tab1" title="Votazione">
 
 			<ui:include src="./votazionetab.xhtml" />
 		</p:tab>
 
-    <p:tab rendered="#{navigationBean.emendamentiEnabled()}" id="tab2" title="Emendamenti">
+		<p:tab rendered="#{navigationBean.emendamentiEnabled()}" id="tab2"
+			title="Emendamenti">
 
 			<ui:include src="./emendamentitab.xhtml" />
 
 		</p:tab>
 
-		<p:tab rendered="#{navigationBean.rinvioEStralciEnabled()}" id="tab3" title="Rinvio e Stralci">
+		<p:tab rendered="#{navigationBean.rinvioEStralciEnabled()}" id="tab3"
+			title="Rinvio e Stralci">
 
 
 			<ui:include src="./rinvioestralcitab.xhtml" />

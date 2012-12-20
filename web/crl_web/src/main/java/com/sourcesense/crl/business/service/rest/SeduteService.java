@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.service.rest;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.GestioneSedute;
+import com.sourcesense.crl.business.model.Report;
 import com.sourcesense.crl.business.model.Seduta;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
@@ -229,6 +231,32 @@ public class SeduteService {
 		return seduta;
 
 	}
+	
+	
+	public InputStream getFile(String url) {
+
+		InputStream responseFile = null;
+		
+			
+		
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource.accept(
+				MediaType.MULTIPART_FORM_DATA).get(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException("Errore - "
+					+ response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+
+		responseFile = response.getEntity(InputStream.class);
+		
+				
+		
+		return responseFile;
+
+	}
+	
 	
 	
 }
