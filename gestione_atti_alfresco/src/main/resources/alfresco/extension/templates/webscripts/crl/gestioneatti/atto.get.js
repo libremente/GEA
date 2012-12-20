@@ -6,6 +6,8 @@ var notePresentazioneAssegnazioneNode = null;
 var pareri = null;
 var consultazioni = null;
 var links = null;
+var relatoriAtto = null;
+
 if(checkIsNotNull(id)){
 	attoFolderNode = utils.getNodeFromString(id);
 	
@@ -47,6 +49,14 @@ if(checkIsNotNull(id)){
 		passaggi = passaggiFolderNode.getChildAssocsByType("cm:folder");
 	}
 	
+	// gestione relatori atto ORG
+	var relatoriAttoXPathQuery = "*[@cm:name='RelatoriAtto']";
+	var relatoriAttoFolderNode = attoFolderNode.childrenByXPath(relatoriAttoXPathQuery)[0];
+	
+	if(relatoriAttoFolderNode!=null && relatoriAttoFolderNode!=undefined){
+		relatoriAtto = relatoriAttoFolderNode.getChildAssocsByType("crlatti:relatore");
+	}
+	
 } else {
 	status.code = 400;
 	status.message = "id atto non valorizzato";
@@ -64,3 +74,4 @@ model.consultazioni = consultazioni;
 model.passaggi = passaggi;
 model.atto = attoFolderNode;
 model.tipoAtto = tipoAtto;
+model.relatoriAtto = relatoriAtto;

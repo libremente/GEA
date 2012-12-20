@@ -15,12 +15,18 @@ var dataDgr = filterParam(atto.get("dataDgr"));
 var firmatari = filterParam(atto.get("firmatari"));
 var pubblico = filterParam(atto.get("pubblico"));
 
+var scadenza60gg = filterParam(atto.get("scadenza60gg"));
+var iterAula = filterParam(atto.get("iterAula"));
+
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
 	attoNode.properties["crlatti:classificazione"] = classificazione;
 	attoNode.properties["crlatti:oggetto"] = oggetto;
 	attoNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
 	attoNode.properties["crlatti:pubblico"] = pubblico;
+	
+	attoNode.properties["crlatti:scadenza60gg"] = scadenza60gg;
+	attoNode.properties["crlatti:iterAula"] = iterAula;
 
 	
 	if(checkIsNotNull(dataRepertorio)){

@@ -134,6 +134,8 @@ if(checkIsNotNull(tipoAttoString)){
 		type = "crlatti:attoRef";	
 	} else if(tipoAttoString == "DOC") {
 		type = "crlatti:attoDoc";	
+	} else if(tipoAttoString == "ORG") {
+		type = "crlatti:attoOrg";	
 	}
 }
 

@@ -50,12 +50,49 @@
 	"votazioneUrgenza" : "<#if atto.properties["crlatti:ammissibilitaVotazioneUrgenza"]?exists>${atto.properties["crlatti:ammissibilitaVotazioneUrgenza"]?string("true","false")}<#else></#if>",
 	"dataVotazioneUrgenza":"<#if atto.properties["crlatti:ammissibilitaDataVotazioneUrgenza"]?exists>${atto.properties["crlatti:ammissibilitaDataVotazioneUrgenza"]?string("yyyy-MM-dd")}<#else></#if>",
 	"noteAmmissibilita":"<#if atto.properties["crlatti:ammissibilitaNote"]?exists>${atto.properties["crlatti:ammissibilitaNote"]}<#else></#if>",
+    "scadenza60gg":"<#if atto.properties["crlatti:scadenza60gg"]?exists>${atto.properties["crlatti:scadenza60gg"]?string("true","false")}<#else></#if>",
+    "iterAula":"<#if atto.properties["crlatti:iterAula"]?exists>${atto.properties["crlatti:iterAula"]?string("true","false")}<#else></#if>",
+    
+    <#if tipoAtto == "ORG">
+		"relatori" : [
+			<#if relatoriAtto?exists>
+			<#list relatoriAtto as relatore>
+			{	 
+					"relatore" : 
+					{ 
+						"descrizione" : "${relatore.name}",
+						"dataNomina": "<#if relatore.properties["crlatti:dataNominaRelatore"]?exists>${relatore.properties["crlatti:dataNominaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
+						"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>"
+					}
+			}	
+			<#if relatore_has_next>,</#if>
+			</#list>
+			</#if>
+				
+		],
+	<#else>
+		"relatori" : [<#if atto.properties["crlatti:relatori"]?exists>
+		
+		<#list atto.properties["crlatti:relatori"] as relatore>
+			{ 
+				"relatore" : 
+				{ 
+					"nome" : "${relatore}"
+				}
+			}
+			<#if relatore_has_next>,</#if>
+		</#list>
+		
+			<#else>
+		</#if>],
+	</#if>
     
     
     <#if tipoAtto == "EAC">
 	"note":"<#if atto.properties["crlatti:noteEac"]?exists>${atto.properties["crlatti:noteEac"]}<#else></#if>",
     "dataAtto":"<#if atto.properties["crlatti:dataAtto"]?exists>${atto.properties["crlatti:dataAtto"]?string("yyyy-MM-dd")}<#else></#if>",
 	</#if>
+
     
     <#if tipoAtto == "MIS">
     "dataIniziativaComitato":"<#if atto.properties["crlatti:dataIniziativaComitatoMis"]?exists>${atto.properties["crlatti:dataIniziativaComitatoMis"]?string("yyyy-MM-dd")}<#else></#if>",
@@ -126,20 +163,7 @@
 		}<#if testo_has_next>,</#if>
 	</#list>
 	],
-	"relatori" : [<#if atto.properties["crlatti:relatori"]?exists>
 	
-	<#list atto.properties["crlatti:relatori"] as relatore>
-		{ 
-			"relatore" : 
-			{ 
-				"nome" : "${relatore}"
-			}
-		}
-		<#if relatore_has_next>,</#if>
-	</#list>
-	
-		<#else>
-	</#if>],
 	"organismiStatutari" : [
 		<#if organismiStatutari?exists>
 		<#list organismiStatutari as organismoStatutario>
@@ -478,7 +502,7 @@
 			    			"relazioneScritta": "<#if aula.properties["crlatti:relazioneScrittaAula"]?exists>${aula.properties["crlatti:relazioneScrittaAula"]}<#else></#if>",
 			    			"esitoVotoAula": "<#if aula.properties["crlatti:esitoVotoPassaggioAula"]?exists>${aula.properties["crlatti:esitoVotoPassaggioAula"]}<#else></#if>",
 							"tipologiaVotazione": "<#if aula.properties["crlatti:tipologiaVotazioneAula"]?exists>${aula.properties["crlatti:tipologiaVotazioneAula"]}<#else></#if>",
-							"dataSedutaAula": "<#if aula.properties["crlatti:dataSedutaAula"]?exists>${aula.properties["crlatti:dataSedutaAula"]?string("yyyy-MM-dd")}<#else></#if>",
+							"dataSedutaAula": "<#if aula.properties["crlatti:dataSedutaPassaggioAula"]?exists>${aula.properties["crlatti:dataSedutaPassaggioAula"]?string("yyyy-MM-dd")}<#else></#if>",
 							"numeroDcr": "<#if aula.properties["crlatti:numeroDcrPassaggioAula"]?exists>${aula.properties["crlatti:numeroDcrPassaggioAula"]}<#else></#if>",
 						 	"numeroLcr": "<#if aula.properties["crlatti:numeroLcrPassaggioAula"]?exists>${aula.properties["crlatti:numeroLcrPassaggioAula"]}<#else></#if>",
 						 	"emendato": "<#if aula.properties["crlatti:emendatoAula"]?exists>${aula.properties["crlatti:emendatoAula"]?string("true","false")}<#else></#if>",

@@ -79,6 +79,8 @@ if(username=="protocollo" || username=="admin"){
 					nodeType = "crlatti:attoRef";
 				} else if(tipoAtto=="REL"){
 					nodeType = "crlatti:attoRel";
+				} else if(tipoAtto=="ORG"){
+					nodeType = "crlatti:attoOrg";
 				}
 				
 				//verifica esistenza del folder dell'atto
@@ -133,6 +135,13 @@ if(username=="protocollo" || username=="admin"){
 					var firmatariSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Firmatari\"";
 					var firmatariSpaceTemplateNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
 					firmatariSpaceTemplateNode.copy(attoFolderNode);
+				}
+				
+				//aspect rlatoriAtto: alcuni atti (es:ORG) hanno i relatori direttamente collegati ad atto e non a commissione
+				if(attoFolderNode.hasAspect("crlatti:relatoriAttoAspect")){
+					var relatoriSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:RelatoriAtto\"";
+					var relatoriSpaceTemplateNode = search.luceneSearch(relatoriSpaceTemplateQuery)[0];
+					relatoriSpaceTemplateNode.copy(attoFolderNode);
 				}
 								
 				//gestione tipo iniziativa

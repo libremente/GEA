@@ -39,6 +39,8 @@ if(tipoAtto=="PDL"){
 	nodeType = "crlatti:attoEac";
 } else if(tipoAtto=="MIS"){
 	nodeType = "crlatti:attoMis";
+} else if(tipoAtto=="ORG"){
+	nodeType = "crlatti:attoOrg";
 }
 
 if(nodeType=="crlatti:attoEac"){
@@ -339,6 +341,13 @@ if(nodeType=="crlatti:attoEac"){
 			var firmatariSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Firmatari\"";
 			var firmatariSpaceTemplateNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
 			firmatariSpaceTemplateNode.copy(attoFolderNode);
+		}
+		
+		//aspect rlatoriAtto: alcuni atti (es:ORG) hanno i relatori direttamente collegati ad atto e non a commissione
+		if(attoFolderNode.hasAspect("crlatti:relatoriAttoAspect")){
+			var relatoriSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:RelatoriAtto\"";
+			var relatoriSpaceTemplateNode = search.luceneSearch(relatoriSpaceTemplateQuery)[0];
+			relatoriSpaceTemplateNode.copy(attoFolderNode);
 		}
 		
 		
