@@ -2,7 +2,7 @@
 {  
    "List":[
    <#list atti as atto>
-   { "CollegamentoAttiSindacato" : 
+   { "collegamentoAttiSindacato" : 
 	   {
 	    "idAtto" : "${atto.nodeRef}",
 		"tipoAtto" : "<#if atto.properties["crlatti:tipoAttoIndirizzo"]?exists>${atto.properties["crlatti:tipoAttoIndirizzo"]}<#else></#if>",
