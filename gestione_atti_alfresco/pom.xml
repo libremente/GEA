@@ -14,8 +14,7 @@
 		the specific language governing permissions and limitations under the
 		License.
 	-->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sourcesense.crl</groupId>
 	<artifactId>crl_gestione_atti_alfresco</artifactId>
@@ -27,11 +26,11 @@
 		http://wiki.alfresco.com/wiki/Developing_an_Alfresco_Module: "The
 		version number must be made up of numeric values separated by dots.
 		For example '2.1.56' is a valid version number, '2.3.4a' is not. " In
-		order to be able to use Maven snapshots we cannot use the <version/>
+		order to be able to use Maven snapshots we cannot use the <version />
 		below as the AMP module version. Instead we use the
 		buildnumber-maven-plugin. This requires a scm connection.
 	-->
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<description>CRL Gestione Atti AMP project</description>
  	
  	<!-- Repositories without proxing from Pronetics -->
@@ -111,7 +110,7 @@
         <alfresco.db.url>jdbc:h2:${alfresco.data.location}/h2_data/${alfresco.db.name};${alfresco.db.params}</alfresco.db.url>
         <alfresco.db.datasource.class>org.h2.jdbcx.JdbcDataSource</alfresco.db.datasource.class>
         <webapp.log.level>error</webapp.log.level>
-		<webapp.log.dir></webapp.log.dir>
+		<webapp.log.dir />
 		<!--  End of testing webapp specific properties -->
 		<!--  Module specific build time properties -->
 		<module.log.level>debug</module.log.level>
@@ -234,9 +233,9 @@
 		for AMP version numbering
 	-->
 	<scm>
-		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/trunk/gestione_atti_alfresco</developerConnection>
-		<connection>https://forge.pronetics.it/svn/crl</connection>
-		<url>https://forge.pronetics.it/svn/crl</url>
+		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/tags/crl_gestione_atti_alfresco-1.0.1</developerConnection>
+		<connection>https://forge.pronetics.it/svn/crl/tags/crl_gestione_atti_alfresco-1.0.1</connection>
+		<url>https://forge.pronetics.it/svn/crl/tags/crl_gestione_atti_alfresco-1.0.1</url>
 	</scm>
 	<build>
         <plugins>
