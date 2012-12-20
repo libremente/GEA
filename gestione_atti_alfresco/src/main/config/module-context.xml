@@ -12,7 +12,7 @@
 	
 	
 	<!-- Modulo per l'integrazione del sistema di gestione Anagrafica -->
-	<!-- <import resource="classpath:alfresco/module/${artifactId}/context/anagrafica-import-job-script-context.xml" />-->
+	<import resource="classpath:alfresco/module/${artifactId}/context/anagrafica-import-job-script-context.xml" />
 	
 	
 	
