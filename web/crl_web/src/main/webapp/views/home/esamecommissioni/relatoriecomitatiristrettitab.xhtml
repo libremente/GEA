@@ -161,10 +161,13 @@
 		</p:column>
 		<p:column>
 			<div id="dataScadenza">
-			<p:inputText size="10" readonly="true" id="datascadenza"
+			<p:calendar id="datascadenza" value="#{esameCommissioniController.dataScadenza}" locale="it" pattern="dd/MM/yyyy">
+			
+			</p:calendar>
+			<!-- <p:inputText size="10" readonly="true" id="datascadenza"
 					value="#{esameCommissioniController.dataScadenza}">
 				<f:convertDateTime locale="it" pattern="dd/MM/yyyy"></f:convertDateTime>
-			</p:inputText>
+			</p:inputText>-->
 				
 			</div>
 		</p:column>
