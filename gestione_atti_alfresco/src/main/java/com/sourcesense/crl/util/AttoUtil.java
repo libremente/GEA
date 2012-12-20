@@ -58,6 +58,7 @@ public class AttoUtil {
 	public static final String PROP_DATA_FIRMA_FIRMATARIO = "dataFirma";
 	public static final String PROP_QUORUM_VOTAZIONE_COMMISSIONE = "tipoVotazioneCommissione";
 	public static final String PROP_ESITO_VOTAZIONE_COMMISSIONE = "esitoVotazioneCommissione";
+	public static final String PROP_RUOLO_COMMISSIONE = "ruoloCommissione";
 	public static final String PROP_DATA_SEDUTA = "dataSedutaSedutaODG";
 	public static final String PROP_ORARIO_INIZIO_SEDUTA = "dalleOreSedutaODG";
 	public static final String PROP_ORARIO_FINE_SEDUTA = "alleOreSedutaODG";
@@ -258,6 +259,31 @@ public class AttoUtil {
     	}
     	
 		return aula; 
+	}
+	
+	
+	public NodeRef getCommissioneCorrente(NodeRef attoNodeRef, String commissioneTarget){
+		
+		NodeRef commissione = null;
+		
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+    	
+        // Get current Passaggio 
+    	NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
+    	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
+        
+		// Get commissione
+    	ResultSet commissioneTargetNodes = searchService.query(attoNodeRef.getStoreRef(),
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @cm\\:name:\""+commissioneTarget+"\"");
+    	
+    	if(commissioneTargetNodes.length()>0){
+    		commissione = commissioneTargetNodes.getNodeRef(0);
+    	}
+    	
+		return commissione; 
 	}
 
 

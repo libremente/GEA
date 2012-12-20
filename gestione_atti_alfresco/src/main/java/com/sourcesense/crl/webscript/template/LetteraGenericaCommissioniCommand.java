@@ -106,7 +106,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     	
     	// Target Commission Data
     	
-    	NodeRef commissioneCorrenteNodeRef = getCommissioneCorrente(attoNodeRef, gruppo);
+    	NodeRef commissioneCorrenteNodeRef = attoUtil.getCommissioneCorrente(attoNodeRef, gruppo);
     	
     
     	// <relatoreCommissione>

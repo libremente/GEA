@@ -143,29 +143,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	}
 	
 	
-	public NodeRef getCommissioneCorrente(NodeRef attoNodeRef, String commissioneTarget){
-		
-		NodeRef commissione = null;
-		
-		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
-        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
-        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
-        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
-    	
-        // Get current Passaggio 
-    	NodeRef passaggioNodeRef = attoUtil.getLastPassaggio(attoNodeRef);
-    	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
-        
-		// Get commissione
-    	ResultSet commissioneTargetNodes = searchService.query(attoNodeRef.getStoreRef(),
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @cm\\:name:\""+commissioneTarget+"\"");
-    	
-    	if(commissioneTargetNodes.length()>0){
-    		commissione = commissioneTargetNodes.getNodeRef(0);
-    	}
-    	
-		return commissione; 
-	}
+	
 	
 	
 	

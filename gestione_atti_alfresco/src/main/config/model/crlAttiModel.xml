@@ -247,6 +247,16 @@
 					<title>Data BURL</title>
 					<type>d:date</type>
 				</property>
+				<property name="crlatti:scadenza60gg">
+					<title>Scadenza 60 gg</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:iterAula">
+					<title>Iter Aula</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:pubblicabile</aspect>
@@ -415,6 +425,14 @@
 			<mandatory-aspects>
 				<aspect>crlatti:dgr</aspect>
 				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:attoOrg">
+			<title>Atto Organizzazione Interna</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:relatoriAttoAspect</aspect>
 			</mandatory-aspects>
 		</type>
 
@@ -1258,6 +1276,11 @@
 				</property>
 			</properties>
 		</aspect>
+		
+		<aspect name="crlatti:relatoriAttoAspect">
+			<title>Relatori Diretti Atto</title>
+		</aspect>
+		
 		
 		<aspect name="crlatti:ammissibilitaBaseAspect">
 			<title>Ammissibilità base</title>

@@ -1,8 +1,13 @@
 package com.sourcesense.crl.webscript.odg;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.repository.AssociationRef;
@@ -19,6 +24,10 @@ import org.alfresco.service.namespace.QName;
 import org.alfresco.service.namespace.RegexQNamePattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 
 import com.sourcesense.crl.util.AttoUtil;
 import com.sourcesense.crl.webscript.template.LetteraGenericaAulaCommand;
@@ -88,7 +97,135 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	}
 	
 
+	 protected byte[] searchAndReplaceDocx(byte[] documentByteArray , HashMap<String, String> replacements) throws IOException {
+		  	
+		 try{
+		 
+		 XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(documentByteArray));
+		 	
+		 
+			
+         List<XWPFParagraph> paragraphs = document.getParagraphs();
+
+			// Recover a Set of the keys in the HashMap
+			Set<String> keySet = replacements.keySet();
+			XWPFParagraph paragraph;
+		
+			XWPFRun run = null;
+			Iterator<String> keySetIterator = null;
+			String text = null;
+			String key = null;
+			String value = null;
+		
+			// Step through each Paragraph
+			for(int i = 0; i < paragraphs.size(); i++) {
+				paragraph = paragraphs.get(i);
+				
+				 List<XWPFRun> runs = paragraph.getRuns();
+				
+				for(int j=0; j < runs.size(); j++) {
+					
+					run = runs.get(j);
+					
+					// Get the text from the CharacterRun 
+					text = run.getText(0);
+					
+					// KeySet Iterator
+					if(text!=null){
+						keySetIterator = keySet.iterator();
+						while(keySetIterator.hasNext()) {
+			
+							// check the key in CharacterRuns text
+						    key = keySetIterator.next();
+						    if(text.contains(key)) {
+						    	
+						    	// replace term
+						    	if(replacements.get(key)!=null){
+						    		value = replacements.get(key);
+						    	}else{
+						    		value = "";
+						    	}
+						        
+						        String newText = text.replaceAll(key, value);
+						        						        
+						        run.setText(newText,0);
+						    }
+						}
+					}
+				}
+			}
+
+			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+			document.write(ostream);
+			return ostream.toByteArray();
+			
+		 }catch (Exception e) {
+			 e.printStackTrace();
+			 return null;
+		 }
+
+	 }
 	
+	 
+	 
+	 protected void searchAndReplaceParagraph( XWPFTableCell cell, HashMap<String, String> replacements) throws IOException {
+		  	
+		 
+		 	List<XWPFParagraph> paragraphs = cell.getParagraphs();
+
+			// Recover a Set of the keys in the HashMap
+			Set<String> keySet = replacements.keySet();
+			XWPFParagraph paragraph;
+		
+			XWPFRun run = null;
+			Iterator<String> keySetIterator = null;
+			String text = null;
+			String key = null;
+			String value = null;
+		
+			// Step through each Paragraph
+			for(int i = 0; i < paragraphs.size(); i++) {
+		
+				paragraph = paragraphs.get(i);
+				
+				List<XWPFRun> runs = paragraph.getRuns();
+				 
+				for(int j=0; j < runs.size(); j++) {
+			
+				run = runs.get(j);
+				
+				// Get the text from the CharacterRun 
+				text = run.getText(0);
+				
+				// KeySet Iterator
+				if(text!=null){
+					keySetIterator = keySet.iterator();
+					while(keySetIterator.hasNext()) {
+		
+						// check the key in CharacterRuns text
+					    key = keySetIterator.next();
+					    if(text.contains(key)) {
+					    	
+					    	// replace term
+					    	if(replacements.get(key)!=null){
+					    		value = replacements.get(key);
+					    	}else{
+					    		value = "";
+					    	}
+					        
+					        String newText = text.replaceAll(key, value);
+					        				        
+					        run.setText(newText,0);
+					    }
+					}
+				}
+			}
+		}
+	
+
+			
+
+	 }
 
 	public ContentService getContentService() {
         return contentService;
