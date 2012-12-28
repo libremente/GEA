@@ -26,7 +26,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * GET OK 
+ * V2 - needed new Docx 
  * @author Alessandro Benedetti
  * 
  */
@@ -74,8 +74,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(commissione2results,
+							this.retrieveLenghtMap(commissione2atti), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 

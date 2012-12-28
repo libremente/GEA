@@ -65,7 +65,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			ArrayListMultimap<String, NodeRef> commissione2atti = ArrayListMultimap
 					.create();
 			this.retrieveAttiFromList(commissioni, spacesStore,
-					atto2commissione, commissione2atti);
+					atto2commissione, commissione2atti,"");
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(

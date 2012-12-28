@@ -26,9 +26,10 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * GET OK
+ * V2
+ * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
@@ -40,30 +41,33 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			/*init Json params*/
+			/* init Json params */
 			this.initCommonParams(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
-			/*define sorting fields*/
+			/* define sorting fields */
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
-			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			String sortField2 = "@{" + CRL_ATTI_MODEL
+					+ "}numeroAttoCommissione";
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
-			/*execute guery grouped by Commissione*/
+			/* execute guery grouped by Commissione */
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",
 								this.tipiAttoLucene)
 						+ " AND @crlatti\\:ruoloCommissione:\""
-						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ this.ruoloCommissione
+						+ "\" AND @cm\\:name:\""
 						+ commissione
 						+ "\" AND @crlatti\\:dataAssegnazioneCommissione:["
-						+ this.dataAssegnazioneCommReferenteDa + " TO "
+						+ this.dataAssegnazioneCommReferenteDa
+						+ " TO "
 						+ this.dataAssegnazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
@@ -71,15 +75,16 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				ResultSet currentResults = this.searchService.query(sp);
 				commissione2results.put(commissione, currentResults);
 			}
-			
+
 			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
 			ArrayListMultimap<String, NodeRef> commissione2atti = this
 					.retrieveAtti(commissione2results, spacesStore,
 							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(commissione2results,
+							this.retrieveLenghtMap(commissione2atti), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -123,10 +128,11 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						.getProperties(currentAtto);
 				Map<QName, Serializable> commissioneProperties = nodeService
 						.getProperties(atto2commissione.get(currentAtto));
-				/*value extraction from Alfresco*/
+				/* value extraction from Alfresco */
 				// from Atto
-				String numeroAtto =""+(Integer) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
@@ -134,9 +140,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
-				if(commReferenteList!=null)
-				for (String commissioneReferenteMulti : commReferenteList)
-					commReferente += commissioneReferenteMulti + " ";
+				if (commReferenteList != null)
+					for (String commissioneReferenteMulti : commReferenteList)
+						commReferente += commissioneReferenteMulti + " ";
 				// from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
 						commissioneProperties, "tipoAttoCommissione");
@@ -148,9 +154,13 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 				String ruoloCommissione = (String) this.getNodeRefProperty(
 						commissioneProperties, "ruoloCommissione");
 
-				/*values writing in table*/
-				currentTable.getRow(0).getCell(1)
-						.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
+				/* values writing in table */
+				currentTable
+						.getRow(0)
+						.getCell(1)
+						.setText(
+								this.checkStringEmpty(tipoAtto + " "
+										+ numeroAtto));
 				currentTable.getRow(1).getCell(1)
 						.setText(this.checkStringEmpty(ruoloCommissione));
 				currentTable.getRow(2).getCell(1)

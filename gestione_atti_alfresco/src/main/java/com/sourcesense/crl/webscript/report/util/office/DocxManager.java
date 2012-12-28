@@ -3,7 +3,9 @@ package com.sourcesense.crl.webscript.report.util.office;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
+import org.alfresco.service.cmr.search.ResultSet;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -38,27 +40,56 @@ public class DocxManager {
 	 * 
 	 * @return
 	 */
-	public XWPFDocument generateFromTemplate(int n, int kpage,
+	public XWPFDocument generateFromTemplateMap(
+			Map<String, ResultSet> commissione2results, Map<String,Integer> group2count, int kpage,
 			boolean breakBetween) {
+		XWPFDocument newDoc = new XWPFDocument();
+		boolean newPage = false;// new page on title
 		List<XWPFTable> tables = document.getTables();
-		XWPFTable tableExt = tables.get(0);
-		for (int k = 1; k < n; k++) {
-			XWPFParagraph createParagraph = document.createParagraph();
-			
-			if (k % kpage == 0)
-				createParagraph.setPageBreak(true);
-				
-			if (breakBetween) {
-				XWPFRun run = createParagraph.createRun();
-				run.addBreak();
-			}
-			XWPFTable currentTable = document.createTable();
-			currentTable = tableExt;
-			int initialTablePos = document.getTablePos(0);
-			document.setTable(initialTablePos + (k+1), currentTable);
+		XWPFTable tableExt = tables.get(0);//template table
+		int k = 0;
+		/*Copy template paragraphs*/
+		List<XWPFParagraph> paragraphs = document.getParagraphs();
+		int parCounter=0;
+		for (int i = 0; i < paragraphs.size(); i++) {
+			XWPFParagraph currentPar = paragraphs.get(i);
+			if(!currentPar.getText().trim().equals("")){
+			newDoc.createParagraph();
+			newDoc.setParagraph(currentPar, parCounter);
+			parCounter++;}
 		}
-
-		return document;
+		for (String key : commissione2results.keySet()) {
+			if (group2count.get(key)>0) {
+				/*create key title*/
+				XWPFParagraph keyTitle = newDoc.createParagraph();
+				XWPFRun keyRun = keyTitle.createRun();
+				keyRun.setText(key.trim());
+				if (k % kpage == 0 && k != 0) {
+					keyTitle.setPageBreak(true);
+					newPage = true;
+				}
+			}
+			for (int j = 0; j < group2count.get(key); j++) {
+				XWPFParagraph createParagraph = newDoc.createParagraph();
+				if ((k % kpage == 0 && k!=0) && (!newPage)) {
+					createParagraph.setPageBreak(true);
+					
+				}
+				if (k % kpage == 0 && k!=0) {
+					XWPFRun run = createParagraph.createRun();
+					run.addBreak();
+				}
+				newDoc.createTable();
+				newDoc.setTable(k, tableExt);
+				// newDoc.setTable(initialTablePos + (k+1), currentTable);
+				k++;
+				newPage = false;
+			}
+			XWPFParagraph breakPar = newDoc.createParagraph();
+			XWPFRun run = breakPar.createRun();
+			run.addBreak();
+		}
+		return newDoc;
 	}
 
 	/**
@@ -93,14 +124,39 @@ public class DocxManager {
 		}
 		return document;
 	}
-	
-	public void insertListInCell(XWPFTableCell currentCell,List<String> myStrings)
-	{
-	XWPFParagraph para = currentCell.getParagraphs().get(0);
-	for(String text : myStrings){
-	    XWPFRun run = para.createRun();
-	    run.setText(text.trim());
-	    run.addBreak();
-	}}
+
+	public void insertListInCell(XWPFTableCell currentCell,
+			List<String> myStrings) {
+		XWPFParagraph para = currentCell.getParagraphs().get(0);
+		for (String text : myStrings) {
+			XWPFRun run = para.createRun();
+			run.setText(text.trim());
+			run.addBreak();
+		}
+	}
+
+	public XWPFDocument generateFromTemplate(int n, int kpage,
+			boolean breakBetween) {
+		List<XWPFTable> tables = document.getTables();
+		XWPFTable tableExt = tables.get(0);
+		for (int k = 1; k < n; k++) {
+			XWPFParagraph createParagraph = document.createParagraph();
+			
+			if (k % kpage == 0)
+				createParagraph.setPageBreak(true);
+				
+			if (breakBetween) {
+				XWPFRun run = createParagraph.createRun();
+				run.addBreak();
+			}
+			XWPFTable currentTable = document.createTable();
+			currentTable = tableExt;
+			int initialTablePos = document.getTablePos(0);
+			document.setTable(initialTablePos + (k+1), currentTable);
+		}
+
+		return document;
+	}
+
 
 }

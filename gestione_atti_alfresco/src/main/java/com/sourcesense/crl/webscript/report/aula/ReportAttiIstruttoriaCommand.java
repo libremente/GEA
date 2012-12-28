@@ -24,6 +24,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
@@ -66,7 +67,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			ResultSet attiResults = this.searchService.query(sp);
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					attiResults.length(), 2, false);
+					this.retrieveLenght(attiResults), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -253,14 +254,28 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 		}
 		return abbinamentiValue;
 	}
-
+	
+	protected int retrieveLenght(
+			ResultSet attiResults) {
+		int count = 0;
+			for (NodeRef currentAtto : attiResults.getNodeRefs()) {
+				Map<QName, Serializable> attoProperties = nodeService
+						.getProperties(currentAtto);
+				String statoAtto = (String) this.getNodeRefProperty(
+						attoProperties, "statoAtto");
+				if (this.checkStatoAtto(statoAtto)) {
+					count++;
+				}
+			}
+		return count;
+	}
 	/**
 	 * Check if the statoAtto is comprehended between "preso in carico e votato"
 	 * 
 	 * @param statoAtto
 	 * @return
 	 */
-	private boolean checkStatoAtto(String statoAtto) {
+	protected boolean checkStatoAtto(String statoAtto) {
 		return statoAtto.equals(PRESO_CARICO_AULA);
 	}
 }

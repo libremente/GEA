@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * GET OK
+ * V2
  * 
  * @author Alessandro Benedetti
  * 
@@ -45,12 +46,12 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 
 		// obtain as much table as the results spreaded across the resultSet
 		XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-				commissioniResult.length(), 5, false);
+				commissioniResult.length(), 2, false);
 		// convert to input stream
 		ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 		XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-				commissioniResult);
+				commissioniResult,docxManager);
 		ostream = new ByteArrayOutputStream();
 		finalDocument.write(ostream);
 
@@ -72,7 +73,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet commissioniResult) throws IOException {
+			ResultSet commissioniResult,DocxManager docxManager) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -83,7 +84,8 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 					currentCommissione, ContentModel.PROP_NAME);
 			List<ChildAssociationRef> consiglieriAssList = nodeService
 					.getChildAssocs(currentCommissione);
-			String consiglieri = "";
+			List<String> consiglieri = new ArrayList<String>();
+			List<String> partiti = new ArrayList<String>();
 			String currentConsigliere = "";
 			for (ChildAssociationRef consigliereAss : consiglieriAssList) {
 				NodeRef consigliereRef = consigliereAss.getChildRef();
@@ -96,16 +98,18 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 				String codice = (String) this.getNodeRefProperty(
 						consigliereProperties,
 						"codiceGruppoConsigliereAnagrafica");
-				currentConsigliere = nomeConsigliere + " " + cognomeConsigliere
-						+ " " + codice;
-				consiglieri += currentConsigliere + " \n";
+				currentConsigliere = cognomeConsigliere + " " + nomeConsigliere
+						;
+				consiglieri.add(currentConsigliere);
+				partiti.add(codice);
 
 			}
 
 			currentTable.getRow(0).getCell(0)
 					.setText(this.checkStringEmpty(nomeCommissione));
-			currentTable.getRow(1).getCell(0)
-					.setText(this.checkStringEmpty(consiglieri));
+			docxManager.insertListInCell(currentTable.getRow(1).getCell(1), consiglieri);
+			docxManager.insertListInCell(currentTable.getRow(1).getCell(2), partiti);
+			
 			tableIndex++;
 		}
 

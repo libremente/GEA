@@ -25,7 +25,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * V2 - misterioso errore di security causato dalla query
  * 
  * @author Alessandro Benedetti
  * 
@@ -66,7 +66,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(tipiAtto), 2, false);
+					this.retrieveLenght(tipiAtto), 3, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 

@@ -28,7 +28,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- TO TEST:
+ V2 needed docx
  Manca dentro commissione il campo dataSedutaCommAttoCommissione per poter testare
  * 
  * @author Alessandro Benedetti
@@ -77,8 +77,9 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(commissione2results,
+							this.retrieveLenghtMap(commissione2atti), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 

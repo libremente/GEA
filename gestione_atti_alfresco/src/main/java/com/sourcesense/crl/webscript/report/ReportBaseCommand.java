@@ -161,7 +161,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 			ResultSet commissioneResults = commissione2results.get(commissione);
 			List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
 			this.retrieveAttiFromList(nodeRefList, spacesStore,
-					atto2commissione, commissione2atti);
+					atto2commissione, commissione2atti,commissione);
 		}
 		return commissione2atti;
 	}
@@ -196,14 +196,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	protected void retrieveAttiFromList(List<NodeRef> nodeRefList,
 			StoreRef spacesStore, Map<NodeRef, NodeRef> atto2commissione,
-			ArrayListMultimap<String, NodeRef> commissione2atti) {
+			ArrayListMultimap<String, NodeRef> commissione2atti,String commissione) {
 		int resultLength = nodeRefList.size();
 		for (int i = 0; i < resultLength; i++) {
 			NodeRef commissioneNodeRef = nodeRefList.get(i);
-			Map<QName, Serializable> commissioneProperties = nodeService
-					.getProperties(commissioneNodeRef);
-			String commissione = (String) this.getNodeRefProperty(
-					commissioneProperties, "name");
 			NodeRef attoNodeRef = commissioneNodeRef;
 			boolean check = false;
 			while (!check) {// look for Atto in type hierarchy
@@ -265,6 +261,42 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		}
 		return count;
 	}
+	
+	protected Map<String,Integer> retrieveLenghtMap(
+			ArrayListMultimap<String, NodeRef> commissione2atti) {
+		Map<String,Integer> commissione2count=new HashMap<String,Integer>();
+		for (String commissione : commissione2atti.keySet()) {
+			int count = commissione2atti.get(commissione).size();
+			commissione2count.put(commissione, count);
+		}
+		return commissione2count;
+	}
+	
+	protected Map<String,Integer> retrieveLenghtMapConditional(
+			ArrayListMultimap<String, NodeRef> commissione2atti) {
+		Map<String,Integer> commissione2count=new HashMap<String,Integer>();
+		for (String commissione : commissione2atti.keySet()) {
+			int count = 0;
+			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+				Map<QName, Serializable> attoProperties = nodeService
+						.getProperties(currentAtto);
+				String statoAtto = (String) this.getNodeRefProperty(
+						attoProperties, "statoAtto");
+				if (this.checkStatoAtto(statoAtto)) {
+					count++;
+				}
+			}
+			commissione2count.put(commissione, count);
+
+		}
+		return commissione2count;
+	}
+
+	protected boolean checkStatoAtto(String statoAtto) {
+		System.out.println("father");
+		return false;
+	}
+
 
 	protected int retrieveLenght(List<ResultSet> allSearches) {
 		// TODO Auto-generated method stub

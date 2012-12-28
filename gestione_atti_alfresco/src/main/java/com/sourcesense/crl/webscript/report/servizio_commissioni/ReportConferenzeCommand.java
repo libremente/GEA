@@ -26,7 +26,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * GET OK
+ * V2
  * 
  * @author Alessandro Benedetti
  * 
@@ -80,8 +80,8 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 4, false);
+			XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(commissione2results,
+					this.retrieveLenghtMapConditional(commissione2atti), 3, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -182,28 +182,11 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 	 * @param statoAtto
 	 * @return
 	 */
-	private boolean checkStatoAtto(String statoAtto) {
+	protected boolean checkStatoAtto(String statoAtto) {
+		System.out.println("son");
 		return statoAtto.equals(PRESO_CARICO_COMMISSIONE)
 				|| statoAtto.equals(VOTATO_COMMISSIONE)
 				|| statoAtto.equals(NOMINATO_RELATORE)
 				|| statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
-	}
-
-	protected int retrieveLenght(
-			ArrayListMultimap<String, NodeRef> commissione2atti) {
-		int count = 0;
-		for (String commissione : commissione2atti.keySet()) {
-			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
-				Map<QName, Serializable> attoProperties = nodeService
-						.getProperties(currentAtto);
-				String statoAtto = (String) this.getNodeRefProperty(
-						attoProperties, "statoAtto");
-				if (this.checkStatoAtto(statoAtto)) {
-					count++;
-				}
-			}
-
-		}
-		return count;
 	}
 }
