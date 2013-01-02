@@ -183,7 +183,6 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 	 * @return
 	 */
 	protected boolean checkStatoAtto(String statoAtto) {
-		System.out.println("son");
 		return statoAtto.equals(PRESO_CARICO_COMMISSIONE)
 				|| statoAtto.equals(VOTATO_COMMISSIONE)
 				|| statoAtto.equals(NOMINATO_RELATORE)

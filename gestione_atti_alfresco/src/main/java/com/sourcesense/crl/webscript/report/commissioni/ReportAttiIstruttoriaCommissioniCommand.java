@@ -28,7 +28,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2 needed new docx
+ * V2 
  * 
  * @author Alessandro Benedetti
  * 
@@ -189,7 +189,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
 					currentTable.getRow(3).getCell(3)
 							.setText(this.checkStringEmpty(commReferente));
-					currentTable.getRow(4).getCell(3)
+					currentTable.getRow(4).getCell(1)
 							.setText(this.checkStringEmpty(commConsultiva));
 					docxManager.insertListInCell(currentTable.getRow(5).getCell(1), elencoRelatori);
                     docxManager.insertListInCell(currentTable.getRow(5).getCell(3), elencoDateNomina);

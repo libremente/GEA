@@ -119,7 +119,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 							+ (Integer) this.getNodeRefProperty(attoProperties,
 									"numeroAtto");
 					String iniziativa = (String) this.getNodeRefProperty(
-							attoProperties, "descrizioneIniziativa");
+							attoProperties, "tipoIniziativa");
 					String oggetto = (String) this.getNodeRefProperty(
 							attoProperties, "oggetto");
 					Date datePresentazione = (Date) this.getNodeRefProperty(
@@ -132,7 +132,8 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 					String firmatari = "";
 					if (firmatariList != null)
 						for (String firmatario : firmatariList)
-							firmatari += firmatario + " ";
+							firmatari += firmatario + ", ";
+					firmatari=firmatari.substring(0,firmatari.length()-2);
 					currentTable
 							.getRow(0)
 							.getCell(1)
@@ -158,10 +159,10 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 	}
 
 	protected int retrieveLenght(
-			ArrayListMultimap<String, NodeRef> commissione2atti) {
+			List<ResultSet> atti) {
 		int count = 0;
-		for (String commissione : commissione2atti.keySet()) {
-			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+		for (ResultSet listaAtti : atti) {
+			for (NodeRef currentAtto : listaAtti.getNodeRefs()) {
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
 				String statoAtto = (String) this.getNodeRefProperty(
@@ -184,7 +185,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 	 * @param statoAtto
 	 * @return
 	 */
-	private boolean checkStatoAtto(String statoAtto, String tipoChiusura) {
+	protected boolean checkStatoAtto(String statoAtto, String tipoChiusura) {
 		return statoAtto.equals(CHIUSO) && tipoChiusura.equals(RITIRATO);
 	}
 

@@ -293,8 +293,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	protected boolean checkStatoAtto(String statoAtto) {
-		System.out.println("father");
-		return false;
+		return true;
 	}
 
 
