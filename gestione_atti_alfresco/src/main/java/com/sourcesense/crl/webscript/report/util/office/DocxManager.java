@@ -40,8 +40,7 @@ public class DocxManager {
 	 * 
 	 * @return
 	 */
-	public XWPFDocument generateFromTemplateMap(
-			Map<String, ResultSet> commissione2results, Map<String,Integer> group2count, int kpage,
+	public XWPFDocument generateFromTemplateMap( Map<String,Integer> group2count, int kpage,
 			boolean breakBetween) {
 		XWPFDocument newDoc = new XWPFDocument();
 		boolean newPage = false;// new page on title
@@ -58,8 +57,8 @@ public class DocxManager {
 			newDoc.setParagraph(currentPar, parCounter);
 			parCounter++;}
 		}
-		for (String key : commissione2results.keySet()) {
-			if (group2count.get(key)>0) {
+		for (String key : group2count.keySet()) {
+			if ( group2count.get(key)>0) {
 				/*create key title*/
 				XWPFParagraph keyTitle = newDoc.createParagraph();
 				XWPFRun keyRun = keyTitle.createRun();

@@ -79,7 +79,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
-					.generateFromTemplateMap(commissione2results,
+					.generateFromTemplateMap(
 							this.retrieveLenghtMapConditional(commissione2atti), 1, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);

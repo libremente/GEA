@@ -27,8 +27,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- TO TEST:
- Manca dentro commissione il campo dataSedutaCommAttoCommissione per poter testare
+ * V2
  * @author Alessandro Benedetti
  * 
  */
@@ -76,8 +75,9 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(
+							this.retrieveLenghtMap(commissione2atti), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -149,9 +149,11 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
 				String firmatari = "";
-				if(firmatariList!=null)
-				for (String firmatario : firmatariList)
-					firmatari += firmatario + " ";
+				if (firmatariList != null)
+					for (String firmatario : firmatariList)
+						firmatari += firmatario + ", ";
+				if(!firmatari.equals(""))
+					firmatari=firmatari.substring(0,firmatari.length()-2);
 				// from Atto
 				ArrayList<String> pareriList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties,

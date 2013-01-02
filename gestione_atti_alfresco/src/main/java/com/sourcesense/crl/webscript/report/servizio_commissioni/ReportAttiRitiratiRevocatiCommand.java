@@ -133,7 +133,8 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 					if (firmatariList != null)
 						for (String firmatario : firmatariList)
 							firmatari += firmatario + ", ";
-					firmatari=firmatari.substring(0,firmatari.length()-2);
+					if(!firmatari.equals(""))
+						firmatari=firmatari.substring(0,firmatari.length()-2);
 					currentTable
 							.getRow(0)
 							.getCell(1)

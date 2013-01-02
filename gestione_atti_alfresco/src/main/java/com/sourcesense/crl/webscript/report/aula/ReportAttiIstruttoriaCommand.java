@@ -130,7 +130,9 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				String firmatari = "";
 				if (firmatariList != null)
 					for (String firmatario : firmatariList)
-						firmatari += firmatario + " ";
+						firmatari += firmatario + ", ";
+				if(!firmatari.equals(""))
+					firmatari=firmatari.substring(0,firmatari.length()-2);
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";

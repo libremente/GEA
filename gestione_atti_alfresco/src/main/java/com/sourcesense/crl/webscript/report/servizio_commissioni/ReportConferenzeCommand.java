@@ -80,7 +80,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(commissione2results,
+			XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(
 					this.retrieveLenghtMapConditional(commissione2atti), 3, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
@@ -148,7 +148,9 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 					String firmatari = "";
 					if (firmatariList != null)
 						for (String firmatario : firmatariList)
-							firmatari += firmatario + " ";
+							firmatari += firmatario + ", ";
+					if(!firmatari.equals(""))
+						firmatari=firmatari.substring(0,firmatari.length()-2);
 
 					/* writing values in the table */
 					currentTable
