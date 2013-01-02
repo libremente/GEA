@@ -605,6 +605,8 @@
 			<show-property name="crlatti:nomeAttoCommissione" />
 			<show-property name="crlatti:numeroAttoCommissione" />
 			<show-property name="crlatti:tipoAttoCommissione" />
+			<show-property name="crlatti:dataSedutaCommAttoCommissione" />
+			
 
 		</property-sheet>
 	</config>
