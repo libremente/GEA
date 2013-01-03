@@ -13,9 +13,12 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.cmr.security.AuthorityService;
 import org.alfresco.service.cmr.security.AuthorityType;
+import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
+import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.web.bean.repository.Repository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.alfresco.util.ISO9075;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,11 +63,11 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
         		FileInfo legislatureFileInfo = fileFolderService.create(legislatureFolderNodeResultSet.getNodeRef(0), legislature.getNumber(), Constant.TYPE_LEGISLATURA);
         		logger.info("Creato il nodo legislatura '" + legislature.getNumber() + "'");    
         		nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, legislature.getId());
-                logger.info("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+legislature.getId()+"'");
+               // logger.info("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+legislature.getId()+"'");
                 nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_INIZIO_LEGISLATURA, legislature.getFrom());
-                logger.info("Proprieta' '"+Constant.PROP_DATA_INIZIO_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getFrom()+"'");
+               // logger.info("Proprieta' '"+Constant.PROP_DATA_INIZIO_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getFrom()+"'");
                 nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_FINE_LEGISLATURA, legislature.getTo());
-                logger.info("Proprieta' '"+Constant.PROP_DATA_FINE_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getTo()+"'");
+               // logger.info("Proprieta' '"+Constant.PROP_DATA_FINE_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getTo()+"'");
                    
                 // set content property to empty string for Share visualization in Alfresco Community Edition    
                 ContentWriter contentWriter = contentService.getWriter(legislatureFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
@@ -167,11 +170,11 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
             	FileInfo groupFileInfo = fileFolderService.create(groupFolderNodeResultSet.getNodeRef(0), groupNodeName, Constant.TYPE_GRUPPO_CONSILIARE_ANAGRAFICA);
         		logger.info("Creato il nodo gruppo '" + group.getName() + "'");    
         		nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, group.getId());
-                logger.info("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+group.getId()+"'");
+               // logger.info("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+group.getId()+"'");
                 nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA, group.getName());
-                logger.info("Proprieta' '"+Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getName()+"'");
+               // logger.info("Proprieta' '"+Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getName()+"'");
                 nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA, group.getCode());
-                logger.info("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getCode()+"'");
+               // logger.info("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getCode()+"'");
                
                 // set content property to empty string for Share visualization in Alfresco Community Edition    
                 ContentWriter contentWriter = contentService.getWriter(groupFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
@@ -198,10 +201,12 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
             int count = 0;
             
             for (Councilor councilor : councilors) {
-            	count ++;
+
+            	NodeRef counciliorNodeRef = createCouncilor(councilor, councilorsFolderNodeResultSet.getNodeRef(0), nomeLegislaturaCorrente);
             	
-            	createCouncilor(councilor, councilorsFolderNodeResultSet.getNodeRef(0), nomeLegislaturaCorrente);
-            	
+            	if(counciliorNodeRef!=null){
+            		count ++;
+            	}
                 
                 /* check for committes */
                 for (int k=0; k<councilor.getCommitteeNames().size(); k++){
@@ -295,29 +300,51 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
     
     private NodeRef createCouncilor(Councilor councilor, NodeRef folderNodeRef, String nomeLegislaturaCorrente){
     	
+    	NodeRef counciliorNodeRef = null;
+    	
     	String councilorNodeName = councilor.getId() + " " + councilor.getFirstName() + " " + councilor.getLastName();
-        FileInfo councilorFileInfo = fileFolderService.create(folderNodeRef, councilorNodeName, Constant.TYPE_CONSIGLIERE_ANAGRAFICA);
-        logger.info("Creato il nodo '"+councilorFileInfo.getName()+"' nel repository di Alfresco");
-        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, councilor.getId());
-        logger.debug("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getId()+"'");
-        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_NOME_CONSIGLIERE_ANAGRAFICA, councilor.getFirstName());
-        logger.debug("Proprieta' '"+Constant.PROP_NOME_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getFirstName()+"'");
-        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_COGNOME_CONSIGLIERE_ANAGRAFICA, councilor.getLastName());
-        logger.debug("Proprieta' '"+Constant.PROP_COGNOME_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getLastName()+"'");
-        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_LEGISLATURA_CONSIGLIERE_ANAGRAFICA, nomeLegislaturaCorrente);
-        logger.debug("Proprieta' '"+Constant.PROP_LEGISLATURA_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+nomeLegislaturaCorrente+"'");           
-        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getGroupName());
-        logger.debug("Proprieta' '"+Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getGroupName()+"'");
-        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getCodeGroupName());
-        logger.debug("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getCodeGroupName()+"'");
+    	
+    	String nomeFolderNode = (String) nodeService.getProperty(folderNodeRef, ContentModel.PROP_NAME);
+    	
+    	// TODO fare controllo sull'esistenza del nodo. Può succedere che ci siano entry duplicate nel database e ci possano essere errori nel creare nodi duplicati
+    	
+    	DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
 
-	     // set content property to empty string for Share visualization in Alfresco Community Edition    
-        ContentWriter contentWriter = contentService.getWriter(councilorFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
-        contentWriter.setMimetype("text/plain");
-        contentWriter.setEncoding("UTF-8");
-        contentWriter.putContent(councilorNodeName);
+		
+    	String luceneFolderNodePath = nodeService.getPath(folderNodeRef).toPrefixString(namespacePrefixResolver);				
+	  	ResultSet testExistNode = searchService.query(folderNodeRef.getStoreRef(), 
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneFolderNodePath+"/cm:"+ISO9075.encode(councilorNodeName)+"\"");
+    	
+	  	if(testExistNode.length()==0){
+    	
+	        FileInfo councilorFileInfo = fileFolderService.create(folderNodeRef, councilorNodeName, Constant.TYPE_CONSIGLIERE_ANAGRAFICA);
+	        logger.info("Creato il nodo '"+councilorFileInfo.getName()+"' nello spazio " + nomeFolderNode +" all'interno del repository di Alfresco");
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, councilor.getId());
+	    //    logger.debug("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getId()+"'");
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_NOME_CONSIGLIERE_ANAGRAFICA, councilor.getFirstName());
+	    //    logger.debug("Proprieta' '"+Constant.PROP_NOME_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getFirstName()+"'");
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_COGNOME_CONSIGLIERE_ANAGRAFICA, councilor.getLastName());
+	    //    logger.debug("Proprieta' '"+Constant.PROP_COGNOME_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getLastName()+"'");
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_LEGISLATURA_CONSIGLIERE_ANAGRAFICA, nomeLegislaturaCorrente);
+	    //    logger.debug("Proprieta' '"+Constant.PROP_LEGISLATURA_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+nomeLegislaturaCorrente+"'");           
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getGroupName());
+	    //    logger.debug("Proprieta' '"+Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getGroupName()+"'");
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getCodeGroupName());
+	    //    logger.debug("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getCodeGroupName()+"'");
+	
+		     // set content property to empty string for Share visualization in Alfresco Community Edition    
+	        ContentWriter contentWriter = contentService.getWriter(councilorFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
+	        contentWriter.setMimetype("text/plain");
+	        contentWriter.setEncoding("UTF-8");
+	        contentWriter.putContent(councilorNodeName);
         
-        return  councilorFileInfo.getNodeRef();
+	        counciliorNodeRef = councilorFileInfo.getNodeRef();
+	  	}
+	 
+	  	return counciliorNodeRef;
     }
     
 

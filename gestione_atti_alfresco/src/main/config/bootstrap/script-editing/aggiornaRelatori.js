@@ -34,3 +34,4 @@ for(var i=0; i<numeroCommissioni; i++) {
 attoNode.properties["crlatti:relatori"] = commRelatoriCommissioni;
 
 attoNode.save();
+

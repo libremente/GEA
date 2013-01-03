@@ -551,6 +551,14 @@
 					<title>Data uscita</title>
 					<type>d:date</type>
 				</property>
+				<property name="crlatti:tipoAttoRelatore">
+					<title>Tipo atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:commissioneRelatore">
+					<title>Commissione</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
 		

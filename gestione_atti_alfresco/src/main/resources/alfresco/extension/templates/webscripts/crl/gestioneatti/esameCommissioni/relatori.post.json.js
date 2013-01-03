@@ -86,6 +86,15 @@ if(checkIsNotNull(id)){
 		
 		relatoreNode.properties["crlatti:dataNominaRelatore"] = dataNominaParsed;
 		relatoreNode.properties["crlatti:dataUscitaRelatore"] = dataUscitaParsed;
+		
+
+		// occorre ridondare alcuni metadati dell'atto e della commissione per permettere le ricerche lucene (report) sui relatori
+		var tipoAttoRelatore = attoNode.typeShort.substring(12);
+		var commissioneRelatore = commissioneFolderNode.name;
+
+		relatoreNode.properties["crlatti:tipoAttoRelatore"] = tipoAttoRelatore;
+		relatoreNode.properties["crlatti:commissioneRelatore"] = commissioneRelatore;
+		
 		relatoreNode.save();
 		
 	}	
