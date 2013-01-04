@@ -145,12 +145,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 					// child of Atto
 					ArrayList<String> firmatariList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "firmatari");
-					String firmatari = "";
-					if (firmatariList != null)
-						for (String firmatario : firmatariList)
-							firmatari += firmatario + ", ";
-					if(!firmatari.equals(""))
-						firmatari=firmatari.substring(0,firmatari.length()-2);
+					String firmatari =this.renderList(firmatariList);
 
 					/* writing values in the table */
 					currentTable

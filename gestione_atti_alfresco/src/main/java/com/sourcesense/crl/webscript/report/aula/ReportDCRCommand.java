@@ -53,7 +53,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			ResultSet attiResults = this.searchService.query(sp);
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					attiResults.length(), 1, false);
+					attiResults.length(), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -112,6 +112,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
 					"oggetto");
 			String emendato =""+ (Boolean) this.getNodeRefProperty(attoProperties,
 					"emendatoAulaAtto");
+			emendato=this.processBoolean(emendato);
 
 			String numeroBurl = (String) this.getNodeRefProperty(
 					attoProperties, "numeroPubblicazioneBURL");
@@ -122,27 +123,27 @@ public class ReportDCRCommand extends ReportBaseCommand {
 
 			currentTable.getRow(0).getCell(1)
 					.setText(this.checkStringEmpty(numeroDcr));
-			currentTable.getRow(1).getCell(1)
+			currentTable.getRow(0).getCell(3)
 					.setText(this.checkDateEmpty(dateSeduta));
-			currentTable.getRow(2).getCell(1)
+			currentTable.getRow(1).getCell(1)
 					.setText(this.checkStringEmpty(oggetto));
 			currentTable
-					.getRow(3)
+					.getRow(2)
 					.getCell(1)
 					.setText(this.checkStringEmpty(tipoAtto + " " + numeroAtto));
-			currentTable.getRow(4).getCell(1)
+			currentTable.getRow(2).getCell(3)
 					.setText(this.checkStringEmpty(emendato));
-			currentTable.getRow(5).getCell(1)
+			currentTable.getRow(3).getCell(1)
 					.setText(this.checkStringEmpty(numeroLcr));
-			currentTable.getRow(6).getCell(1)
+			currentTable.getRow(4).getCell(1)
 					.setText(this.checkStringEmpty(numeroRepertorio));
-			currentTable.getRow(7).getCell(1)
+			currentTable.getRow(5).getCell(1)
 					.setText(this.checkStringEmpty(numeroBurl));
-			currentTable.getRow(8).getCell(1)
+			currentTable.getRow(5).getCell(3)
 					.setText(this.checkDateEmpty(dateBurl));
-			currentTable.getRow(9).getCell(1)
+			currentTable.getRow(6).getCell(1)
 					.setText(this.checkStringEmpty(noteVotazione));
-			currentTable.getRow(10).getCell(1)
+			currentTable.getRow(7).getCell(1)
 					.setText(this.checkStringEmpty(noteGenerali));
 
 			tableIndex++;

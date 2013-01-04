@@ -301,6 +301,29 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		// TODO Auto-generated method stub
 		return allSearches.size();
 	}
+	
+	protected String renderList(List<String> stringList){
+		String encodedString = "";
+		if (stringList != null)
+			for (String singleValue : stringList)
+				encodedString += singleValue + ", ";
+		if(!encodedString.equals(""))
+			encodedString=encodedString.substring(0,encodedString.length()-2);
+		return encodedString;
+	}
+	/**
+	 * Return "Si" for True or "No" for False
+	 * @param booleano
+	 * @return
+	 */
+	protected String processBoolean(String booleano){
+		String result="";
+		if(booleano.equals("true"))
+			result= "Si";
+		else
+			result= "No";
+		return result;
+	}
 
 	/**
 	 * init the common params : List<String> tipiAttoLucene; String

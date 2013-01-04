@@ -72,7 +72,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					attiResults);
+					attiResults,docxManager);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -99,7 +99,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet atti) throws IOException {
+			ResultSet atti,DocxManager docxManager) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -124,15 +124,10 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
 				String descrizioneIniziativa = (String) this
-						.getNodeRefProperty(attoProperties, "tipoIniziativa");
+						.getNodeRefProperty(attoProperties, "descrizioneIniziativa");
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari = "";
-				if (firmatariList != null)
-					for (String firmatario : firmatariList)
-						firmatari += firmatario + ", ";
-				if(!firmatari.equals(""))
-					firmatari=firmatari.substring(0,firmatari.length()-2);
+				String firmatari =this.renderList(firmatariList);
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
@@ -142,10 +137,6 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 
 				ArrayList<String> relatoriList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "relatori");
-				String relatori = "";
-				if (relatoriList != null)
-					for (String relatore : relatoriList)
-						relatori += relatore + ", ";
 
 				String relazioneScritta = "";// to complete
 				String noteGenerali = "";// to complete
@@ -154,8 +145,12 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 						.getRow(0)
 						.getCell(1)
 						.setText(
-								this.checkStringEmpty(tipoAtto + " "
-										+ numeroAtto));
+								this.checkStringEmpty(tipoAtto));
+				currentTable
+				.getRow(0)
+				.getCell(2)
+				.setText(
+						this.checkStringEmpty(numeroAtto));
 				currentTable.getRow(1).getCell(1)
 						.setText(this.checkStringEmpty(abbinamenti));
 				currentTable.getRow(2).getCell(1)
@@ -168,8 +163,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 						.setText(this.checkStringEmpty(descrizioneIniziativa));
 				currentTable.getRow(6).getCell(1)
 						.setText(this.checkStringEmpty(commReferente));
-				currentTable.getRow(7).getCell(1)
-						.setText(this.checkStringEmpty(relatori));
+				docxManager.insertListInCell(currentTable.getRow(7).getCell(1), relatoriList);
 				currentTable.getRow(7).getCell(3)
 						.setText(this.checkStringEmpty(relazioneScritta));
 				currentTable.getRow(8).getCell(1)

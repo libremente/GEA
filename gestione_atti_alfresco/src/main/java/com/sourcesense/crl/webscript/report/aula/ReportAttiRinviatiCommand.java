@@ -37,18 +37,16 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			this.initTipiAttoLucene(json);
+			this.initTipiAttoLuceneAtto(json);
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAtto";
 			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\""
-					+ "crlatti:atto\" AND "
-					+ convertListToString("@crlatti\\:tipoAtto",
-							this.tipiAttoLucene)
-					+ "AND @crlatti\\:rinviato:\"true\"";
+			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "
+					+ convertListToString("TYPE", this.tipiAttoLucene)
+					+"AND @crlatti\\:rinviato:\"true\"";
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
 			sp.addSort(sortField2, true);
@@ -115,11 +113,8 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			String motivazioneRinvio ="";
 			ArrayList<String> relatoriList = (ArrayList<String>) this
 					.getNodeRefProperty(attoProperties, "relatori");
-			String relatori = "";
-			if (relatoriList != null)
-				for (String relatore : relatoriList)
-					relatori += relatore + ", ";
-
+			String relatori = this.renderList(relatoriList);
+			
 			currentTable
 					.getRow(0)
 					.getCell(1)

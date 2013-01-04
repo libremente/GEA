@@ -146,12 +146,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari = "";
-				if (firmatariList != null)
-					for (String firmatario : firmatariList)
-						firmatari += firmatario + ", ";
-				if(!firmatari.equals(""))
-					firmatari=firmatari.substring(0,firmatari.length()-2);
+				String firmatari =this.renderList(firmatariList);
 
 				// from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
