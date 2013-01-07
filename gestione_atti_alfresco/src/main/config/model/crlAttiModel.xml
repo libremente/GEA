@@ -995,6 +995,14 @@
 					<title>Esito</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:tipoAttoParere">
+					<title>Tipo Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoParere">
+					<title>Numero Atto</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:obbligatorioAspect</aspect>

@@ -520,6 +520,8 @@
 			<show-property name="crlatti:commissioneDestinatariaParere" />
 			<show-property name="crlatti:noteParere" />
 			<show-property name="crlatti:esitoParere" />
+			<show-property name="crlatti:tipoAttoParere" />
+			<show-property name="crlatti:numeroAttoParere" />
 		</property-sheet>
 	</config>
 

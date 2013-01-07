@@ -220,7 +220,6 @@ if(checkIsNotNull(id)){
 			var parereSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Parere\"";
 			var parereSpaceTemplateNode = search.luceneSearch(parereSpaceTemplateQuery)[0];
 			
-			
 			// deep copy con secondo argomento = true
 			parereSpaceTemplateNode.copy(pareriFolderNode, true);
 			
@@ -246,6 +245,14 @@ if(checkIsNotNull(id)){
 		parereNode.properties["crlatti:dataAssegnazioneParere"] = dataAssegnazioneParsed;
 		parereNode.properties["crlatti:dataAnnulloParere"] = dataAnnulloParsed;
 		parereNode.properties["crlatti:obbligatorio"] = obbligatorio;
+		
+		var tipoAttoRelatore = attoNode.typeShort.substring(12);
+		var numeroAttoRelatore = attoNode.name;
+		
+		// proprietà necessarie alla reportistica
+		parereNode.properties["crlatti:tipoAttoParere"] = tipoAttoRelatore;
+		parereNode.properties["crlatti:numeroAttoParere"] = numeroAttoRelatore;
+		
 		parereNode.save();
 	}
 	
