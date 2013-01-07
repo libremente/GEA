@@ -22,17 +22,15 @@ import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO DO:
- * - scrivere query relatori
- * SKIP TEMP
- * Bug : vengono create tante tabelle quanti gli atti complessivi non filtrati per stato
- *
+ * TO TEST
+ * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 	@Override
@@ -48,33 +46,51 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			this.initDataNominaRelatoreDa(json);
 			this.initDataNominaRelatoreA(json);
 
-			String sortField1 = "@{" + CRL_ATTI_MODEL + "}nome";// odine
-																// alfabetico
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoRelatore";// odine
+			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoRelatore"; // alfabetico
 
-			SearchParameters sp = new SearchParameters();
-			sp.addStore(spacesStore);
-			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "";// query su relatori per nome e data Nomina
-			sp.setQuery(query);
-			sp.addSort(sortField1, false);
-			ResultSet relatoriResults = this.searchService.query(sp);
+			Map<String, ResultSet> relatore2results = Maps.newHashMap();
+			/* execute guery grouped by Commissione */
+			for (String relatore : this.relatoriJson) {
+				SearchParameters sp = new SearchParameters();
+				sp.addStore(spacesStore);
+				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
+						+ "crlatti:relatore"
+						+ "\" AND "
+						+ convertListToString("@crlatti\\:tipoAttoRelatore",
+								this.tipiAttoLucene)
+						+ " AND "
+						+ convertListToString("@crlatti\\:commissioneRelatore",
+								this.commissioniJson)
+						+ "\" AND @cm\\:name:\""
+						+ relatore
+						+ "\" AND @crlatti\\:dataNominaRelatore:["
+						+ this.dataNominaRelatoreDa
+						+ " TO "
+						+ this.dataNominaRelatoreA + " ]";
+				sp.setQuery(query);
+				sp.addSort(sortField1, true);
+				sp.addSort(sortField2, true);
+				ResultSet currentResults = this.searchService.query(sp);
+				relatore2results.put(relatore, currentResults);
+			}
 
-			List<NodeRef> commissioni = this
-					.retrieveCommissioniFromRelatori(relatoriResults);// filtrando i risultati
 			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
-			ArrayListMultimap<String, NodeRef> commissione2atti = ArrayListMultimap
-					.create();
-			this.retrieveAttiFromList(commissioni, spacesStore,
-					atto2commissione, commissione2atti,"");
+			ArrayListMultimap<String, NodeRef> relatore2atti = this
+					.retrieveAtti(relatore2results, spacesStore,
+							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(commissione2atti), 2, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(
+							this.retrieveLenghtMap(relatore2atti), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					commissione2atti, atto2commissione);
+					relatore2atti, atto2commissione);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -87,9 +103,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
-	 * numero atto- competenza - iniziativa- oggetto - data assegnazione - data
-	 * valutazione - commissione referente
+	 * 
 	 * 
 	 * @param finalDocStream
 	 * @param queryRes
@@ -114,34 +128,44 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 				String tipoAtto = (String) this.getNodeRefProperty(
 						commissioneProperties, "tipoAttoCommissione");
 				if (this.checkTipoAtto(tipoAtto)) {
-					//from Atto
+					// from Atto
 					String numeroAtto = (String) this.getNodeRefProperty(
 							attoProperties, "numeroAtto");
 					String oggetto = (String) this.getNodeRefProperty(
 							attoProperties, "oggetto");
-					
+
 					ArrayList<String> commReferenteList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "commReferente");
 					String commReferente = "";
 					for (String commissioneReferenteMulti : commReferenteList)
 						commReferente += commissioneReferenteMulti + " ";
-					
-					ArrayList<String> commConsultivaList = (ArrayList<String>) this
-							.getNodeRefProperty(attoProperties, "commConsultiva");
-					String commConsultiva = "";
-					for (String commissioneConsultivaMulti : commConsultivaList)
-						commConsultiva += commissioneConsultivaMulti + ",";
 
-					
-					currentTable.getRow(0).getCell(0)
-							.setText(this.checkStringEmpty(numeroAtto));
+					ArrayList<String> commConsultivaList = (ArrayList<String>) this
+							.getNodeRefProperty(attoProperties,
+									"commConsultiva");
+					String commConsultiva = "";
+					if (commConsultivaList != null)
+						for (String commissioneConsultivaMulti : commConsultivaList)
+							commConsultiva += commissioneConsultivaMulti + ",";
+
+					currentTable
+							.getRow(0)
+							.getCell(0)
+							.setText(
+									this.checkStringEmpty(tipoAtto + " "
+											+ numeroAtto));
 					currentTable.getRow(0).getCell(1)
 							.setText(this.checkStringEmpty(oggetto));
 					currentTable.getRow(1).getCell(2)
-					.setText(this.checkStringEmpty(commReferente));
-					currentTable.getRow(2).getCell(2)
-					.setText(this.checkStringEmpty(commConsultiva.substring(0, commConsultiva.length()-1)));
-					
+							.setText(this.checkStringEmpty(commReferente));
+					currentTable
+							.getRow(2)
+							.getCell(2)
+							.setText(
+									this.checkStringEmpty(commConsultiva
+											.substring(0,
+													commConsultiva.length() - 1)));
+
 					tableIndex++;
 				}
 			}
@@ -160,5 +184,5 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 	private boolean checkTipoAtto(String tipoAtto) {
 		return this.tipiAttoLucene.contains(tipoAtto);
 	}
-	
+
 }
