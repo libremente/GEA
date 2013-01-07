@@ -504,6 +504,9 @@
 		<property-sheet>
 			<show-property name="crlatti:dataNominaRelatore" />
 			<show-property name="crlatti:dataUscitaRelatore" />
+			<show-property name="crlatti:tipoAttoRelatore" />
+			<show-property name="crlatti:numeroAttoRelatore" />
+			<show-property name="crlatti:commissioneRelatore" />
 		</property-sheet>
 	</config>
 

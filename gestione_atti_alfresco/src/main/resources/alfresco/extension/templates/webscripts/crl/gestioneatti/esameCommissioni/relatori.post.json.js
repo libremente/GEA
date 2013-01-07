@@ -90,9 +90,11 @@ if(checkIsNotNull(id)){
 
 		// occorre ridondare alcuni metadati dell'atto e della commissione per permettere le ricerche lucene (report) sui relatori
 		var tipoAttoRelatore = attoNode.typeShort.substring(12);
+		var numeroAttoRelatore = attoNode.name;
 		var commissioneRelatore = commissioneFolderNode.name;
 
 		relatoreNode.properties["crlatti:tipoAttoRelatore"] = tipoAttoRelatore;
+		relatoreNode.properties["crlatti:numeroAttoRelatore"] = numeroAttoRelatore;
 		relatoreNode.properties["crlatti:commissioneRelatore"] = commissioneRelatore;
 		
 		relatoreNode.save();

@@ -555,6 +555,10 @@
 					<title>Tipo atto</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:numeroAttoRelatore">
+					<title>Numero atto</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:commissioneRelatore">
 					<title>Commissione</title>
 					<type>d:text</type>
