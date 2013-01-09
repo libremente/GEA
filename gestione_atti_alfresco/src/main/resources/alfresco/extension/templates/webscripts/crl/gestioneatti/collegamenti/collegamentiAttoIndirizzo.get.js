@@ -9,7 +9,7 @@ if(checkIsNotNull(idAtto)){
 	var collegamentiFolderNode = attoNode.childrenByXPath(collegamentiXPathQuery)[0];
 	
 	var attoIndirizzoXPathQuery = "*[@cm:name='AttiIndirizzoSindacatoIspettivo']";
-	var attoIndirizzoFolderNode = attoNode.collegamentiFolderNode(attoIndirizzoXPathQuery)[0];
+	var attoIndirizzoFolderNode = collegamentiFolderNode.childrenByXPath(attoIndirizzoXPathQuery)[0];
 	
 	collegamenti = attoIndirizzoFolderNode.getChildAssocsByType("crlatti:collegamentoAttoIndirizzo");
 } else {

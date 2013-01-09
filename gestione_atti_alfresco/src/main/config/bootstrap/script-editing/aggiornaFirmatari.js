@@ -1,5 +1,6 @@
 var firmatari = space.getChildAssocsByType("crlatti:firmatario");
 var firmatariAtto = new Array();
+var firmatariOriginari = new Array();
 var primoFirmatarioAtto = "";
 
 firmatari.sort(function(a, b){
@@ -23,6 +24,8 @@ for (var i=0; i<firmatari.length; i++) {
 	
 	if(firmatari[i].properties["crlatti:isPrimoFirmatario"]==true){
 		primoFirmatarioAtto = firmatari[i].name;
+	}else{
+		firmatariOriginari.push(firmatari[i].name);
 	}
 	
 	firmatariAtto.push(firmatari[i].name);
@@ -32,5 +35,6 @@ for (var i=0; i<firmatari.length; i++) {
 
 var attoNode = space.parent;
 attoNode.properties["crlatti:primoFirmatario"] = primoFirmatarioAtto;
+attoNode.properties["crlatti:firmatariOriginari"] = firmatariOriginari;
 attoNode.properties["crlatti:firmatari"] = firmatariAtto;
 attoNode.save();

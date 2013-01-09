@@ -732,6 +732,7 @@
 			<show-property name="crlatti:dataSedutaComm" />
 
 			<show-property name="crlatti:commReferente" />
+			<show-property name="crlatti:dataAssegnazioneCommissioneReferente" />
 			<show-property name="crlatti:dataSedutaAula" />
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
@@ -751,6 +752,7 @@
 			<show-property name="crlatti:stralcio" />
 			<show-property name="crlatti:primoFirmatario" />
 			<show-property name="crlatti:firmatari" />
+			<show-property name="crlatti:firmatariOriginari" />
 
 			<show-property name="crlatti:dataChiusura" />
 			<show-property name="crlatti:tipoChiusura" />
@@ -793,6 +795,7 @@
 			<show-property name="crlatti:dataSedutaComm" />
 
 			<show-property name="crlatti:commReferente" />
+			<show-property name="crlatti:dataAssegnazioneCommissioneReferente" />
 			<show-property name="crlatti:dataSedutaAula" />
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />

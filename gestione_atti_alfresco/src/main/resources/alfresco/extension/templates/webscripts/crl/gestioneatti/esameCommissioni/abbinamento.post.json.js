@@ -44,7 +44,8 @@ if(checkIsNotNull(jsonAbbinamento)
 		abbinamentoNode = abbinamentoEsistenteResults[0];
 		creaAssociazione = false;
 	} else {
-		abbinamentoNode = abbinamentiFolderNode.createNode(attoAbbinatoFolderNode.name,"crlatti:abbinamento");
+		var nomeNodoAbbinato = attoAbbinatoFolderNode.typeShort.substring(12) + " " + attoAbbinatoFolderNode.name;
+		abbinamentoNode = abbinamentiFolderNode.createNode(nomeNodoAbbinato,"crlatti:abbinamento");
 	}
 
 	//aggiornamento dei metadati
@@ -88,7 +89,8 @@ if(checkIsNotNull(jsonAbbinamento)
 		abbinamentoAttoAbbinatoNode = abbinamentoAttoAbbinatoEsistenteResults[0];
 		creaAssociazioneAttoAbbinato = false;
 	} else {
-		abbinamentoAttoAbbinatoNode = abbinamentiAttoAbbinatoFolderNode.createNode(attoFolderNode.name,"crlatti:abbinamento");
+		var nomeNodoAbbinamento = attoFolderNode.typeShort.substring(12) + " " + attoFolderNode.name;
+		abbinamentoAttoAbbinatoNode = abbinamentiAttoAbbinatoFolderNode.createNode(nomeNodoAbbinamento,"crlatti:abbinamento");
 	}
 	
 	
@@ -98,7 +100,7 @@ if(checkIsNotNull(jsonAbbinamento)
 	abbinamentoAttoAbbinatoNode.properties["crlatti:noteAbbinamento"] = note;
 	abbinamentoAttoAbbinatoNode.save();
 	
-	if(creaAssociazione){
+	if(creaAssociazioneAttoAbbinato){
 		abbinamentoAttoAbbinatoNode.createAssociation(attoFolderNode,"crlatti:attoAssociatoAbbinamento");
 	}
 	

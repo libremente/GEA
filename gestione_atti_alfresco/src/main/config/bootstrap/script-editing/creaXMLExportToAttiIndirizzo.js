@@ -125,16 +125,16 @@ function creaXMLExport(operazione){
 		var collegamentiAttoIndirizzoXPathQuery = "*[@cm:name='AttiIndirizzoSindacatoIspettivo']";
 		var collegamentiAttoIndirizzoFolderNode = collegamentiFolderNode.childrenByXPath(collegamentiAttoIndirizzoXPathQuery)[0];
 
-		var collegamentiAttoIndirizzoArray = collegamentiAttoIndirizzoFolderNode.getChildAssocsByType("crlatti:collegamentoAttiIndirizzo");
+		var collegamentiAttoIndirizzoArray = collegamentiAttoIndirizzoFolderNode.getChildAssocsByType("crlatti:collegamentoAttoIndirizzo");
 
 		//creazione dei tag <collegamento> - Atti indirizzo
 		for (var i=0; i<collegamentiAttoIndirizzoArray.length; i++) {
 			
-			var collegamento = <collegamento id_atto="" tipo_atto="" numero_atto=""></firmatario>;
+			var collegamento = <collegamento id_atto="" tipo_atto="" numero_atto=""></collegamento>;
 
 			var attoAssociato = collegamentiAttoIndirizzoArray[i].assocs["crlatti:attoAssociatoCollegamentoAttiIndirizzo"][0];
 			
-			collegamento.@id_atto = attoAssociato.properties["crlatti:idAttoIndirizzo"];
+			collegamento.@id_atto = attoAssociato.properties["crlatti:IdAttoIndirizzo"];
 			collegamento.@tipo_atto = attoAssociato.properties["crlatti:tipoAttoIndirizzo"];
 			collegamento.@numero_atto = attoAssociato.properties["crlatti:numeroAttoIndirizzo"];
 			

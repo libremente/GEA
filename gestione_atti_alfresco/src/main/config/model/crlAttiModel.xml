@@ -124,6 +124,10 @@
 					<title>Data seduta aula</title>
 					<type>d:date</type>
 				</property>
+				<property name="crlatti:dataAssegnazioneCommissioneReferente">
+					<title>Data assegnazione commissione referente</title>
+					<type>d:date</type>
+				</property>
 				<property name="crlatti:commConsultiva">
 					<title>Commissioni consultive</title>
 					<type>d:text</type>
@@ -1277,6 +1281,16 @@
 			<properties>
 				<property name="crlatti:firmatari">
 					<title>Firmatari</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:firmatariOriginari">
+					<title>Firmatari Originari</title>
 					<type>d:text</type>
 					<multiple>true</multiple>
 					<index enabled="true">

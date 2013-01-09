@@ -2,7 +2,9 @@
 
 var commissioni = space.getChildAssocsByType("crlatti:commissione");
 
-
+var passaggioNode = space.parent;
+var passaggiNode = passaggioNode.parent;
+var attoNode = passaggiNode.parent;
 
 // Ridondanza delle informazioni sui ruoli delle commissioni direttamente sul nodo atto
 // Per consentire le ricerche lucene relative alle commissioni direttamente sui nodi atto
@@ -23,6 +25,7 @@ for (var i=0; i<commissioni.length; i++) {
 	
 	if(commissioni[i].properties["crlatti:ruoloCommissione"] == "Referente") {
 		commReferenteAtto.push(commissioni[i].name);
+		attoNode.properties["crlatti:dataAssegnazioneCommissioneReferente"] = commissioni[i].properties["crlatti:dataAssegnazioneCommissione"];
 	}
 
 	if(commissioni[i].properties["crlatti:ruoloCommissione"] == "Co-Referente") {
@@ -50,9 +53,7 @@ for (var i=0; i<commissioni.length; i++) {
 	
 }
 
-var passaggioNode = space.parent;
-var passaggiNode = passaggioNode.parent;
-var attoNode = passaggiNode.parent;
+
 attoNode.properties["crlatti:commConsultiva"] = commConsultivaAtto;
 attoNode.properties["crlatti:commReferente"] = commReferenteAtto;
 

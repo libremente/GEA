@@ -9,7 +9,7 @@ if(checkIsNotNull(idAtto)){
 	var collegamentiFolderNode = attoNode.childrenByXPath(collegamentiXPathQuery)[0];
 	
 	var interniXPathQuery = "*[@cm:name='Interni']";
-	var interniFolderNode = attoNode.collegamentiFolderNode(interniXPathQuery)[0];
+	var interniFolderNode = collegamentiFolderNode.childrenByXPath(interniXPathQuery)[0];
 	
 	collegamenti = interniFolderNode.getChildAssocsByType("crlatti:collegamento");
 } else {
