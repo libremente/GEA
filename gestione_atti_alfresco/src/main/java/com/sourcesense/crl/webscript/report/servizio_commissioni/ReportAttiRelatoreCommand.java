@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
-import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -21,13 +23,13 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * TO TEST ordinamento ok mistero su query su name
  * 
  * @author Alessandro Benedetti
  * 
@@ -50,23 +52,21 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoRelatore"; // alfabetico
 
 			Map<String, ResultSet> relatore2results = Maps.newHashMap();
-			/* execute guery grouped by Commissione */
+			/* execute guery grouped by Relatore */
 			for (String relatore : this.relatoriJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
-				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+				sp.setLanguage(SearchService.LANGUAGE_FTS_ALFRESCO);
 				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
 						+ " AND TYPE:\""
-						+ "crlatti:relatore"
-						+ "\" AND "
-						+ convertListToString("@crlatti\\:tipoAttoRelatore",
-								this.tipiAttoLucene)
+						+ "crlatti:relatore\" AND "
+						+ convertListToString("@crlatti\\:tipoAttoRelatore",this.tipiAttoLucene, true)
 						+ " AND "
 						+ convertListToString("@crlatti\\:commissioneRelatore",
-								this.commissioniJson)
-						+ "\" AND @cm\\:name:\""
-						+ relatore
-						+ "\" AND @crlatti\\:dataNominaRelatore:["
+								this.commissioniJson, false)
+						+ " AND =@cm\\:name:\""
+						+ relatore+ "\"" 
+						+" AND @crlatti\\:dataNominaRelatore:["
 						+ this.dataNominaRelatoreDa
 						+ " TO "
 						+ this.dataNominaRelatoreA + " ]";
@@ -78,14 +78,13 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			}
 
 			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
-			ArrayListMultimap<String, NodeRef> relatore2atti = this
-					.retrieveAtti(relatore2results, spacesStore,
-							atto2commissione);
+			TreeMap<String, List<NodeRef>> relatore2atti = this.retrieveAttiOrdered(
+					relatore2results, spacesStore, atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
 					.generateFromTemplateMap(
-							this.retrieveLenghtMap(relatore2atti), 2, false);
+							this.retrieveLenghtMap(relatore2atti), 4, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -111,7 +110,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ArrayListMultimap<String, NodeRef> commissione2atti,
+			Map<String, List<NodeRef>> commissione2atti,
 			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
@@ -121,68 +120,52 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
-				Map<QName, Serializable> commissioneProperties = nodeService
-						.getProperties(atto2commissione.get(currentAtto));
 
-				// from Commissione
-				String tipoAtto = (String) this.getNodeRefProperty(
-						commissioneProperties, "tipoAttoCommissione");
-				if (this.checkTipoAtto(tipoAtto)) {
-					// from Atto
-					String numeroAtto = (String) this.getNodeRefProperty(
-							attoProperties, "numeroAtto");
-					String oggetto = (String) this.getNodeRefProperty(
-							attoProperties, "oggetto");
+				QName nodeRefType = nodeService.getType(currentAtto);
+				String tipoAtto = (String) nodeRefType.getLocalName();
+				// from Atto
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
+				String oggetto = (String) this.getNodeRefProperty(
+						attoProperties, "oggetto");
 
-					ArrayList<String> commReferenteList = (ArrayList<String>) this
-							.getNodeRefProperty(attoProperties, "commReferente");
-					String commReferente = "";
-					for (String commissioneReferenteMulti : commReferenteList)
-						commReferente += commissioneReferenteMulti + " ";
+				ArrayList<String> commReferenteList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "commReferente");
+				String commReferente = "";
+				for (String commissioneReferenteMulti : commReferenteList)
+					commReferente += commissioneReferenteMulti + " ";
 
-					ArrayList<String> commConsultivaList = (ArrayList<String>) this
-							.getNodeRefProperty(attoProperties,
-									"commConsultiva");
-					String commConsultiva = "";
-					if (commConsultivaList != null)
-						for (String commissioneConsultivaMulti : commConsultivaList)
-							commConsultiva += commissioneConsultivaMulti + ",";
+				ArrayList<String> commConsultivaList = (ArrayList<String>) this
+						.getNodeRefProperty(attoProperties, "commConsultiva");
+				String commConsultiva = "";
+				if (commConsultivaList != null)
+					for (String commissioneConsultivaMulti : commConsultivaList)
+						commConsultiva += commissioneConsultivaMulti + ",";
 
-					currentTable
-							.getRow(0)
-							.getCell(0)
-							.setText(
-									this.checkStringEmpty(tipoAtto + " "
-											+ numeroAtto));
-					currentTable.getRow(0).getCell(1)
-							.setText(this.checkStringEmpty(oggetto));
-					currentTable.getRow(1).getCell(2)
-							.setText(this.checkStringEmpty(commReferente));
-					currentTable
-							.getRow(2)
-							.getCell(2)
-							.setText(
-									this.checkStringEmpty(commConsultiva
-											.substring(0,
-													commConsultiva.length() - 1)));
+				currentTable
+						.getRow(0)
+						.getCell(0)
+						.setText(
+								this.checkStringEmpty(tipoAtto + " "
+										+ numeroAtto));
+				currentTable.getRow(0).getCell(1)
+						.setText(this.checkStringEmpty(oggetto));
+				currentTable.getRow(1).getCell(2)
+						.setText(this.checkStringEmpty(commReferente));
+				currentTable
+						.getRow(2)
+						.getCell(2)
+						.setText(
+								this.checkStringEmpty(commConsultiva.substring(
+										0, commConsultiva.length() - 1)));
 
-					tableIndex++;
-				}
+				tableIndex++;
 			}
 		}
 
 		return document;
 	}
 
-	/**
-	 * check if the "tipoAtto" in input is good, related to the selection of
-	 * tipoAtto good
-	 * 
-	 * @param tipoAtto
-	 * @return
-	 */
-	private boolean checkTipoAtto(String tipoAtto) {
-		return this.tipiAttoLucene.contains(tipoAtto);
-	}
-
+	
 }

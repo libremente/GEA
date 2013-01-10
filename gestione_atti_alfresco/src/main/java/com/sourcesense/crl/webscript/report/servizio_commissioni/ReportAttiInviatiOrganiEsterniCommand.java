@@ -21,15 +21,14 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * 
- * TO DO :
- * - ? data assegnazione from atto
- * - data assegnazione parere
- * 
+ * - Per fare l'ordinamento abbiamo dentro parere 
+ *   ridontati il tipoAtto e numeroAtto
  * SKIP TEMP
  * @author Alessandro Benedetti
  *
@@ -50,7 +49,10 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneParereA(json);
 			/*sorting field*/
 			String sortField1 = "@{" + CRL_ATTI_MODEL
-					+ "}organismoStatutarioParere";
+					+ "}tipoAttoParere";
+			String sortField2 = "@{" + CRL_ATTI_MODEL
+					+ "}numeroAttoParere";
+			Map<String, ResultSet> organo2results = Maps.newHashMap();
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
@@ -62,18 +64,24 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 					+ this.dataAssegnazioneParereDa + " TO "
 					+ this.dataAssegnazioneParereA + " ]";
 			sp.setQuery(query);
-			sp.addSort(sortField1, false);
+			sp.addSort(sortField1, true);
+			sp.addSort(sortField2, true);
 			ResultSet pareriResult = this.searchService.query(sp);
-			Map<NodeRef, NodeRef> atto2parere= new HashMap<NodeRef, NodeRef>();
-			ArrayListMultimap<String, NodeRef>  tipoAtto2atto=this.retrieveAttiFromPareri(pareriResult,atto2parere);
+			organo2results.put(this.organismo, pareriResult);
+			Map<NodeRef, NodeRef> atto2parere = new HashMap<NodeRef, NodeRef>();
+			ArrayListMultimap<String, NodeRef> parere2atti = this
+					.retrieveAtti(organo2results, spacesStore,
+							atto2parere);
+
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					pareriResult.length(), 5, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(
+							this.retrieveLenghtMap(parere2atti), 2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					tipoAtto2atto,atto2parere);
+					parere2atti,atto2parere);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -85,23 +93,8 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 
 	}
 
-	/**
-	 * Extract Atto from a list of parere and insert it in a specific "tipoAtto" key
-	 * @param pareriResult
-	 * @param atto2parere 
-	 * @return
-	 */
-	private ArrayListMultimap<String, NodeRef> retrieveAttiFromPareri(ResultSet pareriResult, Map<NodeRef, NodeRef> atto2parere) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
-	 * qui vanno inseriti nella table, presa dal template solo 6: tipo atto-
-	 * numero atto- iniziativa - oggetto- commissione referente-data
-	 * assegnazione commissione referente- commissione consultiva - elenco altri
-	 * pareri - data assegnazione parere
-	 * 
 	 * @param finalDocStream
 	 * @param queryRes
 	 * @return
@@ -109,13 +102,13 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ArrayListMultimap<String, NodeRef> commissione2atti,
+			ArrayListMultimap<String, NodeRef> organo2atti,
 			Map<NodeRef, NodeRef> atto2parere) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
-		for (String commissione : commissione2atti.keySet()) {
-			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+		for (String organo : organo2atti.keySet()) {
+			for (NodeRef currentAtto : organo2atti.get(organo)) {
 				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
@@ -150,29 +143,35 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 				for (String parere : pareriList)
 					altriPareri += parere + " ";
 				
-				Date dateAssegnazioneCommissione =null;// ? data assegnazione from atto
+				
+				Date dateAssegnazioneParere =(Date) this.getNodeRefProperty(
+						parereProperties, "dataAssegnazioneParere");
+				Date dateAssegnazioneCommissione =null;//manca la data dentro atto
 				
 				currentTable.getRow(0).getCell(1)
-				.setText(this.checkStringEmpty(tipoAtto));
+				.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
 				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(numeroAtto));
-				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(iniziativa));
-				currentTable.getRow(3).getCell(1)
+				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(oggetto));
-				currentTable.getRow(4).getCell(1)
+				currentTable.getRow(3).getCell(1)
 				.setText(this.checkStringEmpty(commReferente));
+				currentTable.getRow(3).getCell(3)
+				.setText(this.checkStringEmpty(altriPareri));
+				currentTable.getRow(4).getCell(1)
+				.setText(this.checkStringEmpty(commConsultiva));
 
 				currentTable
-						.getRow(5)
-						.getCell(1)
+						.getRow(4)
+						.getCell(3)
 						.setText(
 								this.checkDateEmpty(dateAssegnazioneCommissione));
 				
-				currentTable.getRow(6).getCell(1)
-				.setText(this.checkStringEmpty(commConsultiva));
-				
-				//elenco altri pareri - data assegnazione parere
+				currentTable
+				.getRow(5)
+				.getCell(1)
+				.setText(
+						this.checkDateEmpty(dateAssegnazioneParere));
 				tableIndex++;
 			}
 		}

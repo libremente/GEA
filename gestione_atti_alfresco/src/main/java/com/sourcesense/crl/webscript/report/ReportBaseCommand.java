@@ -9,8 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
@@ -30,6 +34,8 @@ import org.json.JSONObject;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
 
 public abstract class ReportBaseCommand implements ReportCommand {
@@ -144,27 +150,93 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	/**
 	 * Extract the information from the result set, retrieving Atti
 	 * 
-	 * @param commissione2results
+	 * @param attoChild2results
 	 *            - String commissione -> ResultSet
 	 * @param spacesStore
 	 *            - current space store of search
-	 * @param atto2commissione
+	 * @param atto2child
 	 *            - NodeRef type Atto -> NodeRef type Commissione
 	 * @return
 	 */
 	protected ArrayListMultimap<String, NodeRef> retrieveAtti(
-			Map<String, ResultSet> commissione2results, StoreRef spacesStore,
-			Map<NodeRef, NodeRef> atto2commissione) {
-		ArrayListMultimap<String, NodeRef> commissione2atti = ArrayListMultimap
+			Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
+			Map<NodeRef, NodeRef> atto2child) {
+		ArrayListMultimap<String, NodeRef> child2atti = ArrayListMultimap
 				.create();
-		for (String commissione : commissione2results.keySet()) {
-			ResultSet commissioneResults = commissione2results.get(commissione);
+		for (String commissione : attoChild2results.keySet()) {
+			ResultSet commissioneResults = attoChild2results.get(commissione);
 			List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
 			this.retrieveAttiFromList(nodeRefList, spacesStore,
-					atto2commissione, commissione2atti,commissione);
+					atto2child, child2atti,commissione);
 		}
-		return commissione2atti;
+		return child2atti;
 	}
+
+
+	protected void retrieveAttiFromList(List<NodeRef> nodeRefList,
+			StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
+			ArrayListMultimap<String, NodeRef> child2atti,String child) {
+		int resultLength = nodeRefList.size();
+		for (int i = 0; i < resultLength; i++) {
+			NodeRef childNodeRef = nodeRefList.get(i);
+			NodeRef attoNodeRef = childNodeRef;
+			boolean check = false;
+			while (!check) {// look for Atto in type hierarchy
+				ChildAssociationRef childAssociationRef = nodeService
+						.getPrimaryParent(attoNodeRef);
+				attoNodeRef = childAssociationRef.getParentRef();
+				QName nodeRefType = nodeService.getType(attoNodeRef);
+				QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
+				check = dictionaryService.isSubClass(nodeRefType, attoRefType);
+			}
+			child2atti.put(child, attoNodeRef);
+			atto2child.put(attoNodeRef, childNodeRef);
+
+		}
+	}
+	protected TreeMap<String, List<NodeRef>> retrieveAttiOrdered(
+			Map<String, ResultSet> relatore2results, StoreRef spacesStore,
+			Map<NodeRef, NodeRef> atto2commissione) {
+		TreeMap<String, List<NodeRef>> relatore2atti = Maps.newTreeMap();
+		Set<String> relatori = relatore2results.keySet();
+		for (String relatore : relatori) {
+			ResultSet commissioneResults = relatore2results.get(relatore);
+			List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
+			this.retrieveAttiFromListOrdered(nodeRefList, spacesStore,
+					atto2commissione, relatore2atti, relatore);
+		}
+		return relatore2atti;
+	}
+	
+	protected void retrieveAttiFromListOrdered(List<NodeRef> nodeRefList,
+			StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
+			TreeMap<String, List<NodeRef>> child2atti,String child) {
+		int resultLength = nodeRefList.size();
+		for (int i = 0; i < resultLength; i++) {
+			NodeRef childNodeRef = nodeRefList.get(i);
+			NodeRef attoNodeRef = childNodeRef;
+			boolean check = false;
+			while (!check) {// look for Atto in type hierarchy
+				ChildAssociationRef childAssociationRef = nodeService
+						.getPrimaryParent(attoNodeRef);
+				attoNodeRef = childAssociationRef.getParentRef();
+				QName nodeRefType = nodeService.getType(attoNodeRef);
+				QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
+				check = dictionaryService.isSubClass(nodeRefType, attoRefType);
+			}
+			if(child2atti.get(child)!=null){
+				child2atti.get(child).add(attoNodeRef);
+			}else{
+				List<NodeRef> earlyCreatedList=new LinkedList<NodeRef>();
+				earlyCreatedList.add(attoNodeRef);
+				child2atti.put(child, earlyCreatedList);
+			}
+
+			atto2child.put(attoNodeRef, childNodeRef);
+
+		}
+	}
+	
 
 	public ResultSet getRelatori(NodeRef commissioneNodeRef) {
 		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(
@@ -194,42 +266,25 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return relatoreNodes;
 	}
 
-	protected void retrieveAttiFromList(List<NodeRef> nodeRefList,
-			StoreRef spacesStore, Map<NodeRef, NodeRef> atto2commissione,
-			ArrayListMultimap<String, NodeRef> commissione2atti,String commissione) {
-		int resultLength = nodeRefList.size();
-		for (int i = 0; i < resultLength; i++) {
-			NodeRef commissioneNodeRef = nodeRefList.get(i);
-			NodeRef attoNodeRef = commissioneNodeRef;
-			boolean check = false;
-			while (!check) {// look for Atto in type hierarchy
-				ChildAssociationRef childAssociationRef = nodeService
-						.getPrimaryParent(attoNodeRef);
-				attoNodeRef = childAssociationRef.getParentRef();
-				QName nodeRefType = nodeService.getType(attoNodeRef);
-				QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
-				check = dictionaryService.isSubClass(nodeRefType, attoRefType);
-			}
-			commissione2atti.put(commissione, attoNodeRef);
-			atto2commissione.put(attoNodeRef, commissioneNodeRef);
-
-		}
-	}
-
 	/**
 	 * return the right syntax for Alfresco lucene query on list
 	 * 
 	 * @param field
 	 * @param list
+	 * @param Apex TODO
 	 * @return
 	 */
-	protected static String convertListToString(String field, List<String> list) {
+	protected static String convertListToString(String field, List<String> list, Boolean apex) {
+		String apexString="";
+		if(apex)
+			apexString="\"";
 		String stringSpaced = list.toString().replaceAll(", ", ",");
 		String stringReplaced = stringSpaced.replaceAll(",",
-				"\" OR " + field.replaceFirst("\\:", "\\\\:") + ":\"");
-		return "(" + field + ":\""
+				apexString+" OR " + field.replaceFirst("\\:", "\\\\:") + ":"+apexString);
+		String resultQueryString = "(" + field + ":"+apexString
 				+ stringReplaced.substring(1, stringReplaced.length() - 1)
-				+ "\")";
+				+ apexString+")";
+		return resultQueryString;
 	}
 
 	/**
@@ -263,7 +318,17 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 	
 	protected Map<String,Integer> retrieveLenghtMap(
-			ArrayListMultimap<String, NodeRef> commissione2atti) {
+			Multimap<String, NodeRef> commissione2atti) {
+		Map<String,Integer> commissione2count=new HashMap<String,Integer>();
+		for (String commissione : commissione2atti.keySet()) {
+			int count = commissione2atti.get(commissione).size();
+			commissione2count.put(commissione, count);
+		}
+		return commissione2count;
+	}
+	
+	protected Map<String,Integer> retrieveLenghtMap(
+			Map<String, List<NodeRef>> commissione2atti) {
 		Map<String,Integer> commissione2count=new HashMap<String,Integer>();
 		for (String commissione : commissione2atti.keySet()) {
 			int count = commissione2atti.get(commissione).size();

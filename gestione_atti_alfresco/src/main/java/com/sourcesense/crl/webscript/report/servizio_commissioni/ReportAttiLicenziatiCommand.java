@@ -57,7 +57,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",
-								this.tipiAttoLucene)
+								this.tipiAttoLucene, true)
 						+ " AND @crlatti\\:ruoloCommissione:\""
 						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
 						+ commissione

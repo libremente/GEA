@@ -42,30 +42,16 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneCommReferenteA(json);
 			this.initDataPresentazioneDa(json);
 			this.initDataPresentazioneA(json);
-
-			 String sortField1 = "@{"+CRL_ATTI_MODEL+"}tipoAttoCommissione";
-			 String sortField2 = "@{"+CRL_ATTI_MODEL+"}numeroAttoCommissione";
-			 List<ResultSet> allSearches=new LinkedList<ResultSet>();
-			 //gruppo per consigliere?
-			for (String commissione:this.commissioniJson) {
-				SearchParameters sp = new SearchParameters();
-				sp.addStore(spacesStore);
-				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\""
-								+ "crlatti:commissione" + "\" AND "+convertListToString("@crlatti\\:tipoAtto:", this.tipiAttoLucene)  + " AND @crlatti\\:ruoloCommissione:\""
-								+ this.ruoloCommissione  +"\" AND @cm\\:name:\""
-								+ commissione+"\" AND @crlatti\\:dataAssegnazioneCommissione:["
-								+this.dataAssegnazioneCommReferenteDa+" TO "+
-								this.dataAssegnazioneCommReferenteA+" ] AND @crlatti\\:dataPresentazione:["
-										+this.dataPresentazioneDa+" TO "+
-										this.dataPresentazioneA+" ]";
-				sp.setQuery(query);
-				sp.addSort(sortField1, false);
-				sp.addSort(sortField2, false);
-				ResultSet currentResults = this.searchService.query(sp);
-				allSearches.add(currentResults);
-			}
+/*
+			SearchParameters sp = new SearchParameters();
+			sp.addStore(spacesStore);
+			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+					+"AND @crlatti\\:dataChiusura:["
+					+ this.dataRitiroDa + " TO " + this.dataRitiroA + " ]";
+			sp.setQuery(query);
+			sp.addSort(sortField1, true);
+			ResultSet attiResult = this.searchService.query(sp);
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
@@ -77,7 +63,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 					allSearches);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
-
+*/
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

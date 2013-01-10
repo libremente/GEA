@@ -45,7 +45,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "
-					+ convertListToString("TYPE", this.tipiAttoLucene)
+					+ convertListToString("TYPE", this.tipiAttoLucene, true)
 					+"AND @crlatti\\:rinviato:\"true\"";
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
