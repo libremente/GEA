@@ -26,10 +26,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * 
- * - Per fare l'ordinamento abbiamo dentro parere 
- *   ridontati il tipoAtto e numeroAtto
- * SKIP TEMP
+ * To TEST
  * @author Alessandro Benedetti
  *
  */
@@ -146,7 +143,8 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 				
 				Date dateAssegnazioneParere =(Date) this.getNodeRefProperty(
 						parereProperties, "dataAssegnazioneParere");
-				Date dateAssegnazioneCommissione =null;//manca la data dentro atto
+				Date dateAssegnazioneCommissione =(Date) this.getNodeRefProperty(
+						attoProperties, "dataAssegnazioneCommissioneReferente");
 				
 				currentTable.getRow(0).getCell(1)
 				.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
