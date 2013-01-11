@@ -315,9 +315,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	 * @return
 	 */
 	protected static String convertListToString(String field,
-			List<String> valueList, Boolean apex) {
+			List<String> valueList, Boolean phraseSearch) {
 		String apexString = "";
-		if (apex)
+		if (phraseSearch)
 			apexString = "\"";
 		String stringSpaced = valueList.toString().replaceAll(", ", ",");
 		String stringReplaced = stringSpaced.replaceAll(",", apexString
@@ -330,6 +330,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	/**
+	 * Save temporary on the fileSystem the byteArray.
+	 * In this way is possible to access to the tables in a right and independent manner.
+	 * 
 	 * @param generatedDocument
 	 * @return
 	 * @throws IOException
@@ -342,6 +345,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return new ByteArrayInputStream(ostream.toByteArray());
 	}
 
+	/**
+	 * Convert the TipoAtto list in input in the json in the Alfresco syntax
+	 * @param tipiAttoJson
+	 * @return
+	 */
 	protected List<String> convertToLuceneTipiAtto(List<String> tipiAttoJson) {
 		List<String> luceneTipiAttoList = new ArrayList<String>();
 		for (String jsonType : tipiAttoJson) {
@@ -351,6 +359,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return luceneTipiAttoList;
 	}
 
+	/**
+	 * Return from a map that relate a specific label to a number of results for this label,
+	 * the total number of results. 
+	 * @param group2atti
+	 * @return
+	 */
 	protected int retrieveLenght(ArrayListMultimap<String, NodeRef> group2atti) {
 		int count = 0;
 		for (String group : group2atti.keySet()) {
@@ -359,6 +373,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return count;
 	}
 
+	/**
+	 * Return  a map that relate a specific label to a number of results for this label
+	 * @param commissione2atti
+	 * @return
+	 */
 	protected Map<String, Integer> retrieveLenghtMap(
 			Multimap<String, NodeRef> commissione2atti) {
 		Map<String, Integer> commissione2count = new HashMap<String, Integer>();
@@ -369,6 +388,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return commissione2count;
 	}
 
+	/**
+	 * Return  a map that relate a specific label to a number of results for this label
+	 * @param commissione2atti
+	 * @return
+	 */
 	protected Map<String, Integer> retrieveLenghtMap(
 			Map<String, List<NodeRef>> commissione2atti) {
 		Map<String, Integer> commissione2count = new HashMap<String, Integer>();
@@ -379,6 +403,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return commissione2count;
 	}
 
+	/**
+	 * Return  a map that relate a specific label to a number of results for this label.
+	 * Only elements that match the conditional rule are counted.
+	 * @param commissione2atti
+	 * @return
+	 */
 	protected Map<String, Integer> retrieveLenghtMapConditional(
 			ArrayListMultimap<String, NodeRef> commissione2atti) {
 		Map<String, Integer> commissione2count = new HashMap<String, Integer>();
@@ -399,17 +429,18 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return commissione2count;
 	}
 
+	/**
+	 * Check the validity of the Stato Atto.
+	 * Implementing classes contains the logic.
+	 * @param statoAtto
+	 * @return
+	 */
 	protected boolean checkStatoAtto(String statoAtto) {
 		return true;
 	}
 
-	protected int retrieveLenght(List<ResultSet> allSearches) {
-		// TODO Auto-generated method stub
-		return allSearches.size();
-	}
-
 	/**
-	 * Return last passaggio
+	 * Return last passaggio for a Atto NodeRef
 	 * 
 	 * @param attoNodeRef
 	 * @return
@@ -457,8 +488,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	/**
-	 * Restituisce stringa valorizzata con tutti i nomi degli abbinamenti
-	 * separati da virgola
+	 * Return the string with the name of all the Abbinamento, comma separed
 	 * 
 	 * @param currentAtto
 	 * @return abbinamento1, abbinamento2, abbinamento3, etc..
@@ -481,6 +511,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return abbinamentiValue;
 	}
 
+	/**
+	 * Encode a list of values in a single String , comma separed
+	 * @param stringList
+	 * @return
+	 */
 	protected String renderList(List<String> stringList) {
 		String encodedString = "";
 		if (stringList != null)
@@ -493,7 +528,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	/**
-	 * Return "Si" for True or "No" for False
+	 * Return "Si" for True or "No" for False.
+	 * Useful in front end rendering.
 	 * 
 	 * @param booleano
 	 * @return
@@ -508,14 +544,14 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	/**
-	 * init the common params : List<String> tipiAttoLucene; String
+	 * Init the common params : List<String> tipiAttoLucene; String
 	 * ruoloCommissioneLuceneField; List<String> commissioniJson;
 	 * 
 	 * @throws JSONException
 	 */
 	protected void initCommonParams(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		initTipiAttoLucene(json);
+		initTipiAtto(json);
 		// extract the ruoloCommissione element from json
 		this.ruoloCommissione = JsonUtils.retieveElementFromJson(rootJson,
 				"ruoloCommissione");
@@ -525,7 +561,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 				"commissioni");
 
 	}
-
+/**
+ * Simple init method.
+ * @param json
+ * @throws JSONException
+ */
 	protected void initFirmatario(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
 		this.firmatario = JsonUtils.retieveElementFromJson(rootJson,
@@ -641,10 +681,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	/**
+	 * Init the list of Tipo Atto , extracting values from the json
 	 * @param rootJson
 	 * @throws JSONException
 	 */
-	protected void initTipiAttoLucene(String json) throws JSONException {
+	protected void initTipiAtto(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
 		// extract the tipiAtto list from the json string
 		List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
@@ -653,6 +694,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		this.tipiAttoLucene = tipiAttoJson;
 	}
 
+	/**
+	 * Init the list of Tipo Atto, extracting the list of Tipo Atto from the json,inverting case
+	 * and adding a specific prefix
+	 * @param json
+	 * @throws JSONException
+	 */
 	protected void initTipiAttoLuceneAtto(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
 		this.tipiAttoLucene = Lists.newArrayList();
@@ -665,12 +712,22 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		}
 	}
 
+	/**
+	 * Reverse the case of the String in input and capitalizes it
+	 * @param tipoAtto
+	 * @return
+	 */
 	private String reverseCase(String tipoAtto) {
 		String lowercase = tipoAtto.toLowerCase();
 		String capitalize = StringUtils.capitalize(lowercase);
 		return capitalize;
 	}
 
+	/**
+	 * Check for null dates and format the result
+	 * @param attributeDate
+	 * @return
+	 */
 	protected String checkDateEmpty(Date attributeDate) {
 		if (attributeDate == null)
 			return "";
@@ -681,6 +738,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	}
 
+	/**
+	 * Check for null text element
+	 * @param attribute
+	 * @return
+	 */
 	protected String checkStringEmpty(String attribute) {
 		if (attribute == null)
 			return "";
@@ -689,22 +751,17 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	}
 
+	/**
+	 * returna  specific attribute value in a properties map
+	 * @param properties
+	 * @param attribute
+	 * @return
+	 */
 	protected Serializable getNodeRefProperty(
 			Map<QName, Serializable> properties, String attribute) {
 		return properties.get(QName.createQName(CRL_ATTI_MODEL, attribute));
 	}
 
-	/**
-	 * init a simple map that link json names to lucene names deprecated
-	 * */
-	public void initJson2lucene() {
-		json2luceneField = new HashMap<String, String>();
-		json2luceneField.put(RUOLO_COMM_REFERENTE, "crlatti:commReferente");
-		json2luceneField.put(RUOLO_COMM_COREFERENTE, "crlatti:commCoreferente");
-		json2luceneField.put(RUOLO_COMM_CONSULTIVA, "crlatti:commConsultiva");
-		json2luceneField.put(RUOLO_COMM_REDIGENTE, "crlatti:commRedigente");
-
-	}
 
 	public Map<String, String> getJson2luceneField() {
 		return json2luceneField;
