@@ -36,8 +36,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 
-	private static final String SEP = ", ";
-	private static final String ABBINAMENTI_SPACE_NAME = "Abbinamenti";
+	
 
 	@Override
 	public byte[] generate(byte[] templateByteArray, String json,
@@ -115,7 +114,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				// from Atto
 				QName nodeRefType = nodeService.getType(currentAtto);
 				String tipoAtto = (String) nodeRefType.getLocalName();
-				String abbinamenti = getAbbinamenti(currentAtto);
+				String abbinamenti = this.getAbbinamenti(currentAtto);
 				String numeroAtto = ""
 						+ (Integer) this.getNodeRefProperty(attoProperties,
 								"numeroAtto");
@@ -183,73 +182,9 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				QName.createQName(CRL_ATTI_MODEL, "relazioneScrittaAula"));
 	}
 
-	// Search last "passaggio" function
-	public NodeRef getLastPassaggio(NodeRef attoNodeRef) {
+	
 
-		NodeRef passaggio = null;
-
-		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(
-				null);
-		namespacePrefixResolver.registerNamespace(
-				NamespaceService.SYSTEM_MODEL_PREFIX,
-				NamespaceService.SYSTEM_MODEL_1_0_URI);
-		namespacePrefixResolver.registerNamespace(
-				NamespaceService.CONTENT_MODEL_PREFIX,
-				NamespaceService.CONTENT_MODEL_1_0_URI);
-		namespacePrefixResolver.registerNamespace(
-				NamespaceService.APP_MODEL_PREFIX,
-				NamespaceService.APP_MODEL_1_0_URI);
-
-		String luceneAttoNodePath = nodeService.getPath(attoNodeRef)
-				.toPrefixString(namespacePrefixResolver);
-
-		ResultSet passaggiNodes = searchService.query(
-				attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
-				"PATH:\"" + luceneAttoNodePath + "/cm:Passaggi/*\"");
-
-		int numeroPassaggio = 0;
-		String nomePassaggio = "";
-		int passaggioMax = 0;
-		for (int i = 0; i < passaggiNodes.length(); i++) {
-
-			nomePassaggio = (String) nodeService.getProperty(
-					passaggiNodes.getNodeRef(i), ContentModel.PROP_NAME);
-			numeroPassaggio = Integer.parseInt(nomePassaggio.substring(9));
-
-			if (numeroPassaggio > passaggioMax) {
-				passaggioMax = numeroPassaggio;
-				passaggio = passaggiNodes.getNodeRef(i);
-			}
-
-		}
-
-		return passaggio;
-	}
-
-	/**
-	 * Restituisce stringa valorizzata con tutti i nomi degli abbinamenti
-	 * separati da virgola
-	 * 
-	 * @param currentAtto
-	 * @return abbinamento1, abbinamento2, abbinamento3, etc..
-	 */
-	private String getAbbinamenti(NodeRef currentAtto) {
-		String abbinamentiValue = StringUtils.EMPTY;
-		NodeRef passaggio = getLastPassaggio(currentAtto);
-		NodeRef abbinamentiFolderNode = nodeService.getChildByName(passaggio,
-				ContentModel.ASSOC_CONTAINS, ABBINAMENTI_SPACE_NAME);
-		List<ChildAssociationRef> abbinamenti = nodeService
-				.getChildAssocs(abbinamentiFolderNode);
-		for (Iterator<ChildAssociationRef> iterator = abbinamenti.iterator(); iterator
-				.hasNext();) {
-			ChildAssociationRef childAssociationRef = (ChildAssociationRef) iterator
-					.next();
-			NodeRef abbinamento = childAssociationRef.getChildRef();
-			abbinamentiValue += (String) nodeService.getProperty(abbinamento,
-					ContentModel.PROP_NAME) + SEP;
-		}
-		return abbinamentiValue;
-	}
+	
 	
 	protected int retrieveLenght(
 			ResultSet attiResults) {

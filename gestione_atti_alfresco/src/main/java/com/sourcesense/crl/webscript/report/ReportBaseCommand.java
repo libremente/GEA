@@ -9,13 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
+import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.ContentService;
@@ -60,9 +61,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	public static final String LAVORI_COMITATO_RISTRETTO = "Lavori Comitato Ristretto";
 	public static final String CHIUSO = "Chiuso";
 	public static final String RITIRATO = "Ritirato dai promotori";
-	
-	
-	
+
+	private static final String SEP = ", ";
+	private static final String ABBINAMENTI_SPACE_NAME = "Abbinamenti";
+
 	protected List<String> tipiAttoLucene;
 	protected String ruoloCommissione;
 	protected String organismo;
@@ -85,7 +87,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 	protected String dataAssegnazioneParereDa;
 	protected String dataAssegnazioneParereA;
-	
+
 	protected String dataSedutaDa;
 	protected String dataSedutaA;
 
@@ -97,17 +99,17 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	public abstract byte[] generate(byte[] templateByteArray, String json,
 			StoreRef spacesStore) throws IOException;
 
-	
 	/**
 	 * Extract only valuable commissioni from the ones extracted from the
-	 * Relatori
+	 * Relatori.
+	 * For each relatore is analyzed its typer hierarchy, and when a Commissione is found, its name is checked.
 	 * 
 	 * @param relatoriResults
-	 * @return
+	 * @return List of Commissioni NodeRef
 	 */
 	protected List<NodeRef> retrieveCommissioniFromRelatori(
 			ResultSet relatoriResults) {
-		List<NodeRef> commissioni=Lists.newArrayList();
+		List<NodeRef> commissioni = Lists.newArrayList();
 		int resultLength = relatoriResults.length();
 		for (int i = 0; i < resultLength; i++) {
 			NodeRef relatoreNodeRef = relatoriResults.getNodeRef(i);
@@ -115,31 +117,29 @@ public abstract class ReportBaseCommand implements ReportCommand {
 					.getProperties(relatoreNodeRef);
 			NodeRef commissioneNodeRef = relatoreNodeRef;
 			boolean check = false;
-			while (!check) {// look for Atto in type hierarchy
+			while (!check) {// look for Commissione in type hierarchy
 				ChildAssociationRef childAssociationRef = nodeService
 						.getPrimaryParent(commissioneNodeRef);
 				commissioneNodeRef = childAssociationRef.getParentRef();
 				QName nodeRefType = nodeService.getType(commissioneNodeRef);
 				QName attoRefType = QName.createQName(CRL_ATTI_MODEL,
 						"commissione");
-				check = dictionaryService.isSubClass(nodeRefType,
-						attoRefType);
+				check = dictionaryService.isSubClass(nodeRefType, attoRefType);
 			}
 			Map<QName, Serializable> commissioneProperties = nodeService
 					.getProperties(commissioneNodeRef);
 			String commissione = (String) this.getNodeRefProperty(
 					commissioneProperties, "name");
-			if(this.checkCommissione(commissione))
+			if (this.checkCommissione(commissione))
 				commissioni.add(commissioneNodeRef);
 
 		}
 		return commissioni;
 	}
-	
 
 	/**
-	 * check if the "tipoAtto" in input is good, related to the selection of
-	 * tipoAtto good
+	 * check if the Commissione in input is good, related to the selection of
+	 * Commissione good
 	 * 
 	 * @param tipoAtto
 	 * @return
@@ -147,8 +147,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	private boolean checkCommissione(String commissione) {
 		return this.commissioniJson.contains(commissione);
 	}
+
 	/**
-	 * Extract the information from the result set, retrieving Atti
+	 * For each Commissione(String) in input , access to its resultSet and retrieve 
+	 * the list of Atto NodeRef.
 	 * 
 	 * @param attoChild2results
 	 *            - String commissione -> ResultSet
@@ -166,16 +168,25 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		for (String commissione : attoChild2results.keySet()) {
 			ResultSet commissioneResults = attoChild2results.get(commissione);
 			List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
-			this.retrieveAttiFromList(nodeRefList, spacesStore,
-					atto2child, child2atti,commissione);
+			this.retrieveAttiFromList(nodeRefList, spacesStore, atto2child,
+					child2atti, commissione);
 		}
 		return child2atti;
 	}
 
-
+	/**
+	 * Retrieve Atto from a NodeRef list of results from the query.
+	 * For example a list of Commissione or Parere.
+	 * Then from each child node, it find the related Atto.
+	 * @param nodeRefList - the list of Commissione NodeRef
+	 * @param spacesStore - the current space store  workspace://SpacesStore
+	 * @param atto2child - a map that relates each atto to its specif childNodes( for example Commissione NodeRef)
+	 * @param child2atti - a map that relates a specific child NodeRef
+	 * @param child - the String of the child related to different Atto ( for example Commissione I)
+	 */
 	protected void retrieveAttiFromList(List<NodeRef> nodeRefList,
 			StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
-			ArrayListMultimap<String, NodeRef> child2atti,String child) {
+			ArrayListMultimap<String, NodeRef> child2atti, String child) {
 		int resultLength = nodeRefList.size();
 		for (int i = 0; i < resultLength; i++) {
 			NodeRef childNodeRef = nodeRefList.get(i);
@@ -194,6 +205,15 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
 		}
 	}
+
+	/**
+	 * Retrieve Atto using an ordered sequence of node child names ( for example Relatore)
+	 * and then extract from each relatore the related Atto
+	 * @param relatore2results
+	 * @param spacesStore
+	 * @param atto2commissione
+	 * @return
+	 */
 	protected TreeMap<String, List<NodeRef>> retrieveAttiOrdered(
 			Map<String, ResultSet> relatore2results, StoreRef spacesStore,
 			Map<NodeRef, NodeRef> atto2commissione) {
@@ -207,10 +227,22 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		}
 		return relatore2atti;
 	}
-	
+
+	/**
+	 * Retrieve Atto from a NodeRef list of results from the query.
+	 * For example a list of Relatore or Parere.
+	 * Then from each child node, it find the related Atto.
+	 * TreeMap is used to gain ordering power.
+	 * 
+	 * @param nodeRefList - the list of Commissione NodeRef
+	 * @param spacesStore - the current space store  workspace://SpacesStore
+	 * @param atto2child - a map that relates each atto to its specif childNodes( for example Commissione NodeRef)
+	 * @param child2atti - a map that relates a specific child NodeRef
+	 * @param child - the String of the child related to different Atto ( for example Commissione I)
+	 */
 	protected void retrieveAttiFromListOrdered(List<NodeRef> nodeRefList,
 			StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
-			TreeMap<String, List<NodeRef>> child2atti,String child) {
+			TreeMap<String, List<NodeRef>> child2atti, String child) {
 		int resultLength = nodeRefList.size();
 		for (int i = 0; i < resultLength; i++) {
 			NodeRef childNodeRef = nodeRefList.get(i);
@@ -224,10 +256,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 				QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
 				check = dictionaryService.isSubClass(nodeRefType, attoRefType);
 			}
-			if(child2atti.get(child)!=null){
+			if (child2atti.get(child) != null) {
 				child2atti.get(child).add(attoNodeRef);
-			}else{
-				List<NodeRef> earlyCreatedList=new LinkedList<NodeRef>();
+			} else {
+				List<NodeRef> earlyCreatedList = new LinkedList<NodeRef>();
 				earlyCreatedList.add(attoNodeRef);
 				child2atti.put(child, earlyCreatedList);
 			}
@@ -237,7 +269,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		}
 	}
 	
-
+/**
+ * Return the list of Relatore for a specific Commissione
+ * @param commissioneNodeRef
+ * @return
+ */
 	public ResultSet getRelatori(NodeRef commissioneNodeRef) {
 		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(
 				null);
@@ -267,23 +303,29 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	/**
-	 * return the right syntax for Alfresco lucene query on list
+	 * Given a field and a list of values, this method returns the correct syntax for 
+	 * a Lucene query in OR on that field.
+	 * for example:
+	 * (field1,[value1,value2,value3] becomes:
+	 * (field1:value1 OR field1:value2 OR field1:value3)
 	 * 
-	 * @param field
-	 * @param list
-	 * @param Apex TODO
+	 * @param field - field name
+	 * @param valueList - list of field values
+	 * @param Apex - boolean to make phrase search or not
 	 * @return
 	 */
-	protected static String convertListToString(String field, List<String> list, Boolean apex) {
-		String apexString="";
-		if(apex)
-			apexString="\"";
-		String stringSpaced = list.toString().replaceAll(", ", ",");
-		String stringReplaced = stringSpaced.replaceAll(",",
-				apexString+" OR " + field.replaceFirst("\\:", "\\\\:") + ":"+apexString);
-		String resultQueryString = "(" + field + ":"+apexString
+	protected static String convertListToString(String field,
+			List<String> valueList, Boolean apex) {
+		String apexString = "";
+		if (apex)
+			apexString = "\"";
+		String stringSpaced = valueList.toString().replaceAll(", ", ",");
+		String stringReplaced = stringSpaced.replaceAll(",", apexString
+				+ " OR " + field.replaceFirst("\\:", "\\\\:") + ":"
+				+ apexString);
+		String resultQueryString = "(" + field + ":" + apexString
 				+ stringReplaced.substring(1, stringReplaced.length() - 1)
-				+ apexString+")";
+				+ apexString + ")";
 		return resultQueryString;
 	}
 
@@ -316,30 +358,30 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		}
 		return count;
 	}
-	
-	protected Map<String,Integer> retrieveLenghtMap(
+
+	protected Map<String, Integer> retrieveLenghtMap(
 			Multimap<String, NodeRef> commissione2atti) {
-		Map<String,Integer> commissione2count=new HashMap<String,Integer>();
+		Map<String, Integer> commissione2count = new HashMap<String, Integer>();
 		for (String commissione : commissione2atti.keySet()) {
 			int count = commissione2atti.get(commissione).size();
 			commissione2count.put(commissione, count);
 		}
 		return commissione2count;
 	}
-	
-	protected Map<String,Integer> retrieveLenghtMap(
+
+	protected Map<String, Integer> retrieveLenghtMap(
 			Map<String, List<NodeRef>> commissione2atti) {
-		Map<String,Integer> commissione2count=new HashMap<String,Integer>();
+		Map<String, Integer> commissione2count = new HashMap<String, Integer>();
 		for (String commissione : commissione2atti.keySet()) {
 			int count = commissione2atti.get(commissione).size();
 			commissione2count.put(commissione, count);
 		}
 		return commissione2count;
 	}
-	
-	protected Map<String,Integer> retrieveLenghtMapConditional(
+
+	protected Map<String, Integer> retrieveLenghtMapConditional(
 			ArrayListMultimap<String, NodeRef> commissione2atti) {
-		Map<String,Integer> commissione2count=new HashMap<String,Integer>();
+		Map<String, Integer> commissione2count = new HashMap<String, Integer>();
 		for (String commissione : commissione2atti.keySet()) {
 			int count = 0;
 			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
@@ -361,32 +403,107 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		return true;
 	}
 
-
 	protected int retrieveLenght(List<ResultSet> allSearches) {
 		// TODO Auto-generated method stub
 		return allSearches.size();
 	}
-	
-	protected String renderList(List<String> stringList){
+
+	/**
+	 * Return last passaggio
+	 * 
+	 * @param attoNodeRef
+	 * @return
+	 */
+	protected NodeRef getLastPassaggio(NodeRef attoNodeRef) {
+
+		NodeRef passaggio = null;
+
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(
+				null);
+		namespacePrefixResolver.registerNamespace(
+				NamespaceService.SYSTEM_MODEL_PREFIX,
+				NamespaceService.SYSTEM_MODEL_1_0_URI);
+		namespacePrefixResolver.registerNamespace(
+				NamespaceService.CONTENT_MODEL_PREFIX,
+				NamespaceService.CONTENT_MODEL_1_0_URI);
+		namespacePrefixResolver.registerNamespace(
+				NamespaceService.APP_MODEL_PREFIX,
+				NamespaceService.APP_MODEL_1_0_URI);
+
+		String luceneAttoNodePath = nodeService.getPath(attoNodeRef)
+				.toPrefixString(namespacePrefixResolver);
+
+		ResultSet passaggiNodes = searchService.query(
+				attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
+				"PATH:\"" + luceneAttoNodePath + "/cm:Passaggi/*\"");
+
+		int numeroPassaggio = 0;
+		String nomePassaggio = "";
+		int passaggioMax = 0;
+		for (int i = 0; i < passaggiNodes.length(); i++) {
+
+			nomePassaggio = (String) nodeService.getProperty(
+					passaggiNodes.getNodeRef(i), ContentModel.PROP_NAME);
+			numeroPassaggio = Integer.parseInt(nomePassaggio.substring(9));
+
+			if (numeroPassaggio > passaggioMax) {
+				passaggioMax = numeroPassaggio;
+				passaggio = passaggiNodes.getNodeRef(i);
+			}
+
+		}
+
+		return passaggio;
+	}
+
+	/**
+	 * Restituisce stringa valorizzata con tutti i nomi degli abbinamenti
+	 * separati da virgola
+	 * 
+	 * @param currentAtto
+	 * @return abbinamento1, abbinamento2, abbinamento3, etc..
+	 */
+	protected String getAbbinamenti(NodeRef currentAtto) {
+		String abbinamentiValue = StringUtils.EMPTY;
+		NodeRef passaggio = this.getLastPassaggio(currentAtto);
+		NodeRef abbinamentiFolderNode = nodeService.getChildByName(passaggio,
+				ContentModel.ASSOC_CONTAINS, ABBINAMENTI_SPACE_NAME);
+		List<ChildAssociationRef> abbinamenti = nodeService
+				.getChildAssocs(abbinamentiFolderNode);
+		for (Iterator<ChildAssociationRef> iterator = abbinamenti.iterator(); iterator
+				.hasNext();) {
+			ChildAssociationRef childAssociationRef = (ChildAssociationRef) iterator
+					.next();
+			NodeRef abbinamento = childAssociationRef.getChildRef();
+			abbinamentiValue += (String) nodeService.getProperty(abbinamento,
+					ContentModel.PROP_NAME) + SEP;
+		}
+		return abbinamentiValue;
+	}
+
+	protected String renderList(List<String> stringList) {
 		String encodedString = "";
 		if (stringList != null)
 			for (String singleValue : stringList)
 				encodedString += singleValue + ", ";
-		if(!encodedString.equals(""))
-			encodedString=encodedString.substring(0,encodedString.length()-2);
+		if (!encodedString.equals(""))
+			encodedString = encodedString.substring(0,
+					encodedString.length() - 2);
 		return encodedString;
 	}
+
 	/**
 	 * Return "Si" for True or "No" for False
+	 * 
 	 * @param booleano
 	 * @return
 	 */
-	protected String processBoolean(String booleano){
-		String result="";
-		if(booleano.equals("true"))
-			result= "Si";
+	protected String processBoolean(String booleano) {
+		String result = "";
+		if (booleano.equals("true"))
+			result = "Si";
 		else
-			result= "No";
+			result = "No";
 		return result;
 	}
 
@@ -414,17 +531,17 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		this.firmatario = JsonUtils.retieveElementFromJson(rootJson,
 				"firmatario");
 	}
-	protected void initDataSedutaDa(String json)
-			throws JSONException {
+
+	protected void initDataSedutaDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataSedutaDa = JsonUtils.retieveElementFromJson(
-				rootJson, "dataSedutaDa");
+		this.dataSedutaDa = JsonUtils.retieveElementFromJson(rootJson,
+				"dataSedutaDa");
 	}
-	protected void initDataSedutaA(String json)
-			throws JSONException {
+
+	protected void initDataSedutaA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataSedutaA = JsonUtils.retieveElementFromJson(
-				rootJson, "dataSedutaA");
+		this.dataSedutaA = JsonUtils.retieveElementFromJson(rootJson,
+				"dataSedutaA");
 	}
 
 	protected void initDataAssegnazioneParereDa(String json)
@@ -481,8 +598,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
 		this.dataAssegnazioneCommReferenteDa = JsonUtils
-				.retieveElementFromJson(rootJson,
-						"dataAssegnazioneDa");
+				.retieveElementFromJson(rootJson, "dataAssegnazioneDa");
 	}
 
 	protected void initDataAssegnazioneCommReferenteA(String json)
@@ -536,25 +652,24 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		// convert the list in the lucene format
 		this.tipiAttoLucene = tipiAttoJson;
 	}
-	
+
 	protected void initTipiAttoLuceneAtto(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.tipiAttoLucene=Lists.newArrayList();
+		this.tipiAttoLucene = Lists.newArrayList();
 		// extract the tipiAtto list from the json string
 		List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
 				rootJson, "tipiAtto");
-		for(String tipoAtto:tipiAttoJson){
-			String caseSensAtto=this.reverseCase(tipoAtto);
-			this.tipiAttoLucene.add("crlatti:atto"+caseSensAtto);
+		for (String tipoAtto : tipiAttoJson) {
+			String caseSensAtto = this.reverseCase(tipoAtto);
+			this.tipiAttoLucene.add("crlatti:atto" + caseSensAtto);
 		}
 	}
 
 	private String reverseCase(String tipoAtto) {
-		String lowercase=tipoAtto.toLowerCase();
+		String lowercase = tipoAtto.toLowerCase();
 		String capitalize = StringUtils.capitalize(lowercase);
 		return capitalize;
 	}
-
 
 	protected String checkDateEmpty(Date attributeDate) {
 		if (attributeDate == null)

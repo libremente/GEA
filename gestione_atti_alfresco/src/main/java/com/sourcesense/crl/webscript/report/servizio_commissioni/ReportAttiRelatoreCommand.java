@@ -138,10 +138,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
-				String commConsultiva = "";
-				if (commConsultivaList != null)
-					for (String commissioneConsultivaMulti : commConsultivaList)
-						commConsultiva += commissioneConsultivaMulti + ",";
+				String commConsultiva =this.renderList(commConsultivaList);
 
 				currentTable
 						.getRow(0)
@@ -157,8 +154,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 						.getRow(2)
 						.getCell(2)
 						.setText(
-								this.checkStringEmpty(commConsultiva.substring(
-										0, commConsultiva.length() - 1)));
+								this.checkStringEmpty(commConsultiva));
 
 				tableIndex++;
 			}
