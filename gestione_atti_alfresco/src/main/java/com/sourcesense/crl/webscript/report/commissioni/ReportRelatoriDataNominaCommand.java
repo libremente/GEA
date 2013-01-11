@@ -111,6 +111,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			Map<String, List<NodeRef>> commissione2atti,
 			Map<NodeRef, NodeRef> atto2commissione) throws IOException {

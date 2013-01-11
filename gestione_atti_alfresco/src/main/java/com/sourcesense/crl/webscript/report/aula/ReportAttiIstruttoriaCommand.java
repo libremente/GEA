@@ -5,26 +5,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.alfresco.model.ContentModel;
-import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
-import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
-import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
@@ -174,13 +168,14 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 		return document;
 	}
 
+	/*
 	private String getRelazioneScritta(NodeRef currentAtto) {
-		/* c'è un qualche problema qui, viene fuori un nodeRef Null */
+		/* c'è un qualche problema qui, viene fuori un nodeRef Null 
 		NodeRef aulaFolder = nodeService.getChildByName(currentAtto,
 				ContentModel.ASSOC_CONTAINS, "Aula");
 		return (String) nodeService.getProperty(aulaFolder,
 				QName.createQName(CRL_ATTI_MODEL, "relazioneScrittaAula"));
-	}
+	}*/
 
 	
 

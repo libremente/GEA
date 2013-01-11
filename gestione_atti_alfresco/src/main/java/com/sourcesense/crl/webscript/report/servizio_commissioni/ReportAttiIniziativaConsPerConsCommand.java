@@ -6,14 +6,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
-import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
@@ -139,8 +137,6 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 				String tipoAtto = (String)nodeRefType.getLocalName();
 				String numeroAtto = (String) this.getNodeRefProperty(
 						attoProperties, "numeroAtto");
-				String oggetto = (String) this.getNodeRefProperty(
-						attoProperties, "oggetto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
 				

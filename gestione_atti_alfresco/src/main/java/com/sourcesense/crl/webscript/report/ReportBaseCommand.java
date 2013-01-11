@@ -113,8 +113,6 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		int resultLength = relatoriResults.length();
 		for (int i = 0; i < resultLength; i++) {
 			NodeRef relatoreNodeRef = relatoriResults.getNodeRef(i);
-			Map<QName, Serializable> relatoreProperties = nodeService
-					.getProperties(relatoreNodeRef);
 			NodeRef commissioneNodeRef = relatoreNodeRef;
 			boolean check = false;
 			while (!check) {// look for Commissione in type hierarchy
