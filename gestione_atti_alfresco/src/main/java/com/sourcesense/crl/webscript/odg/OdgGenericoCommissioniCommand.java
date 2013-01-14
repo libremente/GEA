@@ -139,7 +139,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 		
 		for(int i=0; i<attiIndirizzoTrattati.size(); i++){
 			
-			XWPFTableRow row = table.getRow(7+attiIndirizzoTrattati.size()+i);
+			XWPFTableRow row = table.getRow(7+attiTrattati.size()+i);
 		
 			NodeRef attoTrattato = attiIndirizzoTrattati.get(i);
 			
@@ -187,7 +187,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			
 		}
 		
-		// rimuovo la riga template per gli atti interni
+		// rimuovo la riga template per gli atti di indirizzo
 		int rowsAttiIndirizzoTrattatiNumber = attiTrattati.size() + attiIndirizzoTrattati.size() + 7;
 		table.removeRow(rowsAttiIndirizzoTrattatiNumber);
 		
