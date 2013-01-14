@@ -24,7 +24,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2 - misterioso errore di security causato dalla query
+ * V2
  * 
  * @author Alessandro Benedetti
  * 
@@ -83,12 +83,6 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * qui vanno inseriti nella table, presa dal template solo 6: tipo atto-
-	 * numero atto- iniziativa -firmatari- oggetto-data presentazione- data
-	 * revoca
-	 * 
-	 * 
-	 * 
 	 * @param finalDocStream
 	 * @param queryRes
 	 * @return
@@ -128,7 +122,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 					// child of Atto
 					ArrayList<String> firmatariList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "firmatari");
-					String firmatari =this.renderList(firmatariList);
+					String firmatari = this.renderList(firmatariList);
 					currentTable
 							.getRow(0)
 							.getCell(1)
@@ -153,8 +147,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 		return document;
 	}
 
-	protected int retrieveLenght(
-			List<ResultSet> atti) {
+	protected int retrieveLenght(List<ResultSet> atti) {
 		int count = 0;
 		for (ResultSet listaAtti : atti) {
 			for (NodeRef currentAtto : listaAtti.getNodeRefs()) {

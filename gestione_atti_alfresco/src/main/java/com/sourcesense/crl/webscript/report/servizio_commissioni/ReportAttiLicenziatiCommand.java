@@ -28,6 +28,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * V2
+ * 
  * @author Alessandro Benedetti
  * 
  */
@@ -40,29 +41,31 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			/*init json params*/
+			/* init json params */
 			this.initCommonParams(json);
 			this.initDataVotazioneCommReferenteDa(json);
 			this.initDataVotazioneCommReferenteA(json);
-			/*sorting field*/
+			/* sorting field */
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
-			/*query grouped by commissione*/
+			/* query grouped by commissione */
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",
 								this.tipiAttoLucene, true)
 						+ " AND @crlatti\\:ruoloCommissione:\""
-						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ this.ruoloCommissione
+						+ "\" AND @cm\\:name:\""
 						+ commissione
 						+ "\" AND @crlatti\\:dataSedutaCommAttoCommissione:["
-						+ this.dataVotazioneCommReferenteDa + " TO "
+						+ this.dataVotazioneCommReferenteDa
+						+ " TO "
 						+ this.dataVotazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
@@ -95,12 +98,6 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
-	 * numero atto- competenza - iniziativa -firmatari- oggetto - data
-	 * assegnazione - altri pareri - data valutazione - esito votazione -elenco
-	 * relatori, sono una lista all'interno di una cella
-	 * 
-	 * 
 	 * 
 	 * @param finalDocStream
 	 * @param queryRes
@@ -124,10 +121,11 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 				Map<QName, Serializable> commissioneProperties = nodeService
 						.getProperties(currentCommissione);
-				/*Extracting values from Alfresco*/
+				/* Extracting values from Alfresco */
 				// from Atto
-				String numeroAtto = ""+(Integer) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
@@ -148,15 +146,15 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				// from Atto
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari =this.renderList(firmatariList);
+				String firmatari = this.renderList(firmatariList);
 				// from Atto
 				ArrayList<String> pareriList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties,
 								"organismiStatutari");
 				String altriPareri = "";
-				if(pareriList!=null)
-				for (String parere : pareriList)
-					altriPareri += parere + " ";
+				if (pareriList != null)
+					for (String parere : pareriList)
+						altriPareri += parere + " ";
 				// from Commissione
 				String elencoRelatori = "";
 				for (int i = 0; i < relatori.length(); i++) {
@@ -165,7 +163,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 							relatoreNodeRef, ContentModel.PROP_NAME);
 					elencoRelatori += relatore + " ";
 				}
-				/*Writing values in the table*/
+				/* Writing values in the table */
 				currentTable
 						.getRow(0)
 						.getCell(1)

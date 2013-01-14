@@ -25,10 +25,11 @@ import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
-/**
- * To TEST
+/***
+ * V2
+ * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 
@@ -40,25 +41,24 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			/*init json params*/
+			/* init json params */
 			this.initOrganismo(json);
 			this.initDataAssegnazioneParereDa(json);
 			this.initDataAssegnazioneParereA(json);
-			/*sorting field*/
-			String sortField1 = "@{" + CRL_ATTI_MODEL
-					+ "}tipoAttoParere";
-			String sortField2 = "@{" + CRL_ATTI_MODEL
-					+ "}numeroAttoParere";
+			/* sorting field */
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoParere";
+			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoParere";
 			Map<String, ResultSet> organo2results = Maps.newHashMap();
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-					"AND TYPE:\"crlatti:parere"
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+					+ "AND TYPE:\"crlatti:parere"
 					+ "\" AND @crlatti\\:organismoStatutarioParere:\""
 					+ this.organismo
 					+ "\" AND @crlatti\\:dataAssegnazioneParere:["
-					+ this.dataAssegnazioneParereDa + " TO "
+					+ this.dataAssegnazioneParereDa
+					+ " TO "
 					+ this.dataAssegnazioneParereA + " ]";
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
@@ -66,9 +66,8 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			ResultSet pareriResult = this.searchService.query(sp);
 			organo2results.put(this.organismo, pareriResult);
 			Map<NodeRef, NodeRef> atto2parere = new HashMap<NodeRef, NodeRef>();
-			ArrayListMultimap<String, NodeRef> parere2atti = this
-					.retrieveAtti(organo2results, spacesStore,
-							atto2parere);
+			ArrayListMultimap<String, NodeRef> parere2atti = this.retrieveAtti(
+					organo2results, spacesStore, atto2parere);
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
@@ -78,7 +77,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					parere2atti,atto2parere);
+					parere2atti, atto2parere);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -89,7 +88,6 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 		return ostream.toByteArray();
 
 	}
-
 
 	/**
 	 * @param finalDocStream
@@ -114,7 +112,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 
 				// from Atto
 				QName nodeRefType = nodeService.getType(currentAtto);
-				String tipoAtto = (String)nodeRefType.getLocalName();
+				String tipoAtto = (String) nodeRefType.getLocalName();
 				String numeroAtto = ""
 						+ (Integer) this.getNodeRefProperty(attoProperties,
 								"numeroAtto");
@@ -127,50 +125,52 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 				String commReferente = "";
 				for (String commissioneReferenteMulti : commReferenteList)
 					commReferente += commissioneReferenteMulti + " ";
-				
+
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
 				String commConsultiva = "";
 				for (String commissioneConsultivaMulti : commConsultivaList)
 					commConsultiva += commissioneConsultivaMulti + " ";
-				
-				//from Atto
+
+				// from Atto
 				ArrayList<String> pareriList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties, "organismiStatutari");
+						.getNodeRefProperty(attoProperties,
+								"organismiStatutari");
 				String altriPareri = "";
 				for (String parere : pareriList)
 					altriPareri += parere + " ";
-				
-				
-				Date dateAssegnazioneParere =(Date) this.getNodeRefProperty(
+
+				Date dateAssegnazioneParere = (Date) this.getNodeRefProperty(
 						parereProperties, "dataAssegnazioneParere");
-				Date dateAssegnazioneCommissione =(Date) this.getNodeRefProperty(
-						attoProperties, "dataAssegnazioneCommissioneReferente");
-				
-				currentTable.getRow(0).getCell(1)
-				.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
+				Date dateAssegnazioneCommissione = (Date) this
+						.getNodeRefProperty(attoProperties,
+								"dataAssegnazioneCommissioneReferente");
+
+				currentTable
+						.getRow(0)
+						.getCell(1)
+						.setText(
+								this.checkStringEmpty(tipoAtto + " "
+										+ numeroAtto));
 				currentTable.getRow(1).getCell(1)
 						.setText(this.checkStringEmpty(iniziativa));
 				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(oggetto));
 				currentTable.getRow(3).getCell(1)
-				.setText(this.checkStringEmpty(commReferente));
+						.setText(this.checkStringEmpty(commReferente));
 				currentTable.getRow(3).getCell(3)
-				.setText(this.checkStringEmpty(altriPareri));
+						.setText(this.checkStringEmpty(altriPareri));
 				currentTable.getRow(4).getCell(1)
-				.setText(this.checkStringEmpty(commConsultiva));
+						.setText(this.checkStringEmpty(commConsultiva));
 
 				currentTable
 						.getRow(4)
 						.getCell(3)
 						.setText(
 								this.checkDateEmpty(dateAssegnazioneCommissione));
-				
-				currentTable
-				.getRow(5)
-				.getCell(1)
-				.setText(
-						this.checkDateEmpty(dateAssegnazioneParere));
+
+				currentTable.getRow(5).getCell(1)
+						.setText(this.checkDateEmpty(dateAssegnazioneParere));
 				tableIndex++;
 			}
 		}

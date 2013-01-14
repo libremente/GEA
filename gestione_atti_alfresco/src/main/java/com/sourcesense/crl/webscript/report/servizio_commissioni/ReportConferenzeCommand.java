@@ -47,7 +47,8 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneCommReferenteA(json);
 			/* sorting fields */
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
-			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			String sortField2 = "@{" + CRL_ATTI_MODEL
+					+ "}numeroAttoCommissione";
 			/* query grouped by commissione */
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
@@ -80,8 +81,10 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(
-					this.retrieveLenghtMapConditional(commissione2atti), 3, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(
+							this.retrieveLenghtMapConditional(commissione2atti),
+							3, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -99,11 +102,6 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 	}
 
 	/**
-	 * qui vanno inseriti nella table, presa dal template solo 6: tipo atto-
-	 * numero atto- oggetto - iniziativa -firmatari- data assegnazione -
-	 * 
-	 * 
-	 * 
 	 * @param finalDocStream
 	 * @param queryRes
 	 * @return
@@ -118,7 +116,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 		List<XWPFTable> tables = document.getTables();
 		for (String commissione : commissione2atti.keySet()) {
 			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
-				
+
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
 				Map<QName, Serializable> commissioneProperties = nodeService
@@ -145,7 +143,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 					// child of Atto
 					ArrayList<String> firmatariList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "firmatari");
-					String firmatari =this.renderList(firmatariList);
+					String firmatari = this.renderList(firmatariList);
 
 					/* writing values in the table */
 					currentTable

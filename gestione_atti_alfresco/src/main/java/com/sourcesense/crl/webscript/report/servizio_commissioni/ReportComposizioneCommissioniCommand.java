@@ -51,7 +51,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 		ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 		XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-				commissioniResult,docxManager);
+				commissioniResult, docxManager);
 		ostream = new ByteArrayOutputStream();
 		finalDocument.write(ostream);
 
@@ -73,7 +73,8 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 	 * @throws IOException
 	 */
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet commissioniResult,DocxManager docxManager) throws IOException {
+			ResultSet commissioniResult, DocxManager docxManager)
+			throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -98,8 +99,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 				String codice = (String) this.getNodeRefProperty(
 						consigliereProperties,
 						"codiceGruppoConsigliereAnagrafica");
-				currentConsigliere = cognomeConsigliere + " " + nomeConsigliere
-						;
+				currentConsigliere = cognomeConsigliere + " " + nomeConsigliere;
 				consiglieri.add(currentConsigliere);
 				partiti.add(codice);
 
@@ -107,9 +107,11 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
 
 			currentTable.getRow(0).getCell(0)
 					.setText(this.checkStringEmpty(nomeCommissione));
-			docxManager.insertListInCell(currentTable.getRow(1).getCell(1), consiglieri);
-			docxManager.insertListInCell(currentTable.getRow(1).getCell(2), partiti);
-			
+			docxManager.insertListInCell(currentTable.getRow(1).getCell(1),
+					consiglieri);
+			docxManager.insertListInCell(currentTable.getRow(1).getCell(2),
+					partiti);
+
 			tableIndex++;
 		}
 

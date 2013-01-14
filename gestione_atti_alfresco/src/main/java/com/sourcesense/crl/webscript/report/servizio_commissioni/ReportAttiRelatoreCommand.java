@@ -25,7 +25,9 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST ordinamento ok mistero su query su name
+ * V2
+ * 
+ * bug ordinamento relatori
  * 
  * @author Alessandro Benedetti
  * 
@@ -56,13 +58,15 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
 						+ " AND TYPE:\""
 						+ "crlatti:relatore\" AND "
-						+ convertListToString("@crlatti\\:tipoAttoRelatore",this.tipiAttoLucene, true)
+						+ convertListToString("@crlatti\\:tipoAttoRelatore",
+								this.tipiAttoLucene, true)
 						+ " AND "
 						+ convertListToString("@crlatti\\:commissioneRelatore",
 								this.commissioniJson, false)
 						+ " AND =@cm\\:name:\""
-						+ relatore+ "\"" 
-						+" AND @crlatti\\:dataNominaRelatore:["
+						+ relatore
+						+ "\""
+						+ " AND @crlatti\\:dataNominaRelatore:["
 						+ this.dataNominaRelatoreDa
 						+ " TO "
 						+ this.dataNominaRelatoreA + " ]";
@@ -74,8 +78,9 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			}
 
 			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
-			TreeMap<String, List<NodeRef>> relatore2atti = this.retrieveAttiOrdered(
-					relatore2results, spacesStore, atto2commissione);
+			TreeMap<String, List<NodeRef>> relatore2atti = this
+					.retrieveAttiOrdered(relatore2results, spacesStore,
+							atto2commissione);
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
@@ -135,7 +140,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
-				String commConsultiva =this.renderList(commConsultivaList);
+				String commConsultiva = this.renderList(commConsultivaList);
 
 				currentTable
 						.getRow(0)
@@ -147,11 +152,8 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 						.setText(this.checkStringEmpty(oggetto));
 				currentTable.getRow(1).getCell(2)
 						.setText(this.checkStringEmpty(commReferente));
-				currentTable
-						.getRow(2)
-						.getCell(2)
-						.setText(
-								this.checkStringEmpty(commConsultiva));
+				currentTable.getRow(2).getCell(2)
+						.setText(this.checkStringEmpty(commConsultiva));
 
 				tableIndex++;
 			}
@@ -160,5 +162,4 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 		return document;
 	}
 
-	
 }

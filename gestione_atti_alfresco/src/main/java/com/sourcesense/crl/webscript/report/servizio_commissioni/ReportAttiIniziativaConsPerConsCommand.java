@@ -24,23 +24,23 @@ import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
-
 /**
- * TO TEST
+ * V2
+ * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
 	@Override
-	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
-			throws IOException {
+	public byte[] generate(byte[] templateByteArray, String json,
+			StoreRef spacesStore) throws IOException {
 		ByteArrayOutputStream ostream = null;
 		try {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
-			
+
 			this.initFirmatario(json);
 			this.initTipoFirma(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
@@ -48,25 +48,29 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			this.initDataPresentazioneDa(json);
 			this.initDataPresentazioneA(json);
 
-			String sortField1= "@{" + CRL_ATTI_MODEL
-					+ "}numeroAtto";
-			
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
+
 			Map<String, ResultSet> firmatario2results = Maps.newHashMap();
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\""
-						+ "crlatti:atto\"";
-			if(this.tipologiaFirma.equals("primo")){
-				query =query+" AND @crlatti\\:primoFirmatario:\""+this.firmatario+"\"";
-						
-			} else if(this.tipologiaFirma.equals("originari")){
-			 query =query+" AND @crlatti\\:firmatariOriginari:\""+this.firmatario+"\"";
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\""
+					+ "crlatti:atto\"";
+			if (this.tipologiaFirma.equals("primo")) {
+				query = query + " AND @crlatti\\:primoFirmatario:\""
+						+ this.firmatario + "\"";
+
+			} else if (this.tipologiaFirma.equals("originari")) {
+				query = query + " AND @crlatti\\:firmatariOriginari:\""
+						+ this.firmatario + "\"";
 			}
-			query=query+" AND @crlatti\\:dataAssegnazioneCommissioneReferente:["
-					+ this.dataAssegnazioneCommReferenteDa + " TO " + this.dataAssegnazioneCommReferenteA + " ]"
-					+" AND @crlatti\\:dataIniziativa:["
-					+ this.dataPresentazioneDa + " TO " + this.dataPresentazioneA + " ]";
+			query = query
+					+ " AND @crlatti\\:dataAssegnazioneCommissioneReferente:["
+					+ this.dataAssegnazioneCommReferenteDa + " TO "
+					+ this.dataAssegnazioneCommReferenteA + " ]"
+					+ " AND @crlatti\\:dataIniziativa:["
+					+ this.dataPresentazioneDa + " TO "
+					+ this.dataPresentazioneA + " ]";
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
 			ResultSet attiResult = this.searchService.query(sp);
@@ -75,17 +79,16 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			ArrayListMultimap<String, NodeRef> firmatario2atti = this
 					.retrieveAtti(firmatario2results);
 			// obtain as much table as the results spreaded across the resultSet
-						XWPFDocument generatedDocument = docxManager
-								.generateFromTemplateMap(
-										this.retrieveLenghtMap(firmatario2atti), 2, false);
-						// convert to input stream
-						ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(
+							this.retrieveLenghtMap(firmatario2atti), 2, false);
+			// convert to input stream
+			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
-						XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-								firmatario2atti);
-						ostream = new ByteArrayOutputStream();
-						finalDocument.write(ostream);
-
+			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
+					firmatario2atti);
+			ostream = new ByteArrayOutputStream();
+			finalDocument.write(ostream);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -94,7 +97,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 		return ostream.toByteArray();
 
 	}
-	
+
 	protected ArrayListMultimap<String, NodeRef> retrieveAtti(
 			Map<String, ResultSet> attoChild2results) {
 		ArrayListMultimap<String, NodeRef> child2atti = ArrayListMultimap
@@ -102,7 +105,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 		for (String firmatario : attoChild2results.keySet()) {
 			ResultSet firmatarioResults = attoChild2results.get(firmatario);
 			List<NodeRef> nodeRefList = firmatarioResults.getNodeRefs();
-			for(NodeRef atto:nodeRefList){
+			for (NodeRef atto : nodeRefList) {
 				child2atti.put(firmatario, atto);
 			}
 		}
@@ -117,7 +120,8 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ArrayListMultimap<String, NodeRef> firmatario2atti) throws IOException {
+			ArrayListMultimap<String, NodeRef> firmatario2atti)
+			throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -129,20 +133,21 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
 				// from Atto
 				QName nodeRefType = nodeService.getType(currentAtto);
-				String tipoAtto = (String)nodeRefType.getLocalName();
+				String tipoAtto = (String) nodeRefType.getLocalName();
 				String numeroAtto = ""
 						+ (Integer) this.getNodeRefProperty(attoProperties,
 								"numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
-				
+
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari =this.renderList(firmatariList);
-				
-				Date dateAssegnazioneCommissione =(Date) this.getNodeRefProperty(
-						attoProperties, "dataAssegnazioneCommissioneReferente");
-				
+				String firmatari = this.renderList(firmatariList);
+
+				Date dateAssegnazioneCommissione = (Date) this
+						.getNodeRefProperty(attoProperties,
+								"dataAssegnazioneCommissioneReferente");
+
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
@@ -151,61 +156,55 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
-				String commConsultiva =this.renderList(commConsultivaList);
-				
+				String commConsultiva = this.renderList(commConsultivaList);
+
 				String abbinamenti = this.getAbbinamenti(currentAtto);
-				
+
 				Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(
 						attoProperties, "dataSedutaComm");
-				
-				String numeroLcr = (String) this.getNodeRefProperty(attoProperties,
-						"numeroLcr");
-				String numeroLr = (String) this.getNodeRefProperty(attoProperties,
-						"numeroLr");
+
+				String numeroLcr = (String) this.getNodeRefProperty(
+						attoProperties, "numeroLcr");
+				String numeroLr = (String) this.getNodeRefProperty(
+						attoProperties, "numeroLr");
 				Date dateLr = (Date) this.getNodeRefProperty(attoProperties,
 						"dataLr");
-				
-				currentTable.getRow(0).getCell(1)
-				.setText(this.checkStringEmpty(tipoAtto+" "+numeroAtto));
-				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(iniziativa));		
-				currentTable.getRow(2).getCell(1)
-				.setText(this.checkStringEmpty(firmatari));
-				currentTable
-				.getRow(3)
-				.getCell(1)
-				.setText(
-						this.checkDateEmpty(dateAssegnazioneCommissione));
-				
-				currentTable
-				.getRow(3)
-				.getCell(3)
-				.setText(this.checkStringEmpty(commReferente));
-				
-			
-				currentTable.getRow(4).getCell(1)
-				.setText(this.checkStringEmpty(commConsultiva));
 
-				currentTable.getRow(5).getCell(1)
-				.setText(this.checkStringEmpty(abbinamenti));
-				
 				currentTable
-						.getRow(6)
+						.getRow(0)
 						.getCell(1)
 						.setText(
-								this.checkDateEmpty(dateVotazioneCommissione));
-				currentTable.getRow(6).getCell(3)
-				.setText(this.checkStringEmpty(numeroLcr));
-				
-				currentTable.getRow(7).getCell(1)
-				.setText(this.checkStringEmpty(numeroLr));
+								this.checkStringEmpty(tipoAtto + " "
+										+ numeroAtto));
+				currentTable.getRow(1).getCell(1)
+						.setText(this.checkStringEmpty(iniziativa));
+				currentTable.getRow(2).getCell(1)
+						.setText(this.checkStringEmpty(firmatari));
 				currentTable
-				.getRow(7)
-				.getCell(3)
-				.setText(
-						this.checkDateEmpty(dateLr));
-				
-			
+						.getRow(3)
+						.getCell(1)
+						.setText(
+								this.checkDateEmpty(dateAssegnazioneCommissione));
+
+				currentTable.getRow(3).getCell(3)
+						.setText(this.checkStringEmpty(commReferente));
+
+				currentTable.getRow(4).getCell(1)
+						.setText(this.checkStringEmpty(commConsultiva));
+
+				currentTable.getRow(5).getCell(1)
+						.setText(this.checkStringEmpty(abbinamenti));
+
+				currentTable.getRow(6).getCell(1)
+						.setText(this.checkDateEmpty(dateVotazioneCommissione));
+				currentTable.getRow(6).getCell(3)
+						.setText(this.checkStringEmpty(numeroLcr));
+
+				currentTable.getRow(7).getCell(1)
+						.setText(this.checkStringEmpty(numeroLr));
+				currentTable.getRow(7).getCell(3)
+						.setText(this.checkDateEmpty(dateLr));
+
 				tableIndex++;
 			}
 		}
