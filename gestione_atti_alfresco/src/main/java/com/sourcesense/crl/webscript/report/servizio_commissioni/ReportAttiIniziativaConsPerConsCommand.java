@@ -26,10 +26,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 
 /**
- * TO DO:
- * - model change? firmatario-tipologia firma ...
- * data di presentazione
- * SKIP TEMP
+ * TO TEST
  * @author Alessandro Benedetti
  *
  */
@@ -43,6 +40,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			
 			this.initFirmatario(json);
 			this.initTipoFirma(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
@@ -50,10 +48,8 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			this.initDataPresentazioneDa(json);
 			this.initDataPresentazioneA(json);
 
-			String sortField1 = "@{" + CRL_ATTI_MODEL
-					+ "}tipoAttoParere";
-			String sortField2 = "@{" + CRL_ATTI_MODEL
-					+ "}numeroAttoParere";
+			String sortField1= "@{" + CRL_ATTI_MODEL
+					+ "}numeroAtto";
 			
 			Map<String, ResultSet> firmatario2results = Maps.newHashMap();
 			SearchParameters sp = new SearchParameters();
@@ -68,12 +64,11 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			 query =query+" AND @crlatti\\:firmatariOriginari:\""+this.firmatario+"\"";
 			}
 			query=query+" AND @crlatti\\:dataAssegnazioneCommissioneReferente:["
-					+ this.dataAssegnazioneCommReferenteDa + " TO " + this.dataAssegnazioneCommReferenteDa + " ]"
+					+ this.dataAssegnazioneCommReferenteDa + " TO " + this.dataAssegnazioneCommReferenteA + " ]"
 					+" AND @crlatti\\:dataIniziativa:["
 					+ this.dataPresentazioneDa + " TO " + this.dataPresentazioneA + " ]";
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
-			sp.addSort(sortField2, true);
 			ResultSet attiResult = this.searchService.query(sp);
 			firmatario2results.put(this.firmatario, attiResult);
 
@@ -135,8 +130,9 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 				// from Atto
 				QName nodeRefType = nodeService.getType(currentAtto);
 				String tipoAtto = (String)nodeRefType.getLocalName();
-				String numeroAtto = (String) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
 				
