@@ -13,6 +13,10 @@ import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchService;
+import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
+import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,10 +46,11 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
     	documentFilledByteArray = fillIntroTableDocx(documentFilledByteArray, sedutaNodeRef);
     	
     	List<NodeRef> attiTrattati = getAttiTrattati(sedutaNodeRef);
+    	List<NodeRef> attiIndirizzoTrattati = getAttiIndirizzoTrattati(sedutaNodeRef);
 		
-    	documentFilledByteArray = createAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati);
+    	documentFilledByteArray = createAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);
     	
-    	documentFilledByteArray = fillAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, gruppo);
+    	documentFilledByteArray = fillAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati, gruppo);
 		
 		
 		
@@ -55,7 +60,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 	}
 	
 	
-	private byte[] fillAttiTrattatiRowsCommissioniDocx(byte[] documentByteArray, List<NodeRef> attiTrattati, String commissioneCorrente) throws IOException {
+	private byte[] fillAttiTrattatiRowsCommissioniDocx(byte[] documentByteArray, List<NodeRef> attiTrattati, List<NodeRef> attiIndirizzoTrattati, String commissioneCorrente) throws IOException {
 		
 
 		DictionaryService dictionaryService = serviceRegistry.getDictionaryService();	
@@ -65,7 +70,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 		List<XWPFTable> tables = document.getTables();
 						
 		XWPFTable table = tables.get(1);
-		
+	
 		
 		for(int i=0; i<attiTrattati.size(); i++){
 		
@@ -127,12 +132,65 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			
 		}
 		
+		// rimuovo la riga template per gli atti interni
+		int rowsAttiTrattatiNumber = attiTrattati.size() + 7;
+		table.removeRow(rowsAttiTrattatiNumber);
 		
-		int rowsNumber = table.getRows().size();
 		
+		for(int i=0; i<attiIndirizzoTrattati.size(); i++){
+			
+			XWPFTableRow row = table.getRow(7+attiIndirizzoTrattati.size()+i);
 		
-		table.removeRow(rowsNumber-1);
-	
+			NodeRef attoTrattato = attiIndirizzoTrattati.get(i);
+			
+			HashMap<String, String> searchTerms = new HashMap<String, String>();
+			 
+			String numeroAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_NUMERO_ATTO_INDIRIZZO));
+			String tipoAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_ATTO_INDIRIZZO));
+			String oggettoAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO_INDIRIZZO));
+		
+			
+			searchTerms.put("titoloAtto", tipoAttoTrattato+" N."+numeroAttoTrattato);
+			searchTerms.put("oggettoAtto", oggettoAttoTrattato);
+			
+			
+			String firmatariAttoTrattato = "";
+			
+			
+			DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+	        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+	        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+	        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+	    	
+	        String luceneFirmatariNodePath = nodeService.getPath(attoTrattato).toPrefixString(namespacePrefixResolver);
+
+	        String firmatarioType = "{"+attoUtil.CRL_ATTI_MODEL+"}"+"firmatarioAttoIndirizzo";
+	        
+			// Get firmatari
+	    	ResultSet firmatariNodes = searchService.query(attoTrattato.getStoreRef(),
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneFirmatariNodePath+"/cm:Firmatari/*\" AND TYPE:\""+firmatarioType+"\"");
+			
+			
+			for(int j=0; j<firmatariNodes.length(); j++){
+				firmatariAttoTrattato += (String) nodeService.getProperty(firmatariNodes.getNodeRef(j), ContentModel.PROP_NAME);
+				if(j<firmatariNodes.length()-1){
+					firmatariAttoTrattato += ", ";
+				}
+			}
+			
+			
+			
+			searchTerms.put("firmatariAttoIndirizzo", firmatariAttoTrattato);
+		
+
+			searchAndReplaceParagraph(row.getCell(1), searchTerms);
+			
+		}
+		
+		// rimuovo la riga template per gli atti interni
+		int rowsAttiIndirizzoTrattatiNumber = attiTrattati.size() + attiIndirizzoTrattati.size() + 7;
+		table.removeRow(rowsAttiIndirizzoTrattatiNumber);
+		
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 		document.write(ostream);
 		return ostream.toByteArray();
@@ -140,7 +198,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 	}
 	
 	
-	private byte[] createAttiTrattatiRowsCommissioniDocx(byte[] documentByteArray ,List<NodeRef> attiTrattati) throws IOException {
+	private byte[] createAttiTrattatiRowsCommissioniDocx(byte[] documentByteArray ,List<NodeRef> attiTrattati, List<NodeRef> attiIndirizzoTrattati) throws IOException {
 		  
 		
 		XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(documentByteArray));
@@ -149,12 +207,15 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 						
 		XWPFTable table = tables.get(1);
 			 	 
-		XWPFTableRow templateRow= table.getRow(7);
+		XWPFTableRow templateAttoTrattatoRow= table.getRow(7);
+		XWPFTableRow templateAttoIndirizzoTrattatoRow= table.getRow(8);
 		
 		for(int i=0; i<attiTrattati.size(); i++){
-			
-			table.addRow(templateRow, 8);
-			
+			table.addRow(templateAttoTrattatoRow, 8);			
+		}
+		
+		for(int i=0; i<attiIndirizzoTrattati.size(); i++){
+			table.addRow(templateAttoIndirizzoTrattatoRow, 8 + attiTrattati.size());
 		}
 		 	
 			

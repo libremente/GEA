@@ -36,6 +36,7 @@ if(checkIsNotNull(jsonFirmatario)
 	if(firmatarioNode==null){
 		//creazione di un nuovo firmatario
 		firmatarioNode = firmatariFolderNode.createNode(descrizione,"crlatti:firmatario");	
+		firmatarioNode.content = descrizione;
 	}
 	
 	var dataFirmaParsed = null;

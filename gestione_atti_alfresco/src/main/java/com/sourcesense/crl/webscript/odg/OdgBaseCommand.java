@@ -97,6 +97,37 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	}
 	
 
+	public List<NodeRef> getAttiIndirizzoTrattati(NodeRef sedutaNodeRef){
+		
+		List<NodeRef> attiTrattati = new ArrayList<NodeRef>();
+				
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+        
+    	String luceneSedutaNodePath = nodeService.getPath(sedutaNodeRef).toPrefixString(namespacePrefixResolver);
+        
+    	ResultSet attiIndirizzoTrattatiODG = searchService.query(sedutaNodeRef.getStoreRef(), 
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:AttiSindacato/*\"");
+    	
+    	for(int i=0; i< attiIndirizzoTrattatiODG.length(); i++){
+    		
+    		NodeRef attoIndirizzoTrattatoODGNodeRef = attiIndirizzoTrattatiODG.getNodeRef(i);
+   
+    		
+    		List<AssociationRef> attiTrattatiAssociati = nodeService.getTargetAssocs(attoIndirizzoTrattatoODGNodeRef,
+    				QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.ASSOC_ATTO_INDIRIZZO_TRATTATO_SEDUTA));
+    		
+    		if(attiTrattatiAssociati.size() > 0){
+    			attiTrattati.add(attiTrattatiAssociati.get(0).getTargetRef());    		}
+    		
+    	}
+    	
+    	return attiTrattati;
+	}
+	
+
 	 protected byte[] searchAndReplaceDocx(byte[] documentByteArray , HashMap<String, String> replacements) throws IOException {
 		  	
 		 try{

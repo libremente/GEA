@@ -83,6 +83,39 @@
 				}<#if attoTrattato_has_next>,</#if>
 			</#list>
 		],
+		"attiSindacato":[
+			<#assign attiSindacato = seduta.childrenByXPath["*[@cm:name='AttiSindacato']"][0]>
+			<#assign attiSindacatoList = attiSindacato.getChildAssocsByType("crlatti:attoIndirizzoTrattatoODG")>
+			<#list attiSindacatoList as attoSindacatoTrattato>
+				<#assign attoSindacato = attoSindacatoTrattato.assocs["crlatti:attoIndirizzoTrattatoSedutaODG"][0]>
+				{	
+					 "collegamentoAttiSindacato": {
+				
+					 	"idAtto" : "${attoSindacato.nodeRef}",
+						"tipoAtto" : "<#if attoSindacato.properties["crlatti:tipoAttoIndirizzo"]?exists>${attoSindacato.properties["crlatti:tipoAttoIndirizzo"]}<#else></#if>",
+						"numeroAtto" : "<#if attoSindacato.properties["crlatti:numeroAttoIndirizzo"]?exists>${attoSindacato.properties["crlatti:numeroAttoIndirizzo"]}<#else></#if>",
+						"oggettoAtto" : "<#if attoSindacato.properties["crlatti:oggettoAttoIndirizzo"]?exists>${attoSindacato.properties["crlatti:oggettoAttoIndirizzo"]}<#else></#if>",
+						"numeroOrdinamento" : "<#if attoSindacatoTrattato.properties["crlatti:numeroOrdinamento"]?exists>${attoSindacatoTrattato.properties["crlatti:numeroOrdinamento"]}<#else></#if>",
+						"firmatari": [
+							   <#assign firmatariFolderNode = attoSindacato.childrenByXPath["*[@cm:name='Firmatari']"][0]>
+							   <#assign firmatariList = firmatariFolderNode.getChildAssocsByType("crlatti:firmatarioAttoIndirizzo")>
+							   <#list firmatariList as firmatario>
+							   { "firmatario" : 
+								   {
+									"descrizione" : "${firmatario.name}",
+									"gruppoConsiliare" : "<#if firmatario.properties["crlatti:gruppoFirmatarioAttoIndirizzo"]?exists>${firmatario.properties["crlatti:gruppoFirmatarioAttoIndirizzo"]}<#else></#if>"
+								   }
+							   }<#if firmatario_has_next>,</#if>
+  							   </#list>
+						]
+						
+					 }
+				
+				}
+				<#if attoSindacatoTrattato_has_next>,</#if>
+			</#list>
+		
+		],
 		"audizioni" : [
 			<#assign audizioni = seduta.childrenByXPath["*[@cm:name='Audizioni']"][0]>
 			<#assign audizioniList = audizioni.getChildAssocsByType("crlatti:audizione")>

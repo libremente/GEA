@@ -5,6 +5,7 @@ var seduta = json.get("seduta");
 var id = seduta.get("idSeduta");
 
 var atti = seduta.get("attiTrattati");
+var attiSindacato = seduta.get("attiSindacato");
 var consultazioniAtti = seduta.get("consultazioniAtti");
 var audizioni = seduta.get("audizioni");
 
@@ -82,6 +83,74 @@ if(checkIsNotNull(id)){
 		}
 		if(!trovato){
 			attoTrattatoNelRepository.remove();
+		}
+	}
+	
+	
+	// Atti sindacato
+	
+	var attiSindacatoXPathQuery = "*[@cm:name='AttiSindacato']";
+	var attiSindacatoFolderNode = sedutaFolderNode.childrenByXPath(attiSindacatoXPathQuery)[0];		
+	
+	var numeroAttiSindacato = attiSindacato.length();
+	
+	for (var j=0; j<numeroAttiSindacato; j++){
+	
+		var attoSindacato = attiSindacato.get(j).get("collegamentoAttiSindacato");
+		
+		var idAttoTrattato = filterParam(attoSindacato.get("idAtto"));
+		var tipoAtto = filterParam(attoSindacato.get("tipoAtto"));
+		var numeroAtto = filterParam(attoSindacato.get("numeroAtto"));
+		var oggettoAtto = filterParam(attoSindacato.get("oggettoAtto"));
+			
+		var attoIndirizzoTrattatoFolderNode = utils.getNodeFromString(idAttoTrattato);
+		
+		//verifica l'esistenza dell'atto all'interno del folder AttiTrattati
+		var existAttoIndirizzoTrattatoXPathQuery = "*[@cm:name='"+attoIndirizzoTrattatoFolderNode.name+"']";
+		var attoIndirizzoTrattatoEsistenteResults = attiSindacatoFolderNode.childrenByXPath(existAttoIndirizzoTrattatoXPathQuery);
+		
+		var attoIndirizzoTrattatoNode = null;
+		
+		var creaAssociazione = true;
+		
+		if(attoIndirizzoTrattatoEsistenteResults!=null && attoIndirizzoTrattatoEsistenteResults.length>0){
+			attoIndirizzoTrattatoNode = attoIndirizzoTrattatoEsistenteResults[0];
+			creaAssociazione = false;
+		} else {
+			attoIndirizzoTrattatoNode = attiSindacatoFolderNode.createNode(attoIndirizzoTrattatoFolderNode.name,"crlatti:attoIndirizzoTrattatoODG");
+		}
+	
+		if(creaAssociazione){
+			attoIndirizzoTrattatoNode.createAssociation(attoIndirizzoTrattatoFolderNode,"crlatti:attoIndirizzoTrattatoSedutaODG");
+		}
+		
+		attoTrattatoNode.properties["crlatti:numeroOrdinamento"] = numeroOrdinamento;
+		
+		attoTrattatoNode.save();
+		
+	}	
+	
+	
+	//verifica atti sindacato trattati da cancellare
+	var attiSindacatoTrattatiNelRepository = attiSindacatoFolderNode.getChildAssocsByType("crlatti:attoIndirizzoTrattatoODG");
+	
+	//query nel repository per capire se bisogna cancellare alcuni link
+	for(var z=0; z<attiSindacatoTrattatiNelRepository.length; z++){
+		var trovato = false;
+		var attoSindacatoTrattatoNelRepository = attiSindacatoTrattatiNelRepository[z];
+		
+		//cerco il nome dell'atto trattato nel repo all'interno del json
+		for (var q=0; q<attiSindacato.length(); q++){
+			var attoSindacato = attiSindacato.get(q).get("collegamentoAttiSindacato");
+			var attoSindacatoTrattato = utils.getNodeFromString(attoSindacato.get("idAtto"));
+			
+			if(""+attoSindacatoTrattato.name+""==""+attoSindacatoTrattatoNelRepository.name+""){
+				trovato = true;
+				break
+			}
+		}
+		if(!trovato){
+			attoSindacatoTrattatoNelRepository.remove();
 		}
 	}
 	

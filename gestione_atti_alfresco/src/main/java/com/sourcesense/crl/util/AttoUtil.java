@@ -64,9 +64,14 @@ public class AttoUtil {
 	public static final String PROP_ORARIO_FINE_SEDUTA = "alleOreSedutaODG";
 	public static final String PROP_RELAZIONE_SCRITTA_AULA = "relazioneScrittaAula";
 
+	public static final String PROP_TIPO_ATTO_INDIRIZZO = "tipoAttoIndirizzo";
+	public static final String PROP_NUMERO_ATTO_INDIRIZZO = "numeroAttoIndirizzo";
+	public static final String PROP_OGGETTO_ATTO_INDIRIZZO = "oggettoAttoIndirizzo";
+	
 	
 	// crl associations
 	public static final String ASSOC_ATTO_TRATTATO_SEDUTA = "attoTrattatoSedutaODG";
+	public static final String ASSOC_ATTO_INDIRIZZO_TRATTATO_SEDUTA = "attoIndirizzoTrattatoSedutaODG";
 	
 	
 	

@@ -12,14 +12,14 @@
 	language governing permissions and limitations under the License. -->
 <beans>
 
-    <bean id="crlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <bean id="crlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
         <property name="url" value="jdbc:jtds:sqlserver://212.54.226.116:1433;DatabaseName=dbconsiglieri" /> 
  		<!-- <property name="url" value="jdbc:jtds:sqlserver://192.168.1.130:1433/dbConsiglieri;instance=SQLEXPRESS" /> -->
         <property name="username" value="SourceSense" />
         <property name="password" value="SSense2012" />
     </bean>
-
+    
     <bean id="dataExtractor" class="com.sourcesense.crl.job.anagrafica.DataExtractor">
         <property name="dataSource">
             <ref bean="crlDataSource" />
@@ -116,7 +116,7 @@
             <value>PATH:"/app:company_home"</value> 
         </property>
         <property name="cronExpression">
-            <value>0 0/2 * * * ?</value> <!-- add 2099 after ? to disable -->
+            <value>0 0/2 * * * ? 2099</value> <!-- add 2099 after ? to disable -->
         </property>
         <property name="jobName">
             <value>jobAnagraficaImport</value>

@@ -13,6 +13,10 @@ import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchService;
+import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
+import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -63,17 +67,19 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 		
 		
 		List<NodeRef> attiTrattati = getAttiTrattati(sedutaNodeRef);
+		List<NodeRef> attiIndirizzoTrattati = getAttiIndirizzoTrattati(sedutaNodeRef);
 			
 		// riempimento placeholder
 		documentFilledByteArray = searchAndReplaceDocx(templateByteArray, searchTerms);
 		
 		// genrazione documento con le righe della tabella vuote 
-		documentFilledByteArray = createAttiTrattatiRowsAulaDocx(documentFilledByteArray, attiTrattati);
+		documentFilledByteArray = createAttiTrattatiRowsAulaDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);
+		
 		
 		// generazione documento con le righe della tabella popolate
 		// non è stato possibile creare e riempire le righe in un solo passaggio per dei problemi sulla reference
 		// degli oggetti riga
-		documentFilledByteArray = fillAttiTrattatiRowsAulaDocx(documentFilledByteArray, attiTrattati);
+		documentFilledByteArray = fillAttiTrattatiRowsAulaDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);
 		
 		 
 		logger.info("Generazione del documento odg completato");
@@ -84,7 +90,7 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 	
 	
 	
-	private byte[] createAttiTrattatiRowsAulaDocx(byte[] documentByteArray ,List<NodeRef> attiTrattati) throws IOException {
+	private byte[] createAttiTrattatiRowsAulaDocx(byte[] documentByteArray ,List<NodeRef> attiTrattati, List<NodeRef> attiIndirizzoTrattati) throws IOException {
 		  
   
 		
@@ -94,12 +100,15 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 						
 		XWPFTable table = tables.get(1);
 			 	 
-		XWPFTableRow templateRow= table.getRow(3);
+		XWPFTableRow templateAttoTrattatoRow= table.getRow(3);
+		XWPFTableRow templateAttoIndirizzoTrattatoRow= table.getRow(4);
 		
 		for(int i=0; i<attiTrattati.size(); i++){
-			
-			table.addRow(templateRow, 3);
-			
+			table.addRow(templateAttoTrattatoRow, 3);
+		}
+		
+		for(int i=0; i<attiIndirizzoTrattati.size(); i++){
+			table.addRow(templateAttoIndirizzoTrattatoRow, 4 + attiTrattati.size());
 		}
 		 	
 			
@@ -112,7 +121,7 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 	
 	
 	
-	private byte[] fillAttiTrattatiRowsAulaDocx(byte[] documentByteArray ,List<NodeRef> attiTrattati) throws IOException {
+	private byte[] fillAttiTrattatiRowsAulaDocx(byte[] documentByteArray ,List<NodeRef> attiTrattati, List<NodeRef> attiIndirizzoTrattati) throws IOException {
 	
 
 		DictionaryService dictionaryService = serviceRegistry.getDictionaryService();	
@@ -169,17 +178,75 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 				}
 
 				
-				searchAndReplaceParagraph(row.getCell(1), searchTerms);
+				
 				
 			}	
 			
+			searchAndReplaceParagraph(row.getCell(1), searchTerms);
+			
 		}
 		
+
 		
-		int rowsNumber = table.getRows().size();
+		// rimuovo la riga template per gli atti interni
+		int rowsAttiTrattatiNumber = attiTrattati.size() + 3;
+		table.removeRow(rowsAttiTrattatiNumber);
 		
+		for(int i=0; i<attiIndirizzoTrattati.size(); i++){
+			
+			XWPFTableRow row = table.getRow(3+attiTrattati.size()+i);
 		
-		table.removeRow(rowsNumber-1);
+			
+			NodeRef attoTrattato = attiIndirizzoTrattati.get(i);
+			
+			HashMap<String, String> searchTerms = new HashMap<String, String>();
+			 
+			String numeroAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_NUMERO_ATTO_INDIRIZZO));
+			String tipoAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_ATTO_INDIRIZZO));
+			String oggettoAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO_INDIRIZZO));
+		
+			
+			searchTerms.put("titoloAtto", tipoAttoTrattato+" N."+numeroAttoTrattato);
+			searchTerms.put("oggettoAtto", oggettoAttoTrattato);
+			
+			
+			String firmatariAttoTrattato = "";
+			
+			
+			DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+	        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+	        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+	        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+	    	
+	        String luceneFirmatariNodePath = nodeService.getPath(attoTrattato).toPrefixString(namespacePrefixResolver);
+
+	        String firmatarioType = "{"+attoUtil.CRL_ATTI_MODEL+"}"+"firmatarioAttoIndirizzo";
+	        
+			// Get firmatari
+	    	ResultSet firmatariNodes = searchService.query(attoTrattato.getStoreRef(),
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneFirmatariNodePath+"/cm:Firmatari/*\" AND TYPE:\""+firmatarioType+"\"");
+			
+			
+			for(int j=0; j<firmatariNodes.length(); j++){
+				firmatariAttoTrattato += (String) nodeService.getProperty(firmatariNodes.getNodeRef(j), ContentModel.PROP_NAME);
+				if(j<firmatariNodes.length()-1){
+					firmatariAttoTrattato += ", ";
+				}
+			}
+			
+			
+			
+			searchTerms.put("firmatariAttoIndirizzo", firmatariAttoTrattato);
+		
+
+			searchAndReplaceParagraph(row.getCell(1), searchTerms);
+			
+		}
+			
+		// rimuovo la riga template per gli atti interni
+		int rowsAttiIndirizzoTrattatiNumber = attiTrattati.size() + attiIndirizzoTrattati.size() + 3;
+		table.removeRow(rowsAttiIndirizzoTrattatiNumber);
+		
 	
 		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 		document.write(ostream);
