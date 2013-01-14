@@ -115,8 +115,9 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 				// from Atto
 				QName nodeRefType = nodeService.getType(currentAtto);
 				String tipoAtto = (String)nodeRefType.getLocalName();
-				String numeroAtto = (String) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "descrizioneIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
