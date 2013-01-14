@@ -9,9 +9,9 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-<style type="text/css">
+	<style type="text/css">
 .ui-fieldset-legend {
-	width:200px;
+	width: 200px;
 }
 </style>
 
@@ -20,14 +20,14 @@
 
 <h:form id="reportForm">
 
-	
+
 	<p:growl id="messages" showDetail="true" />
 
-	<p:fieldset style="text-align: left;"  legend="Tipo di reports" toggleable="true"
-		toggleSpeed="500">
+	<p:fieldset style="text-align: left;" legend="Tipo di reports"
+		toggleable="true" toggleSpeed="500">
 
 		<p:panelGrid
-			style="text-align:left;width:90%;margin-bottom:7px;border:1px solid #4F4F4F;"
+			style="text-align:left;width:100%;margin-bottom:7px;border:1px solid #4F4F4F;"
 			id="reportisticapanel">
 
 			<f:facet name="header">
@@ -41,7 +41,7 @@
 			<p:row>
 				<p:column>
 
-					<p:tree style="width:90%" id="docTree"
+					<p:tree style="width:90%;border:none" id="docTree" 
 						value="#{reportisticaController.root}" var="node" dynamic="true"
 						cache="false" selectionMode="single"
 						selection="#{reportisticaController.selectedNode}">
@@ -71,7 +71,8 @@
 	</p:fieldset>
 
 
-	<p:fieldset style="text-align: left;" legend="Dettagli Report selezionato" collapsed="false"
+	<p:fieldset style="text-align: left;"
+		legend="Dettagli Report selezionato" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 
 		<p:outputPanel id="dettaglioPan">
@@ -91,8 +92,19 @@
 							<f:selectItems value="#{reportisticaController.tipiAttoSel}" />
 						</p:selectManyCheckbox>
 					</p:column>
+					<p:column>
+						<p:commandButton value="Seleziona tutti"
+							onclick="selectAllChecks('reportForm:tipiAtto:')"></p:commandButton>
+					</p:column>
+					<p:column>
+						<p:commandButton value="Deseleziona tutti"
+							onclick="deselectAllChecks('reportForm:tipiAtto:')"></p:commandButton>
+					</p:column>
 
 				</p:row>
+
+
+
 
 				<p:row rendered="#{reportisticaController.isCommissioniVisible()}">
 
@@ -104,12 +116,21 @@
 						<p:selectManyCheckbox id="commissioni"
 							value="#{reportisticaController.commissioni}"
 							layout="pageDirection">
-							<f:selectItems value="#{reportisticaController.commissioniSel}" />
+							<f:selectItems id="commissioni_chk"
+								value="#{reportisticaController.commissioniSel}" />
 						</p:selectManyCheckbox>
 					</p:column>
+                    <p:column>
+						<p:commandButton value="Seleziona tutti"
+							onclick="selectAllChecks('reportForm:commissioni:')"></p:commandButton>
+					</p:column>
+					<p:column>
+						<p:commandButton value="Deseleziona tutti"
+							onclick="deselectAllChecks('reportForm:commissioni:')"></p:commandButton>
+					</p:column>                
 
 				</p:row>
-
+				
 
 				<p:row
 					rendered="#{reportisticaController.isRuoloCommissioneVisible()}">
@@ -119,7 +140,7 @@
 					</p:column>
 
 					<p:column>
-						<p:selectOneMenu  id="ruoloComm"
+						<p:selectOneMenu id="ruoloComm"
 							value="#{reportisticaController.ruoloCommissione}"
 							layout="pageDirection">
 							<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
@@ -134,16 +155,18 @@
 				</p:row>
 
 
-				<p:row  
+				<p:row
 					rendered="#{reportisticaController.isDataAssegnazioneVisible()}">
 
-					<p:column >
+					<p:column>
 						Data Assegnazione  
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataAssegnazioneDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataAssegnazioneA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneA}"></p:calendar>
 					</p:column>
 
 				</p:row>
@@ -156,8 +179,10 @@
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataVotazioneCommReferenteDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataVotazioneCommReferenteA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataVotazioneCommReferenteDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataVotazioneCommReferenteA}"></p:calendar>
 					</p:column>
 
 				</p:row>
@@ -169,8 +194,10 @@
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataRitiroDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataRitiroA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataRitiroDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataRitiroA}"></p:calendar>
 					</p:column>
 
 
@@ -184,8 +211,10 @@
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataNominaRelatoreDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataNominaRelatoreA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataNominaRelatoreDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataNominaRelatoreA}"></p:calendar>
 					</p:column>
 
 
@@ -199,8 +228,7 @@
 
 					<p:column>
 						<p:selectOneMenu id="relatori"
-							value="#{reportisticaController.relatore}"
-							layout="pageDirection">
+							value="#{reportisticaController.relatore}" layout="pageDirection">
 							<f:selectItems value="#{reportisticaController.relatori}" />
 						</p:selectOneMenu>
 					</p:column>
@@ -215,8 +243,7 @@
 
 					<p:column>
 						<p:selectOneMenu id="organismo"
-							value="#{reportisticaController.organismo}"
-							>
+							value="#{reportisticaController.organismo}">
 							<f:selectItems value="#{reportisticaController.organismi}" />
 						</p:selectOneMenu>
 					</p:column>
@@ -232,8 +259,10 @@
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataAssegnazioneParereDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataAssegnazioneParereA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneParereDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneParereA}"></p:calendar>
 					</p:column>
 
 
@@ -246,8 +275,7 @@
 					</p:column>
 
 					<p:selectOneMenu id="firmatario"
-						value="#{reportisticaController.firmatario}"
-						>
+						value="#{reportisticaController.firmatario}">
 						<f:selectItems value="#{reportisticaController.firmatari}" />
 					</p:selectOneMenu>
 
@@ -261,10 +289,10 @@
 					</p:column>
 
 					<p:column>
-						<p:selectOneMenu id="tipologiaFirma" 
-							value="#{lettereNotificheController.tipologiaFirma}" >
-					    
-					    </p:selectOneMenu>
+						<p:selectOneMenu id="tipologiaFirma"
+							value="#{lettereNotificheController.tipologiaFirma}">
+
+						</p:selectOneMenu>
 					</p:column>
 
 				</p:row>
@@ -277,8 +305,10 @@
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataPresentazioneDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataPresentazioneA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataPresentazioneDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataPresentazioneA}"></p:calendar>
 					</p:column>
 				</p:row>
 
@@ -290,8 +320,10 @@
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataAssegnazioneCommReferenteDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataAssegnazioneCommReferenteA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneCommReferenteDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneCommReferenteA}"></p:calendar>
 					</p:column>
 
 				</p:row>
@@ -303,8 +335,10 @@
 					</p:column>
 
 					<p:column>
-						da : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataSedutaDa}"></p:calendar>
-						a : <p:calendar locale="it" pattern="dd/MM/yyyy" value="#{reportisticaController.dataSedutaA}"></p:calendar>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataSedutaDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataSedutaA}"></p:calendar>
 					</p:column>
 
 				</p:row>

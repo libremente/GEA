@@ -62,6 +62,7 @@ public class TipoAttoServiceManager implements ServiceManager {
 		return tipiAtto;
 	}
 	
+	
     public List<String> getAll() {
 		
 		
@@ -75,6 +76,14 @@ public class TipoAttoServiceManager implements ServiceManager {
         	
 		}
 		return tipiAtto;
+	}
+    
+    public List<TipoAtto> retrieveAllTipoAtto() {
+		
+		
+    	return tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
+		
+		 
 	}
 	
     

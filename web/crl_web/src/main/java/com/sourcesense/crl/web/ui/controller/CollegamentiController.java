@@ -16,6 +16,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Collegamento;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.CollegamentoLeggiRegionali;
+import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
@@ -33,18 +34,19 @@ public class CollegamentiController {
 	private List<Collegamento> attiCollegatiList = new ArrayList<Collegamento>();
 	private String collegamentoToDelete;	
 	
-	private Map<String, String> tipiAttoSindacato = new HashMap<String, String>();
-	private Map<String, String> numeriAttoSindacato = new HashMap<String, String>();
-	
-	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
-	
+	private List<String> tipiAttoSindacato = new ArrayList<String>();
 	private String tipoAttoSindacato;
-	private String numeroAttoSindacato;
+	
+	private List<CollegamentoAttiSindacato> numeriAttoSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	
+	
+	private String idAttoSindacato;
 	private String descrizioneAttoSindacato;
 	private String attoSindacatoToDelete;
 	
-	private Map<String, String> tipiAttoRegionale = new HashMap<String, String>();
-	private Map<String, String> numeriAttoRegionale = new HashMap<String, String>();
+	private List<String> tipiAttoRegionale = new ArrayList<String>();
 	
 	private List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali = new ArrayList<CollegamentoLeggiRegionali>();
 	private String tipoAttoRegionale;
@@ -59,15 +61,17 @@ public class CollegamentiController {
 	
 	@PostConstruct
 	protected void init() {
-		//TODO: alfresco service mappe
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());	
 		
-		setAttiCollegatiList(Clonator.cloneList(atto.getCollegamenti()));
-		setCollegamentiAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		//setAttiCollegatiList(Clonator.cloneList(atto.getCollegamenti()));
+		setAttiCollegatiList(attoServiceManager.findAttiCollegatiById(getAtto().getId()));
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		setCollegamentiAttiSindacato(attoServiceManager.findAttiSindacatoById(getAtto().getId()));
+		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 		setCollegamentiLeggiRegionali(Clonator.cloneList(atto.getCollegamentiLeggiRegionali()));
 	}
 	
@@ -182,21 +186,46 @@ public class CollegamentiController {
 	
 	// Atti Indirizzo e Sindacati******************************
 	
+	
+	public void handleAttoSindacatoChange() {
+
+		getNumeriAttoSindacato().clear();
+		
+		for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+
+			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
+
+				getNumeriAttoSindacato().add(collegamento);
+				
+			}
+
+		}
+
+	}
+	
 	public void addCollegamentoAttoSindacato() {
 
-		if (!numeroAttoSindacato.trim().equals("")) {
+		if (!"".equals(idAttoSindacato)) {
 			if (!checkCollegamentiAttiSindacati()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
 			} else {
-				//TODO: alfresco service (link collegamento)
-				CollegamentoAttiSindacato collegamento = new CollegamentoAttiSindacato();
-				collegamento.setDescrizione(getDescrizioneAttoSindacato());
-				collegamento.setNumeroAtto(getNumeroAttoSindacato());
-				collegamento.setTipoAtto(getTipoAttoSindacato());
-				collegamentiAttiSindacato.add(collegamento);
+				
+				
+				for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+
+					if (collegamento.getIdAtto().equals(idAttoSindacato)) {
+
+						
+						collegamento.setDescrizione(descrizioneAttoSindacato);
+						collegamentiAttiSindacato.add(collegamento);
+						break;
+					}
+
+				}
+				
 				
 				updateAttiIndirizzoHandler();
 			}
@@ -220,7 +249,7 @@ public class CollegamentiController {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
 
-			if (element.getNumeroAtto().equals(numeroAttoSindacato)) {
+			if (element.getNumeroAtto().equals(idAttoSindacato)) {
 
 				return false;
 			}
@@ -235,6 +264,8 @@ public class CollegamentiController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
+		attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 		
 		attoBean.getAtto().setCollegamentiAttiSindacato(Clonator.cloneList(getCollegamentiAttiSindacato()));
 		
@@ -398,13 +429,16 @@ public class CollegamentiController {
 	}
 
 
-	public String getNumeroAttoSindacato() {
-		return numeroAttoSindacato;
+	
+
+
+	public String getIdAttoSindacato() {
+		return idAttoSindacato;
 	}
 
 
-	public void setNumeroAttoSindacato(String numeroAttoSindacato) {
-		this.numeroAttoSindacato = numeroAttoSindacato;
+	public void setIdAttoSindacato(String idAttoSindacato) {
+		this.idAttoSindacato = idAttoSindacato;
 	}
 
 
@@ -479,43 +513,46 @@ public class CollegamentiController {
 	}
 
 
-	public Map<String, String> getTipiAttoSindacato() {
+	public List<String> getTipiAttoSindacato() {
 		return tipiAttoSindacato;
 	}
 
 
-	public void setTipiAttoSindacato(Map<String, String> tipiAttoSindacato) {
+	public void setTipiAttoSindacato(List<String> tipiAttoSindacato) {
 		this.tipiAttoSindacato = tipiAttoSindacato;
 	}
 
 
-	public Map<String, String> getNumeriAttoSindacato() {
+	public List<CollegamentoAttiSindacato> getNumeriAttoSindacato() {
 		return numeriAttoSindacato;
 	}
 
 
-	public void setNumeriAttoSindacato(Map<String, String> numeriAttoSindacato) {
+	public void setNumeriAttoSindacato(List<CollegamentoAttiSindacato> numeriAttoSindacato) {
 		this.numeriAttoSindacato = numeriAttoSindacato;
 	}
 
 
-	public Map<String, String> getTipiAttoRegionale() {
+	public List<String> getTipiAttoRegionale() {
 		return tipiAttoRegionale;
 	}
 
 
-	public void setTipiAttoRegionale(Map<String, String> tipiAttoRegionale) {
+	public void setTipiAttoRegionale(List<String> tipiAttoRegionale) {
 		this.tipiAttoRegionale = tipiAttoRegionale;
 	}
 
 
-	public Map<String, String> getNumeriAttoRegionale() {
-		return numeriAttoRegionale;
+	
+
+
+	public List<CollegamentoAttiSindacato> getAttiSindacato() {
+		return attiSindacato;
 	}
 
 
-	public void setNumeriAttoRegionale(Map<String, String> numeriAttoRegionale) {
-		this.numeriAttoRegionale = numeriAttoRegionale;
+	public void setAttiSindacato(List<CollegamentoAttiSindacato> attiSindacato) {
+		this.attiSindacato = attiSindacato;
 	}
 	
 	

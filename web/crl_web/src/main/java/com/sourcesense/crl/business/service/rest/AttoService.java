@@ -23,6 +23,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoEAC;
 import com.sourcesense.crl.business.model.AttoMIS;
+import com.sourcesense.crl.business.model.Collegamento;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.ConsultazioneParere;
 import com.sourcesense.crl.business.model.TestoAtto;
@@ -538,6 +539,49 @@ public class AttoService {
 	}
 	
 	
+	
+	
+	public List<String> findTipoAttiSindacato (String url){
+		List<String> listTipi = null;
+
+		try {
+			WebResource webResource = client.resource(url);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+					false);
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listTipi = objectMapper.readValue(responseMsg,
+					new TypeReference<List<String>>() {
+					});
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return listTipi;
+
+	}
+	
 	public List<CollegamentoAttiSindacato> findAllAttiSindacato (String url){
 		List<CollegamentoAttiSindacato> listAtti = null;
 
@@ -580,6 +624,46 @@ public class AttoService {
 	}
 
 	
+	public List<Collegamento> findCollegamentiAttoById (String url){
+		List<Collegamento> listAtti = null;
+
+		try {
+			WebResource webResource = client.resource(url);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+					false);
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			listAtti = objectMapper.readValue(responseMsg,
+					new TypeReference<List<Collegamento>>() {
+					});
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return listAtti;
+
+	}
 	
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti = null;

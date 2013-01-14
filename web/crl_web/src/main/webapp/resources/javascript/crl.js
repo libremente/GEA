@@ -27,6 +27,35 @@ PrimeFaces.locales ['it'] = {
 	 };
 
 
+function selectAllChecks(context){
+	
+	conta = 0;
+	
+	while(document.getElementById(context+conta)){
+	    
+		if(!document.getElementById(context+conta).checked){
+			jQuery(PrimeFaces.escapeClientId(context+conta)).click();
+		}
+		conta++;
+	}
+	
+}
+
+
+function deselectAllChecks(context){
+	
+	conta = 0;
+	
+	while(document.getElementById(context+conta)){
+	    
+		if(document.getElementById(context+conta).checked){
+			jQuery(PrimeFaces.escapeClientId(context+conta)).click();
+		}
+		conta++;
+	}
+	
+}
+
 
 function showDialog(){
 	
@@ -55,11 +84,8 @@ function dragSortTable(tableId,hiddeId,colIndx) {
 		//prendo il td
 		  var nodoTd = nodo.getElementsByTagName('td')[colIndx];
 		  
-		  console.log("InnerTD====="+nodoTd.innerHTML);
 		  
    		  var innerDiv = nodoTd.getElementsByTagName('div')[0];
-		  
-   		  console.log("InnerDiv====="+innerDiv.innerHTML);
 		  
 		  var valore ="";  
 			  
@@ -84,7 +110,6 @@ function dragSortTable(tableId,hiddeId,colIndx) {
 			  
 		  }
 		  
-		  console.log(hidden.value);
 		  
 	  }
 	 

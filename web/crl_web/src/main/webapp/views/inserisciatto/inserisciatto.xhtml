@@ -82,7 +82,8 @@
 					value="#{inserisciAttoController.tipoAtto}" required="true"
 					requiredMessage="Tipo Atto obbligatorio">
 					<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
-					<f:selectItems value="#{inserisciAttoController.tipiAtto}" />
+					<f:selectItems value="#{inserisciAttoController.tipiAtto}" var="tipoAtto"
+					itemLabel="#{tipoAtto.descrizione}" itemValue="#{tipoAtto.codice}" />
 					
 				</p:selectOneMenu>
 			</p:column>

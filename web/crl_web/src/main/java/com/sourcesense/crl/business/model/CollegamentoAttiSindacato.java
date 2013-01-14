@@ -1,6 +1,7 @@
 package com.sourcesense.crl.business.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
@@ -13,15 +14,17 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("collegamentoAttiSindacato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class CollegamentoAttiSindacato implements Cloneable{
+public class CollegamentoAttiSindacato implements Cloneable , Comparable <CollegamentoAttiSindacato>{
 	
-	
+	//id atto sindacato
 	private String idAtto;
 	private String descrizione;
 	private String tipoAtto;
 	private String numeroAtto;
 	private String link;
 	private String oggettoAtto;
+	private String numeroOrdinamento;
+	private String firmatariList;
 	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
 	
 	
@@ -32,6 +35,12 @@ public class CollegamentoAttiSindacato implements Cloneable{
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@Override
+	public int compareTo(CollegamentoAttiSindacato arg0) {
+		// TODO Auto-generated method stub
+		return Integer.parseInt(this.numeroOrdinamento) -  Integer.parseInt(arg0.numeroOrdinamento);
 	}
 	
 	@Override public String toString() {
@@ -93,6 +102,31 @@ public class CollegamentoAttiSindacato implements Cloneable{
 	public void setIdAtto(String idAtto) {
 		this.idAtto = idAtto;
 	}
+
+	public String getNumeroOrdinamento() {
+		return numeroOrdinamento;
+	}
+
+	public void setNumeroOrdinamento(String numeroOrdinamento) {
+		this.numeroOrdinamento = numeroOrdinamento;
+	}
+
+	public String getFirmatariList() {
+		
+		firmatariList="";
+		
+		for (Firmatario firmatario : getFirmatari()) {
+			if(firmatario.getDescrizione()!=null){
+			 firmatariList += firmatario.getDescrizione()+"-"+firmatario.getGruppoConsiliare()+"\n";
+			}
+		}
+		return firmatariList;
+	}
+
+	public void setFirmatariList(String firmatariList) {
+		this.firmatariList = firmatariList;
+	}
+	
 	
 	
 	

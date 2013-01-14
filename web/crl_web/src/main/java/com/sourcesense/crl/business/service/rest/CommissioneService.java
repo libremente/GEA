@@ -89,6 +89,28 @@ public class CommissioneService {
 		}
 
 	}
+	
+	
+	
+	public void removeAbbinamento(String url) {
+		
+			WebResource webResource = client.resource(url);
+			
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+			
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
+					true);
+			
+
+	}
 
 	public List<CommissioneReferente> retrieveCommissioniReferenteByAtto (String url){
 

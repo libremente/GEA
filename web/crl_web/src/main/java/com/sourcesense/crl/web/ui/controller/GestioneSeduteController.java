@@ -88,14 +88,19 @@ public class GestioneSeduteController {
 	private boolean discusso;
 	private String audizioneToDelete;
 
-	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	
+	private List<String> tipiAttoSindacato = new ArrayList<String>();
 	private String tipoAttoSindacato;
-	private String numeroAttoSindacato;
+	private List<CollegamentoAttiSindacato> numeriAttoSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private String attiSindacatoTrattatiorder;
+	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private String idAttoSindacato;
+	private String descrizioneAttoSindacato;
 	private String descrizioneCollegamento;
 	private String attoSindacatoToDelete;
 
-	private Map<String, String> tipiAttoSindacato = new HashMap<String, String>();
-	private Map<String, String> numeriAttoSindacato = new HashMap<String, String>();
+	
 
 	private String statoCommitInserisciSeduta = CRLMessage.COMMIT_DONE;
 	private String statoCommitInserisciOdg = CRLMessage.COMMIT_DONE;
@@ -111,14 +116,12 @@ public class GestioneSeduteController {
 				.getSessionGroup().getNome());
 
 		seduteList = Clonator.cloneList(seduteListAll);
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 
 		setDateSeduteList();
 
-		/*
-		 * if (!seduteListAll.isEmpty()) {
-		 * setDataSedutaSelected(dateSeduteList.get(0)); showSedutaDetail();
-		 * fillDateSeduteMap(); }
-		 */
+		
 
 	}
 
@@ -203,8 +206,9 @@ public class GestioneSeduteController {
 					.cloneList(sedutaSelected.getAttiTrattati()));
 			Collections.sort(attiTrattati);
 
-			setAttiSindacato(Clonator.cloneList(sedutaSelected
+			setCollegamentiAttiSindacato(Clonator.cloneList(sedutaSelected
 					.getAttiSindacato()));
+			Collections.sort(collegamentiAttiSindacato);
 
 			setAudizioni(Clonator.cloneList(sedutaSelected.getAudizioni()));
 
@@ -242,7 +246,7 @@ public class GestioneSeduteController {
 			setNote(null);
 			setLinksList(new ArrayList<Link>());
 			setAttiTrattati(new ArrayList<AttoTrattato>());
-			setAttiSindacato(new ArrayList<CollegamentoAttiSindacato>());
+			setCollegamentiAttiSindacato(new ArrayList<CollegamentoAttiSindacato>());
 			setConsultazioniAtti(new ArrayList<Consultazione>());
 			setAudizioni(new ArrayList<Audizione>());
 		}
@@ -302,7 +306,8 @@ public class GestioneSeduteController {
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 		setAttiTrattati(sedutaSelected.getAttiTrattati());
 		Collections.sort(attiTrattati);
-		setAttiSindacato(sedutaSelected.getAttiSindacato());
+		setCollegamentiAttiSindacato(sedutaSelected.getAttiSindacato());
+		Collections.sort(collegamentiAttiSindacato);
 		setAudizioni(sedutaSelected.getAudizioni());
 
 		consultazioniAtti.clear();
@@ -587,20 +592,26 @@ public class GestioneSeduteController {
 
 	public void addCollegamentoAttoSindacato() {
 
-		if (!numeroAttoSindacato.trim().equals("")) {
+		if (!"".equals(idAttoSindacato)) {
 			if (!checkCollegamentiAttiSindacati()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già collegato ", ""));
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
 			} else {
-				// TODO: alfresco service (oggetto e lista firmatari)
-				CollegamentoAttiSindacato collegamento = new CollegamentoAttiSindacato();
-				collegamento.setNumeroAtto(getNumeroAttoSindacato());
-				collegamento.setTipoAtto(getTipoAttoSindacato());
-				attiSindacato.add(collegamento);
+				
+				
+				for (CollegamentoAttiSindacato collegamento : attiSindacato) {
 
+					if (collegamento.getIdAtto().equals(idAttoSindacato)) {
+
+						
+						collegamento.setDescrizione(descrizioneAttoSindacato);
+						collegamentiAttiSindacato.add(collegamento);
+						break;
+					}
+
+				}
 				updateInserisciOdgHandler();
 			}
 		}
@@ -608,12 +619,12 @@ public class GestioneSeduteController {
 
 	public void removeCollegamentoAttoSindacato() {
 
-		for (CollegamentoAttiSindacato element : attiSindacato) {
+		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
 
 			if (element.getNumeroAtto().equals(attoSindacatoToDelete)) {
 
-				attiSindacato.remove(element);
-				updateInserisciOdgHandler();
+				collegamentiAttiSindacato.remove(element);
+				
 				break;
 			}
 		}
@@ -621,23 +632,40 @@ public class GestioneSeduteController {
 
 	private boolean checkCollegamentiAttiSindacati() {
 
-		for (CollegamentoAttiSindacato element : attiSindacato) {
+		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
 
-			if (element.getNumeroAtto().equals(numeroAttoSindacato)) {
+			if (element.getNumeroAtto().equals(idAttoSindacato)) {
 
 				return false;
 			}
 		}
 		return true;
 	}
+	
+	public void handleAttoSindacatoChange() {
+
+		getNumeriAttoSindacato().clear();
+		
+		for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+
+			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
+
+				getNumeriAttoSindacato().add(collegamento);
+				
+			}
+
+		}
+
+	}
 
 	public void salvaInserisciOdg() {
-		// TODO: alfresco service
-
+		
 		if (sedutaSelected != null) {
 
 			sedutaSelected.setAttiSindacato(Clonator
-					.cloneList(getAttiSindacato()));
+					.cloneList(getOrderedAttiSindacatoTrattati()));
+			
+			Collections.sort(collegamentiAttiSindacato);
 
 			sedutaSelected.setAttiTrattati(Clonator
 					.cloneList(getOrderedAttiTrattati()));
@@ -707,6 +735,49 @@ public class GestioneSeduteController {
 
 	}
 
+	private List<CollegamentoAttiSindacato> getOrderedAttiSindacatoTrattati() {
+
+		if (getAttiSindacatoTrattatiorder() != null
+				&& !getAttiSindacatoTrattatiorder().equals("")) {   
+			// Numeri atto ordinati
+			String[] attiOrd = getAttiSindacatoTrattatiorder().split("_");
+
+			for (int i = 0; i < attiOrd.length; i++) {
+
+				String numeroAtto = attiOrd[i].trim();
+
+				for (CollegamentoAttiSindacato attoTrattato : getCollegamentiAttiSindacato()) {
+
+					if (numeroAtto.equals(attoTrattato.getNumeroAtto())) {
+
+						if (i < 10) {
+							attoTrattato.setNumeroOrdinamento("0" + i);
+						} else {
+							attoTrattato.setNumeroOrdinamento("" + i);
+						}
+					}
+				}
+			}
+		} else {
+
+			int i = 0;
+			for (CollegamentoAttiSindacato attoTrattato : getCollegamentiAttiSindacato()) {
+				if (i < 10) {
+					attoTrattato.setNumeroOrdinamento("0" + i);
+				} else {
+					attoTrattato.setNumeroOrdinamento("" + i);
+				}
+				i++;
+			}
+
+		}
+
+		Collections.sort(collegamentiAttiSindacato);
+		return collegamentiAttiSindacato;
+
+	}
+	
+	
 	public StreamedContent getFile() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -921,21 +992,7 @@ public class GestioneSeduteController {
 		this.discusso = discusso;
 	}
 
-	public Map<String, String> getTipiAttoSindacato() {
-		return tipiAttoSindacato;
-	}
-
-	public void setTipiAttoSindacato(Map<String, String> tipiAttoSindacato) {
-		this.tipiAttoSindacato = tipiAttoSindacato;
-	}
-
-	public Map<String, String> getNumeriAttoSindacato() {
-		return numeriAttoSindacato;
-	}
-
-	public void setNumeriAttoSindacato(Map<String, String> numeriAttoSindacato) {
-		this.numeriAttoSindacato = numeriAttoSindacato;
-	}
+	
 
 	public List<AttoTrattato> getAttiTrattati() {
 		return attiTrattati;
@@ -993,13 +1050,7 @@ public class GestioneSeduteController {
 		this.tipoAttoSindacato = tipoAttoSindacato;
 	}
 
-	public String getNumeroAttoSindacato() {
-		return numeroAttoSindacato;
-	}
-
-	public void setNumeroAttoSindacato(String numeroAttoSindacato) {
-		this.numeroAttoSindacato = numeroAttoSindacato;
-	}
+	
 
 	public String getDescrizioneCollegamento() {
 		return descrizioneCollegamento;
@@ -1083,4 +1134,58 @@ public class GestioneSeduteController {
 		this.alleOre = alleOre;
 	}
 
+	public List<String> getTipiAttoSindacato() {
+		return tipiAttoSindacato;
+	}
+
+	public void setTipiAttoSindacato(List<String> tipiAttoSindacato) {
+		this.tipiAttoSindacato = tipiAttoSindacato;
+	}
+
+	public List<CollegamentoAttiSindacato> getNumeriAttoSindacato() {
+		return numeriAttoSindacato;
+	}
+
+	public void setNumeriAttoSindacato(
+			List<CollegamentoAttiSindacato> numeriAttoSindacato) {
+		this.numeriAttoSindacato = numeriAttoSindacato;
+	}
+
+	public List<CollegamentoAttiSindacato> getCollegamentiAttiSindacato() {
+		return collegamentiAttiSindacato;
+	}
+
+	public void setCollegamentiAttiSindacato(
+			List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
+		this.collegamentiAttiSindacato = collegamentiAttiSindacato;
+	}
+
+	public String getIdAttoSindacato() {
+		return idAttoSindacato;
+	}
+
+	public void setIdAttoSindacato(String idAttoSindacato) {
+		this.idAttoSindacato = idAttoSindacato;
+	}
+
+	public String getDescrizioneAttoSindacato() {
+		return descrizioneAttoSindacato;
+	}
+
+	public void setDescrizioneAttoSindacato(String descrizioneAttoSindacato) {
+		this.descrizioneAttoSindacato = descrizioneAttoSindacato;
+	}
+
+	public String getAttiSindacatoTrattatiorder() {
+		return attiSindacatoTrattatiorder;
+	}
+
+	public void setAttiSindacatoTrattatiorder(String attiSindacatoTrattatiorder) {
+		this.attiSindacatoTrattatiorder = attiSindacatoTrattatiorder;
+	}
+
+	
+	
+	
+	
 }

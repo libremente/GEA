@@ -7,14 +7,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <pe:tooltip value="Click per Espandere / Comprimere"
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
 
-<p:fieldset styleClass="fieldSetTab" legend="Atti di Sindacato Ispettivo e di Indirizzo"
-	collapsed="false" toggleable="false">
+<p:fieldset styleClass="fieldSetTab"
+	legend="Atti di Sindacato Ispettivo e di Indirizzo" collapsed="false"
+	toggleable="false">
 
 	<p:row>
 		<p:column colspan="4">
@@ -45,31 +47,41 @@
 					<p:row>
 						<p:column>Tipo</p:column>
 						<p:column>N. Atto</p:column>
-						<p:column></p:column>
+						<p:column>Descrizione</p:column>
+						<p:column>Azioni</p:column>
 					</p:row>
 				</f:facet>
 				<p:row>
-					<p:column>
-						<p:selectOneMenu id="numAttoSindacato"
-							value="#{gestioneSeduteController.numeroAttoSindacato}">
-							<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
-							<f:selectItem itemLabel="1234" itemValue="1234" />
-							<f:selectItem itemLabel="5678" itemValue="5678" />
-							<f:selectItems
-								value="#{gestioneSeduteController.numeriAttoSindacato}" />
-						</p:selectOneMenu>
-					</p:column>
+
 
 					<p:column>
 						<p:selectOneMenu id="tipoAttoSindacato"
 							value="#{gestioneSeduteController.tipoAttoSindacato}">
 							<f:selectItem itemLabel="Scegli tipo Atto" itemValue="" />
-							<f:selectItem itemLabel="ITR" itemValue="ITR" />
-							<f:selectItem itemLabel="ITL" itemValue="ITL" />
 							<f:selectItems
 								value="#{gestioneSeduteController.tipiAttoSindacato}" />
+							<p:ajax update="numAttoSindacato"
+								listener="#{gestioneSeduteController.handleAttoSindacatoChange}" />
 						</p:selectOneMenu>
 					</p:column>
+
+
+					<p:column>
+						<p:selectOneMenu id="numAttoSindacato"
+							value="#{gestioneSeduteController.idAttoSindacato}">
+							<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
+							<f:selectItems itemValue="#{attoSind.idAtto}" var="attoSind"
+								value="#{gestioneSeduteController.numeriAttoSindacato}"
+								itemLabel="#{attoSind.numeroAtto} - #{attoSind.oggettoAtto}" />
+						</p:selectOneMenu>
+					</p:column>
+
+					<p:column>
+						<p:inputText
+							value="#{gestioneSeduteController.descrizioneAttoSindacato}"
+							style="width:100%" />
+					</p:column>
+
 
 					<p:column>
 						<p:commandButton value="Aggiungi"
@@ -82,19 +94,29 @@
 				</p:row>
 
 			</p:panelGrid>
+			<br />
 
 		</p:column>
 	</p:row>
 
-	<br />
+	<p:row style="height:20px">
+
+	</p:row>
 
 	<p:row>
-		<p:column colspan="4">
+		<p:column>
+
+			<p:dataTable id="listaCollegamentiAttiSindacati" styleClass="generalInfoTab grey-text"
+				value="#{gestioneSeduteController.collegamentiAttiSindacato}"
+				var="collegamento" editable="true">
 
 
-			<p:dataTable id="listaCollegamentiAttiSindacati"
-				value="#{gestioneSeduteController.attiSindacato}" var="collegamento"
-				styleClass="generalInfoTab" editable="true">
+
+
+				<p:column headerText="" style="width:20px">
+					<p:graphicImage value="/resources/img/dad.jpeg" />
+
+				</p:column>
 
 				<p:column headerText="Tipo Atto" style="width:125px">
 							#{collegamento.tipoAtto}
@@ -108,8 +130,20 @@
 				#{collegamento.oggettoAtto}
 			</p:column>
 
+
+				
+
 				<p:column headerText="Firmatari" style="width:125px">
-				#{collegamento.oggettoAtto}
+
+                  				
+
+					#{collegamento.firmatariList}
+
+
+				</p:column>
+
+				<p:column headerText="Descrizione" style="width:125px">
+			#{collegamento.descrizione}
 			</p:column>
 
 				<p:column headerText="Azioni" style="width:125px">
@@ -117,15 +151,33 @@
 					<p:commandButton
 						oncomplete="collegamentoAttoSindacatoDialog.show()"
 						icon="delete-icon">
-						<f:setPropertyActionListener value="#{collegamento.numeroAtto}"
+						<f:setPropertyActionListener value="#{collegamento.idAtto}"
 							target="#{gestioneSeduteController.attoSindacatoToDelete}" />
 					</p:commandButton>
 				</p:column>
-
 			</p:dataTable>
+
+			<p:inputText type="hidden" id="hidSindOrder"
+				value="#{gestioneSeduteController.attiSindacatoTrattatiorder}">
+			</p:inputText>
+
+			<script>
+				jQuery(function() {
+					jQuery(
+							'#gestioneSeduteForm\\:gestioneSedute\\:listaCollegamentiAttiSindacati_data')
+							.sortable(
+									{
+										update : function() {
+											dragSortTable(
+													'gestioneSeduteForm:gestioneSedute:listaCollegamentiAttiSindacati_data',
+													'gestioneSeduteForm:gestioneSedute:hidSindOrder',
+													'2');
+										}
+									});
+				});
+			</script>
 		</p:column>
 	</p:row>
-
 </p:fieldset>
 
 </html>

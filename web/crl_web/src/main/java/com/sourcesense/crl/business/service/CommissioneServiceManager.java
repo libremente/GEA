@@ -104,10 +104,12 @@ public class CommissioneServiceManager implements ServiceManager{
 				"alfresco_context_url", "alf_upload_allegato_commissione", new String[] { atto.getId() }),atto, stream, allegato, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
 	}	
 	
-	
-	
 	public void salvaCambiaRuoloInReferente(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_continuazione_commissione_referente", null), esameCommissione);
+	}
+	
+	public void removeAbbinamento(String idAtto , String idAttoAbbinato , String lastPassaggio) {
+		commissioneService.removeAbbinamento (urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_delete_abbinamento_esame_commissioni", new String[] {idAtto,idAttoAbbinato,lastPassaggio}));
 	}
 	
 	public void salvaNoteAllegatiEsameCommissioni(EsameCommissione esameCommissione) {

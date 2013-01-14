@@ -1018,10 +1018,28 @@ public class EsameCommissioniController {
 		for (Abbinamento element : abbinamentiList) {
 
 			if (element.getIdAttoAbbinato().equals(abbinamentoToDelete)) {
-
+				
+				FacesContext context = FacesContext.getCurrentInstance();
+				AttoBean attoBean = ((AttoBean) context.getExternalContext()
+						.getSessionMap().get("attoBean"));
+				commissioneServiceManager.removeAbbinamento(atto.getId(),element.getIdAttoAbbinato(),attoBean.getLastPassaggio().getNome());
 				abbinamentiList.remove(element);
+				
+				
+				for (Abbinamento abbinamento : attoBean.getAbbinamenti()) {
+					
+					if (abbinamento.getIdAttoAbbinato().equals(abbinamentoToDelete)) {
+						
+						attoBean.getAbbinamenti().remove(abbinamento);
+						break;
+					}
+					
+				}
+				
 				updateAbbinamentiHandler();
 				element.setAbbinato(false);
+				context.addMessage(null, new FacesMessage(
+						"Abbinamento cancellato con successo", ""));
 				break;
 			}
 		}
@@ -1485,12 +1503,10 @@ public class EsameCommissioniController {
 
 			commissioneUser.setDataTrasmissione(getDataTrasmissione());
 			commissioneUser.setPassaggioDirettoInAula(isPassaggioDiretto());
-			commissioneUser
-					.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
+			commissioneUser.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
 			commissioneUser.setStato(Commissione.STATO_TRASMESSO);
 
-			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
-					.setCommissioni(getCommissioniList());
+			atto.getPassaggi().get(atto.getPassaggi().size() - 1).setCommissioni(getCommissioniList());
 
 			attoBean.getLastPassaggio().setCommissioni(
 					Clonator.cloneList(getCommissioniList()));
@@ -1507,7 +1523,7 @@ public class EsameCommissioniController {
 			
 			}  
 			
-			if (canChangeStatoAtto()) {
+			if (canChangeStatoAtto() && risultato.equals("")) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 				atto.setStato(StatoAtto.TRASMESSO_AULA);
 

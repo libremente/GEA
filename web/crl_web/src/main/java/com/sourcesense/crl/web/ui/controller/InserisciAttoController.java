@@ -1,13 +1,16 @@
 package com.sourcesense.crl.web.ui.controller;
 
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.StatoAtto;
+import com.sourcesense.crl.business.model.TipoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
+import com.sourcesense.crl.web.ui.beans.UserBean;
 
 
 import java.util.ArrayList;
@@ -62,11 +65,13 @@ public class InserisciAttoController {
 	
 	private String estensioneAtto;
 	
+	private UserBean userBean;
 	
 	private boolean tipologiaVisible;
 
-	private Map<String, String> tipiAtto = new HashMap<String, String>();
+	//private Map<String, String> tipiAtto = new HashMap<String, String>();
 
+	private List<TipoAtto> tipiAtto = new ArrayList<TipoAtto>();
 	private Map<String,String> tipologie = new HashMap<String, String>(){
 		
 	};
@@ -79,9 +84,14 @@ public class InserisciAttoController {
 	@PostConstruct
 	private void initializeValues(){
 		
-		
+		FacesContext context = FacesContext.getCurrentInstance();
+		userBean = (UserBean) context
+				.getApplication()
+				.getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{userBean}",
+						UserBean.class).getValue(context.getELContext());
 		//TODO
-		setTipiAtto(tipoAttoServiceManager.findAll());
+		setTipiAtto(tipoAttoServiceManager.retrieveAllTipoAtto(),GruppoUtente.AULA.equals(userBean.getUserGroupName()));
 		setLegislature(legislaturaServiceManager.list());
 		
 		
@@ -112,6 +122,13 @@ public class InserisciAttoController {
 		atto.setError(null);
 		atto.setStato(StatoAtto.PROTOCOLLATO);
 		
+		if(GruppoUtente.AULA.equals(userBean.getUserGroupName())&&atto.getTipoAtto().equals("PDA")){
+	
+			atto.setTipoIniziativa("05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA");
+		
+		}
+		
+		
 		Atto attoRet = attoServiceManager.persist(atto);
 		
 		
@@ -128,7 +145,6 @@ public class InserisciAttoController {
 
 			attoBean.setAtto(attoRet);
 			attoBean.getAtto().setStato(StatoAtto.PROTOCOLLATO);
-			
 			
 			return "pretty:Riepilogo_Atto";
 
@@ -167,15 +183,37 @@ public class InserisciAttoController {
 	
 	
 
-	public Map<String, String> getTipiAtto() {
-		//return tipoAttoServiceManager.findAll();
+	public List<TipoAtto> getTipiAtto() {
 		return this.tipiAtto;
 	}
 
-	public void setTipiAtto(Map<String, String> tipiAtto) {
+    public void setTipiAtto(List<TipoAtto> tipiAtto,boolean isAula) {
 		
-		tipiAtto.remove("EAC - Elenchi di Atti Comunitari");
-		//tipiAtto.remove("MIS");
+		
+    	for (TipoAtto tipoAtto : tipiAtto) {
+			
+    		if(tipoAtto.getCodice().equals("EAC")){
+    			
+    			continue;
+    		}
+    		
+    		if(isAula && !(tipoAtto.getCodice().equals("ORG") || 
+    				      tipoAtto.getCodice().equals("PDA") )){
+    			continue;
+    			
+    		}else{
+    			
+    			this.tipiAtto.add(tipoAtto);
+    			
+    		}	
+    		
+		}
+    	
+		
+	}
+	
+	public void setTipiAtto(List<TipoAtto> tipiAtto) {
+		
 		
 		this.tipiAtto = tipiAtto;
 	}

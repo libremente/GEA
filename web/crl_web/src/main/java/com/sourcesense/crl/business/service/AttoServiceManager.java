@@ -15,6 +15,7 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoEAC;
 import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.business.model.Collegamento;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.ConsultazioneParere;
@@ -175,7 +176,27 @@ public class AttoServiceManager implements ServiceManager {
 	}
 	
 	
+	public List<CollegamentoAttiSindacato> findAttiSindacatoById(String idAtto) {
+		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_retrieve_atti_indirizzo_atto",new String[]{idAtto}));
+	}
+	
+	
+	public List<Collegamento> findAttiCollegatiById(String idAtto) {
+		return attoService.findCollegamentiAttoById(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_collegamenti_atto",new String[]{idAtto}));
+	}
+	
+	
+	
 
+	public List<String> findTipoAttiSindacato() {
+		return attoService.findTipoAttiSindacato(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_retrieve_tipo_atti_indirizzo",null));
+	}
+	
+	
+	
 	public void presaInCaricoSC(Atto atto) {
 		
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_presa_carico_presentazione_assegnazione", 
@@ -216,6 +237,9 @@ public class AttoServiceManager implements ServiceManager {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_collegamenti", null), atto);
 	}
 	
+	public void salvaCollegamentiAttiSindacato(Atto atto) {
+		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_collegamenti_atto_sindacato", null), atto);
+	}
 	
 	
 	
