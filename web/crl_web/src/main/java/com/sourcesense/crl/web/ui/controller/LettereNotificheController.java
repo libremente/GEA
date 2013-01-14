@@ -397,21 +397,21 @@ public class LettereNotificheController implements Serializable{
 		// COMMISSIONI
 		TreeNode nodeComm = new DefaultTreeNode("Commissioni", root);
 
-		Lettera letteraCommissioni = new Lettera();
+		/*Lettera letteraCommissioni = new Lettera();
 		letteraCommissioni.setTipoTemplate("crltemplate:letteraCommissioni");
 		letteraCommissioni
 				.setUrlView("./lettere/commissioni/letteraCommissioni.xhtml");
 		letteraCommissioni.setNome("Lettera Commissioni");
 		letteraCommissioni.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteraCommissioni = new DefaultTreeNode("lettera",
-				letteraCommissioni, nodeComm);
+				letteraCommissioni, nodeComm);*/
 
 		Lettera letteraTrasmissionePDL = new Lettera();
 		letteraTrasmissionePDL
 				.setTipoTemplate("crltemplate:letteraTrasmissionePDLCommissioni");
 		letteraTrasmissionePDL
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePDL.xhtml");
-		letteraTrasmissionePDL.setNome("Lettera Assegnazione per istruttoria");
+		letteraTrasmissionePDL.setNome("Lettera di trasmissione PDL");
 		letteraTrasmissionePDL.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePDL = new DefaultTreeNode("lettera",
 				letteraTrasmissionePDL, nodeComm);
@@ -518,7 +518,7 @@ public class LettereNotificheController implements Serializable{
 		letteratrasmissioneDOCRISDSA
 				.setUrlView("./lettere/commissioni/letteratrasmissioneDOCRISDSA.xhtml");
 		letteratrasmissioneDOCRISDSA
-				.setNome("Lettera di trasmissione DOC RIS DSA");
+				.setNome("Lettera di trasmissione RIS su DOC - DSA");
 		letteratrasmissioneDOCRISDSA.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteratrasmissioneDOCRISDSA = new DefaultTreeNode(
 				"lettera", letteratrasmissioneDOCRISDSA, nodeComm);
@@ -529,7 +529,7 @@ public class LettereNotificheController implements Serializable{
 		letteratrasmissioneDOCRISProgrammaEuropeo
 				.setUrlView("./lettere/commissioni/letteratrasmissioneDOCRISProgrammaEuropeo.xhtml");
 		letteratrasmissioneDOCRISProgrammaEuropeo
-				.setNome("Lettera Assegnazione per istruttoria");
+				.setNome("Lettera di trasmissione RIS su DOC - Programma europeo");
 		letteratrasmissioneDOCRISProgrammaEuropeo.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteratrasmissioneDOCRISProgrammaEuropeo = new DefaultTreeNode(
 				"lettera", letteratrasmissioneDOCRISProgrammaEuropeo, nodeComm);
@@ -540,7 +540,7 @@ public class LettereNotificheController implements Serializable{
 		letteratrasmissioneparereDOC
 				.setUrlView("./lettere/commissioni/letteratrasmissioneparereDOC.xhtml");
 		letteratrasmissioneparereDOC
-				.setNome("Lettera Assegnazione per istruttoria");
+				.setNome("Lettera di trasmissione parere su DOC");
 		letteratrasmissioneparereDOC.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteratrasmissioneparereDOC = new DefaultTreeNode(
 				"lettera", letteratrasmissioneparereDOC, nodeComm);

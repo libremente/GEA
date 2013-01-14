@@ -57,8 +57,17 @@ public class InserisciEACController {
 	private AttoRecordServiceManager attoRecordServiceManager;
 	
 	
-	private Map<String, String> tipiAttoSindacato = new HashMap<String, String>();
-	private Map<String, String> numeriAttoSindacato = new HashMap<String, String>();
+	/*private Map<String, String> tipiAttoSindacato = new HashMap<String, String>();
+	private Map<String, String> numeriAttoSindacato = new HashMap<String, String>();*/
+	
+	
+	private List<String> tipiAttoSindacato = new ArrayList<String>();
+	private String tipoAttoSindacato;
+	
+	private String idAttoSindacato;
+	private List<CollegamentoAttiSindacato> numeriAttoSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	
 	
 	private AttoEAC atto = new AttoEAC();
@@ -76,9 +85,6 @@ public class InserisciEACController {
 	
 	
 	private String allegatoEACToDelete;
-	
-	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
-	private String tipoAttoSindacato;
 	private String numeroAttoSindacato;
 	private String descrizioneAttoSindacato;
 	private String attoSindacatoToDelete;
@@ -91,11 +97,18 @@ public class InserisciEACController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		
-		if(attoBean.getAttoEAC()!=null){
+		if(attoBean.getAttoEAC().getId() !=null && ! "".equals(attoBean.getAttoEAC().getId())){
 			
 			atto = (AttoEAC)attoBean.getAttoEAC().clone();
+			
+			setCollegamentiAttiSindacato(attoServiceManager.findAttiSindacatoById(atto.getId()));
+			
 			attoBean.setAttoEAC(null);
 		}
+		
+		
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 		
 	}
 	
@@ -192,23 +205,47 @@ public class InserisciEACController {
 	
 	public void addCollegamentoAttoSindacato() {
 
-		if (!numeroAttoSindacato.trim().equals("")) {
+		if (!"".equals(idAttoSindacato)) {
 			if (!checkCollegamentiAttiSindacati()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
 			} else {
-				//TODO: alfresco service (link collegamento)
-				CollegamentoAttiSindacato collegamento = new CollegamentoAttiSindacato();
-				collegamento.setDescrizione(getDescrizioneAttoSindacato());
-				collegamento.setNumeroAtto(getNumeroAttoSindacato());
-				collegamento.setTipoAtto(getTipoAttoSindacato());
-				collegamentiAttiSindacato.add(collegamento);
-				inserisciAtto();
+				
+				
+				for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+
+					if (collegamento.getIdAtto().equals(idAttoSindacato)) {
+
+						
+						collegamento.setDescrizione(descrizioneAttoSindacato);
+						collegamentiAttiSindacato.add(collegamento);
+						break;
+					}
+
+				}
+				
+				
 				
 			}
 		}
+	}
+	
+	public void handleAttoSindacatoChange() {
+
+		getNumeriAttoSindacato().clear();
+		
+		for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+
+			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
+
+				getNumeriAttoSindacato().add(collegamento);
+				
+			}
+
+		}
+
 	}
 
 	public void removeCollegamentoAttoSindacato() {
@@ -377,7 +414,7 @@ public class InserisciEACController {
 		this.attoSindacatoToDelete = attoSindacatoToDelete;
 	}
 	
-	public Map<String, String> getTipiAttoSindacato() {
+	/*public Map<String, String> getTipiAttoSindacato() {
 		return tipiAttoSindacato;
 	}
 
@@ -394,12 +431,57 @@ public class InserisciEACController {
 
 	public void setNumeriAttoSindacato(Map<String, String> numeriAttoSindacato) {
 		this.numeriAttoSindacato = numeriAttoSindacato;
-	}
+	}*/
 
 
+	
+	
 	public boolean isCurrentFilePubblico() {
 		return currentFilePubblico;
 	}
+
+
+	public List<String> getTipiAttoSindacato() {
+		return tipiAttoSindacato;
+	}
+
+
+
+
+	public void setTipiAttoSindacato(List<String> tipiAttoSindacato) {
+		this.tipiAttoSindacato = tipiAttoSindacato;
+	}
+
+
+
+
+	public List<CollegamentoAttiSindacato> getNumeriAttoSindacato() {
+		return numeriAttoSindacato;
+	}
+
+
+
+
+	public void setNumeriAttoSindacato(
+			List<CollegamentoAttiSindacato> numeriAttoSindacato) {
+		this.numeriAttoSindacato = numeriAttoSindacato;
+	}
+
+
+
+
+	public List<CollegamentoAttiSindacato> getAttiSindacato() {
+		return attiSindacato;
+	}
+
+
+
+
+	public void setAttiSindacato(List<CollegamentoAttiSindacato> attiSindacato) {
+		this.attiSindacato = attiSindacato;
+	}
+
+
 
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
@@ -422,6 +504,22 @@ public class InserisciEACController {
 	}
 
 
+
+
+	public String getIdAttoSindacato() {
+		return idAttoSindacato;
+	}
+
+
+
+
+	public void setIdAttoSindacato(String idAttoSindacato) {
+		this.idAttoSindacato = idAttoSindacato;
+	}
+
+
+	
+	
 	
 
 
