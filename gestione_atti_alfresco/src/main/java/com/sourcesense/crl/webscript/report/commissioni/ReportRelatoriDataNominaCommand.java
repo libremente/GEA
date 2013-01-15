@@ -25,6 +25,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * V2
  * 
  * @author Alessandro Benedetti
  * 
@@ -123,7 +124,6 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
-
 				QName nodeRefType = nodeService.getType(currentAtto);
 				String tipoAtto = (String) nodeRefType.getLocalName();
 				// from Atto
@@ -141,10 +141,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
-				String commConsultiva = "";
-				if (commConsultivaList != null)
-					for (String commissioneConsultivaMulti : commConsultivaList)
-						commConsultiva += commissioneConsultivaMulti + ",";
+				String commConsultiva = this.renderList(commConsultivaList);
 
 				currentTable
 						.getRow(0)

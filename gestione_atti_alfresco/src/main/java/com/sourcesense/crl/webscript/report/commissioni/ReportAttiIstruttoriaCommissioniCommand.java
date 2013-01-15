@@ -28,7 +28,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2 
+ * V2
  * 
  * @author Alessandro Benedetti
  * 
@@ -47,24 +47,27 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
-			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			String sortField2 = "@{" + CRL_ATTI_MODEL
+					+ "}numeroAttoCommissione";
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				// solo atti da preso in carico a votato dalla commissione
-				String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",
 								this.tipiAttoLucene, true)
 						+ " AND @crlatti\\:ruoloCommissione:\""
-						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ this.ruoloCommissione
+						+ "\" AND @cm\\:name:\""
 						+ commissione
 						+ "\" AND @crlatti\\:dataAssegnazioneCommissione:["
-						+ this.dataAssegnazioneCommReferenteDa + " TO "
+						+ this.dataAssegnazioneCommReferenteDa
+						+ " TO "
 						+ this.dataAssegnazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
@@ -80,12 +83,13 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
 					.generateFromTemplateMap(
-							this.retrieveLenghtMapConditional(commissione2atti), 1, false);
+							this.retrieveLenghtMapConditional(commissione2atti),
+							1, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					commissione2atti, atto2commissione,docxManager);
+					commissione2atti, atto2commissione, docxManager);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -104,7 +108,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 	 * 
 	 * 
 	 * @param finalDocStream
-	 * @param docxManager 
+	 * @param docxManager
 	 * @param queryRes
 	 * @return
 	 * @throws IOException
@@ -112,7 +116,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
-			Map<NodeRef, NodeRef> atto2commissione, DocxManager docxManager) throws IOException {
+			Map<NodeRef, NodeRef> atto2commissione, DocxManager docxManager)
+			throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -130,8 +135,9 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 						attoProperties, "statoAtto");
 				if (this.checkStatoAtto(statoAtto)) {
 					XWPFTable currentTable = tables.get(tableIndex);
-					String numeroAtto = ""+(Integer) this.getNodeRefProperty(
-							attoProperties, "numeroAtto");
+					String numeroAtto = ""
+							+ (Integer) this.getNodeRefProperty(attoProperties,
+									"numeroAtto");
 					String iniziativa = (String) this.getNodeRefProperty(
 							attoProperties, "tipoIniziativa");
 					String oggetto = (String) this.getNodeRefProperty(
@@ -142,8 +148,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					Date dateAssegnazioneCommissione = (Date) this
 							.getNodeRefProperty(commissioneProperties,
 									"dataAssegnazioneCommissione");
-					List<String> elencoRelatori =Lists.newArrayList();
-					List<String> elencoDateNomina =Lists.newArrayList();
+					List<String> elencoRelatori = Lists.newArrayList();
+					List<String> elencoDateNomina = Lists.newArrayList();
 					for (int i = 0; i < relatori.length(); i++) {
 						NodeRef relatoreNodeRef = relatori.getNodeRef(i);
 						Map<QName, Serializable> relatoreProperties = nodeService
@@ -161,24 +167,20 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					ArrayList<String> commReferenteList = (ArrayList<String>) this
 							.getNodeRefProperty(attoProperties, "commReferente");
 					String commReferente = "";
-					if(commReferenteList!=null)
-					for (String commissioneReferenteMulti : commReferenteList)
-						commReferente += commissioneReferenteMulti + " ";
+					if (commReferenteList != null)
+						for (String commissioneReferenteMulti : commReferenteList)
+							commReferente += commissioneReferenteMulti + " ";
 
 					ArrayList<String> commConsultivaList = (ArrayList<String>) this
-							.getNodeRefProperty(attoProperties,
-									"commConsultiva");
-					String commConsultiva = "";
-					if(commConsultivaList!=null)
-					for (String commissioneConsultivaMulti : commConsultivaList)
-						commConsultiva += commissioneConsultivaMulti + " ";
+							.getNodeRefProperty(attoProperties, "commConsultiva");
+					String commConsultiva = this.renderList(commConsultivaList);
 
 					currentTable.getRow(0).getCell(1)
 							.setText(this.checkStringEmpty(tipoAtto));
 					currentTable.getRow(0).getCell(2)
 							.setText(this.checkStringEmpty(numeroAtto));
 					currentTable.getRow(1).getCell(1)
-					.setText(this.checkStringEmpty(oggetto));
+							.setText(this.checkStringEmpty(oggetto));
 					currentTable.getRow(2).getCell(1)
 							.setText(this.checkStringEmpty(iniziativa));
 					currentTable
@@ -191,8 +193,10 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 							.setText(this.checkStringEmpty(commReferente));
 					currentTable.getRow(4).getCell(1)
 							.setText(this.checkStringEmpty(commConsultiva));
-					docxManager.insertListInCell(currentTable.getRow(5).getCell(1), elencoRelatori);
-                    docxManager.insertListInCell(currentTable.getRow(5).getCell(3), elencoDateNomina);
+					docxManager.insertListInCell(currentTable.getRow(5)
+							.getCell(1), elencoRelatori);
+					docxManager.insertListInCell(currentTable.getRow(5)
+							.getCell(3), elencoDateNomina);
 					tableIndex++;
 				}
 			}

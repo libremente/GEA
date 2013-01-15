@@ -26,7 +26,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2 
+ * V2
+ * 
  * @author Alessandro Benedetti
  * 
  */
@@ -44,23 +45,26 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
-			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
+			String sortField2 = "@{" + CRL_ATTI_MODEL
+					+ "}numeroAttoCommissione";
 			Map<String, ResultSet> commissione2results = Maps.newHashMap();
 			for (String commissione : this.commissioniJson) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",
 								this.tipiAttoLucene, true)
 						+ " AND @crlatti\\:ruoloCommissione:\""
-						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ this.ruoloCommissione
+						+ "\" AND @cm\\:name:\""
 						+ commissione
 						+ "\" AND @crlatti\\:dataAssegnazioneCommissione:["
-						+ this.dataAssegnazioneCommReferenteDa + " TO "
+						+ this.dataAssegnazioneCommReferenteDa
+						+ " TO "
 						+ this.dataAssegnazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
@@ -154,10 +158,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
-				String commConsultiva = "";
-				if (commConsultivaList != null)
-					for (String commissioneConsultivaMulti : commConsultivaList)
-						commConsultiva += commissioneConsultivaMulti + ",";
+				String commConsultiva = this.renderList(commConsultivaList);
 
 				currentTable
 						.getRow(0)

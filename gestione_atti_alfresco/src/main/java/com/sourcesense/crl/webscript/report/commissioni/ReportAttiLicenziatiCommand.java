@@ -31,7 +31,7 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  * V2
  * 
  * @author Alessandro Benedetti
- *
+ * 
  */
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
@@ -53,17 +53,19 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\"" +
-						" AND TYPE:\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoCommissione",
 								this.tipiAttoLucene, true)
 						+ " AND @crlatti\\:ruoloCommissione:\""
-						+ this.ruoloCommissione + "\" AND @cm\\:name:\""
+						+ this.ruoloCommissione
+						+ "\" AND @cm\\:name:\""
 						+ commissione
 						+ "\" AND @crlatti\\:dataSedutaCommAttoCommissione:["
-						+ this.dataVotazioneCommReferenteDa + " TO "
+						+ this.dataVotazioneCommReferenteDa
+						+ " TO "
 						+ this.dataVotazioneCommReferenteA + " ]";
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
@@ -83,7 +85,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					commissione2atti, atto2commissione,docxManager);
+					commissione2atti, atto2commissione, docxManager);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -104,7 +106,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	 * 
 	 * 
 	 * @param finalDocStream
-	 * @param docxManager 
+	 * @param docxManager
 	 * @param queryRes
 	 * @return
 	 * @throws IOException
@@ -112,7 +114,8 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
 			ArrayListMultimap<String, NodeRef> commissione2atti,
-			Map<NodeRef, NodeRef> atto2commissione, DocxManager docxManager) throws IOException {
+			Map<NodeRef, NodeRef> atto2commissione, DocxManager docxManager)
+			throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -128,8 +131,9 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						.getProperties(currentCommissione);
 
 				// from Atto
-				String numeroAtto = ""+(Integer) this.getNodeRefProperty(
-						attoProperties, "numeroAtto");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
 				String oggetto = (String) this.getNodeRefProperty(
@@ -146,7 +150,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari =this.renderList(firmatariList);
+				String firmatari = this.renderList(firmatariList);
 
 				// from Commissione
 				String tipoAtto = (String) this.getNodeRefProperty(
@@ -162,8 +166,8 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						commissioneProperties, "ruoloCommissione");
 				// from Atto
 
-				List<String> elencoRelatori =Lists.newArrayList();
-				List<String> elencoDateNomina =Lists.newArrayList();
+				List<String> elencoRelatori = Lists.newArrayList();
+				List<String> elencoDateNomina = Lists.newArrayList();
 				for (int i = 0; i < relatori.length(); i++) {
 					NodeRef relatoreNodeRef = relatori.getNodeRef(i);
 					Map<QName, Serializable> relatoreProperties = nodeService
@@ -172,8 +176,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 							relatoreProperties, "dataNominaRelatore");
 					String relatore = (String) nodeService.getProperty(
 							relatoreNodeRef, ContentModel.PROP_NAME);
-					String dateNominaString = this
-							.checkDateEmpty(dateNomina);
+					String dateNominaString = this.checkDateEmpty(dateNomina);
 					elencoRelatori.add(relatore);
 					elencoDateNomina.add(dateNominaString);
 				}
@@ -185,7 +188,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 								this.checkStringEmpty(tipoAtto + " "
 										+ numeroAtto));
 				currentTable.getRow(1).getCell(1)
-				.setText(this.checkStringEmpty(oggetto));
+						.setText(this.checkStringEmpty(oggetto));
 				currentTable.getRow(2).getCell(1)
 						.setText(this.checkStringEmpty(ruoloCommissione));
 				currentTable.getRow(3).getCell(1)
@@ -209,9 +212,11 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						.setText(this.checkStringEmpty(numeroLr));
 				currentTable.getRow(10).getCell(3)
 						.setText(this.checkDateEmpty(dateLr));
-				docxManager.insertListInCell(currentTable.getRow(11).getCell(1), elencoRelatori);
-                docxManager.insertListInCell(currentTable.getRow(11).getCell(3), elencoDateNomina);
-				
+				docxManager.insertListInCell(
+						currentTable.getRow(11).getCell(1), elencoRelatori);
+				docxManager.insertListInCell(
+						currentTable.getRow(11).getCell(3), elencoDateNomina);
+
 				tableIndex++;
 			}
 		}
