@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -23,7 +22,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST relazione scritta -> bianca note Generali Aula -> metterlo vuoto
+ * String relazioneScritta = "";// to complete
+ * String noteGenerali = "";// to complete
  * 
  * @author Alessandro Benedetti
  * 

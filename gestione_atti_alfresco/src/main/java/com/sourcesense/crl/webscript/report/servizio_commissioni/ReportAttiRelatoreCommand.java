@@ -90,7 +90,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					relatore2atti, atto2commissione);
+					relatore2atti);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -112,13 +112,12 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			Map<String, List<NodeRef>> commissione2atti,
-			Map<NodeRef, NodeRef> atto2commissione) throws IOException {
+			Map<String, List<NodeRef>> relatore2atti) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
-		for (String commissione : commissione2atti.keySet()) {
-			for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+		for (String relatore : relatore2atti.keySet()) {
+			for (NodeRef currentAtto : relatore2atti.get(relatore)) {
 				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);

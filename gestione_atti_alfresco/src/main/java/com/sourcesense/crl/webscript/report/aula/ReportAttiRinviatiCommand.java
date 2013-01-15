@@ -23,7 +23,11 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * TO TEST
+ * V2
+ * Date dateRinvio =null; //(Date) this.getNodeRefProperty(attoProperties,"dataRinvio");
+ *			Date dateTermine =null;// (Date) this.getNodeRefProperty(attoProperties,"dataChiusura");
+ *			String noteGenerali ="";
+ *			String motivazioneRinvio ="";
  * 
  * @author Alessandro Benedetti
  * 
