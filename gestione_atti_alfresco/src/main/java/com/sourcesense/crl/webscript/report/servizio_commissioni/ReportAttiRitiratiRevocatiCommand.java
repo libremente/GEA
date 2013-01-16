@@ -48,8 +48,6 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
 			/* sorting field */
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
-
-			List<ResultSet> tipiAtto = Lists.newArrayList();
 			Map<String, ResultSet> tipoAtto2results = Maps.newHashMap();
 			for (String tipoAtto : this.tipiAttoLucene) {
 				SearchParameters sp = new SearchParameters();
@@ -74,7 +72,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
 					.generateFromTemplateMap(
-							this.retrieveLenghtMap(tipoAtto2atti), 3, false);
+							this.retrieveLenghtMapConditional(tipoAtto2atti, true), 3, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -168,24 +166,6 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 		return document;
 	}
 
-	protected int retrieveLenght(List<ResultSet> atti) {
-		int count = 0;
-		for (ResultSet listaAtti : atti) {
-			for (NodeRef currentAtto : listaAtti.getNodeRefs()) {
-				Map<QName, Serializable> attoProperties = nodeService
-						.getProperties(currentAtto);
-				String statoAtto = (String) this.getNodeRefProperty(
-						attoProperties, "statoAtto");
-				String tipoChiusura = (String) this.getNodeRefProperty(
-						attoProperties, "tipoChiusura");
-				if (this.checkStatoAtto(statoAtto, tipoChiusura)) {
-					count++;
-				}
-			}
-
-		}
-		return count;
-	}
 
 	/**
 	 * Check if the statoAtto is "Chiuso" and tipoChiusura is

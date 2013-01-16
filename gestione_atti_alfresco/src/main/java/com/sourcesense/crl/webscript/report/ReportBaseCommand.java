@@ -405,10 +405,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	 * Return  a map that relate a specific label to a number of results for this label.
 	 * Only elements that match the conditional rule are counted.
 	 * @param commissione2atti
+	 * @param doubleCheck TODO
 	 * @return
 	 */
 	protected Map<String, Integer> retrieveLenghtMapConditional(
-			ArrayListMultimap<String, NodeRef> commissione2atti) {
+			ArrayListMultimap<String, NodeRef> commissione2atti, Boolean doubleCheck) {
 		Map<String, Integer> commissione2count = new HashMap<String, Integer>();
 		for (String commissione : commissione2atti.keySet()) {
 			int count = 0;
@@ -417,9 +418,18 @@ public abstract class ReportBaseCommand implements ReportCommand {
 						.getProperties(currentAtto);
 				String statoAtto = (String) this.getNodeRefProperty(
 						attoProperties, "statoAtto");
+				String tipoChiusura = (String) this.getNodeRefProperty(
+						attoProperties, "tipoChiusura");
+				if(!doubleCheck)
 				if (this.checkStatoAtto(statoAtto)) {
 					count++;
 				}
+				else{
+					if (this.checkStatoAtto(statoAtto,tipoChiusura)) {
+						count++;
+					}
+				}
+					
 			}
 			commissione2count.put(commissione, count);
 
@@ -434,6 +444,16 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	 * @return
 	 */
 	protected boolean checkStatoAtto(String statoAtto) {
+		return true;
+	}
+	
+	/**
+	 * Check the validity of the Stato Atto.
+	 * Implementing classes contains the logic.
+	 * @param statoAtto
+	 * @return
+	 */
+	protected boolean checkStatoAtto(String statoAtto, String tipoChiusura) {
 		return true;
 	}
 
