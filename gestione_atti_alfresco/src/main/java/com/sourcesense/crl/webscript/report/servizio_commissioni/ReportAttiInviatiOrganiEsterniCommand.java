@@ -58,7 +58,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 					+ this.organismo + "\"";
 			if (!dataAssegnazioneParereDa.equals("*")
 					|| !dataAssegnazioneParereA.equals("*")) {
-				query += "AND @crlatti\\:dataAssegnazioneParere:["
+				query += " AND @crlatti\\:dataAssegnazioneParere:["
 						+ this.dataAssegnazioneParereDa + " TO "
 						+ this.dataAssegnazioneParereA + " ]";
 			}

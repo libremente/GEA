@@ -68,7 +68,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 						+ "\"";				
 				if (!dataAssegnazioneCommReferenteDa.equals("*")
 						|| !dataAssegnazioneCommReferenteA.equals("*")) {
-					query += "AND @crlatti\\:dataAssegnazioneCommissione:["
+					query += " AND @crlatti\\:dataAssegnazioneCommissione:["
 							+ this.dataAssegnazioneCommReferenteDa + " TO "
 							+ this.dataAssegnazioneCommReferenteA + " ]";
 				}

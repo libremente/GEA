@@ -63,11 +63,11 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						+ this.ruoloCommissione
 						+ "\" AND @cm\\:name:\""
 						+ commissione
-						+ "\"" ;
+						+ "\"";
 				
 				if (!dataVotazioneCommReferenteDa.equals("*")
 						|| !dataVotazioneCommReferenteA.equals("*")) {
-					query +="AND @crlatti\\:dataSedutaCommAttoCommissione:["
+					query +=" AND @crlatti\\:dataSedutaCommAttoCommissione:["
 						+ this.dataVotazioneCommReferenteDa
 						+ " TO "
 						+ this.dataVotazioneCommReferenteA + " ]";

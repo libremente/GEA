@@ -55,10 +55,10 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
 						+ " AND TYPE:\""
 						+ tipoAtto
-						+ "\" ";				
+						+ "\"";				
 				if (!dataRitiroDa.equals("*")
 						|| !dataRitiroA.equals("*")) {
-					query += "AND @crlatti\\:dataChiusura:["
+					query += " AND @crlatti\\:dataChiusura:["
 						+ this.dataRitiroDa + " TO " + this.dataRitiroA + " ]";
 				}
 				sp.setQuery(query);

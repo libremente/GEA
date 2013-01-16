@@ -64,11 +64,13 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 						+ " AND @crlatti\\:ruoloCommissione:\""
 						+ this.ruoloCommissione
 						+ "\" AND @cm\\:name:\""
-						+ commissione
-						+ "\" AND @crlatti\\:dataAssegnazioneCommissione:["
-						+ this.dataAssegnazioneCommReferenteDa
-						+ " TO "
-						+ this.dataAssegnazioneCommReferenteA + " ]";
+						+ commissione + "\"";
+				if (!dataAssegnazioneCommReferenteDa.equals("*")
+						|| !dataAssegnazioneCommReferenteA.equals("*")) {
+					query += " AND @crlatti\\:dataAssegnazioneCommissione:["
+							+ this.dataAssegnazioneCommReferenteDa + " TO "
+							+ this.dataAssegnazioneCommReferenteA + " ]";
+				}
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
 				sp.addSort(sortField2, true);
@@ -172,7 +174,8 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 							commReferente += commissioneReferenteMulti + " ";
 
 					ArrayList<String> commConsultivaList = (ArrayList<String>) this
-							.getNodeRefProperty(attoProperties, "commConsultiva");
+							.getNodeRefProperty(attoProperties,
+									"commConsultiva");
 					String commConsultiva = this.renderList(commConsultivaList);
 
 					currentTable.getRow(0).getCell(1)

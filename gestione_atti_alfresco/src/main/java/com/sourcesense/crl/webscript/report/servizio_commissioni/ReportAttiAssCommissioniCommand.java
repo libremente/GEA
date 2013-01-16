@@ -67,7 +67,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						+ commissione + "\"";
 				if (!dataAssegnazioneCommReferenteDa.equals("*")
 						|| !dataAssegnazioneCommReferenteA.equals("*")) {
-					query += "AND @crlatti\\:dataAssegnazioneCommissione:["
+					query += " AND @crlatti\\:dataAssegnazioneCommissione:["
 							+ this.dataAssegnazioneCommReferenteDa + " TO "
 							+ this.dataAssegnazioneCommReferenteA + " ]";
 				}
