@@ -63,13 +63,14 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 						+ " AND "
 						+ convertListToString("@crlatti\\:commissioneRelatore",
 								this.commissioniJson, false)
-						+ " AND =@cm\\:name:\""
-						+ relatore
-						+ "\""
-						+ " AND @crlatti\\:dataNominaRelatore:["
-						+ this.dataNominaRelatoreDa
-						+ " TO "
-						+ this.dataNominaRelatoreA + " ]";
+						+ " AND =@cm\\:name:\"" + relatore + "\"";
+
+				if (!dataNominaRelatoreDa.equals("*")
+						|| !dataNominaRelatoreA.equals("*")) {
+					query += " AND @crlatti\\:dataNominaRelatore:["
+							+ this.dataNominaRelatoreDa + " TO "
+							+ this.dataNominaRelatoreA + " ]";
+				}
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
 				sp.addSort(sortField2, true);

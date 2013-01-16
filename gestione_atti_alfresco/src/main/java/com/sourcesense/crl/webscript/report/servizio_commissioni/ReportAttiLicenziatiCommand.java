@@ -63,10 +63,15 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						+ this.ruoloCommissione
 						+ "\" AND @cm\\:name:\""
 						+ commissione
-						+ "\" AND @crlatti\\:dataSedutaCommAttoCommissione:["
+						+ "\"" ;
+				
+				if (!dataVotazioneCommReferenteDa.equals("*")
+						|| !dataVotazioneCommReferenteA.equals("*")) {
+					query +="AND @crlatti\\:dataSedutaCommAttoCommissione:["
 						+ this.dataVotazioneCommReferenteDa
 						+ " TO "
 						+ this.dataVotazioneCommReferenteA + " ]";
+				}
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
 				ResultSet currentResults = this.searchService.query(sp);

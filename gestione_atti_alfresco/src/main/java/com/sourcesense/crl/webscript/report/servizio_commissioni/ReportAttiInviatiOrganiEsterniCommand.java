@@ -55,11 +55,14 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
 					+ "AND TYPE:\"crlatti:parere"
 					+ "\" AND @crlatti\\:organismoStatutarioParere:\""
-					+ this.organismo
-					+ "\" AND @crlatti\\:dataAssegnazioneParere:["
-					+ this.dataAssegnazioneParereDa
-					+ " TO "
-					+ this.dataAssegnazioneParereA + " ]";
+					+ this.organismo + "\"";
+			if (!dataAssegnazioneParereDa.equals("*")
+					|| !dataAssegnazioneParereA.equals("*")) {
+				query += "AND @crlatti\\:dataAssegnazioneParere:["
+						+ this.dataAssegnazioneParereDa + " TO "
+						+ this.dataAssegnazioneParereA + " ]";
+			}
+
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
 			sp.addSort(sortField2, true);

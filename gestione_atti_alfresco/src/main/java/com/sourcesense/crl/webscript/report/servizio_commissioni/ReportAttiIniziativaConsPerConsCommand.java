@@ -64,13 +64,20 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 				query = query + " AND @crlatti\\:firmatariOriginari:\""
 						+ this.firmatario + "\"";
 			}
-			query = query
-					+ " AND @crlatti\\:dataAssegnazioneCommissioneReferente:["
-					+ this.dataAssegnazioneCommReferenteDa + " TO "
-					+ this.dataAssegnazioneCommReferenteA + " ]"
-					+ " AND @crlatti\\:dataIniziativa:["
-					+ this.dataPresentazioneDa + " TO "
-					+ this.dataPresentazioneA + " ]";
+			if (!dataAssegnazioneCommReferenteDa.equals("*")
+					|| !dataAssegnazioneCommReferenteDa.equals("*")) {
+				query = query
+						+ " AND @crlatti\\:dataAssegnazioneCommissioneReferente:["
+						+ this.dataAssegnazioneCommReferenteDa + " TO "
+						+ this.dataAssegnazioneCommReferenteA + " ]";
+			}
+			if (!dataPresentazioneDa.equals("*")
+					|| !dataPresentazioneA.equals("*")) {
+				query += " AND @crlatti\\:dataIniziativa:["
+						+ this.dataPresentazioneDa + " TO "
+						+ this.dataPresentazioneA + " ]";
+			}
+
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
 			ResultSet attiResult = this.searchService.query(sp);

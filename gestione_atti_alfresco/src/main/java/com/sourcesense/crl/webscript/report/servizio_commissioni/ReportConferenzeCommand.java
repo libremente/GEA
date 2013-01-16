@@ -65,10 +65,13 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 						+ this.ruoloCommissione
 						+ "\" AND @cm\\:name:\""
 						+ commissione
-						+ "\" AND @crlatti\\:dataAssegnazioneCommissione:["
-						+ this.dataAssegnazioneCommReferenteDa
-						+ " TO "
-						+ this.dataAssegnazioneCommReferenteA + " ]";
+						+ "\"";				
+				if (!dataAssegnazioneCommReferenteDa.equals("*")
+						|| !dataAssegnazioneCommReferenteA.equals("*")) {
+					query += "AND @crlatti\\:dataAssegnazioneCommissione:["
+							+ this.dataAssegnazioneCommReferenteDa + " TO "
+							+ this.dataAssegnazioneCommReferenteA + " ]";
+				}
 				sp.setQuery(query);
 				sp.addSort(sortField1, false);
 				sp.addSort(sortField2, false);
