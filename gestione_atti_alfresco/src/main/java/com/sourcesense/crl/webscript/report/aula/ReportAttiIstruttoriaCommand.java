@@ -22,15 +22,13 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * String relazioneScritta = "";// to complete
- * String noteGenerali = "";// to complete
+ * String relazioneScritta = "";// to complete String noteGenerali = "";// to
+ * complete
  * 
  * @author Alessandro Benedetti
  * 
  */
 public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
-
-	
 
 	@Override
 	public byte[] generate(byte[] templateByteArray, String json,
@@ -50,10 +48,11 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "
-					+ convertListToString("TYPE", this.tipiAttoLucene, true)
-					+ " AND @crlatti\\:dataSedutaAula:["
-					+ this.dataSedutaDa
-					+ " TO " + this.dataSedutaA + " ]";
+					+ convertListToString("TYPE", this.tipiAttoLucene, true);
+			if (!dataSedutaDa.equals("*") || !dataSedutaA.equals("*")) {
+				query += " AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
+						+ " TO " + this.dataSedutaA + " ]";
+			}
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
 			sp.addSort(sortField2, true);
@@ -65,7 +64,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					attiResults,docxManager);
+					attiResults, docxManager);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -92,7 +91,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ResultSet atti,DocxManager docxManager) throws IOException {
+			ResultSet atti, DocxManager docxManager) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
@@ -117,10 +116,11 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				String iniziativa = (String) this.getNodeRefProperty(
 						attoProperties, "tipoIniziativa");
 				String descrizioneIniziativa = (String) this
-						.getNodeRefProperty(attoProperties, "descrizioneIniziativa");
+						.getNodeRefProperty(attoProperties,
+								"descrizioneIniziativa");
 				ArrayList<String> firmatariList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari =this.renderList(firmatariList);
+				String firmatari = this.renderList(firmatariList);
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
 				String commReferente = "";
@@ -134,16 +134,10 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 				String relazioneScritta = "";// to complete
 				String noteGenerali = "";// to complete
 				/* write values in table */
-				currentTable
-						.getRow(0)
-						.getCell(1)
-						.setText(
-								this.checkStringEmpty(tipoAtto));
-				currentTable
-				.getRow(0)
-				.getCell(2)
-				.setText(
-						this.checkStringEmpty(numeroAtto));
+				currentTable.getRow(0).getCell(1)
+						.setText(this.checkStringEmpty(tipoAtto));
+				currentTable.getRow(0).getCell(2)
+						.setText(this.checkStringEmpty(numeroAtto));
 				currentTable.getRow(1).getCell(1)
 						.setText(this.checkStringEmpty(abbinamenti));
 				currentTable.getRow(2).getCell(1)
@@ -156,7 +150,8 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 						.setText(this.checkStringEmpty(descrizioneIniziativa));
 				currentTable.getRow(6).getCell(1)
 						.setText(this.checkStringEmpty(commReferente));
-				docxManager.insertListInCell(currentTable.getRow(7).getCell(1), relatoriList);
+				docxManager.insertListInCell(currentTable.getRow(7).getCell(1),
+						relatoriList);
 				currentTable.getRow(7).getCell(3)
 						.setText(this.checkStringEmpty(relazioneScritta));
 				currentTable.getRow(8).getCell(1)
@@ -169,32 +164,27 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 	}
 
 	/*
-	private String getRelazioneScritta(NodeRef currentAtto) {
-		/* c'è un qualche problema qui, viene fuori un nodeRef Null 
-		NodeRef aulaFolder = nodeService.getChildByName(currentAtto,
-				ContentModel.ASSOC_CONTAINS, "Aula");
-		return (String) nodeService.getProperty(aulaFolder,
-				QName.createQName(CRL_ATTI_MODEL, "relazioneScrittaAula"));
-	}*/
+	 * private String getRelazioneScritta(NodeRef currentAtto) { /* c'è un
+	 * qualche problema qui, viene fuori un nodeRef Null NodeRef aulaFolder =
+	 * nodeService.getChildByName(currentAtto, ContentModel.ASSOC_CONTAINS,
+	 * "Aula"); return (String) nodeService.getProperty(aulaFolder,
+	 * QName.createQName(CRL_ATTI_MODEL, "relazioneScrittaAula")); }
+	 */
 
-	
-
-	
-	
-	protected int retrieveLenght(
-			ResultSet attiResults) {
+	protected int retrieveLenght(ResultSet attiResults) {
 		int count = 0;
-			for (NodeRef currentAtto : attiResults.getNodeRefs()) {
-				Map<QName, Serializable> attoProperties = nodeService
-						.getProperties(currentAtto);
-				String statoAtto = (String) this.getNodeRefProperty(
-						attoProperties, "statoAtto");
-				if (this.checkStatoAtto(statoAtto)) {
-					count++;
-				}
+		for (NodeRef currentAtto : attiResults.getNodeRefs()) {
+			Map<QName, Serializable> attoProperties = nodeService
+					.getProperties(currentAtto);
+			String statoAtto = (String) this.getNodeRefProperty(attoProperties,
+					"statoAtto");
+			if (this.checkStatoAtto(statoAtto)) {
+				count++;
 			}
+		}
 		return count;
 	}
+
 	/**
 	 * Check if the statoAtto is comprehended between "preso in carico e votato"
 	 * 

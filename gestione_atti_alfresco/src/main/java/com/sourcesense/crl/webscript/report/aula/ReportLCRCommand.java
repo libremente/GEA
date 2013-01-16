@@ -23,9 +23,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * GET OK
- * -?noteGenerali = (String)
- * this.getNodeRefProperty( attoProperties, "noteChiusura");
+ * GET OK -?noteGenerali = (String) this.getNodeRefProperty( attoProperties,
+ * "noteChiusura");
  * 
  * @author Alessandro Benedetti
  * 
@@ -42,13 +41,16 @@ public class ReportLCRCommand extends ReportBaseCommand {
 			DocxManager docxManager = new DocxManager(is);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
-			String sortField1 ="@{" + CRL_ATTI_MODEL + "}numeroLcr";
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroLcr";
 
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\"crlatti:attoPdl\" AND @crlatti\\:dataSedutaAula:["
-					+ this.dataSedutaDa + " TO " + this.dataSedutaA + " ]";
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\"crlatti:attoPdl\"";
+			if (!dataSedutaDa.equals("*") || !dataSedutaA.equals("*")) {
+				query += " AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
+						+ " TO " + this.dataSedutaA + " ]";
+			}
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
 			ResultSet attiResults = this.searchService.query(sp);
@@ -105,8 +107,9 @@ public class ReportLCRCommand extends ReportBaseCommand {
 					"numeroDcr");
 			Date dateSeduta = (Date) this.getNodeRefProperty(attoProperties,
 					"dataSedutaAula");
-			String numeroAtto = ""+(Integer) this.getNodeRefProperty(
-					attoProperties, "numeroAtto");
+			String numeroAtto = ""
+					+ (Integer) this.getNodeRefProperty(attoProperties,
+							"numeroAtto");
 			String oggetto = (String) this.getNodeRefProperty(attoProperties,
 					"oggetto");
 			ArrayList<String> commReferenteList = (ArrayList<String>) this
@@ -115,9 +118,10 @@ public class ReportLCRCommand extends ReportBaseCommand {
 			if (commReferenteList != null)
 				for (String commissioneReferenteMulti : commReferenteList)
 					commReferente += commissioneReferenteMulti + " ";
-			String emendato = ""+(Boolean) this.getNodeRefProperty(attoProperties,
-					"emendatoAulaAtto");
-			emendato=this.processBoolean(emendato);
+			String emendato = ""
+					+ (Boolean) this.getNodeRefProperty(attoProperties,
+							"emendatoAulaAtto");
+			emendato = this.processBoolean(emendato);
 
 			String numeroBurl = (String) this.getNodeRefProperty(
 					attoProperties, "numeroPubblicazioneBURL");

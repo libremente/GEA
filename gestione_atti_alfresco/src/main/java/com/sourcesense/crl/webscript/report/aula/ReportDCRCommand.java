@@ -22,8 +22,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * GET OK
- * -? noteVotazione ="";//?
+ * GET OK -? noteVotazione ="";//?
  * 
  * @author Alessandro Benedetti
  * 
@@ -45,9 +44,12 @@ public class ReportDCRCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "+convertListToString("TYPE",
-							this.tipiAttoLucene, true) +" AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
-					+ " TO " + this.dataSedutaA + " ]";
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "
+					+ convertListToString("TYPE", this.tipiAttoLucene, true);
+			if (!dataSedutaDa.equals("*") || !dataSedutaA.equals("*")) {
+				query += " AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
+						+ " TO " + this.dataSedutaA + " ]";
+			}
 			sp.setQuery(query);
 			sp.addSort(sortField1, true);
 			ResultSet attiResults = this.searchService.query(sp);
@@ -106,13 +108,15 @@ public class ReportDCRCommand extends ReportBaseCommand {
 					"numeroDcr");
 			Date dateSeduta = (Date) this.getNodeRefProperty(attoProperties,
 					"dataSedutaAula");
-			String numeroAtto =""+ (Integer) this.getNodeRefProperty(
-					attoProperties, "numeroAtto");
+			String numeroAtto = ""
+					+ (Integer) this.getNodeRefProperty(attoProperties,
+							"numeroAtto");
 			String oggetto = (String) this.getNodeRefProperty(attoProperties,
 					"oggetto");
-			String emendato =""+ (Boolean) this.getNodeRefProperty(attoProperties,
-					"emendatoAulaAtto");
-			emendato=this.processBoolean(emendato);
+			String emendato = ""
+					+ (Boolean) this.getNodeRefProperty(attoProperties,
+							"emendatoAulaAtto");
+			emendato = this.processBoolean(emendato);
 
 			String numeroBurl = (String) this.getNodeRefProperty(
 					attoProperties, "numeroPubblicazioneBURL");
