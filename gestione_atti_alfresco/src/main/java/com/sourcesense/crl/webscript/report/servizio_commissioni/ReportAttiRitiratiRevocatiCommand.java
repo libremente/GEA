@@ -19,7 +19,9 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
@@ -48,6 +50,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 
 			List<ResultSet> tipiAtto = Lists.newArrayList();
+			Map<String, ResultSet> tipoAtto2results = Maps.newHashMap();
 			for (String tipoAtto : this.tipiAttoLucene) {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
@@ -64,17 +67,19 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 				sp.setQuery(query);
 				sp.addSort(sortField1, true);
 				ResultSet attiResult = this.searchService.query(sp);
-				tipiAtto.add(attiResult);
+				tipoAtto2results.put(tipoAtto, attiResult);
 			}
-
+			ArrayListMultimap<String, NodeRef> tipoAtto2atti = this
+					.retrieveAtti(tipoAtto2results);
 			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-					this.retrieveLenght(tipiAtto), 3, false);
+			XWPFDocument generatedDocument = docxManager
+					.generateFromTemplateMap(
+							this.retrieveLenghtMap(tipoAtto2atti), 3, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					tipiAtto);
+					tipoAtto2atti);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -86,6 +91,18 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
 	}
 
+	private ArrayListMultimap<String, NodeRef> retrieveAtti(
+			Map<String, ResultSet> tipoAtto2results) {
+		ArrayListMultimap<String, NodeRef> tipo2atti=ArrayListMultimap.create();
+		for(String tipo:tipoAtto2results.keySet()){
+			ResultSet resultSet = tipoAtto2results.get(tipo);
+			for(NodeRef atto:resultSet.getNodeRefs()){
+				tipo2atti.put(tipo, atto);
+			}
+		}
+		return tipo2atti;
+	}
+
 	/**
 	 * @param finalDocStream
 	 * @param queryRes
@@ -94,13 +111,13 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			List<ResultSet> tipiAtto) throws IOException {
+			ArrayListMultimap<String, NodeRef> tipoAtto2atti) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
-		for (ResultSet atti : tipiAtto) {
-			for (int i = 0; i < atti.length(); i++) {
-				NodeRef currentAtto = atti.getNodeRef(i);
+		for (String tipoAttoString : tipoAtto2atti.keySet()) {
+			List<NodeRef> attiList = tipoAtto2atti.get(tipoAttoString);
+			for(NodeRef currentAtto:attiList) {
 				Map<QName, Serializable> attoProperties = nodeService
 						.getProperties(currentAtto);
 				String statoAtto = (String) this.getNodeRefProperty(

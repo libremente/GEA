@@ -87,7 +87,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
 					.generateFromTemplateMap(
-							this.retrieveLenghtMap(commissione2atti), 2, false);
+							this.retrieveLenghtMap(commissione2atti), 3, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
