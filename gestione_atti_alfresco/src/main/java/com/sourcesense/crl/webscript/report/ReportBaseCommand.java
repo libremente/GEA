@@ -570,94 +570,102 @@ public abstract class ReportBaseCommand implements ReportCommand {
 				"firmatario");
 	}
 
+	protected String checkEmptyDate(String date){
+		String result=date;
+		if(date==null||date.trim().equals("")||date.trim().equals("null")){
+			result="*";
+		}
+		return result;
+		
+	}
 	protected void initDataSedutaDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataSedutaDa = JsonUtils.retieveElementFromJson(rootJson,
-				"dataSedutaDa");
+		this.dataSedutaDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataSedutaDa"));
 	}
 
 	protected void initDataSedutaA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataSedutaA = JsonUtils.retieveElementFromJson(rootJson,
-				"dataSedutaA");
+		this.dataSedutaA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataSedutaA"));
 	}
 
 	protected void initDataAssegnazioneParereDa(String json)
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneParereDa = JsonUtils.retieveElementFromJson(
-				rootJson, "dataAssegnazioneParereDa");
+		this.dataAssegnazioneParereDa = checkEmptyDate(JsonUtils.retieveElementFromJson(
+				rootJson, "dataAssegnazioneParereDa"));
 	}
 
 	protected void initDataAssegnazioneParereA(String json)
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneParereA = JsonUtils.retieveElementFromJson(
-				rootJson, "dataAssegnazioneParereA");
+		this.dataAssegnazioneParereA = checkEmptyDate(JsonUtils.retieveElementFromJson(
+				rootJson, "dataAssegnazioneParereA"));
 	}
 
 	protected void initDataPresentazioneDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataPresentazioneDa = JsonUtils.retieveElementFromJson(rootJson,
-				"dataPresentazioneDa");
+		this.dataPresentazioneDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataPresentazioneDa"));
 	}
 
 	protected void initDataPresentazioneA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataPresentazioneA = JsonUtils.retieveElementFromJson(rootJson,
-				"dataPresentazioneA");
+		this.dataPresentazioneA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataPresentazioneA"));
 	}
 
 	protected void initDataNominaRelatoreDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataNominaRelatoreDa = JsonUtils.retieveElementFromJson(rootJson,
-				"dataNominaRelatoreDa");
+		this.dataNominaRelatoreDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataNominaRelatoreDa"));
 	}
 
 	protected void initDataNominaRelatoreA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataNominaRelatoreA = JsonUtils.retieveElementFromJson(rootJson,
-				"dataNominaRelatoreA");
+		this.dataNominaRelatoreA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataNominaRelatoreA"));
 	}
 
 	protected void initDataRitiroDa(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataRitiroDa = JsonUtils.retieveElementFromJson(rootJson,
-				"dataRitiroDa");
+		this.dataRitiroDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataRitiroDa"));
 	}
 
 	protected void initDataRitiroA(String json) throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataRitiroA = JsonUtils.retieveElementFromJson(rootJson,
-				"dataRitiroA");
+		this.dataRitiroA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+				"dataRitiroA"));
 	}
 
 	protected void initDataAssegnazioneCommReferenteDa(String json)
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneCommReferenteDa = JsonUtils
-				.retieveElementFromJson(rootJson, "dataAssegnazioneDa");
+		this.dataAssegnazioneCommReferenteDa = checkEmptyDate(JsonUtils
+				.retieveElementFromJson(rootJson, "dataAssegnazioneDa"));
 	}
 
 	protected void initDataAssegnazioneCommReferenteA(String json)
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataAssegnazioneCommReferenteA = JsonUtils.retieveElementFromJson(
-				rootJson, "dataAssegnazioneA");
+		this.dataAssegnazioneCommReferenteA = checkEmptyDate(JsonUtils.retieveElementFromJson(
+				rootJson, "dataAssegnazioneA"));
 	}
 
 	protected void initDataVotazioneCommReferenteDa(String json)
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataVotazioneCommReferenteDa = JsonUtils.retieveElementFromJson(
-				rootJson, "dataVotazioneCommReferenteDa");
+		this.dataVotazioneCommReferenteDa = checkEmptyDate(JsonUtils.retieveElementFromJson(
+				rootJson, "dataVotazioneCommReferenteDa"));
 	}
 
 	protected void initDataVotazioneCommReferenteA(String json)
 			throws JSONException {
 		JSONObject rootJson = new JSONObject(json);
-		this.dataVotazioneCommReferenteA = JsonUtils.retieveElementFromJson(
-				rootJson, "dataVotazioneCommReferenteA");
+		this.dataVotazioneCommReferenteA = checkEmptyDate(JsonUtils.retieveElementFromJson(
+				rootJson, "dataVotazioneCommReferenteA"));
 	}
 
 	protected void initTipoFirma(String json) throws JSONException {
