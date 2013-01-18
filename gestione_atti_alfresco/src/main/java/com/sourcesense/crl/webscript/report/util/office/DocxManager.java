@@ -127,6 +127,7 @@ public class DocxManager {
 	public void insertListInCell(XWPFTableCell currentCell,
 			List<String> myStrings) {
 		XWPFParagraph para = currentCell.getParagraphs().get(0);
+		if(myStrings!=null)
 		for (String text : myStrings) {
 			XWPFRun run = para.createRun();
 			run.setText(text.trim());
