@@ -27,7 +27,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2
+ * V2 - Big OK
  * 
  * @author Alessandro Benedetti
  * 
