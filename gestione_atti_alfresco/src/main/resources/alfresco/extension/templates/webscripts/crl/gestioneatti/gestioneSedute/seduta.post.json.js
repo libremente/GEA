@@ -3,8 +3,8 @@
 
 var seduta = json.get("seduta").get("seduta");
 var dataSeduta = seduta.get("dataSeduta");
-var dalleOre = seduta.get("dalleOre");
-var alleOre = seduta.get("alleOre");
+var dalleOre = filterParam(seduta.get("dalleOre"));
+var alleOre = filterParam(seduta.get("alleOre"));
 var numVerbale = seduta.get("numVerbale");
 var note = seduta.get("note");
 var links = seduta.get("links");

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,14 +22,17 @@ import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 
 
 public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 
-	private static Log logger = LogFactory.getLog(OdgGenericoAulaCommand.class);
+	private static Log logger = LogFactory.getLog(OdgGenericoCommissioniCommand.class);
 	
 	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef sedutaNodeRef, String gruppo) throws IOException{
 		
@@ -87,14 +91,35 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 					
 			String oggettoAtto = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
 			
+			
+			
 			String tipoIniziativaAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_INIZIATIVA));
 
 			
 			searchTerms.put("titoloAtto", tipoAttoDescrizione+" N."+nomeAttoTrattato);
 			searchTerms.put("oggettoAtto", oggettoAtto);
-			searchTerms.put("tipoIniziativa", tipoIniziativaAttoTrattato);
 			
-
+			if(tipoIniziativaAttoTrattato!=null && tipoIniziativaAttoTrattato.length()>20){
+				searchTerms.put("tipoIniziativa", tipoIniziativaAttoTrattato.substring(22).toLowerCase());
+			}else{
+				searchTerms.put("tipoIniziativa", "");
+			}
+			
+			
+			// Data di scadenza in caso di atto di tipo PAR
+			
+			Date dataScadenza = (Date) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SCADENZA));
+			
+			if(attoTrattato.equals("ATTO PARERE") && dataScadenza != null){
+		    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.ITALY);
+		    	String dataScadenzaString = formatter.format(dataScadenza);
+		        searchTerms.put("dataScadenzaPAR", dataScadenzaString.toUpperCase());
+			}else{
+				 searchTerms.put("dataScadenzaPAR", "");
+				 searchTerms.put("Data Scadenza:", "");
+			}
+			
+			
 			
 			NodeRef commissione = attoUtil.getCommissioneCorrente(attoTrattato, commissioneCorrente);
 			
@@ -129,6 +154,70 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 
 			searchAndReplaceParagraph(row.getCell(1), searchTerms);
 			searchAndReplaceParagraph(row.getCell(2), searchTerms);
+			
+			
+			// Abbinamenti
+			
+			List<NodeRef> attiAbbinati = attoUtil.getAttiAbbinati(attoTrattato);
+			List<AttiAbbinatiLineObject> abbinamentiStringList = new ArrayList<AttiAbbinatiLineObject>();
+			abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
+			abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
+			abbinamentiStringList.add(new AttiAbbinatiLineObject("Abbinato a: ", false, false, 10));
+			
+			for(int j=0; j<attiAbbinati.size(); j++){
+				
+				abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
+				
+				NodeRef attoAbbinato = attiAbbinati.get(j);
+				
+				String nomeAttoAbbinato = (String) nodeService.getProperty(attoAbbinato, ContentModel.PROP_NAME);
+				
+				TypeDefinition typeDefAttoAbbinato = dictionaryService.getType(nodeService.getType(attoTrattato));
+				String tipoAttoDescrizioneAttoAbbinato = typeDefAttoAbbinato.getTitle().toUpperCase();
+						
+				String oggettoAttoAbbinato = (String) nodeService.getProperty(attoAbbinato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
+				String tipoIniziativaAttoAbbinato = (String) nodeService.getProperty(attoAbbinato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_INIZIATIVA));
+				
+				abbinamentiStringList.add(new AttiAbbinatiLineObject(tipoAttoDescrizioneAttoAbbinato+" N."+nomeAttoAbbinato, true, false, 10));
+				abbinamentiStringList.add(new AttiAbbinatiLineObject(oggettoAttoAbbinato, false, false, 10));
+				
+				if(tipoIniziativaAttoAbbinato!=null && tipoIniziativaAttoAbbinato.length()>20){
+					abbinamentiStringList.add(new AttiAbbinatiLineObject("Atto di iniziativa "+tipoIniziativaAttoAbbinato.substring(22).toLowerCase(), false, true, 10));
+				}
+				
+				NodeRef commissioneAttoAbbinato = attoUtil.getCommissioneCorrente(attoAbbinato, commissioneCorrente);
+				
+				if(commissioneAttoAbbinato!=null){
+					
+					Date dataAssegnazioneCommissioneAttoAbbinato = (Date) nodeService.getProperty(commissioneAttoAbbinato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONE));
+					
+					if(dataAssegnazioneCommissioneAttoAbbinato != null) {
+			    		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.ITALY);
+			    		String dataAssegnazioneCommissioneAttoAbbinatoStirng = formatter.format(dataAssegnazioneCommissioneAttoAbbinato);
+			    		abbinamentiStringList.add(new AttiAbbinatiLineObject("Assegnazione: "+dataAssegnazioneCommissioneAttoAbbinatoStirng.toUpperCase(), false, true, 10));
+			    	}
+				}
+			
+				
+			}
+												
+			
+			
+			int numeroParTableCell = row.getCell(1).getParagraphs().size();
+			
+			
+			XWPFParagraph para = row.getCell(1).getParagraphs().get(numeroParTableCell-1);
+			for (int k=0; k<abbinamentiStringList.size(); k++) {
+				
+				AttiAbbinatiLineObject ab = abbinamentiStringList.get(k);
+				
+				XWPFRun run = para.createRun();
+				run.setItalic(ab.isItalic());
+				run.setBold(ab.isBold());
+				run.setFontSize(ab.getSize());
+				run.setText(ab.getText().trim());
+				run.addBreak();
+			}
 			
 		}
 		
@@ -271,5 +360,50 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 		return ostream.toByteArray();
 	
 	}
+	
+}
+
+
+class AttiAbbinatiLineObject{
+	
+	private String text;
+	private boolean bold;
+	private boolean italic;
+	private int size;
+	
+	public AttiAbbinatiLineObject(String text, boolean bold, boolean italic, int size){
+		this.text = text;
+		this.bold = bold;
+		this.italic = italic;
+		this.size = size;
+	}
+	
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public boolean isBold() {
+		return bold;
+	}
+	public void setBold(boolean bold) {
+		this.bold = bold;
+	}
+	public boolean isItalic() {
+		return italic;
+	}
+	public void setItalic(boolean italic) {
+		this.italic = italic;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
 	
 }

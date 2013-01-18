@@ -25,7 +25,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 
 	private static Log logger = LogFactory.getLog(LetteraGenericaServCommCommand.class);
 	
-	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException{
+	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) {
 		
 		byte[] documentFilledByteArray = null;
 		
@@ -153,7 +153,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     		if(i!=0){
     			listaCommissioniPrincipaliDestString += "\r\r";
     		}
-    		listaCommissioniPrincipaliDestString += "Al Signor Presidente\rdella Commissione consiliare "+listaCommissioniPrincipali.get(i);
+    		listaCommissioniPrincipaliDestString += "Al Signor Presidente\rdella Commissione consiliare "+getCommissioneNumber(listaCommissioniPrincipali.get(i));
     	}
     					
     	searchTerms.put("<listaCommissioniPrincipaliDest>", listaCommissioniPrincipaliDestString);
@@ -171,8 +171,8 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     				listaCommissioniConsultiveDestString += "\r\r";
         		}
     			
-    			listaCommissioniConsultiveDestString += "Al Signor Presidente\rdella Commissione consiliare "+commissioniConsultive.get(i);
-    			listaCommissioniConsultiveInvitiString += commissioniConsultive.get(i);
+    			listaCommissioniConsultiveDestString += "Al Signor Presidente\rdella Commissione consiliare "+getCommissioneNumber(commissioniConsultive.get(i));
+    			listaCommissioniConsultiveInvitiString += getCommissioneNumber(commissioniConsultive.get(i));
     			
     			if(i<commissioniConsultive.size()-1){
     				listaCommissioniConsultiveInvitiString += ", ";
@@ -185,7 +185,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	
     	// Create organismi statutari address list 
     	String listaOrganismiStatutariDestString = "";	
-    	String listaOrganismiStatutariInvitiString = "Commissione consiliare ";
+    	String listaOrganismiStatutariInvitiString = "";
     	
     	// Check for organismi statutari
     	if(organismiStatutari!=null && organismiStatutari.size()>0) {
@@ -242,6 +242,9 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 	}
 	
 	
-	
+	private String getCommissioneNumber(String nomeCommissione){
+		
+		return nomeCommissione.split(" ")[0];
+	}
 	
 }

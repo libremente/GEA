@@ -261,6 +261,14 @@
 					<type>d:boolean</type>
 					<default>false</default>
 				</property>
+				<property name="crlatti:numeroDgrSeguito">
+					<title>Numero DGR a seguito Parere </title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataDgrSeguito">
+					<title>Data DGR a seguito Parere</title>
+					<type>d:date</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:pubblicabile</aspect>
@@ -761,6 +769,18 @@
 				</property>
 				<property name="crlatti:dataScadenzaCommissione">
 					<title>Data scadenza</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:sospensioneFerialeCommissione">
+					<title>Sospensione feriale</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:dataInterruzioneCommissione">
+					<title>Data Interruzione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRicezioneIntegrazioniCommissione">
+					<title>Data Ricez Integrazioni</title>
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:dataNominaCommissione">
@@ -1410,6 +1430,8 @@
 				</property>
 			</properties>
 		</aspect>
+		
+		
 		
 		<aspect name="crlatti:provenienzaAspect">
 			<title>Provenienza aspect</title>

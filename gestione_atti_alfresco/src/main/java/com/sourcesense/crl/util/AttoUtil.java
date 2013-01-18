@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.service.cmr.repository.AssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
@@ -11,6 +12,7 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
+import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -32,6 +34,7 @@ public class AttoUtil {
 	public static final String PARERE_TYPE = "parere";
 	public static final String FIRMATARIO_TYPE = "firmatario";
 	public static final String TYPE_LEGISLATURA = "legislaturaAnagrafica";
+	public static final String ABBINAMENTO_TYPE = "abbinamento";
 	
 	// crlAttiModel properties 
 	public static final String PROP_ANNO = "anno";
@@ -42,6 +45,7 @@ public class AttoUtil {
 	public static final String PROP_OGGETTO_ATTO = "oggetto";
 	public static final String PROP_DESCRIZIONE_INIZIATIVA = "descrizioneIniziativa";
 	public static final String PROP_TIPO_INIZIATIVA = "tipoIniziativa";
+	public static final String PROP_DATA_SCADENZA = "dataScadenza";
 	public static final String PROP_NUMERO_DGR = "numeroDgr";
 	public static final String PROP_DATA_DGR = "dataDgr";
 	public static final String PROP_COMMISSIONI_REFERENTI = "commReferente";
@@ -64,6 +68,8 @@ public class AttoUtil {
 	public static final String PROP_ORARIO_FINE_SEDUTA = "alleOreSedutaODG";
 	public static final String PROP_RELAZIONE_SCRITTA_AULA = "relazioneScrittaAula";
 
+	
+
 	public static final String PROP_TIPO_ATTO_INDIRIZZO = "tipoAttoIndirizzo";
 	public static final String PROP_NUMERO_ATTO_INDIRIZZO = "numeroAttoIndirizzo";
 	public static final String PROP_OGGETTO_ATTO_INDIRIZZO = "oggettoAttoIndirizzo";
@@ -72,7 +78,7 @@ public class AttoUtil {
 	// crl associations
 	public static final String ASSOC_ATTO_TRATTATO_SEDUTA = "attoTrattatoSedutaODG";
 	public static final String ASSOC_ATTO_INDIRIZZO_TRATTATO_SEDUTA = "attoIndirizzoTrattatoSedutaODG";
-	
+	public static final String ASSOC_ATTO_ASSOCIATO_ABBINAMENTO = "attoAssociatoAbbinamento";
 	
 	
 	// Constant
@@ -83,8 +89,8 @@ public class AttoUtil {
 	public static final String RUOLO_COMM_REDIGENTE = "Redigente";
 	public static final String RUOLO_COMM_DELIBERANTE = "Deliberante";
 	
-	public static final String INIZIATIVA_CONSILIARE = "DI INIZIATIVA CONSILIARE";
-	public static final String INIZIATIVA_POPOLARE = "DI INIZIATIVA POPOLARE";
+	public static final String INIZIATIVA_CONSILIARE = "01_ATTO DI INIZIATIVA CONSILIARE";
+	public static final String INIZIATIVA_POPOLARE = "03_ATTO DI INIZIATIVA POPOLARE";
 
 
 	
@@ -291,6 +297,51 @@ public class AttoUtil {
 		return commissione; 
 	}
 
+	
+	// Search Atti Abbinati
+	public List<NodeRef> getAttiAbbinati(NodeRef attoNodeRef){
+		
+		List<NodeRef> attiAbbinatiList = new ArrayList<NodeRef>();
+		
+    	DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+    	
+    	// Get current Passaggio 
+    	NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
+    	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
+  
+    	String abbinamentoType = "{"+CRL_ATTI_MODEL+"}"+ABBINAMENTO_TYPE;
+    	
+    	ResultSet abbinamentiNodes = searchService.query(attoNodeRef.getStoreRef(),
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Abbinamenti/*\" AND TYPE:\""+abbinamentoType+"\"");
+    	
+    	//System.out.println((String) nodeService.getProperty(attoNodeRef, ContentModel.PROP_NAME));
+		
+    	
+    	for(int i=0; i<abbinamentiNodes.length(); i++) {
+    		
+    		NodeRef abbinamento = abbinamentiNodes.getNodeRef(i);
+    		
+    		//System.out.println((String) nodeService.getProperty(abbinamento, ContentModel.PROP_NAME));
+    		
+    		List<AssociationRef> attiAbbinatiAssociati = nodeService.getTargetAssocs(abbinamento,
+    				QName.createQName(CRL_ATTI_MODEL, ASSOC_ATTO_ASSOCIATO_ABBINAMENTO));
+    		
+    		if(attiAbbinatiAssociati.size()>0){
+    			attiAbbinatiList.add(attiAbbinatiAssociati.get(0).getTargetRef());
+    		}
+    		
+    		
+    	}
+    	
+    	
+    	
+		return attiAbbinatiList;
+	}
+	
+	
 
 	public SearchService getSearchService() {
 		return searchService;

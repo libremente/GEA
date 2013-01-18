@@ -17,16 +17,27 @@ if(username=="protocollo" || username=="admin"){
 	var tipoAtto = atto.get("tipoAtto");
 	var idProtocollo = atto.get("idProtocollo");
 	var numeroAtto = atto.get("numeroAtto");
+	var estensioneAtto = "";
+	
+	// Da eliminare quando il protocollo supporterà il campo estensioneAtto
+	try{
+		if(atto.get("estensioneAtto")){
+			estensioneAtto = atto.get("estensioneAtto");
+		}
+	
+	}catch(err){
+		// do nothing
+	}
 	
 	if(checkIsNotNull(tipoAtto)) {
 	
 		if(tipoAtto=="EAC"){
 			// atto EAC non importato da protocollo
-			}
+			
 			
 		} else if(tipoAtto=="MIS"){
 			// atto MIS non importato da protocollo
-			}
+			
 			
 		} else {
 		
@@ -282,7 +293,7 @@ if(username=="protocollo" || username=="admin"){
 			
 		} 
 		
-		protocolloLogger.info("Atto trasferito correttamente dal sistema di protocollo. Atto numero:"+numeroAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
+		protocolloLogger.info("Atto trasferito correttamente dal sistema di protocollo. Atto numero:"+numeroAtto+" estensione:"+estensioneAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
 	}
 } else {
 	status.code = 401;

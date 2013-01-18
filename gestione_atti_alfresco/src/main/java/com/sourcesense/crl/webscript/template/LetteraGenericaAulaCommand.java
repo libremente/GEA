@@ -115,7 +115,7 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand{
     		if(i!=0){
     			listaCommissioniPrincipaliDestString += "\r\r";
     		}
-    		listaCommissioniPrincipaliDestString += "Al Signor Presidente\rdella Commissione consiliare "+listaCommissioniPrincipali.get(i);
+    		listaCommissioniPrincipaliDestString += "Al Signor Presidente\rdella Commissione consiliare "+getCommissioneNumber(listaCommissioniPrincipali.get(i));
     	}
     					
     	searchTerms.put("<listaCommissioniPrincipaliDest>", listaCommissioniPrincipaliDestString);
@@ -151,6 +151,9 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand{
 	}
 	
 	
-	
+	private String getCommissioneNumber(String nomeCommissione){
+		
+		return nomeCommissione.split(" ")[0];
+	}	
 	
 }

@@ -130,7 +130,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
         sp.addStore(attoNodeRef.getStoreRef());
         sp.setLanguage(SearchService.LANGUAGE_LUCENE);
         sp.setQuery("PATH:\""+luceneAttoNodePath+"/cm:Firmatari/*\" AND TYPE:\""+firmatarioType+"\"");
-        String field = "{"+attoUtil.CRL_ATTI_MODEL+"}"+attoUtil.PROP_DATA_FIRMA_FIRMATARIO;
+        String field = "@{"+attoUtil.CRL_ATTI_MODEL+"}"+attoUtil.PROP_DATA_FIRMA_FIRMATARIO;
         sp.addSort(field, false);
     
         ResultSet firmatariNodes = serviceRegistry.getSearchService().query(sp);

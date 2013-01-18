@@ -11,9 +11,18 @@ var commissioneTarget = getCommissioneTarget(json, passaggio, commissioneUtente)
 
 var dataPresaInCarico = filterParam(commissioneTarget.get("dataPresaInCarico"));
 var dataScadenza = filterParam(commissioneTarget.get("dataScadenza"));
+
+var sospensioneFeriale = commissioneTarget.get("sospensioneFeriale");
+var dataInterruzione = filterParam(commissioneTarget.get("dataInterruzione"));
+var dataRicezioneIntegrazioni = filterParam(commissioneTarget.get("dataRicezioneIntegrazioni"));
+
+
 var materia = filterParam(commissioneTarget.get("materia"));
 var statoCommissione = filterParam(commissioneTarget.get("stato"));
 var ruoloCommissione = filterParam(commissioneTarget.get("ruolo"));
+
+
+
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
@@ -43,14 +52,33 @@ if(checkIsNotNull(id)){
 				var dataPresaInCaricoParsed = new Date(dataPresaInCaricoSplitted[0],dataPresaInCaricoSplitted[1]-1,dataPresaInCaricoSplitted[2]);
 				commissioneFolderNode.properties["crlatti:dataPresaInCaricoCommissione"] = dataPresaInCaricoParsed;
 			}
-		
+	
 			if(checkIsNotNull(dataScadenza)) {
 				var dataScadenzaSplitted = dataScadenza.split("-");
 				var dataScadenzaParsed = new Date(dataScadenzaSplitted[0],dataScadenzaSplitted[1]-1,dataScadenzaSplitted[2]);
 				commissioneFolderNode.properties["crlatti:dataScadenzaCommissione"] = dataScadenzaParsed;
+			}else{
+				commissioneFolderNode.properties["crlatti:dataScadenzaCommissione"] = null;
+			}
+		
+			
+			if(checkIsNotNull(dataInterruzione)) {
+				var dataInterruzioneSplitted = dataInterruzione.split("-");
+				var dataInterruzioneParsed = new Date(dataInterruzioneSplitted[0],dataInterruzioneSplitted[1]-1,dataInterruzioneSplitted[2]);
+				commissioneFolderNode.properties["crlatti:dataInterruzioneCommissione"] = dataInterruzioneParsed;
+			}
+			
+		
+			if(checkIsNotNull(dataRicezioneIntegrazioni)) {
+				var dataRicezioneIntegrazioniSplitted = dataRicezioneIntegrazioni.split("-");
+				var dataRicezioneIntegrazioniParsed = new Date(dataRicezioneIntegrazioniSplitted[0],dataRicezioneIntegrazioniSplitted[1]-1,dataRicezioneIntegrazioniSplitted[2]);
+				commissioneFolderNode.properties["crlatti:dataRicezioneIntegrazioniCommissione"] = dataRicezioneIntegrazioniParsed;
 			}
 			
 			commissioneFolderNode.properties["crlatti:materiaCommissione"] = materia;
+			commissioneFolderNode.properties["crlatti:sospensioneFerialeCommissione"] = sospensioneFeriale;
+			
+			
 			
 			// passaggio di stato per la commissione: presa in carico
 			commissioneFolderNode.properties["crlatti:statoCommissione"] = statoCommissione;

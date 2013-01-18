@@ -48,7 +48,7 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 		Date dataSeduta = (Date) nodeService.getProperty(sedutaNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SEDUTA));
 		
     	if(dataSeduta != null) {
-    		SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yy", Locale.ITALY);
+    		SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", Locale.ITALY);
     		String dataSedutaString = formatter.format(dataSeduta);
         	searchTerms.put("dataSeduta", dataSedutaString.toUpperCase());
     	}
@@ -162,13 +162,13 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 				
 				if(relatore!=null){
 					
-					String nomeRelatore =  "Relatore Cons."+(String) nodeService.getProperty(relatore, ContentModel.PROP_NAME);
+					String nomeRelatore =  "Relatore Cons. "+(String) nodeService.getProperty(relatore, ContentModel.PROP_NAME);
 
 					NodeRef aula = attoUtil.getAula(attoTrattato);
 					
 					String relazioneScritta= (String) nodeService.getProperty(aula, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_RELAZIONE_SCRITTA_AULA));
 
-					if(relazioneScritta.equals("Sì")){
+					if(relazioneScritta!=null && relazioneScritta.equals("Sì")){
 						nomeRelatore+= " con relazione scritta";
 					}
 					

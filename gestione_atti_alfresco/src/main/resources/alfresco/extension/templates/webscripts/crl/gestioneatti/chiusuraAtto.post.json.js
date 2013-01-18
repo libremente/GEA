@@ -12,6 +12,9 @@ var dataLr = filterParam(atto.get("dataLR"));
 var numeroPubblicazioneBURL = filterParam(atto.get("numeroPubblicazioneBURL"));
 var dataPubblicazioneBURL = filterParam(atto.get("dataPubblicazioneBURL"));
 
+var numeroDgrSeguito = filterParam(atto.get("numeroDgrSeguito"));
+var dataDgrSeguito = filterParam(atto.get("dataDgrSeguito"));
+
 var numeroDcr = filterParam(atto.get("numeroDcr"));
 
 
@@ -31,15 +34,31 @@ if(atto!=null
 	attoFolderNode.properties["crlatti:numeroLr"] = numeroLr;
 	attoFolderNode.properties["crlatti:numeroDcr"] = numeroDcr;
 	
-	var dataLrSplitted = dataLr.split("-");
-	var dataLrParsed = new Date(dataLrSplitted[0],dataLrSplitted[1]-1,dataLrSplitted[2]);
-	attoFolderNode.properties["crlatti:dataLr"] = dataLrParsed;
+	if(checkIsNotNull(dataLr)) {
+		var dataLrSplitted = dataLr.split("-");
+		var dataLrParsed = new Date(dataLrSplitted[0],dataLrSplitted[1]-1,dataLrSplitted[2]);
+		attoFolderNode.properties["crlatti:dataLr"] = dataLrParsed;
+	}
 	
 	attoFolderNode.properties["crlatti:numeroPubblicazioneBURL"] = numeroPubblicazioneBURL;
 	
-	var dataPubblicazioneBURLSplitted = dataPubblicazioneBURL.split("-");
-	var dataPubblicazioneBURLParsed = new Date(dataPubblicazioneBURLSplitted[0],dataPubblicazioneBURLSplitted[1]-1,dataPubblicazioneBURLSplitted[2]);
-	attoFolderNode.properties["crlatti:dataPubblicazioneBURL"] = dataPubblicazioneBURLParsed;
+	if(checkIsNotNull(dataPubblicazioneBURL)) {
+		var dataPubblicazioneBURLSplitted = dataPubblicazioneBURL.split("-");
+		var dataPubblicazioneBURLParsed = new Date(dataPubblicazioneBURLSplitted[0],dataPubblicazioneBURLSplitted[1]-1,dataPubblicazioneBURLSplitted[2]);
+		attoFolderNode.properties["crlatti:dataPubblicazioneBURL"] = dataPubblicazioneBURLParsed;
+	}
+	
+	attoFolderNode.properties["crlatti:numeroDgrSeguito"] = numeroDgrSeguito;
+	
+	if(checkIsNotNull(dataDgrSeguito)) {
+		var dataDgrSeguitoSplitted = dataDgrSeguito.split("-");
+		var dataDgrSeguitoParsed = new Date(dataDgrSeguitoSplitted[0],dataDgrSeguitoSplitted[1]-1,dataDgrSeguitoSplitted[2]);
+		attoFolderNode.properties["crlatti:dataDgrSeguito"] = dataDgrSeguitoParsed;
+	}else{
+		attoFolderNode.properties["crlatti:dataDgrSeguito"] = null;
+	}
+
+	
 	
 	attoFolderNode.properties["crlatti:statoAtto"] = stato;
 	attoFolderNode.save();

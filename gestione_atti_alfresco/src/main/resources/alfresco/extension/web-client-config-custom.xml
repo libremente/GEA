@@ -568,7 +568,6 @@
 			<show-property name="crlatti:materiaCommissione" />
 			<show-property name="crlatti:dataAssegnazioneCommissione" />
 			<show-property name="crlatti:dataPresaInCaricoCommissione" />
-			<show-property name="crlatti:dataScadenzaCommissione" />
 			<show-property name="crlatti:dataNominaCommissione" />
 			<show-property name="crlatti:tipoVotazioneCommissione" />
 			<show-property name="crlatti:esitoVotazioneCommissione" />
@@ -587,6 +586,11 @@
 			<show-property name="crlatti:articoliCommissione" />
 			<show-property name="crlatti:noteStralcioCommissione" />
 			<show-property name="crlatti:dataStralcioCommissione" />
+			
+			<show-property name="crlatti:dataScadenzaCommissione" />
+			<show-property name="crlatti:sospensioneFerialeCommissione" />
+			<show-property name="crlatti:dataInterruzioneCommissione" />
+			<show-property name="crlatti:dataRicezioneIntegrazioniCommissione" />
 
 			<show-property name="crlatti:numEmendPresentatiMaggiorEsame" />
 			<show-property name="crlatti:numEmendPresentatiMinorEsame" />
@@ -823,10 +827,12 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-
+			
+			<show-property name="crlatti:numeroDgrSeguito" />
+			<show-property name="crlatti:dataDgrSeguito" />
+			
 		</property-sheet>
 	</config>
-
 
 	<config evaluator="node-type" condition="crlatti:consigliereAnagrafica">
 		<property-sheet>
