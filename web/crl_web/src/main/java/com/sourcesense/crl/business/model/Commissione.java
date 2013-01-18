@@ -108,6 +108,11 @@ public class Commissione implements Cloneable {
 	private String noteStralcio;
 	private String quorumStralcio;
 	
+	private boolean sospensioneFeriale;
+	private Date dataInterruzione;
+	private Date dataRicezioneIntegrazioni;
+	
+	
 	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
 	
 	
@@ -642,6 +647,30 @@ public class Commissione implements Cloneable {
 
 	public void setQuorumStralcio(String quorumStralcio) {
 		this.quorumStralcio = quorumStralcio;
+	}
+
+	public boolean isSospensioneFeriale() {
+		return sospensioneFeriale;
+	}
+
+	public void setSospensioneFeriale(boolean sospensioneFeriale) {
+		this.sospensioneFeriale = sospensioneFeriale;
+	}
+
+	public Date getDataInterruzione() {
+		return dataInterruzione;
+	}
+
+	public void setDataInterruzione(Date dataInterruzione) {
+		this.dataInterruzione = dataInterruzione;
+	}
+
+	public Date getDataRicezioneIntegrazioni() {
+		return dataRicezioneIntegrazioni;
+	}
+
+	public void setDataRicezioneIntegrazioni(Date dataRicezioneIntegrazioni) {
+		this.dataRicezioneIntegrazioni = dataRicezioneIntegrazioni;
 	}
 	
 	

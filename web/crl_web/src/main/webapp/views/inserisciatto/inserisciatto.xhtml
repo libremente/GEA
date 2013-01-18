@@ -92,33 +92,6 @@
 		</p:row>
 
 
-<!-- 		<p:row >
-		
-		
-				<p:column>
-				<p:panel id="tipologiaPanel1" visible="#{inserisciAttoController.isTipologiaVisible()}" style="border: 0px;">
-					<h:outputLabel for="tipologia" value="Tipologia: " />
-					</p:panel>
-				</p:column>
-
-				<p:column>
-               <p:panel id="tipologiaPanel2" visible="#{inserisciAttoController.isTipologiaVisible()}" style="border: 0px;">
-
-					<p:selectOneMenu id="tipologia"
-						value="#{inserisciAttoController.tipologia}">
-
-						<f:selectItem itemLabel="Scegli Tipologia" itemValue="" />
-						<f:selectItems value="#{inserisciAttoController.tipologie}" />
-
-					</p:selectOneMenu>
-</p:panel>
-				</p:column>
-				
-			
-			
-		</p:row> -->
-
-
 		<p:row>
 			<p:column style="text-align:left;">
 				<h:outputLabel for="legislatura" value="Legislatura: *" />
@@ -128,7 +101,7 @@
 				<p:selectOneMenu id="legislatura"
 					value="#{inserisciAttoController.legislatura}" required="true"
 					requiredMessage="Legislatura obbligatoria">
-					<f:selectItem itemLabel="Scegli Legislatura" itemValue="" />
+					<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
 					<f:selectItems value="#{inserisciAttoController.legislature}" />
 				</p:selectOneMenu>
 			</p:column>

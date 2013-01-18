@@ -38,6 +38,9 @@ public class ChiusuraIterController {
 	private Date dataLr;
 	private String urlLeggiRegionali;
 	private String numeroDcr;
+	private String numeroDgrSeguito;
+	private Date dataDgrSeguito;
+    private boolean dgr;
 	
 	AttoBean attoBean;
 
@@ -47,6 +50,9 @@ public class ChiusuraIterController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
+		
+		dgr = "Parere negativo trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim()) 
+				|| "Parere favorevole trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim());
 	}
 	
 	
@@ -67,9 +73,21 @@ public class ChiusuraIterController {
 		attoBean.getAtto().setDataPubblicazioneBURL(getDataBurl());
 		attoBean.getAtto().setNumeroLr(getNumeroLr());
 		attoBean.getAtto().setDataLR(getDataLr());
+		attoBean.getAtto().setNumeroDgrSeguito(getNumeroDgrSeguito());
+		attoBean.getAtto().setDataDgrSeguito(getDataDgrSeguito());
 		attoBean.setStato(StatoAtto.CHIUSO);
 		context.addMessage(null, new FacesMessage("Atto chiuso con successo", ""));
 	}
+	
+	
+	public void changeDgr(){
+		
+		String tipo = atto.getTipoChiusura().trim();
+		
+		dgr = "Parere negativo trasmesso alla Giunta".trim().equals(tipo) 
+				|| "Parere favorevole trasmesso alla Giunta".trim().equals(tipo);
+		
+	} 
 	
 	
 	public void createLeggeRegionaleLink (){
@@ -112,7 +130,9 @@ public class ChiusuraIterController {
 	
 public String tipoChiusuraPar() {
 		
-		FacesContext context = FacesContext.getCurrentInstance();
+	return "Parere negativo trasmesso alla Giunta";
+	
+		/*FacesContext context = FacesContext.getCurrentInstance();
 		attoBean = (AttoBean) context
 				.getApplication()
 				.getExpressionFactory()
@@ -129,7 +149,7 @@ public String tipoChiusuraPar() {
 			
 		 else {
 			return "Rifiutato e trasmesso alla Giunta";
-		}
+		}*/
 
 	}
 	
@@ -229,6 +249,38 @@ public String tipoChiusuraPar() {
 	public void setUrlLeggiRegionali(String urlLeggiRegionali) {
 		this.urlLeggiRegionali = urlLeggiRegionali;
 	}
+
+
+	public String getNumeroDgrSeguito() {
+		return this.atto.getNumeroDgrSeguito();
+	}
+
+
+	public void setNumeroDgrSeguito(String numeroDgrSeguito) {
+		this.atto.setNumeroDgrSeguito(numeroDgrSeguito);
+	}
+
+
+	public Date getDataDgrSeguito() {
+		return this.atto.getDataDgrSeguito();
+	}
+
+
+	public void setDataDgrSeguito(Date dataDgrSeguito) {
+		this.atto.setDataDgrSeguito (dataDgrSeguito);
+	}
+
+
+	public boolean isDgr() {
+		return dgr;
+	}
+
+
+	public void setDgr(boolean dgr) {
+		this.dgr = dgr;
+	}
+	
+	
 	
 	
 	

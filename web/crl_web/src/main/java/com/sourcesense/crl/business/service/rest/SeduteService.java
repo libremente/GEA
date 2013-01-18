@@ -43,15 +43,16 @@ public class SeduteService {
 	
 	
 	
-	public List<Seduta> findByGroup (String url){
+	public List<Seduta> findByGroup (String url,String param){
 
 		List<Seduta> sedute =null;
-
+		//?provenienza={0}
 		try {
 			WebResource webResource = client.resource(url);
-
-			ClientResponse response = webResource.accept(
-					MediaType.APPLICATION_JSON).get(ClientResponse.class);
+			ClientResponse response = webResource
+					.queryParam("provenienza", param)
+					.accept(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+					.get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "
@@ -96,7 +97,7 @@ public class SeduteService {
 			String json = objectMapper.writeValueAsString(gestioneSedute);
 	
 			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
+					MediaType.APPLICATION_JSON+ ";charset=utf-8")
 					.post(ClientResponse.class, json);
 
 			if (response.getStatus() != 200) {
@@ -136,7 +137,7 @@ public class SeduteService {
 			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			
 			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
+					MediaType.APPLICATION_JSON+ ";charset=utf-8")
 					.get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
@@ -159,7 +160,7 @@ public class SeduteService {
 			String json = objectMapper.writeValueAsString(seduta);
 	
 			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
+					MediaType.APPLICATION_JSON+ ";charset=utf-8")
 					.post(ClientResponse.class, json);
 
 			if (response.getStatus() != 200) {
@@ -199,7 +200,7 @@ public class SeduteService {
 			String json = objectMapper.writeValueAsString(gestioneSedute);
 	
 			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
+					MediaType.APPLICATION_JSON+ ";charset=utf-8")
 					.post(ClientResponse.class, json);
 
 			if (response.getStatus() != 200) {

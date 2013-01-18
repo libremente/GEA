@@ -119,7 +119,7 @@
 					<h:outputText style="font-weight: bold;" value="Classificazione: " />
 				</p:column>
 				<p:column>
-					<p:inputText readonly="true" id="inputclassificazione"
+					<p:inputText readonly="false" id="inputclassificazione"
 						value="#{presentazioneAssegnazioneAttoController.classificazione}">
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -146,7 +146,7 @@
 						value="Numero repertorio: " />
 				</p:column>
 				<p:column>
-					<p:inputText readonly="true" id="inputnumrepertorio"
+					<p:inputText readonly="false" id="inputnumrepertorio"
 						value="#{presentazioneAssegnazioneAttoController.numeroRepertorio}">
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
@@ -160,7 +160,7 @@
 
 				<p:column>
 
-					<p:calendar disabled="true" readonly="false" size="10" locale="it"
+					<p:calendar disabled="false" readonly="false" size="10" locale="it"
 						id="datarepertorio" pattern="dd/MM/yyyy"
 						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
 
@@ -284,7 +284,7 @@
 			<p:row>
 				<p:column>
 					<h:outputText style="font-weight: bold;"
-						value="Pubblicazione atto: " />
+						value="Atto pubblico: " />
 				</p:column>
 
 				<p:column colspan="3">

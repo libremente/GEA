@@ -165,6 +165,9 @@ public class Atto implements Cloneable {
 	private boolean iterAula;
 
 	private String noteChiusuraIter;
+	
+	private String numeroDgrSeguito;
+	private Date dataDgrSeguito;
 
 	public Atto() {
 		Passaggio passaggio = new Passaggio();
@@ -943,4 +946,25 @@ public class Atto implements Cloneable {
 	public void setScadenza60gg(boolean scadenza60gg) {
 		this.scadenza60gg = scadenza60gg;
 	}
+
+	public String getNumeroDgrSeguito() {
+		return numeroDgrSeguito;
+	}
+
+	public void setNumeroDgrSeguito(String numeroDgrSeguito) {
+		this.numeroDgrSeguito = numeroDgrSeguito;
+	}
+
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getDataDgrSeguito() {
+		return dataDgrSeguito;
+	}
+
+	public void setDataDgrSeguito(Date dataDgrSeguito) {
+		this.dataDgrSeguito = dataDgrSeguito;
+	}
+
+	
+	
+	
 }

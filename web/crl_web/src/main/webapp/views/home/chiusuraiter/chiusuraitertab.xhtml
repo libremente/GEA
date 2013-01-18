@@ -33,7 +33,10 @@
 
 				<p:column>
 					<p:calendar size="10" locale="it" id="datachiusura"
-						value="#{chiusuraIterController.dataChiusura}" />
+						value="#{chiusuraIterController.dataChiusura}" >
+						
+						
+						</p:calendar>
 				</p:column>
 			</p:row>
 
@@ -42,13 +45,21 @@
 					<h:outputText style="font-weight: bold;" value="Tipo chiusura: " />
 				</p:column>
 				<p:column>
-					<p:selectOneMenu value="#{chiusuraIterController.tipoChiusura}">
+					<p:selectOneMenu id="tipoSelect"   value="#{chiusuraIterController.tipoChiusura}" >
+					    
+					    <p:ajax process="@this chiudifascicolopanel" event="change" update="chiudifascicolopanel" listener="#{chiusuraIterController.changeDgr}"/>
+					    
 						<f:selectItem itemLabel="Scegli tipo chiusura" itemValue="" />
 						<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
-						<f:selectItem itemLabel="Approvato e Trasmesso alla Giunta"
-							itemValue="Approvato e Trasmesso alla Giunta" />
+						
+						<f:selectItem  itemLabel="Parere favorevole trasmesso alla Giunta"
+							itemValue="Parere favorevole trasmesso alla Giunta"  />
+							
 						<f:selectItem itemLabel="#{chiusuraIterController.tipoChiusuraPar()}"
 							itemValue="#{chiusuraIterController.tipoChiusuraPar()}" />
+						
+						<f:selectItem itemLabel="Respinto dall'Aula"
+							itemValue="Respinto dall'Aula" />
 						<f:selectItem itemLabel="Inammissibile"
 							itemValue="Inammissibile" />
 						<f:selectItem itemLabel="Ritirato dai promotori"
@@ -59,10 +70,37 @@
 							itemValue="Per decadenza (fine legislatura)" />
 						<f:selectItem itemLabel="Per motivi diversi"
 							itemValue="Per motivi diversi" />
+							
+							
+							
 					</p:selectOneMenu>
 				</p:column>
 			</p:row>
 
+
+            <p:row id="dgrRow" rendered="#{chiusuraIterController.isDgr()}">
+             
+                <p:column>
+                    <h:outputText style="font-weight: bold;" value="Numero DGR a seguito di parere: " />  
+                </p:column>
+                 
+				<p:column>
+				     
+				<p:inputText value="#{chiusuraIterController.numeroDgrSeguito}" />	
+				  
+				</p:column>
+				
+				<p:column>
+				   <h:outputText style="font-weight: bold;" value="Data DGR: " /> 
+				</p:column>
+				
+				<p:column >
+					<p:calendar 
+						value="#{chiusuraIterController.dataDgrSeguito}" />
+				</p:column>
+			</p:row>
+
+						
 			<p:row>
 				<p:column>
 					<h:outputText style="font-weight: bold;" value="Note: " />
@@ -72,6 +110,7 @@
 						value="#{chiusuraIterController.note}" />
 				</p:column>
 			</p:row>
+			
 
 		</p:panelGrid>
 

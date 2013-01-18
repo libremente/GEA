@@ -248,7 +248,7 @@
 
 
 
-									<p:column headerText="Modifica">
+									<p:column headerText="Modifica/Conferma">
 										<c:set var="updatable"
 											value="${ (commissione.stato != 'Assegnato') and  (commissione.stato != 'Annullato' ) }" />
 										<p:rowEditor rendered="${updatable  and not passaggi}" />

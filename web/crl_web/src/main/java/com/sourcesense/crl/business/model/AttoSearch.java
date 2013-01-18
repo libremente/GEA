@@ -191,23 +191,6 @@ public class AttoSearch extends Atto {
 	}
 
 	
-	
-	
-	/*public String getCommissioneReferente() {
-		return commissioneReferente;
-	}
-
-	public void setCommissioneReferente(String commissioneReferente) {
-		this.commissioneReferente = commissioneReferente;
-	}
-
-	public String getCommissioneConsultiva() {
-		return commissioneConsultiva;
-	}
-
-	public void setCommissioneConsultiva(String commissioneConsultiva) {
-		this.commissioneConsultiva = commissioneConsultiva;
-	}*/
 
 	public String getCommissione1() {
 		return commissione1;
@@ -313,6 +296,7 @@ public class AttoSearch extends Atto {
 		this.numeroDGR = numeroDGR;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAssegnazioneA() {
 		return dataAssegnazioneA;
 	}
@@ -321,6 +305,7 @@ public class AttoSearch extends Atto {
 		this.dataAssegnazioneA = dataAssegnazioneA;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataAssegnazioneDa() {
 		return dataAssegnazioneDa;
 	}
@@ -329,6 +314,7 @@ public class AttoSearch extends Atto {
 		this.dataAssegnazioneDa = dataAssegnazioneDa;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataDGR() {
 		return dataDGR;
 	}
@@ -345,6 +331,7 @@ public class AttoSearch extends Atto {
 		this.emendatoAula = emendatoAula;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataChiusuraDa() {
 		return dataChiusuraDa;
 	}
@@ -353,6 +340,7 @@ public class AttoSearch extends Atto {
 		this.dataChiusuraDa = dataChiusuraDa;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataChiusuraA() {
 		return dataChiusuraA;
 	}
@@ -361,6 +349,7 @@ public class AttoSearch extends Atto {
 		this.dataChiusuraA = dataChiusuraA;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataLR() {
 		return dataLR;
 	}

@@ -1157,7 +1157,7 @@ public class SearchAttoController {
 	}
 
 	public void setDataLR(Date dataLR) {
-		this.atto.setDataDGR(dataLR);
+		this.atto.setDataLR(dataLR);
 	}
 	
 	public String getCommissione1() {

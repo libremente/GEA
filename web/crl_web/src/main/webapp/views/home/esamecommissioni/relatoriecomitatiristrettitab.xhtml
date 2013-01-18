@@ -117,7 +117,8 @@
 
 
 			<b> <h:outputLabel for="datapresaincarico"
-					value="Data presa in carico: " /> </b>
+					value="Data presa in carico: " />
+			</b>
 		</p:column>
 		<p:column>
 			<div id="presaInCarico">
@@ -130,7 +131,7 @@
 				&nbsp;
 				<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
 					id="presaincaricoesamecommissione" value="Presa in Carico"
-					update="dataScadenzaMessage, dataScadenzaReadOnly, comitatiMsg, :informationForm:informationBar"
+					update="dataScadenzaMessage,  comitatiMsg, :informationForm:informationBar"
 					actionListener="#{esameCommissioniController.presaInCarico}"
 					oncomplete="unblockDiv()" />
 
@@ -140,43 +141,118 @@
 		<p:column></p:column>
 		<p:column></p:column>
 	</p:row>
-	<!-- <p:row>
-		<p:column>
-			<h:outputText style="font-weight: bold;" value="Materia: " />
 
-		</p:column>
-		<p:column>
-			<div id="materiaDiv">
-				<p:inputText id="inputmateria"
-					value="#{esameCommissioniController.materia}">
-					<p:ajax event="change"
-						listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
-				</p:inputText>
-			</div>
-		</p:column>
-	</p:row>-->
-	<p:row rendered="#{navigationBean.isSessionAttoPAR()}">
-		<p:column>
-			<b> <h:outputLabel for="datascadenza" value="Data scadenza: " />
-			</b>
-		</p:column>
-		<p:column>
-			<div id="dataScadenza">
-				<p:calendar id="datascadenza" size="10"
-					value="#{esameCommissioniController.dataScadenza}" locale="it"
-					pattern="dd/MM/yyyy">
-
-				</p:calendar>
-				<!-- <p:inputText size="10" readonly="true" id="datascadenza"
-					value="#{esameCommissioniController.dataScadenza}">
-				<f:convertDateTime locale="it" pattern="dd/MM/yyyy"></f:convertDateTime>
-			</p:inputText>-->
-
-			</div>
-		</p:column>
-	</p:row>
 </p:panelGrid>
+
 <div id="blockedRelatori">
+	<br />
+
+	<p:fieldset id="scadenzaPARSet"
+		rendered="#{navigationBean.isSessionAttoPAR()}" legend="Scadenza Parere"
+		collapsed="false" toggleable="true" toggleSpeed="500">
+		<p:panelGrid>
+			<p:row>
+
+				<p:column>
+					<b> <h:outputLabel for="dataassegnazione"
+							value="Data assegnazione: " />
+					</b>
+				</p:column>
+				<p:column>
+
+					<p:inputText id="dataassegnazione" size="10" readonly="true"
+						value="#{esameCommissioniController.dataAssegnazione}">
+						<f:convertDateTime locale="it" pattern="dd/MM/yyyy"></f:convertDateTime>
+					</p:inputText>
+
+
+				</p:column>
+
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<b> <h:outputLabel for="sospensioneFeriale"
+							value="Sospensione Feriale: " />
+					</b>
+				</p:column>
+				<p:column>
+
+					<p:selectBooleanCheckbox id="sospensioneFeriale"
+						value="#{esameCommissioniController.sospensioneFeriale}">
+					</p:selectBooleanCheckbox>
+				</p:column>
+			</p:row>
+
+			<p:row>
+
+				<p:column>
+					<b> <h:outputLabel for="datainterruzione"
+							value="Data Interruzione: " />
+					</b>
+				</p:column>
+				<p:column>
+
+					<p:calendar id="datainterruzione" size="10"
+						value="#{esameCommissioniController.dataInterruzione}" locale="it"
+						pattern="dd/MM/yyyy">
+
+					</p:calendar>
+				</p:column>
+
+				<p:column>
+					<b> <h:outputLabel for="dataricezioneintegrazioni"
+							value="Data ricezione Integrazioni: " />
+					</b>
+				</p:column>
+				<p:column>
+
+					<p:calendar id="dataricezioneintegrazioni" size="10"
+						value="#{esameCommissioniController.dataRicezioneIntegrazioni}"
+						locale="it" pattern="dd/MM/yyyy">
+
+					</p:calendar>
+				</p:column>
+
+			</p:row>
+
+
+			<p:row>
+
+				<p:column>
+					<b> <h:outputLabel for="datascadenza" value="Data scadenza: " />
+					</b>
+				</p:column>
+				<p:column>
+
+
+					<p:inputText id="datascadenza" size="10" readonly="true"
+						value="#{esameCommissioniController.dataScadenza}">
+						<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+					</p:inputText>
+
+				</p:column>
+
+                <p:column>
+					<h:outputText id="dataScadenzaMessage" 
+					   rendered="#{empty esameCommissioniController.dataInterruzione or 
+					       (not empty esameCommissioniController.dataInterruzione and not empty esameCommissioniController.dataRicezioneIntegrazioni) 
+					                  }"
+					   style="color:#{esameCommissioniController.messaggioGiorniScadenzaColor};" value="#{esameCommissioniController.messaggioGiorniScadenza}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="2">
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+						id="scadenzaPar" value="Conferma" update="scadenzaPARSet,comitatiMsg"
+						actionListener="#{esameCommissioniController.scadenzaPar}" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<br />
 	<p:fieldset legend="Gestione Relatori" collapsed="false"
 		toggleable="true" toggleSpeed="500">
 
@@ -322,7 +398,8 @@
 				<p:column style="width:200px">
 
 					<b> <h:outputLabel for="dataistituzionecomitato"
-							value="Data istituzione Comitato: " /> </b>
+							value="Data istituzione Comitato: " />
+					</b>
 				</p:column>
 				<p:column colspan="5">
 					<p>
@@ -590,7 +667,8 @@
 			<p:row>
 				<p:column>
 					<b> <h:outputLabel for="datafinelavori"
-							value="Data Fine Lavori: " /> </b>
+							value="Data Fine Lavori: " />
+					</b>
 				</p:column>
 				<p:column>
 					<p>

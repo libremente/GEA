@@ -174,7 +174,7 @@ public class LettereNotificheController implements Serializable{
 		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.xhtml");
 		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni
-				.setNome("Lettera Iniziativa Presidente Giunta: fusione e distacchi di comuni");
+				.setNome("Lettera di fusione o distacco comuni");
 		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteraIniziativaPresidenteGiuntaFusioneDistacchiComuni = new DefaultTreeNode(
 				"lettera",

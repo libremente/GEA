@@ -215,28 +215,7 @@
 					</p:calendar>
 				</p:column>
 			</p:row>
-			<p:row  rendered="#{navigationBean.isSessionAttoPAR()}">
-				<p:column>
-					<h:outputText style="font-weight: bold;" value="Data scadenza: " />
-				</p:column>
-				<p:column>
-					<p:inputText id="dataScadenzaReadOnly"
-						value="#{esameCommissioniController.dataScadenza}" readonly="true">
-						<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-					</p:inputText>
-				</p:column>
-				<p:column>
-					<h:outputText id="dataScadenzaMessage" 
-						style="color:#{esameCommissioniController.messaggioGiorniScadenzaColor};" value="#{esameCommissioniController.messaggioGiorniScadenza}" />
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column>
-					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Registra"
-						action="#{esameCommissioniController.registraVotazione}"
-						update="votazioneMsg, :informationForm:informationBar , dataScadenzaMessage" />
-				</p:column>
-			</p:row>
+			
 		</p:panelGrid>
 	</p:fieldset>
 	
