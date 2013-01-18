@@ -420,10 +420,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 						attoProperties, "statoAtto");
 				String tipoChiusura = (String) this.getNodeRefProperty(
 						attoProperties, "tipoChiusura");
-				if(!doubleCheck)
+				if(!doubleCheck){
 				if (this.checkStatoAtto(statoAtto)) {
 					count++;
-				}
+				}}
 				else{
 					if (this.checkStatoAtto(statoAtto,tipoChiusura)) {
 						count++;
@@ -431,6 +431,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
 				}
 					
 			}
+			if(count!=0)
 			commissione2count.put(commissione, count);
 
 		}

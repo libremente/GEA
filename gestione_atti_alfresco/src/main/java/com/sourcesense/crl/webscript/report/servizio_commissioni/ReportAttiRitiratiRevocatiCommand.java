@@ -95,10 +95,19 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 		for(String tipo:tipoAtto2results.keySet()){
 			ResultSet resultSet = tipoAtto2results.get(tipo);
 			for(NodeRef atto:resultSet.getNodeRefs()){
-				tipo2atti.put(tipo, atto);
+				tipo2atti.put(this.convertAttoType(tipo), atto);
 			}
 		}
 		return tipo2atti;
+	}
+
+	/**
+	 * return the substring for the Atto type : crlatti:attoPdl -> Pdl
+	 * @param tipo
+	 * @return
+	 */
+	private String convertAttoType(String tipo) {
+		return tipo.substring(12);
 	}
 
 	/**
