@@ -2,9 +2,9 @@
 
 function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissione){
 	if(checkIsNotNull(commissione)){
+		var commissioneString = ""+commissione+"";
 		if(checkIsNotNull(ruoloCommissione)){
 			var ruoloCommissioneString = ""+ruoloCommissione+"";
-			var commissioneString = ""+commissione+"";
 			if(ruoloCommissioneString=="Referente"){
 				luceneQuery = verifyAND(luceneQuery);
 				luceneQuery += "@crlatti\\:commReferente:\""+commissioneString+"\"";
@@ -21,6 +21,15 @@ function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissi
 				luceneQuery = verifyAND(luceneQuery);
 				luceneQuery += "@crlatti\\:commDeliberante:\""+commissioneString+"\"";
 			}
+		} else {
+			luceneQuery = verifyAND(luceneQuery);
+			luceneQuery += " ( " +
+					"@crlatti\\:commReferente:\""+commissioneString+"\" OR "+
+					"@crlatti\\:commCoreferente:\""+commissioneString+"\" OR "+
+					"@crlatti\\:commConsultiva:\""+commissioneString+"\" OR "+
+					"@crlatti\\:commRedigente:\""+commissioneString+"\" OR "+
+					"@crlatti\\:commDeliberante:\""+commissioneString+"\" " +
+					") ";
 		}
 	}
 	return luceneQuery;
@@ -395,12 +404,12 @@ if(checkIsNotNull(numeroDgr)){
 
 if(checkIsNotNull(dataDgr)){
 	luceneQuery = verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:dataDgr:["+dataDgr+"T00:00:00 TO MAX]";
+	luceneQuery += "@crlatti\\:dataDgr:["+dataDgr+"T00:00:00 TO "+dataDgr+"T00:00:00]";
 }
 
 if(checkIsNotNull(dataLr)){
 	luceneQuery = verifyAND(luceneQuery);
-	luceneQuery += "@crlatti\\:dataLr:["+dataLr+"T00:00:00 TO MAX]";
+	luceneQuery += "@crlatti\\:dataLr:["+dataLr+"T00:00:00 TO "+dataLr+"T00:00:00]";
 }
 
 //statiUtente - condizioni in OR per Lucene
