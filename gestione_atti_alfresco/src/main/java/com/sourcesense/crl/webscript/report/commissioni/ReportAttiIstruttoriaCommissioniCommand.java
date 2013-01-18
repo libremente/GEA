@@ -86,7 +86,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 			XWPFDocument generatedDocument = docxManager
 					.generateFromTemplateMap(
 							this.retrieveLenghtMapConditional(commissione2atti, false),
-							1, false);
+							2, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 

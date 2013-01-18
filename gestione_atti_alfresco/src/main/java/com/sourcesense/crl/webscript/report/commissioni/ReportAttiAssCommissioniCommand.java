@@ -26,7 +26,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2
+ * V2 - Big Ok
  * 
  * @author Alessandro Benedetti
  * 
@@ -189,8 +189,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 						.getRow(7)
 						.getCell(1)
 						.setText(
-								this.checkStringEmpty(commConsultiva.substring(
-										0, commConsultiva.length() - 1)));
+								this.checkStringEmpty(commConsultiva));
 
 				tableIndex++;
 			}

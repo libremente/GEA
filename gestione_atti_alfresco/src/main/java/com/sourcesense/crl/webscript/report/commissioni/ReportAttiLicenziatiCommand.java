@@ -28,7 +28,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2
+ * V2 - Big Ok ( scavalla pagine a 2, come comportarsi con fogli vuoti?
  * 
  * @author Alessandro Benedetti
  * 

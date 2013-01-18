@@ -25,7 +25,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * V2
+ * V2 - Big Ok
  * 
  * @author Alessandro Benedetti
  * 
@@ -44,9 +44,9 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 			this.initDataNominaRelatoreDa(json);
 			this.initDataNominaRelatoreA(json);
 
-			String sortField1 = "@{" + CRL_ATTI_MODEL + "}commissioneRelatore";// odine
+			String sortField1 = "@{" + CRL_ATTI_MODEL + "}commissioneRelatore";// ordine
 			String sortField2 = "@{" + CRL_ATTI_MODEL + "}dataNominaRelatore"; // alfabetico
-			String sortField3 = "@{" + CRL_ATTI_MODEL + "}tipoAttoRelatore";// odine
+			String sortField3 = "@{" + CRL_ATTI_MODEL + "}tipoAttoRelatore";// ordine
 			String sortField4 = "@{" + CRL_ATTI_MODEL + "}numeroAttoRelatore"; // alfabetico
 
 			Map<String, ResultSet> relatore2results = Maps.newHashMap();
