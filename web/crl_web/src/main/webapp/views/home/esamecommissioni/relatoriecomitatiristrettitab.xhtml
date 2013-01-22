@@ -141,6 +141,21 @@
 		<p:column></p:column>
 		<p:column></p:column>
 	</p:row>
+	<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+
+		<p:column>
+			<b> <h:outputLabel for="datapresaincarico"
+					value="Dichiarato urgente: " />
+			</b>
+
+		</p:column>
+		<p:column colspan="5">
+			<p:selectBooleanCheckbox id="urgenteChk" readonly="true"
+				value="#{attoBean.votazioneUrgenza}"></p:selectBooleanCheckbox>
+
+		</p:column>
+	</p:row>
+
 
 </p:panelGrid>
 
@@ -148,8 +163,9 @@
 	<br />
 
 	<p:fieldset id="scadenzaPARSet"
-		rendered="#{navigationBean.isSessionAttoPAR()}" legend="Scadenza Parere"
-		collapsed="false" toggleable="true" toggleSpeed="500">
+		rendered="#{navigationBean.isSessionAttoPAR()}"
+		legend="Scadenza Parere" collapsed="false" toggleable="true"
+		toggleSpeed="500">
 		<p:panelGrid>
 			<p:row>
 
@@ -228,25 +244,33 @@
 				<p:column>
 
 
-					<p:inputText id="datascadenza" size="10" readonly="true"
+					<!-- <p:inputText id="datascadenza" size="10" readonly="true"
 						value="#{esameCommissioniController.dataScadenza}">
 						<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
-					</p:inputText>
+					</p:inputText> -->
+					<p:calendar id="datascadenza" size="10"
+						value="#{esameCommissioniController.dataScadenza}" locale="it"
+						pattern="dd/MM/yyyy">
+						
+					</p:calendar>
+
 
 				</p:column>
 
-                <p:column>
-					<h:outputText id="dataScadenzaMessage" 
-					   rendered="#{empty esameCommissioniController.dataInterruzione or 
+				<p:column>
+					<h:outputText id="dataScadenzaMessage"
+						rendered="#{empty esameCommissioniController.dataInterruzione or 
 					       (not empty esameCommissioniController.dataInterruzione and not empty esameCommissioniController.dataRicezioneIntegrazioni) 
 					                  }"
-					   style="color:#{esameCommissioniController.messaggioGiorniScadenzaColor};" value="#{esameCommissioniController.messaggioGiorniScadenza}" />
+						style="color:#{esameCommissioniController.messaggioGiorniScadenzaColor};"
+						value="#{esameCommissioniController.messaggioGiorniScadenza}" />
 				</p:column>
 			</p:row>
 			<p:row>
 				<p:column colspan="2">
 					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
-						id="scadenzaPar" value="Conferma" update="scadenzaPARSet,comitatiMsg"
+						id="scadenzaPar" value="Conferma"
+						update="scadenzaPARSet,comitatiMsg"
 						actionListener="#{esameCommissioniController.scadenzaPar}" />
 				</p:column>
 			</p:row>

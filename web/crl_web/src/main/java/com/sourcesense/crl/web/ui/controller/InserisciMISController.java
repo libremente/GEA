@@ -85,7 +85,7 @@ public class InserisciMISController {
 	private List<Allegato> allegatiMIS = new ArrayList<Allegato>();
 	private List<String> commissioni = new ArrayList<String>();
 	
-	private Map<String, String> legislature = new HashMap<String, String>();
+	private List<String> legislature = new ArrayList<String>();
 	
 	@PostConstruct
 	private void initializeValues(){
@@ -102,7 +102,7 @@ public class InserisciMISController {
 		
 		
 		setCommissioni(commissioneServiceManager.getAll());
-		setLegislature(legislaturaServiceManager.findAll());
+		setLegislature(legislaturaServiceManager.list());
 		
 	}
 	
@@ -461,12 +461,11 @@ public class InserisciMISController {
 		this.currentFilePubblico = currentFilePubblico;
 	}
 	
-	public Map<String, String> getLegislature() {
-		//return legislaturaServiceManager.findAll();
-		return this.legislature;
+	public List<String> getLegislature() {
+		return legislature;
 	}
 
-	public void setLegislature(Map<String, String> legislature) {
+	public void setLegislature(List<String> legislature) {
 		this.legislature = legislature;
 	}
 	

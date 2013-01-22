@@ -123,7 +123,7 @@
                 <h:outputText style="font-weight: bold;" value="Classificazione: " />
               </p:column>
               <p:column>
-                <p:inputText readonly="true" id="inputclassificazione"
+                <p:inputText readonly="false" id="inputclassificazione"
                   value="#{esameAulaController.atto.classificazione}">
                   <p:ajax event="change"
                           listener="#{esameAulaController.updateDatiHandler()}" />
@@ -161,10 +161,10 @@
             <p:row>
               <p:column>
                 <h:outputText style="font-weight: bold;"
-                  value="Numero repertorio: " />
+                  value="Numero Fascicolo: " />
               </p:column>
               <p:column>
-                <p:inputText readonly="true" id="inputnumrepertorio"
+                <p:inputText readonly="false" id="inputnumrepertorio"
                   value="#{esameAulaController.atto.numeroRepertorio}">
                   <p:ajax event="change"
                           listener="#{esameAulaController.updateDatiHandler()}" />
@@ -173,12 +173,12 @@
 
               <p:column>
                 <b> <h:outputLabel for="datarepertorio"
-                    value="Data Repertorio: " /> </b>
+                    value="Data Fascicolo: " /> </b>
               </p:column>
 
               <p:column>
 
-                <p:calendar disabled="true" readonly="false" size="10"
+                <p:calendar disabled="false" readonly="false" size="10"
                   locale="it" id="datarepertorio" pattern="dd/MM/yyyy"
                   value="#{esameAulaController.atto.dataRepertorio}">
 
@@ -285,22 +285,9 @@
 
             </p:row>
 
-            <!-- <p:row>
-              <p:column>
-                <h:outputText style="font-weight: bold;" value="Assegnazione: " />
-              </p:column>
-              <p:column colspan="3">
-                <p:inputText readonly="false" id="inputassegnazione"
-                  value="#{esameAulaController.atto.assegnazione}">
-                  <p:ajax event="change"
-                    listener="#{esameAulaController.updateDatiHandler()}" />
-                </p:inputText>
-              </p:column>
-            </p:row> -->
-
             <p:row>
               <p:column>
-                <h:outputText style="font-weight: bold;" value="Pubblicazione atto: " />
+                <h:outputText style="font-weight: bold;" value="Atto pubblico: " />
               </p:column>
 
               <p:column colspan="3">

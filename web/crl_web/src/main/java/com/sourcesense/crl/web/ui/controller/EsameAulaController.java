@@ -464,14 +464,16 @@ public class EsameAulaController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		if (getEsitoVotazione().equals(Aula.ESITO_VOTO_APPROVATO)) {
+		atto.setStato(StatoAtto.VOTATO_AULA);
+		attoBean.setStato(StatoAtto.VOTATO_AULA);
+		
+		/*if (getEsitoVotazione().equals(Aula.ESITO_VOTO_APPROVATO)) {
 
-			atto.setStato(StatoAtto.VOTATO_AULA);
-			attoBean.setStato(StatoAtto.VOTATO_AULA);
+			
 		} else {
 
 			navigation = "pretty:Chiusura_Iter";
-		}
+		}*/
 
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());

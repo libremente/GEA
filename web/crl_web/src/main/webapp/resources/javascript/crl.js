@@ -30,11 +30,14 @@ PrimeFaces.locales ['it'] = {
 function selectAllChecks(context){
 	
 	conta = 0;
-	
 	while(document.getElementById(context+conta)){
 	    
+		
+		
 		if(!document.getElementById(context+conta).checked){
-			jQuery(PrimeFaces.escapeClientId(context+conta)).click();
+			
+			document.getElementById(context+conta).checked=true;
+			
 		}
 		conta++;
 	}
@@ -49,7 +52,9 @@ function deselectAllChecks(context){
 	while(document.getElementById(context+conta)){
 	    
 		if(document.getElementById(context+conta).checked){
-			jQuery(PrimeFaces.escapeClientId(context+conta)).click();
+			
+			document.getElementById(context+conta).checked=false;
+		
 		}
 		conta++;
 	}

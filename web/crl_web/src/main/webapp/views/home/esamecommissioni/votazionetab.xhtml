@@ -42,41 +42,39 @@
 							onclick="testoAttoDialog.hide()" type="button" />
 
 					</p:confirmDialog>
-					
-					
+
+
 					<p:confirmDialog id="confirmTrasmissioneDialog"
-						message="Conferma trasmissione"
-						header="Trasmissione " severity="alert"
-						widgetVar="trsmissioneAttoDialog">
+						message="Conferma trasmissione" header="Trasmissione "
+						severity="alert" widgetVar="trsmissioneAttoDialog">
 
 						<p:commandButton id="confirmTrasmDialog" value="Conferma"
 							oncomplete="trsmissioneAttoDialog.hide()"
 							action="#{esameCommissioniController.confermaTrasmissione}"
-					     	update="votazioneMsg, :informationForm:informationBar" />
-						
+							update="votazioneMsg, :informationForm:informationBar" />
+
 						<p:commandButton id="declineTrasmAtto" value="Annulla"
 							onclick="trsmissioneAttoDialog.hide()" type="button" />
 
 					</p:confirmDialog>
-					
-					
+
+
 					<p:confirmDialog id="confirmCambiaRuoloDialog"
-						message="Conferma passaggio in Referente"
-						header="Cambio Ruolo " severity="alert"
-						widgetVar="confirmCambiaRuoloDialg">
+						message="Conferma passaggio in Referente" header="Cambio Ruolo "
+						severity="alert" widgetVar="confirmCambiaRuoloDialg">
 
 						<p:commandButton id="confirmCambiaRuoloBtn" value="Conferma"
 							oncomplete="confirmCambiaRuoloDialg.hide()"
 							action="#{esameCommissioniController.cambiaRuoloInReferente}"
-						    update="votazioneMsg"/>
-						
+							update="votazioneMsg" />
+
 						<p:commandButton id="declineCambiaRuoloDialog" value="Annulla"
 							onclick="confirmCambiaRuoloDialg.hide()" type="button" />
 
 					</p:confirmDialog>
-					
-					
-					
+
+
+
 					<p:confirmDialog id="uploadFileAttributesVotazione"
 						header="Caricamento"
 						widgetVar="uploadFileAttributesVotazioneDialog"
@@ -149,39 +147,37 @@
 								<c:choose>
 									<c:when
 										test="#{navigationBean.isSessionAttoEsitoCommissioneApprovato()}">
-										
-										<f:selectItem itemLabel="Deliberato"
-											itemValue="Deliberato" />
-										
+
+										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
+
 										<f:selectItem itemLabel="Non Deliberato"
 											itemValue="Non Deliberato" />
-									
-									     <f:selectItem itemLabel="Proposto non passaggio all'esame"
+
+										<f:selectItem itemLabel="Proposto non passaggio all'esame"
 											itemValue="Proposto non passaggio all'esame" />
-									
+
 									</c:when>
 
 									<c:when
 										test="#{navigationBean.isSessionAttoEsitoCommissioneArchiviazioneINP()}">
-										
+
 										<f:selectItem itemLabel="Archiviazione"
 											itemValue="Archiviazione" />
-										
+
 										<f:selectItem itemLabel="Proposta di RIS"
 											itemValue="Proposta di RIS" />
 									</c:when>
 
 									<c:when
 										test="#{navigationBean.isSessionAttoEsitoCommissioneApprovatoREL()}">
-                                       <f:selectItem itemLabel="Approvato"
-											itemValue="Approvato" />
-										
+										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
+
 										<f:selectItem itemLabel="Presa d'atto "
 											itemValue="Presa d'atto" />
-										
+
 										<f:selectItem itemLabel="Proposta di RIS"
 											itemValue="Proposta di RIS" />
-                                       
+
 									</c:when>
 
 									<c:otherwise>
@@ -192,7 +188,7 @@
 
 						</c:choose>
 
-						
+
 
 
 
@@ -216,11 +212,23 @@
 				</p:column>
 			</p:row>
 			
+			
+			<p:row>
+				<p:column>
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Registra"
+						action="#{esameCommissioniController.registraVotazione}"
+						update="votazioneMsg, :informationForm:informationBar" />
+				</p:column>
+			</p:row>
+			
+			
+
 		</p:panelGrid>
 	</p:fieldset>
-	
-	<p:fieldset rendered="#{navigationBean.testoAttoVotatoEnabled()}" legend="#{esameCommissioniController.testoParereEspressoAttoVotato()}" collapsed="false"
-		toggleable="true" toggleSpeed="500">
+
+	<p:fieldset rendered="#{navigationBean.testoAttoVotatoEnabled()}"
+		legend="#{esameCommissioniController.testoParereEspressoAttoVotato()}"
+		collapsed="false" toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="testoattovotatopanel">
 			<p:row>
 				<!-- <p:column>
@@ -237,16 +245,19 @@
 				<p:column colspan="4">
 					<p:dataTable id="listaTestiAtto"
 						value="#{esameCommissioniController.testiAttoVotatoList}"
-						var="testoAttoVotato" styleClass="generalInfoTab grey-text" editable="true">
-						
-						<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+						var="testoAttoVotato" styleClass="generalInfoTab grey-text"
+						editable="true">
+
+						<p:ajax event="rowEdit" update="@this"
+							listener="#{fileDownloadController.fileUpdate}" />
 
 						<p:column sortBy="#{testoAttoVotato.nome}">
 							<f:facet name="header">Testo Dell'Atto</f:facet>
 							<h:outputText value="#{testoAttoVotato.nome}" />
 						</p:column>
 
-						<p:column sortBy="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}">
+						<p:column
+							sortBy="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}">
 							<f:facet name="header">Azioni</f:facet>
 							<h:outputText
 								value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
@@ -255,18 +266,16 @@
 
 						<p:column sortBy="#{testoAttoVotato.pubblico}">
 							<f:facet name="header">Pubblico</f:facet>
-							<p:cellEditor >
+							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="si"
-								rendered="#{testoAttoVotato.pubblico}" />
-							<h:outputText value="no"
-								rendered="#{!testoAttoVotato.pubblico}" />
+									<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
+									<h:outputText value="no"
+										rendered="#{!testoAttoVotato.pubblico}" />
 								</f:facet>
-								<f:facet  name="input">
-									<p:selectBooleanCheckbox 
-									value="#{testoAttoVotato.pubblico}" />
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{testoAttoVotato.pubblico}" />
 								</f:facet>
-							</p:cellEditor> 
+							</p:cellEditor>
 						</p:column>
 
 						<p:column>
@@ -293,9 +302,9 @@
 							</p:commandButton>
 
 						</p:column>
-						
+
 						<p:column headerText="Modifica" style="width:50px">
-							<p:rowEditor   />
+							<p:rowEditor />
 						</p:column>
 
 
@@ -304,8 +313,10 @@
 			</p:row>
 		</p:panelGrid>
 	</p:fieldset>
-	<p:fieldset rendered="#{navigationBean.isContinuazioneLavoriReferente()}" legend="Continuazione dei lavori in referente"
-		collapsed="false" toggleable="true" toggleSpeed="500">
+	<p:fieldset
+		rendered="#{navigationBean.isContinuazioneLavoriReferente()}"
+		legend="Continuazione dei lavori in referente" collapsed="false"
+		toggleable="true" toggleSpeed="500">
 		<p:panelGrid styleClass="infoTable" id="contlavoriinreferentepanel">
 			<p:row>
 				<p:column>
@@ -347,9 +358,10 @@
 		toggleSpeed="500" rendered="#{navigationBean.canTransmitToAula()}">
 		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
 			<p:row>
-			<p:column>
+				<p:column>
 					<b> <h:outputLabel for="datarichsiscrzaula"
-							value="Data Richiesta Iscrizione Aula: " /> </b>
+							value="Data Richiesta Iscrizione Aula: " />
+					</b>
 				</p:column>
 				<p:column>
 					<p>
@@ -362,7 +374,8 @@
 				</p:column>
 				<p:column>
 					<b> <h:outputLabel for="datatrasmissione"
-							value="Data Trasmissione: " /> </b>
+							value="Data Trasmissione: " />
+					</b>
 				</p:column>
 				<p:column>
 					<p>
@@ -374,14 +387,14 @@
 					</p>
 				</p:column>
 			</p:row>
-			<p:row rendered="#{navigationBean.isSessionAttoPDL() and navigationBean.isCommissioneUpdateEnabled()}">
+			<p:row
+				rendered="#{navigationBean.isSessionAttoPDL() and navigationBean.isCommissioneUpdateEnabled()}">
 				<p:column>
 					<h:outputText style="font-weight: bold;"
 						value="Passaggio diretto in Aula: " />
 				</p:column>
 				<p:column>
-					<p:selectBooleanCheckbox 
-					
+					<p:selectBooleanCheckbox
 						value="#{esameCommissioniController.passaggioDiretto}">
 						<p:ajax event="change"
 							listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
@@ -390,9 +403,9 @@
 			</p:row>
 			<p:row>
 				<p:column>
-					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva Trasmissione"
-					    oncomplete="trsmissioneAttoDialog.show()"
-						 />
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+						value="Salva Trasmissione"
+						oncomplete="trsmissioneAttoDialog.show()" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>

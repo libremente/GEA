@@ -266,7 +266,7 @@ public class AttoBean implements Serializable {
 
 			for (TestoAtto testoAtto : commRec
 					.getTestiAttoVotatoEsameCommissioni()) {
-
+				testoAtto.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo()); 
 				returnList.add(testoAtto);
 			}
 		}
@@ -292,7 +292,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
-
+				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo()); 
 				returnList.add(allegato);
 
 			}
@@ -305,7 +305,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getEmendamentiEsameCommissioni()) {
-
+				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo());  
 				returnList.add(allegato);
 
 			}
@@ -319,7 +319,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getTestiClausola()) {
-
+				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo());
 				returnList.add(allegato);
 
 			}
@@ -333,6 +333,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getAllegati()) {
+				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo());
 				returnList.add(allegato);
 			}
 		}

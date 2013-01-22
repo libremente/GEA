@@ -288,6 +288,20 @@ public class NavigationRules {
 
 	}
 
+	
+	public boolean isBURLEnabled() {
+
+		if (attoBean.getTipoAtto().equals("REL")
+				|| attoBean.getTipoAtto().equals("INP")
+
+		) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
 	public boolean chiusuraIterDisabled() {
 
 		return false;
@@ -475,6 +489,16 @@ public class NavigationRules {
 		return false;
 	}
 
+	public boolean isServizioCommissioni() {
+
+	
+		return GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean
+				.getUserGroupName());
+
+	}
+	
+	 
+	
 	public boolean isGuest() {
 
 		if (userBean.getUser().getSessionGroup().getNome()

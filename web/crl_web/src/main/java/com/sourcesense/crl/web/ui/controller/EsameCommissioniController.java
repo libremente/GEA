@@ -348,7 +348,6 @@ public class EsameCommissioniController {
 		totaleEmendPresentati();
 		totaleNonApprovati();
 
-		
 		abbinamentiList = Clonator.cloneList(passaggioIn.getAbbinamenti());
 		relatoriList = Clonator.cloneList(commissioneUser.getRelatori());
 		membriComitatoList = Clonator.cloneList(commissioneUser
@@ -364,16 +363,15 @@ public class EsameCommissioniController {
 		allegatiList = Clonator.cloneList(attoBean.getAllegatiCommissioni());
 		linksList = Clonator.cloneList(commissioneUser
 				.getLinksNoteEsameCommissione());
-		
-		
-		if(commissioneUser.getDataScadenza()==null && commissioneUser.getDataInterruzione()==null){
-			
-				commissioneUser.setDataScadenza(DateUtils.getDataScadenzaPar(
-						getDataAssegnazione(), attoBean.getAtto().isScadenza60gg(),
-						isSospensioneFeriale()));
-			
+
+		if (commissioneUser.getDataScadenza() == null
+				&& commissioneUser.getDataInterruzione() == null) {
+
+			commissioneUser.setDataScadenza(DateUtils.getDataScadenzaPar(
+					getDataAssegnazione(), attoBean.getAtto().isScadenza60gg(),
+					isSospensioneFeriale()));
+
 		}
-		
 
 		confrontaDataScadenza();
 
@@ -557,7 +555,7 @@ public class EsameCommissioniController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
+
 		if (getDataInterruzione() != null
 				&& getDataRicezioneIntegrazioni() == null) {
 
@@ -578,12 +576,12 @@ public class EsameCommissioniController {
 					isSospensioneFeriale()));
 
 		}
-		
+
 		confrontaDataScadenza();
-		
+
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
-		.setCommissioni(getCommissioniList());
-		
+				.setCommissioni(getCommissioniList());
+
 		Target target = new Target();
 		target.setCommissione(commissioneUser.getDescrizione());
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
@@ -593,10 +591,9 @@ public class EsameCommissioniController {
 
 		commissioneServiceManager
 				.salvaPresaInCaricoEsameCommissioni(esameCommissione);
-		
-		context.addMessage(null, new FacesMessage("Scadenza Parere Aggiornata"
-				, ""));
-		
+
+		context.addMessage(null, new FacesMessage("Scadenza Parere Aggiornata",
+				""));
 
 	}
 
@@ -644,7 +641,7 @@ public class EsameCommissioniController {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
 		}
 
-		//confrontaDataScadenza();
+		// confrontaDataScadenza();
 
 		String numeroAtto = attoBean.getNumeroAtto();
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
@@ -1547,7 +1544,7 @@ public class EsameCommissioniController {
 						|| (commissioneUser.getQuorumEsameCommissioni() != null && !commissioneUser
 								.getQuorumEsameCommissioni().trim().equals("")) || (commissioneUser
 						.getDataSedutaCommissione() != null))) {
-			
+
 			context.addMessage(
 					null,
 					new FacesMessage(
@@ -1557,34 +1554,37 @@ public class EsameCommissioniController {
 
 		} else {
 
-			commissioneUser.setDataTrasmissione(getDataTrasmissione());
-			commissioneUser.setPassaggioDirettoInAula(isPassaggioDiretto());
-			commissioneUser
-					.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
-			commissioneUser.setStato(Commissione.STATO_TRASMESSO);
-
-			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
-					.setCommissioni(getCommissioniList());
-
-			attoBean.getLastPassaggio().setCommissioni(
-					Clonator.cloneList(getCommissioniList()));
-
 			if (atto.getTipoAtto().equals("INP")
 					|| atto.getTipoAtto().equals("PAR")
 					|| atto.getTipoAtto().equals("REL")
 					|| (atto.getTipoAtto().equals("DOC") && !atto.isIterAula())
-					|| (atto.getTipoAtto().equals("PDA") && commissioneUser
-							.getRuolo().equals(Commissione.RUOLO_DELIBERANTE))) {
+					|| commissioneUser.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)) {
 
 				risultato = "pretty:Chiusura_Iter";
 
 			}
 
+			// Se non sono REL, INP e DOC lo stato non cambia
 			if (canChangeStatoAtto() && risultato.equals("")) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 				atto.setStato(StatoAtto.TRASMESSO_AULA);
 
 			}
+
+			commissioneUser.setDataTrasmissione(getDataTrasmissione());
+			commissioneUser.setPassaggioDirettoInAula(isPassaggioDiretto());
+			commissioneUser.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
+			
+			// Se non sono REL, INP e DOC lo stato non cambia
+			if (risultato.equals("")) {
+				commissioneUser.setStato(Commissione.STATO_TRASMESSO);
+			}
+			
+			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+					.setCommissioni(getCommissioniList());
+
+			attoBean.getLastPassaggio().setCommissioni(
+					Clonator.cloneList(getCommissioniList()));
 
 			Target target = new Target();
 			target.setCommissione(commissioneUser.getDescrizione());

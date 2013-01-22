@@ -13,7 +13,7 @@
 
 
 <h:head>
-<style type="text/css">
+	<style type="text/css">
 .ui-dialog {
 	z-index: -1 !important;
 	opacity: 0;
@@ -77,12 +77,12 @@
 			</p:column>
 
 			<p:column>
-				<h:outputText style="font-weight: bold;" value="N° Repertorio: " />
+				<h:outputText style="font-weight: bold;" value="Numero Fascicolo: " />
 				<h:outputText value="#{attoBean.numeroRepertorio}" />
 			</p:column>
 
 			<p:column>
-				<h:outputText style="font-weight: bold;" value="Data Repertorio: " />
+				<h:outputText style="font-weight: bold;" value="Data Fascicolo: " />
 				<h:outputText value="#{attoBean.dataRepertorio}">
 					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
@@ -264,8 +264,8 @@
 
 		<p:row>
 			<p:column colspan="2">
-				<h:outputText style="font-weight: bold;" rendered="#{not empty riepilogoAttoController.commissioneSelected.descrizione}"
-				
+				<h:outputText style="font-weight: bold;"
+					rendered="#{not empty riepilogoAttoController.commissioneSelected.descrizione}"
 					value="#{riepilogoAttoController.commissioneSelected.descrizione}: " />
 
 			</p:column>
@@ -327,6 +327,7 @@
 		</p:row>
 		<p:row style="height:30px">
 		</p:row>
+
 		<p:row
 			rendered="#{ riepilogoAttoController.commissioneSelected.ruolo ne 'Consultiva'}">
 
@@ -377,7 +378,12 @@
 				</h:outputText>
 			</p:column>
 		</p:row>
-
+		<p:row>
+			<p:column colspan="2"></p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="2"></p:column>
+		</p:row>
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
@@ -440,7 +446,7 @@
 		<p:row>
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
-				<h:outputText 
+				<h:outputText
 					value="#{attoBean.getWorkingAula().tipologiaVotazione}" />
 			</p:column>
 
@@ -476,7 +482,8 @@
 				</h:outputText>
 			</p:column>
 		</p:row>
-		<p:row>
+		
+		<p:row rendered="#{navigationBean.isBURLEnabled()}">
 			<p:column>
 				<h:outputText style="font-weight: bold;"
 					value="Data Pubblicazione BURL: " />
@@ -491,7 +498,8 @@
 				<h:outputText value="#{attoBean.numeroPubblicazioneBURL}" />
 			</p:column>
 		</p:row>
-		<p:row>
+		
+		<p:row rendered="#{navigationBean.isSessionAttoPDL()}"> 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Numero LR:  " />
 				<h:outputText value="#{attoBean.numeroLR}" />
@@ -503,12 +511,12 @@
 				</h:outputText>
 			</p:column>
 		</p:row>
-		<p:row rendered="#{navigationBean.isSessionAttoPDA()}">
+		<!-- <p:row rendered="#{navigationBean.isSessionAttoPDA()}">
 			<p:column colspan="2">
 				<b><h:outputLabel for="numeroDcr" value="Numero DCR: " /> </b>
 				<h:outputText id="numeroDcr" value="#{attoBean.atto.numeroDcr}" />
 			</p:column>
-		</p:row>
+		</p:row> -->
 
 
 
@@ -560,12 +568,13 @@
 					</p:column>
 
 					<p:column>
-						<h:outputText style="font-weight: bold;" value="N° Repertorio: " />
+						<h:outputText style="font-weight: bold;"
+							value="Numero Fascicolo: " />
 						<h:outputText value="#{attoBean.numeroRepertorio}" />
 					</p:column>
 
 					<p:column>
-						<h:outputText style="font-weight: bold;" value="Data Repertorio: " />
+						<h:outputText style="font-weight: bold;" value="Data Fascicolo: " />
 						<h:outputText value="#{attoBean.dataRepertorio}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -706,8 +715,8 @@
 
 			<c:forEach items="#{riepilogoAttoController.commissioni}"
 				var="commissione">
-               
-                   
+
+
 				<p:panelGrid styleClass="infoTable">
 
 					<p:row>
@@ -809,7 +818,12 @@
 							</h:outputText>
 						</p:column>
 					</p:row>
-
+					<p:row>
+						<p:column colspan="2"></p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2"></p:column>
+					</p:row>
 					<p:row>
 						<p:column>
 							<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
@@ -850,8 +864,8 @@
 					</p:row>
 
 				</p:panelGrid>
-				<br/>
-				<br/>
+				<br />
+				<br />
 			</c:forEach>
 		</p:fieldset>
 
@@ -909,7 +923,7 @@
 						</h:outputText>
 					</p:column>
 				</p:row>
-				<p:row>
+				<p:row rendered="#{navigationBean.isBURLEnabled()}">
 					<p:column>
 						<h:outputText style="font-weight: bold;"
 							value="Data Pubblicazione BURL: " />
@@ -924,7 +938,7 @@
 						<h:outputText value="#{attoBean.numeroPubblicazioneBURL}" />
 					</p:column>
 				</p:row>
-				<p:row>
+				<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 					<p:column>
 						<h:outputText style="font-weight: bold;" value="Numero LR:  " />
 						<h:outputText value="#{attoBean.numeroLR}" />
@@ -936,14 +950,14 @@
 						</h:outputText>
 					</p:column>
 				</p:row>
-				<p:row rendered="#{navigationBean.isSessionAttoPDA()}">
+				<!-- <p:row rendered="#{navigationBean.isSessionAttoPDA()}">
 					<p:column colspan="2">
 						<b><h:outputLabel for="numeroDcrprnt" value="Numero DCR: " />
 						</b>
 						<h:outputText id="numeroDcrprnt"
 							value="#{attoBean.atto.numeroDcr}" />
 					</p:column>
-				</p:row>
+				</p:row> -->
 
 
 

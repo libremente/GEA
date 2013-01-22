@@ -118,7 +118,7 @@
 	<p:fieldset legend="Pubblicazione su BURL" collapsed="false"
 		toggleable="true" toggleSpeed="500" rendered="#{navigationBean.pubblicazioneBurlEnabled()}">
 		<p:panelGrid styleClass="infoTable" id="registrazioneburlpanel">
-			<p:row>
+			<p:row rendered="#{navigationBean.isBURLEnabled()}">
 				<p:column>
 					<h:outputText style="font-weight: bold;"
 						value="Numero e serie BURL: " />
@@ -181,13 +181,13 @@
             </div>
 
 
-			<p:row>
+			<!-- <p:row>
 				<p:column colspan="2">
 				<h:outputLink value="lettereenotifiche">
 					Creazione lettera per pubblicazione del Presidente
 					</h:outputLink>
 				</p:column>
-			</p:row>
+			</p:row>-->
 		</p:panelGrid>
 	</p:fieldset>
 	<p>

@@ -2,6 +2,7 @@ package com.sourcesense.crl.web.ui.controller;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +58,11 @@ public class ReportisticaController implements Serializable {
 	@ManagedProperty(value = "#{reportServiceManager}")
 	private ReportServiceManager reportServiceManager;
 	
+	@ManagedProperty(value = "#{legislaturaServiceManager}")
+	private LegislaturaServiceManager legislaturaServiceManager;
+	
+	
+	private List<String> legislature = new ArrayList<String>();
 
 	private TreeNode root;
 	private TreeNode selectedNode;
@@ -78,6 +84,7 @@ public class ReportisticaController implements Serializable {
 	private Date dataNominaRelatoreA;
 	private Map<String, String> relatori = new HashMap<String, String>();
 	private String relatore;
+	private String legislatura;
 	private Map<String, String> organismi = new HashMap<String, String>();
 	private String organismo;
 	private Date dataAssegnazioneParereDa;
@@ -123,7 +130,8 @@ public class ReportisticaController implements Serializable {
 		setFirmatari(personaleServiceManager.findAllFirmatario());
 		setRelatori(personaleServiceManager.findAllRelatore());
 		setTipiAttoSel(tipoAttoServiceManager.findAll());
-
+		setLegislature(legislaturaServiceManager.list());
+		
 		root = new DefaultTreeNode("Root", null);
 
 		// SERVIZIO COMISSIONI
@@ -612,6 +620,16 @@ public class ReportisticaController implements Serializable {
 	public void setDataSedutaA(Date dataSedutaA) {
 		selectedReport.setDataSedutaA(dataSedutaA);
 	}
+	
+	
+
+	public String getLegislatura() {
+		return selectedReport.getLegislatura();
+	}
+
+	public void setLegislatura(String legislatura) {
+		this.selectedReport.setLegislatura ( legislatura);
+	}
 
 	public String getRelatore() {
 		return relatore;
@@ -700,6 +718,25 @@ public class ReportisticaController implements Serializable {
 	public void setReportServiceManager(ReportServiceManager reportServiceManager) {
 		this.reportServiceManager = reportServiceManager;
 	}
+
+	public LegislaturaServiceManager getLegislaturaServiceManager() {
+		return legislaturaServiceManager;
+	}
+
+	public void setLegislaturaServiceManager(
+			LegislaturaServiceManager legislaturaServiceManager) {
+		this.legislaturaServiceManager = legislaturaServiceManager;
+	}
+
+	public List<String> getLegislature() {
+		return legislature;
+	}
+
+	public void setLegislature(List<String> legislature) {
+		this.legislature = legislature;
+	}
+	
+	
 	
 	
 

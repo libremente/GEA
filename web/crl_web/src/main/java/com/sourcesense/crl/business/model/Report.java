@@ -11,6 +11,7 @@ public class Report {
 
 	private String tipoTemplate;
 	private String nome;
+	private String legislatura;
 	
 	private List <String> tipiAtto;
 	private List <String> commissioni;
@@ -235,6 +236,14 @@ public class Report {
 
 	public void setTipoTemplate(String tipoTemplate) {
 		this.tipoTemplate = tipoTemplate;
+	}
+
+	public String getLegislatura() {
+		return legislatura;
+	}
+
+	public void setLegislatura(String legislatura) {
+		this.legislatura = legislatura;
 	}
 
 	
