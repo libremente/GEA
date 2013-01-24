@@ -105,6 +105,7 @@ var numeroDgr = atto.get("numeroDGR");
 var dataDgr = atto.get("dataDGR");
 
 var numeroFascicolo = atto.get("numeroRepertorio");
+var rinviato = atto.get("rinviato");
 
 var luceneQuery = "PATH:\"/app:company_home/cm:CRL//*\" ";
 
@@ -367,6 +368,21 @@ if(checkIsNotNull(dataSedutaAulaDa)
 	luceneQuery += "@crlatti\\:dataSedutaAula:[MIN TO "+dataSedutaAulaA+"T00:00:00]";
 }
 
+//dataAssegnazioneCommissioneReferente
+if(checkIsNotNull(dataAssegnazioneDa)
+		&& checkIsNotNull(dataAssegnazioneA)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataAssegnazioneCommissioneReferente:["+dataAssegnazioneDa+"T00:00:00 TO "+dataAssegnazioneA+"T00:00:00]";
+} else if(checkIsNotNull(dataAssegnazioneDa)
+		&& (dataAssegnazioneA==null || dataAssegnazioneA==undefined || dataAssegnazioneA=="")) {
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataAssegnazioneCommissioneReferente:["+dataAssegnazioneDa+"T00:00:00 TO MAX]";
+} else if(checkIsNotNull(dataAssegnazioneA)
+		&& (dataAssegnazioneDa==null || dataAssegnazioneDa==undefined || dataAssegnazioneDa=="")){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:dataAssegnazioneCommissioneReferente:[MIN TO "+dataAssegnazioneA+"T00:00:00]";
+}
+
 if(checkIsNotNull(relatore)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:relatori:\""+relatore+"\"";
@@ -385,6 +401,11 @@ if(checkIsNotNull(soggettoConsultato)){
 if(checkIsNotNull(emendato)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:emendato:\""+emendato+"\"";
+}
+
+if(checkIsNotNull(rinviato)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:rinviato:\""+rinviato+"\"";
 }
 
 if(checkIsNotNull(emendatoAula)){
