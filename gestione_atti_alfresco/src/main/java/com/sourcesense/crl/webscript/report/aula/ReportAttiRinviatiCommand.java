@@ -41,6 +41,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			this.initLegislatura(json);
 			this.initTipiAttoLuceneAtto(json);
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAtto";
 			String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
@@ -48,7 +49,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "
+			String query ="PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\" AND "
 					+ convertListToString("TYPE", this.tipiAttoLucene, true)
 					+"AND @crlatti\\:rinviato:\"true\"";
 			sp.setQuery(query);

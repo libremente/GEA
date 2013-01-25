@@ -39,6 +39,7 @@ public class ReportLCRCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			this.initLegislatura(json);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
 			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroLcr";
@@ -46,7 +47,7 @@ public class ReportLCRCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\"crlatti:attoPdl\"";
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\" AND TYPE:\"crlatti:attoPdl\"";
 			if (!dataSedutaDa.equals("*") || !dataSedutaA.equals("*")) {
 				query += " AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa
 						+ " TO " + this.dataSedutaA + " ]";

@@ -69,6 +69,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	protected String ruoloCommissione;
 	protected String organismo;
 	protected List<String> commissioniJson;
+	
+	protected String legislatura;
 
 	protected String dataAssegnazioneCommReferenteDa;
 	protected String dataAssegnazioneCommReferenteA;
@@ -666,6 +668,13 @@ public abstract class ReportBaseCommand implements ReportCommand {
 		JSONObject rootJson = new JSONObject(json);
 		this.dataAssegnazioneCommReferenteDa = checkEmptyDate(JsonUtils
 				.retieveElementFromJson(rootJson, "dataAssegnazioneDa"));
+	}
+	
+	protected void initLegislatura(String json)
+			throws JSONException {
+		JSONObject rootJson = new JSONObject(json);
+		this.legislatura = checkEmptyDate(JsonUtils
+				.retieveElementFromJson(rootJson, "legislatura"));
 	}
 
 	protected void initDataAssegnazioneCommReferenteA(String json)

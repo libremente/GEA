@@ -38,6 +38,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			this.initLegislatura(json);
 			this.initTipiAttoLuceneAtto(json);
 			this.initDataSedutaDa(json);
 			this.initDataSedutaA(json);
@@ -47,7 +48,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND "
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\" AND "
 					+ convertListToString("TYPE", this.tipiAttoLucene, true);
 			if (!dataSedutaDa.equals("*") || !dataSedutaA.equals("*")) {
 				query += " AND @crlatti\\:dataSedutaAula:[" + this.dataSedutaDa

@@ -43,6 +43,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			this.initLegislatura(json);
 			this.initCommonParams(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
@@ -55,7 +56,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
 				// solo atti da preso in carico a votato dalla commissione
-				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\""
 						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "

@@ -39,6 +39,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 			ByteArrayInputStream is = new ByteArrayInputStream(
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
+			this.initLegislatura(json);
 			this.initCommonParams(json);
 			this.initRelatori(json);
 			this.initDataNominaRelatoreDa(json);
@@ -55,7 +56,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_FTS_ALFRESCO);
-				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\""
 						+ " AND TYPE:\""
 						+ "crlatti:relatore\" AND "
 						+ convertListToString("@crlatti\\:tipoAttoRelatore",

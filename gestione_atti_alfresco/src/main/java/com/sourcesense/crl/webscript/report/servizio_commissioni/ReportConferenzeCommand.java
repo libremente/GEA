@@ -42,6 +42,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 			/* init json params */
+			this.initLegislatura(json);
 			this.initCommonParams(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
 			this.initDataAssegnazioneCommReferenteA(json);
@@ -55,7 +56,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 				SearchParameters sp = new SearchParameters();
 				sp.addStore(spacesStore);
 				sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\""
+				String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\""
 						+ " AND TYPE:\""
 						+ "crlatti:commissione"
 						+ "\" AND "

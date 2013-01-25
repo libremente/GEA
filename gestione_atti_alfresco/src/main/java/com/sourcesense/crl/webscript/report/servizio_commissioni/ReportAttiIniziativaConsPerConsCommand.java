@@ -41,6 +41,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 					templateByteArray);
 			DocxManager docxManager = new DocxManager(is);
 
+			this.initLegislatura(json);
 			this.initFirmatario(json);
 			this.initTipoFirma(json);
 			this.initDataAssegnazioneCommReferenteDa(json);
@@ -54,7 +55,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 			SearchParameters sp = new SearchParameters();
 			sp.addStore(spacesStore);
 			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti//*\" AND TYPE:\""
+			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\" AND TYPE:\""
 					+ "crlatti:atto\"";
 			if (this.tipologiaFirma.equals("primo")) {
 				query = query + " AND @crlatti\\:primoFirmatario:\""

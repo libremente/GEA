@@ -78,6 +78,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     		 * Report Json example
     		 * 
     		 * {"tipoTemplate":"crlreport:reportAttiAssCommissioniServComm",
+    		 * 	    "legislatura":"IX",
     		 *     "nome":"Atti assegnati alle commissioni","tipiAtto":["PAR","REF","PDA","PDL","PRE"],
     		 *      "commissioni":[],"ruoloCommissione":"Referente","dataAssegnazioneDa":1355958000000,"dataAssegnazioneA":1355958000000,
     		 *      "dataVotazioneCommReferenteDa":null,"dataVotazioneCommReferenteA":null,"dataRitiroDa":null,"dataRitiroA":null,
