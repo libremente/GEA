@@ -29,6 +29,7 @@ if(checkIsNotNull(id)
 	
 	
 	aulaFolderNode.properties["crlatti:motivazioneRinvioAula"] = motivazioneRinvio;
+	aulaFolderNode.properties["crlatti:rinviato"] = true;
 	
 	
 	if(checkIsNotNull(dataSedutaRinvio)) {
