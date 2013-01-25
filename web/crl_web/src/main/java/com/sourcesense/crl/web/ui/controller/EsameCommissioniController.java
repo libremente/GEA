@@ -1252,6 +1252,8 @@ public class EsameCommissioniController {
 
 	public void confrontaDataScadenza() {
 
+		setMessaggioGiorniScadenza("");
+
 		if (getDataScadenza() != null
 				&& getDataSedutaRegistrazioneVotazione() == null) {
 
@@ -1558,28 +1560,32 @@ public class EsameCommissioniController {
 					|| atto.getTipoAtto().equals("PAR")
 					|| atto.getTipoAtto().equals("REL")
 					|| (atto.getTipoAtto().equals("DOC") && !atto.isIterAula())
-					|| commissioneUser.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)) {
+					|| commissioneUser.getRuolo().equals(
+							Commissione.RUOLO_DELIBERANTE)) {
 
-				risultato = "pretty:Chiusura_Iter";
+				if (canChangeStatoAtto()) {
+					risultato = "pretty:Chiusura_Iter";
+				}
 
 			}
 
-			// Se non sono REL, INP e DOC lo stato non cambia
+			// Se non sono REL, INP e DOC e la comm è referente => cambia tutto
 			if (canChangeStatoAtto() && risultato.equals("")) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 				atto.setStato(StatoAtto.TRASMESSO_AULA);
+				commissioneUser.setStato(Commissione.STATO_TRASMESSO);
+
+			} else if (!canChangeStatoAtto()) {
+
+				commissioneUser.setStato(Commissione.STATO_TRASMESSO);
 
 			}
 
 			commissioneUser.setDataTrasmissione(getDataTrasmissione());
 			commissioneUser.setPassaggioDirettoInAula(isPassaggioDiretto());
-			commissioneUser.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
-			
-			// Se non sono REL, INP e DOC lo stato non cambia
-			if (risultato.equals("")) {
-				commissioneUser.setStato(Commissione.STATO_TRASMESSO);
-			}
-			
+			commissioneUser
+					.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
+
 			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 					.setCommissioni(getCommissioniList());
 

@@ -171,7 +171,7 @@ public class Atto implements Cloneable {
 
 	public Atto() {
 		Passaggio passaggio = new Passaggio();
-		passaggio.setNome("Passaggio 1");
+		passaggio.setNome("Passaggio1");
 		passaggi.add(passaggio);
 	}
 

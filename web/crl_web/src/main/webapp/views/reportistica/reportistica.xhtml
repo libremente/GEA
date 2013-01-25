@@ -81,7 +81,8 @@
 
 
 
-				<p:row rendered="#{not empty reportisticaController.selectedReport.nome}">
+				<p:row
+					rendered="#{not empty reportisticaController.selectedReport.nome and reportisticaController.isLegislaturaVisible()}">
 
 					<p:column>
 						<h:outputLabel for="legislature" value="Legislatura: " />
@@ -246,7 +247,8 @@
 
 					<p:column>
 						<p:selectOneMenu id="relatori"
-							value="#{reportisticaController.relatore}" layout="pageDirection">
+							value="#{reportisticaController.relatore}">
+							<f:selectItem itemValue="" itemLabel="Scegli Relatore" />
 							<f:selectItems value="#{reportisticaController.relatori}" />
 						</p:selectOneMenu>
 					</p:column>
@@ -292,11 +294,13 @@
 						<h:outputLabel for="firmatario" value="Firmatario: " />
 					</p:column>
 
-					<p:selectOneMenu id="firmatario"
-						value="#{reportisticaController.firmatario}">
-						<f:selectItems value="#{reportisticaController.firmatari}" />
-					</p:selectOneMenu>
-
+					<p:column>
+						<p:selectOneMenu id="firmatario"
+							value="#{reportisticaController.firmatario}">
+							<f:selectItem itemValue="" itemLabel="Scegli Firmatario" />
+							<f:selectItems value="#{reportisticaController.firmatari}" />
+						</p:selectOneMenu>
+					</p:column>
 				</p:row>
 
 				<p:row
@@ -308,8 +312,10 @@
 
 					<p:column>
 						<p:selectOneMenu id="tipologiaFirma"
-							value="#{lettereNotificheController.tipologiaFirma}">
-
+							value="#{reportisticaController.tipologiaFirma}">
+							<f:selectItem itemValue="" itemLabel="Scegli Tipologia Firma" />
+                            <f:selectItem itemValue="primo" itemLabel="Primo" />
+                            <f:selectItem itemValue="originari" itemLabel="Originari" />  
 						</p:selectOneMenu>
 					</p:column>
 

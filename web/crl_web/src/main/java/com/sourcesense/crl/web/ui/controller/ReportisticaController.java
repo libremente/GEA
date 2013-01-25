@@ -82,14 +82,14 @@ public class ReportisticaController implements Serializable {
 	private Date dataRitiroA;
 	private Date dataNominaRelatoreDa;
 	private Date dataNominaRelatoreA;
-	private Map<String, String> relatori = new HashMap<String, String>();
+	private List<String> relatori = new ArrayList<String> ();
 	private String relatore;
 	private String legislatura;
 	private Map<String, String> organismi = new HashMap<String, String>();
 	private String organismo;
 	private Date dataAssegnazioneParereDa;
 	private Date dataAssegnazioneParereA;
-	private Map<String, String> firmatari = new HashMap<String, String>();
+	private List<String> firmatari = new ArrayList<String>();
 	private String firmatario;
 	private String tipologiaFirma;
 	private Date dataPresentazioneDa;
@@ -127,8 +127,8 @@ public class ReportisticaController implements Serializable {
 		setCommissioniSel(commissioneServiceManager.findAll());
 
 		setOrganismi(organismoStatutarioServiceManager.findAll());
-		setFirmatari(personaleServiceManager.findAllFirmatario());
-		setRelatori(personaleServiceManager.findAllRelatore());
+		setFirmatari(personaleServiceManager.getAllFirmatario());
+		setRelatori(personaleServiceManager.getAllRelatore());
 		setTipiAttoSel(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.list());
 		
@@ -222,6 +222,14 @@ public class ReportisticaController implements Serializable {
 		TreeNode nodeAttiRinv = new DefaultTreeNode("lettera", repAttiRinv,
 				aula);
 
+	}
+	
+	
+	
+	public boolean isLegislaturaVisible(){
+		
+		return (! COMPO_COMMISSIONI.equals(selectedReport.getNome()));
+		
 	}
 
 	public boolean isTipiAttoVisible() {
@@ -521,13 +529,13 @@ public class ReportisticaController implements Serializable {
 		selectedReport.setDataNominaRelatoreA(dataNominaRelatoreA);
 	}
 
-	public List<String> getRelatori() {
+	/*public List<String> getRelatori() {
 		return selectedReport.getRelatori();
 	}
 
 	public void setRelatori(List<String> relatori) {
 		selectedReport.setRelatori(relatori);
-	}
+	}*/
 
 	public String getOrganismo() {
 		return selectedReport.getOrganismo();
@@ -647,17 +655,7 @@ public class ReportisticaController implements Serializable {
 		this.organismi = organismi;
 	}
 
-	public Map<String, String> getFirmatari() {
-		return firmatari;
-	}
-
-	public void setFirmatari(Map<String, String> firmatari) {
-		this.firmatari = firmatari;
-	}
-
-	public void setRelatori(Map<String, String> relatori) {
-		this.relatori = relatori;
-	}
+	
 
 	public TipoAttoServiceManager getTipoAttoServiceManager() {
 		return tipoAttoServiceManager;
@@ -735,6 +733,32 @@ public class ReportisticaController implements Serializable {
 	public void setLegislature(List<String> legislature) {
 		this.legislature = legislature;
 	}
+
+
+
+	public List<String> getRelatori() {
+		return relatori;
+	}
+
+
+
+	public void setRelatori(List<String> relatori) {
+		this.relatori = relatori;
+	}
+
+
+
+	public List<String> getFirmatari() {
+		return firmatari;
+	}
+
+
+
+	public void setFirmatari(List<String> firmatari) {
+		this.firmatari = firmatari;
+	}
+	
+	
 	
 	
 	

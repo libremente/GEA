@@ -248,7 +248,7 @@
 
             <p:row>
               <p:column>
-                <h:outputText style="font-weight: bold;" value="Numero DGR: " 
+                <h:outputText style="font-weight: bold;" value="Numero delibera UdP: " 
                   rendered="#{navigationBean.sessionAttoPDA_UDP}"/>
                 
                 <h:outputText style="font-weight: bold;" value="Numero atto di origine: " 
@@ -266,7 +266,7 @@
 
               <p:column>
                 <b> 
-                  <h:outputLabel for="datadgr" value="Data DGR: " 
+                  <h:outputLabel for="datadgr" value="Data delibera UdP: " 
                   rendered="#{navigationBean.sessionAttoPDA_UDP}"/> 
                   <h:outputLabel for="datadgr" value="Data atto di origine: " 
                     rendered="#{navigationBean.sessionAttoORG}"/>                   
@@ -549,7 +549,10 @@
   
 </div>
 
-<script>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+
+
+<script type="text/javascript">
   if (! ("#{esameAulaController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
 $('#blockedDati').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
 	width:		'350px',

@@ -141,18 +141,14 @@
 		<p:column></p:column>
 		<p:column></p:column>
 	</p:row>
-	<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+	
+	
+	<p:row rendered="#{navigationBean.isSessionAttoPDL() and attoBean.votazioneUrgenza}">
 
-		<p:column>
-			<b> <h:outputLabel for="datapresaincarico"
-					value="Dichiarato urgente: " />
-			</b>
-
-		</p:column>
-		<p:column colspan="5">
-			<p:selectBooleanCheckbox id="urgenteChk" readonly="true"
-				value="#{attoBean.votazioneUrgenza}"></p:selectBooleanCheckbox>
-
+		
+		<p:column colspan="6">
+			<b><h:outputText style="color:red" value="Dichiarato Urgente"> </h:outputText></b>
+			
 		</p:column>
 	</p:row>
 
