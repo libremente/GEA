@@ -14,6 +14,7 @@ var numeroDgr = filterParam(atto.get("numeroDgr"));
 var dataDgr = filterParam(atto.get("dataDgr"));
 var firmatari = filterParam(atto.get("firmatari"));
 var pubblico = filterParam(atto.get("pubblico"));
+var nuovoOggetto = filterParam(atto.get("nuovoOggetto"));
 
 var scadenza60gg = filterParam(atto.get("scadenza60gg"));
 var iterAula = filterParam(atto.get("iterAula"));
@@ -24,6 +25,7 @@ if(checkIsNotNull(id)){
 	attoNode.properties["crlatti:oggetto"] = oggetto;
 	attoNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
 	attoNode.properties["crlatti:pubblico"] = pubblico;
+	attoNode.properties["crlatti:nuovoOggetto"] = nuovoOggetto;
 	
 	attoNode.properties["crlatti:scadenza60gg"] = scadenza60gg;
 	attoNode.properties["crlatti:iterAula"] = iterAula;
