@@ -5,10 +5,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
@@ -21,7 +24,9 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.TreeMultimap;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
+import com.sourcesense.crl.webscript.report.model.Atto;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
@@ -45,10 +50,6 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 			this.initDataNominaRelatoreDa(json);
 			this.initDataNominaRelatoreA(json);
 
-			String sortField1 = "@{" + CRL_ATTI_MODEL + "}commissioneRelatore";// ordine
-			String sortField2 = "@{" + CRL_ATTI_MODEL + "}dataNominaRelatore"; // alfabetico
-			String sortField3 = "@{" + CRL_ATTI_MODEL + "}tipoAttoRelatore";// ordine
-			String sortField4 = "@{" + CRL_ATTI_MODEL + "}numeroAttoRelatore"; // alfabetico
 
 			Map<String, ResultSet> relatore2results = Maps.newHashMap();
 			/* execute guery grouped by Relatore */
@@ -73,28 +74,25 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 							+ this.dataNominaRelatoreA + " ]";
 				}
 				sp.setQuery(query);
-				sp.addSort(sortField1, true);
-				sp.addSort(sortField2, true);
-				sp.addSort(sortField3, true);
-				sp.addSort(sortField4, true);
 				ResultSet currentResults = this.searchService.query(sp);
 				relatore2results.put(relatore, currentResults);
 			}
 
-			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
+			Map<NodeRef, NodeRef> atto2relatore = new HashMap<NodeRef, NodeRef>();
 			TreeMap<String, List<NodeRef>> relatore2atti = this
 					.retrieveAttiOrdered(relatore2results, spacesStore,
-							atto2commissione);
+							atto2relatore);
+			TreeMultimap<String,Atto> commissione2atti=this.initCommissione2AttiMap(relatore2atti,atto2relatore);
 
 			// obtain as much table as the results spreaded across the resultSet
 			XWPFDocument generatedDocument = docxManager
 					.generateFromTemplateMap(
-							this.retrieveLenghtMap(relatore2atti), 4, false);
+							this.retrieveLenghtMap(commissione2atti), 4, false);
 			// convert to input stream
 			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
 			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					relatore2atti);
+					commissione2atti);
 			ostream = new ByteArrayOutputStream();
 			finalDocument.write(ostream);
 
@@ -106,33 +104,75 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 
 	}
 
+	private Map<String, Integer> retrieveLenghtMap(
+			TreeMultimap<String, Atto> commissione2atti) {
+		Map<String, Integer> commissione2length=Maps.newTreeMap();
+		for(String commissione:commissione2atti.keySet()){
+			SortedSet<Atto> sortedAtto = commissione2atti.get(commissione);
+			commissione2length.put(commissione, sortedAtto.size());
+		}
+		return commissione2length;
+	}
+
+	private TreeMultimap<String,Atto> initCommissione2AttiMap(
+			TreeMap<String, List<NodeRef>> relatore2atti,Map<NodeRef, NodeRef> atto2relatore) {
+		TreeMultimap<String,Atto> commissione2Atti=TreeMultimap.create();
+		for(String relatore:relatore2atti.keySet()){
+			for(NodeRef attoNode:relatore2atti.get(relatore)){
+				Atto currentAtto=new Atto();
+				Map<QName, Serializable> attoProperties = nodeService
+						.getProperties(attoNode);
+				Map<QName, Serializable> relatoreProperties = nodeService
+						.getProperties(atto2relatore.get(attoNode));
+				QName nodeRefType = nodeService.getType(attoNode);
+				String tipoAtto = (String) nodeRefType.getLocalName();
+				Date dataNomina = (Date) this
+						.getNodeRefProperty(relatoreProperties,
+								"dataNominaRelatore");
+				String commissione = (String) this.getNodeRefProperty(
+						relatoreProperties, "commissioneRelatore");
+				String numeroAtto = ""
+						+ (Integer) this.getNodeRefProperty(attoProperties,
+								"numeroAtto");
+				currentAtto.setAttoNodeRef(attoNode);
+				currentAtto.setConsigliere(relatore);
+				currentAtto.setDataNomina(dataNomina);
+				currentAtto.setNumeroAtto(numeroAtto);
+				currentAtto.setTipoAtto(tipoAtto);
+				commissione2Atti.put(commissione, currentAtto);				
+			}
+		}
+		
+		return commissione2Atti;
+		
+	}
+
 	/**
 	 * 
 	 * 
 	 * @param finalDocStream
+	 * @param atto2relatore 
 	 * @param queryRes
 	 * @return
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			Map<String, List<NodeRef>> relatore2atti) throws IOException {
+			TreeMultimap<String,Atto> commissione2atti) throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);
 		int tableIndex = 0;
 		List<XWPFTable> tables = document.getTables();
-		for (String relatore : relatore2atti.keySet()) {
-			for (NodeRef currentAtto : relatore2atti.get(relatore)) {
+		for (String commissione : commissione2atti.keySet()) {
+			for (Atto currentAtto : commissione2atti.get(commissione)) {
 				XWPFTable currentTable = tables.get(tableIndex);
 				Map<QName, Serializable> attoProperties = nodeService
-						.getProperties(currentAtto);
-				QName nodeRefType = nodeService.getType(currentAtto);
-				String tipoAtto = (String) nodeRefType.getLocalName();
-				// from Atto
-				String numeroAtto = ""
-						+ (Integer) this.getNodeRefProperty(attoProperties,
-								"numeroAtto");
+						.getProperties(currentAtto.getAttoNodeRef());
+				String tipoAtto =currentAtto.getTipoAtto();
+				Date dataNomina =currentAtto.getDataNomina();
+				String numeroAtto =currentAtto.getNumeroAtto();
 				String oggetto = (String) this.getNodeRefProperty(
 						attoProperties, "oggetto");
+				String consigliere=currentAtto.getConsigliere();
 
 				ArrayList<String> commReferenteList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commReferente");
@@ -143,24 +183,21 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 				ArrayList<String> commConsultivaList = (ArrayList<String>) this
 						.getNodeRefProperty(attoProperties, "commConsultiva");
 				String commConsultiva = this.renderList(commConsultivaList);
+				
 
 				currentTable
-						.getRow(0)
-						.getCell(0)
-						.setText(
-								this.checkStringEmpty(tipoAtto + " "
-										+ numeroAtto));
-				currentTable.getRow(0).getCell(1)
-						.setText(this.checkStringEmpty(oggetto));
-				currentTable.getRow(1).getCell(2)
-						.setText(this.checkStringEmpty(commReferente));
-				currentTable
-						.getRow(2)
-						.getCell(2)
-						.setText(
-								this.checkStringEmpty(commConsultiva.substring(
-										0, commConsultiva.length() - 1)));
-
+				.getRow(0)
+				.getCell(0)
+				.setText(
+						this.checkStringEmpty(consigliere));
+		currentTable.getRow(0).getCell(1)
+				.setText("Nominato il "+this.checkDateEmpty(dataNomina)+" - "+this.checkStringEmpty(tipoAtto + " "
+						+ numeroAtto+" - "+oggetto));
+		currentTable.getRow(1).getCell(2)
+				.setText(this.checkStringEmpty(commReferente));
+		currentTable.getRow(2).getCell(2)
+				.setText(this.checkStringEmpty(commConsultiva));
+		
 				tableIndex++;
 			}
 		}
