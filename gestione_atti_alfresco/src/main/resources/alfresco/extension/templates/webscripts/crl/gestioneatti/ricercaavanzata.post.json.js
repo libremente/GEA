@@ -64,6 +64,7 @@ var dataLr = atto.get("dataLR");
 var commissione1 = atto.get("commissione1");
 var commissione2 = atto.get("commissione2");
 var commissione3 = atto.get("commissione3");
+var commissioneUser = atto.get("commissioneUser");
 
 var ruoloCommissione1 = atto.get("ruoloCommissione1");
 var ruoloCommissione2 = atto.get("ruoloCommissione2");
@@ -139,19 +140,21 @@ if(checkIsNotNull(tipoAttoString)){
 	} else if(tipoAttoString == "REL") {
 		type = "crlatti:attoRel";	
 	} else if(tipoAttoString == "EAC") {
-		type = "crlatti:attoEac";	
+		type = "crlatti:attoEac";
 	} else if(tipoAttoString == "REF") {
 		type = "crlatti:attoRef";	
 	} else if(tipoAttoString == "DOC") {
 		type = "crlatti:attoDoc";	
 	} else if(tipoAttoString == "ORG") {
 		type = "crlatti:attoOrg";	
+	} else if(tipoAttoString == "MIS") {
+		type = "crlatti:attoMis";	
 	}
 }
 
 luceneQuery += "AND TYPE:\""+type+"\"";
 
-if(type=="crlatti:atto" || type=="crlatti:attoEAC"){
+if(type=="crlatti:atto" || type=="crlatti:attoEac"){
 	
 	if(checkIsNotNull(legislatura)){
 		luceneQuery = verifyAND(luceneQuery);
@@ -220,6 +223,7 @@ if(checkIsNotNull(firmatario)){
 }
 
 //commissioni e ruoli
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissioneUser,null);
 luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione1,ruoloCommissione1);
 luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione2,ruoloCommissione2);
 luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione3,ruoloCommissione3);

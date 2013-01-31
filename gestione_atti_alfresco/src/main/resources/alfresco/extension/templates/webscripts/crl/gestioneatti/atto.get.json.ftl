@@ -265,6 +265,33 @@
     	</#list>
     <#else></#if>],
     
+    "seduteAtto" : [<#if seduteAtto?exists>
+    	<#list seduteAtto as sedutaAtto>
+    		{
+    			"sedutaAtto": {
+    				"idSeduta": "${sedutaAtto.idSeduta}",
+    				"nomeOrgano": "${sedutaAtto.nomeOrgano}",
+    				"dataSeduta": "${sedutaAtto.dataSeduta?string("yyyy-MM-dd")}",
+    				"links": [ 
+					<#list sedutaAtto.links as link>
+						{
+							"link" : 
+							{
+								"descrizione":"${link.name}",
+								"indirizzo":"<#if link.properties["crlatti:indirizzoCollegamento"]?exists>${link.properties["crlatti:indirizzoCollegamento"]}<#else></#if>",
+								"pubblico":"<#if link.properties["crlatti:pubblico"]?exists>${link.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>"
+							}
+						}<#if link_has_next>,</#if>
+					</#list>
+					]
+    			}
+    		}
+    		<#if sedutaAtto_has_next>,</#if>
+    	</#list>
+    
+    </#if>
+    ],
+    
     "passaggi" : [<#if passaggi?exists>
 		<#list passaggi as passaggio>
 			{

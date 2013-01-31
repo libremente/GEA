@@ -36,8 +36,12 @@ if(checkIsNotNull(id)){
 			
 		var attoTrattatoFolderNode = utils.getNodeFromString(idAttoTrattato);
 		
+		var tipoAttoTrattato = attoTrattatoFolderNode.typeShort.substring(12).toUpperCase();
+		
+		var nomeAttoTrattato = tipoAttoTrattato +"-"+attoTrattatoFolderNode.name
+		
 		//verifica l'esistenza dell'atto all'interno del folder AttiTrattati
-		var existAttoTrattatoXPathQuery = "*[@cm:name='"+attoTrattatoFolderNode.name+"']";
+		var existAttoTrattatoXPathQuery = "*[@cm:name='"+nomeAttoTrattato+"']";
 		var attoTrattatoEsistenteResults = attiFolderNode.childrenByXPath(existAttoTrattatoXPathQuery);
 		
 		var attoTrattatoNode = null;
@@ -48,7 +52,8 @@ if(checkIsNotNull(id)){
 			attoTrattatoNode = attoTrattatoEsistenteResults[0];
 			creaAssociazione = false;
 		} else {
-			attoTrattatoNode = attiFolderNode.createNode(attoTrattatoFolderNode.name,"crlatti:attoTrattatoODG");
+			attoTrattatoNode = attiFolderNode.createNode(nomeAttoTrattato,"crlatti:attoTrattatoODG");
+			attoTrattatoNode.content = nomeAttoTrattato;
 		}
 	
 		if(creaAssociazione){
@@ -57,6 +62,8 @@ if(checkIsNotNull(id)){
 		
 		attoTrattatoNode.properties["crlatti:previstoAttoTrattatoODG"] = previstoAttoTrattato;
 		attoTrattatoNode.properties["crlatti:discussoAttoTrattatoODG"] = discussoAttoTrattato;
+		attoTrattatoNode.properties["crlatti:numeroAttoTrattatoODG"] = attoTrattatoFolderNode.name;
+		attoTrattatoNode.properties["crlatti:tipoAttoTrattatoODG"] = tipoAttoTrattato;
 		attoTrattatoNode.properties["crlatti:numeroOrdinamento"] = numeroOrdinamento;
 		
 		attoTrattatoNode.save();
@@ -76,7 +83,10 @@ if(checkIsNotNull(id)){
 		for (var q=0; q<atti.length(); q++){
 			var atto = atti.get(q).get("attoTrattato").get("atto").get("atto");
 			var attoTrattato = utils.getNodeFromString(atto.get("id"));
-			if(""+attoTrattato.name+""==""+attoTrattatoNelRepository.name+""){
+			
+			var attoTrattatoTipo = attoTrattato.typeShort.substring(12).toUpperCase();
+			
+			if(""+attoTrattatoTipo+"-"+attoTrattato.name+""==""+attoTrattatoNelRepository.name+""){
 				trovato = true;
 				break
 			}
@@ -118,6 +128,7 @@ if(checkIsNotNull(id)){
 			creaAssociazione = false;
 		} else {
 			attoIndirizzoTrattatoNode = attiSindacatoFolderNode.createNode(attoIndirizzoTrattatoFolderNode.name,"crlatti:attoIndirizzoTrattatoODG");
+			attoIndirizzoTrattatoNode.content = attoIndirizzoTrattatoFolderNode.name;
 		}
 	
 		if(creaAssociazione){

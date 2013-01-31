@@ -5,7 +5,7 @@ public class Committee {
 
     private int id;
     private String name;
-
+    private int order;
 
     public Committee() {
     }
@@ -26,9 +26,15 @@ public class Committee {
         this.name = name;
     }
 
- 
+    public int getOrder() {
+		return order;
+	}
 
-    @Override
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("Committee");

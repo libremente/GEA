@@ -36,7 +36,7 @@ if(checkIsNotNull(jsonAbbinamento)
 	var abbinamentiFolderNode = passaggioFolderNode.childrenByXPath(xPathQueryAbbinamenti)[0];
 	
 	//verifica esistenza abbinamento preesistente
-	var esisteAbbinamentoXPathQuery = "*[@cm:name='"+attoAbbinatoFolderNode.name+"']";
+	var esisteAbbinamentoXPathQuery = "*[@cm:name='"+attoAbbinatoFolderNode.typeShort.substring(12) + " " + attoAbbinatoFolderNode.name+"']";
 	var abbinamentoEsistenteResults = abbinamentiFolderNode.childrenByXPath(esisteAbbinamentoXPathQuery);
 	
 	var creaAssociazione = true;
@@ -46,6 +46,7 @@ if(checkIsNotNull(jsonAbbinamento)
 	} else {
 		var nomeNodoAbbinato = attoAbbinatoFolderNode.typeShort.substring(12) + " " + attoAbbinatoFolderNode.name;
 		abbinamentoNode = abbinamentiFolderNode.createNode(nomeNodoAbbinato,"crlatti:abbinamento");
+		abbinamentoNode.content = nomeNodoAbbinato;
 	}
 
 	//aggiornamento dei metadati
@@ -81,7 +82,7 @@ if(checkIsNotNull(jsonAbbinamento)
 	var abbinamentiAttoAbbinatoFolderNode = passaggioAttoAbbinatoFolderNode.childrenByXPath(xPathQueryAbbinamentiAttoAbbinato)[0];
 	
 	//verifica esistenza abbinamento preesistente
-	var esisteAbbinamentoAttoAbbinatoXPathQuery = "*[@cm:name='"+attoFolderNode.name+"']";
+	var esisteAbbinamentoAttoAbbinatoXPathQuery = "*[@cm:name='"+attoFolderNode.typeShort.substring(12) + " " + attoFolderNode.name+"']";
 	var abbinamentoAttoAbbinatoEsistenteResults = abbinamentiAttoAbbinatoFolderNode.childrenByXPath(esisteAbbinamentoAttoAbbinatoXPathQuery);
 	
 	var creaAssociazioneAttoAbbinato = true;
@@ -91,6 +92,7 @@ if(checkIsNotNull(jsonAbbinamento)
 	} else {
 		var nomeNodoAbbinamento = attoFolderNode.typeShort.substring(12) + " " + attoFolderNode.name;
 		abbinamentoAttoAbbinatoNode = abbinamentiAttoAbbinatoFolderNode.createNode(nomeNodoAbbinamento,"crlatti:abbinamento");
+		abbinamentoAttoAbbinatoNode.content = nomeNodoAbbinamento;
 	}
 	
 	

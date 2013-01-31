@@ -43,11 +43,14 @@ public class AttoUtil {
 	public static final String PROP_NUM_ATTO = "numeroAtto";
 	public static final String PROP_ESTENSIONE_ATTO = "estensioneAtto";
 	public static final String PROP_OGGETTO_ATTO = "oggetto";
+	public static final String PROP_NUMERO_LCR_ATTO = "numeroLcr";
+	public static final String PROP_DATA_SEDUTA_AULA_ATTO = "dataSedutaAula";
 	public static final String PROP_DESCRIZIONE_INIZIATIVA = "descrizioneIniziativa";
 	public static final String PROP_TIPO_INIZIATIVA = "tipoIniziativa";
 	public static final String PROP_DATA_SCADENZA = "dataScadenza";
 	public static final String PROP_NUMERO_DGR = "numeroDgr";
 	public static final String PROP_DATA_DGR = "dataDgr";
+	public static final String PROP_NUMERO_DCR = "numeroDcr";
 	public static final String PROP_COMMISSIONI_REFERENTI = "commReferente";
 	public static final String PROP_COMMISSIONI_CONSULTIVE = "commConsultiva";
 	public static final String PROP_COMMISSIONE_COREFERENTE = "commCoreferente";
@@ -91,7 +94,7 @@ public class AttoUtil {
 	
 	public static final String INIZIATIVA_CONSILIARE = "01_ATTO DI INIZIATIVA CONSILIARE";
 	public static final String INIZIATIVA_POPOLARE = "03_ATTO DI INIZIATIVA POPOLARE";
-
+	public static final String INIZIATIVA_PRESIDENTE_GIUNTA = "06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA";
 
 	
 

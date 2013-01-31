@@ -842,6 +842,12 @@
 			<show-property name="crlatti:gruppoConsigliereAnagrafica" />
 		</property-sheet>
 	</config>
+	
+	<config evaluator="node-type" condition="crlatti:commissioneAnagrafica">
+		<property-sheet>
+			<show-property name="crlatti:numeroOrdinamentoCommissioneAnagrafica" />
+		</property-sheet>
+	</config>
 
 	<config evaluator="node-type" condition="crlatti:sedutaODG">
 		<property-sheet>
@@ -930,6 +936,8 @@
 			<show-property name="crlatti:attoAssociatoCollegamentoAttiIndirizzo" />
 		</property-sheet>
 	</config>
+	
+	
 
 
 	<config evaluator="string-compare" condition="Advanced Search">

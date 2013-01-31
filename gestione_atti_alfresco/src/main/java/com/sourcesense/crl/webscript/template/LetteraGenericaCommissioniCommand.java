@@ -43,7 +43,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     	Date dataDgr = (Date) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_DGR));
     	
     	if(dataDgr != null) {
-    		SimpleDateFormat dataDgrFormatter = new SimpleDateFormat("dd/MM/yy");
+    		SimpleDateFormat dataDgrFormatter = new SimpleDateFormat("dd/MM/yyyy");
     		String dataDgrString = dataDgrFormatter.format(dataDgr);
     		searchTerms.put("<dataDGR>", dataDgrString);
     	}
@@ -94,7 +94,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     		if(i!=0){
     			listaCommissioniPrincipaliDestString += "\r\r";
     		}
-    		listaCommissioniPrincipaliDestString += "Al Signor Presidente\rdella Commissione consiliare "+getCommissioneNumber(listaCommissioniPrincipali.get(i));
+    		listaCommissioniPrincipaliDestString += "Al Signor Presidente\rdella "+getCommissioneNumber(listaCommissioniPrincipali.get(i)) +" Commissione";
     	}
     					
     	searchTerms.put("<listaCommissioniPrincipaliDest>", listaCommissioniPrincipaliDestString);
@@ -109,29 +109,41 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     	NodeRef commissioneCorrenteNodeRef = attoUtil.getCommissioneCorrente(attoNodeRef, gruppo);
     	
     
-    	// <relatoreCommissione>
-    	
-    	String quorumVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_QUORUM_VOTAZIONE_COMMISSIONE));
-    	String esitoVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ESITO_VOTAZIONE_COMMISSIONE));
-    	Date dataVotazione = (Date) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_VOTAZIONE_COMMISSIONE));
-    	
-    	if(dataVotazione != null) {
-    		SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yy", Locale.ITALY);
-    		String dataVotazioneString = formatter.format(dataVotazione);
-        	searchTerms.put("<dataVotazione>", dataVotazioneString);
+    	if(commissioneCorrenteNodeRef!=null){
+    		// <relatoreCommissione>
+        	
+        	String quorumVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_QUORUM_VOTAZIONE_COMMISSIONE));
+        	
+        	if(quorumVotazione.equalsIgnoreCase("maggioranza")){
+        		quorumVotazione = "a maggioranza";
+        	}else if(quorumVotazione.equalsIgnoreCase("unanimità")){
+        		quorumVotazione = "all'unanimità";
+        	}
+        	
+        	
+        	String esitoVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ESITO_VOTAZIONE_COMMISSIONE));
+        	Date dataVotazione = (Date) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_VOTAZIONE_COMMISSIONE));
+        	
+        	if(dataVotazione != null) {
+        		SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", Locale.ITALY);
+        		String dataVotazioneString = formatter.format(dataVotazione);
+            	searchTerms.put("<dataVotazione>", dataVotazioneString);
+        	}
+        	
+        	searchTerms.put("<quorumVotazione>", quorumVotazione);
+        	searchTerms.put("<esitoVotazione>", esitoVotazione);
+        	
+        	// get Relatore con property crlatti:dataUscitaRelatore non valorizzata
+        	
+        	NodeRef relatoreNodeRef = attoUtil.getRelatoreCorrente(commissioneCorrenteNodeRef);
+        	
+        	if(relatoreNodeRef!=null){
+        		String relatore = (String) nodeService.getProperty(relatoreNodeRef, ContentModel.PROP_NAME);
+        		searchTerms.put("<relatoreCommissione>", relatore);
+        	}
+    		
     	}
     	
-    	searchTerms.put("<quorumVotazione>", quorumVotazione);
-    	searchTerms.put("<esitoVotazione>", esitoVotazione);
-    	
-    	// get Relatore con property crlatti:dataUscitaRelatore non valorizzata
-    	
-    	NodeRef relatoreNodeRef = attoUtil.getRelatoreCorrente(commissioneCorrenteNodeRef);
-    	
-    	if(relatoreNodeRef!=null){
-    		String relatore = (String) nodeService.getProperty(relatoreNodeRef, ContentModel.PROP_NAME);
-    		searchTerms.put("<relatoreCommissione>", relatore);
-    	}
     			
     			
 		// Generate byte array of filled document content

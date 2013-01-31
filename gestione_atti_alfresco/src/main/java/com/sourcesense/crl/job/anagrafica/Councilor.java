@@ -13,10 +13,10 @@ public class Councilor {
     private String legislatureNumber;
     private String groupName;
     private String codeGroupName;
-    private List<String> committeeNames;
+    private List<Committee> committees;
 
     public Councilor() {
-        committeeNames = new ArrayList<String>();
+        committees = new ArrayList<Committee>();
     }
 
     public Councilor(String firstName, String lastName, String legislatureNumber, String groupName) {
@@ -24,7 +24,7 @@ public class Councilor {
         this.lastName = lastName;
         this.legislatureNumber = legislatureNumber;
         this.groupName = groupName;
-        this.committeeNames = new ArrayList<String>();
+        this.committees = new ArrayList<Committee>();
     }
 
     
@@ -77,16 +77,16 @@ public class Councilor {
 		this.codeGroupName = codeGroupName;
 	}
 
-	public List<String> getCommitteeNames() {
-        return committeeNames;
+	public List<Committee> getCommittees() {
+        return committees;
     }
 
-    public void setCommitteeNames(List<String> committeeNames) {
-        this.committeeNames = committeeNames;
+    public void setCommittees(List<Committee> committees) {
+        this.committees = committees;
     }
 
-    public void addCommittee(String committee) {
-        this.committeeNames.add(committee);
+    public void addCommittee(Committee committee) {
+        this.committees.add(committee);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Councilor {
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", legislatureNumber='").append(legislatureNumber).append('\'');
         sb.append(", groupName='").append(groupName).append('\'');
-        sb.append(", committeeNames=").append(committeeNames);
+       // sb.append(", committeeNames=").append(committeeNames);
         sb.append('}');
         return sb.toString();
     }

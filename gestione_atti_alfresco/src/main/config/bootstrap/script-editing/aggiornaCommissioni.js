@@ -25,7 +25,7 @@ for (var i=0; i<commissioni.length; i++) {
 	
 	if(commissioni[i].properties["crlatti:ruoloCommissione"] == "Referente") {
 		commReferenteAtto.push(commissioni[i].name);
-		attoNode.properties["crlatti:dataAssegnazioneCommissioneReferente"] = commissioni[i].properties["crlatti:dataAssegnazioneCommissione"];
+		//attoNode.properties["crlatti:dataAssegnazioneCommissioneReferente"] = commissioni[i].properties["crlatti:dataAssegnazioneCommissione"];
 	}
 
 	if(commissioni[i].properties["crlatti:ruoloCommissione"] == "Co-Referente") {
@@ -39,6 +39,19 @@ for (var i=0; i<commissioni.length; i++) {
 	if(commissioni[i].properties["crlatti:ruoloCommissione"] == "Deliberante") {
 		commDeliberanteAtto.push(commissioni[i].name);
 	}
+	
+	
+	if(commissioni[i].properties["crlatti:ruoloCommissione"] == "Referente" || commissioni[i].properties["crlatti:ruoloCommissione"] == "Co-Referente" ||
+			commissioni[i].properties["crlatti:ruoloCommissione"] == "Redigente" || commissioni[i].properties["crlatti:ruoloCommissione"] == "Deliberante" ){
+		
+		attoNode.properties["crlatti:dataAssegnazioneCommissioneReferente"] = commissioni[i].properties["crlatti:dataAssegnazioneCommissione"];
+		
+		attoNode.properties["crlatti:esitoVotoComRef"] = commissioni[i].properties["crlatti:esitoVotazioneCommissione"];
+		attoNode.properties["crlatti:dataSedutaComm"] = commissioni[i].properties["crlatti:dataVotazioneCommissione"];
+				
+		
+	}
+	
 	
 	// Controllo emendamenti in commissione
 	

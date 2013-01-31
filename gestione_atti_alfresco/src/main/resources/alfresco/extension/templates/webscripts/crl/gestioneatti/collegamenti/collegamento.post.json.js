@@ -29,7 +29,7 @@ if(checkIsNotNull(id)){
 		
 		
 		//verifica l'esistenza del collegamento all'interno del folder Collegamenti/Interni
-		var existCollegamentoXPathQuery = "*[@cm:name='"+attoCollegatoFolderNode.name+"']";
+		var existCollegamentoXPathQuery = "*[@cm:name='"+attoCollegatoFolderNode.typeShort.substring(12) + " " + attoCollegatoFolderNode.name+"']";
 		var collegamentoEsistenteResults = interniFolderNode.childrenByXPath(existCollegamentoXPathQuery);
 		var collegamentoNode = null;
 		
@@ -41,6 +41,7 @@ if(checkIsNotNull(id)){
 		} else {
 			var nomeCollegamento = attoCollegatoFolderNode.typeShort.substring(12) + " " + attoCollegatoFolderNode.name;
 			collegamentoNode = interniFolderNode.createNode(nomeCollegamento,"crlatti:collegamento");
+			collegamentoNode.content = nomeCollegamento;
 		}
 	
 		//aggiornamento dei metadati
@@ -67,7 +68,7 @@ if(checkIsNotNull(id)){
 		
 		
 		//verifica esistenza collegamento preesistente
-		var esisteCollegamentoAttoCollegatoXPathQuery = "*[@cm:name='"+attoFolderNode.name+"']";
+		var esisteCollegamentoAttoCollegatoXPathQuery = "*[@cm:name='"+attoFolderNode.typeShort.substring(12) + " " + attoFolderNode.name+"']";
 		var collegamentoAttoCollegatoEsistenteResults = interniAttoCollegatoFolderNode.childrenByXPath(esisteCollegamentoAttoCollegatoXPathQuery);
 		
 		var creaAssociazioneAttoCollegato = true;
@@ -77,6 +78,7 @@ if(checkIsNotNull(id)){
 		} else {
 			var nomeCollegamentoAttoCollegato = attoFolderNode.typeShort.substring(12) + " " + attoFolderNode.name;
 			collegamentoAttoCollegatoNode = interniAttoCollegatoFolderNode.createNode(nomeCollegamentoAttoCollegato,"crlatti:collegamento");
+			collegamentoAttoCollegatoNode.content = nomeCollegamentoAttoCollegato;
 		}
 		
 		
@@ -104,7 +106,7 @@ if(checkIsNotNull(id)){
 		for (var q=0; q<collegamenti.length(); q++){
 			var collegamento = collegamenti.get(q).get("collegamento");
 			var idAttoCollegamento = filterParam(collegamento.get("idAttoCollegato"));
-			var attoCollegamento = utils.getNodeFromString(idAttoCollegato);
+			var attoCollegamento = utils.getNodeFromString(idAttoCollegamento);
 			var nomeAttoCollegamento = attoCollegamento.typeShort.substring(12) + " " + attoCollegamento.name;
 			
 			if(""+nomeAttoCollegamento+""==""+collegamentoNelRepository.name+""){

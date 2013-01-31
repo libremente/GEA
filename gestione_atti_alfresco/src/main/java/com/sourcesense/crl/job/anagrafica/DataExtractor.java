@@ -99,6 +99,7 @@ public class DataExtractor {
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
+
             PreparedStatement ps = conn.prepareStatement(Constant.QUERY_ALL_COUNCILORS_FILTERED_BY_LEGISLATURE);
             ps.setInt(1, idCurrentLegislature);
             ps.setInt(2, idCurrentLegislature);
@@ -116,7 +117,20 @@ public class DataExtractor {
                 if (committes != null && !"".equals(committes) && !"#".equals(committes)) {
                     StringTokenizer st = new StringTokenizer(committes, "#");
                     while (st.hasMoreTokens()) {
-                        councilor.addCommittee(st.nextToken());
+                    	String comm = st.nextToken();
+                    	Committee c = new Committee();
+                    	
+                    	String[] strArray = comm.split("!");
+                    	if(strArray.length>0){
+                    		c.setName(strArray[0]);
+                    		if(strArray.length>1){
+                        		c.setOrder(Integer.valueOf(comm.split("!")[1]));
+                    		}else{
+                        		c.setOrder(1000);
+                        	}
+                    	}
+                    
+                        councilor.addCommittee(c);
                     }
                 }
                 councilors.add(councilor);

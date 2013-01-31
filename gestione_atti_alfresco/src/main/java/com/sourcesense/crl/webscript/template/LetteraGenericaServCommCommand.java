@@ -1,6 +1,5 @@
 package com.sourcesense.crl.webscript.template;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,10 +11,6 @@ import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.service.cmr.search.ResultSet;
-import org.alfresco.service.cmr.search.SearchService;
-import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
-import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -87,7 +82,6 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     		searchTerms.put("<ultimoFirmatarioAtto>", ultimoFirmatarioString);
     	}
     	
-    	// Check for iniziativa popolare
 
     	if(iniziativa!=null && iniziativa!=""){
 	    	if(iniziativa.equals(attoUtil.INIZIATIVA_CONSILIARE)){
@@ -102,9 +96,21 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 	    	    		}
 	    	    	}
 	        	}
+	        	
+	        	searchTerms.put("<iniziativa>", iniziativa.substring(8));
+	        	
+	        }else if(iniziativa.equals(attoUtil.INIZIATIVA_PRESIDENTE_GIUNTA)){
+	        	
+	        	iniziativa = "DI INIZIATIVA: PRESIDENTE DELLA GIUNTA REGIONALE";
+	        	searchTerms.put("<iniziativa>", iniziativa);
+	        	
+	        }else{
+	        	
+	        	iniziativa = iniziativa.replaceAll("INIZIATIVA", "INIZIATIVA:");
+	        	searchTerms.put("<iniziativa>", iniziativa.substring(8));
 	        }
 	    	
-	    	searchTerms.put("<iniziativa>", iniziativa.substring(8));
+	    	
 	    	searchTerms.put("<iniziativaMinuscolo>", iniziativa.substring(8).toLowerCase());
 	    	searchTerms.put("<descrizioneIniziativa>", descrizioneIniziativa);
     	}

@@ -21,6 +21,12 @@ if(numeroEmendamentiApprovati>0){
 	attoNode.properties["crlatti:emendatoAulaAtto"] = false;
 }
 
+attoNode.properties["crlatti:numeroLcr"] = document.properties["crlatti:numeroLcrPassaggioAula"];
+attoNode.properties["crlatti:esitoVotoAula"] = document.properties["crlatti:esitoVotoPassaggioAula"];
+attoNode.properties["crlatti:dataSedutaAula"] = document.properties["crlatti:dataSedutaPassaggioAula"];
+attoNode.properties["crlatti:numeroDcr"] = document.properties["crlatti:numeroDcrPassaggioAula"];
+
+
 attoNode.save();
 
 

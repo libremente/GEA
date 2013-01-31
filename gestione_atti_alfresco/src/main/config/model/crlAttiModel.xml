@@ -716,6 +716,19 @@
 			</mandatory-aspects>
 		</type>
 		
+		<type name="crlatti:commissioneAnagrafica">
+			<title>Anagrafica Commissione</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:numeroOrdinamentoCommissioneAnagrafica">
+					<title>Ordinamento</title>
+					<type>d:int</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
+		</type>
 		
 		<!-- fine anagrafica -->
 		
@@ -1121,6 +1134,14 @@
 			<title>Atto trattato OdG</title>
 			<parent>cm:content</parent>
 			<properties>
+				<property name="crlatti:tipoAttoTrattatoODG">
+					<title>Tipo Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoTrattatoODG">
+					<title>Numero Atto</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:previstoAttoTrattatoODG">
 					<title>Previsto</title>
 					<type>d:boolean</type>

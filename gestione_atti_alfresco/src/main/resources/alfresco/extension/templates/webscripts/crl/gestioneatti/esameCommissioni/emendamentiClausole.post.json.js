@@ -10,21 +10,37 @@ var passaggio = json.get("target").get("passaggio");
 var commissioneTarget = getCommissioneTarget(json, passaggio, commissioneUtente);
 
 
-var numEmendPresentatiMaggiorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMaggiorEsameCommissioni"));
-var numEmendPresentatiMinorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMinorEsameCommissioni"));
-var numEmendPresentatiGiuntaEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiGiuntaEsameCommissioni"));
-var numEmendPresentatiMistoEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMistoEsameCommissioni"));
+//var numEmendPresentatiMaggiorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMaggiorEsameCommissioni"));
+//var numEmendPresentatiMinorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMinorEsameCommissioni"));
+//var numEmendPresentatiGiuntaEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiGiuntaEsameCommissioni"));
+//var numEmendPresentatiMistoEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendPresentatiMistoEsameCommissioni"));
+//
+//var numEmendApprovatiMaggiorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMaggiorEsameCommissioni"));
+//var numEmendApprovatiMinorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMinorEsameCommissioni"));
+//var numEmendApprovatiGiuntaEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiGiuntaEsameCommissioni"));
+//var numEmendApprovatiMistoEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMistoEsameCommissioni"));
 
-var numEmendApprovatiMaggiorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMaggiorEsameCommissioni"));
-var numEmendApprovatiMinorEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMinorEsameCommissioni"));
-var numEmendApprovatiGiuntaEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiGiuntaEsameCommissioni"));
-var numEmendApprovatiMistoEsameCommissioni = filterNumericParam(commissioneTarget.get("numEmendApprovatiMistoEsameCommissioni"));
+//var nonAmmissibiliEsameCommissioni = filterNumericParam(commissioneTarget.get("nonAmmissibiliEsameCommissioni"));
+//var decadutiEsameCommissioni = filterNumericParam(commissioneTarget.get("decadutiEsameCommissioni"));
+//var ritiratiEsameCommissioni = filterNumericParam(commissioneTarget.get("ritiratiEsameCommissioni"));
+//var respintiEsameCommissioni = filterNumericParam(commissioneTarget.get("respintiEsameCommissioni"));
+//var noteEmendamentiEsameCommissioni = filterParam(commissioneTarget.get("noteEmendamentiEsameCommissioni"));
 
-var nonAmmissibiliEsameCommissioni = filterNumericParam(commissioneTarget.get("nonAmmissibiliEsameCommissioni"));
-var decadutiEsameCommissioni = filterNumericParam(commissioneTarget.get("decadutiEsameCommissioni"));
-var ritiratiEsameCommissioni = filterNumericParam(commissioneTarget.get("ritiratiEsameCommissioni"));
-var respintiEsameCommissioni = filterNumericParam(commissioneTarget.get("respintiEsameCommissioni"));
-var noteEmendamentiEsameCommissioni = filterParam(commissioneTarget.get("noteEmendamentiEsameCommissioni"));
+var numEmendPresentatiMaggiorEsameCommissioni = commissioneTarget.get("numEmendPresentatiMaggiorEsameCommissioni");
+var numEmendPresentatiMinorEsameCommissioni = commissioneTarget.get("numEmendPresentatiMinorEsameCommissioni");
+var numEmendPresentatiGiuntaEsameCommissioni = commissioneTarget.get("numEmendPresentatiGiuntaEsameCommissioni");
+var numEmendPresentatiMistoEsameCommissioni = commissioneTarget.get("numEmendPresentatiMistoEsameCommissioni");
+
+var numEmendApprovatiMaggiorEsameCommissioni = commissioneTarget.get("numEmendApprovatiMaggiorEsameCommissioni");
+var numEmendApprovatiMinorEsameCommissioni = commissioneTarget.get("numEmendApprovatiMinorEsameCommissioni");
+var numEmendApprovatiGiuntaEsameCommissioni = commissioneTarget.get("numEmendApprovatiGiuntaEsameCommissioni");
+var numEmendApprovatiMistoEsameCommissioni = commissioneTarget.get("numEmendApprovatiMistoEsameCommissioni");
+
+var nonAmmissibiliEsameCommissioni = commissioneTarget.get("nonAmmissibiliEsameCommissioni");
+var decadutiEsameCommissioni = commissioneTarget.get("decadutiEsameCommissioni");
+var ritiratiEsameCommissioni = commissioneTarget.get("ritiratiEsameCommissioni");
+var respintiEsameCommissioni = commissioneTarget.get("respintiEsameCommissioni");
+var noteEmendamentiEsameCommissioni = commissioneTarget.get("noteEmendamentiEsameCommissioni");
 
 var dataPresaInCaricoProposta = filterParam(commissioneTarget.get("dataPresaInCaricoProposta"));
 var dataIntesa = filterParam(commissioneTarget.get("dataIntesa"));
@@ -55,24 +71,92 @@ if(checkIsNotNull(id)){
 		if(commissioneUtenteResults!=null && commissioneUtenteResults.length>0){
 			commissioneFolderNode = commissioneUtenteResults[0];
 	
-	
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsame"] = numEmendPresentatiMaggiorEsameCommissioni;
-		
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsame"] = numEmendPresentatiMaggiorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMinorEsame"] = numEmendPresentatiMinorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiGiuntaEsame"] = numEmendPresentatiGiuntaEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendPresentatiMistoEsame"] = numEmendPresentatiMistoEsameCommissioni;
+			if(numEmendPresentatiMaggiorEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsame"] = numEmendPresentatiMaggiorEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiMaggiorEsame"] = null;
+			}
 			
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiMaggiorEsame"] = numEmendApprovatiMaggiorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiMinorEsame"] = numEmendApprovatiMinorEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiGiuntaEsame"] = numEmendApprovatiGiuntaEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendApprovatiMistoEsame"] = numEmendApprovatiMistoEsameCommissioni;
+			if(numEmendPresentatiMinorEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiMinorEsame"] = numEmendPresentatiMinorEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiMinorEsame"] = null;
+			}
 			
-			commissioneFolderNode.properties["crlatti:numEmendNonAmmissibiliEsame"] = nonAmmissibiliEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendDecadutiEsame"] = decadutiEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendRitiratiEsame"] = ritiratiEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:numEmendRespintiEsame"] = respintiEsameCommissioni;
-			commissioneFolderNode.properties["crlatti:noteEmendamentiEsame"] = noteEmendamentiEsameCommissioni;
+			if(numEmendPresentatiGiuntaEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiGiuntaEsame"] = numEmendPresentatiGiuntaEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiGiuntaEsame"] = null;
+			}
+			
+			if(numEmendPresentatiMistoEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiMistoEsame"] = numEmendPresentatiMistoEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendPresentatiMistoEsame"] = null;
+			}
+			
+
+			
+			
+			if(numEmendApprovatiMaggiorEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiMaggiorEsame"] = numEmendApprovatiMaggiorEsameCommissioni;			
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiMaggiorEsame"] = null;		
+			}
+			
+			if(numEmendApprovatiMinorEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiMinorEsame"] = numEmendApprovatiMinorEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiMinorEsame"] = null;
+			}
+			
+			if(numEmendApprovatiGiuntaEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiGiuntaEsame"] = numEmendApprovatiGiuntaEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiGiuntaEsame"] = null;
+			}
+			
+			if(numEmendApprovatiMistoEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiMistoEsame"] = numEmendApprovatiMistoEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendApprovatiMistoEsame"] = null;
+			}
+			
+			
+			
+			
+			if(nonAmmissibiliEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendNonAmmissibiliEsame"] = nonAmmissibiliEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendNonAmmissibiliEsame"] = null;
+			}
+			
+			if(decadutiEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendDecadutiEsame"] = decadutiEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendDecadutiEsame"] = null;
+			}
+			
+			if(ritiratiEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendRitiratiEsame"] = ritiratiEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendRitiratiEsame"] = null;
+			}
+			
+			if(respintiEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:numEmendRespintiEsame"] = respintiEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:numEmendRespintiEsame"] = null;
+			}
+			
+			if(noteEmendamentiEsameCommissioni!="null"){
+				commissioneFolderNode.properties["crlatti:noteEmendamentiEsame"] = noteEmendamentiEsameCommissioni;
+			}else{
+				commissioneFolderNode.properties["crlatti:noteEmendamentiEsame"] = null;
+			}
+			
+			
+			
 	
 			var dataPresaInCaricoPropostaParsed= null;
 			if(checkIsNotNull(dataPresaInCaricoProposta)){

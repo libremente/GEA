@@ -57,6 +57,66 @@ if(checkIsNotNull(id)){
 		relatoriAtto = relatoriAttoFolderNode.getChildAssocsByType("crlatti:relatore");
 	}
 	
+	
+	var tipoAtto = attoFolderNode.typeShort.substring(12).toUpperCase();
+	var numeroAtto = 	attoFolderNode.name;
+	
+	
+	
+	var sedutePath = "/app:company_home" +
+	"/cm:"+search.ISO9075Encode("CRL") +
+	"/cm:"+search.ISO9075Encode("Gestione Atti") +
+	"/cm:"+search.ISO9075Encode("Sedute") + "//*";
+
+	var luceneQuery = "PATH:\""+sedutePath+"\" AND TYPE:\"crlatti:attoTrattatoODG\" AND @crlatti\\:numeroAttoTrattatoODG:\""+numeroAtto+"\" AND @crlatti\\:tipoAttoTrattatoODG:\""+tipoAtto+"\"";
+	var seduteResults = search.luceneSearch(luceneQuery);
+	
+	var seduteResultsObj = new Array();
+
+	for(var i=0; i< seduteResults.length; i++){
+		
+		var sedutaResult = seduteResults[i].parent.parent;
+		var sedutaResultObj = new Object();
+		
+		sedutaResultObj.idSeduta = sedutaResult.nodeRef.toString();
+		
+		// nome della commissione o dell'aula
+		sedutaResultObj.nomeOrgano = sedutaResult.parent.parent.parent.name;
+		sedutaResultObj.dataSeduta = sedutaResult.properties["crlatti:dataSedutaSedutaODG"];
+		
+		
+		var linksFolderXpathQuery = "*[@cm:name='Links']";
+		var linksFolderNode = sedutaResult.childrenByXPath(linksFolderXpathQuery)[0];
+		sedutaResultObj.links = linksFolderNode.getChildAssocsByType("crlatti:link");
+
+			
+		var passaggioFolderNode = getLastPassaggio(attoFolderNode);
+		
+		
+		if(sedutaResultObj.nomeOrgano!="Aula" && sedutaResultObj.nomeOrgano!="ServizioCommissioni"){
+			
+			
+			var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
+			var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
+			
+			var commissioneFolderXpathQuery = "*[@cm:name='"+sedutaResultObj.nomeOrgano+"']";
+			var commissioneFolderNode = commissioniFolderNode.childrenByXPath(commissioneFolderXpathQuery)[0];
+			
+			// Workaround nel caso in cui la commissione aggiunga all'odg un atto per cui non ha nessun ruolo
+			if(commissioneFolderNode!=null){
+				sedutaResultObj.nomeOrgano = commissioneFolderNode.properties["crlatti:ruoloCommissione"] + " - " + sedutaResultObj.nomeOrgano;
+			}
+		}
+		
+	
+	
+		
+		seduteResultsObj.push(sedutaResultObj);
+		
+	}
+	
+	
+	
 } else {
 	status.code = 400;
 	status.message = "id atto non valorizzato";
@@ -75,3 +135,4 @@ model.passaggi = passaggi;
 model.atto = attoFolderNode;
 model.tipoAtto = tipoAtto;
 model.relatoriAtto = relatoriAtto;
+model.seduteAtto = seduteResultsObj;

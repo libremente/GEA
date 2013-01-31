@@ -22,14 +22,18 @@ firmatari.sort(function(a, b){
 
 for (var i=0; i<firmatari.length; i++) {
 	
-	if(firmatari[i].properties["crlatti:isPrimoFirmatario"]==true){
+	if(firmatari[i].properties["crlatti:isPrimoFirmatario"]==true && (firmatari[i].properties["crlatti:dataRitiro"]==null || firmatari[i].properties["crlatti:dataRitiro"]==undefined ) ){
 		primoFirmatarioAtto = firmatari[i].name;
 	}else{
-		firmatariOriginari.push(firmatari[i].name);
+		if(firmatari[i].properties["crlatti:dataRitiro"]==null || firmatari[i].properties["crlatti:dataRitiro"]==undefined ){
+			firmatariOriginari.push(firmatari[i].name);
+		}
 	}
 	
-	firmatariAtto.push(firmatari[i].name);
-	
+	if(firmatari[i].properties["crlatti:dataRitiro"]==null || firmatari[i].properties["crlatti:dataRitiro"]==undefined ){
+		firmatariAtto.push(firmatari[i].name);
+	}
+
 	
 }
 

@@ -209,9 +209,10 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
             	}
                 
                 /* check for committes */
-                for (int k=0; k<councilor.getCommitteeNames().size(); k++){
+                for (int k=0; k<councilor.getCommittees().size(); k++){
                 	
-                	String committeName = councilor.getCommitteeNames().get(k);
+                	String committeName = councilor.getCommittees().get(k).getName();
+                	int committeOrder = councilor.getCommittees().get(k).getOrder();
                 	
                 	// replace all not alpha or digit character
                 	//committeName = committeName.replaceAll("[^a-zA-Z0-9]+","");
@@ -220,7 +221,11 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 	if(!committesMap.containsKey(committeName)){
                 		
                 		FileInfo committeFolderInfo = fileFolderService.create(committesFolderNodeResultSet.getNodeRef(0), 
-                				committeName, ContentModel.TYPE_FOLDER);
+                				committeName, Constant.TYPE_COMMISSIONE_ANAGRAFICA);
+                		
+                	
+                		nodeService.setProperty(committeFolderInfo.getNodeRef(), Constant.PROP_NUMERO_ORDINAMENTO_COMMISSIONE_ANAGRAFICA, committeOrder);
+                		
                 		
                 		/* create alfresco authority (group) named as "LEGISLATURA_NomeCommissione" if does not exist */
                 		String alfrescoGroupName = nomeLegislaturaCorrente + "_" + committeName;

@@ -9,6 +9,9 @@ public class Constant {
 	public static final QName TYPE_LEGISLATURA =  QName.createQName(CRL_MODEL_URI, "legislaturaAnagrafica");
 	public static final QName TYPE_CONSIGLIERE_ANAGRAFICA =  QName.createQName(CRL_MODEL_URI, "consigliereAnagrafica");
 	public static final QName TYPE_GRUPPO_CONSILIARE_ANAGRAFICA =  QName.createQName(CRL_MODEL_URI, "gruppoConsiliareAnagrafica");
+	public static final QName TYPE_COMMISSIONE_ANAGRAFICA =  QName.createQName(CRL_MODEL_URI, "commissioneAnagrafica");	
+	
+	public static final QName PROP_NUMERO_ORDINAMENTO_COMMISSIONE_ANAGRAFICA = QName.createQName(CRL_MODEL_URI, "numeroOrdinamentoCommissioneAnagrafica");
 	
 	public static final QName PROP_DATA_INIZIO_LEGISLATURA = QName.createQName(CRL_MODEL_URI, "dataInizioLegislatura");
 	public static final QName PROP_DATA_FINE_LEGISLATURA = QName.createQName(CRL_MODEL_URI, "dataFineLegislatura");
@@ -47,7 +50,7 @@ public class Constant {
                                            "( " +
                                              "STUFF( " +
                                                     "( " +
-                                                       "SELECT '#' + oo.nome_organo " +
+                                                       "SELECT '#' + oo.nome_organo + '!' + ISNULL(convert(varchar(max),oo.ordinamento) ,'') " +
                                                        "FROM persona ppo " +
                                                        "INNER JOIN join_persona_organo_carica AS jpoc " +
                                                                "ON ppo.id_persona = jpoc.id_persona " +

@@ -33,11 +33,17 @@ if(username=="protocollo" || username=="admin"){
 	
 		if(tipoAtto=="EAC"){
 			// atto EAC non importato da protocollo
-			
+			status.code = 400;
+			status.message = "Tipo atto "+tipoAtto+" non gestito";
+			protocolloLogger.error(status.message);
+			status.redirect = true;
 			
 		} else if(tipoAtto=="MIS"){
 			// atto MIS non importato da protocollo
-			
+			status.code = 400;
+			status.message = "Tipo atto "+tipoAtto+" non gestito";
+			protocolloLogger.error(status.message);
+			status.redirect = true;
 			
 		} else {
 		
@@ -92,6 +98,11 @@ if(username=="protocollo" || username=="admin"){
 					nodeType = "crlatti:attoRel";
 				} else if(tipoAtto=="ORG"){
 					nodeType = "crlatti:attoOrg";
+				} else{
+					status.code = 400;
+					status.message = "Tipo atto "+tipoAtto+" non gestito";
+					protocolloLogger.error(status.message);
+					status.redirect = true;
 				}
 				
 				//verifica esistenza del folder dell'atto
@@ -268,6 +279,8 @@ if(username=="protocollo" || username=="admin"){
 				attoFolderNode.save();
 				attoFolderNode.addAspect("crlatti:importatoDaProtocollo");
 				model.atto = attoFolderNode;
+				
+				protocolloLogger.info("Atto trasferito correttamente dal sistema di protocollo. Atto numero:"+numeroAtto+" estensione:"+estensioneAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
 							
 			} else if(checkIsNull(numeroAtto)){
 				status.code = 400;
@@ -293,7 +306,7 @@ if(username=="protocollo" || username=="admin"){
 			
 		} 
 		
-		protocolloLogger.info("Atto trasferito correttamente dal sistema di protocollo. Atto numero:"+numeroAtto+" estensione:"+estensioneAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
+		
 	}
 } else {
 	status.code = 401;
