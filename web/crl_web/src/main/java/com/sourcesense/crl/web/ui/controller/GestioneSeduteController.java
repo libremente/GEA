@@ -491,6 +491,7 @@ public class GestioneSeduteController {
 						.findById(attoDaTrattare);
 				AttoTrattato attoTrattato = new AttoTrattato();
 				attoTrattato.setAtto(attoDaCollegare);
+				attoTrattato.setPrevisto(true);
 				attiTrattati.add(attoTrattato);
 				FacesContext context = FacesContext.getCurrentInstance();
 				UserBean userBean = ((UserBean) context.getExternalContext()

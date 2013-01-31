@@ -60,7 +60,7 @@
 							<f:selectItem itemLabel="Scegli tipo Atto" itemValue="" />
 							<f:selectItems
 								value="#{gestioneSeduteController.tipiAttoSindacato}" />
-							<p:ajax update="numAttoSindacato"
+							<p:ajax update="numAttoSindacato" global="false"
 								listener="#{gestioneSeduteController.handleAttoSindacatoChange}" />
 						</p:selectOneMenu>
 					</p:column>

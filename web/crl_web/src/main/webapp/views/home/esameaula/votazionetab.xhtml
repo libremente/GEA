@@ -101,7 +101,7 @@
 		<p:column><div id="relazioneScrittaDiv">
 			<p:selectOneMenu id="relazioneScritta"
 				value="#{esameAulaController.relazioneScritta}">
-				<f:selectItem itemLabel="Sì" itemValue="Sì" />
+				<f:selectItem itemLabel="Sì" itemValue="Si" />
 				<f:selectItem itemLabel="No" itemValue="No" />
 				<p:ajax event="change"
 					listener="#{esameAulaController.updateVotazioneHandler}" />
@@ -207,9 +207,8 @@
 
 
 						<p:column>
-							<p:selectBooleanCheckbox value="#{esameAulaController.emendato}">
-								<p:ajax event="change"
-									listener="#{esameAulaController.updateVotazioneHandler}" />
+							<p:selectBooleanCheckbox id="emendatoChk" value="#{esameAulaController.emendato}" >
+								
 							</p:selectBooleanCheckbox>
 						</p:column>
 
@@ -276,10 +275,10 @@
 							<h:outputText value="#{testoAttoVotato.nome}" />
 						</p:column>
 
-							<p:column sortBy="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}">
+							<p:column sortBy="#{testoAttoVotato.mimetype}">
 								<f:facet name="header">Formato</f:facet>
 								<h:outputText
-									value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
+									value="#{testoAttoVotato.mimetype}" />
 
 							</p:column>
 

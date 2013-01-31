@@ -83,7 +83,7 @@ public class ReportisticaController implements Serializable {
 	private Date dataNominaRelatoreDa;
 	private Date dataNominaRelatoreA;
 	private List<String> relatori = new ArrayList<String> ();
-	private String relatore;
+	private List<String> relatoriSelected = new ArrayList<String> ();
 	private String legislatura;
 	private Map<String, String> organismi = new HashMap<String, String>();
 	private String organismo;
@@ -639,13 +639,13 @@ public class ReportisticaController implements Serializable {
 		this.selectedReport.setLegislatura ( legislatura);
 	}
 
-	public String getRelatore() {
-		return relatore;
-	}
-
-	public void setRelatore(String relatore) {
-		this.relatore = relatore;
-	}
+//	public String getRelatore() {
+//		return this.selectedReport.getRelator;
+//	}
+//
+//	public void setRelatore(String relatore) {
+//		this.relatore = relatore;
+//	}
 
 	public Map<String, String> getOrganismi() {
 		return organismi;
@@ -744,6 +744,19 @@ public class ReportisticaController implements Serializable {
 
 	public void setRelatori(List<String> relatori) {
 		this.relatori = relatori;
+	}
+    
+	
+
+
+	public List<String> getRelatoriSelected() {
+		return selectedReport.getRelatori();
+	}
+
+
+
+	public void setRelatoriSelected(List<String> relatoriSelected) {
+		this.selectedReport.setRelatori ( relatoriSelected);
 	}
 
 

@@ -43,6 +43,7 @@ public class AttoSearch extends Atto {
 	private String numeroDcr;
 	private String esitoVotoCommissioneReferente;
 	private String esitoVotoAula;
+	private String commissioneUser;
 	private String commissione1;
 	private String commissione2;
 	private String commissione3;
@@ -55,6 +56,8 @@ public class AttoSearch extends Atto {
 	private String gruppoUtente;
 	private boolean emendato;
 	private boolean emendatoAula;
+	
+	
 	
 	
 	/********DELETE***********/
@@ -359,6 +362,17 @@ public class AttoSearch extends Atto {
 	}
 
 	
+	
+	
+	
+	public String getCommissioneUser() {
+		return commissioneUser;
+	}
+
+	public void setCommissioneUser(String commissioneUser) {
+		this.commissioneUser = commissioneUser;
+	}
+
 	///////////////////////DELETE
 	public String getCommissioneReferente() {
 		return commissioneReferente;

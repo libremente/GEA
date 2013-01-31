@@ -246,11 +246,10 @@
 					</p:column>
 
 					<p:column>
-						<p:selectOneMenu id="relatori"
-							value="#{reportisticaController.relatore}">
-							<f:selectItem itemValue="" itemLabel="Scegli Relatore" />
+						<p:selectManyMenu id="relatori" style="width:200px;height:200px;overflow:scroll"
+							value="#{reportisticaController.relatoriSelected}">
 							<f:selectItems value="#{reportisticaController.relatori}" />
-						</p:selectOneMenu>
+						</p:selectManyMenu>
 					</p:column>
 
 				</p:row>

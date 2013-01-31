@@ -26,6 +26,7 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 	private String numeroOrdinamento;
 	private String id;
 	private String descrizione;
+	private String cognomeNome;
 	
 	
 	@Override public String toString() {
@@ -104,6 +105,14 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public String getCognomeNome() {
+		return cognomeNome;
+	}
+
+	public void setCognomeNome(String cognomeNome) {
+		this.cognomeNome = cognomeNome;
 	}
 
 	

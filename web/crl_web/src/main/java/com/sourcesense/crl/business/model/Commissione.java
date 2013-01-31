@@ -87,18 +87,18 @@ public class Commissione implements Cloneable {
 	private boolean presenzaComitatoRistretto;
 	private boolean passaggioDirettoInAula;
 	
-	private int numEmendPresentatiMaggiorEsameCommissioni = 0;
-	private int numEmendPresentatiMinorEsameCommissioni = 0;
-	private int numEmendPresentatiGiuntaEsameCommissioni = 0;
-	private int numEmendPresentatiMistoEsameCommissioni = 0;
-	private int numEmendApprovatiMaggiorEsameCommissioni = 0;
-	private int numEmendApprovatiMinorEsameCommissioni = 0;
-	private int numEmendApprovatiGiuntaEsameCommissioni = 0;
-	private int numEmendApprovatiMistoEsameCommissioni = 0;
-	private int nonAmmissibiliEsameCommissioni = 0;
-	private int decadutiEsameCommissioni = 0;
-	private int ritiratiEsameCommissioni = 0;
-	private int respintiEsameCommissioni = 0;
+	private Integer numEmendPresentatiMaggiorEsameCommissioni ;
+	private Integer numEmendPresentatiMinorEsameCommissioni ;
+	private Integer numEmendPresentatiGiuntaEsameCommissioni ;
+	private Integer numEmendPresentatiMistoEsameCommissioni ;
+	private Integer numEmendApprovatiMaggiorEsameCommissioni;
+	private Integer numEmendApprovatiMinorEsameCommissioni;
+	private Integer numEmendApprovatiGiuntaEsameCommissioni;
+	private Integer numEmendApprovatiMistoEsameCommissioni ;
+	private Integer nonAmmissibiliEsameCommissioni ;
+	private Integer decadutiEsameCommissioni ;
+	private Integer ritiratiEsameCommissioni ;
+	private Integer respintiEsameCommissioni ;
 	
 	
 	private Date dataSedutaStralcio;
@@ -212,107 +212,107 @@ public class Commissione implements Cloneable {
 		this.motivazioniContinuazioneInReferente = motivazioniContinuazioneInReferente;
 	}
 
-	public int getNumEmendPresentatiMaggiorEsameCommissioni() {
+	public Integer getNumEmendPresentatiMaggiorEsameCommissioni() {
 		return numEmendPresentatiMaggiorEsameCommissioni;
 	}
 
 	public void setNumEmendPresentatiMaggiorEsameCommissioni(
-			int numEmendPresentatiMaggiorEsameCommissioni) {
+			Integer numEmendPresentatiMaggiorEsameCommissioni) {
 		this.numEmendPresentatiMaggiorEsameCommissioni = numEmendPresentatiMaggiorEsameCommissioni;
 	}
 
-	public int getNumEmendPresentatiMinorEsameCommissioni() {
+	public Integer getNumEmendPresentatiMinorEsameCommissioni() {
 		return numEmendPresentatiMinorEsameCommissioni;
 	}
 
 	public void setNumEmendPresentatiMinorEsameCommissioni(
-			int numEmendPresentatiMinorEsameCommissioni) {
+			Integer numEmendPresentatiMinorEsameCommissioni) {
 		this.numEmendPresentatiMinorEsameCommissioni = numEmendPresentatiMinorEsameCommissioni;
 	}
 
-	public int getNumEmendPresentatiGiuntaEsameCommissioni() {
+	public Integer getNumEmendPresentatiGiuntaEsameCommissioni() {
 		return numEmendPresentatiGiuntaEsameCommissioni;
 	}
 
 	public void setNumEmendPresentatiGiuntaEsameCommissioni(
-			int numEmendPresentatiGiuntaEsameCommissioni) {
+			Integer numEmendPresentatiGiuntaEsameCommissioni) {
 		this.numEmendPresentatiGiuntaEsameCommissioni = numEmendPresentatiGiuntaEsameCommissioni;
 	}
 
-	public int getNumEmendPresentatiMistoEsameCommissioni() {
+	public Integer getNumEmendPresentatiMistoEsameCommissioni() {
 		return numEmendPresentatiMistoEsameCommissioni;
 	}
 
 	public void setNumEmendPresentatiMistoEsameCommissioni(
-			int numEmendPresentatiMistoEsameCommissioni) {
+			Integer numEmendPresentatiMistoEsameCommissioni) {
 		this.numEmendPresentatiMistoEsameCommissioni = numEmendPresentatiMistoEsameCommissioni;
 	}
 
-	public int getNumEmendApprovatiMaggiorEsameCommissioni() {
+	public Integer getNumEmendApprovatiMaggiorEsameCommissioni() {
 		return numEmendApprovatiMaggiorEsameCommissioni;
 	}
 
 	public void setNumEmendApprovatiMaggiorEsameCommissioni(
-			int numEmendApprovatiMaggiorEsameCommissioni) {
+			Integer numEmendApprovatiMaggiorEsameCommissioni) {
 		this.numEmendApprovatiMaggiorEsameCommissioni = numEmendApprovatiMaggiorEsameCommissioni;
 	}
 
-	public int getNumEmendApprovatiMinorEsameCommissioni() {
+	public Integer getNumEmendApprovatiMinorEsameCommissioni() {
 		return numEmendApprovatiMinorEsameCommissioni;
 	}
 
 	public void setNumEmendApprovatiMinorEsameCommissioni(
-			int numEmendApprovatiMinorEsameCommissioni) {
+			Integer numEmendApprovatiMinorEsameCommissioni) {
 		this.numEmendApprovatiMinorEsameCommissioni = numEmendApprovatiMinorEsameCommissioni;
 	}
 
-	public int getNumEmendApprovatiGiuntaEsameCommissioni() {
+	public Integer getNumEmendApprovatiGiuntaEsameCommissioni() {
 		return numEmendApprovatiGiuntaEsameCommissioni;
 	}
 
 	public void setNumEmendApprovatiGiuntaEsameCommissioni(
-			int numEmendApprovatiGiuntaEsameCommissioni) {
+			Integer numEmendApprovatiGiuntaEsameCommissioni) {
 		this.numEmendApprovatiGiuntaEsameCommissioni = numEmendApprovatiGiuntaEsameCommissioni;
 	}
 
-	public int getNumEmendApprovatiMistoEsameCommissioni() {
+	public Integer getNumEmendApprovatiMistoEsameCommissioni() {
 		return numEmendApprovatiMistoEsameCommissioni;
 	}
 
 	public void setNumEmendApprovatiMistoEsameCommissioni(
-			int numEmendApprovatiMistoEsameCommissioni) {
+			Integer numEmendApprovatiMistoEsameCommissioni) {
 		this.numEmendApprovatiMistoEsameCommissioni = numEmendApprovatiMistoEsameCommissioni;
 	}
 
-	public int getNonAmmissibiliEsameCommissioni() {
+	public Integer getNonAmmissibiliEsameCommissioni() {
 		return nonAmmissibiliEsameCommissioni;
 	}
 
-	public void setNonAmmissibiliEsameCommissioni(int nonAmmissibiliEsameCommissioni) {
+	public void setNonAmmissibiliEsameCommissioni(Integer nonAmmissibiliEsameCommissioni) {
 		this.nonAmmissibiliEsameCommissioni = nonAmmissibiliEsameCommissioni;
 	}
 
-	public int getDecadutiEsameCommissioni() {
+	public Integer getDecadutiEsameCommissioni() {
 		return decadutiEsameCommissioni;
 	}
 
-	public void setDecadutiEsameCommissioni(int decadutiEsameCommissioni) {
+	public void setDecadutiEsameCommissioni(Integer decadutiEsameCommissioni) {
 		this.decadutiEsameCommissioni = decadutiEsameCommissioni;
 	}
 
-	public int getRitiratiEsameCommissioni() {
+	public Integer getRitiratiEsameCommissioni() {
 		return ritiratiEsameCommissioni;
 	}
 
-	public void setRitiratiEsameCommissioni(int ritiratiEsameCommissioni) {
+	public void setRitiratiEsameCommissioni(Integer ritiratiEsameCommissioni) {
 		this.ritiratiEsameCommissioni = ritiratiEsameCommissioni;
 	}
 
-	public int getRespintiEsameCommissioni() {
+	public Integer getRespintiEsameCommissioni() {
 		return respintiEsameCommissioni;
 	}
 
-	public void setRespintiEsameCommissioni(int respintiEsameCommissioni) {
+	public void setRespintiEsameCommissioni(Integer respintiEsameCommissioni) {
 		this.respintiEsameCommissioni = respintiEsameCommissioni;
 	}
 

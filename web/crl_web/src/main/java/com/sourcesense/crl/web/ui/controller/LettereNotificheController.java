@@ -324,7 +324,7 @@ public class LettereNotificheController implements Serializable{
 		letteraAssegnazionesedereferente
 				.setUrlView("./lettere/servizioCommissioni/pda/letteraAssegnazionesedereferente.xhtml");
 		letteraAssegnazionesedereferente
-				.setNome("Lettera Parere Proposta di Regolamento");
+				.setNome("Lettera Assegnazione in sede referente");
 		letteraAssegnazionesedereferente.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteraAssegnazionesedereferente = new DefaultTreeNode(
 				"lettera", letteraAssegnazionesedereferente, nodeServCommPDA);

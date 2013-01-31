@@ -20,6 +20,7 @@ public class Relatore extends Personale implements Cloneable{
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;
+	private String cognomeNome;
 	
 	public Object clone() {
 		try {
@@ -53,6 +54,14 @@ public class Relatore extends Personale implements Cloneable{
 	}
 	public void setDataUscita(Date dataUscita) {
 		this.dataUscita = dataUscita;
+	}
+
+	public String getCognomeNome() {
+		return cognomeNome;
+	}
+
+	public void setCognomeNome(String cognomeNome) {
+		this.cognomeNome = cognomeNome;
 	}
 	
 	

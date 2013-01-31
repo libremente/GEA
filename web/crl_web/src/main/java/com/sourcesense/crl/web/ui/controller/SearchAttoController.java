@@ -97,16 +97,15 @@ public class SearchAttoController {
 
 	@ManagedProperty(value = "#{organismoStatutarioServiceManager}")
 	private OrganismoStatutarioServiceManager organismoStatutarioServiceManager;
-	
+
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
 
-	
 	private String listaLavoro;
-	
+
 	private String idAttoSelected;
 	private String tipoAttoSelected;
-	
+
 	private String numeroDGR;
 	private String numeroDcr;
 	private Date dataDGR;
@@ -123,11 +122,11 @@ public class SearchAttoController {
 	private String ruoloCommissione3;
 
 	private List<Atto> listAtti = new ArrayList<Atto>();
-	
+
 	private String numeroAtto;
-	
+
 	private String numeroAttoDa;
-	
+
 	private String numeroAttoA;
 
 	private Date dataIniziativaDa;
@@ -157,7 +156,7 @@ public class SearchAttoController {
 	private String esitoVotoCommissioneReferente;
 
 	private String esitoVotoAula;
-	
+
 	private boolean redigente;
 
 	private boolean deliberante;
@@ -197,7 +196,7 @@ public class SearchAttoController {
 	private boolean emendato;
 
 	private boolean emendatoAula;
-	
+
 	private boolean rinviato;
 
 	private boolean sospeso;
@@ -207,7 +206,7 @@ public class SearchAttoController {
 	private Map<String, String> tipiAtto = new HashMap<String, String>();
 
 	private List<String> legislature = new ArrayList<String>();
-	
+
 	private Map<String, String> stati = new HashMap<String, String>();
 
 	private Map<String, String> tipiIniziative = new HashMap<String, String>();
@@ -219,93 +218,124 @@ public class SearchAttoController {
 	private Map<String, String> esitiVotoAula = new HashMap<String, String>();
 
 	private List<String> commissioni = new ArrayList<String>();
-	
-    private List<String> firmatari = new ArrayList<String>();
-	
+
+	private List<String> firmatari = new ArrayList<String>();
+
 	private List<String> relatori = new ArrayList<String>();
 
-	
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 
-	public void searchAtti() {          
+	public void searchAtti() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
-		
-		
 		atto.getStatiUtente().clear();
+		atto.setCommissioneUser("");
 		
-		//LAVORAZIONE
-        if("inlavorazione".equals(listaLavoro)){
-        	
-        	if(userBean.getUser().getSessionGroup().isCommissione()){
-        	
-        		
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-        	    
-        	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-        		
-        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
-        	    
-        	}else if(GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-        		
-        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
-        		
-        	}else if(GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-        		
-        		
-        		atto.setTipoAtto("MIS");
-        		
-        	}
-        
-        
-        //LAVORATI
-        }else if("lavorati".equals(listaLavoro)){
-        	
-        	if(userBean.getUser().getSessionGroup().isCommissione()){
-            	
-        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
-        	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
-        	
-        	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-        		
-        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
-        		
-        	}else if(GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-        		
-        		atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
-         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
-         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
-         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_COMMISSIONE));
-         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-         	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
-       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
-       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
-       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
-       	        atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
-       	     
-        	}else if(GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-        		
-        	}
-        	
-        }		
 		
+		// LAVORAZIONE
+		if ("inlavorazione".equals(listaLavoro)) {
+
+			if (userBean.getUser().getSessionGroup().isCommissione()) {
+
+				atto.setCommissioneUser(userBean.getUser().getSessionGroup()
+						.getNome());
+				
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+
+			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
+					.getSessionGroup().getNome())) {
+
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.TRASMESSO_AULA));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+
+			} else if (GruppoUtente.SERVIZIO_COMMISSIONI
+					.equalsIgnoreCase(userBean.getUser().getSessionGroup()
+							.getNome())) {
+
+				atto.getStatiUtente()
+						.add(new StatoAtto(StatoAtto.PROTOCOLLATO));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.PRESO_CARICO_SC));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+
+			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
+					.getSessionGroup().getNome())) {
+
+				atto.setTipoAtto("MIS");
+
+			}
+
+			// LAVORATI
+		} else if ("lavorati".equals(listaLavoro)) {
+
+			if (userBean.getUser().getSessionGroup().isCommissione()) {
+
+				atto.setCommissioneUser(userBean.getUser().getSessionGroup()
+						.getNome());
+				
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.TRASMESSO_AULA));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
+
+			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
+					.getSessionGroup().getNome())) {
+
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
+
+			} else if (GruppoUtente.SERVIZIO_COMMISSIONI
+					.equalsIgnoreCase(userBean.getUser().getSessionGroup()
+							.getNome())) {
+
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.TRASMESSO_COMMISSIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.TRASMESSO_AULA));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
+
+			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
+					.getSessionGroup().getNome())) {
+
+			}
+
+		}
+
 		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
 		setListAtti(attoServiceManager.searchAtti(atto));
 	}
@@ -313,8 +343,7 @@ public class SearchAttoController {
 	@PostConstruct
 	protected void initLazyModel() {
 
-		setCommissioni(commissioneServiceManager
-				.getAll());
+		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setFirmatari(personaleServiceManager.getAllFirmatario());
 		setRelatori(personaleServiceManager.getAllRelatore());
@@ -323,139 +352,146 @@ public class SearchAttoController {
 		setTipiIniziative(tipoIniziativaServiceManager.findAll());
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.list());
-		
+
 		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
 		atto.setCommissioneReferente("");
 		atto.setCommissioneConsultiva("");
+       
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
-		
 		atto.getStatiUtente().clear();
-		
-		if(userBean.getUser().getSessionGroup().isCommissione()){
-        	
-    		
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-    	    
-    	}else if(GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-    		
-    		atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
-    	    
-    	}else if(GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-    		
-    		atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
-    	    atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
-    		
-    	}else if(GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())){
-    		
-    		
-    		atto.setTipoAtto("MIS");
-    		
-    	}
+		atto.setCommissioneUser("");  
 		
 		
+		if (userBean.getUser().getSessionGroup().isCommissione()) {
+
+			atto.setCommissioneUser(userBean.getUser().getSessionGroup()
+					.getNome());
+			
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+
+		} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
+				.getSessionGroup().getNome())) {
+
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+
+		} else if (GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean
+				.getUser().getSessionGroup().getNome())) {
+
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+
+		} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
+				.getSessionGroup().getNome())) {
+
+			atto.setTipoAtto("MIS");
+
+		}
+
 		setListAtti(attoServiceManager.searchAtti(atto));
-		
+
 	}
 
-	
+	public void postProcessXLS(Object document) throws SecurityException,
+			NoSuchFieldException, IllegalArgumentException,
+			IllegalAccessException {
 
-	public void postProcessXLS(Object document) throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {  
-	    
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
-		
-		HSSFWorkbook wb = (HSSFWorkbook) document;  
-	    wb.removeSheetAt(0);
+
+		HSSFWorkbook wb = (HSSFWorkbook) document;
+		wb.removeSheetAt(0);
 		HSSFSheet sheet = wb.createSheet();
 		sheet.createRow(0);
-	    
-		
-		HSSFCellStyle cellStyle = wb.createCellStyle();    
-	    cellStyle.setFillForegroundColor(HSSFColor.YELLOW.index);  
-	    cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		
-	    HSSFCell cell = sheet.getRow(0).createCell(0);
-	    cell.setCellValue("Tipo atto");
-	    cell.setCellStyle(cellStyle);
-	    cell = sheet.getRow(0).createCell(1);
-	    cell.setCellValue("N° atto");
-	    cell.setCellStyle(cellStyle);
-	    
-	    
-	    int colCount=2;
-		
-	    for (ColonnaAtto colonna : userBean.getColonneTotali()) {
-			
-	    	HSSFCell cellRec = sheet.getRow(0).createCell(colCount);
-	    	cellRec.setCellValue(colonna.getNome());
-	    	cellRec.setCellStyle(cellStyle);
-	    	colCount++;
-	    	
-		}
-	    
-	    
-	    int rowNum =1;
-	    
-	    for (Atto atto : listAtti) {
-	    	
-	    	sheet.createRow(rowNum);
-	    	HSSFCell cella = sheet.getRow(rowNum).createCell(0);
-	    	cella.setCellValue(atto.getTipo());
-	    	cella = sheet.getRow(rowNum).createCell(1);
-	    	cella.setCellValue(atto.getNumeroAtto());
-		    
-	    	int colConta=2;
-	    	DateFormat myDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	    	
-	    	for (ColonnaAtto colonna : userBean.getColonneTotali()) {
-	    		
-	    		Field privateStringField = atto.getClass().getDeclaredField(colonna.getAttoProperty());
 
-	    	    privateStringField.setAccessible(true);
-	    		
-	    	    cella = sheet.getRow(rowNum).createCell(colConta);
-		    	
-	    	    String value = "";
-	    	    
-	    	    if(privateStringField.get(atto) instanceof Date){
-	    	    	
-	    	    	value=myDateFormat.format((Date)privateStringField.get(atto));
-	    	    	
-	    	    }else{
-	    	    	
-	    	    	value=(String)privateStringField.get(atto);
-	    	    }
-	    	    
-	    	    cella.setCellValue(value);
-	    		colConta++;
-	    	}
-	    	
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+		cellStyle.setFillForegroundColor(HSSFColor.YELLOW.index);
+		cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+		HSSFCell cell = sheet.getRow(0).createCell(0);
+		cell.setCellValue("Tipo atto");
+		cell.setCellStyle(cellStyle);
+		cell = sheet.getRow(0).createCell(1);
+		cell.setCellValue("N° atto");
+		cell.setCellStyle(cellStyle);
+
+		int colCount = 2;
+
+		for (ColonnaAtto colonna : userBean.getColonneTotali()) {
+
+			HSSFCell cellRec = sheet.getRow(0).createCell(colCount);
+			cellRec.setCellValue(colonna.getNome());
+			cellRec.setCellStyle(cellStyle);
+			colCount++;
+
+		}
+
+		int rowNum = 1;
+
+		for (Atto atto : listAtti) {
+
+			sheet.createRow(rowNum);
+			HSSFCell cella = sheet.getRow(rowNum).createCell(0);
+			cella.setCellValue(atto.getTipo());
+			cella = sheet.getRow(rowNum).createCell(1);
+			cella.setCellValue(atto.getNumeroAtto());
+
+			int colConta = 2;
+			DateFormat myDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+			for (ColonnaAtto colonna : userBean.getColonneTotali()) {
+
+				Field privateStringField = atto.getClass().getDeclaredField(
+						colonna.getAttoProperty());
+
+				privateStringField.setAccessible(true);
+
+				cella = sheet.getRow(rowNum).createCell(colConta);
+
+				String value = "";
+
+				if (privateStringField.get(atto) instanceof Date) {
+
+					value = myDateFormat.format((Date) privateStringField
+							.get(atto));
+
+				} else {
+
+					value = (String) privateStringField.get(atto);
+				}
+
+				cella.setCellValue(value);
+				colConta++;
+			}
+
 			rowNum++;
 		}
-	    
-	    
-	     
-	}  
-	
-	
-	
-	
+
+	}
+
 	public String attoDetail() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = (AttoBean) context
 				.getApplication()
@@ -463,35 +499,36 @@ public class SearchAttoController {
 				.createValueExpression(context.getELContext(), "#{attoBean}",
 						AttoBean.class).getValue(context.getELContext());
 
-		
 		Atto attoRet = null;
-		
-		if("MIS".equalsIgnoreCase(tipoAttoSelected)){
-			
-			
+
+		if ("MIS".equalsIgnoreCase(tipoAttoSelected)) {
+
 			attoBean.setAttoMIS(attoServiceManager.findMISById(idAttoSelected));
 			return "pretty:Inserimento_MIS";
-			
-		}else if("EAC".equalsIgnoreCase(tipoAttoSelected)){
-			
-			
-		
+
+		} else if ("EAC".equalsIgnoreCase(tipoAttoSelected)) {
+
 			attoBean.setAttoEAC(attoServiceManager.findEACById(idAttoSelected));
 			return "pretty:Inserimento_EAC";
-			
-			
-		}else {
-			
+
+		} else {
+
 			attoBean.setAtto(attoServiceManager.findById(idAttoSelected));
-			attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
-			attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
-			attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setFirmatari(
+					personaleServiceManager.findFirmatariByAtto(attoBean
+							.getAtto()));
+			attoBean.getAtto()
+					.setTestiAtto(
+							attoRecordServiceManager.testiAttoByAtto(attoBean
+									.getAtto()));
+			attoBean.getAtto().setAllegati(
+					attoRecordServiceManager.allAllegatiAttoByAtto(attoBean
+							.getAtto()));
 			return "pretty:Riepilogo_Atto";
-			
+
 		}
 	}
-	
-	
+
 	public String attoDetail(String idAttoParam, String tipo) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -501,38 +538,34 @@ public class SearchAttoController {
 				.createValueExpression(context.getELContext(), "#{attoBean}",
 						AttoBean.class).getValue(context.getELContext());
 
-		
 		Atto attoRet = null;
-		
-		if("MIS".equalsIgnoreCase(tipo)){
-			
-			
+
+		if ("MIS".equalsIgnoreCase(tipo)) {
+
 			attoBean.setAttoMIS(attoServiceManager.findMISById(idAttoParam));
 			return "pretty:Inserimento_MIS";
-			
-		}else if("EAC".equalsIgnoreCase(tipo)){
-			
-			
-		
+
+		} else if ("EAC".equalsIgnoreCase(tipo)) {
+
 			attoBean.setAttoEAC(attoServiceManager.findEACById(idAttoParam));
 			return "pretty:Inserimento_EAC";
-			
-			
-		}else {
-			
+
+		} else {
+
 			attoBean.setAtto(attoServiceManager.findById(idAttoParam));
-			attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
-			attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
-			attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setFirmatari(
+					personaleServiceManager.findFirmatariByAtto(attoBean
+							.getAtto()));
+			attoBean.getAtto()
+					.setTestiAtto(
+							attoRecordServiceManager.testiAttoByAtto(attoBean
+									.getAtto()));
+			attoBean.getAtto().setAllegati(
+					attoRecordServiceManager.allAllegatiAttoByAtto(attoBean
+							.getAtto()));
 			return "pretty:Riepilogo_Atto";
-			
+
 		}
-		
-        
-		
-		
-		
-		
 
 	}
 
@@ -544,10 +577,6 @@ public class SearchAttoController {
 		this.atto.setNumeroAtto(numeroAtto);
 	}
 
-	
-	
-	
-	
 	public String getNumeroAttoDa() {
 		return this.atto.getNumeroAttoDa();
 	}
@@ -659,8 +688,6 @@ public class SearchAttoController {
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
 	}
-	
-	
 
 	public AttoRecordServiceManager getAttoRecordServiceManager() {
 		return attoRecordServiceManager;
@@ -693,7 +720,8 @@ public class SearchAttoController {
 
 	public void setEsitoVotoCommissioneReferente(
 			String esitoVotoCommissioneReferente) {
-		this.atto.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
+		this.atto
+				.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
 	}
 
 	public String getEsitoVotoAula() {
@@ -704,21 +732,19 @@ public class SearchAttoController {
 		this.atto.setEsitoVotoAula(esitoVotoAula);
 	}
 
-	/*public String getCommissioneReferente() {
-		return this.atto.getCommissioneReferente();
-	}
-
-	public void setCommissioneReferente(String commissioneReferente) {
-		this.atto.setCommissioneReferente(commissioneReferente);
-	}
-
-	public String getCommissioneConsultiva() {
-		return this.atto.getCommissioneConsultiva();
-	}
-
-	public void setCommissioneConsultiva(String commissioneConsultiva) {
-		this.atto.setCommissioneConsultiva(commissioneConsultiva);
-	}*/
+	/*
+	 * public String getCommissioneReferente() { return
+	 * this.atto.getCommissioneReferente(); }
+	 * 
+	 * public void setCommissioneReferente(String commissioneReferente) {
+	 * this.atto.setCommissioneReferente(commissioneReferente); }
+	 * 
+	 * public String getCommissioneConsultiva() { return
+	 * this.atto.getCommissioneConsultiva(); }
+	 * 
+	 * public void setCommissioneConsultiva(String commissioneConsultiva) {
+	 * this.atto.setCommissioneConsultiva(commissioneConsultiva); }
+	 */
 
 	public boolean isRedigente() {
 		return this.atto.isRedigente();
@@ -847,7 +873,7 @@ public class SearchAttoController {
 	public void setDataChiusuraA(Date dataSedutaAulaA) {
 		this.atto.setDataChiusuraA(dataSedutaAulaA);
 	}
-	
+
 	public Date getDataChiusuraDa() {
 		return this.atto.getDataChiusuraDa();
 	}
@@ -855,8 +881,7 @@ public class SearchAttoController {
 	public void setDataChiusuraDa(Date dataSedutaAulaA) {
 		this.atto.setDataChiusuraDa(dataSedutaAulaA);
 	}
-	
-	
+
 	public String getRelatore() {
 		return this.atto.getRelatore();
 	}
@@ -896,8 +921,7 @@ public class SearchAttoController {
 	public void setEmendatoAula(boolean emendatoAula) {
 		this.atto.setEmendatoAula(emendatoAula);
 	}
-	
-	
+
 	public String getNumeroDcr() {
 		return this.atto.getNumeroDcr();
 	}
@@ -905,8 +929,7 @@ public class SearchAttoController {
 	public void setNumeroDcr(String numeroDcr) {
 		this.atto.setNumeroDcr(numeroDcr);
 	}
-	
-	
+
 	public String getNumeroDGR() {
 		return this.atto.getNumeroDGR();
 	}
@@ -955,7 +978,6 @@ public class SearchAttoController {
 		this.tipiAtto = tipiAtto;
 	}
 
-		
 	public Map<String, String> getStati() {
 		return stati;
 	}
@@ -980,13 +1002,12 @@ public class SearchAttoController {
 		this.tipiIniziative = tipiIniziative;
 	}
 
-	/*public Map<String, String> getFirmatari() {
-		return firmatari;
-	}
-
-	public void setFirmatari(Map<String, String> firmatari) {
-		this.firmatari = firmatari;
-	}*/
+	/*
+	 * public Map<String, String> getFirmatari() { return firmatari; }
+	 * 
+	 * public void setFirmatari(Map<String, String> firmatari) { this.firmatari
+	 * = firmatari; }
+	 */
 
 	public Map<String, String> getTipiChiusura() {
 		return tipiChiusura;
@@ -1013,15 +1034,13 @@ public class SearchAttoController {
 		this.esitiVotoAula = esitiVotoAula;
 	}
 
-	/*public Map<String, String> getCommissioni() {
-		return commissioni;
-	}
+	/*
+	 * public Map<String, String> getCommissioni() { return commissioni; }
+	 * 
+	 * public void setCommissioni(Map<String, String> commissioniReferenti) {
+	 * this.commissioni = commissioniReferenti; }
+	 */
 
-	public void setCommissioni(Map<String, String> commissioniReferenti) {
-		this.commissioni = commissioniReferenti;
-	}*/
-
-	
 	public List<String> getCommissioni() {
 		return commissioni;
 	}
@@ -1029,15 +1048,13 @@ public class SearchAttoController {
 	public void setCommissioni(List<String> commissioni) {
 		this.commissioni = commissioni;
 	}
-	
-	
-	/*public Map<String, String> getRelatori() {
-		return relatori;
-	}
 
-	public void setRelatori(Map<String, String> relatori) {
-		this.relatori = relatori;
-	}*/
+	/*
+	 * public Map<String, String> getRelatori() { return relatori; }
+	 * 
+	 * public void setRelatori(Map<String, String> relatori) { this.relatori =
+	 * relatori; }
+	 */
 
 	public Map<String, String> getOrganismiStatutari() {
 		return organismiStatutari;
@@ -1159,13 +1176,13 @@ public class SearchAttoController {
 	public void setDataLR(Date dataLR) {
 		this.atto.setDataLR(dataLR);
 	}
-	
+
 	public String getCommissione1() {
 		return atto.getCommissione1();
 	}
 
 	public void setCommissione1(String commissione1) {
-		this.atto.setCommissione1 (commissione1);
+		this.atto.setCommissione1(commissione1);
 	}
 
 	public String getCommissione2() {
@@ -1173,7 +1190,7 @@ public class SearchAttoController {
 	}
 
 	public void setCommissione2(String commissione2) {
-		this.atto.setCommissione2 (commissione2);
+		this.atto.setCommissione2(commissione2);
 	}
 
 	public String getCommissione3() {
@@ -1181,7 +1198,7 @@ public class SearchAttoController {
 	}
 
 	public void setCommissione3(String commissione3) {
-		this.atto.setCommissione3 (commissione3);
+		this.atto.setCommissione3(commissione3);
 	}
 
 	public String getRuoloCommissione1() {
@@ -1189,8 +1206,8 @@ public class SearchAttoController {
 	}
 
 	public void setRuoloCommissione1(String ruoloCommissione1) {
-		this.atto.setRuoloCommissione1 (ruoloCommissione1);
-		
+		this.atto.setRuoloCommissione1(ruoloCommissione1);
+
 	}
 
 	public String getRuoloCommissione2() {
@@ -1198,7 +1215,7 @@ public class SearchAttoController {
 	}
 
 	public void setRuoloCommissione2(String ruoloCommissione2) {
-		this.atto.setRuoloCommissione2 (ruoloCommissione2);
+		this.atto.setRuoloCommissione2(ruoloCommissione2);
 	}
 
 	public String getRuoloCommissione3() {
@@ -1206,7 +1223,7 @@ public class SearchAttoController {
 	}
 
 	public void setRuoloCommissione3(String ruoloCommissione3) {
-		this.atto.setRuoloCommissione3 (ruoloCommissione3);
+		this.atto.setRuoloCommissione3(ruoloCommissione3);
 	}
 
 	public List<String> getFirmatari() {
@@ -1225,8 +1242,6 @@ public class SearchAttoController {
 		this.relatori = relatori;
 	}
 
-
-
 	public String getIdAttoSelected() {
 		return idAttoSelected;
 	}
@@ -1243,10 +1258,4 @@ public class SearchAttoController {
 		this.tipoAttoSelected = tipoAttoSelected;
 	}
 
-	
-	
-	
-	
-	
-	
 }

@@ -62,22 +62,22 @@ public class EsameAulaController {
 	private String emendamentoToDelete;
 	private boolean readonly = false;
 
-	private int numEmendPresentatiMaggior;
-	private int numEmendPresentatiMinor;
-	private int numEmendPresentatiGiunta;
-	private int numEmendPresentatiMisto;
-	private int numEmendPresentatiTotale;
-	private int numEmendApprovatiMaggior;
-	private int numEmendApprovatiMinor;
-	private int numEmendApprovatiGiunta;
-	private int numEmendApprovatiMisto;
-	private int numEmendApprovatiTotale;
-	private int nonAmmissibili;
-	private int decaduti;
-	private int ritirati;
-	private int respinti;
-	private int totaleNonApprovati;
-	private String noteEmendamenti;
+	private Integer numEmendPresentatiMaggior;
+	private Integer numEmendPresentatiMinor;
+	private Integer numEmendPresentatiGiunta;
+	private Integer numEmendPresentatiMisto;
+	private Integer numEmendPresentatiTotale= new Integer(0);
+	private Integer numEmendApprovatiMaggior;
+	private Integer numEmendApprovatiMinor;
+	private Integer numEmendApprovatiGiunta;
+	private Integer numEmendApprovatiMisto;
+	private Integer numEmendApprovatiTotale = new Integer(0);
+	private Integer nonAmmissibili;
+	private Integer decaduti;
+	private Integer ritirati;
+	private Integer respinti;
+	private Integer totaleNonApprovati= new Integer(0);
+	private Integer noteEmendamenti;
 
 	private Date dataSedutaRinvio;
 	private Date dataTermineMassimo;
@@ -275,12 +275,11 @@ public class EsameAulaController {
 				.setAula((Aula) aulaUser.clone());
 
 		if (atto.getStato().equals(StatoAtto.TRASMESSO_AULA)
-				|| ( "PDA".equals(atto.getTipoAtto()) 
-					&& "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equals(atto.getTipoIniziativa()) )
-				|| "ORG".equals(atto.getTipoAtto())	
-				)
-				
-				 {
+				|| ("PDA".equals(atto.getTipoAtto()) && "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA"
+						.equals(atto.getTipoIniziativa()))
+				|| "ORG".equals(atto.getTipoAtto()))
+
+		{
 			atto.setStato(StatoAtto.PRESO_CARICO_AULA);
 		}
 
@@ -297,13 +296,12 @@ public class EsameAulaController {
 				aulaUser.getRelazioneScritta());
 
 		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)
-				|| ( "PDA".equals(attoBean.getTipoAtto()) 
-						&& "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equals(attoBean.getTipoIniziativa()) )
-					|| "ORG".equals(attoBean.getTipoAtto())	
-				) {
+				|| ("PDA".equals(attoBean.getTipoAtto()) && "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA"
+						.equals(attoBean.getTipoIniziativa()))
+				|| "ORG".equals(attoBean.getTipoAtto())) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
 		}
-		
+
 		String numeroAtto = attoBean.getNumeroAtto();
 		context.addMessage(null, new FacesMessage("Atto " + numeroAtto
 				+ " preso in carico con successo dall' utente " + username, ""));
@@ -466,14 +464,6 @@ public class EsameAulaController {
 
 		atto.setStato(StatoAtto.VOTATO_AULA);
 		attoBean.setStato(StatoAtto.VOTATO_AULA);
-		
-		/*if (getEsitoVotazione().equals(Aula.ESITO_VOTO_APPROVATO)) {
-
-			
-		} else {
-
-			navigation = "pretty:Chiusura_Iter";
-		}*/
 
 		Target target = new Target();
 		target.setPassaggio(attoBean.getLastPassaggio().getNome());
@@ -492,11 +482,23 @@ public class EsameAulaController {
 				aulaUser.getDataSedutaAula());
 		attoBean.getWorkingAula().setNumeroDcr(aulaUser.getNumeroDcr());
 		attoBean.getWorkingAula().setNumeroLcr(aulaUser.getNumeroLcr());
-		attoBean.getWorkingAula().setEmendato(aulaUser.isEmendato());
+		attoBean.getWorkingAula().setEmendato(isEmendato());
 		attoBean.getWorkingAula().setNoteVotazione(aulaUser.getNoteVotazione());
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage(
-				"Votazione salvata con successo", ""));
+
+		String message = "";
+
+		if (aulaUser.isEmendato()
+				&& getNumEmendApprovatiTotale()==0) {
+
+			message = "Votazione salvata con successo \n Attenzione atto emendato senza Emendamenti Approvati";
+
+		} else {
+
+			message = "Votazione salvata con successo";
+		}
+
+		context.addMessage(null, new FacesMessage(message, ""));
 
 		return navigation;
 	}
@@ -575,21 +577,70 @@ public class EsameAulaController {
 		}
 	}
 
+	
 	public void totaleEmendPresentati() {
-		numEmendPresentatiTotale = getNumEmendPresentatiGiunta()
-				+ getNumEmendPresentatiMaggior() + getNumEmendPresentatiMinor()
-				+ getNumEmendPresentatiMisto();
+		
+		numEmendPresentatiTotale=0;
+		
+		if(getNumEmendPresentatiGiunta() != null){
+		numEmendPresentatiTotale +=  getNumEmendPresentatiGiunta();
+		}
+		
+		if(getNumEmendPresentatiMaggior()!=null){
+			
+			numEmendPresentatiTotale += getNumEmendPresentatiMaggior();
+		}
+		if(getNumEmendPresentatiMinor()!=null){
+			numEmendPresentatiTotale +=getNumEmendPresentatiMinor();
+		}
+		if(getNumEmendPresentatiMisto()!=null){
+			numEmendPresentatiTotale += getNumEmendPresentatiMisto();
+		}
+				
+			
+	
 	}
 
 	public void totaleEmendApprovati() {
-		numEmendApprovatiTotale = getNumEmendApprovatiGiunta()
-				+ getNumEmendApprovatiMaggior() + getNumEmendApprovatiMinor()
-				+ getNumEmendApprovatiMisto();
+		
+		numEmendApprovatiTotale=0;
+		
+		if(getNumEmendApprovatiGiunta() != null){
+			numEmendApprovatiTotale +=  getNumEmendApprovatiGiunta();
+			}
+			
+			if(getNumEmendApprovatiMaggior()!=null){
+				
+				numEmendApprovatiTotale += getNumEmendApprovatiMaggior();
+			}
+			if(getNumEmendApprovatiMinor()!=null){
+				numEmendApprovatiTotale +=getNumEmendApprovatiMinor();
+			}
+			if(getNumEmendApprovatiMisto()!=null){
+				numEmendApprovatiTotale +=getNumEmendApprovatiMisto();
+			}
+		
 	}
 
 	public void totaleNonApprovati() {
-		totaleNonApprovati = getNonAmmissibili() + getDecaduti()
-				+ getRitirati() + getRespinti();
+		
+		totaleNonApprovati=0;
+		
+		if(getNonAmmissibili() != null){
+			totaleNonApprovati +=  getNonAmmissibili();
+			}
+			
+			if(getDecaduti()!=null){
+				
+				totaleNonApprovati += getDecaduti();
+			}
+			if(getRitirati()!=null){
+				totaleNonApprovati +=getRitirati();
+			}
+			if(getRespinti()!=null){
+				totaleNonApprovati +=getRespinti();
+			}
+		
 	}
 
 	public void salvaEmendamenti() {
@@ -607,6 +658,16 @@ public class EsameAulaController {
 		esameAula.setAtto(atto);
 
 		aulaServiceManager.salvaEmendamentiEsameAula(esameAula);
+
+		if (getNumEmendApprovatiTotale() > 0) {
+			atto.getPassaggi().get(atto.getPassaggi().size() - 1).getAula()
+					.setEmendato(true);
+			aulaUser.setEmendato(true);
+			emendato = true;
+			esameAula.setAtto(atto);
+			attoBean.getWorkingAula().setEmendato(true);
+			aulaServiceManager.salvaVotazioneEsameAula(esameAula);
+		}
 
 		attoBean.getWorkingAula().setNumEmendPresentatiMaggiorEsameAula(
 				aulaUser.getNumEmendPresentatiMaggiorEsameAula());
@@ -1033,131 +1094,131 @@ public class EsameAulaController {
 		this.emendamentiList = emendamentiList;
 	}
 
-	public int getNumEmendPresentatiMaggior() {
+	public Integer getNumEmendPresentatiMaggior() {
 		return aulaUser.getNumEmendPresentatiMaggiorEsameAula();
 	}
 
-	public void setNumEmendPresentatiMaggior(int numEmendPresentatiMaggior) {
+	public void setNumEmendPresentatiMaggior(Integer numEmendPresentatiMaggior) {
 		this.aulaUser
 				.setNumEmendPresentatiMaggiorEsameAula(numEmendPresentatiMaggior);
 	}
 
-	public int getNumEmendPresentatiMinor() {
+	public Integer getNumEmendPresentatiMinor() {
 		return aulaUser.getNumEmendPresentatiMinorEsameAula();
 	}
 
-	public void setNumEmendPresentatiMinor(int numEmendPresentatiMinor) {
+	public void setNumEmendPresentatiMinor(Integer numEmendPresentatiMinor) {
 		this.aulaUser
 				.setNumEmendPresentatiMinorEsameAula(numEmendPresentatiMinor);
 	}
 
-	public int getNumEmendPresentatiGiunta() {
+	public Integer getNumEmendPresentatiGiunta() {
 		return aulaUser.getNumEmendPresentatiGiuntaEsameAula();
 	}
 
-	public void setNumEmendPresentatiGiunta(int numEmendPresentatiGiunta) {
+	public void setNumEmendPresentatiGiunta(Integer numEmendPresentatiGiunta) {
 		this.aulaUser
 				.setNumEmendPresentatiGiuntaEsameAula(numEmendPresentatiGiunta);
 	}
 
-	public int getNumEmendPresentatiMisto() {
+	public Integer getNumEmendPresentatiMisto() {
 		return aulaUser.getNumEmendPresentatiMistoEsameAula();
 	}
 
-	public void setNumEmendPresentatiMisto(int numEmendPresentatiMisto) {
+	public void setNumEmendPresentatiMisto(Integer numEmendPresentatiMisto) {
 		this.aulaUser
 				.setNumEmendPresentatiMistoEsameAula(numEmendPresentatiMisto);
 	}
 
-	public int getNumEmendPresentatiTotale() {
+	public Integer getNumEmendPresentatiTotale() {
 		return numEmendPresentatiTotale;
 	}
 
-	public void setNumEmendPresentatiTotale(int numEmendPresentatiTotale) {
+	public void setNumEmendPresentatiTotale(Integer numEmendPresentatiTotale) {
 		this.numEmendPresentatiTotale = numEmendPresentatiTotale;
 	}
 
-	public int getNumEmendApprovatiMaggior() {
+	public Integer getNumEmendApprovatiMaggior() {
 		return aulaUser.getNumEmendApprovatiMaggiorEsameAula();
 	}
 
-	public void setNumEmendApprovatiMaggior(int numEmendApprovatiMaggior) {
+	public void setNumEmendApprovatiMaggior(Integer numEmendApprovatiMaggior) {
 		this.aulaUser
 				.setNumEmendApprovatiMaggiorEsameAula(numEmendApprovatiMaggior);
 	}
 
-	public int getNumEmendApprovatiMinor() {
+	public Integer getNumEmendApprovatiMinor() {
 		return aulaUser.getNumEmendApprovatiMinorEsameAula();
 	}
 
-	public void setNumEmendApprovatiMinor(int numEmendApprovatiMinor) {
+	public void setNumEmendApprovatiMinor(Integer numEmendApprovatiMinor) {
 		this.aulaUser
 				.setNumEmendApprovatiMinorEsameAula(numEmendApprovatiMinor);
 	}
 
-	public int getNumEmendApprovatiGiunta() {
+	public Integer getNumEmendApprovatiGiunta() {
 		return aulaUser.getNumEmendApprovatiGiuntaEsameAula();
 	}
 
-	public void setNumEmendApprovatiGiunta(int numEmendApprovatiGiunta) {
+	public void setNumEmendApprovatiGiunta(Integer numEmendApprovatiGiunta) {
 		this.aulaUser
 				.setNumEmendApprovatiGiuntaEsameAula(numEmendApprovatiGiunta);
 	}
 
-	public int getNumEmendApprovatiMisto() {
+	public Integer getNumEmendApprovatiMisto() {
 		return aulaUser.getNumEmendApprovatiMistoEsameAula();
 	}
 
-	public void setNumEmendApprovatiMisto(int numEmendApprovatiMisto) {
+	public void setNumEmendApprovatiMisto(Integer numEmendApprovatiMisto) {
 		this.aulaUser
 				.setNumEmendApprovatiMistoEsameAula(numEmendApprovatiMisto);
 	}
 
-	public int getNumEmendApprovatiTotale() {
+	public Integer getNumEmendApprovatiTotale() {
 		return numEmendApprovatiTotale;
 	}
 
-	public void setNumEmendApprovatiTotale(int numEmendApprovatiTotale) {
+	public void setNumEmendApprovatiTotale(Integer numEmendApprovatiTotale) {
 		this.numEmendApprovatiTotale = numEmendApprovatiTotale;
 	}
 
-	public int getNonAmmissibili() {
+	public Integer getNonAmmissibili() {
 		return aulaUser.getNonAmmissibiliEsameAula();
 	}
 
-	public void setNonAmmissibili(int nonAmmissibili) {
+	public void setNonAmmissibili(Integer nonAmmissibili) {
 		this.aulaUser.setNonAmmissibiliEsameAula(nonAmmissibili);
 	}
 
-	public int getDecaduti() {
+	public Integer getDecaduti() {
 		return aulaUser.getDecadutiEsameAula();
 	}
 
-	public void setDecaduti(int decaduti) {
+	public void setDecaduti(Integer decaduti) {
 		this.aulaUser.setDecadutiEsameAula(decaduti);
 	}
 
-	public int getRitirati() {
+	public Integer getRitirati() {
 		return aulaUser.getRitiratiEsameAula();
 	}
 
-	public void setRitirati(int ritirati) {
+	public void setRitirati(Integer ritirati) {
 		this.aulaUser.setRitiratiEsameAula(ritirati);
 	}
 
-	public int getRespinti() {
+	public Integer getRespinti() {
 		return aulaUser.getRespintiEsameAula();
 	}
 
-	public void setRespinti(int respinti) {
+	public void setRespinti(Integer respinti) {
 		this.aulaUser.setRespintiEsameAula(respinti);
 	}
 
-	public int getTotaleNonApprovati() {
+	public Integer getTotaleNonApprovati() {
 		return totaleNonApprovati;
 	}
 
-	public void setTotaleNonApprovati(int totaleNonApprovati) {
+	public void setTotaleNonApprovati(Integer totaleNonApprovati) {
 		this.totaleNonApprovati = totaleNonApprovati;
 	}
 
@@ -1532,18 +1593,14 @@ public class EsameAulaController {
 
 	public void confermaRelatori() {
 
-
 		atto.setRelatori(relatoriList);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		attoServiceManager.salvaRelatoriAula(atto);
 
 		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
-		context.addMessage(
-				null,
-				new FacesMessage(
-						"Relatori associati all'atto. ",
-						""));
+		context.addMessage(null, new FacesMessage(
+				"Relatori associati all'atto. ", ""));
 
 		// }
 	}

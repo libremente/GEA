@@ -76,7 +76,7 @@
 					<p:calendar id="filtraData_da"
 						value="#{gestioneSeduteController.dataSedutaDa}" locale="it"
 						pattern="dd/MM/yyyy" size="10">
-						<p:ajax event="dateSelect"
+						<p:ajax event="dateSelect" global="false"
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
@@ -85,7 +85,7 @@
 					<p:calendar id="filtraData_a"
 						value="#{gestioneSeduteController.dataSedutaA}" locale="it"
 						pattern="dd/MM/yyyy" size="10">
-						<p:ajax event="dateSelect"
+						<p:ajax event="dateSelect" global="false"
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
@@ -147,7 +147,7 @@
 									<p:commandButton oncomplete="sedutaDialog.show()"
 										icon="delete-icon">
 
-										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
+										<f:setPropertyActionListener value="#{seduta.dataSeduta}" 
 											target="#{gestioneSeduteController.sedutaToDelete}" />
 									</p:commandButton>
 								</p:column>
@@ -174,7 +174,7 @@
 						<p:column style="text-align:left;">
 							<p:calendar size="10" locale="it" id="dataSeduta"
 								value="#{gestioneSeduteController.dataSeduta}">
-								<p:ajax event="dateSelect"
+								<p:ajax event="dateSelect" global="false"
 									listener="#{gestioneSeduteController.updateInserisciSedutaHandler}" />
 							</p:calendar>
 						</p:column>
@@ -186,7 +186,7 @@
 						<p:column style="text-align:left;">
 							<p:inputText size="10" id="numVerbale"
 								value="#{gestioneSeduteController.numVerbale}">
-								<p:ajax event="change"
+								<p:ajax event="change" global="false"
 									listener="#{gestioneSeduteController.updateInserisciSedutaHandler}" />
 							</p:inputText>
 
@@ -213,7 +213,7 @@
 							<br />
 							<p:inputTextarea rows="5" cols="53"
 								value="#{gestioneSeduteController.note}">
-								<p:ajax event="change"
+								<p:ajax event="change" global="false"
 									listener="#{gestioneSeduteController.updateInserisciSedutaHandler}" />
 							</p:inputTextarea>
 						</p:column>

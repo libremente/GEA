@@ -192,7 +192,7 @@ public class InserisciAttoController {
 		
     	for (TipoAtto tipoAtto : tipiAtto) {
 			
-    		if(tipoAtto.getCodice().equals("EAC")){
+    		if(tipoAtto.getCodice().equals("EAC") || tipoAtto.getCodice().equals("MIS")){
     			
     			continue;
     		}

@@ -116,8 +116,9 @@
 
 	</p:fieldset>
 	<p:fieldset legend="Pubblicazione su BURL" collapsed="false"
-		toggleable="true" toggleSpeed="500" rendered="#{navigationBean.pubblicazioneBurlEnabled()}">
+		toggleable="true" toggleSpeed="500" rendered="#{navigationBean.isBURLEnabled()}">
 		<p:panelGrid styleClass="infoTable" id="registrazioneburlpanel">
+			
 			<p:row rendered="#{navigationBean.isBURLEnabled()}">
 				<p:column>
 					<h:outputText style="font-weight: bold;"
@@ -168,7 +169,7 @@
 			
 			
 
-           <p:row>
+           <p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 				<p:column colspan="2">
 				    
 					<p:commandLink target="_blank" value="Link Leggi Regionali"  action="#{chiusuraIterController.createLeggeRegionaleLink}" 
@@ -181,13 +182,7 @@
             </div>
 
 
-			<!-- <p:row>
-				<p:column colspan="2">
-				<h:outputLink value="lettereenotifiche">
-					Creazione lettera per pubblicazione del Presidente
-					</h:outputLink>
-				</p:column>
-			</p:row>-->
+			
 		</p:panelGrid>
 	</p:fieldset>
 	<p>

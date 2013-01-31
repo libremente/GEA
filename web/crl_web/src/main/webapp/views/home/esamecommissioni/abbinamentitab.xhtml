@@ -33,7 +33,7 @@
 		<p:commandButton id="confirmAbbinamento" value="Conferma"
 			oncomplete="abbinamentoDialog.hide()"
 			action="#{esameCommissioniController.removeAbbinamento}"
-			update="listaAbbinamenti" />
+			update="listaAbbinamenti, :informationForm" />
 		<p:commandButton id="declineAbbinamento" value="Annulla"
 			onclick="abbinamentoDialog.hide()" type="button" />
 
@@ -781,9 +781,10 @@
 		</p:column>
 		<p:column headerText="Azioni">
 			<c:set value="#{atto.id}" var="idAttoParam" />
+			<c:set value="#{atto.tipo}" var="tipoAttoParam" />
 			<p:commandButton value="" id="addAbbinamento" title="Abbina"
 				style="height:25px;width:25px"
-				action="#{esameCommissioniController.addAbbinamento(idAttoParam)}"
+				action="#{esameCommissioniController.addAbbinamento(idAttoParam,tipoAttoParam)}"
 				update=":presAssForm:tabView:listaAbbinamenti, :presAssForm:tabView:abbinamentiMsg, :presAssForm:tabView:dettagliabbinamentopanel"
 				icon="new-icon" />
 		</p:column>

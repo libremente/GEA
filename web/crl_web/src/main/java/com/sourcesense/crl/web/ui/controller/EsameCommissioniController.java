@@ -136,24 +136,24 @@ public class EsameCommissioniController {
 	private Date dataRichiestaIscrizione;
 	private boolean passaggioDiretto;
 	private String emendamentoToDelete;
-	private int numEmendPresentatiMaggior;
-	private int numEmendPresentatiMinor;
-	private int numEmendPresentatiGiunta;
-	private int numEmendPresentatiMisto;
-	private int numEmendPresentatiTotale;
-	private int numEmendApprovatiMaggior;
-	private int numEmendApprovatiMinor;
-	private int numEmendApprovatiGiunta;
-	private int numEmendApprovatiMisto;
-	private int numEmendApprovatiTotale;
-	private int numEmendApprovatiCommissione;
-	private int numEmendPresentatiCommissione;
+	private Integer numEmendPresentatiMaggior;
+	private Integer numEmendPresentatiMinor;
+	private Integer numEmendPresentatiGiunta;
+	private Integer numEmendPresentatiMisto;
+	private Integer numEmendPresentatiTotale = new Integer(0);
+	private Integer numEmendApprovatiMaggior;
+	private Integer numEmendApprovatiMinor;
+	private Integer numEmendApprovatiGiunta;
+	private Integer numEmendApprovatiMisto;
+	private Integer numEmendApprovatiTotale = new Integer(0);
+	private Integer numEmendApprovatiCommissione;
+	private Integer numEmendPresentatiCommissione;
 
-	private int nonAmmissibili;
-	private int decaduti;
-	private int ritirati;
-	private int respinti;
-	private int totaleNonApprovati;
+	private Integer nonAmmissibili;
+	private Integer decaduti;
+	private Integer ritirati;
+	private Integer respinti;
+	private Integer totaleNonApprovati= new Integer(0);
 	private String noteEmendamenti;
 	private Date dataPresaInCaricoProposta;
 	private Date dataIntesa;
@@ -1027,7 +1027,7 @@ public class EsameCommissioniController {
 
 	// Abbinamenti***************************************************************
 
-	public void addAbbinamento(String idAbbinamento) {
+	public void addAbbinamento(String idAbbinamento, String tipoAtto) {
 
 		if (!idAbbinamento.trim().equals("")) {
 
@@ -1239,6 +1239,7 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
+		attoServiceManager.salvaInfoGeneraliPresentazione(atto);
 		attoBean.getAtto().setOggetto(atto.getOggetto());
 
 		setStatoCommitOggettoAttoCorrente(CRLMessage.COMMIT_DONE);
@@ -1639,22 +1640,75 @@ public class EsameCommissioniController {
 	// Emendamenti e Clausole*************************************************
 
 	public void totaleEmendPresentati() {
-		numEmendPresentatiTotale = getNumEmendPresentatiGiunta()
-				+ getNumEmendPresentatiMaggior() + getNumEmendPresentatiMinor()
-				+ getNumEmendPresentatiMisto()
-				+ getNumEmendPresentatiCommissione();
+		
+		numEmendPresentatiTotale=0;
+
+		if (getNumEmendPresentatiGiunta() != null) {
+			numEmendPresentatiTotale += getNumEmendPresentatiGiunta();
+		}
+
+		if (getNumEmendPresentatiMaggior() != null) {
+
+			numEmendPresentatiTotale += getNumEmendPresentatiMaggior();
+		}
+		if (getNumEmendPresentatiMinor() != null) {
+			numEmendPresentatiTotale += getNumEmendPresentatiMinor();
+		}
+		if (getNumEmendPresentatiMisto() != null) {
+			numEmendPresentatiTotale += getNumEmendPresentatiMisto();
+		}
+		if (getNumEmendPresentatiCommissione() != null) {
+			numEmendPresentatiTotale += getNumEmendPresentatiCommissione();
+		}
+
 	}
 
 	public void totaleEmendApprovati() {
-		numEmendApprovatiTotale = getNumEmendApprovatiGiunta()
-				+ getNumEmendApprovatiMaggior() + getNumEmendApprovatiMinor()
-				+ getNumEmendApprovatiMisto()
-				+ getNumEmendApprovatiCommissione();
+
+		numEmendApprovatiTotale =0;
+		
+		if (getNumEmendApprovatiGiunta() != null) {
+			numEmendApprovatiTotale += getNumEmendApprovatiGiunta();
+		}
+
+		if (getNumEmendApprovatiMaggior() != null) {
+
+			numEmendApprovatiTotale += getNumEmendApprovatiMaggior();
+		}
+		if (getNumEmendApprovatiMinor() != null) {
+			numEmendApprovatiTotale += getNumEmendApprovatiMinor();
+		}
+		if (getNumEmendApprovatiMisto() != null) {
+			numEmendApprovatiTotale += getNumEmendApprovatiMisto();
+		}
+		if (getNumEmendApprovatiCommissione() != null) {
+			numEmendApprovatiTotale += getNumEmendApprovatiCommissione();
+		}
+		
+		
+		
+		
 	}
 
 	public void totaleNonApprovati() {
-		totaleNonApprovati = getNonAmmissibili() + getDecaduti()
-				+ getRitirati() + getRespinti();
+
+		totaleNonApprovati=0;
+		 
+		if (getNonAmmissibili() != null) {
+			totaleNonApprovati += getNonAmmissibili();
+		}
+
+		if (getDecaduti() != null) {
+
+			totaleNonApprovati += getDecaduti();
+		}
+		if (getRitirati() != null) {
+			totaleNonApprovati += getRitirati();
+		}
+		if (getRespinti() != null) {
+			totaleNonApprovati += getRespinti();
+		}
+
 	}
 
 	public void uploadEmendamento(FileUploadEvent event) {
@@ -2228,123 +2282,123 @@ public class EsameCommissioniController {
 		this.passaggioDiretto = passaggioDiretto;
 	}
 
-	public int getNumEmendPresentatiMaggior() {
+	public Integer getNumEmendPresentatiMaggior() {
 		return commissioneUser.getNumEmendPresentatiMaggiorEsameCommissioni();
 	}
 
-	public void setNumEmendPresentatiMaggior(int numEmendPresentatiMaggior) {
+	public void setNumEmendPresentatiMaggior(Integer numEmendPresentatiMaggior) {
 		this.commissioneUser
 				.setNumEmendPresentatiMaggiorEsameCommissioni(numEmendPresentatiMaggior);
 	}
 
-	public int getNumEmendPresentatiMinor() {
+	public Integer getNumEmendPresentatiMinor() {
 		return commissioneUser.getNumEmendPresentatiMinorEsameCommissioni();
 	}
 
-	public void setNumEmendPresentatiMinor(int numEmendPresentatiMinor) {
+	public void setNumEmendPresentatiMinor(Integer numEmendPresentatiMinor) {
 		this.commissioneUser
 				.setNumEmendPresentatiMinorEsameCommissioni(numEmendPresentatiMinor);
 	}
 
-	public int getNumEmendPresentatiGiunta() {
+	public Integer getNumEmendPresentatiGiunta() {
 		return commissioneUser.getNumEmendPresentatiGiuntaEsameCommissioni();
 	}
 
-	public void setNumEmendPresentatiGiunta(int numEmendPresentatiGiunta) {
+	public void setNumEmendPresentatiGiunta(Integer numEmendPresentatiGiunta) {
 		this.commissioneUser
 				.setNumEmendPresentatiGiuntaEsameCommissioni(numEmendPresentatiGiunta);
 	}
 
-	public int getNumEmendPresentatiMisto() {
+	public Integer getNumEmendPresentatiMisto() {
 		return commissioneUser.getNumEmendPresentatiMistoEsameCommissioni();
 	}
 
-	public void setNumEmendPresentatiMisto(int numEmendPresentatiMisto) {
+	public void setNumEmendPresentatiMisto(Integer numEmendPresentatiMisto) {
 		this.commissioneUser
 				.setNumEmendPresentatiMistoEsameCommissioni(numEmendPresentatiMisto);
 	}
 
-	public int getNumEmendPresentatiTotale() {
+	public Integer getNumEmendPresentatiTotale() {
 		return numEmendPresentatiTotale;
 	}
 
-	public void setNumEmendPresentatiTotale(int numEmendPresentatiTotale) {
+	public void setNumEmendPresentatiTotale(Integer numEmendPresentatiTotale) {
 		this.numEmendPresentatiTotale = numEmendPresentatiTotale;
 	}
 
-	public int getNumEmendApprovatiMaggior() {
+	public Integer getNumEmendApprovatiMaggior() {
 		return commissioneUser.getNumEmendApprovatiMaggiorEsameCommissioni();
 	}
 
-	public void setNumEmendApprovatiMaggior(int numEmendApprovatiMaggior) {
+	public void setNumEmendApprovatiMaggior(Integer numEmendApprovatiMaggior) {
 		this.commissioneUser
 				.setNumEmendApprovatiMaggiorEsameCommissioni(numEmendApprovatiMaggior);
 	}
 
-	public int getNumEmendApprovatiMinor() {
+	public Integer getNumEmendApprovatiMinor() {
 		return commissioneUser.getNumEmendApprovatiMinorEsameCommissioni();
 	}
 
-	public void setNumEmendApprovatiMinor(int numEmendApprovatiMinor) {
+	public void setNumEmendApprovatiMinor(Integer numEmendApprovatiMinor) {
 		this.commissioneUser
 				.setNumEmendApprovatiMinorEsameCommissioni(numEmendApprovatiMinor);
 	}
 
-	public int getNumEmendApprovatiGiunta() {
+	public Integer getNumEmendApprovatiGiunta() {
 		return commissioneUser.getNumEmendApprovatiGiuntaEsameCommissioni();
 	}
 
-	public void setNumEmendApprovatiGiunta(int numEmendApprovatiGiunta) {
+	public void setNumEmendApprovatiGiunta(Integer numEmendApprovatiGiunta) {
 		this.commissioneUser
 				.setNumEmendApprovatiGiuntaEsameCommissioni(numEmendApprovatiGiunta);
 	}
 
-	public int getNumEmendApprovatiMisto() {
+	public Integer getNumEmendApprovatiMisto() {
 		return commissioneUser.getNumEmendApprovatiMistoEsameCommissioni();
 	}
 
-	public void setNumEmendApprovatiMisto(int numEmendApprovatiMisto) {
+	public void setNumEmendApprovatiMisto(Integer numEmendApprovatiMisto) {
 		this.commissioneUser
 				.setNumEmendApprovatiMistoEsameCommissioni(numEmendApprovatiMisto);
 	}
 
-	public int getNumEmendApprovatiTotale() {
+	public Integer getNumEmendApprovatiTotale() {
 		return numEmendApprovatiTotale;
 	}
 
-	public void setNumEmendApprovatiTotale(int numEmendApprovatiTotale) {
+	public void setNumEmendApprovatiTotale(Integer numEmendApprovatiTotale) {
 		this.numEmendApprovatiTotale = numEmendApprovatiTotale;
 	}
 
-	public int getDecaduti() {
+	public Integer getDecaduti() {
 		return commissioneUser.getDecadutiEsameCommissioni();
 	}
 
-	public void setDecaduti(int decaduti) {
+	public void setDecaduti(Integer decaduti) {
 		this.commissioneUser.setDecadutiEsameCommissioni(decaduti);
 	}
 
-	public int getRitirati() {
+	public Integer getRitirati() {
 		return commissioneUser.getRitiratiEsameCommissioni();
 	}
 
-	public void setRitirati(int ritirati) {
+	public void setRitirati(Integer ritirati) {
 		this.commissioneUser.setRitiratiEsameCommissioni(ritirati);
 	}
 
-	public int getRespinti() {
+	public Integer getRespinti() {
 		return commissioneUser.getRespintiEsameCommissioni();
 	}
 
-	public void setRespinti(int respinti) {
+	public void setRespinti(Integer respinti) {
 		this.commissioneUser.setRespintiEsameCommissioni(respinti);
 	}
 
-	public int getTotaleNonApprovati() {
+	public Integer getTotaleNonApprovati() {
 		return totaleNonApprovati;
 	}
 
-	public void setTotaleNonApprovati(int totaleNonApprovati) {
+	public void setTotaleNonApprovati(Integer totaleNonApprovati) {
 		this.totaleNonApprovati = totaleNonApprovati;
 	}
 
@@ -2693,11 +2747,11 @@ public class EsameCommissioniController {
 		this.abbinamentiList = abbinamentiList;
 	}
 
-	public int getNonAmmissibili() {
+	public Integer getNonAmmissibili() {
 		return commissioneUser.getNonAmmissibiliEsameCommissioni();
 	}
 
-	public void setNonAmmissibili(int nonAmmissibili) {
+	public void setNonAmmissibili(Integer nonAmmissibili) {
 		this.commissioneUser.setNonAmmissibiliEsameCommissioni(nonAmmissibili);
 	}
 
@@ -2973,20 +3027,20 @@ public class EsameCommissioniController {
 		this.readonly = readonly;
 	}
 
-	public int getNumEmendApprovatiCommissione() {
+	public Integer getNumEmendApprovatiCommissione() {
 		return numEmendApprovatiCommissione;
 	}
 
-	public void setNumEmendApprovatiCommissione(int numEmendApprovatiCommissione) {
+	public void setNumEmendApprovatiCommissione(Integer numEmendApprovatiCommissione) {
 		this.numEmendApprovatiCommissione = numEmendApprovatiCommissione;
 	}
 
-	public int getNumEmendPresentatiCommissione() {
+	public Integer getNumEmendPresentatiCommissione() {
 		return numEmendPresentatiCommissione;
 	}
 
 	public void setNumEmendPresentatiCommissione(
-			int numEmendPresentatiCommissione) {
+			Integer numEmendPresentatiCommissione) {
 		this.numEmendPresentatiCommissione = numEmendPresentatiCommissione;
 	}
 

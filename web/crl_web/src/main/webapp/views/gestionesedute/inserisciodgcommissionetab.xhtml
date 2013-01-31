@@ -95,7 +95,7 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:selectBooleanCheckbox value="#{consultazioneAtto.prevista}">
-								<p:ajax event="change"
+								<p:ajax event="change" global="false"
 									listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
 							</p:selectBooleanCheckbox>
 						</f:facet>
@@ -111,7 +111,7 @@
 						</f:facet>
 						<f:facet name="input">
 							<p:selectBooleanCheckbox value="#{consultazioneAtto.discussa}">
-								<p:ajax event="change"
+								<p:ajax event="change" global="false"
 									listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
 							</p:selectBooleanCheckbox>
 						</f:facet>
@@ -252,7 +252,7 @@
 							<f:selectItem itemLabel="Scegli tipo Atto" itemValue="" />
 							<f:selectItems
 								value="#{gestioneSeduteController.tipiAttoSindacato}" />
-							<p:ajax update="numAttoSindacato"
+							<p:ajax update="numAttoSindacato" global="false"
 								listener="#{gestioneSeduteController.handleAttoSindacatoChange}" />
 						</p:selectOneMenu>
 					</p:column>

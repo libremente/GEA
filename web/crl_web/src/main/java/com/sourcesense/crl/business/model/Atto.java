@@ -168,6 +168,8 @@ public class Atto implements Cloneable {
 	
 	private String numeroDgrSeguito;
 	private Date dataDgrSeguito;
+	
+	private List <SedutaAtto> seduteAtto = new ArrayList<SedutaAtto>();
 
 	public Atto() {
 		Passaggio passaggio = new Passaggio();
@@ -962,6 +964,14 @@ public class Atto implements Cloneable {
 
 	public void setDataDgrSeguito(Date dataDgrSeguito) {
 		this.dataDgrSeguito = dataDgrSeguito;
+	}
+
+	public List<SedutaAtto> getSeduteAtto() {
+		return seduteAtto;
+	}
+
+	public void setSeduteAtto(List<SedutaAtto> seduteAtto) {
+		this.seduteAtto = seduteAtto;
 	}
 
 	

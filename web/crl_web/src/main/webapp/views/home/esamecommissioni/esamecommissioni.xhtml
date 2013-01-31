@@ -39,20 +39,19 @@
 		<p:tab id="tab2" rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.abbinamentiEnabled()}"  title="Abbinamenti">
 			<ui:include src="abbinamentitab.xhtml" />
 		</p:tab>
+		
+		<p:tab id="tab3" rendered="#{navigationBean.isCommissioneReferente() and navigationBean.emendamentiClausoleEnabled()}"  title="Emendamenti e Clausole">
+			<ui:include src="./emendamentieclausoletab.xhtml" />
+		</p:tab>
 
-		<p:tab id="tab3" title="Votazione">
+        <p:tab id="tab4" rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.isSessionAttoPDL()}"  title="Stralci">
+			<ui:include src="./stralcitab.xhtml" />
+		</p:tab>  
+
+		<p:tab id="tab5" title="Votazione">
 			<ui:include src="votazionetab.xhtml" />
 		</p:tab>
 		
-		
-
-		<p:tab id="tab4" rendered="#{navigationBean.isCommissioneReferente() and navigationBean.emendamentiClausoleEnabled()}"  title="Emendamenti e Clausole">
-			<ui:include src="./emendamentieclausoletab.xhtml" />
-		</p:tab>
-		
-		<p:tab id="tab5" rendered="#{!navigationBean.isCommissioneConsultiva() and navigationBean.isSessionAttoPDL()}"  title="Stralci">
-			<ui:include src="./stralcitab.xhtml" />
-		</p:tab>
 
 		<p:tab id="tab6" title="Note e Allegati">
 			<ui:include src="./noteallegatitab.xhtml" />

@@ -152,14 +152,14 @@
 
 
 				<p>
-					<p:commandButton value="Genera lettera" 
+					<p:commandButton value="Salva Modifiche" 
 						action="#{lettereNotificheController.salvaLettera}"
 						update="messages" />
 				</p>
 				<p>
 
 
-					<p:commandButton value="Scarica lettera" id="downloadLink"
+					<p:commandButton value="Vedi lettera" id="downloadLink"
 						ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
 						<p:fileDownload value="#{lettereNotificheController.file}" />
 

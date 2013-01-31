@@ -18,6 +18,8 @@ public class Componente  implements Cloneable {
 	private Date dataUscita;
 	private boolean coordinatore;
 	private String descrizione;
+	private String cognomeNome;
+	
 	
 	public Object clone() {
 		try {
@@ -64,6 +66,16 @@ public class Componente  implements Cloneable {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
+
+	public String getCognomeNome() {
+		return cognomeNome;
+	}
+
+	public void setCognomeNome(String cognomeNome) {
+		this.cognomeNome = cognomeNome;
+	}
+	
+	
 	
 	
 

@@ -36,19 +36,19 @@ public class Aula implements Cloneable{
 	private List<Allegato> allegatiEsameAula = new ArrayList<Allegato>();
 	
 	
-	private int numEmendPresentatiMaggiorEsameAula;
-	private int numEmendPresentatiMinorEsameAula;
-	private int numEmendPresentatiGiuntaEsameAula;
-	private int numEmendPresentatiMistoEsameAula;
-	private int numEmendApprovatiMaggiorEsameAula;
-	private int numEmendApprovatiMinorEsameAula;
-	private int numEmendApprovatiGiuntaEsameAula;
-	private int numEmendApprovatiMistoEsameAula;
-	private int nonAmmissibiliEsameAula;
-	private int decadutiEsameAula;
-	private int ritiratiEsameAula;
-	private int respintiEsameAula;
-	private int totaleNonApprovatiEsameAula;
+	private Integer numEmendPresentatiMaggiorEsameAula;
+	private Integer numEmendPresentatiMinorEsameAula;
+	private Integer numEmendPresentatiGiuntaEsameAula;
+	private Integer numEmendPresentatiMistoEsameAula;
+	private Integer numEmendApprovatiMaggiorEsameAula;
+	private Integer numEmendApprovatiMinorEsameAula;
+	private Integer numEmendApprovatiGiuntaEsameAula;
+	private Integer numEmendApprovatiMistoEsameAula;
+	private Integer nonAmmissibiliEsameAula;
+	private Integer decadutiEsameAula;
+	private Integer ritiratiEsameAula;
+	private Integer respintiEsameAula;
+	private Integer totaleNonApprovatiEsameAula;
 	private String noteEmendamentiEsameAula;
 	
 	private Date dataSedutaRinvio;
@@ -160,114 +160,114 @@ public class Aula implements Cloneable{
 		this.emendamentiEsameAula = emendamentiEsameAula;
 	}
 
-	public int getNumEmendPresentatiMaggiorEsameAula() {
+	public Integer getNumEmendPresentatiMaggiorEsameAula() {
 		return numEmendPresentatiMaggiorEsameAula;
 	}
 	public void setNumEmendPresentatiMaggiorEsameAula(
-			int numEmendPresentatiMaggiorEsameAula) {
+			Integer numEmendPresentatiMaggiorEsameAula) {
 		this.numEmendPresentatiMaggiorEsameAula = numEmendPresentatiMaggiorEsameAula;
 	}
 
-	public int getNumEmendPresentatiMinorEsameAula() {
+	public Integer getNumEmendPresentatiMinorEsameAula() {
 		return numEmendPresentatiMinorEsameAula;
 	}
 
 	public void setNumEmendPresentatiMinorEsameAula(
-			int numEmendPresentatiMinorEsameAula) {
+			Integer numEmendPresentatiMinorEsameAula) {
 		this.numEmendPresentatiMinorEsameAula = numEmendPresentatiMinorEsameAula;
 	}
 
-	public int getNumEmendPresentatiGiuntaEsameAula() {
+	public Integer getNumEmendPresentatiGiuntaEsameAula() {
 		return numEmendPresentatiGiuntaEsameAula;
 	}
 
 	public void setNumEmendPresentatiGiuntaEsameAula(
-			int numEmendPresentatiGiuntaEsameAula) {
+			Integer numEmendPresentatiGiuntaEsameAula) {
 		this.numEmendPresentatiGiuntaEsameAula = numEmendPresentatiGiuntaEsameAula;
 	}
 
-	public int getNumEmendPresentatiMistoEsameAula() {
+	public Integer getNumEmendPresentatiMistoEsameAula() {
 		return numEmendPresentatiMistoEsameAula;
 	}
 
 	public void setNumEmendPresentatiMistoEsameAula(
-			int numEmendPresentatiMistoEsameAula) {
+			Integer numEmendPresentatiMistoEsameAula) {
 		this.numEmendPresentatiMistoEsameAula = numEmendPresentatiMistoEsameAula;
 	}
 
-	public int getNumEmendApprovatiMaggiorEsameAula() {
+	public Integer getNumEmendApprovatiMaggiorEsameAula() {
 		return numEmendApprovatiMaggiorEsameAula;
 	}
 	
 	public void setNumEmendApprovatiMaggiorEsameAula(
-			int numEmendApprovatiMaggiorEsameAula) {
+			Integer numEmendApprovatiMaggiorEsameAula) {
 		this.numEmendApprovatiMaggiorEsameAula = numEmendApprovatiMaggiorEsameAula;
 	}
 
-	public int getNumEmendApprovatiMinorEsameAula() {
+	public Integer getNumEmendApprovatiMinorEsameAula() {
 		return numEmendApprovatiMinorEsameAula;
 	}
 
 	public void setNumEmendApprovatiMinorEsameAula(
-			int numEmendApprovatiMinorEsameAula) {
+			Integer numEmendApprovatiMinorEsameAula) {
 		this.numEmendApprovatiMinorEsameAula = numEmendApprovatiMinorEsameAula;
 	}
 
-	public int getNumEmendApprovatiGiuntaEsameAula() {
+	public Integer getNumEmendApprovatiGiuntaEsameAula() {
 		return numEmendApprovatiGiuntaEsameAula;
 	}
 
 	public void setNumEmendApprovatiGiuntaEsameAula(
-			int numEmendApprovatiGiuntaEsameAula) {
+			Integer numEmendApprovatiGiuntaEsameAula) {
 		this.numEmendApprovatiGiuntaEsameAula = numEmendApprovatiGiuntaEsameAula;
 	}
 
-	public int getNumEmendApprovatiMistoEsameAula() {
+	public Integer getNumEmendApprovatiMistoEsameAula() {
 		return numEmendApprovatiMistoEsameAula;
 	}
 
 	public void setNumEmendApprovatiMistoEsameAula(
-			int numEmendApprovatiMistoEsameAula) {
+			Integer numEmendApprovatiMistoEsameAula) {
 		this.numEmendApprovatiMistoEsameAula = numEmendApprovatiMistoEsameAula;
 	}
 
-	public int getNonAmmissibiliEsameAula() {
+	public Integer getNonAmmissibiliEsameAula() {
 		return nonAmmissibiliEsameAula;
 	}
 
-	public void setNonAmmissibiliEsameAula(int nonAmmissibiliEsameAula) {
+	public void setNonAmmissibiliEsameAula(Integer nonAmmissibiliEsameAula) {
 		this.nonAmmissibiliEsameAula = nonAmmissibiliEsameAula;
 	}
 
-	public int getDecadutiEsameAula() {
+	public Integer getDecadutiEsameAula() {
 		return decadutiEsameAula;
 	}
 
-	public void setDecadutiEsameAula(int decadutiEsameAula) {
+	public void setDecadutiEsameAula(Integer decadutiEsameAula) {
 		this.decadutiEsameAula = decadutiEsameAula;
 	}
 
-	public int getRitiratiEsameAula() {
+	public Integer getRitiratiEsameAula() {
 		return ritiratiEsameAula;
 	}
 
-	public void setRitiratiEsameAula(int ritiratiEsameAula) {
+	public void setRitiratiEsameAula(Integer ritiratiEsameAula) {
 		this.ritiratiEsameAula = ritiratiEsameAula;
 	}
 
-	public int getRespintiEsameAula() {
+	public Integer getRespintiEsameAula() {
 		return respintiEsameAula;
 	}
 
-	public void setRespintiEsameAula(int respintiEsameAula) {
+	public void setRespintiEsameAula(Integer respintiEsameAula) {
 		this.respintiEsameAula = respintiEsameAula;
 	}
 
-	public int getTotaleNonApprovatiEsameAula() {
+	public Integer getTotaleNonApprovatiEsameAula() {
 		return totaleNonApprovatiEsameAula;
 	}
 	
-	public void setTotaleNonApprovatiEsameAula(int totaleNonApprovatiEsameAula) {
+	public void setTotaleNonApprovatiEsameAula(Integer totaleNonApprovatiEsameAula) {
 		this.totaleNonApprovatiEsameAula = totaleNonApprovatiEsameAula;
 	}
 
