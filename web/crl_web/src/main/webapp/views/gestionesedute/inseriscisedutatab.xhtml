@@ -172,7 +172,7 @@
 							<h:outputLabel for="dataSeduta" value="Data seduta:  " />
 						</p:column>
 						<p:column style="text-align:left;">
-							<p:calendar size="10" locale="it" id="dataSeduta"
+							<p:calendar size="10" locale="it" id="dataSeduta" pattern="dd/MM/yyyy"
 								value="#{gestioneSeduteController.dataSeduta}">
 								<p:ajax event="dateSelect" global="false"
 									listener="#{gestioneSeduteController.updateInserisciSedutaHandler}" />

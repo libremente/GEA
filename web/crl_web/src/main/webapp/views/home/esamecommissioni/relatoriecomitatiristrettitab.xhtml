@@ -99,7 +99,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:fileUpload label="Carica Testo del Comitato Ristretto"
+							<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
 								oncomplete="uploadFileAttributesDialog.hide()" auto="false"
 								update="listaTestiComitatoRistretto ,comitatiMsg"
 								fileUploadListener="#{esameCommissioniController.uploadTestoComitatoRistretto}" />
@@ -122,7 +122,7 @@
 		</p:column>
 		<p:column>
 			<div id="presaInCarico">
-				<p:calendar size="10" locale="it" id="datapresaincarico"
+				<p:calendar size="10" locale="it" id="datapresaincarico" pattern="dd/MM/yyyy"
 					update="comitatiMsg"
 					value="#{esameCommissioniController.dataPresaInCarico}">
 					<p:ajax event="dateSelect"
@@ -291,7 +291,7 @@
 							</p:row>
 						</f:facet>
 						<p:row>
-							<p:column>
+							<p:column style="text-align:center">
 								<p:selectOneMenu id="relatore"
 									value="#{esameCommissioniController.nomeRelatore}">
 									<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
@@ -303,19 +303,19 @@
 							</p:column>
 
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:calendar size="10" locale="it" id="dataNominaRelatore"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataNominaRelatore}" />
 							</p:column>
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:calendar size="10" locale="it" id="dataUscitaRelatore"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataUscitaRelatore}" />
 							</p:column>
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:commandButton value="Aggiungi"
 									action="#{esameCommissioniController.addRelatore}"
 									id="addRelatore" update="listaRelatori, comitatiMsg"
@@ -423,7 +423,7 @@
 				</p:column>
 				<p:column colspan="5">
 					<p>
-						<p:calendar size="10" locale="it" id="dataistituzionecomitato"
+						<p:calendar size="10" locale="it" id="dataistituzionecomitato" pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataIstituzioneComitato}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
@@ -447,7 +447,7 @@
 							</p:row>
 						</f:facet>
 						<p:row>
-							<p:column>
+							<p:column style="text-align:center">
 								<p:selectOneMenu id="componente"
 									value="#{esameCommissioniController.nomeComponente}">
 									<f:selectItem itemLabel="Scegli Componente" itemValue="" />
@@ -459,25 +459,25 @@
 							</p:column>
 
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:calendar size="10" locale="it" id="dataNominaComponente"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataNominaComponente}" />
 							</p:column>
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:selectBooleanCheckbox
 									value="#{esameCommissioniController.coordinatore}">
 								</p:selectBooleanCheckbox>
 							</p:column>
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:calendar size="10" locale="it" id="dataUscitaComponente"
 									pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataUscitaComponente}" />
 							</p:column>
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:commandButton value="Aggiungi"
 									action="#{esameCommissioniController.addComponente}"
 									id="addComponente"
@@ -661,7 +661,7 @@
 							</p:commandButton>
 						</p:column>p:column>
 						<p:column>
-							<f:facet name="header">Download</f:facet>
+							<f:facet name="header">Scarica</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
 								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
@@ -692,7 +692,7 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="datafinelavori"
+						<p:calendar size="10" locale="it" id="datafinelavori" pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataFineLavori}">
 
 						</p:calendar>

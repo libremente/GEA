@@ -27,6 +27,17 @@ PrimeFaces.locales ['it'] = {
 	 };
 
 
+function leggiRegionali(){
+	url = document.getElementById('chiusuraIterForm:tabView:urlHidden').value;
+	if(url != ''){
+	  	
+		window.open(url,'_blank');
+	}
+	
+	
+}
+
+
 function selectAllChecks(context){
 	
 	conta = 0;

@@ -72,7 +72,7 @@
 							</p:row>
 							<p:row>
 								<p:column>
-									<p:fileUpload label="Carica Allegato"
+									<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
 										oncomplete="uploadAllegatoAttributesDialog.hide()"
 										auto="false" update="listaAllegati ,noteAllegatiMsg"
 										fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadAllegato}" />
@@ -183,7 +183,7 @@
 										</p:commandButton>
 									</p:column>
 									<p:column>
-										<f:facet name="header">Download</f:facet>
+										<f:facet name="header">Scarica</f:facet>
 
 										<p:commandButton id="downloadLinkemendamento"
 											icon="detail-icon" ajax="false"
@@ -246,25 +246,25 @@
 										</p:row>
 									</f:facet>
 									<p:row>
-										<p:column>
-											<p:inputText id="link"
+										<p:column style="text-align:center">
+											<p:inputText id="link" size="55"
 												value="#{presentazioneAssegnazioneAttoController.nomeLink}" />
 
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											
-											<p:inputText id="urllink"
+											<p:inputText id="urllink" size="55"
 												value="#{presentazioneAssegnazioneAttoController.urlLink}" />
 										
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:selectBooleanCheckbox id="pubblico"
 												value="#{presentazioneAssegnazioneAttoController.pubblico}" />
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:commandButton value="Aggiungi"
 												action="#{presentazioneAssegnazioneAttoController.addLink}"
 												id="addLink" update="listaLinks , noteAllegatiMsg"

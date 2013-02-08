@@ -14,8 +14,12 @@
 	position="left center" />
 
 
-<h:form>
+
 <div id="blockedIter">
+
+<h:inputHidden id="urlHidden" value="#{chiusuraIterController.urlLeggiRegionali}" ></h:inputHidden>
+
+
 	<p:fieldset legend="Chiudi fascicolo" toggleable="true"
 		toggleSpeed="500">
 		<p:row>
@@ -32,7 +36,7 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datachiusura"
+					<p:calendar size="10" locale="it" id="datachiusura" pattern="dd/MM/yyyy"
 						value="#{chiusuraIterController.dataChiusura}" >
 						
 						
@@ -95,7 +99,7 @@
 				</p:column>
 				
 				<p:column >
-					<p:calendar 
+					<p:calendar pattern="dd/MM/yyyy" locale="it"
 						value="#{chiusuraIterController.dataDgrSeguito}" />
 				</p:column>
 			</p:row>
@@ -134,7 +138,7 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="databurl"
+					<p:calendar size="10" locale="it" id="databurl" pattern="dd/MM/yyyy"
 						value="#{chiusuraIterController.dataBurl}" />
 				</p:column>
 
@@ -153,7 +157,7 @@
 				</p:column>
 
 				<p:column>
-					<p:calendar size="10" locale="it" id="datalr"
+					<p:calendar size="10" locale="it" id="datalr" pattern="dd/MM/yyyy"
 						value="#{chiusuraIterController.dataLr}" />
 				</p:column>
 			</p:row>
@@ -172,10 +176,14 @@
            <p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 				<p:column colspan="2">
 				    
-					<p:commandLink target="_blank" value="Link Leggi Regionali"  action="#{chiusuraIterController.createLeggeRegionaleLink}" 
-					update="chiusuraIterMsg"
+					<p:commandLink target="_blank" value="Link Leggi Regionali"  action="#{chiusuraIterController.createLeggeRegionaleLink}" oncomplete="leggiRegionali()"
+					update="urlHidden,chiusuraIterMsg"
 					/>
-				</p:column>
+					
+					
+				
+				
+				</p:column><!-- action="#{chiusuraIterController.createLeggeRegionaleLink}" -->
 			</p:row>  
            
             <div id="">
@@ -192,9 +200,13 @@
 	</p>
 	
 	</div>
-</h:form>
+
 <script type="text/javascript" src="resources/javascript/blockUI.js"></script>
-<script>
+<script  type="text/javascript">
+
+
+
+
 
 	
 if ( #{navigationBean.isGuest()}==true || #{navigationBean.isCommissioneConsultiva()}==true) {

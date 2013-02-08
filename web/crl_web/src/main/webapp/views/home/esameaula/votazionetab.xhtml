@@ -54,7 +54,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:fileUpload label="Carica Testo dell'Atto"
+							<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
 								oncomplete="uploadFileAttributesVotazioneDialog.hide()" auto="false"
 								update="listaTestiAtto ,votazioneMsg"
 								fileUploadListener="#{esameAulaController.uploadTestoAttoVotato}" />
@@ -79,7 +79,7 @@
 		Data presa in carico:
 		</p:column>
 		<p:column><div id="DataPresaInCaricoDiv">
-			<p:calendar size="10" locale="it"
+			<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 				value="#{esameAulaController.dataPresaInCarico}">
 				<p:ajax event="dateSelect"
 					listener="#{esameAulaController.updateVotazioneHandler}" />
@@ -167,7 +167,7 @@
 
 						</p:column>
 						<p:column>
-							<p:calendar size="10" locale="it" id="dataSedutaVotazione"
+							<p:calendar size="10" locale="it" id="dataSedutaVotazione" pattern="dd/MM/yyyy"
 								value="#{esameAulaController.dataSedutaVotazione}">
 								<p:ajax event="dateSelect"
 									listener="#{esameAulaController.updateVotazioneHandler}" />
@@ -310,7 +310,7 @@
 							</p:column>
 							
 							<p:column>
-							<f:facet name="header">Download</f:facet>
+							<f:facet name="header">Scarica</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
 								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">

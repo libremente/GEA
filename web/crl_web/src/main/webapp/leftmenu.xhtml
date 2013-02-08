@@ -16,7 +16,7 @@
 				<p:menuitem value="Inserisci atto EAC" url="/inserisciattoEAC" rendered="#{ navigationBean.isServizioCommissioni() }"/>
 				<p:menuitem value="Inserisci atto MIS" url="/inserisciattoMIS" rendered="#{navigationBean.isCPCVUser()}"/>
 				<p:menuitem value="Gestione sedute" url="/gestionesedute" rendered="#{ !navigationBean.isGuest() and !navigationBean.isCPCVUser()}" />
-				<p:menuitem value="Reportistica" url="/reportistica" />
+				<p:menuitem value="Reportistica" url="/reportistica" rendered="#{ !navigationBean.isGuest() }"/>
 				<p:menuitem value="Disconnetti" action="#{loginController.logout}" />
 			</p:submenu>
 		</p:menu>

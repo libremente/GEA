@@ -113,7 +113,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private boolean normaFinanziaria;
 	private boolean richiestaUrgenza;
 	private boolean votazioneUrgenza;
-	private boolean currentFilePubblico;
+	private boolean currentFilePubblico=true;
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
 

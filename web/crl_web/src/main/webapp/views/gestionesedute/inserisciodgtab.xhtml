@@ -137,6 +137,8 @@
 												itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
 											<f:selectItem itemLabel="Iniziativa Commissioni"
 												itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
+											<f:selectItem itemLabel="Altra Iniziativa"
+												itemValue="08_ATTO DI ALTRA INIZIATIVA" />
 										</p:selectOneMenu>
 									</p:column>
 
@@ -147,8 +149,10 @@
 									<p:column>	
 									da:&nbsp; 
 								   <p:calendar size="8" locale="it" id="datainiziativa_da"
+											pattern="dd/MM/yyyy"
 											value="#{searchAttoController.dataIniziativaDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+									&nbsp;a:&nbsp;
+									<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
 											id="datainiziativa_a"
 											value="#{searchAttoController.dataIniziativaA}" />
 									</p:column>
@@ -184,29 +188,32 @@
 								</p:column>
 									<p:column>
 										<p:selectOneMenu id="tipoChiusura"
-										value="#{searchAttoController.tipoChiusura}">
-										<f:selectItem itemLabel="Scegli Tipo Chiusura" itemValue="" />
-										<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
-										<f:selectItem itemLabel="Parere favorevole trasmesso alla Giunta"
-											itemValue="Parere favorevole trasmesso alla Giunta" />
-                                        <f:selectItem itemLabel="Parere negativo trasmesso alla Giunta" itemValue="Parere negativo trasmesso alla Giunta" />
-										<!--<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
+											value="#{searchAttoController.tipoChiusura}">
+											<f:selectItem itemLabel="Scegli Tipo Chiusura" itemValue="" />
+											<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
+											<f:selectItem
+												itemLabel="Parere favorevole trasmesso alla Giunta"
+												itemValue="Parere favorevole trasmesso alla Giunta" />
+											<f:selectItem
+												itemLabel="Parere negativo trasmesso alla Giunta"
+												itemValue="Parere negativo trasmesso alla Giunta" />
+											<!--<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
 										 <f:selectItem itemLabel="Rifiutato e trasmesso alla Giunta"
 											itemValue="Rifiutato e trasmesso alla Giunta" /> -->
-										<f:selectItem itemLabel="Respinto dall'Aula"
-							            itemValue="Respinto dall'Aula" />	
-										<f:selectItem itemLabel="Inammissibile"
-											itemValue="Inammissibile" />
+											<f:selectItem itemLabel="Respinto dall'Aula"
+												itemValue="Respinto dall'Aula" />
+											<f:selectItem itemLabel="Inammissibile"
+												itemValue="Inammissibile" />
 
-										<f:selectItem itemLabel="Ritirato dai promotori"
-											itemValue="Ritirato dai promotori" />
-										<f:selectItem itemLabel="Abbinato ad altro atto"
-											itemValue="Abbinato ad altro atto" />
-										<f:selectItem itemLabel="Per decadenza (fine legislatura)"
-											itemValue="Per decadenza (fine legislatura)" />
-										<f:selectItem itemLabel="Per motivi diversi"
-											itemValue="Per motivi diversi" />
-									</p:selectOneMenu>
+											<f:selectItem itemLabel="Ritirato dai promotori"
+												itemValue="Ritirato dai promotori" />
+											<f:selectItem itemLabel="Abbinato ad altro atto"
+												itemValue="Abbinato ad altro atto" />
+											<f:selectItem itemLabel="Per decadenza (fine legislatura)"
+												itemValue="Per decadenza (fine legislatura)" />
+											<f:selectItem itemLabel="Per motivi diversi"
+												itemValue="Per motivi diversi" />
+										</p:selectOneMenu>
 									</p:column>
 
 
@@ -257,9 +264,10 @@
 									<p:column style="width: 30%">	
 									da:&nbsp; 
 								   <p:calendar size="8" locale="it" id="dataassegnazione_da"
+											pattern="dd/MM/yyyy"
 											value="#{searchAttoController.dataAssegnazioneDa}" />
 									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
-											id="dataassegnazione_a"
+											pattern="dd/MM/yyyy" id="dataassegnazione_a"
 											value="#{searchAttoController.dataAssegnazioneA}" />
 									</p:column>
 
@@ -268,7 +276,7 @@
 								</p:column>
 									<p:column>
 										<p:calendar size="8" locale="it" id="datadgr"
-											value="#{searchAttoController.dataDGR}" />
+											pattern="dd/MM/yyyy" value="#{searchAttoController.dataDGR}" />
 									</p:column>
 
 								</p:row>
@@ -458,9 +466,10 @@
 									da:&nbsp; 
 									
 								<p:calendar size="8" locale="it" id="dataSedutaComm_da"
+											pattern="dd/MM/yyyy"
 											value="#{searchAttoController.dataSedutaCommissioneDa}" />
 									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
-											id="dataSedutaComm_a"
+											pattern="dd/MM/yyyy" id="dataSedutaComm_a"
 											value="#{searchAttoController.dataSedutaCommissioneA}" />
 									</p:column>
 
@@ -544,9 +553,10 @@
 									da:&nbsp; 
 									
 								  <p:calendar size="8" locale="it" id="dataSedutaAula_da"
+											pattern="dd/MM/yyyy"
 											value="#{searchAttoController.dataSedutaAulaDa}" />
 									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
-											id="dataSedutaAula_a"
+											pattern="dd/MM/yyyy" id="dataSedutaAula_a"
 											value="#{searchAttoController.dataSedutaAulaA}" />
 									</p:column>
 
@@ -628,9 +638,10 @@
 									da:&nbsp; 
 									
 								<p:calendar size="8" locale="it" id="dataChiusura_da"
+											pattern="dd/MM/yyyy"
 											value="#{searchAttoController.dataChiusuraDa}" />
 									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
-											id="dataChiusura_a"
+											pattern="dd/MM/yyyy" id="dataChiusura_a"
 											value="#{searchAttoController.dataChiusuraA}" />
 									</p:column>
 
@@ -650,7 +661,7 @@
 								</p:column>
 									<p:column>
 										<p:calendar size="8" locale="it" id="dataLR"
-											value="#{searchAttoController.dataLR}" />
+											pattern="dd/MM/yyyy" value="#{searchAttoController.dataLR}" />
 
 									</p:column>
 
@@ -747,7 +758,8 @@
 					<h:outputText value="#{atto.tipo}" />
 				</p:column>
 
-				<p:column sortBy="#{atto.numeroAtto}" headerText="N.Atto">
+				<p:column sortBy="#{atto.numeroAtto}" headerText="N.Atto"
+					sortFunction="#{searchAttoController.sortNumeriAtto}">
 
 
 					<!-- target="_blank" onclick="window.open('atto?numeroatto=#{atto.numeroAtto}', '_blank');window.focus(); return false;"-->
@@ -806,9 +818,9 @@
 						</p:selectOneMenu>
 					</p:column>
 					<p:column>
-						<p:commandButton value="Stampa ODG" id="stampaODG" 
-						onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false" >               
-			                  <p:fileDownload value="#{gestioneSeduteController.file}" />
+						<p:commandButton value="Stampa ODG" id="stampaODG"
+							onclick="PrimeFaces.monitorDownload(start, stop)" ajax="false">
+							<p:fileDownload value="#{gestioneSeduteController.file}" />
 						</p:commandButton>
 					</p:column>
 				</p:row>
@@ -833,7 +845,7 @@
 			</p:panelGrid>
 			<p:fieldset styleClass="fieldSetTab" legend="Atti iscritti"
 				collapsed="false" toggleable="false">
-				
+
 				<script>
 					hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
 				</script>
@@ -854,6 +866,7 @@
     			</p:column>
 
 					<p:column sortBy="#{attoTrattato.atto.numeroAtto}"
+						sortFunction="#{searchAttoController.sortNumeriAtto}"
 						headerText="N.Atto" style="width:125px">
 
 						<c:set value="#{attoTrattato.atto.id}" var="idAttoParam" />
@@ -918,8 +931,7 @@
 					<p:column headerText="Elimina">
 
 						<p:commandButton update="listaAttiTrattati"
-							oncomplete="attoTrattatoDialog.show()"
-							icon="delete-icon">
+							oncomplete="attoTrattatoDialog.show()" icon="delete-icon">
 
 							<f:setPropertyActionListener value="#{attoTrattato.atto.id}"
 								target="#{gestioneSeduteController.idAttoTrattatoToDelete}" />

@@ -82,7 +82,7 @@
 						</p:row>
 						<p:row>
 							<p:column>
-								<p:fileUpload label="Carica Allegato"
+								<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
 									oncomplete="uploadFileConsultazioneAttributesDialog.hide()"
 									auto="false"
 									update="listaDocumentazioneConsultazione, pareriMsg"
@@ -103,11 +103,11 @@
 		</p:row>
 		<p:row>
 			<p:column colspan="4">
-				<p:panelGrid id="addConsultazionePanel" styleClass="tableAppend">
+				<p:panelGrid id="addConsultazionePanel"  styleClass="tableAppend">
 					<f:facet name="header">
 						<p:row>
 							<p:column>Data Consultazione</p:column>
-							<p:column>Soggetto Consultato</p:column>
+							<p:column>Soggetti</p:column>
 							<p:column>Documenti</p:column>
 							<p:column></p:column>
 						</p:row>
@@ -121,7 +121,7 @@
 
 
 						<p:column>
-							<p:inputText id="nomeSoggettoConsultato"
+							<p:inputTextarea id="nomeSoggettoConsultato" cols="100" rows="2"
 								value="#{consultazioniPareriController.soggettoConsultato}" />
 						</p:column>
 
@@ -129,7 +129,7 @@
 							<p:commandButton value="Aggiungi"
 								action="#{consultazioniPareriController.addConsultazione}"
 								id="addConsultazione"
-								update="listaConsultazioni, consultazioneMsg, dettagliconsultazionepanel"
+								update="addConsultazionePanel,listaConsultazioni, consultazioneMsg, dettagliconsultazionepanel"
 								icon="new-icon" />
 						</p:column>
 
@@ -169,7 +169,7 @@
 					</p:column>
 
 					<p:column sortBy="#{consultazione.descrizione}">
-						<f:facet name="header">Soggetti Consultati</f:facet>
+						<f:facet name="header">Soggetti</f:facet>
 						<h:outputText value="#{consultazione.descrizione}" />
 					</p:column>
 
@@ -223,7 +223,7 @@
 								</b>
 							</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="dataseduta"
+								<p:calendar size="10" locale="it" id="dataseduta" pattern="dd/MM/yyyy"
 									value="#{consultazioniPareriController.dataSedutaConsultazione}" />
 							</p:column>
 							
@@ -280,7 +280,7 @@
 											<p:commandButton value="Aggiungi"
 												action="#{consultazioniPareriController.addSoggettoInvitato}"
 												id="addSoggettoInvitato"
-												update="listaSoggettiInvitati, consultazioneMsg"
+												update="addSoggettoInvitatoPanel,listaSoggettiInvitati, consultazioneMsg"
 												icon="new-icon" />
 										</p:column>
 
@@ -342,48 +342,6 @@
 								</p:column>
 						</p:row>
 
-						<!-- <p:row>
-							<p:column colspan="4">
-								<table class="generalInfoTab grey-text"
-									id="documentazioneallegatatab" style="width: 100%;" border="0">
-									<thead>
-										<th colspan="2">Documentazione allegata</th>
-										<th>Documento</th>
-										<th>Pubblico</th>
-										<th>Opzioni</th>
-									</thead>
-
-									TODO: 
-							da implementare la cencellazione e l'aggiunta delle righe sugli opportuni tasti già inseriti
-							il campo "download" è da implementare con l'opportuno tag <p:filedownload/>
-
-									<tbody>
-										<tr>
-											<td align="left" colspan="2">Allegato 1</td>
-											<td align="left"><h:commandLink>
-													<h:outputText value="download" />
-												</h:commandLink></td>
-											<td align="left"><p:selectBooleanCheckbox /></td>
-											<td align="left"><h:graphicImage alt="delete"
-													value="/resources/img/delete.png" /></td>
-
-										</tr>
-
-										<tr>
-											<td align="left" colspan="2">Allegato 2</td>
-											<td align="left"><h:commandLink>
-													<h:outputText value="download" />
-												</h:commandLink></td>
-											<td align="left"><p:selectBooleanCheckbox /></td>
-											<td align="left"><h:graphicImage alt="delete"
-													value="/resources/img/delete.png" /></td>
-
-										</tr>
-
-									</tbody>
-								</table>
-							</p:column>
-						</p:row> -->
 
 						<p:row>
 							<p:column colspan="4">
@@ -444,7 +402,7 @@
 									</p:column>
 
 									<p:column>
-										<f:facet name="header">Download</f:facet>
+										<f:facet name="header">Scarica</f:facet>
 
 										<p:commandButton id="downloadLinkemendamento"
 											icon="detail-icon" ajax="false"

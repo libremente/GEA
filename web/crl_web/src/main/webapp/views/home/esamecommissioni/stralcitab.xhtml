@@ -27,24 +27,13 @@
 					collapsed="false" toggleable="true" toggleSpeed="500">
 
 					<p:panelGrid styleClass="infoTable" id="stralciGrid">
-						<!-- <p:row>
-							<p:column>
-			Data seduta:
-			</p:column>
-							<p:column>
-								<p:calendar size="10" locale="it"
-									value="#{esameCommissioniController.dataSedutaStralcio}">
-									<p:ajax event="dateSelect"
-										listener="#{esameCommissioniController.updateStralciHandler}" />
-								</p:calendar>
-							</p:column>
-						</p:row> -->
+
 						<p:row>
 							<p:column>
 			Data Stralcio:
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it"
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataStralcio}">
 									<p:ajax event="dateSelect"
 										listener="#{esameCommissioniController.updateStralciHandler}" />
@@ -56,7 +45,7 @@
 			Data iniziativa:
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it"
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataIniziativaStralcio}">
 									<p:ajax event="dateSelect"
 										listener="#{esameCommissioniController.updateStralciHandler}" />

@@ -139,6 +139,8 @@
 											itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
 										<f:selectItem itemLabel="Iniziativa Commissioni"
 											itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
+											<f:selectItem itemLabel="Altra Iniziativa"
+											itemValue="08_ATTO DI ALTRA INIZIATIVA" />	
 									</p:selectOneMenu>
 								</p:column>
 
@@ -148,9 +150,9 @@
 								</p:column>
 								<p:column>	
 									da:&nbsp; 
-								   <p:calendar size="8" locale="it" id="datainiziativa_da"
+								   <p:calendar size="8" locale="it" id="datainiziativa_da" pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataIniziativaDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
 										id="datainiziativa_a"
 										value="#{searchAttoController.dataIniziativaA}" />
 								</p:column>
@@ -257,9 +259,9 @@
 								</p:column>
 								<p:column style="width: 30%">	
 									da:&nbsp; 
-								   <p:calendar size="8" locale="it" id="dataassegnazione_da"
+								   <p:calendar size="8" locale="it" id="dataassegnazione_da" pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataAssegnazioneDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
 										id="dataassegnazione_a"
 										value="#{searchAttoController.dataAssegnazioneA}" />
 								</p:column>
@@ -268,7 +270,7 @@
 								   Data DGR:
 								</p:column>
 								<p:column>
-									<p:calendar size="8" locale="it" id="datadgr"
+									<p:calendar size="8" locale="it" id="datadgr" pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataDGR}" />
 								</p:column>
 
@@ -458,9 +460,9 @@
 								<p:column style="width:20%">	
 									da:&nbsp; 
 									
-								<p:calendar size="8" locale="it" id="dataSedutaComm_da"
+								<p:calendar size="8" locale="it" id="dataSedutaComm_da" pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataSedutaCommissioneDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
 										id="dataSedutaComm_a"
 										value="#{searchAttoController.dataSedutaCommissioneA}" />
 								</p:column>
@@ -544,9 +546,9 @@
 										
 									da:&nbsp; 
 									
-								  <p:calendar size="8" locale="it" id="dataSedutaAula_da"
+								  <p:calendar size="8" locale="it" id="dataSedutaAula_da" pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataSedutaAulaDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
 										id="dataSedutaAula_a"
 										value="#{searchAttoController.dataSedutaAulaA}" />
 								</p:column>
@@ -628,9 +630,9 @@
 								<p:column style="width:20%">	
 									da:&nbsp; 
 									
-								<p:calendar size="8" locale="it" id="dataChiusura_da"
+								<p:calendar size="8" locale="it" id="dataChiusura_da" pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataChiusuraDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
 										id="dataChiusura_a"
 										value="#{searchAttoController.dataChiusuraA}" />
 								</p:column>
@@ -650,7 +652,7 @@
 									Data LR:
 								</p:column>
 								<p:column>
-									<p:calendar size="8" locale="it" id="dataLR"
+									<p:calendar size="8" locale="it" id="dataLR" pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataLR}" />
 
 								</p:column>
@@ -778,7 +780,7 @@
 				<h:outputText value="#{atto.tipo}" />
 			</p:column>
 
-			<p:column headerText="N.Atto" sortBy="#{atto.id}">
+			<p:column headerText="N.Atto" sortBy="#{atto.numeroAtto}" sortFunction="#{searchAttoController.sortNumeriAtto}">
 				<c:set value="#{atto.id}" var="idAttoParam" />
 				<c:set value="#{atto.tipo}" var="tipoAttoParam" />
 				<h:commandLink action="#{searchAttoController.attoDetail()}"
@@ -824,7 +826,7 @@
 					</p:column>
 
 					<p:column headerText="N.Atto" style="width:125px"
-						sortBy="#{collegamento.numeroAttoCollegato}">
+						sortBy="#{collegamento.numeroAttoCollegato}" sortFunction="#{searchAttoController.sortNumeriAtto}">
 						<h:outputText value="#{collegamento.numeroAttoCollegato}" />
 					</p:column>
 

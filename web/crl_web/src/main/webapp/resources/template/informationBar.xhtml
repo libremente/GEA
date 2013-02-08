@@ -39,9 +39,10 @@
 			
 				<h:outputLabel value="#{attoBean.tipoAtto}" />
 				&nbsp;
+				
 				<h:outputLabel value="#{attoBean.numeroAtto}" />
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<c:if test="#{attoBean.abbinamenti.size() >0 }">
+				<c:if test="#{attoBean.getAbbinamentiAttivi().size() >0 }">
 					<h:outputLabel value="Abbinato a :" />
 					<c:forEach items="#{attoBean.getAbbinamentiAttivi()}" var="abbinamento">
 					

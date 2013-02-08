@@ -52,7 +52,7 @@ public class EsameAulaController {
 	private String numeroLcr;
 	private boolean emendato;
 	private String noteVotazione;
-	boolean currentFilePubblico;
+	boolean currentFilePubblico=true;
 	private String testoAttoVotatoToDelete;
 	private String testoAttoToDelete;
 
@@ -700,8 +700,22 @@ public class EsameAulaController {
 				aulaUser.getNoteEmendamentiEsameAula());
 
 		setStatoCommitEmendamenti(CRLMessage.COMMIT_DONE);
+		
+		String messaggio = "Emendamenti salvati con successo";
+		
+		
+		 
+		
+		if(numEmendPresentatiTotale  -  numEmendApprovatiTotale != totaleNonApprovati){
+		   
+			messaggio = "Emendamenti salvati con successo : Attenzione dati incoerenti !";
+			
+		}
+		
 		context.addMessage(null, new FacesMessage(
-				"Emendamenti salvati con successo", ""));
+				messaggio , ""));
+	
+	
 	}
 
 	// Rinvio e Starlci******************************************************

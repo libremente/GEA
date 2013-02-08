@@ -93,6 +93,9 @@ public class ChiusuraIterController {
 	public void createLeggeRegionaleLink (){
 		//http://consiglionline.lombardia.it/normelombardia/accessibile/main.aspx?view=showdoc&iddoc=lr00{0}{1}
 		if("".equals(getNumeroLr()) || getDataLr()==null || getNumeroLr()==null ){
+			
+			setUrlLeggiRegionali("");
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR,
@@ -118,8 +121,8 @@ public class ChiusuraIterController {
 				
 			}	
 				
-			String url = attoServiceManager.regioniUrl( data, numero);	
-			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+			setUrlLeggiRegionali ( attoServiceManager.regioniUrl( data, numero));	
+			//FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 			}catch (Exception e) {
 				// TODO: handle exception
 			}

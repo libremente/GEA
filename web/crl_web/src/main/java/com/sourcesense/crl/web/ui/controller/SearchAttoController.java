@@ -28,6 +28,7 @@ import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.ColonnaAtto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.GruppoUtente;
+import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.util.LazyAttoDataModel;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
@@ -221,8 +222,10 @@ public class SearchAttoController {
 
 	private List<String> firmatari = new ArrayList<String>();
 
-	private List<String> relatori = new ArrayList<String>();
-
+	//private List<String> relatori = new ArrayList<String>();
+	private List<Relatore> relatori = new ArrayList<Relatore>();
+	
+	
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 
 	public void searchAtti() {
@@ -346,7 +349,7 @@ public class SearchAttoController {
 		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
 		setFirmatari(personaleServiceManager.getAllFirmatario());
-		setRelatori(personaleServiceManager.getAllRelatore());
+		setRelatori(personaleServiceManager.getAllRelatori());
 		setStati(statoAttoServiceManager.findAll());
 		setTipiChiusura(tipoChiusuraServiceManager.findAll());
 		setTipiIniziative(tipoIniziativaServiceManager.findAll());
@@ -568,6 +571,13 @@ public class SearchAttoController {
 		}
 
 	}
+	
+	
+	public int sortNumeriAtto(String s1, String s2) {
+        
+        return Integer.parseInt(s1) -  Integer.parseInt(s2);
+    }
+	
 
 	public String getNumeroAtto() {
 		return this.atto.getNumeroAtto();
@@ -1234,14 +1244,23 @@ public class SearchAttoController {
 		this.firmatari = firmatari;
 	}
 
-	public List<String> getRelatori() {
+	/*public List<String> getRelatori() {
 		return relatori;
 	}
 
 	public void setRelatori(List<String> relatori) {
 		this.relatori = relatori;
+	}*/
+
+	
+	public List<Relatore> getRelatori() {
+		return relatori;
 	}
 
+	public void setRelatori(List<Relatore> relatori) {
+		this.relatori = relatori;
+	}
+	
 	public String getIdAttoSelected() {
 		return idAttoSelected;
 	}

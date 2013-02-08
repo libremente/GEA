@@ -57,7 +57,7 @@ public class ConsultazioniPareriController {
 	private String esito;
 	private String noteParere;
 	private String allegatoParereToDelete;
-	private boolean currentFilePubblico;
+	private boolean currentFilePubblico ;
 	private String commissioneDestinataria;
 
 	private List<Consultazione> consultazioniList = new ArrayList<Consultazione>();
@@ -359,6 +359,8 @@ public class ConsultazioniPareriController {
 				setDescrizioneConsultazioneSelected(soggettoConsultato);
 				showConsultazioneDetail();
 				updateConsultazioniHandler();
+				setSoggettoConsultato("");
+				setDataConsultazione(null);
 			}
 		}
 	}
@@ -413,7 +415,8 @@ public class ConsultazioniPareriController {
 				soggetto.setDescrizione(nomeSoggettoInvitato);
 				soggetto.setIntervenuto(intervenuto);
 				soggettiInvitatiList.add(soggetto);
-
+                setNomeSoggettoInvitato("");
+                setIntervenuto(false);
 				updateConsultazioniHandler();
 			}
 		}

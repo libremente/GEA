@@ -25,19 +25,7 @@
 
 
 					<!-- Confirm dialog -->
-					<p:confirmDialog id="confirmAttoDialog"
-						message="Sei sicuro di voler eliminare il File ?"
-						header="Cancellazione Testo Atto" severity="alert"
-						widgetVar="testoAttoDialog">
-
-						<p:commandButton id="confirmTestoAtto" value="Conferma"
-							oncomplete="testoAttoDialog.hide()"
-							action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
-							update="listaTestiAtto" />
-						<p:commandButton id="declineTestoAtto" value="Annulla"
-							onclick="testoAttoDialog.hide()" type="button" />
-
-					</p:confirmDialog>
+					
 
 					<p:confirmDialog id="confirmDialog"
 						message="Sei sicuro di voler eliminare il Firmatario?"
@@ -55,39 +43,9 @@
 					</p:confirmDialog>
 
 
-					<p:confirmDialog id="uploadFileAttributes" header="Caricamento"
-						widgetVar="uploadFileAttributesDialog" style="width:450px"
-						message="Allega Testo">
-						<p:panelGrid id="uploadpanel">
-							<p:row>
-								<p:column>
-									<h:outputLabel for="isPubblico" value="Atto Pubblico: " />
-									<p:selectBooleanCheckbox id="isPubblico"
-										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
-										<p:ajax event="change" immediate="true"></p:ajax>
-									</p:selectBooleanCheckbox>
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column>
-									<p:fileUpload label="Carica Testo dell'Atto"
-										oncomplete="uploadFileAttributesDialog.hide()" auto="false"
-										update="listaTestiAtto ,presaCaricoMsg"
-										fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}" />
-								</p:column>
-							</p:row>
-							<p:row>
-								<p:column>
-									<p:commandButton id="declineUploadFile" value="Annulla"
-										onclick="uploadFileAttributesDialog.hide()" type="button" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>
-					</p:confirmDialog>
-
 					<b> <h:outputLabel for="datapresaincarico"
 							value="Data presa in carico: " /> <p:calendar size="10"
-							locale="it" id="datapresaincarico"
+							locale="it" id="datapresaincarico" pattern="dd/MM/yyyy"
 							value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
 					</b>
 					<p:commandButton value="Presa in Carico"
@@ -200,8 +158,8 @@
 						<f:selectItem itemLabel="Iniziativa Commissioni"
 							itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
 
-						<!-- <f:selectItem itemLabel="Commissione europea"
-							itemValue="Commissione europea" /> -->
+						<f:selectItem itemLabel="Altra Iniziativa"
+											itemValue="08_ATTO DI ALTRA INIZIATIVA" />	
 
 
 					</p:selectOneMenu>
@@ -331,104 +289,7 @@
 
 	</p:fieldset>
 
-	<p:fieldset legend="Testo dell'Atto presentato" collapsed="false"
-		toggleable="true" toggleSpeed="500">
-		<p:panelGrid styleClass="infoTable" id="testoattopanel">
-			<p:row>
-				<!-- <p:column>
-					<h:graphicImage alt="add" value="/resources/img/add.png" />
-				</p:column>-->
-				<p:column colspan="3">
-
-
-					<p:commandButton value="Carica Testo dell'Atto"
-						oncomplete="uploadFileAttributesDialog.show()">
-					</p:commandButton>
-
-					<!-- 
-                    <h:outputText value="Pubblico : " />    
-                    
-				</p:fileUpload> -->
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column colspan="4">
-
-					<p:dataTable id="listaTestiAtto"
-						value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
-						var="testoAtto" styleClass="generalInfoTab grey-text"
-						editable="true">
-
-						<p:ajax event="rowEdit" update="@this"
-							listener="#{fileDownloadController.fileUpdate}" />
-
-						<p:column sortBy="#{testoAtto.nome}">
-							<f:facet name="header">Testo Dell'Atto</f:facet>
-							<h:outputText value="#{testoAtto.nome}" />
-						</p:column>
-
-						<p:column sortBy="#{testoAtto.mimetype}">
-							<f:facet name="header">Formato</f:facet>
-
-
-
-							<h:outputText value="#{testoAtto.mimetype}" />
-
-
-						</p:column>
-
-						<p:column sortBy="#{testoAtto.pubblico}">
-							<f:facet name="header">Pubblico</f:facet>
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
-									<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
-								</f:facet>
-								<f:facet name="input">
-									<p:selectBooleanCheckbox value="#{testoAtto.pubblico}" />
-								</f:facet>
-							</p:cellEditor>
-
-						</p:column>
-
-						<p:column>
-							<f:facet name="header">Download</f:facet>
-
-							<p:commandButton id="downloadLink" icon="detail-icon"
-								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
-								<f:setPropertyActionListener value="#{testoAtto.id}"
-									target="#{fileDownloadController.fileId}" />
-								<f:setPropertyActionListener value="#{testoAtto.nome}"
-									target="#{fileDownloadController.fileName}" />
-								<f:setPropertyActionListener value="#{testoAtto.mimetype}"
-									target="#{fileDownloadController.fileMimetype}" />
-								<p:fileDownload value="#{fileDownloadController.file}" />
-							</p:commandButton>
-
-						</p:column>
-
-						<p:column>
-							<f:facet name="header">Elimina</f:facet>
-							<p:commandButton oncomplete="testoAttoDialog.show()"
-								icon="delete-icon">
-
-								<f:setPropertyActionListener value="#{testoAtto.id}"
-									target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
-							</p:commandButton>
-						</p:column>
-
-						<p:column headerText="Modifica" style="width:50px">
-							<p:rowEditor />
-						</p:column>
-
-
-					</p:dataTable>
-				</p:column>
-			</p:row>
-
-		</p:panelGrid>
-	</p:fieldset>
-
+	
 	<p:fieldset rendered="#{navigationBean.isFirmatariEnabled()}"
 		legend="Firmatari" toggleable="true" collapsed="false"
 		toggleSpeed="500">
@@ -484,7 +345,7 @@
 									value="#{presentazioneAssegnazioneAttoController.dataRitiro}" />
 							</p:column>
 
-							<p:column>
+							<p:column style="text-align:center">
 								<p:selectBooleanCheckbox id="primofirmatario"
 									value="#{presentazioneAssegnazioneAttoController.primoFirmatario}" />
 							</p:column>
@@ -631,7 +492,7 @@
 
 
 
-			<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+			<!--<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 				<p:column>
 
 				</p:column>
@@ -654,7 +515,7 @@
 					Creazione lettera di ritiro firma
 					</h:outputLink>
 				</p:column>
-			</p:row>
+			</p:row>-->
 
 			<p:row>
 				<p:column>

@@ -108,6 +108,10 @@ public class RiepilogoAttoController {
     		
     		setTipoIniziativa("Iniziativa Commissioni");
     		
+    	}else if ("08_ATTO DI ALTRA INIZIATIVA".equals(tipoIniziativa)){
+    		
+    		setTipoIniziativa("Altra Iniziativa");
+    		
     	}
     	
     	    

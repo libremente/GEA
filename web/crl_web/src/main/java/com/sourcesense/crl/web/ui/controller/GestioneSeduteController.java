@@ -484,7 +484,7 @@ public class GestioneSeduteController {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già abbinato ", ""));
+						"Attenzione ! Atto già iscritto ", ""));
 
 			} else {
 				Atto attoDaCollegare = attoServiceManager

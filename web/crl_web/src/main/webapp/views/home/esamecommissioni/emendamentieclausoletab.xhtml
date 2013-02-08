@@ -76,7 +76,7 @@
 										</p:row>
 										<p:row>
 											<p:column>
-												<p:fileUpload label="Carica Emendamento"
+												<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
 													oncomplete="uploadEmendamentoAttributesDialog.hide()"
 													auto="false" update="listaEmendamenti ,emendamentoMsg"
 													fileUploadListener="#{esameCommissioniController.uploadEmendamento}" />
@@ -108,7 +108,7 @@
 										</p:row>
 										<p:row>
 											<p:column>
-												<p:fileUpload label="Carica Clausola"
+												<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
 													oncomplete="uploadClausolaAttributesDialog.hide()"
 													auto="false" update="listaTestiClausola ,emendamentoMsg"
 													fileUploadListener="#{esameCommissioniController.uploadTestoClausola}" />
@@ -181,7 +181,7 @@
 										</p:commandButton>
 									</p:column>
 									<p:column>
-										<f:facet name="header">Download</f:facet>
+										<f:facet name="header">Scarica</f:facet>
 
 										<p:commandButton id="downloadLinkemendamento"
 											icon="detail-icon" ajax="false"
@@ -418,7 +418,7 @@
 							Data arrivo proposta: 
 						</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="dataPresaInCarico"
+								<p:calendar size="10" locale="it" id="dataPresaInCarico" pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataPresaInCaricoProposta}">
 									<p:ajax event="dateSelect"
 										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
@@ -430,7 +430,7 @@
 							Data votazione intesa:
 						</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="dataIntesa"
+								<p:calendar size="10" locale="it" id="dataIntesa" pattern="dd/MM/yyyy"
 									value="#{esameCommissioniController.dataIntesa}">
 									<p:ajax event="dateSelect"
 										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
@@ -535,7 +535,7 @@
 									</p:column>
 
 									<p:column>
-										<f:facet name="header">Download</f:facet>
+										<f:facet name="header">Scarica</f:facet>
 
 										<p:commandButton id="downloadLinkestoClausola"
 											icon="detail-icon" ajax="false"

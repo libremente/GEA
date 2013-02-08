@@ -91,7 +91,7 @@
 							</p:row>
 							<p:row>
 								<p:column>
-									<p:fileUpload label="Carica Testo dell'Atto"
+									<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
 										oncomplete="uploadFileAttributesVotazioneDialog.hide()"
 										auto="false" update="listaTestiAtto ,votazioneMsg"
 										fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}" />
@@ -204,7 +204,7 @@
 					</b>
 				</p:column>
 				<p:column>
-					<p:calendar size="10" locale="it" id="dataseduta1"
+					<p:calendar size="10" locale="it" id="dataseduta1" pattern="dd/MM/yyyy"
 						value="#{esameCommissioniController.dataSedutaRegistrazioneVotazione}">
 						<p:ajax event="dateSelect"
 							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
@@ -288,7 +288,7 @@
 							</p:commandButton>
 						</p:column>
 						<p:column>
-							<f:facet name="header">Download</f:facet>
+							<f:facet name="header">Scarica</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
 								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
@@ -325,7 +325,7 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="dataseduta2"
+						<p:calendar size="10" locale="it" id="dataseduta2" pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataSedutaContinuazioneLavori}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateContinuazioneLavoriHandler}" />
@@ -365,7 +365,7 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="datarichsiscrzaula"
+						<p:calendar size="10" locale="it" id="datarichsiscrzaula" pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataRichiestaIscrizione}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
@@ -379,7 +379,7 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="datatrasmissione"
+						<p:calendar size="10" locale="it" id="datatrasmissione" pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataTrasmissione}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />

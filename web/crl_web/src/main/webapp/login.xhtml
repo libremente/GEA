@@ -53,8 +53,8 @@
 
 			<p:column>
 				<p:inputText id="username" value="#{loginController.username}"
-					required="true" label="Username"
-					requiredMessage="Username obbligatorio" />
+					 label="Username"
+					 />
 
 			</p:column>
 
@@ -70,8 +70,8 @@
 
 			<p:column>
 				<p:password id="password" value="#{loginController.password}"
-					required="true" label="Password"
-					requiredMessage="Password obbligatoria" />
+					 label="Password"
+					 />
 
 			</p:column>
 			<p:column>
@@ -88,6 +88,14 @@
 					update="loginpanel,errorMsg" action="#{loginController.login()}" />
 					
 				<p:growl id="errorMsg" showDetail="true" sticky="false" />	
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;	
+			
+
+				<p:commandButton id="readbtn" value="Accesso sola Lettura" 
+					update="loginpanel,errorMsg" action="#{loginController.readOnlyLogin()}" />
+					
+				<p:growl id="errorroMsg" showDetail="true" sticky="false" />	
 				
 					
 			</p:column>

@@ -17,7 +17,7 @@ import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
-@ManagedBean(name = "loginController")    
+@ManagedBean(name = "loginController")
 @RequestScoped
 public class LoginController {
 
@@ -30,28 +30,12 @@ public class LoginController {
 
 	private String password;
 
-	public String login() {
+	public String readOnlyLogin() {
 
-		try{
-		
-		User sessionUser = userServiceManager.authenticate(user);
+		try {
 
-		if (sessionUser != null) {
-			
-			if(sessionUser.getSessionGroup()==null){
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(
-						null,
-						new FacesMessage(
-								FacesMessage.SEVERITY_ERROR,
-								"Attenzione ! Utentenza non valida per la corrente legislatura ",
-								""));
-				
-				return null;
-				
-			}
-			
-			
+			User sessionUser = userServiceManager.authenticateReadOnly(user);
+
 			FacesContext context = FacesContext.getCurrentInstance();
 			UserBean userBean = (UserBean) context
 					.getApplication()
@@ -62,45 +46,79 @@ public class LoginController {
 			userBean.setUser(sessionUser);
 			return "pretty:Home";
 
-		} else {
-            
-			
-			
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Utente e password errati ",
-							""));
-			
-			return null;
+		} catch (ServiceAuthenticationException ex) {
 
-		}
-		
-		}catch (ServiceAuthenticationException ex){
-			
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Utente e password errati ",
-							""));
-			
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Utente e password errati ", ""));
+
 			return null;
 		}
 
 	}
-	
-	
+
+	public String login() {
+
+		try {
+
+			User sessionUser = userServiceManager.authenticate(user);
+
+			if (sessionUser != null) {
+
+				if (sessionUser.getSessionGroup() == null) {
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(
+							null,
+							new FacesMessage(
+									FacesMessage.SEVERITY_ERROR,
+									"Attenzione ! Utentenza non valida per la corrente legislatura ",
+									""));
+
+					return null;
+
+				}
+
+				FacesContext context = FacesContext.getCurrentInstance();
+				UserBean userBean = (UserBean) context
+						.getApplication()
+						.getExpressionFactory()
+						.createValueExpression(context.getELContext(),
+								"#{userBean}", UserBean.class)
+						.getValue(context.getELContext());
+				userBean.setUser(sessionUser);
+				return "pretty:Home";
+
+			} else {
+
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Utente e password errati ", ""));
+
+				return null;
+
+			}
+
+		} catch (ServiceAuthenticationException ex) {
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Utente e password errati ", ""));
+
+			return null;
+		}
+
+	}
+
 	public String logout() {
-		HttpSession session = ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false));
+		HttpSession session = ((HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false));
 		session.removeAttribute("userBean");
 		session.removeAttribute("attoBean");
 		session.invalidate();
-	    return "pretty:login";
+		return "pretty:login";
 	}
 
 	public User getUser() {

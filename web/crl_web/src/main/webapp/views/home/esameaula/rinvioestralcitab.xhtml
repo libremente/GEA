@@ -49,7 +49,7 @@
 			
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="dataSeduta"
+								<p:calendar size="10" locale="it" id="dataSeduta" pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataSedutaRinvio}">
 									<p:ajax event="dateSelect"
 										listener="#{esameAulaController.updateRinvioEsameHandler}" />
@@ -63,7 +63,7 @@
 			
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="termineMassimo"
+								<p:calendar size="10" locale="it" id="termineMassimo" pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataTermineMassimo}">
 									<p:ajax event="dateSelect"
 										listener="#{esameAulaController.updateRinvioEsameHandler}" />
@@ -108,24 +108,13 @@
 					rendered="#{navigationBean.stralciAulaEnabled()}">
 
 					<p:panelGrid styleClass="infoTable" id="stralciGrid">
-						<!-- 		<p:row>
-							<p:column>
-			Data seduta:
-			</p:column>
-							<p:column>
-								<p:calendar size="10" locale="it"
-									value="#{esameAulaController.dataSedutaStralcio}">
-									<p:ajax event="dateSelect"
-										listener="#{esameAulaController.updateStralciHandler}" />
-								</p:calendar>
-							</p:column>
-						</p:row> -->
+						
 						<p:row>
 							<p:column>
 			Data Stralcio:
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it"
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataStralcio}">
 									<p:ajax event="dateSelect"
 										listener="#{esameAulaController.updateStralciHandler}" />
@@ -137,7 +126,7 @@
 			Data iniziativa:
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it"
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataIniziativaStralcio}">
 									<p:ajax event="dateSelect"
 										listener="#{esameAulaController.updateStralciHandler}" />

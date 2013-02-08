@@ -23,6 +23,52 @@
 					<!-- Messaggio azioni -->
 					<p:growl id="assegnazioneMsg" showDetail="true" sticky="false" />
 
+
+					<p:confirmDialog id="confirmAttoDialog"
+						message="Sei sicuro di voler eliminare il File ?"
+						header="Cancellazione Testo Atto" severity="alert"
+						widgetVar="testoAttoDialog">
+
+						<p:commandButton id="confirmTestoAtto" value="Conferma"
+							oncomplete="testoAttoDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeTestoAtto}"
+							update="listaTestiAtto" />
+						<p:commandButton id="declineTestoAtto" value="Annulla"
+							onclick="testoAttoDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+
+					<p:confirmDialog id="uploadFileAttributes" header="Caricamento"
+						widgetVar="uploadFileAttributesDialog" style="width:450px"
+						message="Allega Testo">
+						<p:panelGrid id="uploadpanel">
+							<p:row>
+								<p:column>
+									<h:outputLabel for="isPubblico" value="Atto Pubblico: " />
+									<p:selectBooleanCheckbox id="isPubblico"
+										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+										<p:ajax event="change" immediate="true"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:fileUpload label="Sfoglia" uploadLabel="Carica" cancelLabel="Cancella"
+										oncomplete="uploadFileAttributesDialog.hide()" 
+										auto="false"
+										update="listaTestiAtto ,presaCaricoMsg"
+										fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadTestoAtto}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:commandButton id="declineUploadFile" value="Annulla"
+										onclick="uploadFileAttributesDialog.hide()" type="button" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:confirmDialog>
+
 					<p:confirmDialog id="confirmCommissioneDialog"
 						message="Sei sicuro di voler eliminare la Commissione?"
 						header="Cancellazione Commissione" severity="alert"
@@ -97,28 +143,31 @@
 										</p:row>
 									</f:facet>
 									<p:row>
-										<p:column>
-											<p:selectOneMenu id="commissione" value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
+										<p:column style="text-align:center">
+											<p:selectOneMenu id="commissione"
+												value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
 												<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-												
-												<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,15)}" itemValue="#{commissione}" 
+
+												<f:selectItems var="commissione"
+													itemLabel="#{fn:substring(commissione,0,15)}"
+													itemValue="#{commissione}"
 													value="#{presentazioneAssegnazioneAttoController.commissioni}" />
 											</p:selectOneMenu>
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:calendar size="10" locale="it" id="dataproposta"
 												pattern="dd/MM/yyyy"
 												value="#{presentazioneAssegnazioneAttoController.dataProposta}" />
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:calendar size="10" locale="it" id="dataassegnazione"
 												pattern="dd/MM/yyyy"
 												value="#{presentazioneAssegnazioneAttoController.dataAssegnazione}" />
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:selectOneMenu id="ruolo"
 												value="#{presentazioneAssegnazioneAttoController.ruolo}">
 												<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
@@ -132,7 +181,7 @@
 											</p:selectOneMenu>
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 
 											<p:commandButton value="Aggiungi"
 												action="#{presentazioneAssegnazioneAttoController.addCommissione}"
@@ -197,7 +246,8 @@
 												<h:outputText value="#{commissione.ruolo}" />
 											</f:facet>
 											<f:facet name="input">
-												<p:selectOneMenu style="width:100px" value="#{commissione.ruolo}">
+												<p:selectOneMenu style="width:100px"
+													value="#{commissione.ruolo}">
 													<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
 													<f:selectItem itemLabel="Referente" itemValue="Referente" />
 													<f:selectItem itemLabel="Co-Referente"
@@ -225,11 +275,10 @@
 									</p:column>
 
 									<p:column headerText="Annulla">
-									
-									     <c:set
-											value="#{ attoBean.getNumeroPassaggi() > 1 }"
+
+										<c:set value="#{ attoBean.getNumeroPassaggi() > 1 }"
 											var="passaggi" />
-									
+
 										<c:set
 											value="#{ commissione.stato ne 'Votato' and 
                                                   commissione.stato ne 'Trasmesso' and
@@ -268,10 +317,14 @@
 								</p:dataTable>
 							</p:column>
 						</p:row>
-						<p:row><p:column>
-					</p:column></p:row>
-					<p:row><p:column>
-					</p:column></p:row>
+						<p:row>
+							<p:column>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+							</p:column>
+						</p:row>
 					</p:panelGrid>
 				</p:fieldset>
 			</p:column>
@@ -293,34 +346,35 @@
 											<p:column>Organismo Statutario</p:column>
 											<p:column>Data assegnazione</p:column>
 											<p:column>Data annullo</p:column>
-											
+
 											<p:column></p:column>
 										</p:row>
 									</f:facet>
 									<p:row>
-										<p:column>
-											<p:selectOneMenu id="organismostatutario" editable="true"  effect="fold"
+										<p:column style="text-align:center">
+											<p:selectOneMenu id="organismostatutario" editable="true" style="width:180px"
+												effect="fold"
 												value="#{presentazioneAssegnazioneAttoController.nomeOrganismoStatutario}">
-												
+
 												<f:selectItems
 													value="#{presentazioneAssegnazioneAttoController.organismiStatutari}" />
 											</p:selectOneMenu>
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:calendar size="10" locale="it"
 												id="dataassegnazioneorganismo" pattern="dd/MM/yyyy"
 												value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneParere}" />
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:calendar size="10" locale="it"
 												id="dataannulloorganismostatutario" pattern="dd/MM/yyyy"
 												value="#{presentazioneAssegnazioneAttoController.dataAnnulloParere}" />
 										</p:column>
 
-									
-										<p:column>
+
+										<p:column style="text-align:center">
 											<p:commandButton value="Aggiungi"
 												action="#{presentazioneAssegnazioneAttoController.addParere}"
 												id="addParere" update="listaPareri , assegnazioneMsg"
@@ -379,7 +433,7 @@
 
 
 
-									
+
 
 									<p:column headerText="Elimina">
 
@@ -403,6 +457,114 @@
 
 			</p:column>
 		</p:row>
+
+		<p:row>
+
+			<p:column>
+
+				<p:fieldset legend="Testo dell'Atto presentato" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="testoattopanel">
+						<p:row>
+							<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+							<p:column colspan="3">
+
+
+								<p:commandButton value="Carica Testo dell'Atto"
+									oncomplete="uploadFileAttributesDialog.show()">
+								</p:commandButton>
+
+								<!-- 
+                    <h:outputText value="Pubblico : " />    
+                    
+				</p:fileUpload> -->
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+
+								<p:dataTable id="listaTestiAtto"
+									value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
+									var="testoAtto" styleClass="generalInfoTab grey-text"
+									editable="true">
+
+									<p:ajax event="rowEdit" update="@this"
+										listener="#{fileDownloadController.fileUpdate}" />
+
+									<p:column sortBy="#{testoAtto.nome}">
+										<f:facet name="header">Testo Dell'Atto</f:facet>
+										<h:outputText value="#{testoAtto.nome}" />
+									</p:column>
+
+									<p:column sortBy="#{testoAtto.mimetype}">
+										<f:facet name="header">Formato</f:facet>
+
+
+
+										<h:outputText value="#{testoAtto.mimetype}" />
+
+
+									</p:column>
+
+									<p:column sortBy="#{testoAtto.pubblico}">
+										<f:facet name="header">Pubblico</f:facet>
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+												<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{testoAtto.pubblico}" />
+											</f:facet>
+										</p:cellEditor>
+
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Scarica</f:facet>
+
+										<p:commandButton id="downloadLink" icon="detail-icon"
+											ajax="false"
+											onclick="PrimeFaces.monitorDownload(start, stop)">
+											<f:setPropertyActionListener value="#{testoAtto.id}"
+												target="#{fileDownloadController.fileId}" />
+											<f:setPropertyActionListener value="#{testoAtto.nome}"
+												target="#{fileDownloadController.fileName}" />
+											<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+												target="#{fileDownloadController.fileMimetype}" />
+											<p:fileDownload value="#{fileDownloadController.file}" />
+										</p:commandButton>
+
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+										<p:commandButton oncomplete="testoAttoDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{testoAtto.id}"
+												target="#{presentazioneAssegnazioneAttoController.testoAttoToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+									<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor />
+									</p:column>
+
+
+								</p:dataTable>
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+				</p:fieldset>
+
+
+			</p:column>
+		</p:row>
+
 		<p:row>
 			<p:column>
 

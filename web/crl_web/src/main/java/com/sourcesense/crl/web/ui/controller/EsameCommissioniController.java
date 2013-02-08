@@ -86,7 +86,7 @@ public class EsameCommissioniController {
 	private Date dataUscitaRelatore;
 	private String nomeRelatore;
 
-	private boolean currentFilePubblico;
+	private boolean currentFilePubblico=true;
 	private Date currentDataSeduta;
 
 	private String componenteToDelete;
