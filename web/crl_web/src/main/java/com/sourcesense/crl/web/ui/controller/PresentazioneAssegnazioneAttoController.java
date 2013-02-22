@@ -363,15 +363,17 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void addFirmatario() {
 
+		
+		FacesContext context = FacesContext.getCurrentInstance();
 		if (nomeFirmatario != null && !nomeFirmatario.trim().equals("")) {
 			if (!checkFirmatari()) {
-				FacesContext context = FacesContext.getCurrentInstance();
+				
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Firmatario "
 								+ nomeFirmatario + " già presente ", ""));
 
 			} else if (primoFirmatario && checkPrimoFirmatario()) {
-				FacesContext context = FacesContext.getCurrentInstance();
+				
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Primo firmatario già selezionato ", ""));
@@ -386,6 +388,12 @@ public class PresentazioneAssegnazioneAttoController {
 				firmatariList.add(firmatario);
 
 				updateInfoGenHandler();
+				atto.setFirmatari(getOrderedFirmatari());
+				attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
+				context.addMessage(null, new FacesMessage(
+						"Firmatario aggiunto con successo", ""));
+				
+				
 			}
 		}
 	}

@@ -91,7 +91,8 @@
 							</p:row>
 							<p:row>
 								<p:column>
-									<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+									<p:fileUpload label="Sfoglia" uploadLabel="Carica"
+										cancelLabel="Cancella"
 										oncomplete="uploadFileAttributesVotazioneDialog.hide()"
 										auto="false" update="listaTestiAtto ,votazioneMsg"
 										fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}" />
@@ -116,7 +117,7 @@
 				</p:column>
 				<p:column>
 					<p:selectOneMenu value="#{esameCommissioniController.quorum}">
-						<f:selectItem itemLabel="Scegli quorum" itemValue="" />
+						<f:selectItem itemLabel="Scegli quorum" itemValue=" " />
 						<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
 						<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
 						<p:ajax event="change"
@@ -204,24 +205,26 @@
 					</b>
 				</p:column>
 				<p:column>
-					<p:calendar size="10" locale="it" id="dataseduta1" pattern="dd/MM/yyyy"
+					<p:calendar size="10" locale="it" id="dataseduta1"
+						pattern="dd/MM/yyyy"
 						value="#{esameCommissioniController.dataSedutaRegistrazioneVotazione}">
 						<p:ajax event="dateSelect"
 							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
 					</p:calendar>
 				</p:column>
 			</p:row>
-			
-			
+
+
 			<p:row>
 				<p:column>
-					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Registra"
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+						value="Registra"
 						action="#{esameCommissioniController.registraVotazione}"
 						update="votazioneMsg, :informationForm:informationBar ,:presAssForm" />
 				</p:column>
 			</p:row>
-			
-			
+
+
 
 		</p:panelGrid>
 	</p:fieldset>
@@ -291,7 +294,8 @@
 							<f:facet name="header">Scarica</f:facet>
 
 							<p:commandButton id="downloadLink" icon="detail-icon"
-								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								 process="@this" immediate="true"
+								onclick="PrimeFaces.monitorDownload(start, stop)">
 								<f:setPropertyActionListener value="#{testoAttoVotato.id}"
 									target="#{fileDownloadController.fileId}" />
 								<f:setPropertyActionListener value="#{testoAttoVotato.nome}"
@@ -325,7 +329,8 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="dataseduta2" pattern="dd/MM/yyyy"
+						<p:calendar size="10" locale="it" id="dataseduta2"
+							pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataSedutaContinuazioneLavori}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateContinuazioneLavoriHandler}" />
@@ -358,14 +363,17 @@
 		toggleSpeed="500" rendered="#{navigationBean.canTransmitToAula()}">
 		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
 			<p:row>
-				<p:column>
+				<p:column
+					rendered="#{navigationBean.hasDataRichiestaIscrizioneAula()}">
 					<b> <h:outputLabel for="datarichsiscrzaula"
 							value="Data Richiesta Iscrizione Aula: " />
 					</b>
 				</p:column>
-				<p:column>
+				<p:column
+					rendered="#{navigationBean.hasDataRichiestaIscrizioneAula()}">
 					<p>
-						<p:calendar size="10" locale="it" id="datarichsiscrzaula" pattern="dd/MM/yyyy"
+						<p:calendar size="10" locale="it" id="datarichsiscrzaula"
+							pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataRichiestaIscrizione}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
@@ -379,7 +387,8 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="datatrasmissione" pattern="dd/MM/yyyy"
+						<p:calendar size="10" locale="it" id="datatrasmissione"
+							pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataTrasmissione}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />

@@ -137,7 +137,7 @@
               </p:column>
               <p:column colspan="3">
                 <p:inputTextarea readonly="false" rows="2" cols="82"
-                  value="#{esameAulaController.atto.oggetto}">
+                  value="#{esameAulaController.atto.oldOggetto}">
                   <p:ajax event="change"
                           listener="#{esameAulaController.updateDatiHandler()}" />
                 </p:inputTextarea>
@@ -201,7 +201,7 @@
   
                   <f:selectItem itemLabel="Popolare" itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
               
-                  <f:selectItem itemLabel="Ufficio di Presidenza" itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
+                  <f:selectItem itemLabel="Ufficio di Presidenza" itemValue="05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA" />
               
                   <f:selectItem itemLabel="Consiglio delle Autonomie locali"
                   itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />
@@ -209,7 +209,7 @@
                   <f:selectItem itemLabel="Presidente della Giunta"
                                 itemValue="06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA" />
                   <f:selectItem itemLabel="Giunta" itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
-                  <f:selectItem itemLabel="Iniziativa Commissioni" itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
+                  <f:selectItem itemLabel="Commissioni" itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
                   <f:selectItem itemLabel="Altra Iniziativa"
 											itemValue="08_ATTO DI ALTRA INIZIATIVA" />	
 
@@ -371,7 +371,7 @@
                     <f:facet name="header">Scarica</f:facet>
 
                     <p:commandButton id="downloadLink" icon="detail-icon"
-                      ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+                      process="@this" immediate="true" onclick="PrimeFaces.monitorDownload(start, stop)">
                       <f:setPropertyActionListener value="#{testoAtto.id}"
                         target="#{fileDownloadController.fileId}" />
                       <f:setPropertyActionListener value="#{testoAtto.nome}"

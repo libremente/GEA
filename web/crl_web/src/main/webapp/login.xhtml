@@ -8,16 +8,33 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+<h:head>
+
+
+<style type="text/css">
+
+.ui-growl{
+	
+	margin-left: 640px !important;
+	margin-right: 580px !important;
+	margin-top: 3% !important;
+}
+
+</style>
+
+</h:head>
+
+
 <h:form>
 
 	<p:ajaxStatus onstart="statusDialog.show();"
 		onsuccess="statusDialog.hide();" />
-	
+
 	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
 		draggable="false" closable="false">
 		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
 	</p:dialog>
-	
+
 	<p:panelGrid
 		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
 		id="loginpanel">
@@ -53,8 +70,7 @@
 
 			<p:column>
 				<p:inputText id="username" value="#{loginController.username}"
-					 label="Username"
-					 />
+					label="Username" />
 
 			</p:column>
 
@@ -70,8 +86,7 @@
 
 			<p:column>
 				<p:password id="password" value="#{loginController.password}"
-					 label="Password"
-					 />
+					label="Password" />
 
 			</p:column>
 			<p:column>
@@ -84,20 +99,20 @@
 
 			<p:column colspan="3" style="align:center">
 
-				<p:commandButton id="insertattobtn" value="Accedi" 
+				<p:commandButton id="insertattobtn" value="Accedi"
 					update="loginpanel,errorMsg" action="#{loginController.login()}" />
-					
+
 				<p:growl id="errorMsg" showDetail="true" sticky="false" />	
 				
 				&nbsp;&nbsp;&nbsp;&nbsp;	
 			
 
-				<p:commandButton id="readbtn" value="Accesso sola Lettura" 
-					update="loginpanel,errorMsg" action="#{loginController.readOnlyLogin()}" />
-					
-				<p:growl id="errorroMsg" showDetail="true" sticky="false" />	
-				
-					
+				<p:commandButton id="readbtn" value="Accesso sola Lettura"
+					update="loginpanel" action="#{loginController.readOnlyLogin()}" />
+
+				<p:growl id="errorroMsg" showDetail="true" sticky="false" />
+
+
 			</p:column>
 		</p:row>
 

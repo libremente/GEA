@@ -52,7 +52,7 @@ public class EsameAulaController {
 	private String numeroLcr;
 	private boolean emendato;
 	private String noteVotazione;
-	boolean currentFilePubblico=true;
+	boolean currentFilePubblico = true;
 	private String testoAttoVotatoToDelete;
 	private String testoAttoToDelete;
 
@@ -66,7 +66,7 @@ public class EsameAulaController {
 	private Integer numEmendPresentatiMinor;
 	private Integer numEmendPresentatiGiunta;
 	private Integer numEmendPresentatiMisto;
-	private Integer numEmendPresentatiTotale= new Integer(0);
+	private Integer numEmendPresentatiTotale = new Integer(0);
 	private Integer numEmendApprovatiMaggior;
 	private Integer numEmendApprovatiMinor;
 	private Integer numEmendApprovatiGiunta;
@@ -76,7 +76,7 @@ public class EsameAulaController {
 	private Integer decaduti;
 	private Integer ritirati;
 	private Integer respinti;
-	private Integer totaleNonApprovati= new Integer(0);
+	private Integer totaleNonApprovati = new Integer(0);
 	private Integer noteEmendamenti;
 
 	private Date dataSedutaRinvio;
@@ -275,7 +275,7 @@ public class EsameAulaController {
 				.setAula((Aula) aulaUser.clone());
 
 		if (atto.getStato().equals(StatoAtto.TRASMESSO_AULA)
-				|| ("PDA".equals(atto.getTipoAtto()) && "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA"
+				|| ("PDA".equals(atto.getTipoAtto()) && "05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA"
 						.equals(atto.getTipoIniziativa()))
 				|| "ORG".equals(atto.getTipoAtto()))
 
@@ -296,7 +296,7 @@ public class EsameAulaController {
 				aulaUser.getRelazioneScritta());
 
 		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)
-				|| ("PDA".equals(attoBean.getTipoAtto()) && "05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA"
+				|| ("PDA".equals(attoBean.getTipoAtto()) && "05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA"
 						.equals(attoBean.getTipoIniziativa()))
 				|| "ORG".equals(attoBean.getTipoAtto())) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_AULA);
@@ -488,8 +488,7 @@ public class EsameAulaController {
 
 		String message = "";
 
-		if (aulaUser.isEmendato()
-				&& getNumEmendApprovatiTotale()==0) {
+		if (aulaUser.isEmendato() && getNumEmendApprovatiTotale() == 0) {
 
 			message = "Votazione salvata con successo \n Attenzione atto emendato senza Emendamenti Approvati";
 
@@ -577,70 +576,67 @@ public class EsameAulaController {
 		}
 	}
 
-	
 	public void totaleEmendPresentati() {
-		
-		numEmendPresentatiTotale=0;
-		
-		if(getNumEmendPresentatiGiunta() != null){
-		numEmendPresentatiTotale +=  getNumEmendPresentatiGiunta();
+
+		numEmendPresentatiTotale = 0;
+
+		if (getNumEmendPresentatiGiunta() != null) {
+			numEmendPresentatiTotale += getNumEmendPresentatiGiunta();
 		}
-		
-		if(getNumEmendPresentatiMaggior()!=null){
-			
+
+		if (getNumEmendPresentatiMaggior() != null) {
+
 			numEmendPresentatiTotale += getNumEmendPresentatiMaggior();
 		}
-		if(getNumEmendPresentatiMinor()!=null){
-			numEmendPresentatiTotale +=getNumEmendPresentatiMinor();
+		if (getNumEmendPresentatiMinor() != null) {
+			numEmendPresentatiTotale += getNumEmendPresentatiMinor();
 		}
-		if(getNumEmendPresentatiMisto()!=null){
+		if (getNumEmendPresentatiMisto() != null) {
 			numEmendPresentatiTotale += getNumEmendPresentatiMisto();
 		}
-				
-			
-	
+
 	}
 
 	public void totaleEmendApprovati() {
-		
-		numEmendApprovatiTotale=0;
-		
-		if(getNumEmendApprovatiGiunta() != null){
-			numEmendApprovatiTotale +=  getNumEmendApprovatiGiunta();
-			}
-			
-			if(getNumEmendApprovatiMaggior()!=null){
-				
-				numEmendApprovatiTotale += getNumEmendApprovatiMaggior();
-			}
-			if(getNumEmendApprovatiMinor()!=null){
-				numEmendApprovatiTotale +=getNumEmendApprovatiMinor();
-			}
-			if(getNumEmendApprovatiMisto()!=null){
-				numEmendApprovatiTotale +=getNumEmendApprovatiMisto();
-			}
-		
+
+		numEmendApprovatiTotale = 0;
+
+		if (getNumEmendApprovatiGiunta() != null) {
+			numEmendApprovatiTotale += getNumEmendApprovatiGiunta();
+		}
+
+		if (getNumEmendApprovatiMaggior() != null) {
+
+			numEmendApprovatiTotale += getNumEmendApprovatiMaggior();
+		}
+		if (getNumEmendApprovatiMinor() != null) {
+			numEmendApprovatiTotale += getNumEmendApprovatiMinor();
+		}
+		if (getNumEmendApprovatiMisto() != null) {
+			numEmendApprovatiTotale += getNumEmendApprovatiMisto();
+		}
+
 	}
 
 	public void totaleNonApprovati() {
-		
-		totaleNonApprovati=0;
-		
-		if(getNonAmmissibili() != null){
-			totaleNonApprovati +=  getNonAmmissibili();
-			}
-			
-			if(getDecaduti()!=null){
-				
-				totaleNonApprovati += getDecaduti();
-			}
-			if(getRitirati()!=null){
-				totaleNonApprovati +=getRitirati();
-			}
-			if(getRespinti()!=null){
-				totaleNonApprovati +=getRespinti();
-			}
-		
+
+		totaleNonApprovati = 0;
+
+		if (getNonAmmissibili() != null) {
+			totaleNonApprovati += getNonAmmissibili();
+		}
+
+		if (getDecaduti() != null) {
+
+			totaleNonApprovati += getDecaduti();
+		}
+		if (getRitirati() != null) {
+			totaleNonApprovati += getRitirati();
+		}
+		if (getRespinti() != null) {
+			totaleNonApprovati += getRespinti();
+		}
+
 	}
 
 	public void salvaEmendamenti() {
@@ -700,22 +696,22 @@ public class EsameAulaController {
 				aulaUser.getNoteEmendamentiEsameAula());
 
 		setStatoCommitEmendamenti(CRLMessage.COMMIT_DONE);
-		
-		String messaggio = "Emendamenti salvati con successo";
-		
-		
-		 
-		
-		if(numEmendPresentatiTotale  -  numEmendApprovatiTotale != totaleNonApprovati){
-		   
-			messaggio = "Emendamenti salvati con successo : Attenzione dati incoerenti !";
-			
+
+		if (numEmendPresentatiTotale - numEmendApprovatiTotale != totaleNonApprovati) {
+
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_WARN,
+							"Emendamenti salvati con successo : Attenzione dati incoerenti !",
+							""));
+
+		} else {
+
+			context.addMessage(null, new FacesMessage(
+					"Emendamenti salvati con successo", ""));
 		}
-		
-		context.addMessage(null, new FacesMessage(
-				messaggio , ""));
-	
-	
+
 	}
 
 	// Rinvio e Starlci******************************************************

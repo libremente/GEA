@@ -6,6 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:form id="presAssForm" enctype="multipart/form-data">
@@ -27,7 +28,10 @@
 		<p:ajax update="tabView"
 			listener="#{esameAulaController.changePassaggio}" />
 	</p:selectOneMenu>
-
+	&nbsp;&nbsp;
+	<c:if  test="#{attoBean.getNumeroPassaggi() > 1}" >
+	<b> <h:outputText style="color:red" value="Atto rinviato" /> </b>
+    </c:if>
 	<br />
 	<br />
 

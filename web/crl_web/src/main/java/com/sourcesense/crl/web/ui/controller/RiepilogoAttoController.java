@@ -87,7 +87,7 @@ public class RiepilogoAttoController {
     		
     		setTipoIniziativa("Popolare");
     		
-    	}else if("05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA".equals(tipoIniziativa)){
+    	}else if("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA".equals(tipoIniziativa)){
     		
     		setTipoIniziativa("Ufficio di Presidenza");
     		
@@ -106,7 +106,7 @@ public class RiepilogoAttoController {
     		
     	}else if("04_ATTO DI INIZIATIVA COMMISSIONI".equals(tipoIniziativa)){
     		
-    		setTipoIniziativa("Iniziativa Commissioni");
+    		setTipoIniziativa("Commissioni");
     		
     	}else if ("08_ATTO DI ALTRA INIZIATIVA".equals(tipoIniziativa)){
     		

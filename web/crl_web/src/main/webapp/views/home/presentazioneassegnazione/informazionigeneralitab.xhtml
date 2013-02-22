@@ -146,7 +146,7 @@
 							itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
 
 						<f:selectItem itemLabel="Ufficio di Presidenza"
-							itemValue="05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA" />
+							itemValue="05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA" />
 
 						<f:selectItem itemLabel="Consiglio delle Autonomie locali"
 							itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />
@@ -155,7 +155,7 @@
 							itemValue="06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA" />
 						<f:selectItem itemLabel="Giunta"
 							itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
-						<f:selectItem itemLabel="Iniziativa Commissioni"
+						<f:selectItem itemLabel="Commissioni"
 							itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
 
 						<f:selectItem itemLabel="Altra Iniziativa"
@@ -316,7 +316,7 @@
 									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
 									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
 									<f:selectItems var="firmatario"
-										itemLabel="#{firmatario.descrizione}"
+										itemLabel="#{firmatario.cognomeNome}"
 										itemValue="#{firmatario.descrizione}"
 										value="#{presentazioneAssegnazioneAttoController.firmatari}" />
 									<p:ajax update="gruppoconsiliare"

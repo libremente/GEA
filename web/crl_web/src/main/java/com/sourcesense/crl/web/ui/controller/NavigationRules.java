@@ -12,7 +12,7 @@ import javax.faces.context.FacesContext;
 
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
-
+ 
 @ManagedBean(name = "navigationBean")
 @RequestScoped
 public class NavigationRules {
@@ -81,6 +81,17 @@ public class NavigationRules {
 
 		return null;
 	}
+	
+	public boolean hasDataRichiestaIscrizioneAula (){
+		Commissione comm = attoBean.getWorkingCommissione(userBean.getUser()
+				.getSessionGroup().getNome());
+		
+		return ! (
+				comm.getRuolo().equals(Commissione.RUOLO_CONSULTIVA)||
+				comm.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)
+				);
+	}
+	
 
 	public boolean isEACDisabled() {
 
@@ -222,9 +233,24 @@ public class NavigationRules {
 						.getTipoAtto().equalsIgnoreCase("DOC") && !attoBean
 						.getAtto().isIterAula()))
 
-		// TODO Flag
-		// || ! attoBean.getTipologia().equalsIgnoreCase("PRS")
+						
 
+		) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
+	public boolean boxAulaVisible() {
+
+		if (attoBean.getTipoAtto().equals("PAR")
+						|| attoBean.getTipoAtto().equals("REL")
+						|| attoBean.getTipoAtto().equals("INP")
+						|| (attoBean.getTipoAtto().equalsIgnoreCase("DOC") 
+								&& !attoBean.getAtto().isIterAula()
+						    )
 		) {
 			return false;
 		} else {
@@ -390,26 +416,31 @@ public class NavigationRules {
 
 	public boolean isSessionAttoPDA_UDP() {
 		boolean res = attoBean.getTipoAtto().equalsIgnoreCase("PDA")
-				&& ("05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA"
+				&& ("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA"
 						.equalsIgnoreCase(attoBean.getTipoIniziativa()));
 
 		return res;
 	}
 
 	public boolean isSessionAttoORG() {
-		// TODO: riattivare la condizione reale quando sara' disponibile tipo
-		// ORG
+		
 		return attoBean.getTipoAtto().equalsIgnoreCase("ORG");
-
-		// return attoBean.getTipoAtto().equalsIgnoreCase("INP");
+		
 	}
 
 	public boolean isSessionAttoPLP() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PLP");
 	}
 
+	public boolean isGestioneSeduteEnabled() {
+		 
+		return userBean.getUser().getSessionGroup().isCommissione() || 
+				GruppoUtente.AULA.equals(userBean.getUser().getSessionGroup()
+						.getNome());
+	}
+	
 	public boolean gestioneSeduteConsultazioniCommissione() {
-		// TODO
+		
 		return userBean.getUser().getSessionGroup().isCommissione();
 	}
 

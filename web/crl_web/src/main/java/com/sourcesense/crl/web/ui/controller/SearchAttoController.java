@@ -40,6 +40,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.swing.plaf.ListUI;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -341,6 +343,7 @@ public class SearchAttoController {
 
 		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
 		setListAtti(attoServiceManager.searchAtti(atto));
+		Collections.sort(listAtti);
 	}
 
 	@PostConstruct
@@ -412,6 +415,7 @@ public class SearchAttoController {
 		}
 
 		setListAtti(attoServiceManager.searchAtti(atto));
+		Collections.sort(listAtti);
 
 	}
 
@@ -572,6 +576,62 @@ public class SearchAttoController {
 
 	}
 	
+	public void reset(){
+		
+		setAbbinamento(false);
+		setAnno("");
+		setCommissione1("");
+		setCommissione2("");
+		setCommissione3("");
+		setDataAssegnazioneA(null);
+		setDataAssegnazioneDa(null);
+		setDataChiusuraA(null);
+		setDataChiusuraDa(null);
+		setDataDGR(null);
+		setDataIniziativaA(null);
+		setDataIniziativaDa(null);
+		setDataLR(null);
+		setDataPubblicazioneA(null);
+		setDataPubblicazioneDa(null);
+		setDataSedutaAulaA(null);
+		setDataSedutaAulaDa(null);
+		setDataSedutaCommissioneA(null);
+		setDataSedutaCommissioneDa(null);
+		setDataSedutaSCA(null);
+		setDataSedutaSCDa(null);
+		setDeliberante(false);
+		setEmendato(false);
+		setEmendatoAula(false);
+		setEsitoVotoAula("");
+		setEsitoVotoCommissioneReferente("");
+		setFirmatario("");
+		setNumeroAttoA("");
+		setNumeroAttoDa("");
+		setNumerodcr("");
+		setNumeroDcr("");
+		setNumeroDGR("");
+		setNumeroLCR("");
+		setNumeroLR("");
+		setNumeroprotocollo("");
+		setOggetto("");
+		setOrganismoStatutario("");
+		setPrimofirmatario("");
+		setRedigente(false);
+		setRelatore("");
+		setRinviato(false);
+		setRuoloCommissione1("");
+		setRuoloCommissione2("");
+		setRuoloCommissione3("");
+		setSoggettoConsultato("");
+		setSospeso(false);
+		setStato("");
+		setStralcio(false);
+		setTipoatto("");
+		setTipoChiusura("");
+		setTipoiniziativa("");
+		
+		
+	}
 	
 	public int sortNumeriAtto(String s1, String s2) {
         

@@ -86,7 +86,7 @@ public class EsameCommissioniController {
 	private Date dataUscitaRelatore;
 	private String nomeRelatore;
 
-	private boolean currentFilePubblico=true;
+	private boolean currentFilePubblico = true;
 	private Date currentDataSeduta;
 
 	private String componenteToDelete;
@@ -153,7 +153,7 @@ public class EsameCommissioniController {
 	private Integer decaduti;
 	private Integer ritirati;
 	private Integer respinti;
-	private Integer totaleNonApprovati= new Integer(0);
+	private Integer totaleNonApprovati = new Integer(0);
 	private String noteEmendamenti;
 	private Date dataPresaInCaricoProposta;
 	private Date dataIntesa;
@@ -1640,8 +1640,8 @@ public class EsameCommissioniController {
 	// Emendamenti e Clausole*************************************************
 
 	public void totaleEmendPresentati() {
-		
-		numEmendPresentatiTotale=0;
+
+		numEmendPresentatiTotale = 0;
 
 		if (getNumEmendPresentatiGiunta() != null) {
 			numEmendPresentatiTotale += getNumEmendPresentatiGiunta();
@@ -1665,8 +1665,8 @@ public class EsameCommissioniController {
 
 	public void totaleEmendApprovati() {
 
-		numEmendApprovatiTotale =0;
-		
+		numEmendApprovatiTotale = 0;
+
 		if (getNumEmendApprovatiGiunta() != null) {
 			numEmendApprovatiTotale += getNumEmendApprovatiGiunta();
 		}
@@ -1684,16 +1684,13 @@ public class EsameCommissioniController {
 		if (getNumEmendApprovatiCommissione() != null) {
 			numEmendApprovatiTotale += getNumEmendApprovatiCommissione();
 		}
-		
-		
-		
-		
+
 	}
 
 	public void totaleNonApprovati() {
 
-		totaleNonApprovati=0;
-		 
+		totaleNonApprovati = 0;
+
 		if (getNonAmmissibili() != null) {
 			totaleNonApprovati += getNonAmmissibili();
 		}
@@ -1949,8 +1946,22 @@ public class EsameCommissioniController {
 						commissioneUser.getNoteClausolaValutativa());
 
 		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage(
-				"Emendamenti e Clausole salvati con successo", ""));
+
+		
+		if (numEmendPresentatiTotale - numEmendApprovatiTotale != totaleNonApprovati) {
+
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_WARN,
+							"Emendamenti e Clausole salvati con successo : Attenzione dati incoerenti !",
+							""));
+
+		} else {
+
+			context.addMessage(null, new FacesMessage(
+					"Emendamenti e Clausole salvati con successo", ""));
+		}
 	}
 
 	// Note e Allegati******************************************************
@@ -3031,7 +3042,8 @@ public class EsameCommissioniController {
 		return numEmendApprovatiCommissione;
 	}
 
-	public void setNumEmendApprovatiCommissione(Integer numEmendApprovatiCommissione) {
+	public void setNumEmendApprovatiCommissione(
+			Integer numEmendApprovatiCommissione) {
 		this.numEmendApprovatiCommissione = numEmendApprovatiCommissione;
 	}
 

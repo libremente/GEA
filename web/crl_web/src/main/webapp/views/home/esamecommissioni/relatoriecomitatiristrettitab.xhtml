@@ -296,7 +296,7 @@
 									value="#{esameCommissioniController.nomeRelatore}">
 									<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
 									<f:selectItems var="relatore"
-										itemLabel="#{relatore.descrizione }"
+										itemLabel="#{relatore.cognomeNome }"
 										itemValue="#{relatore.descrizione}"
 										value="#{esameCommissioniController.relatori}" />
 								</p:selectOneMenu>
@@ -452,7 +452,7 @@
 									value="#{esameCommissioniController.nomeComponente}">
 									<f:selectItem itemLabel="Scegli Componente" itemValue="" />
 									<f:selectItems var="relatore"
-										itemLabel="#{relatore.descrizione }"
+										itemLabel="#{relatore.cognomeNome }"
 										itemValue="#{relatore.descrizione}"
 										value="#{esameCommissioniController.membriComitato}" />
 								</p:selectOneMenu>

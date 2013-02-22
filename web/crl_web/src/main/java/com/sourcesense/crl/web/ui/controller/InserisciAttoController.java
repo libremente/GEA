@@ -124,7 +124,7 @@ public class InserisciAttoController {
 		
 		if(GruppoUtente.AULA.equals(userBean.getUserGroupName())&&atto.getTipoAtto().equals("PDA")){
 	
-			atto.setTipoIniziativa("05_ATTO DI INIZIATIVA UFFICIO DI PRESIDENZA");
+			atto.setTipoIniziativa("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA");
 		
 		}
 		

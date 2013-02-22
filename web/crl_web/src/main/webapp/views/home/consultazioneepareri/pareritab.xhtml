@@ -202,6 +202,7 @@
 								<p:selectOneMenu value="#{consultazioniPareriController.esito}">
 									<f:selectItem itemLabel="Scegli esito" itemValue="" />
 									<f:selectItem itemLabel="Positivo" itemValue="Positivo" />
+									<f:selectItem itemLabel="Positivo con osservazioni" itemValue="Positivo con osservazioni" />
 									<f:selectItem itemLabel="Negativo" itemValue="Negativo" />
 									<p:ajax event="change"
 										listener="#{consultazioniPareriController.updatePareriHandler}" />

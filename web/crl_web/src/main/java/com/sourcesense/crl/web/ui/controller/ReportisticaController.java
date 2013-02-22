@@ -72,7 +72,8 @@ public class ReportisticaController implements Serializable {
 	private List<String> tipiAtto;
 	private Map<String, String> tipiAttoSel = new HashMap<String, String>();
 	private List<String> commissioni;
-	private Map<String, String> commissioniSel = new HashMap<String, String>();
+	//private Map<String, String> commissioniSel = new HashMap<String, String>();
+	private List<String> commissioniSel = new ArrayList<String>();
 	private String ruoloCommissione;
 	private Date dataAssegnazioneDa;
 	private Date dataAssegnazioneA;
@@ -124,8 +125,8 @@ public class ReportisticaController implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		setCommissioniSel(commissioneServiceManager.findAll());
-
+		//setCommissioniSel(commissioneServiceManager.findAll());
+		setCommissioniSel(commissioneServiceManager.getAll());
 		setOrganismi(organismoStatutarioServiceManager.findAll());
 		setFirmatari(personaleServiceManager.getAllFirmatario());
 		setRelatori(personaleServiceManager.getAllRelatore());
@@ -701,13 +702,28 @@ public class ReportisticaController implements Serializable {
 		this.tipiAttoSel = tipiAttoSel;
 	}
 
-	public Map<String, String> getCommissioniSel() {
+	
+	
+	
+	/*public Map<String, String> getCommissioniSel() {
 		return commissioniSel;
 	}
 
 	public void setCommissioniSel(Map<String, String> commissioniSel) {
 		this.commissioniSel = commissioniSel;
+	}*/
+
+	public List<String> getCommissioniSel() {
+		return commissioniSel;
 	}
+
+
+
+	public void setCommissioniSel(List<String> commissioniSel) {
+		this.commissioniSel = commissioniSel;
+	}
+
+
 
 	public ReportServiceManager getReportServiceManager() {
 		return reportServiceManager;

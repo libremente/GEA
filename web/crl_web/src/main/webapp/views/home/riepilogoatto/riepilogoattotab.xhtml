@@ -119,27 +119,29 @@
 				<p:dataTable styleClass="generalInfoTab grey-text"
 					value="#{attoBean.atto.firmatari}" var="firmatario">
 
-					<p:column sortBy="#{firmatario.primoFirmatario}">
+
+
+					<p:column>
+						<f:facet name="header">Nome Firmatario</f:facet>
+						<h:outputText value="#{firmatario.descrizione}" />
+
+					</p:column>
+
+					<p:column>
 						<f:facet name="header">Primo firmatario</f:facet>
 
 						<h:outputText value="si" rendered="#{firmatario.primoFirmatario}" />
 						<h:outputText value="no" rendered="#{!firmatario.primoFirmatario}" />
 					</p:column>
 
-					<p:column sortBy="#{firmatario.descrizione}">
-						<f:facet name="header">Nome Firmatario</f:facet>
-						<h:outputText value="#{firmatario.descrizione}" />
-
-					</p:column>
-
-					<p:column sortBy="#{firmatario.dataFirma}">
+					<p:column>
 						<f:facet name="header">Data Firma</f:facet>
 
 						<h:outputText value="#{firmatario.dataFirma}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
-					<p:column sortBy="#{firmatario.dataRitiro}">
+					<p:column>
 						<f:facet name="header">Data Ritiro</f:facet>
 						<h:outputText value="#{firmatario.dataRitiro}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
@@ -245,7 +247,7 @@
 					</p:column>
 
 					<p:column sortBy="#{commissione.ruolo}">
-						<f:facet name="header">Ruolo</f:facet>
+						<f:facet name="header">Competenza</f:facet>
 
 						<h:outputText value="#{commissione.ruolo}" />
 					</p:column>
@@ -411,7 +413,7 @@
 			<p:column>
 				<c:if test="#{riepilogoAttoController.trasmissioneAdAulaAbilited()}">
 					<h:outputText style="font-weight: bold;"
-						value="Data Trasmissione ad Aula: " />
+						value="Data Trasmissione: " />
 				</c:if>
 				<c:if
 					test="#{! riepilogoAttoController.trasmissioneAdAulaAbilited()}">
@@ -430,7 +432,8 @@
 </p:fieldset>
 
 <p:fieldset legend="Aula" toggleable="true" id="fsAula"
-	collapsed="false" toggleSpeed="500">
+	collapsed="false" toggleSpeed="500"
+	rendered="#{ navigationBean.boxAulaVisible()}">
 	<p:panelGrid styleClass="infoTable" id="infoAula">
 		<p:row>
 			<p:column>
@@ -438,17 +441,6 @@
 				<h:outputText value="#{attoBean.getWorkingAula().numeroDcr}" />
 			</p:column>
 
-			<p:column>
-				<h:outputText style="font-weight: bold;" value="Numero LCR: " />
-				<h:outputText value="#{attoBean.getWorkingAula().numeroLcr}" />
-			</p:column>
-		</p:row>
-		<p:row>
-			<p:column>
-				<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
-				<h:outputText
-					value="#{attoBean.getWorkingAula().tipologiaVotazione}" />
-			</p:column>
 
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Seduta: " />
@@ -456,13 +448,49 @@
 					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
+
 		</p:row>
+
 		<p:row>
-			<p:column colspan="2">
+
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
+				<h:outputText
+					value="#{attoBean.getWorkingAula().tipologiaVotazione}" />
+			</p:column>
+
+			<p:column>
 				<h:outputText style="font-weight: bold;" value="Esito Votazione:  " />
 				<h:outputText value="#{attoBean.getWorkingAula().esitoVotoAula}" />
 			</p:column>
+
+
+			<c:set var="emendato" value="No" />
+
+			<c:if test="#{attoBean.getWorkingAula().isEmendato()}">
+				<c:set var="emendato" value="Si" />
+			</c:if>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Emendato: " />
+				<h:outputText value="#{emendato}">
+
+				</h:outputText>
+			</p:column>
+
 		</p:row>
+
+		<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero LCR: " />
+				<h:outputText value="#{attoBean.getWorkingAula().numeroLcr}" />
+			</p:column>
+
+		</p:row>
+
+
 	</p:panelGrid>
 </p:fieldset>
 
@@ -482,7 +510,7 @@
 				</h:outputText>
 			</p:column>
 		</p:row>
-		
+
 		<p:row rendered="#{navigationBean.isBURLEnabled()}">
 			<p:column>
 				<h:outputText style="font-weight: bold;"
@@ -498,8 +526,8 @@
 				<h:outputText value="#{attoBean.numeroPubblicazioneBURL}" />
 			</p:column>
 		</p:row>
-		
-		<p:row rendered="#{navigationBean.isSessionAttoPDL()}"> 
+
+		<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
 			<p:column>
 				<h:outputText style="font-weight: bold;" value="Numero LR:  " />
 				<h:outputText value="#{attoBean.numeroLR}" />
@@ -511,6 +539,16 @@
 				</h:outputText>
 			</p:column>
 		</p:row>
+
+		<p:row rendered="#{not empty attoBean.atto.noteChiusuraIter }">
+			<p:column colspan="2">
+				<h:outputText style="font-weight: bold;" value="Note:  " />
+				<h:outputText value="#{attoBean.atto.noteChiusuraIter}">
+
+				</h:outputText>
+			</p:column>
+		</p:row>
+
 		<!-- <p:row rendered="#{navigationBean.isSessionAttoPDA()}">
 			<p:column colspan="2">
 				<b><h:outputLabel for="numeroDcr" value="Numero DCR: " /> </b>
@@ -611,6 +649,14 @@
 						<p:dataTable styleClass="generalInfoTab grey-text"
 							value="#{attoBean.atto.firmatari}" var="firmatario">
 
+
+
+							<p:column sortBy="#{firmatario.descrizione}">
+								<f:facet name="header">Nome Firmatario</f:facet>
+								<h:outputText value="#{firmatario.descrizione}" />
+
+							</p:column>
+
 							<p:column sortBy="#{firmatario.primoFirmatario}">
 								<f:facet name="header">Primo firmatario</f:facet>
 
@@ -618,12 +664,6 @@
 									rendered="#{firmatario.primoFirmatario}" />
 								<h:outputText value="no"
 									rendered="#{!firmatario.primoFirmatario}" />
-							</p:column>
-
-							<p:column sortBy="#{firmatario.descrizione}">
-								<f:facet name="header">Nome Firmatario</f:facet>
-								<h:outputText value="#{firmatario.descrizione}" />
-
 							</p:column>
 
 							<p:column sortBy="#{firmatario.dataFirma}">
@@ -850,7 +890,7 @@
 							<c:if
 								test="#{riepilogoAttoController.trasmissioneAdAulaAbilited()}">
 								<h:outputText style="font-weight: bold;"
-									value="Data Trasmissione ad Aula: " />
+									value="Data Trasmissione: " />
 							</c:if>
 							<c:if
 								test="#{! riepilogoAttoController.trasmissioneAdAulaAbilited()}">
@@ -870,7 +910,7 @@
 		</p:fieldset>
 
 		<p:fieldset legend="Aula" toggleable="true" collapsed="false"
-			toggleSpeed="500">
+			toggleSpeed="500" rendered="#{navigationBean.boxAulaVisible()}" >
 			<p:panelGrid styleClass="infoTable">
 				<p:row>
 					<p:column>
@@ -878,17 +918,6 @@
 						<h:outputText value="#{attoBean.getWorkingAula().numeroDcr}" />
 					</p:column>
 
-					<p:column>
-						<h:outputText style="font-weight: bold;" value="Numero LCR: " />
-						<h:outputText value="#{attoBean.getWorkingAula().numeroLcr}" />
-					</p:column>
-				</p:row>
-				<p:row>
-					<p:column>
-						<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
-						<h:outputText
-							value="#{attoBean.getWorkingAula().tipologiaVotazione}" />
-					</p:column>
 
 					<p:column>
 						<h:outputText style="font-weight: bold;" value="Data Seduta: " />
@@ -896,13 +925,47 @@
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
+
 				</p:row>
+
 				<p:row>
-					<p:column colspan="2">
+
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
+						<h:outputText
+							value="#{attoBean.getWorkingAula().tipologiaVotazione}" />
+					</p:column>
+
+					<p:column>
 						<h:outputText style="font-weight: bold;"
 							value="Esito Votazione:  " />
 						<h:outputText value="#{attoBean.getWorkingAula().esitoVotoAula}" />
 					</p:column>
+
+
+					<c:set var="emendato" value="No" />
+
+					<c:if test="#{attoBean.getWorkingAula().isEmendato()}">
+						<c:set var="emendato" value="Si" />
+					</c:if>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Emendato: " />
+						<h:outputText value="#{emendato}">
+
+						</h:outputText>
+					</p:column>
+
+				</p:row>
+
+				<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Numero LCR: " />
+						<h:outputText value="#{attoBean.getWorkingAula().numeroLcr}" />
+					</p:column>
+
 				</p:row>
 			</p:panelGrid>
 		</p:fieldset>
@@ -947,6 +1010,14 @@
 						<h:outputText style="font-weight: bold;" value="Data LR:  " />
 						<h:outputText value="#{attoBean.dataLR}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row rendered="#{not empty attoBean.atto.noteChiusuraIter }">
+					<p:column colspan="2">
+						<h:outputText style="font-weight: bold;" value="Note:  " />
+						<h:outputText value="#{attoBean.atto.noteChiusuraIter}">
+
 						</h:outputText>
 					</p:column>
 				</p:row>

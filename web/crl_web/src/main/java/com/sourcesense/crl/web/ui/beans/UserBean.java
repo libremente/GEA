@@ -45,17 +45,13 @@ public class UserBean implements Serializable {
 	@PostConstruct
 	public void init() {
 
-		/*colonneTotali.add(new ColonnaAtto("Tipo atto","tipo", true ));
-		colonneTotali.add(new ColonnaAtto("N° atto","numeroAtto", true));
 		
-		
-		
-		*/
 		colonneTotali.add(new ColonnaAtto("Oggetto","oggetto", true));
 		colonneTotali.add(new ColonnaAtto("Data presentazione","dataPresentazione", true));
 		colonneTotali.add(new ColonnaAtto("Stato","stato", true));
+		colonneTotali.add(new ColonnaAtto("Primo firmatario","primoFirmatario", false));
 		colonneTotali.add(new ColonnaAtto("Firmatari","elencoFirmatari", false));
-		colonneTotali.add(new ColonnaAtto("Tipo iniziativa","tipoIniziativa", false));
+		colonneTotali.add(new ColonnaAtto("Tipo iniziativa","tipoIniziativaNome", false));
 		colonneTotali.add(new ColonnaAtto("Tipo chiusura","tipoChiusura", false));
 		colonneTotali.add(new ColonnaAtto("Com. referente, co-referente, redigente o deliberante","commissioniNonConsultive", false));
 		colonneTotali.add(new ColonnaAtto("Data assegnazione","dataAssegnazione", false));
@@ -63,12 +59,12 @@ public class UserBean implements Serializable {
 		colonneTotali.add(new ColonnaAtto("Relatore","relatore", false));
 		colonneTotali.add(new ColonnaAtto("Data nomina relatore","dataNominaRelatore", false));
 		colonneTotali.add(new ColonnaAtto("Abbinamenti","elencoAbbinamenti", false));
-		colonneTotali.add(new ColonnaAtto("Esito votazione commissione referente (o redigente o deliberante)","esitoVotazioneCommissioneReferente",false));
-		colonneTotali.add(new ColonnaAtto("Data votazione commissione","dataVotazioneCommissione", false));
+		colonneTotali.add(new ColonnaAtto("Esito votazione Commissione referente (o redigente o deliberante)","esitoVotazioneCommissioneReferente",false));
+		colonneTotali.add(new ColonnaAtto("Data votazione Commissione","dataVotazioneCommissione", false));
 		colonneTotali.add(new ColonnaAtto("Data scadenza", "dataScadenza",false));
-		colonneTotali.add(new ColonnaAtto("Data richiesta iscrizione all'aula","dataRichiestaIscrizioneAula",false));
+		colonneTotali.add(new ColonnaAtto("Data richiesta iscrizione Aula","dataRichiestaIscrizioneAula",false));
 		colonneTotali.add(new ColonnaAtto("Esito votazione Aula","esitoVotazioneAula", false));
-		colonneTotali.add(new ColonnaAtto("Data votazione aula","dataVotazioneAula", false));
+		colonneTotali.add(new ColonnaAtto("Data votazione Aula","dataVotazioneAula", false));
 		colonneTotali.add(new ColonnaAtto("N° DCR","numeroDcr", false));
 		colonneTotali.add(new ColonnaAtto("N° LCR","numeroLcr", false));
 		colonneTotali.add(new ColonnaAtto("BURL","numeroPubblicazioneBURL", false));

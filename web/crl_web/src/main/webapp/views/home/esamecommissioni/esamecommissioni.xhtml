@@ -19,7 +19,10 @@
 	    <f:selectItems value="#{attoBean.getPassaggi()}"  />
 	    <p:ajax update="tabView" listener="#{esameCommissioniController.changePassaggio}" />  
 	</p:selectOneMenu>
-	
+	&nbsp;&nbsp;
+	<c:if  test="#{attoBean.getNumeroPassaggi() > 1}" >
+	<b> <h:outputText style="color:red" value="Atto rinviato" /> </b>
+    </c:if>
 	<br />
 	<br />
 

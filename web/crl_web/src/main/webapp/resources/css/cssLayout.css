@@ -22,6 +22,10 @@
 #footer_menu ul li{display:inline}
 #footer_menu li a,footer_menu li a:visited,footer_menu li a:hover,footer_menu li a:active{text-decoration:none;}
 
+
+
+
+
  #left {
     float: left;
     /*background-color: #ece3a5; */
@@ -94,9 +98,22 @@
 }
 
 
+.ui-growl{
+	
+	margin-left: 640px !important;
+	margin-right: 580px !important;
+	margin-top: 13% !important;
+}
+
+
 .ui-panelgrid tr, .ui-panelgrid td {
 border:0 !important;
 
+}
+
+.ui-datepicker {
+	
+	z-index: 1200 !important;
 }
 
 .ui-fieldset, .ui-fieldset  {
@@ -115,6 +132,13 @@ border:0 !important;
 .infoTable {
 width:100%;
 padding: 8px 19px 4px 10px ;	
+	
+}
+
+
+.infoTableSearch {
+width:100%;
+padding: 0 ;	
 	
 }
 
