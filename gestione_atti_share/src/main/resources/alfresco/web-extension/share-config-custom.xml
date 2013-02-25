@@ -126,6 +126,7 @@
          <type name="cm:content">
          	<subtype name="crlatti:firmatario"/>
          	<subtype name="crlatti:firmatarioAnagrafica"/>
+         	<subtype name="crlatti:firmatarioAttoIndirizzo"/>
          	<subtype name="crlatti:consigliereAnagrafica"/>
          	<subtype name="crlatti:legislaturaAnagrafica"/>
          	<subtype name="crlatti:abbinamento"/>
@@ -136,6 +137,7 @@
 			<subtype name="crlatti:membroComitatoRistretto" />
 			<subtype name="crlatti:testoComitatoRistretto"/>
 			<subtype name="crlatti:collegamento" />
+			<subtype name="crlatti:collegamentoAttoIndirizzo" />
 			<subtype name="crlatti:audizione" />
 			
 			<subtype name="crltemplate:lettera"/>
@@ -195,6 +197,27 @@
 			<subtype name="crltemplate:letteraTrasmissioneORGAula"/>
 			<subtype name="crltemplate:letteraConvalidaORGAula"/>
 			<subtype name="crltemplate:letteraTrasmissioneBURLAula"/>
+			
+			<!-- Reports -->
+			<subtype name="crlreport:reportAttiAssCommissioniServComm" />
+			<subtype name="crlreport:reportAttiIniziativaConsPerConsServComm" />
+			<subtype name="crlreport:reportAttiInviatiOrganiEsterniServComm" />
+			<subtype name="crlreport:reportAttiLicenziatiServComm" />
+			<subtype name="crlreport:reportAttiRelatoreServComm" />
+			<subtype name="crlreport:reportAttiRitiratiRevocatiServComm" />
+			<subtype name="crlreport:reportComposizioneCommissioniServComm" />
+			<subtype name="crlreport:reportConferenzeServComm" />
+			<subtype name="crlreport:reportAttiAssCommissioniComm" />
+			<subtype name="crlreport:reportAttiIstruttoriaCommissioniComm" />
+			<subtype name="crlreport:reportAttiLicenziatiComm" />
+			<subtype name="crlreport:reportRelatoriDataNominaComm" />
+			<subtype name="crlreport:reportAttiIstruttoriaAula" />
+			<subtype name="crlreport:reportAttiRinviatiAula" />
+			<subtype name="crlreport:reportDCRAula" />
+			<subtype name="crlreport:reportLCRAula" />
+			<!-- Odg -->
+			<subtype name="crlodg:odgGenericoCommissioniDocument" />
+			<subtype name="crlodg:odgGenericoAulaDocument" />
    			
          </type>
 
@@ -210,6 +233,7 @@
 			<subtype name="crlatti:attoRef" />
 			<subtype name="crlatti:attoRel" />
 			<subtype name="crlatti:attoEac" />
+			<subtype name="crlatti:attoIndirizzo"/>
 			<subtype name="crlatti:commissione"/>
 			<subtype name="crlatti:comitatoRistretto"/>
 			<subtype name="crlatti:aula"/>
@@ -453,6 +477,7 @@
             <show id="crlatti:esitoVotoAula"/>
             <show id="crlatti:dataSedutaComm"/>
             <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
             <show id="crlatti:dataSedutaAula"/>
             <show id="crlatti:commConsultiva"/>
             <show id="crlatti:relatori"/>
@@ -471,6 +496,7 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
             <show id="crlatti:dataChiusura" />
 			<show id="crlatti:tipoChiusura" />
 			<show id="crlatti:noteChiusura" />
@@ -478,6 +504,9 @@
 			<show id="crlatti:dataLr" />
 			<show id="crlatti:numeroPubblicazioneBURL" />
 			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
+			<show id="crlatti:numeroDgrSeguito" />
+			<show id="crlatti:dataDgrSeguito" />
           </field-visibility>
       </form>
    </forms>
@@ -516,6 +545,7 @@
             <show id="crlatti:esitoVotoAula"/>
             <show id="crlatti:dataSedutaComm"/>
             <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
             <show id="crlatti:dataSedutaAula"/>
             <show id="crlatti:commConsultiva"/>
             <show id="crlatti:relatori"/>
@@ -534,6 +564,7 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
             <show id="crlatti:dataChiusura" />
 			<show id="crlatti:tipoChiusura" />
 			<show id="crlatti:noteChiusura" />
@@ -542,6 +573,8 @@
 			<show id="crlatti:numeroPubblicazioneBURL" />
 			<show id="crlatti:dataPubblicazioneBURL" />
 			<show id="crlatti:pubblico" />
+			<show id="crlatti:numeroDgrSeguito" />
+			<show id="crlatti:dataDgrSeguito" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -557,67 +590,7 @@
             <show id="cm:description" force="true" />
             <show id="mimetype" />
             <show id="cm:created"/>
-             <show id="crlatti:assegnazione"/>
-            <show id="crlatti:descrizioneIniziativa"/>
-            <show id="crlatti:numeroRepertorio"/>
-            <show id="crlatti:dataRepertorio"/>
-            <show id="crlatti:classificazione"/>
-            <show id="crlatti:pubblico"/>
-            <show id="crlatti:legislatura"/>
-            <show id="crlatti:statoAtto"/>
-            <show id="crlatti:numeroAtto"/>
-            <show id="crlatti:dataIniziativa"/>
-            <show id="crlatti:numeroProtocollo"/>
-            <show id="crlatti:tipoIniziativa"/>
-            <show id="crlatti:numeroDcr"/>
-            <show id="crlatti:oggetto"/>
-            <show id="crlatti:dataPubblicazione"/>
-            <show id="crlatti:esitoVotoComRef"/>
-            <show id="crlatti:dataSedutaSc"/>
-            <show id="crlatti:esitoVotoAula"/>
-            <show id="crlatti:dataSedutaComm"/>
-            <show id="crlatti:commReferente"/>
-            <show id="crlatti:dataSedutaAula"/>
-            <show id="crlatti:commConsultiva"/>
-            <show id="crlatti:relatori"/>
-            <show id="crlatti:redigente"/>
-            <show id="crlatti:coreferente"/>
-            <show id="crlatti:deliberante"/>
-            <show id="crlatti:organismiStatutari"/>
-            <show id="crlatti:numeroLcr"/>
-            <show id="crlatti:soggettoConsultato"/>
-            <show id="crlatti:anno"/>
-            <show id="crlatti:emendato"/>
-            <show id="crlatti:emendatoAulaAtto"/>
-            <show id="crlatti:rinviato"/>
-            <show id="crlatti:sospeso"/>
-            <show id="crlatti:abbinamento"/>
-            <show id="crlatti:stralcio"/>
-            <show id="crlatti:primoFirmatario" /> 
-            <show id="crlatti:firmatari"/>
-            <show id="crlatti:dataChiusura" />
-			<show id="crlatti:tipoChiusura" />
-			<show id="crlatti:noteChiusura" />
-			<show id="crlatti:numeroLr" />
-			<show id="crlatti:dataLr" />
-			<show id="crlatti:numeroPubblicazioneBURL" />
-			<show id="crlatti:dataPubblicazioneBURL" />
-			<show id="crlatti:pubblico" />
-          </field-visibility>
-      </form>
-   </forms>
-   </config>
-   
-   <config evaluator="node-type" condition="crlatti:attoPdl">
-   	<forms>
-   		<form>
-   			<field-visibility>
-   			<hide id="cm:contains" />
-   		    <show id="cm:name" />
-            <show id="cm:title" force="true" />
-            <show id="cm:description" force="true" />
-            <show id="mimetype" />
-            <show id="cm:created"/>
+            <show id="crlatti:dataPresaInCarico" />
             <show id="crlatti:assegnazione"/>
             <show id="crlatti:descrizioneIniziativa"/>
             <show id="crlatti:numeroRepertorio"/>
@@ -638,6 +611,72 @@
             <show id="crlatti:esitoVotoAula"/>
             <show id="crlatti:dataSedutaComm"/>
             <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismiStatutari"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" /> 
+            <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
+			<show id="crlatti:statoExportAttiIndirizzo" />
+          </field-visibility>
+      </form>
+   </forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:attoPdl">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   			<hide id="cm:contains" />
+   		    <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:assegnazione"/>
+            <show id="crlatti:dataPresaInCarico" />
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:classificazione"/>
+            <show id="crlatti:pubblico"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
             <show id="crlatti:dataSedutaAula"/>
             <show id="crlatti:commConsultiva"/>
             <show id="crlatti:relatori"/>
@@ -656,6 +695,7 @@
             <show id="crlatti:stralcio"/>
             <show id="crlatti:primoFirmatario" />
             <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
             <show id="crlatti:dataChiusura" />
 			<show id="crlatti:tipoChiusura" />
 			<show id="crlatti:noteChiusura" />
@@ -664,6 +704,7 @@
 			<show id="crlatti:numeroPubblicazioneBURL" />
 			<show id="crlatti:dataPubblicazioneBURL" />
 			<show id="crlatti:pubblico" />
+			<show id="crlatti:statoExportAttiIndirizzo" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -789,6 +830,15 @@
    	</forms>
    </config>
  
+   <config evaluator="node-type" condition="crlatti:commissioneAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:numeroOrdinamentoCommissioneAnagrafica" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
     	   
 	   
    <config evaluator="node-type" condition="crlatti:commissione">
@@ -820,7 +870,12 @@
 				 <show id="crlatti:noteStralcioCommissione" />
 				 <show id="crlatti:dataStralcioCommissione" />
 				 <show id="crlatti:quorumEsameCommissione" />
-		         
+				 
+				 <show id="crlatti:dataScadenzaCommissione" />
+				 <show id="crlatti:sospensioneFerialeCommissione" />
+				 <show id="crlatti:dataInterruzioneCommissione" />
+				 <show id="crlatti:dataRicezioneIntegrazioniCommissione" />
+				 
 		        <show id="crlatti:numEmendPresentatiMaggiorEsame" />
 				<show id="crlatti:numEmendPresentatiMinorEsame" />
 				<show id="crlatti:numEmendPresentatiGiuntaEsame" />
@@ -938,6 +993,9 @@
    			<field-visibility>
    				<show id="crlatti:dataNominaRelatore"/>
    				<show id="crlatti:dataUscitaRelatore" />
+   				<show id="crlatti:tipoAttoRelatore" />
+				<show id="crlatti:numeroAttoRelatore" />
+				<show id="crlatti:commissioneRelatore" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -955,6 +1013,9 @@
    				<show id="crlatti:dataRicezioneOrganoParere" />
    				<show id="crlatti:noteParere" />
    				<show id="crlatti:esitoParere" />
+   				<show id="crlatti:commissioneDestinatariaParere" />
+   				<show id="crlatti:tipoAttoParere" />
+				<show id="crlatti:numeroAttoParere" />
    			</field-visibility>
    		</form>
    	</forms>
@@ -1096,7 +1157,45 @@
    	</forms>
    </config>
    
-  
+   <config evaluator="node-type" condition="crlatti:attoIndirizzo">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:IdAttoIndirizzo"/>
+   				<show id="crlatti:IdLegislaturaAttoIndirizzo"/>
+   				<show id="crlatti:tipoAttoIndirizzo"/>
+   				<show id="crlatti:numeroAttoIndirizzo"/>
+   				<show id="crlatti:oggettoAttoIndirizzo"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:firmatarioAttoIndirizzo">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:IdFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:idGruppoFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:nomeFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:cognomeFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:gruppoFirmatarioAttoIndirizzo"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:collegamentoAttoIndirizzo">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:descrizioneCollegamentoAttiIndirizzo"/>
+   				<show id="crlatti:attoAssociatoCollegamentoAttiIndirizzo"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
    
    
    
