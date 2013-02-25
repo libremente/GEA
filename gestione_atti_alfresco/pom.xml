@@ -100,7 +100,7 @@
 			slash, e.g. '/var/log/alfresco/' ) | | Jetty embedded run logs by
 			default in target/alfresco.log
 		-->
-        <alfresco.version>4.0.e</alfresco.version>
+        <alfresco.version>4.2.c</alfresco.version>
         <alfresco.edition>community</alfresco.edition>
 		<alfresco.data.location>./alf_data_jetty</alfresco.data.location>
 		<alfresco.db.name>alf_jetty</alfresco.db.name>
@@ -164,6 +164,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
+            <scope>provided</scope>
         </dependency>
       	<dependency>
          	<groupId>org.springframework.extensions.surf</groupId>
@@ -174,17 +175,20 @@
       	<dependency>
      	 	<groupId>org.apache.poi</groupId>
       		<artifactId>poi</artifactId>
-      		<version>3.8-beta5</version>
+      		<version>3.9-beta1-20120801</version>
+      		<scope>provided</scope>
     	</dependency>
     	<dependency>
      	 	<groupId>org.apache.poi</groupId>
       		<artifactId>poi-scratchpad</artifactId>
-      		<version>3.8-beta5</version>
+      		<version>3.9-beta1-20120801</version>
+      		<scope>provided</scope>
     	</dependency>
     	<dependency>
      	 	<groupId>org.apache.poi</groupId>
       		<artifactId>poi-ooxml</artifactId>
-      		<version>3.8-beta5</version>
+      		<version>3.9-beta1-20120801</version>
+      		<scope>provided</scope>
     	</dependency>
     	<dependency>
   		<groupId>junit</groupId>
@@ -200,13 +204,13 @@
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-data-model</artifactId>
-            <version>4.0.d</version>
+            <version>4.2.c</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-web-client</artifactId>
-            <version>4.0.d</version>
+            <version>4.2.c</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -224,7 +228,8 @@
 		 <dependency>
     		<groupId>org.apache.chemistry.opencmis</groupId>
     		<artifactId>chemistry-opencmis-client-impl</artifactId>
-    		<version>0.6.0</version>
+    		<version>0.8.0</version>
+    		 <scope>provided</scope>
  		</dependency>
     
 		<!--
@@ -633,7 +638,7 @@
                 <dependency>
                     <groupId>tk.skuro.alfresco</groupId>
                     <artifactId>h2-support</artifactId>
-                    <version>1.2</version>
+                    <version>1.5</version>
                 </dependency>
 			</dependencies>
 		</profile>
