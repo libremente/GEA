@@ -49,7 +49,7 @@
 	<properties>
 		<env>local</env><!-- dev per la macchina di sviluppo interna | local per locale -->
 		<webapp.name>share</webapp.name>
-		<alfresco.version>4.0.e</alfresco.version>
+		<alfresco.version>4.2.c</alfresco.version>
         <alfresco.edition>community</alfresco.edition>
 		<share.log.level>debug</share.log.level>
 		<share.servlet.port>8081</share.servlet.port>
