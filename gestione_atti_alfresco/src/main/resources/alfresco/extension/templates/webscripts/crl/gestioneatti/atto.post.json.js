@@ -101,7 +101,12 @@ if(nodeType=="crlatti:attoEac"){
 		eacAttoFolderNode.properties["crlatti:dataAtto"] = dataAttoParsed;
 	}
 	
+	
+	
 	eacAttoFolderNode.save();
+	
+	eacAttoFolderNode.addAspect("crlatti:attiIndirizzoAspect");
+	
 	model.atto = eacAttoFolderNode;
 		
 } else if(nodeType=="crlatti:attoMis") {
@@ -253,7 +258,13 @@ if(nodeType=="crlatti:attoEac"){
 	misAttoFolderNode.properties["crlatti:istitutoIncaricatoMis"] = istitutoIncaricato;
 	misAttoFolderNode.properties["crlatti:oggetto"] = oggetto;
 
+	
 	misAttoFolderNode.save();
+	
+	
+	misAttoFolderNode.addAspect("crlatti:attiIndirizzoAspect");
+
+	
 	model.atto = misAttoFolderNode;
 	
 } else {
@@ -337,6 +348,7 @@ if(nodeType=="crlatti:attoEac"){
 		attoFolderNode.properties["crlatti:pubblico"] = true;
 		attoFolderNode.save();
 		
+		
 		if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){
 			var firmatariSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Firmatari\"";
 			var firmatariSpaceTemplateNode = search.luceneSearch(firmatariSpaceTemplateQuery)[0];
@@ -361,6 +373,9 @@ if(nodeType=="crlatti:attoEac"){
 		var passaggioFolderNode = passaggioSpaceTemplateNode.copy(passaggiFolderNode, true); // deep copy
 		passaggioFolderNode.name = "Passaggio1";
 		passaggioFolderNode.save();
+		
+		attoFolderNode.addAspect("crlatti:attiIndirizzoAspect");
+
 		
 		model.atto = attoFolderNode;
 	}

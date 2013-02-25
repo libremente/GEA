@@ -114,11 +114,14 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
         	
         	String quorumVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_QUORUM_VOTAZIONE_COMMISSIONE));
         	
-        	if(quorumVotazione.equalsIgnoreCase("maggioranza")){
-        		quorumVotazione = "a maggioranza";
-        	}else if(quorumVotazione.equalsIgnoreCase("unanimità")){
-        		quorumVotazione = "all'unanimità";
+        	if(quorumVotazione!=null){
+        		if(quorumVotazione.equalsIgnoreCase("maggioranza")){
+            		quorumVotazione = "a maggioranza";
+            	}else if(quorumVotazione.equalsIgnoreCase("unanimità")){
+            		quorumVotazione = "all'unanimità";
+            	}
         	}
+        	
         	
         	
         	String esitoVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ESITO_VOTAZIONE_COMMISSIONE));

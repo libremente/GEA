@@ -47,7 +47,7 @@
     </bean>
     
     
-    <bean id="axiante-alfresco.userBootstrap" 
+    <bean id="crl_gestione_atti.userBootstrap" 
     	class="org.alfresco.repo.module.ImporterModuleComponent" 
     	parent="module.baseComponent">
         

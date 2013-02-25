@@ -103,58 +103,63 @@ public class TemplateFiller {
 			 	HeaderStories headerStore = new HeaderStories( document);
 		        Range docRange = headerStore.getOddFooterSubrange();
 		        
-		        int numParagraphs = docRange.numParagraphs();
-		    	
-				// Recover a Set of the keys in the HashMap
-				Set<String> keySet = replacements.keySet();
-				
-				Paragraph paragraph = null;
-				CharacterRun charRun = null;
-				Iterator<String> keySetIterator = null;
-				int numCharRuns = 0;
-				String text = null;
-				String key = null;
-				String value = null;
-			
-				// Step through each Paragraph
-				for(int i = 0; i < numParagraphs; i++) {
-					paragraph = docRange.getParagraph(i);
+		        if(docRange!=null){
+		        	  int numParagraphs = docRange.numParagraphs();
+				    	
+						// Recover a Set of the keys in the HashMap
+						Set<String> keySet = replacements.keySet();
+						
+						Paragraph paragraph = null;
+						CharacterRun charRun = null;
+						Iterator<String> keySetIterator = null;
+						int numCharRuns = 0;
+						String text = null;
+						String key = null;
+						String value = null;
 					
-					// Get the number of CharacterRuns in the Paragraph
-					numCharRuns = paragraph.numCharacterRuns();
+						// Step through each Paragraph
+						for(int i = 0; i < numParagraphs; i++) {
+							paragraph = docRange.getParagraph(i);
+							
+							// Get the number of CharacterRuns in the Paragraph
+							numCharRuns = paragraph.numCharacterRuns();
+							
+							for(int j = 0; j < numCharRuns; j++) {
+								
+								charRun = paragraph.getCharacterRun(j);
+								
+								// Get the text from the CharacterRun 
+								text = charRun.text();
+								
+								// KeySet Iterator
+								keySetIterator = keySet.iterator();
+								while(keySetIterator.hasNext()) {
 					
-					for(int j = 0; j < numCharRuns; j++) {
-						
-						charRun = paragraph.getCharacterRun(j);
-						
-						// Get the text from the CharacterRun 
-						text = charRun.text();
-						
-						// KeySet Iterator
-						keySetIterator = keySet.iterator();
-						while(keySetIterator.hasNext()) {
+									// check the key in CharacterRuns text
+								    key = keySetIterator.next();
+								    if(text.contains(key)) {
+								    	
+								    	// replace term
+								    	if(replacements.get(key)!=null){
+								    		value = replacements.get(key);
+								    	}else{
+								    		value = "";
+								    	}
+								        int start = text.indexOf(key);
+								        charRun.replaceText(key, value, start);
 			
-							// check the key in CharacterRuns text
-						    key = keySetIterator.next();
-						    if(text.contains(key)) {
-						    	
-						    	// replace term
-						    	if(replacements.get(key)!=null){
-						    		value = replacements.get(key);
-						    	}else{
-						    		value = "";
-						    	}
-						        int start = text.indexOf(key);
-						        charRun.replaceText(key, value, start);
-	
-						    }
+								    }
+								}
+							}
 						}
-					}
-				}
-	
-				ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-				document.write(ostream);
-				return ostream.toByteArray();
+			
+						ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+						document.write(ostream);
+						return ostream.toByteArray();	
+		        }else{
+		        	 	return documentByteArray;
+		        }
+		      
 				
 		 }catch (Exception e) {
 			 logger.error("Exception details: "+e.getMessage());

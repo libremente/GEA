@@ -162,7 +162,12 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			List<AttiAbbinatiLineObject> abbinamentiStringList = new ArrayList<AttiAbbinatiLineObject>();
 			abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
 			abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
-			abbinamentiStringList.add(new AttiAbbinatiLineObject("Abbinato a: ", false, false, 10));
+			
+			
+			if(attiAbbinati.size()>0){
+				abbinamentiStringList.add(new AttiAbbinatiLineObject("Abbinato a: ", false, false, 10));
+			}
+			
 			
 			for(int j=0; j<attiAbbinati.size(); j++){
 				

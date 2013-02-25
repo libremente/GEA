@@ -601,6 +601,8 @@ for(var i=0; i< attiResults.length; i++){
 	attoResultObj.numeroLr = attoResult.properties["crlatti:numeroLr"];
 	attoResultObj.dataLR = attoResult.properties["crlatti:dataLr"];
 	
+	attoResultObj.pubblico = attoResult.properties["crlatti:pubblico"];
+	
 	
 	var noteGeneraliFilename = "Note Generali.txt";
 	var noteGeneraliXPathQuery = "*[@cm:name='"+noteGeneraliFilename+"']";

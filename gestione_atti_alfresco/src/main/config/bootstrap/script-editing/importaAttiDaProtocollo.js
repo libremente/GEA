@@ -10,6 +10,7 @@ function importaAtto(){
 
 	var legislatura = document.properties["crlatti:legislatura"];
 	var numeroAtto = document.properties["crlatti:numeroAtto"];
+	var estensioneAtto = document.properties["crlatti:estensioneAtto"];
 	var idProtocollo = document.properties["crlatti:idProtocollo"];
 	
 	var tipologia = document.properties["crlatti:tipologia"];
@@ -107,17 +108,16 @@ function importaAtto(){
 		}
 		
 		//verifica esistenza del folder dell'atto
-		var attoPath = tipoPath + "/cm:" + search.ISO9075Encode(numeroAtto);
+		var attoPath = tipoPath + "/cm:" + search.ISO9075Encode(numeroAtto+""+estensioneAtto);
 		var attoLuceneQuery = "PATH:\""+attoPath+"\"";
 		var attoResults = search.luceneSearch(attoLuceneQuery);
 		
-		var esisteAttoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocollo+"\" AND @cm\\:name:\""+numeroAtto+"\"";
+		//var esisteAttoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocollo+"\" AND @cm\\:name:\""+numeroAtto+"\"";
 		
 		var attoFolderNode = null;
 		if(attoResults!=null && attoResults.length>0){
 			//atto presente
 			attoFolderNode = attoResults[0];
-			attoFolderNode.name = numeroAtto;
 			attoFolderNode.properties["crlatti:legislatura"] = legislatura;
 			attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
 			attoFolderNode.properties["crlatti:tipologia"] = tipologia;
@@ -191,6 +191,7 @@ function importaAtto(){
 				attoFolderNode.removeAspect("crlatti:importatoDaProtocollo");
 			}
 			
+				
 			document.remove();
 			
 			protocolloLogger.info("Atto importato correttamente. Operazione: Modifica atto esistente - Atto numero:"+numeroAtto+" idProtocollo:"+idProtocollo);	
@@ -201,6 +202,10 @@ function importaAtto(){
 			if(document.hasAspect("crlatti:importatoDaProtocollo")){
 				document.removeAspect("crlatti:importatoDaProtocollo");
 			}
+			
+
+			document.addAspect("crlatti:attiIndirizzoAspect");
+			
 			
 			protocolloLogger.info("Atto importato correttamente. Operazione: Creazione nuovo atto - Atto numero:"+numeroAtto+" idProtocollo:"+idProtocollo);	
 		}

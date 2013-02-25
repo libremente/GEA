@@ -278,7 +278,6 @@
 				<aspect>crlatti:pubblicabile</aspect>
 				<aspect>crlatti:tipizzabile</aspect>
 				<aspect>crlatti:protocollato</aspect>
-				<aspect>crlatti:attiIndirizzoAspect</aspect>
 			</mandatory-aspects>
 		</type>
 		

@@ -34,6 +34,9 @@
         <property name="extensionName">
             <value>crlUtility</value>
         </property>
+         <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
     </bean>
 	
 </beans>

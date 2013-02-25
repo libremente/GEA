@@ -106,7 +106,7 @@ if(username=="protocollo" || username=="admin"){
 				}
 				
 				//verifica esistenza del folder dell'atto
-				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto);
+				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto+estensioneAtto);
 				var attoLuceneQuery = "PATH:\""+attoPath+"\"";
 				var attoResults = search.luceneSearch(attoLuceneQuery);
 					
@@ -138,6 +138,8 @@ if(username=="protocollo" || username=="admin"){
 				attoFolderNode.properties["crlatti:assegnazione"] = assegnazione;
 				attoFolderNode.properties["crlatti:pubblico"] = true;
 				
+				attoFolderNode.properties["crlatti:statoAtto"] = "Protocollato";
+				
 				//dataRepertorio
 				if(checkIsNotNull(dataRepertorio)){
 					var dataRepertorioSplitted = dataRepertorio.split("-");
@@ -165,7 +167,14 @@ if(username=="protocollo" || username=="admin"){
 					var relatoriSpaceTemplateNode = search.luceneSearch(relatoriSpaceTemplateQuery)[0];
 					relatoriSpaceTemplateNode.copy(attoFolderNode);
 				}
-								
+				
+				
+				var firmatariPath = "/app:company_home" +
+				"/cm:"+search.ISO9075Encode("CRL") +
+				"/cm:"+search.ISO9075Encode("Gestione Atti") +
+				"/cm:"+search.ISO9075Encode("Anagrafica") +
+				"/cm:"+search.ISO9075Encode("ConsiglieriAttivi") +"/*";
+			
 				//gestione tipo iniziativa
 				if(checkIsNotNull(esibenteMittente)){
 					var firmatariArray = new Array();
@@ -176,32 +185,51 @@ if(username=="protocollo" || username=="admin"){
 						if(esibenteMittente.indexOf(prefix)!=-1){
 							var esibenteMittenteFirmatari = esibenteMittente.split(prefix)[1];
 							var firmatariNomeCognomeSplitted = esibenteMittenteFirmatari.split("-");
-							var firmatariSplitted = null;
-							if(firmatariNomeCognomeSplitted.length==0){
-								firmatariSplitted = esibenteMittenteFirmatari.split(",");
-							} else {
-								firmatariSplitted = firmatariNomeCognomeSplitted;
-							}
+							var firmatariSplittedTemp = null;
+							var firmatariSplitted = new Array();
+							if(firmatariNomeCognomeSplitted.length>0){
+								for(var k=0; k<firmatariNomeCognomeSplitted.length; k++){
+									firmatariSplittedTemp = firmatariNomeCognomeSplitted[k].split(",");
+									for(var j=0; j<firmatariSplittedTemp.length; j++){
+										var firmatarioTemp = null;
+										if(firmatariSplittedTemp[j].indexOf("(")==-1){
+											firmatarioTemp = firmatariSplittedTemp[j];
+										}else{
+											firmatarioTemp = firmatariSplittedTemp[j].split("\\(")[0];
+										}
+										
+										firmatariSplitted.push(firmatarioTemp);
+									}
+								}
+								
+								//firmatariSplitted = esibenteMittenteFirmatari.split(",");
+							} 
+//							else {
+//								firmatariSplitted = firmatariNomeCognomeSplitted;
+//							}
+							
 							
 							for(var i=0; i<firmatariSplitted.length; i++){
 								if(firmatariSplitted[i].indexOf("(")==-1){
 									var firmatario = firmatariSplitted[i].trim();
 									
 									//cerca il consigliere exact match - difficile
-									var consigliereLuceneQuery = "TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\""+firmatario+"\"";
+									var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"*"+firmatario+"\"";
 									var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
 									var consigliereAnagraficaNode = null;
 									if(consigliereResults!=null && consigliereResults.length==1){
 										consigliereAnagraficaNode = consigliereResults[0];
-									} else {
-										//cerca il consigliere per nome o per cognome
-										var nomeCognomeConsigliereLuceneQuery = 
-											"TYPE:\"crlatti:consigliereAnagrafica\" AND ( @crlatti\\:nomeConsigliereAnagrafica:\""+firmatario+"\" OR @crlatti\\:cognomeConsigliereAnagrafica:\""+firmatario+"\")";
-										var nomeCognomeConsigliereResults = search.luceneSearch(nomeCognomeConsigliereLuceneQuery);
-										if(nomeCognomeConsigliereResults!=null && nomeCognomeConsigliereResults.length==1){
-											consigliereAnagraficaNode = nomeCognomeConsigliereResults[0];
-										}
-									}
+									} 
+									
+//									else {
+//										//cerca il consigliere per nome o per cognome
+//										var nomeCognomeConsigliereLuceneQuery = 
+//											"TYPE:\"crlatti:consigliereAnagrafica\" AND ( @crlatti\\:nomeConsigliereAnagrafica:\""+firmatario+"\" OR @crlatti\\:cognomeConsigliereAnagrafica:\""+firmatario+"\")";
+//										var nomeCognomeConsigliereResults = search.luceneSearch(nomeCognomeConsigliereLuceneQuery);
+//										if(nomeCognomeConsigliereResults!=null && nomeCognomeConsigliereResults.length==1){
+//											consigliereAnagraficaNode = nomeCognomeConsigliereResults[0];
+//										}
+//									}
 									
 									if(consigliereAnagraficaNode!=null){
 										var nomeConsigliere = consigliereAnagraficaNode.properties["crlatti:nomeConsigliereAnagrafica"];
@@ -241,8 +269,8 @@ if(username=="protocollo" || username=="admin"){
 						}
 					} else {
 						
-						firmatariArray.push(esibenteMittente);
-						attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
+						//firmatariArray.push(esibenteMittente);
+						//attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
 					}
 					
 					// La proprietà firmatari viene valorizzata mediante una regola nella cartella firmatari dell'atto. 

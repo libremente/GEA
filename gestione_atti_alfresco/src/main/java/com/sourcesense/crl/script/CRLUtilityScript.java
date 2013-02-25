@@ -1,14 +1,20 @@
 package com.sourcesense.crl.script;
 
+
 import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
+
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.repo.security.authentication.AuthenticationUtil.RunAsWork;
+import org.alfresco.service.ServiceRegistry;
+
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 
 
 public class CRLUtilityScript extends BaseScopableProcessorExtension {
+	
+	private ServiceRegistry serviceRegistry;
 
 	public void sudo(final Function func, String runAsUsername) {
         final Context context = Context.getCurrentContext();
@@ -40,6 +46,20 @@ public class CRLUtilityScript extends BaseScopableProcessorExtension {
         
         return AuthenticationUtil.runAs(job, runAsUsername);
     }
+	
+	
+
+	public ServiceRegistry getServiceRegistry() {
+		return serviceRegistry;
+	}
+	
+	
+	public void setServiceRegistry(ServiceRegistry serviceRegistry) {
+		this.serviceRegistry = serviceRegistry;
+	}
+ 
+ 
+ 
 
 	
 }

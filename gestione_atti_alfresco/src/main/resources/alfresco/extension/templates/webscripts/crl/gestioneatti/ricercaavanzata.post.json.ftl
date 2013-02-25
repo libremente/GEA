@@ -6,8 +6,9 @@
    	  		"atto" : 
 		   {
 		    "id" : "<#if atto.id?exists>${atto.id}<#else></#if>",
+		    "nome" : "<#if atto.name?exists>${atto.name}<#else></#if>",
 			"tipo" : "<#if atto.tipo?exists>${atto.tipo}<#else></#if>",
-			"numeroAtto" : "<#if atto.name?exists>${atto.name}<#else></#if>",
+			"numeroAtto" : "${atto.numeroAtto?c}",
 			"oggetto" : "<#if atto.oggetto?exists>${atto.oggetto}<#else></#if>",
 			"primoFirmatario" : "<#if atto.primoFirmatario?exists>${atto.primoFirmatario}<#else></#if>",
 			"dataPresentazione" : "<#if atto.dataPresentazione?exists>${atto.dataPresentazione?string("yyyy-MM-dd")}<#else></#if>",
@@ -35,7 +36,8 @@
 			"dataPubblicazioneBURL" : "<#if atto.dataPubblicazioneBURL?exists>${atto.dataPubblicazioneBURL?string("yyyy-MM-dd")}<#else></#if>",
 			"numeroLr" : "<#if atto.numeroLr?exists>${atto.numeroLr}<#else></#if>",
 			"dataLR" : "<#if atto.dataLR?exists>${atto.dataLR?string("yyyy-MM-dd")}<#else></#if>",
-			"notePresentazioneAssegnazione" : "<#if atto.notePresentazioneAssegnazione?exists>${atto.notePresentazioneAssegnazione}<#else></#if>"
+			"notePresentazioneAssegnazione" : "<#if atto.notePresentazioneAssegnazione?exists>${atto.notePresentazioneAssegnazione}<#else></#if>",
+			"pubblico" : "<#if atto.pubblico?exists>${atto.pubblico?string("true","false")}<#else></#if>"
 
 		   }
 	   }
