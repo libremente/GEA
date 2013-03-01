@@ -50,6 +50,7 @@ if(checkIsNotNull(id)){
 
 			// passaggio di stato per la commissione: votato in Commissione
 			commissioneFolderNode.properties["crlatti:statoCommissione"] = statoCommissione;
+                        commissioneFolderNode.properties["crlatti:ruoloCommissione"] = ruoloCommissione;
 			commissioneFolderNode.save();
 			
 			// passaggio di stato per l'atto in caso di commissione Referente
