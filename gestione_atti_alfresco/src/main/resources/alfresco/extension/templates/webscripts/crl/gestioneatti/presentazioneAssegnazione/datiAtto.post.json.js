@@ -18,6 +18,7 @@ var nuovoOggetto = filterParam(atto.get("nuovoOggetto"));
 
 var scadenza60gg = filterParam(atto.get("scadenza60gg"));
 var iterAula = filterParam(atto.get("iterAula"));
+var attoProseguente = filterParam(atto.get("attoProseguente"));
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
@@ -29,6 +30,7 @@ if(checkIsNotNull(id)){
 	
 	attoNode.properties["crlatti:scadenza60gg"] = scadenza60gg;
 	attoNode.properties["crlatti:iterAula"] = iterAula;
+        attoNode.properties["crlatti:attoProseguente"] = attoProseguente;
 
 	
 	if(checkIsNotNull(dataRepertorio)){

@@ -55,6 +55,7 @@
 	"noteAmmissibilita":"<#if atto.properties["crlatti:ammissibilitaNote"]?exists>${atto.properties["crlatti:ammissibilitaNote"]}<#else></#if>",
     "scadenza60gg":"<#if atto.properties["crlatti:scadenza60gg"]?exists>${atto.properties["crlatti:scadenza60gg"]?string("true","false")}<#else></#if>",
     "iterAula":"<#if atto.properties["crlatti:iterAula"]?exists>${atto.properties["crlatti:iterAula"]?string("true","false")}<#else></#if>",
+    "attoProseguente" : "<#if atto.properties["crlatti:attoProseguente"]?exists>${atto.properties["crlatti:attoProseguente"]?string}<#else></#if>",
     
     <#if tipoAtto == "ORG">
 		"relatori" : [

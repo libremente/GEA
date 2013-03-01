@@ -678,7 +678,7 @@
 		<property-sheet>
 			<show-property name="crlatti:tipoTestoAbbinamento" />
 			<show-property name="crlatti:dataAbbinamento" />
-			<show-property name="crlatti:dataDisabbinamento" />
+			<show-property name="crlatti:dataDisabbinamento" />                       
 			<show-association name="crlatti:attoAssociatoAbbinamento" />
 		</property-sheet>
 	</config>
@@ -830,7 +830,7 @@
 			
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
-			
+			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
 
