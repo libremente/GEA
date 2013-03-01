@@ -3,7 +3,8 @@
    "atto": 
    {
 	"id":"${atto.nodeRef}",
-	"numeroAtto":"${atto.name}"
+	"numeroAtto":"${atto.name}",
+        "pubblico":"${atto.properties["crlatti:pubblico"]?string}"
    }
 }
 </#escape>
