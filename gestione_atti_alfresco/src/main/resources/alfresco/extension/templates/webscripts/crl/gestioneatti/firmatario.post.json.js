@@ -57,6 +57,9 @@ if(checkIsNotNull(jsonFirmatario)
 	firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
 	firmatarioNode.save();
 	
+	
+	attoFolderNode.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";
+	
 } else {
 	status.code = 400;
 	status.message = "firmatario non valorizzato correttamente: idAtto e descrizione sono obbligatori";

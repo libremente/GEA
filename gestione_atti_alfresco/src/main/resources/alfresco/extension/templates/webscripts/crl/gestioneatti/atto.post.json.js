@@ -114,21 +114,21 @@ if(nodeType=="crlatti:attoEac"){
 	//gestione inserimento e modifica dell'atto di tipo MIS
 	var id = atto.get("id");
 	
-	var numeroRepertorio = atto.get("numeroRepertorio");
-	var dataIniziativaComitato = atto.get("dataIniziativaComitato");
-	var dataPropostaCommissione = atto.get("dataPropostaCommissione");
-	var commissioneCompetente = atto.get("commissioneCompetente");
-	var esitoVotoIntesa = atto.get("esitoVotoIntesa");
-	var dataIntesa = atto.get("dataIntesa");
-	var dataRispostaComitato = atto.get("dataRispostaComitato");
-	var dataApprovazioneProgetto = atto.get("dataApprovazioneProgetto");
-	var dataApprovazioneUdp = atto.get("dataApprovazioneUdP");
-	var numeroAttoUdp = atto.get("numeroAttoUdp");
-	var istitutoIncaricato = atto.get("istitutoIncaricato");
-	var scadenzaMv = atto.get("dataScadenzaMV");
-	var dataEsameRapportoFinale = atto.get("dataEsameRapportoFinale");
-	var dataTrasmissioneACommissioni = atto.get("dataTrasmissioneCommissioni");
-	var note = atto.get("note");
+	var numeroRepertorio = filterParam(atto.get("numeroRepertorio"));
+	var dataIniziativaComitato = filterParam(atto.get("dataIniziativaComitato"));
+	var dataPropostaCommissione = filterParam(atto.get("dataPropostaCommissione"));
+	var commissioneCompetente = filterParam(atto.get("commissioneCompetente"));
+	var esitoVotoIntesa = filterParam(atto.get("esitoVotoIntesa"));
+	var dataIntesa = filterParam(atto.get("dataIntesa"));
+	var dataRispostaComitato = filterParam(atto.get("dataRispostaComitato"));
+	var dataApprovazioneProgetto = filterParam(atto.get("dataApprovazioneProgetto"));
+	var dataApprovazioneUdp = filterParam(atto.get("dataApprovazioneUdP"));
+	var numeroAttoUdp = filterParam(atto.get("numeroAttoUdp"));
+	var istitutoIncaricato = filterParam(atto.get("istitutoIncaricato"));
+	var scadenzaMv = filterParam(atto.get("dataScadenzaMV"));
+	var dataEsameRapportoFinale = filterParam(atto.get("dataEsameRapportoFinale"));
+	var dataTrasmissioneACommissioni = filterParam(atto.get("dataTrasmissioneCommissioni"));
+	var note = filterParam(atto.get("note"));
 	var oggetto = filterParam(atto.get("oggetto"));
 	
 	
