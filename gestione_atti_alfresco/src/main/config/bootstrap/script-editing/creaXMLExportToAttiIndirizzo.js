@@ -170,7 +170,7 @@ function creaXMLExport(operazione){
 
 		exportNode.content = attoXML;
 
-		document.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";
+		document.properties["crlatti:statoExportAttiIndirizzo"]="NOACTION";
 		document.save();
 		
 		attiIndirizzoExportLogger.info("Creato file export "+nomeFileExport+": operazione "+operazione+" su atto "+tipo_atto+" "+numero_atto);

@@ -386,7 +386,8 @@ for(var i=0; i<xmlFileList.length; i++){
 		attoIndirizzoLuceneQuery += " AND TYPE:\"crlatti:attoIndirizzo\"";
 		attoIndirizzoLuceneQuery += " AND @crlatti\\:IdAttoIndirizzo:\""+id_atto+"\"";
 		
-		var attoResults = search.luceneSearch(attoLuceneQuery);
+				
+		var attoResults = search.luceneSearch(attoIndirizzoLuceneQuery);
 		
 		if(attoResults!=null && attoResults.length>0){
 			attiIndirizzoImportLogger.error("Richiesta operazione di DELETE per atto con id: "+id_atto+" e tipo atto: "+tipo_atto+". L'atto non e' presente nel repository");			
