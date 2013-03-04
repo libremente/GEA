@@ -84,8 +84,12 @@ if(checkIsNotNull(id)){
 	// salvo il nodo atto modificando una proprietà non definita nel modello
 	// al solo scopo di innescare la regola che produce il file XML per l'export
 	// verso il sistema di gestione Atti Indirizzo
-	attoFolderNode.properties["crlatti:exportCollegamentiProp"] = new Date().getTime();
-	attoFolderNode.save();
+//	attoFolderNode.properties["crlatti:exportCollegamentiProp"] = new Date().getTime();
+//	attoFolderNode.save();
+	
+	// modifico la property per innescare la creazione del file xml di export per Atti Indirizzo
+	attoNode.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";	
+	attoNode.save();
 	
 	
 } else {

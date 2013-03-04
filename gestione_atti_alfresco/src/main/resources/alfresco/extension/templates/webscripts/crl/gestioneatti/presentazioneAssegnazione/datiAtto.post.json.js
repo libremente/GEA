@@ -20,9 +20,20 @@ var scadenza60gg = filterParam(atto.get("scadenza60gg"));
 var iterAula = filterParam(atto.get("iterAula"));
 var attoProseguente = filterParam(atto.get("attoProseguente"));
 
+// var di controllo per la creazione del file xml di export verso atti indirizzo
+var exportAttiIndirizzo = false;
+
+
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
 	attoNode.properties["crlatti:classificazione"] = classificazione;
+	
+	// controllo per variabile exportAttiIndirizzo
+	// occorre generare l'xml  nel caso in cui cambia l'oggetto
+	if(oggetto != attoNode.properties["crlatti:oggetto"]){
+		exportAttiIndirizzo = true;
+	}
+	
 	attoNode.properties["crlatti:oggetto"] = oggetto;
 	attoNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
 	attoNode.properties["crlatti:pubblico"] = pubblico;
@@ -30,7 +41,7 @@ if(checkIsNotNull(id)){
 	
 	attoNode.properties["crlatti:scadenza60gg"] = scadenza60gg;
 	attoNode.properties["crlatti:iterAula"] = iterAula;
-        attoNode.properties["crlatti:attoProseguente"] = attoProseguente;
+	attoNode.properties["crlatti:attoProseguente"] = attoProseguente;
 
 	
 	if(checkIsNotNull(dataRepertorio)){
@@ -85,6 +96,9 @@ if(checkIsNotNull(id)){
 				firmatarioNode = firmatarioEsistenteResults[0];
 			} else {
 				firmatarioNode = firmatariFolderNode.createNode(descrizione,"crlatti:firmatario");
+				// controllo per variabile exportAttiIndirizzo
+				// occorre generare l'xml  nel caso in cui viene creato un nuovo firmatario
+				exportAttiIndirizzo = true;
 			}
 			
 			var dataFirmaParsed = null;
@@ -103,6 +117,13 @@ if(checkIsNotNull(id)){
 			firmatarioNode.properties["crlatti:dataFirma"] = dataFirmaParsed;
 			firmatarioNode.properties["crlatti:dataRitiro"] = dataRitiroParsed;
 			firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
+			
+			// controllo per variabile exportAttiIndirizzo
+			// occorre generare l'xml  nel caso in cui cambia il gruppo consiliare di un firmatario
+			if(firmatarioNode.properties["crlatti:gruppoConsiliare"] != gruppoConsiliare){
+				exportAttiIndirizzo = true;
+			}
+			
 			firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
 			firmatarioNode.properties["crlatti:numeroOrdinamento"] = numeroOrdinamento;
 			firmatarioNode.save();
@@ -129,6 +150,11 @@ if(checkIsNotNull(id)){
 			}
 			if(!trovato){
 				var firmatariSpace = firmatarioNelRepository.parent;
+				
+				// controllo per variabile exportAttiIndirizzo
+				// occorre generare l'xml  nel caso in cui viene eliminato un firmatario
+				exportAttiIndirizzo = true;
+				
 				firmatarioNelRepository.remove();
 				/*
 				 * in eliminazione i firmatari devono essere gestiti manualmente 
@@ -151,6 +177,12 @@ if(checkIsNotNull(id)){
 	}
 	
 	model.atto = attoNode;
+	
+	if(exportAttiIndirizzo==true){
+		attoNode.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";	
+		attoNode.save();
+	}
+	
 	
 } else {
 	status.code = 400;
