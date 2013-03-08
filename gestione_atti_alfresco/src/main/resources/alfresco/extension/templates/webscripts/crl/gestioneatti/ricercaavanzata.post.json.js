@@ -48,8 +48,10 @@ var numeroProtocollo = atto.get("numeroProtocollo");
 var tipoIniziativa = atto.get("tipoIniziativa");
 var numeroDcr = atto.get("numeroDcr");
 var primoFirmatario = atto.get("primoFirmatario");
+var gruppoPrimoFirmatario = atto.get("gruppoPrimoFirmatario");
 var oggetto = atto.get("oggetto");
 var firmatario = atto.get("firmatario");
+var gruppoFirmatario = atto.get("gruppoFirmatario");
 var dataIniziativaDa = atto.get("dataIniziativaDa");
 var dataIniziativaA = atto.get("dataIniziativaA");
 
@@ -221,6 +223,18 @@ if(checkIsNotNull(firmatario)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:firmatari:\""+firmatario+"\"";
 }
+
+if(checkIsNotNull(gruppoFirmatario)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:gruppoFirmatari:\""+gruppoFirmatario+"\"";
+}
+
+if(checkIsNotNull(gruppoPrimoFirmatario)){
+	luceneQuery = verifyAND(luceneQuery);
+	luceneQuery += "@crlatti\\:gruppoPrimoFirmatario:\""+gruppoPrimoFirmatario+"\"";
+}
+
+
 
 //commissioni e ruoli
 luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissioneUser,null);

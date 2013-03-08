@@ -24,6 +24,7 @@ import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
@@ -92,12 +93,41 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
     	
     	
     	String CRL_ATTI_MODEL = "http://www.regione.lombardia.it/content/model/atti/1.0";
+    	String TYPE_LEGISLATURA = "legislaturaAnagrafica";
+    	
     	String PROP_OGGETTO_ATTO = "oggetto";
     	String PROP_LEGISLATURA = "legislatura";
+    	String PROP_ID_ANAGRAFICA = "idAnagrafica";
     	
+    	   	
     	String numeroAtto = (String) nodeService.getProperty(nodeRef, ContentModel.PROP_NAME);
-    	String idAtto = numeroAtto;
-    	String idLegislatura = (String) nodeService.getProperty(nodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA));
+    	String idAtto = (String) nodeService.getProperty(nodeRef, ContentModel.PROP_NODE_UUID);
+    	
+    	// uuid
+    	//String idAtto = numeroAtto;
+    	
+    	// id legislatura
+    	String numeroLegislatura = (String) nodeService.getProperty(nodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA));
+    	
+    	// get id della legislatura dell'atto
+    	NodeRef legislatura = null;
+    	String idLegislatura = "";
+    	
+    	String legislaturaType = "{"+CRL_ATTI_MODEL+"}"+TYPE_LEGISLATURA;
+        
+        StoreRef storeRef = new StoreRef("workspace://SpacesStore");
+        
+		// Get legislature
+    	ResultSet legislatureNodes = searchService.query(storeRef,
+  				SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/cm:"+numeroLegislatura+"\"");
+		
+    	if(legislatureNodes.length() > 0){
+    		legislatura = legislatureNodes.getNodeRef(0);
+    		idLegislatura =  (String) nodeService.getProperty(legislatura, QName.createQName(CRL_ATTI_MODEL, PROP_ID_ANAGRAFICA)).toString();
+		}
+    	
+    	
+    	
     	String tipoAtto = nodeService.getType(nodeRef).getLocalName().substring(4).toUpperCase();    
     	String oggettoAtto = (String) nodeService.getProperty(nodeRef, QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO));
     	
@@ -161,7 +191,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 	    	ResultSet exportFolderNodeResultSet = searchService.query(Repository.getStoreRef(),
 	           		SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:Export/cm:Gestione_x0020_Atti/cm:AttiIndirizzo\"");
 	    			
-	    	FileInfo xmlFileInfo = fileFolderService.create(exportFolderNodeResultSet.getNodeRef(0), nomeFileExport, Constant.TYPE_LEGISLATURA);
+	    	FileInfo xmlFileInfo = fileFolderService.create(exportFolderNodeResultSet.getNodeRef(0), nomeFileExport, ContentModel.TYPE_CONTENT);
 	    	
 	        ContentWriter contentWriter = contentService.getWriter(xmlFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
 	        contentWriter.setMimetype("text/plain");

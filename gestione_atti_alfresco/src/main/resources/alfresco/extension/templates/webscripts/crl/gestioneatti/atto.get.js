@@ -83,6 +83,7 @@ if(checkIsNotNull(id)){
 		// nome della commissione o dell'aula
 		sedutaResultObj.nomeOrgano = sedutaResult.parent.parent.parent.name;
 		sedutaResultObj.dataSeduta = sedutaResult.properties["crlatti:dataSedutaSedutaODG"];
+		sedutaResultObj.numVerbale = sedutaResult.properties["crlatti:numVerbaleSedutaODG"];
 		
 		
 		var linksFolderXpathQuery = "*[@cm:name='Links']";

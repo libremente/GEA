@@ -755,7 +755,9 @@
 			<show-property name="crlatti:abbinamento" />
 			<show-property name="crlatti:stralcio" />
 			<show-property name="crlatti:primoFirmatario" />
+			<show-property name="crlatti:gruppoPrimoFirmatario" />
 			<show-property name="crlatti:firmatari" />
+			<show-property name="crlatti:gruppoFirmatari" />
 			<show-property name="crlatti:firmatariOriginari" />
 
 			<show-property name="crlatti:dataChiusura" />

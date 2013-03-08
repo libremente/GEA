@@ -271,6 +271,7 @@
     		{
     			"sedutaAtto": {
     				"idSeduta": "${sedutaAtto.idSeduta}",
+    				"numVerbale": "${sedutaAtto.numVerbale}",
     				"nomeOrgano": "${sedutaAtto.nomeOrgano}",
     				"dataSeduta": "${sedutaAtto.dataSeduta?string("yyyy-MM-dd")}",
     				"links": [ 

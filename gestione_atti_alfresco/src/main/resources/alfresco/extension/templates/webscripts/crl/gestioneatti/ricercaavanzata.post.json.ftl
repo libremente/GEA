@@ -11,6 +11,7 @@
 			"numeroAtto" : "${atto.numeroAtto?c}",
 			"oggetto" : "<#if atto.oggetto?exists>${atto.oggetto}<#else></#if>",
 			"primoFirmatario" : "<#if atto.primoFirmatario?exists>${atto.primoFirmatario}<#else></#if>",
+			"elencoFirmatari" : "<#if atto.elencoFirmatario?exists>${atto.elencoFirmatari}<#else></#if>",
 			"dataPresentazione" : "<#if atto.dataPresentazione?exists>${atto.dataPresentazione?string("yyyy-MM-dd")}<#else></#if>",
 			"stato" : "<#if atto.stato?exists>${atto.stato}<#else></#if>",
 			"elencoFirmatari" : "<#if atto.elencoFirmatari?exists>${atto.elencoFirmatari}<#else></#if>",
