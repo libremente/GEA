@@ -23,6 +23,8 @@ import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.opencmis.commons.enums.VersioningState;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 public class CMISClientScript extends BaseScopableProcessorExtension {
@@ -33,6 +35,8 @@ public class CMISClientScript extends BaseScopableProcessorExtension {
 	private String attiIspettiviAlfrescoPath;
 	
 	private ServiceRegistry serviceRegistry;
+	
+	private static Log logger = LogFactory.getLog(CMISClientScript.class);
 	
 	public boolean sendToAttiIspettiviRepository(String contentId) {
        
@@ -66,6 +70,9 @@ public class CMISClientScript extends BaseScopableProcessorExtension {
 			return true; 
 		    
 		}catch (Exception e) {
+			// add exception logging
+			logger.error(e);
+			//e.printStackTrace();
 			return false;
 		}
     }
