@@ -2,6 +2,8 @@ package com.sourcesense.crl.web.ui.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -460,7 +462,15 @@ public class ConsultazioniPareriController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
+		
 
+		Collections.sort(getConsultazioniList(), new Comparator<Consultazione>() {
+			public int compare(Consultazione m1, Consultazione m2) {
+				return m1.getDataConsultazione().compareTo(
+						m2.getDataConsultazione());
+			}
+		});
+		
 		attoBean.getAtto().setConsultazioni(getConsultazioniList());
 
 		setStatoCommitConsultazioni(CRLMessage.COMMIT_DONE);

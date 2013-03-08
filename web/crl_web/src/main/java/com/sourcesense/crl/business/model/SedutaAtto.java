@@ -31,7 +31,7 @@ public class SedutaAtto {
 	private String ruolo;
 	private Date dataSeduta;
 	private List <Link> links = new ArrayList<Link>();
-	
+	private String numVerbale;
 	
 	
 	public String getIdSeduta() {
@@ -66,6 +66,13 @@ public class SedutaAtto {
 	public void setLinks(List<Link> links) {
 		this.links = links;
 	}
+	public String getNumVerbale() {
+		return numVerbale;
+	}
+	public void setNumVerbale(String numVerbale) {
+		this.numVerbale = numVerbale;
+	}
+	
 	
 	
 	

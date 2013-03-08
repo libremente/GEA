@@ -2,6 +2,7 @@ package com.sourcesense.crl.business.service.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -238,12 +239,11 @@ public class SeduteService {
 
 		InputStream responseFile = null;
 		
-			
+		
 		
 		WebResource webResource = client.resource(url);
-
-		ClientResponse response = webResource.accept(
-				MediaType.MULTIPART_FORM_DATA).get(ClientResponse.class);
+        
+		ClientResponse response = webResource.type(MediaType.TEXT_PLAIN+ ";charset=utf-8").get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
 			throw new ServiceNotAvailableException("Errore - "
@@ -252,7 +252,6 @@ public class SeduteService {
 
 		responseFile = response.getEntity(InputStream.class);
 		
-				
 		
 		return responseFile;
 

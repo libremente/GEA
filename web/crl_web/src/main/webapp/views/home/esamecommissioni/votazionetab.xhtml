@@ -82,7 +82,7 @@
 						<p:panelGrid id="uploadpanelPanelVotazione">
 							<p:row>
 								<p:column>
-									<h:outputLabel for="isPubblicoVotazione" value="Pubblico: " />
+									<h:outputLabel for="isPubblicoVotazione" value="Pubblica su Internet: " />
 									<p:selectBooleanCheckbox id="isPubblicoVotazione"
 										value="#{esameCommissioniController.currentFilePubblico}">
 										<p:ajax event="change" immediate="true"></p:ajax>
@@ -111,7 +111,7 @@
 
 				</p:column>
 			</p:row>
-			<p:row>
+			<!-- <p:row>
 				<p:column>
 					<h:outputText style="font-weight: bold;" value="Quorum: " />
 				</p:column>
@@ -124,7 +124,7 @@
 							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
 					</p:selectOneMenu>
 				</p:column>
-			</p:row>
+			</p:row> -->
 
 			<p:row>
 				<p:column>
@@ -135,68 +135,22 @@
 						value="#{esameCommissioniController.esitoVotazione}">
 						<f:selectItem itemLabel="Scegli votazione" itemValue="" />
 
-						<c:choose>
-
-							<c:when test="#{navigationBean.isCommissioneConsultiva()}">
-								<f:selectItem itemLabel="Parere Favorevole"
-									itemValue="Parere Favorevole" />
-								<f:selectItem itemLabel="Parere Contrario"
-									itemValue="Parere Contrario" />
-							</c:when>
-
-							<c:otherwise>
-								<c:choose>
-									<c:when
-										test="#{navigationBean.isSessionAttoEsitoCommissioneApprovato()}">
-
-										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
-
-										<f:selectItem itemLabel="Non Deliberato"
-											itemValue="Non Deliberato" />
-
-										<f:selectItem itemLabel="Proposto non passaggio all'esame"
-											itemValue="Proposto non passaggio all'esame" />
-
-									</c:when>
-
-									<c:when
-										test="#{navigationBean.isSessionAttoEsitoCommissioneArchiviazioneINP()}">
-
-										<f:selectItem itemLabel="Archiviazione"
-											itemValue="Archiviazione" />
-
-										<f:selectItem itemLabel="Proposta di RIS"
-											itemValue="Proposta di RIS" />
-									</c:when>
-
-									<c:when
-										test="#{navigationBean.isSessionAttoEsitoCommissioneApprovatoREL()}">
-										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
-
-										<f:selectItem itemLabel="Presa d'atto "
-											itemValue="Presa d'atto" />
-
-										<f:selectItem itemLabel="Proposta di RIS"
-											itemValue="Proposta di RIS" />
-
-									</c:when>
-
-									<c:otherwise>
-									</c:otherwise>
-								</c:choose>
-
-							</c:otherwise>
-
-						</c:choose>
-
-
-
+						<f:selectItems value="#{esameCommissioniController.esitiVotazione}" />
 
 
 						<p:ajax event="change"
 							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
 					</p:selectOneMenu>
+					&nbsp;&nbsp;
+					<p:selectOneMenu value="#{esameCommissioniController.quorum}">
+						<f:selectItem itemLabel="Scegli tipo" itemValue=" " />
+						<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
+						<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
+						<p:ajax event="change"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:selectOneMenu>
 				</p:column>
+				
 			</p:row>
 
 			<p:row>

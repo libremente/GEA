@@ -149,6 +149,10 @@ public class SearchAttoController {
 	private String numerodcr;
 
 	private String primofirmatario;
+	
+	private String gruppoFirmatario;
+	
+	private String gruppoPrimoFirmatario;
 
 	private String oggetto;
 
@@ -223,8 +227,9 @@ public class SearchAttoController {
 	private List<String> commissioni = new ArrayList<String>();
 
 	private List<String> firmatari = new ArrayList<String>();
-
-	//private List<String> relatori = new ArrayList<String>();
+	
+	private List<String> gruppiConsiliari = new ArrayList<String>();
+	
 	private List<Relatore> relatori = new ArrayList<Relatore>();
 	
 	
@@ -358,11 +363,8 @@ public class SearchAttoController {
 		setTipiIniziative(tipoIniziativaServiceManager.findAll());
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.list());
-
+		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
 		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
-		atto.setCommissioneReferente("");
-		atto.setCommissioneConsultiva("");
-       
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
@@ -735,6 +737,23 @@ public class SearchAttoController {
 		this.atto.setPrimoFirmatario(primofirmatario);
 	}
 
+	
+	public String getGruppoFirmatario() {
+		return atto.getGruppoFirmatario();
+	}
+
+	public void setGruppoFirmatario(String gruppoFirmatario) {
+		this.atto.setGruppoFirmatario (gruppoFirmatario);
+	}
+
+	public String getGruppoPrimoFirmatario() {
+		return atto.getGruppoPrimoFirmatario();
+	}
+
+	public void setGruppoPrimoFirmatario(String gruppoPrimoFirmatario) {
+		this.atto.setGruppoPrimoFirmatario ( gruppoPrimoFirmatario);
+	}
+
 	public String getOggetto() {
 		return this.atto.getOggetto();
 	}
@@ -802,19 +821,7 @@ public class SearchAttoController {
 		this.atto.setEsitoVotoAula(esitoVotoAula);
 	}
 
-	/*
-	 * public String getCommissioneReferente() { return
-	 * this.atto.getCommissioneReferente(); }
-	 * 
-	 * public void setCommissioneReferente(String commissioneReferente) {
-	 * this.atto.setCommissioneReferente(commissioneReferente); }
-	 * 
-	 * public String getCommissioneConsultiva() { return
-	 * this.atto.getCommissioneConsultiva(); }
-	 * 
-	 * public void setCommissioneConsultiva(String commissioneConsultiva) {
-	 * this.atto.setCommissioneConsultiva(commissioneConsultiva); }
-	 */
+	
 
 	public boolean isRedigente() {
 		return this.atto.isRedigente();
@@ -1104,13 +1111,6 @@ public class SearchAttoController {
 		this.esitiVotoAula = esitiVotoAula;
 	}
 
-	/*
-	 * public Map<String, String> getCommissioni() { return commissioni; }
-	 * 
-	 * public void setCommissioni(Map<String, String> commissioniReferenti) {
-	 * this.commissioni = commissioniReferenti; }
-	 */
-
 	public List<String> getCommissioni() {
 		return commissioni;
 	}
@@ -1119,12 +1119,6 @@ public class SearchAttoController {
 		this.commissioni = commissioni;
 	}
 
-	/*
-	 * public Map<String, String> getRelatori() { return relatori; }
-	 * 
-	 * public void setRelatori(Map<String, String> relatori) { this.relatori =
-	 * relatori; }
-	 */
 
 	public Map<String, String> getOrganismiStatutari() {
 		return organismiStatutari;
@@ -1304,15 +1298,17 @@ public class SearchAttoController {
 		this.firmatari = firmatari;
 	}
 
-	/*public List<String> getRelatori() {
-		return relatori;
-	}
-
-	public void setRelatori(List<String> relatori) {
-		this.relatori = relatori;
-	}*/
+	
 
 	
+	public List<String> getGruppiConsiliari() {
+		return gruppiConsiliari;
+	}
+
+	public void setGruppiConsiliari(List<String> gruppiConsiliari) {
+		this.gruppiConsiliari = gruppiConsiliari;
+	}
+
 	public List<Relatore> getRelatori() {
 		return relatori;
 	}

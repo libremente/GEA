@@ -35,7 +35,7 @@
     <p:panelGrid id="uploadpanel">
       <p:row>
         <p:column>
-          <h:outputLabel for="isPubblico" value="Pubblico: " />
+          <h:outputLabel for="isPubblico" value="Pubblica su Internet: " />
           <p:selectBooleanCheckbox id="isPubblico"
                                    value="#{esameAulaController.currentFilePubblico}" >
             <p:ajax event="change" immediate="true"></p:ajax>
@@ -320,10 +320,7 @@
                   oncomplete="uploadFileAttributesDialog.show()">
                 </p:commandButton>
 
-                <!-- 
-                          <h:outputText value="Pubblico : " />    
-
-              </p:fileUpload> -->
+               
               </p:column>
             </p:row>
             <p:row>

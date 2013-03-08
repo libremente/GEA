@@ -2,6 +2,8 @@ package com.sourcesense.crl.web.ui.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -100,8 +102,6 @@ public class AttoBean implements Serializable {
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
 	private String noteNoteAllegatiPresentazioneAssegnazione;
-	
-	
 
 	private List<Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
 	private List<Abbinamento> abbinamentiAttivi = new ArrayList<Abbinamento>();
@@ -110,12 +110,11 @@ public class AttoBean implements Serializable {
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 
-	public int getNumeroPassaggi(){
-		
+	public int getNumeroPassaggi() {
+
 		return this.atto.getPassaggi().size();
 	}
-	
-	
+
 	public boolean containCommissione(String commissione) {
 
 		// le commissioni sono definite nel primo passaggio
@@ -199,6 +198,7 @@ public class AttoBean implements Serializable {
 			if (organismoRec.getDescrizione().equalsIgnoreCase(organismo)) {
 
 				organismoRet = organismoRec;
+				
 			}
 		}
 
@@ -220,7 +220,20 @@ public class AttoBean implements Serializable {
 		}
 
 		return consultazioneRet;
+	}
 
+	public List<Consultazione> getConsultazioni() {
+
+		List<Consultazione> lista = atto.getConsultazioni();
+
+		Collections.sort(lista, new Comparator<Consultazione>() {
+			public int compare(Consultazione m1, Consultazione m2) {
+				return m1.getDataConsultazione().compareTo(
+						m2.getDataConsultazione());
+			}
+		});
+
+		return lista;
 	}
 
 	public Passaggio getLastPassaggio() {
@@ -249,7 +262,7 @@ public class AttoBean implements Serializable {
 
 		List<String> commissioni = new ArrayList<String>();
 		for (Commissione commissione : getLastPassaggio().getCommissioni()) {
-            
+
 			commissioni.add(commissione.getDescrizione());
 		}
 
@@ -266,7 +279,8 @@ public class AttoBean implements Serializable {
 
 			for (TestoAtto testoAtto : commRec
 					.getTestiAttoVotatoEsameCommissioni()) {
-				testoAtto.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo()); 
+				testoAtto.setCommissione(commRec.getDescrizione() + " - "
+						+ commRec.getRuolo());
 				returnList.add(testoAtto);
 			}
 		}
@@ -292,7 +306,8 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
-				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo()); 
+				allegato.setCommissione(commRec.getDescrizione() + " - "
+						+ commRec.getRuolo());
 				returnList.add(allegato);
 
 			}
@@ -305,7 +320,8 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getEmendamentiEsameCommissioni()) {
-				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo());  
+				allegato.setCommissione(commRec.getDescrizione() + " - "
+						+ commRec.getRuolo());
 				returnList.add(allegato);
 
 			}
@@ -319,7 +335,8 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getTestiClausola()) {
-				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo());
+				allegato.setCommissione(commRec.getDescrizione() + " - "
+						+ commRec.getRuolo());
 				returnList.add(allegato);
 
 			}
@@ -333,7 +350,8 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getAllegati()) {
-				allegato.setCommissione(commRec.getDescrizione()+ " - "+commRec.getRuolo());
+				allegato.setCommissione(commRec.getDescrizione() + " - "
+						+ commRec.getRuolo());
 				returnList.add(allegato);
 			}
 		}
@@ -950,24 +968,22 @@ public class AttoBean implements Serializable {
 	public List<Abbinamento> getAbbinamenti() {
 		return getLastPassaggio().getAbbinamenti();
 	}
-	
+
 	public List<Abbinamento> getAbbinamentiAttivi() {
-				
-		
+
 		abbinamentiAttivi.clear();
-		
+
 		for (Abbinamento element : getAbbinamenti()) {
 
 			if (element.getDataDisabbinamento() == null) {
 
-				abbinamentiAttivi.add((Abbinamento)element.clone());
-				
+				abbinamentiAttivi.add((Abbinamento) element.clone());
+
 			}
 		}
-		
+
 		return abbinamentiAttivi;
 	}
-
 
 	public List<Commissione> getCommissioni() {
 		return getLastPassaggio().getCommissioni();
@@ -989,7 +1005,4 @@ public class AttoBean implements Serializable {
 		this.attoEAC = attoEAC;
 	}
 
-	
-	
-	
 }

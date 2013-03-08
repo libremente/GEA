@@ -116,6 +116,7 @@ public class GestioneSeduteController {
 				.getSessionGroup().getNome());
 
 		seduteList = Clonator.cloneList(seduteListAll);
+		Collections.sort(seduteList); 
 		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 

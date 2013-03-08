@@ -29,28 +29,29 @@
 
 	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
 		<property name="basename" value="/WEB-INF/messages/ext_resources" /> </bean> -->
-	
-    <aop:aspectj-autoproxy proxy-target-class="true" >
-    
-    </aop:aspectj-autoproxy>
+
+	<aop:aspectj-autoproxy proxy-target-class="true">
+
+	</aop:aspectj-autoproxy>
 
 	<bean
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-		id="messageSource" 
-		p:basenames="file:${catalina.base}/conf/ext_resources"
+		id="messageSource" p:basenames="file:${catalina.base}/conf/ext_resources"
 		p:fallbackToSystemLocale="false" />
 
 	<bean factory-method="create" class="com.sun.jersey.api.client.Client"
 		id="client">
 	</bean>
 
-	<bean class="org.codehaus.jackson.map.ObjectMapper" id="objectMapper" scope="request" >
-	<aop:scoped-proxy />
+	<bean class="org.codehaus.jackson.map.ObjectMapper" id="objectMapper"
+		scope="request">
+		<aop:scoped-proxy />
 	</bean>
 
 
-    <bean class="com.sourcesense.crl.util.URLBuilder" id="urlBuilder">
-    
+	<bean class="com.sourcesense.crl.util.URLBuilder" id="urlBuilder"
+		scope="session">
+		<aop:scoped-proxy />
 	</bean>
 
 	<bean class="com.sourcesense.crl.business.security.AlfrescoSessionTicket"
@@ -59,7 +60,7 @@
 	</bean>
 
 
-    
+
 
 
 </beans>

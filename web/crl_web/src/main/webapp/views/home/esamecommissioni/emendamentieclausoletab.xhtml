@@ -67,7 +67,7 @@
 										<p:row>
 											<p:column>
 												<h:outputLabel for="isPubblicoEmendamento"
-													value="Pubblico: " />
+													value="Pubblica su Internet: " />
 												<p:selectBooleanCheckbox id="isPubblicoEmendamentoAllegato"
 													value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
 													<p:ajax event="change" immediate="true"></p:ajax>
@@ -410,7 +410,7 @@
 
 				<p:fieldset styleClass="fieldSetTab" legend="Clausola Valutativa:"
 					collapsed="false" toggleable="true" toggleSpeed="500"
-					rendered="#{navigationBean.isSessionAttoPDL()}">
+					rendered="#{navigationBean.isClausoleEnabled()}">
 
 					<p:panelGrid styleClass="infoTable" id="clausolaValutativaGrid">
 						<p:row>

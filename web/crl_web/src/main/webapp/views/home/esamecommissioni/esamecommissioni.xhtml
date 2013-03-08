@@ -43,7 +43,7 @@
 			<ui:include src="abbinamentitab.xhtml" />
 		</p:tab>
 		
-		<p:tab id="tab3" rendered="#{navigationBean.isCommissioneReferente() and navigationBean.emendamentiClausoleEnabled()}"  title="Emendamenti e Clausole">
+		<p:tab id="tab3" rendered="#{navigationBean.emendamentiClausoleEnabled()}"  title="Emendamenti e Clausole">
 			<ui:include src="./emendamentieclausoletab.xhtml" />
 		</p:tab>
 

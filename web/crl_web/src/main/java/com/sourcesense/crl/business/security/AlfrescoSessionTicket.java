@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Configurable;
  * "ticket":"TICKET_da34b98e4a5ac05368a347b3a706246baf3e5659" } }
  */
 
-@Configurable
+
 @JsonRootName(value = "data")
 public class AlfrescoSessionTicket {
 	

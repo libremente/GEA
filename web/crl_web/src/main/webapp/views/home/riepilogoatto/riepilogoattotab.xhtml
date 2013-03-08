@@ -150,9 +150,7 @@
 					</p:column>
 
 				</p:dataTable>
-				<h:outputText value="Nessun firmatario"
-					rendered="#{empty attoBean.atto.firmatari}">
-				</h:outputText>
+
 
 
 			</p:column>
@@ -182,8 +180,15 @@
 					</p:column>
 
 				</p:dataTable>
-				<h:outputText value="Nessun abbinamento"
-					rendered="#{empty attoBean.abbinamenti}">
+
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+
+				<h:outputText value="Il presente atto è il proseguente"
+					rendered="#{attoBean.atto.attoProseguente}">
 				</h:outputText>
 			</p:column>
 		</p:row>
@@ -427,6 +432,85 @@
 			</p:column>
 		</p:row>
 
+	</p:panelGrid>
+
+</p:fieldset>
+
+<p:fieldset legend="Audizioni/Consultazioni" toggleable="true"
+	id="fsAudi" collapsed="false" toggleSpeed="500"
+	rendered="#{not navigationBean.isSessionAttoORG() }">
+	<p:panelGrid styleClass="infoTable" id="infoAudi">
+		<p:row>
+			<p:column>
+
+
+				<p:dataTable value="#{attoBean.getConsultazioni()}"
+					var="consultazione">
+
+					<c:set var="soggetti" value=" " />
+
+					<p:column headerText="Data consultazione" rendered="#{isRelatore}">
+						<h:outputText value="#{consultazione.dataConsultazione}">
+							<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Soggetti">
+
+						<h:outputText value="#{consultazione.getSoggetti()}" />
+					</p:column>
+
+					<p:column headerText="Commissione">
+						<h:outputText value="#{consultazione.commissione}" />
+					</p:column>
+
+
+				</p:dataTable>
+
+			</p:column>
+
+
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+<p:fieldset legend="Pareri degli Organismi Statutari" toggleable="true" rendered="#{navigationBean.organismiEnabled()}"
+	id="fsOrgan" collapsed="false" toggleSpeed="500">
+	<p:panelGrid styleClass="infoTable" id="infoOrgan">
+		<p:row>
+			<p:column>
+
+
+				<p:dataTable value="#{attoBean.getAtto().getOrganismiStatutari()}"
+					var="organismo">
+
+					<c:set var="soggetti" value=" " />
+
+					<p:column headerText="Organismo Statutario"
+						rendered="#{isRelatore}">
+						<h:outputText value="#{organismo.descrizione}">
+
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Data deliberazione">
+
+						<h:outputText value="#{organismo.parere.dataRicezioneParere}">
+							<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Esito deliberazione">
+						<h:outputText value="#{organismo.parere.esito}" />
+					</p:column>
+
+
+				</p:dataTable>
+
+			</p:column>
+
+
+		</p:row>
 	</p:panelGrid>
 
 </p:fieldset>
@@ -718,6 +802,15 @@
 					</p:column>
 				</p:row>
 
+				<p:row>
+					<p:column colspan="3">
+
+						<h:outputText value="Il presente atto è il proseguente"
+							rendered="#{attoBean.atto.attoProseguente}">
+						</h:outputText>
+					</p:column>
+				</p:row>
+
 			</p:panelGrid>
 
 		</p:fieldset>
@@ -909,8 +1002,89 @@
 			</c:forEach>
 		</p:fieldset>
 
+
+		<p:fieldset legend="Audizioni/Consultazioni" toggleable="true"
+			collapsed="false" toggleSpeed="500"
+			rendered="#{not navigationBean.isSessionAttoORG() }">
+			<p:panelGrid styleClass="infoTable">
+				<p:row>
+					<p:column>
+
+
+						<p:dataTable value="#{attoBean.getConsultazioni()}"
+							var="consultazione">
+
+							<c:set var="soggetti" value=" " />
+
+							<p:column headerText="Data consultazione"
+								rendered="#{isRelatore}">
+								<h:outputText value="#{consultazione.dataConsultazione}">
+									<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Soggetti">
+
+								<h:outputText value="#{consultazione.getSoggetti()}" />
+							</p:column>
+
+							<p:column headerText="Commissione">
+								<h:outputText value="#{consultazione.commissione}" />
+							</p:column>
+
+
+						</p:dataTable>
+
+					</p:column>
+
+
+				</p:row>
+			</p:panelGrid>
+		</p:fieldset>
+
+		<p:fieldset legend="Pareri degli Organismi Statutari" rendered="#{navigationBean.organismiEnabled()}"
+			toggleable="true"  collapsed="false" toggleSpeed="500">
+			<p:panelGrid styleClass="infoTable" >
+				<p:row>
+					<p:column>
+
+
+						<p:dataTable value="#{attoBean.getAtto().getOrganismiStatutari()}"
+							var="organismo">
+
+							<c:set var="soggetti" value=" " />
+
+							<p:column headerText="Organismo Statutario"
+								rendered="#{isRelatore}">
+								<h:outputText value="#{organismo.descrizione}">
+
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Data deliberazione">
+
+								<h:outputText value="#{organismo.parere.dataRicezioneParere}">
+									<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Esito deliberazione">
+								<h:outputText value="#{organismo.parere.esito}" />
+							</p:column>
+
+
+						</p:dataTable>
+
+					</p:column>
+
+
+				</p:row>
+			</p:panelGrid>
+
+		</p:fieldset>
+
 		<p:fieldset legend="Aula" toggleable="true" collapsed="false"
-			toggleSpeed="500" rendered="#{navigationBean.boxAulaVisible()}" >
+			toggleSpeed="500" rendered="#{navigationBean.boxAulaVisible()}">
 			<p:panelGrid styleClass="infoTable">
 				<p:row>
 					<p:column>

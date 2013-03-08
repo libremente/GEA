@@ -73,7 +73,7 @@ public class AttoService {
 			attoRet = objectMapper.readValue(responseMsg, Atto.class);
 			atto.setId(attoRet.getId());
 			atto.setNumeroAtto(attoRet.getNumeroAtto());
-			
+			atto.setPubblico(attoRet.isPubblico());
 			}
 
 		} catch (JsonMappingException e) {

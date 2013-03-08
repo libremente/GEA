@@ -31,7 +31,7 @@ public class Consultazione implements Cloneable{
 	private String note;
 	private String idAtto;
 	private String commissione;
-	
+	private String soggetti;
 	
 	
 	private List <SoggettoInvitato> soggettiInvitati = new ArrayList<SoggettoInvitato>();
@@ -133,6 +133,26 @@ public class Consultazione implements Cloneable{
 	public void setCommissione(String commissione) {
 		this.commissione = commissione;
 	}
+
+	public String getSoggetti() {
+		
+		StringBuilder soggettiStr=new StringBuilder("") ;
+		
+		for (SoggettoInvitato soggetto : soggettiInvitati) {
+			
+			soggettiStr.append(soggetto.getDescrizione()+" ");
+		}
+		
+		return soggettiStr.toString();
+	
+	
+	}
+
+	public void setSoggetti(String soggetti) {
+		this.soggetti = soggetti;
+	}
+	
+	
 	
 	
 	

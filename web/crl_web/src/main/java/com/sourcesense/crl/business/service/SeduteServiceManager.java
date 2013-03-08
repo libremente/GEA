@@ -1,6 +1,8 @@
 package com.sourcesense.crl.business.service;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +55,13 @@ public class SeduteServiceManager implements ServiceManager{
 	
 	public InputStream getODGFile(String tipoTemplate,String idSeduta,String gruppo ) {
         //alf_retrieve_report_bin=crl/template/report/creareport?json={0}&tipoTemplate={1} 
+		try{
 		return seduteService.getFile(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,gruppo}));
+				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,URLEncoder.encode(gruppo,"UTF-8")}));
+		}catch(IOException ioex){
+			
+			return null;
+		}
 	}
 	
 	

@@ -23,8 +23,12 @@ public class Abbinamento implements Cloneable{
 	private Date dataDisabbinamento;
 	private String note;
 	private boolean abbinato;
+	
 	private String tipoAttoAbbinato;
 	private String numeroAttoAbbinato;
+	
+	
+		
 	
 	//private Atto atto;
 	
@@ -113,6 +117,7 @@ public class Abbinamento implements Cloneable{
 	public void setNumeroAttoAbbinato(String numeroAttoAbbinato) {
 		this.numeroAttoAbbinato = numeroAttoAbbinato;
 	}
+
 	
 	
 	

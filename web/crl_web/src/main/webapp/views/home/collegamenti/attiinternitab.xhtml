@@ -42,10 +42,10 @@
 
 		<!-- Pannello ricerca -->
 
-	<p:panelGrid
-		style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;text-align:left;"
-                id="serchPanel"
-                rendered="#{not navigationBean.isCommissioneConsultiva()}">
+		<p:panelGrid
+			style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;text-align:left;"
+			id="serchPanel"
+			rendered="#{not navigationBean.isCommissioneConsultiva()}">
 
 
 			<f:facet name="header">
@@ -139,8 +139,8 @@
 											itemValue="02_ATTO DI INIZIATIVA GIUNTA" />
 										<f:selectItem itemLabel="Commissioni"
 											itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
-											<f:selectItem itemLabel="Altra Iniziativa"
-											itemValue="08_ATTO DI ALTRA INIZIATIVA" />	
+										<f:selectItem itemLabel="Altra Iniziativa"
+											itemValue="08_ATTO DI ALTRA INIZIATIVA" />
 									</p:selectOneMenu>
 								</p:column>
 
@@ -150,10 +150,11 @@
 								</p:column>
 								<p:column>	
 									da:&nbsp; 
-								   <p:calendar size="8" locale="it" id="datainiziativa_da" pattern="dd/MM/yyyy"
+								   <p:calendar size="8" locale="it" id="datainiziativa_da"
+										pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataIniziativaDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
-										id="datainiziativa_a"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="datainiziativa_a"
 										value="#{searchAttoController.dataIniziativaA}" />
 								</p:column>
 
@@ -191,14 +192,17 @@
 										value="#{searchAttoController.tipoChiusura}">
 										<f:selectItem itemLabel="Scegli Tipo Chiusura" itemValue="" />
 										<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
-										<f:selectItem itemLabel="Parere favorevole trasmesso alla Giunta"
+										<f:selectItem
+											itemLabel="Parere favorevole trasmesso alla Giunta"
 											itemValue="Parere favorevole trasmesso alla Giunta" />
-                                        <f:selectItem itemLabel="Parere negativo trasmesso alla Giunta" itemValue="Parere negativo trasmesso alla Giunta" />
+										<f:selectItem
+											itemLabel="Parere negativo trasmesso alla Giunta"
+											itemValue="Parere negativo trasmesso alla Giunta" />
 										<!--<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
 										 <f:selectItem itemLabel="Rifiutato e trasmesso alla Giunta"
 											itemValue="Rifiutato e trasmesso alla Giunta" /> -->
 										<f:selectItem itemLabel="Respinto dall'Aula"
-							            itemValue="Respinto dall'Aula" />	
+											itemValue="Respinto dall'Aula" />
 										<f:selectItem itemLabel="Inammissibile"
 											itemValue="Inammissibile" />
 
@@ -235,7 +239,71 @@
 									<b>Ricerca Atto Avanzata - filtri aggiuntivi</b>
 								</p:column>
 							</p:row>
+							<!-- new -->
+							<p:row style="width:100%;padding-bottom:7px;">
 
+								<p:column style="width:5%;vertical-align: middle;">
+								   Firmatario:
+								</p:column>
+								<p:column style="width:30%">
+									<p:selectOneMenu id="firmatario" style="width:150px"
+										value="#{searchAttoController.firmatario}">
+										<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.relatori}"
+											var="relatore" itemLabel="#{relatore.descrizione}"
+											itemValue="#{relatore.descrizione}" />
+									</p:selectOneMenu>
+
+								</p:column>
+
+								<p:column colspan="2" style="vertical-align: middle;width:5%">
+								   Primo Firmatario:
+								</p:column>
+								<p:column colspan="2" style="width:20%">
+									<p:selectOneMenu id="primoFirmatario" style="width:250px"
+										value="#{searchAttoController.primofirmatario}">
+										<f:selectItem itemLabel="Scegli Primo Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.relatori}"
+											var="relatore" itemLabel="#{relatore.descrizione}"
+											itemValue="#{relatore.descrizione}" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="width:5%;vertical-align: middle;">
+								   Gruppo Consiliare:
+								</p:column>
+								<p:column style="width:30%">
+									<p:selectOneMenu id="gruppoConsiliare" style="width:150px"
+										value="#{searchAttoController.gruppoFirmatario}">
+										<f:selectItem itemLabel="Scegli Gruppo Consiliare"
+											itemValue="" />
+										<f:selectItems
+											value="#{searchAttoController.gruppiConsiliari}" />
+									</p:selectOneMenu>
+
+								</p:column>
+
+								<p:column colspan="2" style="vertical-align: middle;width:5%">
+								   Gruppo Consiliare Primo Firmatario:
+								</p:column>
+								<p:column colspan="2" style="width:20%">
+									<p:selectOneMenu id="gruppoConsiliarePF" style="width:250px"
+										value="#{searchAttoController.gruppoPrimoFirmatario}">
+										<f:selectItem
+											itemLabel="Scegli Gruppo Consiliare Primo Firmatario"
+											itemValue="" />
+										<f:selectItems
+											value="#{searchAttoController.gruppiConsiliari}" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+
+							<!-- /new -->
 							<p:row style="width:100%;padding-bottom:7px;">
 
 								<p:column style="vertical-align: middle;">
@@ -259,10 +327,11 @@
 								</p:column>
 								<p:column style="width: 30%">	
 									da:&nbsp; 
-								   <p:calendar size="8" locale="it" id="dataassegnazione_da" pattern="dd/MM/yyyy"
+								   <p:calendar size="8" locale="it" id="dataassegnazione_da"
+										pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataAssegnazioneDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
-										id="dataassegnazione_a"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="dataassegnazione_a"
 										value="#{searchAttoController.dataAssegnazioneA}" />
 								</p:column>
 
@@ -270,8 +339,8 @@
 								   Data DGR:
 								</p:column>
 								<p:column>
-									<p:calendar size="8" locale="it" id="datadgr" pattern="dd/MM/yyyy"
-										value="#{searchAttoController.dataDGR}" />
+									<p:calendar size="8" locale="it" id="datadgr"
+										pattern="dd/MM/yyyy" value="#{searchAttoController.dataDGR}" />
 								</p:column>
 
 							</p:row>
@@ -397,27 +466,34 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="esitoVotoComRef" style="width:150px"
+									<p:selectOneMenu id="esitoVotoComRef"
 										value="#{searchAttoController.esitoVotoCommissioneReferente}">
 										<f:selectItem itemLabel="Scegli Esito" itemValue="" />
-										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
-
-										<f:selectItem itemLabel="Non Deliberato"
-											itemValue="Non Deliberato" />
-
-										<f:selectItem itemLabel="Proposto non passaggio all'esame"
-											itemValue="Proposto non passaggio all'esame" />
-
-										<f:selectItem itemLabel="Archiviazione"
-											itemValue="Archiviazione" />
-
-										<f:selectItem itemLabel="Proposta di RIS"
-											itemValue="Proposta di RIS" />
 
 										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
-
-										<f:selectItem itemLabel="Presa d'atto "
+										<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
+										<f:selectItem itemLabel="Proposta di non passaggio all'esame"
+											itemValue="Proposta di non passaggio all'esame" />
+										<f:selectItem itemLabel="Parere favorevole"
+											itemValue="Parere favorevole" />
+										<f:selectItem itemLabel="Parere favorevole con osservazioni"
+											itemValue="Parere favorevole con osservazioni" />
+										<f:selectItem itemLabel="Parere negativo"
+											itemValue="Parere negativo" />
+										<f:selectItem itemLabel="Parere negativo con osservazioni"
+											itemValue="Parere negativo con osservazioni" />
+										<f:selectItem itemLabel="Intesa espressa senza condizioni"
+											itemValue="Intesa espressa senza condizioni" />
+										<f:selectItem itemLabel="Intesa espressa con condizioni"
+											itemValue="Intesa espressa con condizioni" />
+										<f:selectItem itemLabel="Mancata intesa"
+											itemValue="Mancata intesa" />
+										<f:selectItem itemLabel="Archiviazione"
+											itemValue="Archiviazione" />
+										<f:selectItem itemLabel="Presa d'atto"
 											itemValue="Presa d'atto" />
+
+
 									</p:selectOneMenu>
 
 								</p:column>
@@ -460,10 +536,11 @@
 								<p:column style="width:20%">	
 									da:&nbsp; 
 									
-								<p:calendar size="8" locale="it" id="dataSedutaComm_da" pattern="dd/MM/yyyy"
+								<p:calendar size="8" locale="it" id="dataSedutaComm_da"
+										pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataSedutaCommissioneDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
-										id="dataSedutaComm_a"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="dataSedutaComm_a"
 										value="#{searchAttoController.dataSedutaCommissioneA}" />
 								</p:column>
 
@@ -629,10 +706,11 @@
 								<p:column style="width:20%">	
 									da:&nbsp; 
 									
-								<p:calendar size="8" locale="it" id="dataChiusura_da" pattern="dd/MM/yyyy"
+								<p:calendar size="8" locale="it" id="dataChiusura_da"
+										pattern="dd/MM/yyyy"
 										value="#{searchAttoController.dataChiusuraDa}" />
-									&nbsp;a:&nbsp;<p:calendar size="8" locale="it" pattern="dd/MM/yyyy"
-										id="dataChiusura_a"
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="dataChiusura_a"
 										value="#{searchAttoController.dataChiusuraA}" />
 								</p:column>
 
@@ -651,8 +729,8 @@
 									Data LR:
 								</p:column>
 								<p:column>
-									<p:calendar size="8" locale="it" id="dataLR" pattern="dd/MM/yyyy"
-										value="#{searchAttoController.dataLR}" />
+									<p:calendar size="8" locale="it" id="dataLR"
+										pattern="dd/MM/yyyy" value="#{searchAttoController.dataLR}" />
 
 								</p:column>
 
@@ -704,7 +782,7 @@
 									<p:dataExporter type="xls" target="listaAtti"
 										fileName="lista_atti" />
 								</h:commandLink>
-					</p:column>
+							</p:column>
 							<p:column style="text-align:right">
 								<p:commandButton value="Reimposta"
 									update="searchPanel,RicercaAvanzataPanel"
@@ -720,8 +798,9 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-		
-		<p:panelGrid id="listaLavoroPanel" rendered="#{!navigationBean.isGuest() }"
+
+		<p:panelGrid id="listaLavoroPanel"
+			rendered="#{!navigationBean.isGuest() }"
 			style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F">
 
 			<p:row>
@@ -730,10 +809,14 @@
 						style="valign:middle" />
 					<p:selectOneMenu id="listaLavoro"
 						value="#{searchAttoController.listaLavoro}">
-						<p:ajax event="change" update="listaAtti" process="@this searchPanel"  listener="#{searchAttoController.searchAtti}"  />
-						<f:selectItem itemLabel=" In istruttoria" itemValue="inlavorazione" />
-						    <f:selectItem itemDisabled="#{navigationBean.isCPCVUser() }" itemLabel="Conclusa istruttoria" itemValue="lavorati" />
-						<f:selectItem itemLabel="Tutti gli Atti" itemValue="tutti" />						
+						<p:ajax event="change" update="listaAtti"
+							process="@this searchPanel"
+							listener="#{searchAttoController.searchAtti}" />
+						<f:selectItem itemLabel=" In istruttoria"
+							itemValue="inlavorazione" />
+						<f:selectItem itemDisabled="#{navigationBean.isCPCVUser() }"
+							itemLabel="Conclusa istruttoria" itemValue="lavorati" />
+						<f:selectItem itemLabel="Tutti gli Atti" itemValue="tutti" />
 					</p:selectOneMenu>
 
 				</p:column>
@@ -757,7 +840,8 @@
 				<h:outputText value="#{atto.tipo}" />
 			</p:column>
 
-			<p:column headerText="N.Atto" sortBy="#{atto.numeroAtto}" sortFunction="#{searchAttoController.sortNumeriAtto}">
+			<p:column headerText="N.Atto" sortBy="#{atto.numeroAtto}"
+				sortFunction="#{searchAttoController.sortNumeriAtto}">
 				<c:set value="#{atto.id}" var="idAttoParam" />
 				<c:set value="#{atto.tipo}" var="tipoAttoParam" />
 				<h:commandLink action="#{searchAttoController.attoDetail()}"
@@ -803,7 +887,8 @@
 					</p:column>
 
 					<p:column headerText="N.Atto" style="width:125px"
-						sortBy="#{collegamento.numeroAttoCollegato}" sortFunction="#{searchAttoController.sortNumeriAtto}">
+						sortBy="#{collegamento.numeroAttoCollegato}"
+						sortFunction="#{searchAttoController.sortNumeriAtto}">
 						<h:outputText value="#{collegamento.numeroAttoCollegato}" />
 					</p:column>
 

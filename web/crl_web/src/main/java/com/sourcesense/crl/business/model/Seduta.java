@@ -18,7 +18,7 @@ import com.sourcesense.crl.util.JsonHourSerializer;
 @JsonTypeName("seduta")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Seduta implements Cloneable{
+public class Seduta implements Cloneable,Comparable<Seduta>{
 
 	public Object clone() {
 		try {
@@ -49,6 +49,13 @@ public class Seduta implements Cloneable{
 	@JsonSerialize(using=JsonDateSerializer.class) 
 	public Date getDataSeduta() {
 		return dataSeduta;
+	}
+	
+	@Override
+	public int compareTo(Seduta o) {
+		
+		return o.getDataSeduta().compareTo(this.dataSeduta);
+		
 	}
 	
 	public void setDataSeduta(Date dataSeduta) {
@@ -134,6 +141,8 @@ public class Seduta implements Cloneable{
 	public void setAlleOre(Date alleOre) {
 		this.alleOre = alleOre;
 	}
+
+	
 	
 	
 	

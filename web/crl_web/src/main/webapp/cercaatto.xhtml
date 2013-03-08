@@ -160,8 +160,7 @@
 											itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
 										<f:selectItem itemLabel="Altra Iniziativa"
 											itemValue="08_ATTO DI ALTRA INIZIATIVA" />
-										<f:selectItem itemLabel="Altra Iniziativa"
-											itemValue="08_ATTO DI ALTRA INIZIATIVA" />
+
 
 
 									</p:selectOneMenu>
@@ -262,6 +261,69 @@
 									<b>Ricerca Atto Avanzata - filtri aggiuntivi</b>
 								</p:column>
 							</p:row>
+
+							<!-- new -->
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="width:5%;vertical-align: middle;">
+								   Firmatario:
+								</p:column>
+								<p:column style="width:30%">
+									<p:selectOneMenu id="firmatario"
+										value="#{searchAttoController.firmatario}">
+										<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.relatori}"
+											var="relatore" itemLabel="#{relatore.descrizione}"
+											itemValue="#{relatore.descrizione}" />
+									</p:selectOneMenu>
+										
+								</p:column>
+
+								<p:column colspan="2" style="vertical-align: middle;width:5%">
+								   Primo Firmatario:
+								</p:column>
+								<p:column colspan="2" style="width:20%">
+									<p:selectOneMenu id="primoFirmatario"
+										value="#{searchAttoController.primofirmatario}">
+										<f:selectItem itemLabel="Scegli Primo Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.relatori}"
+											var="relatore" itemLabel="#{relatore.descrizione}"
+											itemValue="#{relatore.descrizione}" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+							
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="width:5%;vertical-align: middle;">
+								   Gruppo Consiliare:
+								</p:column>
+								<p:column style="width:30%">
+									<p:selectOneMenu id="gruppoConsiliare"
+										value="#{searchAttoController.gruppoFirmatario}">
+										<f:selectItem itemLabel="Scegli Gruppo Consiliare" itemValue="" />
+										<f:selectItems value="#{searchAttoController.gruppiConsiliari}" />
+									</p:selectOneMenu>
+										
+								</p:column>
+
+								<p:column colspan="2" style="vertical-align: middle;width:5%">
+								   Gruppo Consiliare Primo Firmatario:
+								</p:column>
+								<p:column colspan="2" style="width:20%">
+									<p:selectOneMenu id="gruppoConsiliarePF"
+										value="#{searchAttoController.gruppoPrimoFirmatario}">
+										<f:selectItem itemLabel="Scegli Gruppo Consiliare Primo Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.gruppiConsiliari}" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+				
+							<!-- /new -->
+
+
 
 							<p:row style="width:100%;padding-bottom:7px;">
 
@@ -453,24 +515,31 @@
 									<p:selectOneMenu id="esitoVotoComRef"
 										value="#{searchAttoController.esitoVotoCommissioneReferente}">
 										<f:selectItem itemLabel="Scegli Esito" itemValue="" />
-										<f:selectItem itemLabel="Deliberato" itemValue="Deliberato" />
-
-										<f:selectItem itemLabel="Non Deliberato"
-											itemValue="Non Deliberato" />
-
-										<f:selectItem itemLabel="Proposto non passaggio all'esame"
-											itemValue="Proposto non passaggio all'esame" />
-
-										<f:selectItem itemLabel="Archiviazione"
-											itemValue="Archiviazione" />
-
-										<f:selectItem itemLabel="Proposta di RIS"
-											itemValue="Proposta di RIS" />
 
 										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
-
-										<f:selectItem itemLabel="Presa d'atto "
+										<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
+										<f:selectItem itemLabel="Proposta di non passaggio all'esame"
+											itemValue="Proposta di non passaggio all'esame" />
+										<f:selectItem itemLabel="Parere favorevole"
+											itemValue="Parere favorevole" />
+										<f:selectItem itemLabel="Parere favorevole con osservazioni"
+											itemValue="Parere favorevole con osservazioni" />
+										<f:selectItem itemLabel="Parere negativo"
+											itemValue="Parere negativo" />
+										<f:selectItem itemLabel="Parere negativo con osservazioni"
+											itemValue="Parere negativo con osservazioni" />
+										<f:selectItem itemLabel="Intesa espressa senza condizioni"
+											itemValue="Intesa espressa senza condizioni" />
+										<f:selectItem itemLabel="Intesa espressa con condizioni"
+											itemValue="Intesa espressa con condizioni" />
+										<f:selectItem itemLabel="Mancata intesa"
+											itemValue="Mancata intesa" />
+										<f:selectItem itemLabel="Archiviazione"
+											itemValue="Archiviazione" />
+										<f:selectItem itemLabel="Presa d'atto"
 											itemValue="Presa d'atto" />
+
+
 									</p:selectOneMenu>
 
 								</p:column>
@@ -725,7 +794,7 @@
 							<p:column colspan="2">
 
 								<p:commandButton value="Cerca" update="listaAtti"
-								    style="color:white; background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #045491;"
+									style="color:white; background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #045491;"
 									id="btncercaatto_cerca"
 									actionListener="#{searchAttoController.searchAtti}" />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

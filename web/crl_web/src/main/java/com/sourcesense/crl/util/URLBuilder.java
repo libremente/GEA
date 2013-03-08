@@ -18,7 +18,7 @@ public class URLBuilder {
 	MessageSource messageSource;
 	
 	
-	@Autowired
+	
 	AlfrescoSessionTicket alfrescoSessionTicket;
 
 	

@@ -44,7 +44,7 @@ import com.sourcesense.crl.util.JsonNoteDeserializer;
 @JsonTypeName("atto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Atto implements Cloneable ,  Comparable <Atto>{
+public class Atto implements Cloneable, Comparable<Atto> {
 	/**
 	 * 
 	 */
@@ -57,15 +57,17 @@ public class Atto implements Cloneable ,  Comparable <Atto>{
 			return null;
 		}
 	}
-	
-	
+
 	@Override
 	public int compareTo(Atto arg0) {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(this.numeroAtto) -  Integer.parseInt(arg0.numeroAtto);
+		return Integer.parseInt(this.numeroAtto)
+				- Integer.parseInt(arg0.numeroAtto);
 	}
 
 	private boolean pubblico;
+
+	private boolean attoProseguente;
 
 	private String id;
 	private String nome;
@@ -173,11 +175,11 @@ public class Atto implements Cloneable ,  Comparable <Atto>{
 	private boolean iterAula;
 
 	private String noteChiusuraIter;
-	
+
 	private String numeroDgrSeguito;
 	private Date dataDgrSeguito;
-	
-	private List <SedutaAtto> seduteAtto = new ArrayList<SedutaAtto>();
+
+	private List<SedutaAtto> seduteAtto = new ArrayList<SedutaAtto>();
 
 	public Atto() {
 		Passaggio passaggio = new Passaggio();
@@ -223,17 +225,13 @@ public class Atto implements Cloneable ,  Comparable <Atto>{
 	}
 
 	public String getOggetto() {
-		
+
 		return oggetto;
 	}
 
 	public void setOggetto(String oggetto) {
 		this.oggetto = oggetto;
 	}
-	
-	
-	
-	
 
 	public String getOldOggetto() {
 		return oggetto;
@@ -451,9 +449,6 @@ public class Atto implements Cloneable ,  Comparable <Atto>{
 		this.numeroProtocollo = numeroProtocollo;
 	}
 
-	
-	
-	
 	public String getTipoIniziativa() {
 		return tipoIniziativa;
 	}
@@ -1005,37 +1000,37 @@ public class Atto implements Cloneable ,  Comparable <Atto>{
 
 		} else if ("03_ATTO DI INIZIATIVA POPOLARE".equals(tipoIniziativa)) {
 
-			return  "Popolare";
+			return "Popolare";
 
 		} else if ("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA"
 				.equals(tipoIniziativa)) {
 
-			return  "Ufficio di Presidenza";
+			return "Ufficio di Presidenza";
 
 		} else if ("07_ATTO DI INIZIATIVA AUTONOMIE LOCALI"
 				.equals(tipoIniziativa)) {
 
-			return  "Consiglio delle Autonomie locali";
+			return "Consiglio delle Autonomie locali";
 
 		} else if ("06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA"
 				.equals(tipoIniziativa)) {
 
-			return  "Presidente della Giunta";
+			return "Presidente della Giunta";
 
 		} else if ("02_ATTO DI INIZIATIVA GIUNTA".equals(tipoIniziativa)) {
 
-			return  "Giunta";
+			return "Giunta";
 
 		} else if ("04_ATTO DI INIZIATIVA COMMISSIONI".equals(tipoIniziativa)) {
 
-			return  "Commissioni";
+			return "Commissioni";
 
 		} else if ("08_ATTO DI ALTRA INIZIATIVA".equals(tipoIniziativa)) {
 
-			return  "Altra Iniziativa";
+			return "Altra Iniziativa";
 
 		}
-		
+
 		return null;
 
 	}
@@ -1044,7 +1039,12 @@ public class Atto implements Cloneable ,  Comparable <Atto>{
 		this.tipoIniziativaNome = tipoIniziativaNome;
 	}
 
-	
-	
-	
+	public boolean isAttoProseguente() {
+		return attoProseguente;
+	}
+
+	public void setAttoProseguente(boolean attoProseguente) {
+		this.attoProseguente = attoProseguente;
+	}
+
 }

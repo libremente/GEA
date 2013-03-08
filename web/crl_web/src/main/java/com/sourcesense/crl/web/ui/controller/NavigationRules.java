@@ -169,7 +169,10 @@ public class NavigationRules {
 	}
 
 	public boolean consultazioniEPareriDisabled() {
-		return isSessionAttoPDA_UDP() || isSessionAttoORG();
+		Commissione commissione = attoBean.getWorkingCommissione(userBean
+				.getUser().getSessionGroup().getNome());
+		
+		return commissione==null || isSessionAttoPDA_UDP() || isSessionAttoORG();
 	}
 
 	public boolean collegamentiDisabled() {
@@ -191,14 +194,15 @@ public class NavigationRules {
 
 	}
 
-	public boolean emendamentiClausoleEnabled() {
+	
+	public boolean organismiEnabled() {
 
 		if (attoBean.getTipoAtto().equals("PDA")
 				|| attoBean.getTipoAtto().equals("PLP")
 				|| attoBean.getTipoAtto().equals("PRE")
 				|| attoBean.getTipoAtto().equals("REF")
-				|| attoBean.getTipoAtto().equals("REL")
-				|| attoBean.getTipoAtto().equals("PDL"))
+				|| attoBean.getTipoAtto().equals("PDL")
+				|| attoBean.getTipoAtto().equals("DOC"))
 
 		{
 			return true;
@@ -207,6 +211,46 @@ public class NavigationRules {
 		}
 
 	}
+	
+	
+	public boolean emendamentiClausoleEnabled() {
+
+		if (attoBean.getTipoAtto().equals("PDA")
+				|| attoBean.getTipoAtto().equals("PLP")
+				|| attoBean.getTipoAtto().equals("PRE")
+				|| attoBean.getTipoAtto().equals("REF")
+				|| attoBean.getTipoAtto().equals("REL")
+				|| attoBean.getTipoAtto().equals("PDL")
+				|| attoBean.getTipoAtto().equals("DOC"))
+
+		{
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	
+	
+	public boolean isClausoleEnabled() {
+
+		Commissione commissione = attoBean.getWorkingCommissione(userBean
+				.getUser().getSessionGroup().getNome());
+
+		if (attoBean.getTipoAtto().equals("PDL") && (
+				Commissione.RUOLO_REFERENTE.equals(commissione.getRuolo()) ||
+				Commissione.RUOLO_COREFERENTE.equals(commissione.getRuolo()) ||
+				Commissione.RUOLO_REDIGENTE.equals(commissione.getRuolo())) 
+				)
+
+		{
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	
 
 	public boolean abbinamentiEnabled() {
 
@@ -260,8 +304,21 @@ public class NavigationRules {
 	}
 
 	public boolean emendamentiEnabled() {
-		return isSessionAttoPDL() || isSessionAttoPDA_UDP()
-				|| isSessionAttoORG();
+		if (isSessionAttoPDL()
+				|| isSessionAttoORG()
+				|| attoBean.getTipoAtto().equals("PDA")
+				|| attoBean.getTipoAtto().equals("PLP")
+				|| attoBean.getTipoAtto().equals("PRE")
+				|| attoBean.getTipoAtto().equals("DOC")
+				|| attoBean.getTipoAtto().equals("REF")
+				)
+
+		{
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 
 	public boolean datiAttoEnabled() {

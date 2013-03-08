@@ -50,23 +50,13 @@ public class AttoSearch extends Atto {
 	private String ruoloCommissione1;
 	private String ruoloCommissione2;
 	private String ruoloCommissione3;
-	
+    private String gruppoFirmatario;
+	private String gruppoPrimoFirmatario;
 	private String numeroLcr;
 	private List<StatoAtto> statiUtente = new ArrayList<StatoAtto>();
 	private String gruppoUtente;
 	private boolean emendato;
 	private boolean emendatoAula;
-	
-	
-	
-	
-	/********DELETE***********/
-	private String commissioneReferente;
-	private String commissioneConsultiva;
-	  
-	 /***************************/
-	
-	
 	
 	
 	@JsonSerialize(using=JsonDateSerializer.class)
@@ -373,23 +363,23 @@ public class AttoSearch extends Atto {
 		this.commissioneUser = commissioneUser;
 	}
 
-	///////////////////////DELETE
-	public String getCommissioneReferente() {
-		return commissioneReferente;
+	public String getGruppoFirmatario() {
+		return gruppoFirmatario;
 	}
 
-	public void setCommissioneReferente(String commissioneReferente) {
-		this.commissioneReferente = commissioneReferente;
+	public void setGruppoFirmatario(String gruppoFirmatario) {
+		this.gruppoFirmatario = gruppoFirmatario;
 	}
 
-	public String getCommissioneConsultiva() {
-		return commissioneConsultiva;
+	public String getGruppoPrimoFirmatario() {
+		return gruppoPrimoFirmatario;
 	}
 
-	public void setCommissioneConsultiva(String commissioneConsultiva) {
-		this.commissioneConsultiva = commissioneConsultiva;
+	public void setGruppoPrimoFirmatario(String gruppoPrimoFirmatario) {
+		this.gruppoPrimoFirmatario = gruppoPrimoFirmatario;
 	}
-/////////////////////DELETE
+
+	
 	
 	
 	
