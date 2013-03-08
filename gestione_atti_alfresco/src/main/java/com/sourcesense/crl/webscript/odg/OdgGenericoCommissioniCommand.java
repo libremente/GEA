@@ -25,7 +25,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 
@@ -83,11 +82,15 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			NodeRef attoTrattato = attiTrattati.get(i);
 			
 			HashMap<String, String> searchTerms = new HashMap<String, String>();
-			 
+
 			String nomeAttoTrattato = (String) nodeService.getProperty(attoTrattato, ContentModel.PROP_NAME);
 				
 			TypeDefinition typeDef = dictionaryService.getType(nodeService.getType(attoTrattato));
-			String tipoAttoDescrizione = typeDef.getTitle().toUpperCase();
+			String tipoAttoDescrizione = "";
+			
+			if(typeDef.getName().getLocalName().length() > 4){
+				tipoAttoDescrizione= typeDef.getName().getLocalName().substring(4).toUpperCase();
+			}
 					
 			String oggettoAtto = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
 			
@@ -96,7 +99,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			String tipoIniziativaAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_INIZIATIVA));
 
 			
-			searchTerms.put("titoloAtto", tipoAttoDescrizione+" N."+nomeAttoTrattato);
+			searchTerms.put("titoloAtto", tipoAttoDescrizione+" N. "+nomeAttoTrattato);
 			searchTerms.put("oggettoAtto", oggettoAtto);
 			
 			if(tipoIniziativaAttoTrattato!=null && tipoIniziativaAttoTrattato.length()>20){
@@ -106,24 +109,29 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			}
 			
 			
-			// Data di scadenza in caso di atto di tipo PAR
-			
-			Date dataScadenza = (Date) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SCADENZA));
-			
-			if(attoTrattato.equals("ATTO PARERE") && dataScadenza != null){
-		    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.ITALY);
-		    	String dataScadenzaString = formatter.format(dataScadenza);
-		        searchTerms.put("dataScadenzaPAR", dataScadenzaString.toUpperCase());
-			}else{
-				 searchTerms.put("dataScadenzaPAR", "");
-				 searchTerms.put("Data Scadenza:", "");
-			}
-			
-			
-			
 			NodeRef commissione = attoUtil.getCommissioneCorrente(attoTrattato, commissioneCorrente);
 			
+			
+			
+		
+			
 			if(commissione!=null){
+				
+				
+				// Data di scadenza in caso di atto di tipo PAR
+				
+				Date dataScadenza = (Date) nodeService.getProperty(commissione, QName.createQName(attoUtil.CRL_ATTI_MODEL, "dataScadenzaCommissione"));
+				
+				if(tipoAttoDescrizione.equals("PAR") && dataScadenza != null){
+			    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.ITALY);
+			    	String dataScadenzaString = formatter.format(dataScadenza);
+			        searchTerms.put("dataScadenzaPAR", dataScadenzaString.toUpperCase());
+				}else{
+					 searchTerms.put("dataScadenzaPAR", "");
+					 searchTerms.put("Data Scadenza:", "");
+				}
+				
+				
 
 				NodeRef relatore = attoUtil.getRelatoreCorrente(commissione);
 				
@@ -133,7 +141,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 					
 					searchTerms.put("relatoreAttivo", nomeRelatore);
 				}else{
-					searchTerms.put("relatoreAttivo", "");
+					searchTerms.put("relatoreAttivo", "Nomina relatore");
 				}
 				
 				
@@ -244,7 +252,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			String oggettoAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO_INDIRIZZO));
 		
 			
-			searchTerms.put("titoloAtto", tipoAttoTrattato+" N."+numeroAttoTrattato);
+			searchTerms.put("titoloAtto", tipoAttoTrattato+" N. "+numeroAttoTrattato);
 			searchTerms.put("oggettoAtto", oggettoAttoTrattato);
 			
 			
