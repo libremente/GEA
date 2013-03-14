@@ -4,11 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.alfresco.model.ContentModel;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.repository.AssociationRef;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
@@ -17,11 +19,14 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.alfresco.service.namespace.RegexQNamePattern;
+import org.alfresco.util.ISO8601DateFormat;
+import org.alfresco.util.ISO9075;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -125,6 +130,112 @@ public abstract class OdgBaseCommand implements OdgCommand{
     	}
     	
     	return attiTrattati;
+	}
+	
+	
+	
+	public List<NodeRef> getConsultazioniGenerali(NodeRef sedutaNodeRef){
+		
+		List<NodeRef> consultazioniGenerali = new ArrayList<NodeRef>();
+				
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+        
+    	String luceneSedutaNodePath = nodeService.getPath(sedutaNodeRef).toPrefixString(namespacePrefixResolver);
+        
+    	ResultSet conusultazioniODG = searchService.query(sedutaNodeRef.getStoreRef(), 
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:Audizioni/*\"");
+    	
+    	for(int i=0; i< conusultazioniODG.length(); i++){
+    		consultazioniGenerali.add(conusultazioniODG.getNodeRef(i));
+    	}
+    	
+    	return consultazioniGenerali;
+	}
+	
+	
+	public List<NodeRef> getConsultazioniAtti(NodeRef seduta, List<NodeRef> attiTrattati, String gruppo){
+		
+		List<NodeRef> consultazioni = new ArrayList<NodeRef>();
+		
+		String dataSedutaConsultazione = (String)(String) nodeService.getProperty(seduta, ContentModel.PROP_NAME);
+		
+	
+		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
+        namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
+		
+        String consultazioneType = "{"+attoUtil.CRL_ATTI_MODEL+"}consultazione";
+        
+    	for(int i=0; i< attiTrattati.size(); i++){
+    		    			
+    			String luceneAttoTrattatoNodePath = nodeService.getPath(attiTrattati.get(i)).toPrefixString(namespacePrefixResolver);
+    			
+    			ResultSet consultazioniAttoTrattato = searchService.query(attiTrattati.get(i).getStoreRef(), 
+    	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneAttoTrattatoNodePath+"/cm:Consultazioni/*\" AND TYPE:\""+consultazioneType+"\" " +
+    	  						"AND @crlatti\\:commissioneConsultazione:\""+gruppo+"\" " +
+    	  						"AND @crlatti\\:dataSedutaConsultazione:["+ dataSedutaConsultazione + " TO "+ dataSedutaConsultazione + " ]");
+    			
+    			
+    			for(int j=0; j<consultazioniAttoTrattato.length(); j++){	
+    				consultazioni.add(consultazioniAttoTrattato.getNodeRef(j));
+    			}
+    		
+    	}
+    	
+    	return consultazioni;
+	}
+	
+	
+	public VerbaleObject getVerbaleSedutaPrecedente(String gruppo, NodeRef seduta){
+		
+		// query per ottenere la seduta prima della seduta corrente in ordine cronologico
+		// selezioni tutte le sedute con data precedente a quella della seduta corrente
+		// ordino i risultati per dataSeduta e prendo il secondo result (il primo è la seduta di partenza)
+		
+		String path = "/app:company_home/cm:CRL/cm:"+ISO9075.encode("Gestione Atti")+"/cm:Sedute/cm:"+ISO9075.encode(gruppo);
+		String dataSeduta = (String) nodeService.getProperty(seduta, ContentModel.PROP_NAME);
+		
+		String sedutaType = "{"+attoUtil.CRL_ATTI_MODEL+"}sedutaODG";
+		
+		String sortField = "@{" + attoUtil.CRL_ATTI_MODEL + "}dataSedutaSedutaODG";
+
+		SearchParameters sp = new SearchParameters();
+		sp.addStore(seduta.getStoreRef());
+		sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+		
+		String query = "PATH:\""+path+"//*\" AND TYPE:\""+sedutaType+"\" "+
+					"AND @crlatti\\:dataSedutaSedutaODG:[ * TO "+ dataSeduta + " ]";
+		
+		sp.setQuery(query);
+		sp.addSort(sortField, false);
+		sp.setLimit(2);
+	
+	
+		ResultSet sedute = searchService.query(sp);
+	
+		VerbaleObject verbale = null;
+		
+		if(sedute.length()>1){
+			NodeRef sedutaPrec = sedute.getNodeRef(1);
+			
+			String numeroSedutaPrec = (String) nodeService.getProperty(sedutaPrec, QName.createQName(attoUtil.CRL_ATTI_MODEL, "numVerbaleSedutaODG"));
+			Date dataSedutaPrec = (Date) nodeService.getProperty(sedutaPrec, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SEDUTA));
+			
+			if(numeroSedutaPrec==null){
+				numeroSedutaPrec = "";
+			}
+			
+			verbale = new VerbaleObject(numeroSedutaPrec, dataSedutaPrec);
+	
+		}
+				
+		return verbale;
+		
+		
 	}
 	
 
@@ -298,5 +409,37 @@ public abstract class OdgBaseCommand implements OdgCommand{
 		this.attoUtil = attoUtil;
 	}
     
+	
+}
+
+
+class VerbaleObject{
+	
+	private String numeroSeduta;
+	private Date dataSeduta;
+	
+	public VerbaleObject(String numeroSeduta, Date dataSeduta){
+		
+		this.numeroSeduta = numeroSeduta;
+		this.dataSeduta = dataSeduta;
+	}
+
+	public String getNumeroSeduta() {
+		return numeroSeduta;
+	}
+
+	public void setNumeroSeduta(String numeroSeduta) {
+		this.numeroSeduta = numeroSeduta;
+	}
+
+	public Date getDataSeduta() {
+		return dataSeduta;
+	}
+
+	public void setDataSeduta(Date dataSeduta) {
+		this.dataSeduta = dataSeduta;
+	}
+	
+
 	
 }

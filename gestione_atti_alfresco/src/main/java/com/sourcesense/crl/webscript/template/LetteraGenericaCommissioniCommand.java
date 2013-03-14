@@ -125,6 +125,12 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
         	
         	
         	String esitoVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ESITO_VOTAZIONE_COMMISSIONE));
+        	
+        	if(esitoVotazione!=null){
+        		esitoVotazione = esitoVotazione.toLowerCase();
+        	}
+        	
+        	
         	Date dataVotazione = (Date) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_VOTAZIONE_COMMISSIONE));
         	
         	if(dataVotazione != null) {

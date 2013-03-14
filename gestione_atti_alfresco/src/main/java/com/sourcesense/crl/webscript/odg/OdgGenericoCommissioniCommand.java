@@ -33,6 +33,8 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 
 	private static Log logger = LogFactory.getLog(OdgGenericoCommissioniCommand.class);
 	
+	
+	// Genera il documento docx contenente l'ordine del giorno
 	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef sedutaNodeRef, String gruppo) throws IOException{
 		
 		byte[] documentFilledByteArray = null;
@@ -43,16 +45,38 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
     	searchTerms.put("commissioneCorrente", gruppo);
     	
    
-    	
+    	// compila dati generali
     	documentFilledByteArray = searchAndReplaceDocx(templateByteArray, searchTerms);
     	
+    	// compila la tabella introduttiva del documento (dati della seduta)
     	documentFilledByteArray = fillIntroTableDocx(documentFilledByteArray, sedutaNodeRef);
     	
+    	// compila i dati riferiti alla seduta precedente 
+    	documentFilledByteArray = fillSedutaPrecedenteTableDocx(documentFilledByteArray, sedutaNodeRef, gruppo);
+    	
+    	// get delle consultazioni/audizioni generali
+    	List<NodeRef> consultazioniGenerali = getConsultazioniGenerali(sedutaNodeRef);
+    	
+    	// get degli atti trattati
     	List<NodeRef> attiTrattati = getAttiTrattati(sedutaNodeRef);
+    	
+    	
+    	// get delle consultazioni legate all'atto (inserisco gli atti trattati già ricercati per evitare una nuova ricerca)
+    	List<NodeRef> consultazioniAtto = getConsultazioniAtti(sedutaNodeRef, attiTrattati, gruppo);
+    	
+    	// generazione delle righe della tabella necessarie a riportare tutte le consultazioni
+    	documentFilledByteArray = createConsultazioniRowsCommissioniDocx(documentFilledByteArray, consultazioniGenerali, consultazioniAtto);
+    	
+    	documentFilledByteArray = fillConsultazioniRowsCommissioniDocx(documentFilledByteArray, consultazioniGenerali, consultazioniAtto);
+    	
+    	
+    	// get degli atti di indirizzo trattati
     	List<NodeRef> attiIndirizzoTrattati = getAttiIndirizzoTrattati(sedutaNodeRef);
 		
+    	// generazione delle righe della tabella necessarie a riportare tutti gli atti trattati
     	documentFilledByteArray = createAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);
     	
+    	// compilazione delle righe della tabella degli atti trattati
     	documentFilledByteArray = fillAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati, gruppo);
 		
 		
@@ -60,6 +84,48 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 		logger.info("Generazione del documento odg completato");
 		
 		return documentFilledByteArray;
+	}
+	
+	
+	private byte[] fillSedutaPrecedenteTableDocx (byte[] documentByteArray, NodeRef seduta, String gruppo) throws IOException {
+		
+		XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(documentByteArray));
+	
+		List<XWPFTable> tables = document.getTables();
+		
+		XWPFTable table = tables.get(1);
+		
+		// riga della tabella contenente i riferimenti alla seduta precedente
+		XWPFTableRow row = table.getRow(4);
+		
+		
+		
+		HashMap<String, String> searchTerms = new HashMap<String, String>();
+		
+		VerbaleObject verbale = getVerbaleSedutaPrecedente(gruppo, seduta);
+		
+		if(verbale!=null){
+			
+			Date dataVerbalePrec = verbale.getDataSeduta();
+			
+			if(dataVerbalePrec != null){
+		    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
+		    	String dataScadenzaString = formatter.format(dataVerbalePrec);
+		    	searchTerms.put("dataVerbalePrec", dataScadenzaString);
+			}
+			
+			String numeroVerbalePrec = verbale.getNumeroSeduta();
+			
+			searchTerms.put("numeroVerbalePrec", numeroVerbalePrec);
+		}
+		
+		
+		searchAndReplaceParagraph(row.getCell(1), searchTerms);
+		
+		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+		document.write(ostream);
+		return ostream.toByteArray();
+		
 	}
 	
 	
@@ -73,7 +139,8 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 		List<XWPFTable> tables = document.getTables();
 						
 		XWPFTable table = tables.get(1);
-	
+		
+		
 		
 		for(int i=0; i<attiTrattati.size(); i++){
 		
@@ -112,9 +179,6 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			NodeRef commissione = attoUtil.getCommissioneCorrente(attoTrattato, commissioneCorrente);
 			
 			
-			
-		
-			
 			if(commissione!=null){
 				
 				
@@ -123,7 +187,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 				Date dataScadenza = (Date) nodeService.getProperty(commissione, QName.createQName(attoUtil.CRL_ATTI_MODEL, "dataScadenzaCommissione"));
 				
 				if(tipoAttoDescrizione.equals("PAR") && dataScadenza != null){
-			    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.ITALY);
+			    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 			    	String dataScadenzaString = formatter.format(dataScadenza);
 			        searchTerms.put("dataScadenzaPAR", dataScadenzaString.toUpperCase());
 				}else{
@@ -151,7 +215,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 				Date dataAssegnazioneCommissione = (Date) nodeService.getProperty(commissione, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONE));
 				
 				if(dataAssegnazioneCommissione != null) {
-		    		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.ITALY);
+		    		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 		    		String dataAssegnazioneCommissioneString = formatter.format(dataAssegnazioneCommissione);
 		        	searchTerms.put("dataAssegnazioneCommissione", dataAssegnazioneCommissioneString.toUpperCase());
 		    	}
@@ -168,11 +232,13 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			
 			List<NodeRef> attiAbbinati = attoUtil.getAttiAbbinati(attoTrattato);
 			List<AttiAbbinatiLineObject> abbinamentiStringList = new ArrayList<AttiAbbinatiLineObject>();
-			abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
-			abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
+			
 			
 			
 			if(attiAbbinati.size()>0){
+				abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
+				abbinamentiStringList.add(new AttiAbbinatiLineObject("", false, false, 10));
+				
 				abbinamentiStringList.add(new AttiAbbinatiLineObject("Abbinato a: ", false, false, 10));
 			}
 			
@@ -205,7 +271,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 					Date dataAssegnazioneCommissioneAttoAbbinato = (Date) nodeService.getProperty(commissioneAttoAbbinato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONE));
 					
 					if(dataAssegnazioneCommissioneAttoAbbinato != null) {
-			    		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.ITALY);
+			    		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 			    		String dataAssegnazioneCommissioneAttoAbbinatoStirng = formatter.format(dataAssegnazioneCommissioneAttoAbbinato);
 			    		abbinamentiStringList.add(new AttiAbbinatiLineObject("Assegnazione: "+dataAssegnazioneCommissioneAttoAbbinatoStirng.toUpperCase(), false, true, 10));
 			    	}
@@ -283,9 +349,24 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 			
 			
 			searchTerms.put("firmatariAttoIndirizzo", firmatariAttoTrattato);
+			
+			
+			if(tipoAttoTrattato.equals("RIS")){
+				
+				searchTerms.put("Assegnazione: XXXX", "");
+				
+				HashMap<String, String> searchTermsRispAssessore = new HashMap<String, String>();
+				searchTermsRispAssessore.put("Risposta dell’Assessore XXXXX", "");
+				
+		
+				searchAndReplaceParagraph(row.getCell(2), searchTermsRispAssessore);
+			}
 		
 
 			searchAndReplaceParagraph(row.getCell(1), searchTerms);
+			
+			
+			
 			
 		}
 		
@@ -373,6 +454,156 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand{
 		return ostream.toByteArray();
 	
 	}
+	
+	
+	private byte[] createConsultazioniRowsCommissioniDocx(byte[] documentByteArray ,List<NodeRef> consultazioniGenerali, List<NodeRef> consultazioniAtto) throws IOException {
+		  
+		
+		XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(documentByteArray));
+
+		List<XWPFTable> tables = document.getTables();
+						
+		XWPFTable table = tables.get(0);
+			 	 
+		XWPFTableRow templateConsultazioneGeneraleRow= table.getRow(1);
+		XWPFTableRow templateConsultazioneAttoRow= table.getRow(2);
+		
+		for(int i=0; i<consultazioniGenerali.size(); i++){
+			table.addRow(templateConsultazioneGeneraleRow, 2);			
+		}
+		
+		
+		for(int i=0; i<consultazioniAtto.size(); i++){
+			table.addRow(templateConsultazioneAttoRow, 2 + consultazioniGenerali.size());
+		}
+		 	
+			
+		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+		document.write(ostream);
+		return ostream.toByteArray();
+	
+
+	 }
+	
+	
+	private byte[] fillConsultazioniRowsCommissioniDocx(byte[] documentByteArray, List<NodeRef> consultazioniGenerali, List<NodeRef> consultazioniAtto) throws IOException {
+		
+		DictionaryService dictionaryService = serviceRegistry.getDictionaryService();	
+		
+		XWPFDocument document = new XWPFDocument(new ByteArrayInputStream(documentByteArray));
+
+		List<XWPFTable> tables = document.getTables();
+						
+		XWPFTable table = tables.get(0);
+	
+		// Modifica delle righe della tabella relative alle consultazioni generali
+		
+		for(int i=0; i<consultazioniGenerali.size(); i++){
+		
+			HashMap<String, String> searchTerms = new HashMap<String, String>();
+			HashMap<String, String> searchTerms2 = new HashMap<String, String>();
+			
+			XWPFTableRow row = table.getRow(1+i);
+		
+			NodeRef consultazioneGenerale = consultazioniGenerali.get(i);
+			
+			// determino il noderef della seduta a partire dalla consultazione
+			NodeRef sedutaNodeRef = nodeService.getParentAssocs(nodeService.getParentAssocs(consultazioneGenerale).get(0).getParentRef()).get(0).getParentRef();
+			
+			Date dataSeduta = (Date) nodeService.getProperty(sedutaNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SEDUTA));
+			
+	    	if(dataSeduta != null) {
+	    		SimpleDateFormat formatterGiorno = new SimpleDateFormat("EEEE", Locale.ITALY);
+	    		String dataSedutaGiornoString = formatterGiorno.format(dataSeduta).toUpperCase();
+	    		
+	    		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
+	    		String dataSedutaString = formatter.format(dataSeduta);
+	    		
+	        	searchTerms.put("dataSedutaAG", dataSedutaGiornoString + "\r" + dataSedutaString);
+	    	}
+			
+	    	searchAndReplaceParagraph(row.getCell(0), searchTerms);
+	    	
+	    	
+	    	String soggettiConsultatiAG = (String) nodeService.getProperty(consultazioneGenerale, ContentModel.PROP_NAME);
+	    	searchTerms2.put("soggettiConsultatiAG", soggettiConsultatiAG);
+	    	
+	    	searchAndReplaceParagraph(row.getCell(1), searchTerms2);
+	    	
+	    	
+		}
+		
+		// rimuovo la riga template per le consultazioni generali
+		int rowsConsultazioniGeneraliNumber = consultazioniGenerali.size() + 1;
+		table.removeRow(rowsConsultazioniGeneraliNumber);
+		
+		
+		// Modifica delle righe della tabella relative alle consultazioni degli atti
+		
+		for(int i=0; i<consultazioniAtto.size(); i++){
+			
+			HashMap<String, String> searchTerms = new HashMap<String, String>();
+			HashMap<String, String> searchTerms2 = new HashMap<String, String>();
+			
+			XWPFTableRow row = table.getRow(consultazioniGenerali.size()+i+1);
+			
+			NodeRef consultazioneAtto = consultazioniAtto.get(i);
+			
+			Date dataConsultazione = (Date) nodeService.getProperty(consultazioneAtto, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_CONSULTAZIONE_ATTO));
+			
+	    	if(dataConsultazione != null) {
+	    		SimpleDateFormat formatterGiorno = new SimpleDateFormat("EEEE", Locale.ITALY);
+	    		String dataConsultazioneGiornoString = formatterGiorno.format(dataConsultazione).toUpperCase();
+	    		
+	    		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
+	    		String dataConsultazioneString = formatter.format(dataConsultazione);
+	    		
+	        	searchTerms.put("dataConsultazioneAtto", dataConsultazioneGiornoString + "\r" + dataConsultazioneString);
+	    	}
+			
+	    	searchAndReplaceParagraph(row.getCell(0), searchTerms);
+			
+			
+			// determino il noderef dell'atto a partire dalla consultazione
+			NodeRef attoNodeRef = nodeService.getParentAssocs(nodeService.getParentAssocs(consultazioneAtto).get(0).getParentRef()).get(0).getParentRef();
+			
+			String nomeAtto = (String) nodeService.getProperty(attoNodeRef, ContentModel.PROP_NAME);
+			
+			TypeDefinition typeDef = dictionaryService.getType(nodeService.getType(attoNodeRef));
+			String tipoAttoDescrizione = "";
+			
+			if(typeDef.getName().getLocalName().length() > 4){
+				tipoAttoDescrizione= typeDef.getName().getLocalName().substring(4).toUpperCase();
+			}
+					
+			String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
+			
+			String soggettiConsultatiAtto = (String) nodeService.getProperty(consultazioneAtto, ContentModel.PROP_NAME);
+			
+			searchTerms2.put("numeroAttoConsultazione", nomeAtto);
+			searchTerms2.put("tipoAttoConsultazione", tipoAttoDescrizione);
+			searchTerms2.put("oggettoAttoConsultazione", oggettoAtto);
+			searchTerms2.put("soggettiConsultatiAtto", soggettiConsultatiAtto);
+			
+			searchAndReplaceParagraph(row.getCell(1), searchTerms2);
+			
+		}
+		
+		
+		
+		// rimuovo la riga template per le consultazioni generali
+		int rowsConsultazioniAttoNumber = consultazioniAtto.size() + consultazioniGenerali.size() + 1;
+		table.removeRow(rowsConsultazioniAttoNumber);
+		
+		
+		
+		
+		ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+		document.write(ostream);
+		return ostream.toByteArray();
+		
+	}
+	
 	
 }
 

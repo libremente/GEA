@@ -15,7 +15,7 @@ var dataPubblicazioneBURL = filterParam(atto.get("dataPubblicazioneBURL"));
 var numeroDgrSeguito = filterParam(atto.get("numeroDgrSeguito"));
 var dataDgrSeguito = filterParam(atto.get("dataDgrSeguito"));
 
-var numeroDcr = filterParam(atto.get("numeroDcr"));
+//var numeroDcr = filterParam(atto.get("numeroDcr"));
 
 
 if(atto!=null
@@ -32,7 +32,7 @@ if(atto!=null
 	attoFolderNode.properties["crlatti:noteChiusura"] = noteChiusuraIter;
 	
 	attoFolderNode.properties["crlatti:numeroLr"] = numeroLr;
-	attoFolderNode.properties["crlatti:numeroDcr"] = numeroDcr;
+	//attoFolderNode.properties["crlatti:numeroDcr"] = numeroDcr;
 	
 	if(checkIsNotNull(dataLr)) {
 		var dataLrSplitted = dataLr.split("-");

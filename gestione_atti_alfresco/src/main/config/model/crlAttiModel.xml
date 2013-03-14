@@ -94,6 +94,10 @@
 					<title>Nuovo Oggetto</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:oggettoOriginale">
+					<title>Oggetto Originale</title>
+					<type>d:text</type>
+				</property>
 				<property name="crlatti:dataPubblicazione">
 					<title>Data pubblicazione</title>
 					<type>d:date</type>

@@ -98,6 +98,49 @@ if(checkIsNotNull(provenienza)){
 	sedutaFolderNode.properties["crlatti:noteSedutaODG"] = note;
 	
 	sedutaFolderNode.save();
+	
+	
+	// ricerco le consultazioni della legislatura corrente e inserisco eventuali atti trattati
+	
+	var gestioneAttiPath = "/app:company_home"+
+	"/cm:"+search.ISO9075Encode("CRL")+
+	"/cm:"+search.ISO9075Encode("Gestione Atti");
+	
+	
+	var legislaturaPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(getLegislaturaCorrente());
+	var consultazioniLuceneQuery = "PATH:\""+legislaturaPath+"//*\" AND TYPE:\"crlatti:consultazione\" ";
+	consultazioniLuceneQuery += "AND @crlatti\\:commissioneConsultazione:\""+provenienza+"\" ";
+	consultazioniLuceneQuery += "AND @crlatti\\:dataSedutaConsultazione:\""+dataSeduta+"T00:00:00.000Z\" ";
+
+	
+	var consultazioniResults = search.luceneSearch(consultazioniLuceneQuery);
+	
+	var attiXPathQuery = "*[@cm:name='AttiTrattati']";
+	var attiFolderNode = sedutaFolderNode.childrenByXPath(attiXPathQuery)[0];
+	
+	for(var k=0; k<consultazioniResults.length;k++){
+		
+			
+			var atto = consultazioniResults[k].parent.parent;
+					
+			var tipoAttoTrattato = atto.typeShort.substring(12).toUpperCase();
+			var nomeAttoTrattato = tipoAttoTrattato +"-"+atto.name
+			
+						
+			var attoTrattatoNode = attiFolderNode.createNode(nomeAttoTrattato,"crlatti:attoTrattatoODG");
+			attoTrattatoNode.content = nomeAttoTrattato;
+			
+			attoTrattatoNode.createAssociation(atto,"crlatti:attoTrattatoSedutaODG");
+		
+			attoTrattatoNode.properties["crlatti:numeroAttoTrattatoODG"] = atto.name;
+			attoTrattatoNode.properties["crlatti:tipoAttoTrattatoODG"] = tipoAttoTrattato;
+			
+			attoTrattatoNode.save();
+			
+	}
+	
+	
+	
 		
 		
 		

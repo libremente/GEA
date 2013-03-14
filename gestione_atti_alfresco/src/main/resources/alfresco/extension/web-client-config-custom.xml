@@ -729,6 +729,7 @@
 			<show-property name="crlatti:numeroDcr" />
 
 			<show-property name="crlatti:oggetto" />
+			<show-property name="crlatti:oggettoOriginale" />
 			<show-property name="crlatti:dataPubblicazione" />
 			<show-property name="crlatti:esitoVotoComRef" />
 			<show-property name="crlatti:dataSedutaSc" />
@@ -794,6 +795,7 @@
 			<show-property name="crlatti:numeroDcr" />
 
 			<show-property name="crlatti:oggetto" />
+			<show-property name="crlatti:oggettoOriginale" />
 			<show-property name="crlatti:dataPubblicazione" />
 			<show-property name="crlatti:esitoVotoComRef" />
 			<show-property name="crlatti:dataSedutaSc" />

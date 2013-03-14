@@ -112,6 +112,7 @@ if(checkIsNotNull(id)){
 		var tipoAtto = filterParam(attoSindacato.get("tipoAtto"));
 		var numeroAtto = filterParam(attoSindacato.get("numeroAtto"));
 		var oggettoAtto = filterParam(attoSindacato.get("oggettoAtto"));
+		var numeroOrdinamento = filterParam(attoSindacato.get("numeroOrdinamento"));
 			
 		var attoIndirizzoTrattatoFolderNode = utils.getNodeFromString(idAttoTrattato);
 		
@@ -135,9 +136,9 @@ if(checkIsNotNull(id)){
 			attoIndirizzoTrattatoNode.createAssociation(attoIndirizzoTrattatoFolderNode,"crlatti:attoIndirizzoTrattatoSedutaODG");
 		}
 		
-		attoTrattatoNode.properties["crlatti:numeroOrdinamento"] = numeroOrdinamento;
+		attoIndirizzoTrattatoNode.properties["crlatti:numeroOrdinamento"] = numeroOrdinamento;
 		
-		attoTrattatoNode.save();
+		attoIndirizzoTrattatoNode.save();
 		
 	}	
 	

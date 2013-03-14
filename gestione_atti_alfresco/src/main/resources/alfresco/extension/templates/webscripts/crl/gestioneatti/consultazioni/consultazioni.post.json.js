@@ -52,117 +52,62 @@ if(checkIsNotNull(id)){
 			consultazioneNode = consultazioniFolderNode.childrenByXPath(consXPathQuery)[0];
 			consultazioneNode.name = descrizione;
 			
-			// creo la seduta con la data della consultazione per la commissione corrente
-			
 
-			var gestioneSedutePath = "/app:company_home"+
+			
+			// aggiungo l'atto alla seduta solo se esiste una seduta in quella data
+			
+			
+			
+			var seduteCommissionePath = "/app:company_home"+
 			"/cm:"+search.ISO9075Encode("CRL")+
 			"/cm:"+search.ISO9075Encode("Gestione Atti")+
-			"/cm:"+search.ISO9075Encode("Sedute");
-
-
-			if(checkIsNotNull(commissione) 
-					&& checkIsNotNull(dataSeduta)){
-				
-				var dataCreazioneSedutaSplitted = dataSeduta.split("-");
-				var dataCreazioneSedutaParsed = new Date(dataCreazioneSedutaSplitted[0],dataCreazioneSedutaSplitted[1]-1,dataCreazioneSedutaSplitted[2]);	
-				
-				var anno = dataCreazioneSedutaSplitted[0]
-				var mese = dataCreazioneSedutaSplitted[1];
-
-				//creazione spazio per la provenienza (commissione o aula)
-				var provenienzaPath = gestioneSedutePath + "/cm:"+search.ISO9075Encode(commissione);
-				var provenienzaLuceneQuery = "PATH:\""+provenienzaPath+"\"";
-				var provenienzaResults = search.luceneSearch(provenienzaLuceneQuery);
-
-				var provenienzaFolderNode = null;
-				if(provenienzaResults!=null && provenienzaResults.length>0){
-					provenienzaFolderNode = provenienzaResults[0];
-				} else {
-					var gestioneSeduteLuceneQuery = "PATH:\""+gestioneSedutePath+"\"";
-					var gestioneSeduteFolderNode = search.luceneSearch(gestioneSeduteLuceneQuery)[0];
-					provenienzaFolderNode = gestioneSeduteFolderNode.createFolder(provenienza);
-					
-					// setting dei permessi sul nodo in base alla provenienza
-					provenienzaFolderNode.setPermission("Coordinator", "GROUP_"+commissione);
-				}
-
-				//creazione spazio anno
-				var annoPath = provenienzaPath + "/cm:" + search.ISO9075Encode(anno);
-				var annoLuceneQuery = "PATH:\""+annoPath+"\"";
-				var annoResults = search.luceneSearch(annoLuceneQuery);
-				var annoFolderNode = null;
-				if(annoResults!=null && annoResults.length>0){
-					annoFolderNode = annoResults[0];
-				} else {
-					annoFolderNode = provenienzaFolderNode.createFolder(anno);
-				}
-
-				//creazione spazio mese
-				var mesePath = annoPath + "/cm:" + search.ISO9075Encode(mese);
-				var meseLuceneQuery = "PATH:\""+mesePath+"\"";
-				var meseResults = search.luceneSearch(meseLuceneQuery);
-				var meseFolderNode = null;
-				if(meseResults!=null && meseResults.length>0){
-					meseFolderNode = meseResults[0];
-				} else {
-					meseFolderNode = annoFolderNode.createFolder(mese);
-				}
-
-
-				//verifica esistenza del folder della seduta
-				var sedutaPath = mesePath + "/cm:" + search.ISO9075Encode(dataSeduta);
-				var sedutaLuceneQuery = "PATH:\""+sedutaPath+"\"";
-				var sedutaResults = search.luceneSearch(sedutaLuceneQuery);
-				if(sedutaResults!=null && sedutaResults.length>0){
-					sedutaFolderNode = sedutaResults[0];
-					
-				} else {
-					//creazione del nodo
-					var sedutaSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Seduta\"";
-					var sedutaSpaceTemplateNode = search.luceneSearch(sedutaSpaceTemplateQuery)[0];
-					var sedutaFolderNode = sedutaSpaceTemplateNode.copy(meseFolderNode,true);
-					sedutaFolderNode.name = dataSeduta;
-				}
-					
+			"/cm:"+search.ISO9075Encode("Sedute")+
+			"/cm:"+search.ISO9075Encode(commissione);
 			
-				sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataCreazioneSedutaParsed;				
-				sedutaFolderNode.save();
+			
+			
+			var sedutaLuceneQuery = "PATH:\""+seduteCommissionePath+"//*\" AND TYPE:\"crlatti:sedutaODG\" ";
+			sedutaLuceneQuery += "AND @crlatti\\:dataSedutaSedutaODG:\""+dataSeduta+"T00:00:00.000Z\" ";
+
+			
+			var sedutaResults = search.luceneSearch(sedutaLuceneQuery);
+			
+			if(sedutaResults.length>0){
 				
+				var seduta = sedutaResults[0];
 				
 				var attiXPathQuery = "*[@cm:name='AttiTrattati']";
-				var attiFolderNode = sedutaFolderNode.childrenByXPath(attiXPathQuery)[0];	
+				var attiFolderNode = seduta.childrenByXPath(attiXPathQuery)[0];
 				
-				// Inserimento atto trattato
-					
-				var attoTrattatoFolderNode = utils.getNodeFromString(id);
+				var tipoAttoTrattato = attoNode.typeShort.substring(12).toUpperCase();
+				var nomeAttoTrattato = tipoAttoTrattato +"-"+attoNode.name
 				
-				//verifica l'esistenza dell'atto all'interno del folder AttiTrattati
-				var existAttoTrattatoXPathQuery = "*[@cm:name='"+attoTrattatoFolderNode.name+"']";
-				var attoTrattatoEsistenteResults = attiFolderNode.childrenByXPath(existAttoTrattatoXPathQuery);
+				// verifico che l'atto non sia già tra gli atti trattati nella seduta
 				
-				var attoTrattatoNode = null;
-				
-				var creaAssociazione = true;
+				var attoTrattatoXPathQuery = "*[@cm:name='"+nomeAttoTrattato+"']";
+				var attoTrattatoEsistenteResults = attiFolderNode.childrenByXPath(attoTrattatoXPathQuery);
 				
 				if(attoTrattatoEsistenteResults!=null && attoTrattatoEsistenteResults.length>0){
-					attoTrattatoNode = attoTrattatoEsistenteResults[0];
-					creaAssociazione = false;
+					// do nothing
 				} else {
-					attoTrattatoNode = attiFolderNode.createNode(attoTrattatoFolderNode.name,"crlatti:attoTrattatoODG");
+					var attoTrattatoNode = attiFolderNode.createNode(nomeAttoTrattato,"crlatti:attoTrattatoODG");
+					attoTrattatoNode.content = nomeAttoTrattato;
+					
+					attoTrattatoNode.createAssociation(attoNode,"crlatti:attoTrattatoSedutaODG");
+				
+					attoTrattatoNode.properties["crlatti:numeroAttoTrattatoODG"] = attoNode.name;
+					attoTrattatoNode.properties["crlatti:tipoAttoTrattatoODG"] = tipoAttoTrattato;
+					
+					attoTrattatoNode.save();
 				}
-			
 				
-
-				if(creaAssociazione){
-					attoTrattatoNode.createAssociation(attoTrattatoFolderNode,"crlatti:attoTrattatoSedutaODG");
-				}
+							
 				
-				attoTrattatoNode.save();
-				
-				
+	
 			}
-		}
+			
+			
+	}
 	
 		
 		
@@ -268,7 +213,8 @@ if(checkIsNotNull(id)){
 			}
 		}
 		if(!trovato){
-			consultazioneNelRepository.remove();
+			consultazioneNelRepository.remove();			
+			
 		}
 	}
 	
