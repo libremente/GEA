@@ -1,6 +1,6 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
-function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissione){
+function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissione, workingList){
 	if(checkIsNotNull(commissione)){
 		var commissioneString = ""+commissione+"";
 		if(checkIsNotNull(ruoloCommissione)){
@@ -28,8 +28,12 @@ function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissi
 					"@crlatti\\:commCoreferente:\""+commissioneString+"\" OR "+
 					"@crlatti\\:commConsultiva:\""+commissioneString+"\" OR "+
 					"@crlatti\\:commRedigente:\""+commissioneString+"\" OR "+
-					"@crlatti\\:commDeliberante:\""+commissioneString+"\" " +
-					") ";
+					"@crlatti\\:commDeliberante:\""+commissioneString+"\" ";
+                                        // SCRL-124
+                                        if(workingList == "inlavorazione") {
+                                            luceneQuery += "OR (TYPE:\"crlatti:attoMis\" AND @crlatti\\:commissioneCompetenteMis:\""+commissioneString+"\" AND ISNOTNULL:\"crlatti:dataPropostaCommissioneMis\" AND ISNULL:\"crlatti:dataIntesaMis\") ";
+                                        }
+					luceneQuery += ") ";
 		}
 	}
 	return luceneQuery;
@@ -116,6 +120,9 @@ var tipoAttoString = ""+tipoAtto+"";
 var type = "crlatti:atto";
 
 var statiUtente = atto.get("statiUtente");
+
+var ruoloUtente = atto.get("ruoloUtente");
+var tipoWorkingList = atto.get("tipoWorkingList");
 
 //atto -> statiUtente -> StatoAtto -> descrizione
 //statoAtto = statiUtente
@@ -235,12 +242,12 @@ if(checkIsNotNull(gruppoPrimoFirmatario)){
 }
 
 
-
+// SCRL-124
 //commissioni e ruoli
-luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissioneUser,null);
-luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione1,ruoloCommissione1);
-luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione2,ruoloCommissione2);
-luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione3,ruoloCommissione3);
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissioneUser,null,tipoWorkingList);
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione1,ruoloCommissione1,null);
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione2,ruoloCommissione2,null);
+luceneQuery = creaLuceneQueryCommissioniRuoli(luceneQuery,commissione3,ruoloCommissione3,null);
 
 
 //dataIniziativa
@@ -451,6 +458,12 @@ if(checkIsNotNull(dataLr)){
 	luceneQuery += "@crlatti\\:dataLr:["+dataLr+"T00:00:00 TO "+dataLr+"T00:00:00]";
 }
 
+// SCRL-124
+if(ruoloUtente != "aula" && (tipoWorkingList == "inlavorazione" || tipoWorkingList == "lavorato")) {
+    luceneQuery = verifyAND(luceneQuery);
+    luceneQuery += "NOT (TYPE:\"crlatti:attoOrg\" OR (TYPE:\"crlatti:attoPda\" AND @crlatti\\:tipoIniziativa:\"05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA\"))";
+}
+         
 //statiUtente - condizioni in OR per Lucene
 if(checkIsNotNull(statiUtente)){
 	var numeroStatiUtente = statiUtente.length();
@@ -471,6 +484,15 @@ if(checkIsNotNull(statiUtente)){
 				}
 			}
 		}
+                
+                // SCRL-124 
+                if(ruoloUtente == "aula" && tipoWorkingList == "inlavorazione") {
+                    luceneQuery = verifyOR(luceneQuery);
+                    luceneQuery += "(TYPE:\"crlatti:attoOrg\" AND @crlatti\\:statoAtto:\"Protocollato\")";
+                    luceneQuery = verifyOR(luceneQuery); 
+                    luceneQuery += "(TYPE:\"crlatti:attoPda\" AND @crlatti\\:tipoIniziativa:\"05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA\" AND @crlatti\\:statoAtto:\"Protocollato\")"
+                }
+                
 		luceneQuery += " ) ";
 	}
 }
