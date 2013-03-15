@@ -7,6 +7,9 @@ var numeroAtto = atto.get("numeroAtto");
 var estensioneAtto = filterParam(atto.get("estensioneAtto"));
 var tipoAtto = atto.get("tipoAtto");
 var stato = atto.get("stato");
+var tipoIniziativa = filterParam(atto.get("tipoIniziativa"));
+var tipoAtto = atto.get("tipoAtto");
+
 var dataImportazione = new Date();
 var mese = dataImportazione.getMonth() + 1;
 var anno = dataImportazione.getFullYear();
@@ -344,6 +347,9 @@ if(nodeType=="crlatti:attoEac"){
 		attoFolderNode.properties["crlatti:estensioneAtto"] = estensioneAtto;
 		attoFolderNode.properties["crlatti:tipologia"] = tipologia;
 		attoFolderNode.properties["crlatti:anno"] = anno;
+		
+		// nel caso di pda Upd occorre inserire il tipo iniziativa
+		attoFolderNode.properties["crlatti:tipoIniziativa"] = tipoIniziativa;
 		attoFolderNode.properties["crlatti:statoAtto"] = stato;
 		attoFolderNode.properties["crlatti:pubblico"] = true;
 		attoFolderNode.save();
