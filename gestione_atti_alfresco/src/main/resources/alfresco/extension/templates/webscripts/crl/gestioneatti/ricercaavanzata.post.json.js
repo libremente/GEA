@@ -459,7 +459,7 @@ if(checkIsNotNull(dataLr)){
 }
 
 // SCRL-124
-if(ruoloUtente != "aula" && (tipoWorkingList == "inlavorazione" || tipoWorkingList == "lavorato")) {
+if(ruoloUtente != "Aula" && (tipoWorkingList == "inlavorazione" || tipoWorkingList == "lavorato")) {
     luceneQuery = verifyAND(luceneQuery);
     luceneQuery += "NOT (TYPE:\"crlatti:attoOrg\" OR (TYPE:\"crlatti:attoPda\" AND @crlatti\\:tipoIniziativa:\"05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA\"))";
 }
@@ -486,7 +486,7 @@ if(checkIsNotNull(statiUtente)){
 		}
                 
                 // SCRL-124 
-                if(ruoloUtente == "aula" && tipoWorkingList == "inlavorazione") {
+                if(ruoloUtente == "Aula" && tipoWorkingList == "inlavorazione") {
                     luceneQuery = verifyOR(luceneQuery);
                     luceneQuery += "(TYPE:\"crlatti:attoOrg\" AND @crlatti\\:statoAtto:\"Protocollato\")";
                     luceneQuery = verifyOR(luceneQuery); 
