@@ -40,7 +40,16 @@ public class CollegamentoAttiSindacato implements Cloneable , Comparable <Colleg
 	@Override
 	public int compareTo(CollegamentoAttiSindacato arg0) {
 		// TODO Auto-generated method stub
+		if(arg0.numeroOrdinamento==null || arg0.numeroOrdinamento.equals("")){
+			arg0.numeroOrdinamento="0";
+		}
+		
+		if(this.numeroOrdinamento==null || this.numeroOrdinamento.equals("")){
+			this.numeroOrdinamento="0";
+		}
+		
 		return Integer.parseInt(this.numeroOrdinamento) -  Integer.parseInt(arg0.numeroOrdinamento);
+		
 	}
 	
 	@Override public String toString() {

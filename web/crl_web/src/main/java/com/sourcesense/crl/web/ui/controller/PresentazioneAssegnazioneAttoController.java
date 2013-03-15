@@ -113,7 +113,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private boolean normaFinanziaria;
 	private boolean richiestaUrgenza;
 	private boolean votazioneUrgenza;
-	private boolean currentFilePubblico=true;
+	private boolean currentFilePubblico = true;
 	private Date dataVotazioneUrgenza;
 	private String noteAmmissibilita;
 
@@ -166,6 +166,16 @@ public class PresentazioneAssegnazioneAttoController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
+
+		if (atto.getOggettoOriginale() != null
+				&& !"".equals(atto.getOggettoOriginale())) {
+
+			setOggetto(atto.getOggettoOriginale());
+		}else{
+			
+			setOggetto(atto.getOggetto());
+			
+		}
 
 		this.testiAttoList = new ArrayList<TestoAtto>(Clonator.cloneList(atto
 				.getTestiAtto()));
@@ -363,17 +373,16 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void addFirmatario() {
 
-		
 		FacesContext context = FacesContext.getCurrentInstance();
 		if (nomeFirmatario != null && !nomeFirmatario.trim().equals("")) {
 			if (!checkFirmatari()) {
-				
+
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Firmatario "
 								+ nomeFirmatario + " già presente ", ""));
 
 			} else if (primoFirmatario && checkPrimoFirmatario()) {
-				
+
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Primo firmatario già selezionato ", ""));
@@ -392,8 +401,7 @@ public class PresentazioneAssegnazioneAttoController {
 				attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
 				context.addMessage(null, new FacesMessage(
 						"Firmatario aggiunto con successo", ""));
-				
-				
+
 			}
 		}
 	}
@@ -447,8 +455,21 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	
 	public void salvaInfoGenerali() {
+		boolean originale=false;
 		atto.setFirmatari(getOrderedFirmatari());
+		if (atto.getOggettoOriginale() != null
+				&& !"".equals(atto.getOggettoOriginale())) {
+            originale=false;   
+			atto.setOggettoOriginale(oggetto);
+		}else{
+			
+			
+			atto.setOggetto(oggetto);
+			
+		}
+
 		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -456,7 +477,12 @@ public class PresentazioneAssegnazioneAttoController {
 				.getSessionMap().get("attoBean"));
 
 		attoBean.getAtto().setClassificazione(this.atto.getClassificazione());
-		attoBean.getAtto().setOggetto(this.atto.getOggetto());
+        if(!originale){
+		   attoBean.getAtto().setOggetto(oggetto);
+        }else{
+        	attoBean.getAtto().setOggettoOriginale(oggetto);
+        	
+        }
 		attoBean.getAtto().setNumeroRepertorio(atto.getNumeroRepertorio());
 		attoBean.getAtto().setDataRepertorio(this.atto.getDataRepertorio());
 		attoBean.getAtto().setTipoIniziativa(atto.getTipoIniziativa());
@@ -472,8 +498,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 		attoBean.getAtto().setIterAula(atto.isIterAula());
 		attoBean.getAtto().setScadenza60gg(atto.isScadenza60gg());
-		attoBean.getAtto().setPubblico(atto.isPubblico());   
-		
+		attoBean.getAtto().setPubblico(atto.isPubblico());
+
 		setStatoCommitInfoGen(CRLMessage.COMMIT_DONE);
 
 		context.addMessage(null, new FacesMessage(
@@ -1576,11 +1602,11 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	public String getOggetto() {
-		return atto.getOggetto();
+		return this.oggetto;
 	}
 
 	public void setOggetto(String oggetto) {
-		this.atto.setOggetto(oggetto);
+		this.oggetto = oggetto;
 	}
 
 	public String getNumeroRepertorio() {

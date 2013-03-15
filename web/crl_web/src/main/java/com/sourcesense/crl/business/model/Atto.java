@@ -74,7 +74,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	private String tipo;
 	private String codice;
 	private String oggetto;
-	private String nuovoOggetto;
+	private String oggettoOriginale;
 	private String primoFirmatario;
 	private Date dataPresentazione;
 	private Date dataPubblicazione;
@@ -241,12 +241,14 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.oggetto = oldOggetto;
 	}
 
-	public String getNuovoOggetto() {
-		return nuovoOggetto;
+	
+
+	public String getOggettoOriginale() {
+		return oggettoOriginale;
 	}
 
-	public void setNuovoOggetto(String nuovoOggetto) {
-		this.nuovoOggetto = nuovoOggetto;
+	public void setOggettoOriginale(String oggettoOriginale) {
+		this.oggettoOriginale = oggettoOriginale;
 	}
 
 	public String getPrimoFirmatario() {

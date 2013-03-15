@@ -186,9 +186,8 @@ public class EsameCommissioniController {
 	private Date dataRicezioneIntegrazioni;
 	private Date dataScadenza;
 
-	
 	private List<String> esitiVotazione = new ArrayList<String>();
-	
+
 	private String statoCommitRelatori = CRLMessage.COMMIT_DONE;
 	private String statoCommitComitatoRistretto = CRLMessage.COMMIT_DONE;
 	private String statoCommitPresaInCarico = CRLMessage.COMMIT_DONE;
@@ -229,22 +228,23 @@ public class EsameCommissioniController {
 		// solo se admin prende la referente o deliberante
 		Commissione commTemp = findCommissione(userBean.getUser()
 				.getSessionGroup().getNome());
-		
+
 		esitiVotazione.clear();
-		
-		if(!commTemp.getRuolo().equals(Commissione.RUOLO_CONSULTIVA)){
-			
+
+		if (!commTemp.getRuolo().equals(Commissione.RUOLO_CONSULTIVA)) {
+
 			String tipo = attoBean.getTipoAtto();
-			
-			if("PDL".equals(tipo) || "PDA".equals(tipo) || "PLP".equals(tipo) ||
-					"PRE".equals(tipo) || "REF".equals(tipo) || "DOC".equals(tipo) ){
-			
+
+			if ("PDL".equals(tipo) || "PDA".equals(tipo) || "PLP".equals(tipo)
+					|| "PRE".equals(tipo) || "REF".equals(tipo)
+					|| "DOC".equals(tipo)) {
+
 				esitiVotazione.add("Approvato");
 				esitiVotazione.add("Respinto");
 				esitiVotazione.add("Proposta di non passaggio all'esame");
-				
-			}else if("PAR".equals(tipo) ){
-			
+
+			} else if ("PAR".equals(tipo)) {
+
 				esitiVotazione.add("Parere favorevole");
 				esitiVotazione.add("Parere favorevole con osservazioni");
 				esitiVotazione.add("Parere negativo");
@@ -252,30 +252,27 @@ public class EsameCommissioniController {
 				esitiVotazione.add("Intesa espressa senza condizioni");
 				esitiVotazione.add("Intesa espressa con condizioni");
 				esitiVotazione.add("Mancata intesa");
-				
-				
-			}else if("INP".equals(tipo) ){
-			
+
+			} else if ("INP".equals(tipo)) {
+
 				esitiVotazione.add("Archiviazione");
-				
-			}else if("REL".equals(tipo) ){
-			
+
+			} else if ("REL".equals(tipo)) {
+
 				esitiVotazione.add("Presa d'atto");
 				esitiVotazione.add("Approvato");
-				
+
 			}
-			
-			
-		}else{
-			
+
+		} else {
+
 			esitiVotazione.add("Parere favorevole");
 			esitiVotazione.add("Parere favorevole con osservazioni");
 			esitiVotazione.add("Parere negativo");
 			esitiVotazione.add("Parere negativo con osservazioni");
-			
+
 		}
-		
-		
+
 		if (commTemp == null) {
 
 			commTemp = attoBean.getCommissioneReferente();
@@ -1109,7 +1106,7 @@ public class EsameCommissioniController {
 				abbinamento.setNumeroAttoAbbinato(attoDaAbbinare
 						.getNumeroAtto());
 				abbinamento.setTipoAttoAbbinato(attoDaAbbinare.getTipoAtto());
-				
+
 				abbinamentiList.add(abbinamento);
 				setIdAbbinamentoSelected(idAbbinamento);
 				showAbbinamentoDetail();
@@ -1288,11 +1285,18 @@ public class EsameCommissioniController {
 
 	public void salvaOggetto() {
 		FacesContext context = FacesContext.getCurrentInstance();
+
+		if (this.oggettoAttoCorrente != null
+				&& !"".equals(this.oggettoAttoCorrente)) {
+			this.atto.setOggettoOriginale(atto.getOggetto());
+			this.atto.setOggetto(oggettoAttoCorrente);
+		}
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
 		attoServiceManager.salvaInfoGeneraliPresentazione(atto);
 		attoBean.getAtto().setOggetto(atto.getOggetto());
+		attoBean.getAtto().setOggettoOriginale(atto.getOggettoOriginale());
 		attoBean.getAtto().setAttoProseguente(atto.isAttoProseguente());
 
 		setStatoCommitOggettoAttoCorrente(CRLMessage.COMMIT_DONE);
@@ -2000,7 +2004,6 @@ public class EsameCommissioniController {
 
 		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_DONE);
 
-		
 		if (numEmendPresentatiTotale - numEmendApprovatiTotale != totaleNonApprovati) {
 
 			context.addMessage(
@@ -2270,21 +2273,23 @@ public class EsameCommissioniController {
 	}
 
 	public String getOggettoAttoCorrente() {
-		return atto.getOggetto();
+
+		return (atto.getOggettoOriginale() != null && !"".equals(atto
+				.getOggettoOriginale())) ? atto.getOggetto() : "";
 	}
 
 	public void setOggettoAttoCorrente(String oggettoAttoCorrente) {
-		this.atto.setOggetto(oggettoAttoCorrente);
+
+		this.oggettoAttoCorrente = oggettoAttoCorrente;
+
 	}
 
-	
-	
 	public boolean isAttoProseguente() {
 		return this.atto.isAttoProseguente();
 	}
 
 	public void setAttoProseguente(boolean attoProseguente) {
-		this.atto.setAttoProseguente ( attoProseguente);
+		this.atto.setAttoProseguente(attoProseguente);
 	}
 
 	public String getEsitoVotazione() {
@@ -3142,13 +3147,8 @@ public class EsameCommissioniController {
 	}
 
 	public void setEsitiVotazione(List<String> esitiVotazione) {
-		
-		
-		
+
 		this.esitiVotazione = esitiVotazione;
 	}
-	
-	
-	
 
 }

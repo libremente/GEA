@@ -35,6 +35,10 @@ public class StatoAtto {
 	public static final String PUBBLICATO="Pubblicato";
 	public static final String CHIUSO="Chiuso";
 	
+	//EAC - MIS
+	public static final String EAC="eac";
+	public static final String MIS="mis";
+	
 	
 	private String descrizione;
 

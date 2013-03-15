@@ -12,10 +12,17 @@
 <pe:tooltip value="Click per Espandere / Comprimere"
 	forSelector="legend" shared="true" targetPosition="top center"
 	position="left center" />
-
+<p:ajaxStatus onstart="statusDialog.show();"
+	onsuccess="statusDialog.hide();" />
+<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+	draggable="false" closable="false">
+	<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+</p:dialog>
 <div id="blockedRinvioStralci">
+
 	<p:panelGrid styleClass="infoTable" id="rinviostralciPanel">
-		<p:row rendered="#{!navigationBean.sessionAttoPDA_UDP and !navigationBean.isSessionAttoORG()}">
+		<p:row
+			rendered="#{!navigationBean.sessionAttoPDA_UDP and !navigationBean.isSessionAttoORG()}">
 			<p:column>
 				<p:fieldset styleClass="fieldSetTab" legend="Rinvio esame: "
 					collapsed="false" toggleable="true" toggleSpeed="500">
@@ -49,9 +56,10 @@
 			
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="dataSeduta" pattern="dd/MM/yyyy"
+								<p:calendar size="10" locale="it" id="dataSeduta"
+									pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataSedutaRinvio}">
-									<p:ajax event="dateSelect"
+									<p:ajax event="dateSelect" global="false"
 										listener="#{esameAulaController.updateRinvioEsameHandler}" />
 								</p:calendar>
 							</p:column>
@@ -63,9 +71,10 @@
 			
 			</p:column>
 							<p:column>
-								<p:calendar size="10" locale="it" id="termineMassimo" pattern="dd/MM/yyyy"
+								<p:calendar size="10" locale="it" id="termineMassimo"
+									pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataTermineMassimo}">
-									<p:ajax event="dateSelect"
+									<p:ajax event="dateSelect" global="false"
 										listener="#{esameAulaController.updateRinvioEsameHandler}" />
 								</p:calendar>
 							</p:column>
@@ -79,7 +88,7 @@
 							<p:column>
 								<p:inputTextarea rows="6" cols="65"
 									value="#{esameAulaController.motivazioneRinvio}">
-									<p:ajax event="change"
+									<p:ajax event="change" global="false"
 										listener="#{esameAulaController.updateRinvioEsameHandler}" />
 								</p:inputTextarea>
 
@@ -88,7 +97,7 @@
 
 							<p:column>
 
-								<p:commandButton value="Salva"
+								<p:commandButton value="Salva" global="false"
 									oncomplete="confirmRinvioCommDialog.show()"
 									disabled="#{navigationBean.isSessionAttoChiuso()}" />
 
@@ -108,7 +117,7 @@
 					rendered="#{navigationBean.stralciAulaEnabled()}">
 
 					<p:panelGrid styleClass="infoTable" id="stralciGrid">
-						
+
 						<p:row>
 							<p:column>
 			Data Stralcio:
@@ -116,7 +125,7 @@
 							<p:column>
 								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataStralcio}">
-									<p:ajax event="dateSelect"
+									<p:ajax event="dateSelect" global="false"
 										listener="#{esameAulaController.updateStralciHandler}" />
 								</p:calendar>
 							</p:column>
@@ -128,7 +137,7 @@
 							<p:column>
 								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
 									value="#{esameAulaController.dataIniziativaStralcio}">
-									<p:ajax event="dateSelect"
+									<p:ajax event="dateSelect" global="false"
 										listener="#{esameAulaController.updateStralciHandler}" />
 								</p:calendar>
 							</p:column>
@@ -143,7 +152,7 @@
 							<p:column>
 								<p:inputTextarea rows="6" cols="65"
 									value="#{esameAulaController.articoli}">
-									<p:ajax event="change"
+									<p:ajax event="change" global="false"
 										listener="#{esameAulaController.updateStralciHandler}" />
 								</p:inputTextarea>
 
@@ -161,7 +170,7 @@
 							<p:column>
 								<p:inputTextarea rows="6" cols="65"
 									value="#{esameAulaController.noteStralcio}">
-									<p:ajax event="change"
+									<p:ajax event="change" global="false"
 										listener="#{esameAulaController.updateStralciHandler}" />
 								</p:inputTextarea>
 
@@ -180,14 +189,14 @@
 									<f:selectItem itemLabel="Scegli quorum" itemValue="" />
 									<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
 									<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
-									<p:ajax event="change"
+									<p:ajax event="change" global="false"
 										listener="#{esameAulaController.updateStralciHandler}" />
 								</p:selectOneMenu>
 							</p:column>
 						</p:row>
 						<p:row>
 							<p:column>
-								<p:commandButton value="Salva"
+								<p:commandButton value="Salva" global="false"
 									action="#{esameAulaController.salvaStralci}"
 									update="rinvioStralciMsg" />
 							</p:column>

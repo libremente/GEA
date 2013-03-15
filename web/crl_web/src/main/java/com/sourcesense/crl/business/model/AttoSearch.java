@@ -59,6 +59,9 @@ public class AttoSearch extends Atto {
 	private boolean emendatoAula;
 	
 	
+	private String ruoloUtente;
+	private String tipoWorkingList;
+	
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataPubblicazioneDa() {
 		return dataPubblicazioneDa;
@@ -377,6 +380,22 @@ public class AttoSearch extends Atto {
 
 	public void setGruppoPrimoFirmatario(String gruppoPrimoFirmatario) {
 		this.gruppoPrimoFirmatario = gruppoPrimoFirmatario;
+	}
+
+	public String getRuoloUtente() {
+		return ruoloUtente;
+	}
+
+	public void setRuoloUtente(String ruoloUtente) {
+		this.ruoloUtente = ruoloUtente;
+	}
+
+	public String getTipoWorkingList() {
+		return tipoWorkingList;
+	}
+
+	public void setTipoWorkingList(String tipoWorkingList) {
+		this.tipoWorkingList = tipoWorkingList;
 	}
 
 	

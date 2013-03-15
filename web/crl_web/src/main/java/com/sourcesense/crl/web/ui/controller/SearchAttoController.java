@@ -243,11 +243,14 @@ public class SearchAttoController {
 
 		atto.getStatiUtente().clear();
 		atto.setCommissioneUser("");
-		
+		atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
+		atto.setTipoWorkingList("");
 		
 		// LAVORAZIONE
 		if ("inlavorazione".equals(listaLavoro)) {
 
+			atto.setTipoWorkingList("inlavorazione");
+			
 			if (userBean.getUser().getSessionGroup().isCommissione()) {
 
 				atto.setCommissioneUser(userBean.getUser().getSessionGroup()
@@ -263,7 +266,9 @@ public class SearchAttoController {
 						new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
 				atto.getStatiUtente().add(
 						new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.MIS));
+				
 			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
 					.getSessionGroup().getNome())) {
 
@@ -286,6 +291,8 @@ public class SearchAttoController {
 						new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
 				atto.getStatiUtente().add(
 						new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+				atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.EAC));
 
 			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
 					.getSessionGroup().getNome())) {
@@ -297,6 +304,8 @@ public class SearchAttoController {
 			// LAVORATI
 		} else if ("lavorati".equals(listaLavoro)) {
 
+			atto.setTipoWorkingList("lavorati");
+			
 			if (userBean.getUser().getSessionGroup().isCommissione()) {
 
 				atto.setCommissioneUser(userBean.getUser().getSessionGroup()
@@ -372,7 +381,8 @@ public class SearchAttoController {
 
 		atto.getStatiUtente().clear();
 		atto.setCommissioneUser("");  
-		
+		atto.setTipoWorkingList("inlavorazione");
+		atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
 		
 		if (userBean.getUser().getSessionGroup().isCommissione()) {
 
@@ -389,6 +399,8 @@ public class SearchAttoController {
 					new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
 			atto.getStatiUtente().add(
 					new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.MIS));
 
 		} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
 				.getSessionGroup().getNome())) {
@@ -408,6 +420,8 @@ public class SearchAttoController {
 					new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
 			atto.getStatiUtente().add(
 					new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+			atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.EAC));
 
 		} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
 				.getSessionGroup().getNome())) {
@@ -1214,6 +1228,7 @@ public class SearchAttoController {
 	}
 
 	public void setListAtti(List<Atto> listAtti) {
+		
 		this.listAtti = listAtti;
 	}
 

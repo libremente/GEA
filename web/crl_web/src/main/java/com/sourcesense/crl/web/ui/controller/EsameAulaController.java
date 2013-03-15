@@ -114,6 +114,9 @@ public class EsameAulaController {
 	private Date dataUscitaRelatore;
 	private Object relatoreToDelete;
 
+	private String oggetto;
+	private String oggettoOriginale;
+
 	@PostConstruct
 	public void init() {
 
@@ -131,6 +134,20 @@ public class EsameAulaController {
 		linksList = new ArrayList<Link>(aulaUser.getLinksEsameAula());
 		relatoriList = Clonator.cloneList(attoBean.getAtto().getRelatori());
 
+		boolean original = atto.getOggettoOriginale() != null
+				&& !"".equals(atto.getOggettoOriginale());
+		boolean oggNew = atto.getOggetto() != null && !"".equals(atto.getOggetto());
+		
+		if(original && oggNew){
+			setOggetto(atto.getOggetto());
+			setOggettoOriginale(atto.getOggettoOriginale());
+			
+		}else {
+			
+			setOggettoOriginale(atto.getOggetto());
+		}
+		
+		
 		totaleEmendApprovati();
 		totaleEmendPresentati();
 		totaleNonApprovati();
@@ -1531,15 +1548,53 @@ public class EsameAulaController {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
-	public void salvaInfoGenerali() {
-		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
+	public String getOggetto() {
+		return oggetto;
+	}
 
+	public void setOggetto(String oggetto) {
+		this.oggetto = oggetto;
+	}
+
+	public String getOggettoOriginale() {
+		return oggettoOriginale;
+	}
+
+	public void setOggettoOriginale(String oggettoOriginale) {
+		this.oggettoOriginale = oggettoOriginale;
+	}
+
+	public void salvaInfoGenerali() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
+		boolean original = oggettoOriginale != null
+				&& !"".equals(oggettoOriginale);
+		boolean oggNew = oggetto != null && !"".equals(oggetto);
+
+		if (original && oggNew) {
+
+			atto.setOggetto(oggetto);
+			atto.setOggettoOriginale(oggettoOriginale);
+			attoBean.getAtto().setOggetto(oggetto);
+			attoBean.getAtto().setOggettoOriginale(oggettoOriginale);
+
+		} else if (original && !oggNew) {
+
+			atto.setOggetto(oggettoOriginale);
+			attoBean.getAtto().setOggetto(oggettoOriginale);
+
+		} else {
+            atto.setOggetto(oggetto); 
+			attoBean.getAtto().setOggetto(oggetto);
+
+		}
+
+		attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
+
 		attoBean.getAtto().setClassificazione(this.atto.getClassificazione());
-		attoBean.getAtto().setOggetto(this.atto.getOggetto());
+
 		attoBean.getAtto().setNumeroRepertorio(atto.getNumeroRepertorio());
 		attoBean.getAtto().setDataRepertorio(this.atto.getDataRepertorio());
 		attoBean.getAtto().setTipoIniziativa(atto.getTipoIniziativa());

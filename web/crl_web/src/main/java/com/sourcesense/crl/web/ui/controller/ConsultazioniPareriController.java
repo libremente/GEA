@@ -322,6 +322,7 @@ public class ConsultazioniPareriController {
 
 		else {
 			setDataSedutaConsultazione(null);
+			setDataConsultazione(null);
 			setPrevista(false);
 			setDiscussa(false);
 			setNoteConsultazione("");
@@ -356,8 +357,9 @@ public class ConsultazioniPareriController {
 				Consultazione consultazione = new Consultazione();
 				consultazione.setDescrizione(soggettoConsultato);
 				consultazione.setDataConsultazione(dataConsultazione);
+				consultazione.setPrevista(true);
 				consultazioniList.add(consultazione);
-
+                
 				setDescrizioneConsultazioneSelected(soggettoConsultato);
 				showConsultazioneDetail();
 				updateConsultazioniHandler();
@@ -378,8 +380,18 @@ public class ConsultazioniPareriController {
 				if (!consultazioniList.isEmpty()) {
 					setDescrizioneConsultazioneSelected(consultazioniList
 							.get(0).getDescrizione());
+					showConsultazioneDetail();
+				}else{
+					
+					setDataSedutaConsultazione(null);
+					setPrevista(false);
+					setDiscussa(false);
+					setNoteConsultazione("");
+					setSoggettiInvitatiList(new ArrayList<SoggettoInvitato>());
+					setCommissioneDestinataria(null);
+					
 				}
-				showConsultazioneDetail();
+				
 
 				updateConsultazioniHandler();
 				break;

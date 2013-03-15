@@ -77,6 +77,8 @@ public class GestioneSeduteController {
 
 	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();
 	private String attiTrattatiorder;
+	private String attiSindacatoTrattatiorder;
+
 	private String idAttoTrattatoToDelete;
 
 	private List<Consultazione> consultazioniAtti = new ArrayList<Consultazione>();
@@ -88,20 +90,16 @@ public class GestioneSeduteController {
 	private boolean discusso;
 	private String audizioneToDelete;
 
-	
 	private List<String> tipiAttoSindacato = new ArrayList<String>();
 	private String tipoAttoSindacato;
 	private List<CollegamentoAttiSindacato> numeriAttoSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
-	private String attiSindacatoTrattatiorder;
+
 	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private String idAttoSindacato;
 	private String descrizioneAttoSindacato;
 	private String descrizioneCollegamento;
 	private String attoSindacatoToDelete;
-
-	
-
 	private String statoCommitInserisciSeduta = CRLMessage.COMMIT_DONE;
 	private String statoCommitInserisciOdg = CRLMessage.COMMIT_DONE;
 
@@ -116,13 +114,10 @@ public class GestioneSeduteController {
 				.getSessionGroup().getNome());
 
 		seduteList = Clonator.cloneList(seduteListAll);
-		Collections.sort(seduteList); 
+		Collections.sort(seduteList);
 		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
-
 		setDateSeduteList();
-
-		
 
 	}
 
@@ -310,7 +305,6 @@ public class GestioneSeduteController {
 		setCollegamentiAttiSindacato(sedutaSelected.getAttiSindacato());
 		Collections.sort(collegamentiAttiSindacato);
 		setAudizioni(sedutaSelected.getAudizioni());
-
 		consultazioniAtti.clear();
 
 		for (AttoTrattato element : attiTrattati) {
@@ -323,8 +317,10 @@ public class GestioneSeduteController {
 				Consultazione cons = (Consultazione) consultazione.clone();
 				if (formatter.format(cons.getDataSeduta()).equals(
 						formatter.format(sedutaSelected.getDataSeduta()))
+
 						&& userBean.getUser().getSessionGroup().getNome()
 								.equals(cons.getCommissione())) {
+
 					cons.setNumeroAtto(element.getAtto().getNumeroAtto());
 					cons.setTipoAtto(element.getAtto().getTipoAtto());
 					cons.setIdAtto(element.getAtto().getId());
@@ -417,7 +413,10 @@ public class GestioneSeduteController {
 				seduteList.add(seduta);
 
 				dateSeduteList.add(formatter.format(seduta.getDataSeduta()));
+				seduteListAll = seduteServiceManager.getSedute(userBean
+						.getUser().getSessionGroup().getNome());
 
+				seduteList = Clonator.cloneList(seduteListAll);
 				// Modifica
 			} else {
 				seduta.setNumVerbale(getNumVerbale());
@@ -598,16 +597,15 @@ public class GestioneSeduteController {
 			if (!checkCollegamentiAttiSindacati()) {
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Atto già collegato ", ""));
 
 			} else {
-				
-				
+
 				for (CollegamentoAttiSindacato collegamento : attiSindacato) {
 
 					if (collegamento.getIdAtto().equals(idAttoSindacato)) {
 
-						
 						collegamento.setDescrizione(descrizioneAttoSindacato);
 						collegamentiAttiSindacato.add(collegamento);
 						break;
@@ -623,10 +621,10 @@ public class GestioneSeduteController {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
 
-			if (element.getNumeroAtto().equals(attoSindacatoToDelete)) {
+			if (element.getIdAtto().equals(attoSindacatoToDelete)) {
 
 				collegamentiAttiSindacato.remove(element);
-				
+
 				break;
 			}
 		}
@@ -643,17 +641,17 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-	
+
 	public void handleAttoSindacatoChange() {
 
 		getNumeriAttoSindacato().clear();
-		
+
 		for (CollegamentoAttiSindacato collegamento : attiSindacato) {
 
 			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
 
 				getNumeriAttoSindacato().add(collegamento);
-				
+
 			}
 
 		}
@@ -661,12 +659,12 @@ public class GestioneSeduteController {
 	}
 
 	public void salvaInserisciOdg() {
-		
+
 		if (sedutaSelected != null) {
 
 			sedutaSelected.setAttiSindacato(Clonator
 					.cloneList(getOrderedAttiSindacatoTrattati()));
-			
+
 			Collections.sort(collegamentiAttiSindacato);
 
 			sedutaSelected.setAttiTrattati(Clonator
@@ -740,7 +738,7 @@ public class GestioneSeduteController {
 	private List<CollegamentoAttiSindacato> getOrderedAttiSindacatoTrattati() {
 
 		if (getAttiSindacatoTrattatiorder() != null
-				&& !getAttiSindacatoTrattatiorder().equals("")) {   
+				&& !getAttiSindacatoTrattatiorder().equals("")) {
 			// Numeri atto ordinati
 			String[] attiOrd = getAttiSindacatoTrattatiorder().split("_");
 
@@ -778,8 +776,7 @@ public class GestioneSeduteController {
 		return collegamentiAttiSindacato;
 
 	}
-	
-	
+
 	public StreamedContent getFile() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -793,16 +790,18 @@ public class GestioneSeduteController {
 			String gruppo = userBean.getUser().getSessionGroup().getNome();
 			String nomeFile = "";
 			Format formatter = new SimpleDateFormat("dd_MM_yyyy");
-			
+
 			if (GruppoUtente.AULA.equals(gruppo)) {
 
 				tipoTemplate = "crlodg:odgGenericoAulaDocument";
-				nomeFile = "ODG_Aula_" + formatter.format(sedutaSelected.getDataSeduta()) ;
+				nomeFile = "ODG_Aula_"
+						+ formatter.format(sedutaSelected.getDataSeduta());
 
 			} else {
 
 				tipoTemplate = "crlodg:odgGenericoCommissioniDocument";
-				nomeFile = "ODG_"+gruppo+"_" + formatter.format(sedutaSelected.getDataSeduta()) ;
+				nomeFile = "ODG_" + gruppo + "_"
+						+ formatter.format(sedutaSelected.getDataSeduta());
 			}
 
 			InputStream stream = seduteServiceManager.getODGFile(tipoTemplate,
@@ -820,7 +819,7 @@ public class GestioneSeduteController {
 		}
 
 	}
-	
+
 	public void setFile(StreamedContent file) {
 		this.file = file;
 	}
@@ -994,8 +993,6 @@ public class GestioneSeduteController {
 		this.discusso = discusso;
 	}
 
-	
-
 	public List<AttoTrattato> getAttiTrattati() {
 		return attiTrattati;
 	}
@@ -1051,8 +1048,6 @@ public class GestioneSeduteController {
 	public void setTipoAttoSindacato(String tipoAttoSindacato) {
 		this.tipoAttoSindacato = tipoAttoSindacato;
 	}
-
-	
 
 	public String getDescrizioneCollegamento() {
 		return descrizioneCollegamento;
@@ -1186,8 +1181,4 @@ public class GestioneSeduteController {
 		this.attiSindacatoTrattatiorder = attiSindacatoTrattatiorder;
 	}
 
-	
-	
-	
-	
 }

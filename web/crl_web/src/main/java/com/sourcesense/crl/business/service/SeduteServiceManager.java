@@ -55,13 +55,10 @@ public class SeduteServiceManager implements ServiceManager{
 	
 	public InputStream getODGFile(String tipoTemplate,String idSeduta,String gruppo ) {
         //alf_retrieve_report_bin=crl/template/report/creareport?json={0}&tipoTemplate={1} 
-		try{
 		return seduteService.getFile(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,URLEncoder.encode(gruppo,"UTF-8")}));
-		}catch(IOException ioex){
-			
-			return null;
-		}
+				//"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,URLEncoder.encode(gruppo,"UTF-8")}));
+				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,gruppo}));
+		
 	}
 	
 	

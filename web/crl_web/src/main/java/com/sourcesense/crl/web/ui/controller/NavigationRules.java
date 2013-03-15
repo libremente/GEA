@@ -277,8 +277,6 @@ public class NavigationRules {
 						.getTipoAtto().equalsIgnoreCase("DOC") && !attoBean
 						.getAtto().isIterAula()))
 
-						
-
 		) {
 			return false;
 		} else {

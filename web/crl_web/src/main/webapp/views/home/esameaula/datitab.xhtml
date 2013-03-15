@@ -137,7 +137,7 @@
               </p:column>
               <p:column colspan="3">
                 <p:inputTextarea readonly="false" rows="2" cols="82"
-                  value="#{esameAulaController.atto.oldOggetto}">
+                  value="#{esameAulaController.oggettoOriginale}">
                   <p:ajax event="change"
                           listener="#{esameAulaController.updateDatiHandler()}" />
                 </p:inputTextarea>
@@ -150,7 +150,7 @@
               </p:column>
               <p:column colspan="3">
                 <p:inputTextarea readonly="false" rows="2" cols="82"
-                  value="#{esameAulaController.atto.nuovoOggetto}">
+                  value="#{esameAulaController.oggetto}">
                   <p:ajax event="change"
                           listener="#{esameAulaController.updateDatiHandler()}" />
                 </p:inputTextarea>

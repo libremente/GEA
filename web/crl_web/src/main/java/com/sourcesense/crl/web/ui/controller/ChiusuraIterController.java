@@ -51,8 +51,11 @@ public class ChiusuraIterController {
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
 		
+		if(atto.getTipoChiusura()!=null){
 		dgr = "Parere negativo trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim()) 
 				|| "Parere favorevole trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim());
+		}
+	
 	}
 	
 	

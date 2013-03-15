@@ -90,8 +90,14 @@
 					<h:outputText style="font-weight: bold;" value="Oggetto: " />
 				</p:column>
 				<p:column colspan="3">
+				
+				    <!-- <c:set var="oggetto" value="#{presentazioneAssegnazioneAttoController.oggetto}"/>
+				    <c:if test="#{not empty presentazioneAssegnazioneAttoController.atto.oggettoOriginale}">
+				       <c:set var="oggetto" value="#{presentazioneAssegnazioneAttoController.atto.oggettoOriginale}"/>
+				    </c:if>-->
+				
 					<p:inputTextarea readonly="false" rows="2" cols="82"
-						value="#{presentazioneAssegnazioneAttoController.oggetto}">
+						value="#{presentazioneAssegnazioneAttoController.oggetto}" >
 						<p:ajax event="change"
 							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
 					</p:inputTextarea>

@@ -616,6 +616,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public String getOggetto() {
+		
 		return atto.getOggetto();
 	}
 

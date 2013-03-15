@@ -3,6 +3,7 @@ package com.sourcesense.crl.web.ui.controller;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoMIS;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
@@ -114,19 +115,23 @@ public class InserisciMISController {
 	public void inserisciAtto() {
 
 		atto.setTipoAtto("MIS");
+		atto.setStato(StatoAtto.MIS);
 		atto.setNumeroAtto(atto.getNumeroRepertorio());
 		
 		AttoMIS attoRet = attoServiceManager.persistMIS(atto);
+		FacesContext context = FacesContext.getCurrentInstance();
 		
 		if (attoRet!=null && attoRet.getError()==null) {
 
 		    this.atto=attoRet;
-			
+		    context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_INFO,
+					"Atto EAC inserito con successo", "")); 			
 
 		} else if (attoRet!=null && attoRet.getError()!=null && !attoRet.getError().equals("")) {
 			
 			
-			FacesContext context = FacesContext.getCurrentInstance();
+			
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));
 			
