@@ -96,6 +96,7 @@ if(nodeType=="crlatti:attoEac"){
 	eacAttoFolderNode.properties["crlatti:estensioneAtto"] = estensioneAtto;
 	eacAttoFolderNode.properties["crlatti:noteEac"] = note;
 	eacAttoFolderNode.properties["crlatti:legislatura"] = "nd";
+        eacAttoFolderNode.properties["crlatti:statoAtto"] = stato;
 
 	
 	if(checkIsNotNull(dataAtto)){
@@ -260,6 +261,7 @@ if(nodeType=="crlatti:attoEac"){
 	misAttoFolderNode.properties["crlatti:numeroAttoUdpMis"] = numeroAttoUdp;
 	misAttoFolderNode.properties["crlatti:istitutoIncaricatoMis"] = istitutoIncaricato;
 	misAttoFolderNode.properties["crlatti:oggetto"] = oggetto;
+        misAttoFolderNode.properties["crlatti:statoAtto"] = stato;
 
 	
 	misAttoFolderNode.save();
