@@ -13,7 +13,7 @@
 			"primoFirmatario" : "<#if atto.primoFirmatario?exists>${atto.primoFirmatario}<#else></#if>",
 			"elencoFirmatari" : "<#if atto.elencoFirmatario?exists>${atto.elencoFirmatari}<#else></#if>",
 			"dataPresentazione" : "<#if atto.dataPresentazione?exists>${atto.dataPresentazione?string("yyyy-MM-dd")}<#else></#if>",
-			"stato" : "<#if atto.stato?exists>${atto.stato}<#else></#if>",
+			"stato" : "<#if atto.stato?exists && atto.stato!="eac" && atto.stato!="mis">${atto.stato}<#else></#if>",
 			"elencoFirmatari" : "<#if atto.elencoFirmatari?exists>${atto.elencoFirmatari}<#else></#if>",
 			"tipoIniziativa" : "<#if atto.tipoIniziativa?exists>${atto.tipoIniziativa}<#else></#if>",
 			"tipoChiusura" : "<#if atto.tipoChiusura?exists>${atto.tipoChiusura}<#else></#if>",
