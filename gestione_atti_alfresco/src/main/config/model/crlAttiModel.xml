@@ -556,6 +556,18 @@
 					<title>Note</title>
 					<type>d:text</type>
 				</property>
+                                <property name="crlatti:dataTrasmissioneUdpMis">
+					<title>Data trasmissione a commissioni</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:relatore1Mis">
+					<title>Relatore 1</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:relatore2Mis">
+					<title>Relatore 2</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
 		

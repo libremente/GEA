@@ -113,6 +113,9 @@
     "dataEsameRapportoFinale":"<#if atto.properties["crlatti:dataEsameRapportoFinaleMis"]?exists>${atto.properties["crlatti:dataEsameRapportoFinaleMis"]?string("yyyy-MM-dd")}<#else></#if>",
     "dataTrasmissioneCommissioni":"<#if atto.properties["crlatti:dataTrasmissioneACommissioniMis"]?exists>${atto.properties["crlatti:dataTrasmissioneACommissioniMis"]?string("yyyy-MM-dd")}<#else></#if>",
     "note":"<#if atto.properties["crlatti:noteMis"]?exists>${atto.properties["crlatti:noteMis"]}<#else></#if>",
+    "dataTrasmissioneUdP":"<#if atto.properties["crlatti:dataTrasmissioneUdpMis"]?exists>${atto.properties["crlatti:dataTrasmissioneUdpMis"]?string("yyyy-MM-dd")}<#else></#if>",
+    "relatore1":"<#if atto.properties["crlatti:relatore1Mis"]?exists>${atto.properties["crlatti:relatore1Mis"]}<#else></#if>",
+    "relatore2":"<#if atto.properties["crlatti:relatore2Mis"]?exists>${atto.properties["crlatti:relatore2Mis"]}<#else></#if>",
 	</#if>
 
     "notePresentazioneAssegnazione":"<#if notePresentazioneAssegnazione?exists>${notePresentazioneAssegnazione.content}<#else></#if>",

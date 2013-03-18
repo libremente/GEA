@@ -472,6 +472,9 @@
 			<show-property name="crlatti:dataEsameRapportoFinaleMis" />
 			<show-property name="crlatti:dataTrasmissioneACommissioniMis" />
 			<show-property name="crlatti:noteMis" />
+                        <show-property name="crlatti:dataTrasmissioneUdpMis" />
+                        <show-property name="crlatti:relatore1Mis" />
+                        <show-property name="crlatti:relatore2Mis" />     
 		</property-sheet>
 	</config>
 

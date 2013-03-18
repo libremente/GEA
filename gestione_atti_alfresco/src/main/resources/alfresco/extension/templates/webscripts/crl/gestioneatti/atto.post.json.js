@@ -134,8 +134,11 @@ if(nodeType=="crlatti:attoEac"){
 	var dataTrasmissioneACommissioni = filterParam(atto.get("dataTrasmissioneCommissioni"));
 	var note = filterParam(atto.get("note"));
 	var oggetto = filterParam(atto.get("oggetto"));
-	
-	
+        var dataTrasmissioneUdP = filterParam(atto.get("dataTrasmissioneUdP"));
+        var relatore1 = filterParam(atto.get("relatore1"));
+        var relatore2 = filterParam(atto.get("relatore2"));	
+
+
 	//creazione dello spazio legislatura
 	var legislaturaPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(legislatura);
 	var legislaturaLuceneQuery = "PATH:\""+legislaturaPath+"\"";
@@ -249,6 +252,12 @@ if(nodeType=="crlatti:attoEac"){
 		var dataTrasmissioneACommissioniParsed = new Date(dataTrasmissioneACommissioniSplitted[0],dataTrasmissioneACommissioniSplitted[1]-1,dataTrasmissioneACommissioniSplitted[2]);
 		misAttoFolderNode.properties["crlatti:dataTrasmissioneACommissioniMis"] = dataTrasmissioneACommissioniParsed;
 	}
+        
+        if(checkIsNotNull(dataTrasmissioneUdP)){
+		var dataTrasmissioneUdPSplitted = dataTrasmissioneUdP.split("-");
+		var dataTrasmissioneUdPParsed = new Date(dataTrasmissioneUdPSplitted[0],dataTrasmissioneUdPSplitted[1]-1,dataTrasmissioneUdPSplitted[2]);
+		misAttoFolderNode.properties["crlatti:dataTrasmissioneUdpMis"] = dataTrasmissioneUdPParsed;
+	}
 	
 	misAttoFolderNode.name = numeroAtto+estensioneAtto;
 	misAttoFolderNode.properties["crlatti:legislatura"] = legislatura;
@@ -262,7 +271,8 @@ if(nodeType=="crlatti:attoEac"){
 	misAttoFolderNode.properties["crlatti:istitutoIncaricatoMis"] = istitutoIncaricato;
 	misAttoFolderNode.properties["crlatti:oggetto"] = oggetto;
         misAttoFolderNode.properties["crlatti:statoAtto"] = stato;
-
+        misAttoFolderNode.properties["crlatti:relatore1Mis"] = relatore1;
+        misAttoFolderNode.properties["crlatti:relatore2Mis"] = relatore2;
 	
 	misAttoFolderNode.save();
 	
