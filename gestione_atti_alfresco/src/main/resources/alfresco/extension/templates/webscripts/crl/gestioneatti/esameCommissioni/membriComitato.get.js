@@ -36,6 +36,8 @@ if(checkIsNotNull(idAtto) && checkIsNotNull(commissione)){
 		model.passaggio = passaggioFolderNode;
 		model.presenzaComitato = comitatoCommissioneFolderNode.properties["crlatti:presenzaCR"];
 		model.dataIstituzioneComitato = comitatoCommissioneFolderNode.properties["crlatti:dataIstituzioneCR"];
+                model.tipologia = comitatoCommissioneFolderNode.properties["crlatti:tipologiaCR"];
+                
 		model.membriComitato = membriComitatoNode;
 
 			

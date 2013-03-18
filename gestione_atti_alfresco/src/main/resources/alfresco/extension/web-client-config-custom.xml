@@ -500,6 +500,7 @@
 			<show-property name="crlatti:presenzaCR" />
 			<show-property name="crlatti:dataIstituzioneCR" />
 			<show-property name="crlatti:dataFineLavoriCR" />
+                        <show-property name="crlatti:tipologiaCR" />
 		</property-sheet>
 	</config>
 

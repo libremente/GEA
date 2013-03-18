@@ -5,6 +5,7 @@
    "passaggio": "${passaggio.name}",
    "presenzaComitato" : "<#if presenzaComitato?exists>${presenzaComitato?string("true","false")}<#else></#if>",
    "dataIstituzioneComitato" : "<#if dataIstituzioneComitato?exists>${dataIstituzioneComitato?string("yyyy-MM-dd")}<#else></#if>",
+    "tipologia" : "<#if tipologia?exists>${tipologia}<#else></#if>",
    "List":[
    <#list membriComitato as membro>
    { "membro" : 

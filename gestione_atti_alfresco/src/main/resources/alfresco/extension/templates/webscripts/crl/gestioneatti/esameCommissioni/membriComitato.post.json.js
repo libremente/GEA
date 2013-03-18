@@ -15,6 +15,7 @@ var dataIstituzioneComitato = filterParam(commissioneTarget.get("dataIstituzione
 var membri = filterParam(commissioneTarget.get("comitatoRistretto").get("componenti"));
 var statoCommissione = filterParam(commissioneTarget.get("stato"));
 var ruoloCommissione = filterParam(commissioneTarget.get("ruolo"));
+var tipologia = filterParam(commissioneTarget.get("comitatoRistretto").get("tipologia"));
 
 
 
@@ -58,6 +59,7 @@ if(checkIsNotNull(id)){
 	// setting delle proprietà del comitato ristretto
 	
 	comitatoFolderNode.properties["crlatti:presenzaCR"] = presenzaComitato;
+        comitatoFolderNode.properties["crlatti:tipologiaCR"] = tipologia;
 	
 	var dataIstituzioneComitatoParsed = null;
 	if(checkIsNotNull(dataIstituzioneComitato)){

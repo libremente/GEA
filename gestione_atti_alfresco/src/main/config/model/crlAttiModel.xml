@@ -638,6 +638,10 @@
 					<title>Data fine lavori</title>
 					<type>d:date</type>
 				</property>
+                                <property name="crlatti:tipologiaCR">
+					<title>Tipologia Comitato</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
 

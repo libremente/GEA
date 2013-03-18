@@ -406,9 +406,10 @@
 						   	"comitatoRistretto" : 
 						   	{
 						   		"comitatoRistretto" : {
+                                                                        <#assign componenti = commissione.childrenByXPath["*[@cm:name='ComitatoRistretto']"][0]>
+                                                                        "tipologia": "<#if componenti.properties["crlatti:tipologiaCR"]?exists>${componenti.properties["crlatti:tipologiaCR"]}<#else></#if>",
 							   		"componenti":
-							   			[
-							   			<#assign componenti = commissione.childrenByXPath["*[@cm:name='ComitatoRistretto']"][0]>
+							   			[							   			
 							   			<#assign componentiList = componenti.getChildAssocsByType("crlatti:membroComitatoRistretto")>
 							   			<#list  componentiList as componente>
 										 {
