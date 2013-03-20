@@ -27,7 +27,7 @@
             <ref bean="ServiceRegistry"/>
         </property>
          <property name="attiIspettiviAlfrescoURL">
-            <value>http://10.177.4.11/alfresco</value>
+            <value>http://10.177.4.11:8080/alfresco</value>
         </property>
         <property name="attiIspettiviAlfrescoUser">
             <value>integrazioneNGA</value>
@@ -36,7 +36,7 @@
             <value>870apZ0O3h</value>
         </property>
          <property name="attiIspettiviAlfrescoPath">
-            <value>/CRL/Integrazioni/Import/NGA/Atti</value>
+            <value>/User Homes/integrazioneNGA/Import/NGA/Atti</value>
         </property>
     </bean>
 
@@ -98,7 +98,7 @@
             <value>PATH:"/app:company_home"</value> 
         </property>
         <property name="cronExpression">
-            <value>0 0/5 * * * ? 2099</value>  <!-- <value>0 0 6 * * ? 2099</value> add 2099 after ? to disable -->
+            <value>0 0/5 * * * ?</value>  <!-- <value>0 0/5 * * * ? 2099</value> add 2099 after ? to disable -->
         </property>
         <property name="jobName">
             <value>jobAttiIndirizzoExport</value>

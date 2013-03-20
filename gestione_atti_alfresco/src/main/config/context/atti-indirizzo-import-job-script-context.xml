@@ -77,7 +77,7 @@
             <value>PATH:"/app:company_home"</value> 
         </property>
         <property name="cronExpression">
-            <value>0 0/3 * * * ? 2099</value>
+            <value>0 0/5 * * * ?</value> <!-- <value>0 0/5 * * * ? 2099</value> add 2099 after ? to disable -->
         </property>
         <property name="jobName">
             <value>jobAttiIndirizzoImport</value>
