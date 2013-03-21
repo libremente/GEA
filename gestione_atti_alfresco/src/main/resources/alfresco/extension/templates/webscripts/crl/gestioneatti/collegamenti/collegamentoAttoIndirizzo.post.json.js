@@ -88,8 +88,8 @@ if(checkIsNotNull(id)){
 //	attoFolderNode.save();
 	
 	// modifico la property per innescare la creazione del file xml di export per Atti Indirizzo
-	attoNode.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";	
-	attoNode.save();
+	attoFolderNode.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";	
+	attoFolderNode.save();
 	
 	
 } else {
