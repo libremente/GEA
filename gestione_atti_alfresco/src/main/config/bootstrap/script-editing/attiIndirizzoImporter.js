@@ -382,7 +382,7 @@ for(var i=0; i<xmlFileList.length; i++){
 	}else if (operazione == "DELETE"){
 		
 		var legislaturaRepositoryPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(numero_legislatura);
-		var attoIndirizzoLuceneQuery = "PATH:\""+legislaturaPath+"//*\"";
+		var attoIndirizzoLuceneQuery = "PATH:\""+legislaturaRepositoryPath+"//*\"";
 		attoIndirizzoLuceneQuery += " AND TYPE:\"crlatti:attoIndirizzo\"";
 		attoIndirizzoLuceneQuery += " AND @crlatti\\:IdAttoIndirizzo:\""+id_atto+"\"";
 		
@@ -390,33 +390,35 @@ for(var i=0; i<xmlFileList.length; i++){
 		var attoResults = search.luceneSearch(attoIndirizzoLuceneQuery);
 		
 		if(attoResults!=null && attoResults.length>0){
-			attiIndirizzoImportLogger.error("Richiesta operazione di DELETE per atto con id: "+id_atto+" e tipo atto: "+tipo_atto+". L'atto non e' presente nel repository");			
+                    
+                    var attoFolderNode = attoResults[0];
+			
+                    // rimuovere i collegamenti negli atti
+
+                    // ricerca di tutti i crlatti:collegamentoAttoIndirizzo con id_atto corrente
+
+                    var collegamentiLegislaturaRepositoryPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(numero_legislatura);
+                    var collAttoIndirizzoLuceneQuery = "PATH:\""+collegamentiLegislaturaRepositoryPath+"//*\"";
+                    collAttoIndirizzoLuceneQuery += " AND TYPE:\"crlatti:collegamentoAttoIndirizzo\"";
+                    collAttoIndirizzoLuceneQuery += " AND @cm\\:name:\""+id_atto+"\"";
+
+                    var collAttoResults = search.luceneSearch(collAttoIndirizzoLuceneQuery);
+
+                    for(var j=0; j < collAttoResults.length; j++){
+
+                            collAttoResults[j].remove();
+
+                    }
+
+
+                    // rimozione dell'atto dal repository
+
+                    attoFolderNode.remove();
+                        
 		} else {
-			
-			var attoFolderNode = attoResults[0];
-			
-			// rimuovere i collegamenti negli atti
-			
-			// ricerca di tutti i crlatti:collegamentoAttoIndirizzo con id_atto corrente
-			
-			var collegamentiLegislaturaRepositoryPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(numero_legislatura);
-			var collAttoIndirizzoLuceneQuery = "PATH:\""+collegamentiLegislaturaRepositoryPath+"//*\"";
-			collAttoIndirizzoLuceneQuery += " AND TYPE:\"crlatti:collegamentoAttoIndirizzo\"";
-			collAttoIndirizzoLuceneQuery += " AND @cm\\:name:\""+id_atto+"\"";
-			
-			var collAttoResults = search.luceneSearch(collAttoIndirizzoLuceneQuery);
-			
-			for(var j=0; j < collAttoResults.length; j++){
-				
-				collAttoResults[j].remove();
-			
-			}
-			
-			
-			// rimozione dell'atto dal repository
-			
-			attoFolderNode.remove();
-			
+		
+                    attiIndirizzoImportLogger.error("Richiesta operazione di DELETE per atto con id: "+id_atto+" e tipo atto: "+tipo_atto+". L'atto non e' presente nel repository");			
+	
 		}
 		
 		xmlFile.move(attiParsedFolderNode);
