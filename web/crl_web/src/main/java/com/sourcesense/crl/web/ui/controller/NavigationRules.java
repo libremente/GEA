@@ -374,12 +374,11 @@ public class NavigationRules {
 
 		if (attoBean.getTipoAtto().equals("REL")
 				|| attoBean.getTipoAtto().equals("INP")
-				|| attoBean.getTipoChiusura().equals("Per decadenza (fine legislatura)")
-				|| attoBean.getTipoChiusura().equals("Respinto dall'Aula")
-				|| attoBean.getTipoChiusura().equals("Ritirato dai promotori")
-				|| attoBean.getTipoChiusura().equals("Abbinato ad altro atto")
-				|| attoBean.getTipoChiusura().equals("Inammissibile")
-
+				|| "Per decadenza (fine legislatura)".equals(attoBean.getTipoChiusura())
+				|| "Respinto dall'Aula".equals(attoBean.getTipoChiusura())
+				|| "Ritirato dai promotori".equals(attoBean.getTipoChiusura())
+				|| "Abbinato ad altro atto".equals(attoBean.getTipoChiusura())
+				|| "Inammissibile".equals(attoBean.getTipoChiusura())
 		) {
 			return false;
 		} else {
