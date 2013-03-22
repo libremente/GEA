@@ -1,5 +1,6 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -18,9 +19,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoTrattato;
 import com.sourcesense.crl.business.model.Audizione;
@@ -37,6 +40,7 @@ import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.SeduteServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
+import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 @ManagedBean(name = "gestioneSeduteController")
@@ -102,6 +106,12 @@ public class GestioneSeduteController {
 	private String attoSindacatoToDelete;
 	private String statoCommitInserisciSeduta = CRLMessage.COMMIT_DONE;
 	private String statoCommitInserisciOdg = CRLMessage.COMMIT_DONE;
+
+	private List<Allegato> odgList = new ArrayList<Allegato>();
+	private List<Allegato> verbaliList = new ArrayList<Allegato>();
+	private String odgToDelete;
+	private String verbaleToDelete;
+	private boolean currentFilePubblico;
 
 	@PostConstruct
 	protected void init() {
@@ -417,6 +427,7 @@ public class GestioneSeduteController {
 						.getUser().getSessionGroup().getNome());
 
 				seduteList = Clonator.cloneList(seduteListAll);
+				Collections.sort(seduteList);
 				// Modifica
 			} else {
 				seduta.setNumVerbale(getNumVerbale());
@@ -820,6 +831,74 @@ public class GestioneSeduteController {
 
 	}
 
+	public void removeTestoODG() {
+
+	}
+
+	public void uploadODG(FileUploadEvent event) {
+
+		String fileName = event.getFile().getFileName();
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		Allegato allegatoRet = new Allegato();
+		allegatoRet.setNome(event.getFile().getFileName());
+		allegatoRet.setPubblico(currentFilePubblico);
+
+		// TODO
+		// try {
+		//
+		//
+		// Allegato allegatoAlf = commissioneServiceManager
+		// .uploadTestoComitatoRistretto(((AttoBean) FacesContext
+		// .getCurrentInstance().getExternalContext()
+		// .getSessionMap().get("attoBean")).getAtto(),
+		// event.getFile().getInputstream(), allegatoRet);
+		//
+		// allegatoRet.setId(allegatoAlf.getId());
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+
+		odgList.add(allegatoRet);
+
+	}
+
+	public void uploadVerbale(FileUploadEvent event) {
+
+		String fileName = event.getFile().getFileName();
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		Allegato allegatoRet = new Allegato();
+		allegatoRet.setNome(event.getFile().getFileName());
+		allegatoRet.setPubblico(currentFilePubblico);
+
+		// TODO
+		// try {
+		//
+		//
+		// Allegato allegatoAlf = commissioneServiceManager
+		// .uploadTestoComitatoRistretto(((AttoBean) FacesContext
+		// .getCurrentInstance().getExternalContext()
+		// .getSessionMap().get("attoBean")).getAtto(),
+		// event.getFile().getInputstream(), allegatoRet);
+		//
+		// allegatoRet.setId(allegatoAlf.getId());
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+
+		odgList.add(allegatoRet);
+
+	}
+
+	public void removeVerbale() {
+
+	}
+
 	public void setFile(StreamedContent file) {
 		this.file = file;
 	}
@@ -1179,6 +1258,46 @@ public class GestioneSeduteController {
 
 	public void setAttiSindacatoTrattatiorder(String attiSindacatoTrattatiorder) {
 		this.attiSindacatoTrattatiorder = attiSindacatoTrattatiorder;
+	}
+
+	public List<Allegato> getOdgList() {
+		return odgList;
+	}
+
+	public void setOdgList(List<Allegato> odgList) {
+		this.odgList = odgList;
+	}
+
+	public List<Allegato> getVerbaliList() {
+		return verbaliList;
+	}
+
+	public void setVerbaliList(List<Allegato> verbaliList) {
+		this.verbaliList = verbaliList;
+	}
+
+	public String getOdgToDelete() {
+		return odgToDelete;
+	}
+
+	public void setOdgToDelete(String odgToDelete) {
+		this.odgToDelete = odgToDelete;
+	}
+
+	public String getVerbaleToDelete() {
+		return verbaleToDelete;
+	}
+
+	public void setVerbaleToDelete(String verbaleToDelete) {
+		this.verbaleToDelete = verbaleToDelete;
+	}
+
+	public boolean isCurrentFilePubblico() {
+		return currentFilePubblico;
+	}
+
+	public void setCurrentFilePubblico(boolean currentFilePubblico) {
+		this.currentFilePubblico = currentFilePubblico;
 	}
 
 }

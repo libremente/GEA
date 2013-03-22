@@ -189,6 +189,25 @@ public class AttoBean implements Serializable {
 
 	}
 
+	
+	public List<OrganismoStatutario> getValidOrganismiStatutari() {
+
+		List<OrganismoStatutario> listOrg = new ArrayList<OrganismoStatutario>();
+
+		for (OrganismoStatutario organismoRec : atto.getOrganismiStatutari()) {
+
+			if (organismoRec.getDataAnnullo()==null) {
+
+				listOrg.add(organismoRec);
+
+			}
+		}
+
+		return listOrg;
+
+	}
+	
+	
 	public OrganismoStatutario getWorkingOrganismoStatutario(String organismo) {
 
 		OrganismoStatutario organismoRet = null;
@@ -198,7 +217,7 @@ public class AttoBean implements Serializable {
 			if (organismoRec.getDescrizione().equalsIgnoreCase(organismo)) {
 
 				organismoRet = organismoRec;
-				
+
 			}
 		}
 
@@ -232,6 +251,16 @@ public class AttoBean implements Serializable {
 						m2.getDataConsultazione());
 			}
 		});
+
+		for (Consultazione consultazione : lista) {
+
+			Commissione commAppo = getWorkingCommissione(consultazione
+					.getCommissione());
+
+			if (commAppo != null) {
+				consultazione.setRuoloCommissione(commAppo.getRuolo());
+			}
+		}
 
 		return lista;
 	}
@@ -616,7 +645,7 @@ public class AttoBean implements Serializable {
 	}
 
 	public String getOggetto() {
-		
+
 		return atto.getOggetto();
 	}
 

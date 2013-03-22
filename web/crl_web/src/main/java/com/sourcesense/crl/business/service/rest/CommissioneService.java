@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Map;
 
@@ -239,13 +240,17 @@ public class CommissioneService {
 		try {
 
 			WebResource webResource = client.resource(url);
+			SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd");
 			FormDataMultiPart part = new FormDataMultiPart();
+			String dataSeduta = (allegato.getDataSeduta()==null)?"":format.format(allegato.getDataSeduta());
 			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
 			part.field("id", atto.getId());
 			part.field("pubblico", allegato.isPubblico()+"");
 			part.field("provenienza", allegato.getCommissione());
 			part.field("passaggio", allegato.getPassaggio());
-			part.field("dataSeduta", allegato.getDataSeduta()+"");
+			
+			part.field("dataSeduta", dataSeduta);
+			
 			part.field("tipologia", tipologia);
 			
 			ClientResponse response = webResource

@@ -1108,7 +1108,7 @@
 
 
 								<p:column>
-									<p:selectOneMenu id="numAttoSindacato"
+									<p:selectOneMenu id="numAttoSindacato" style="width:200px"
 										value="#{gestioneSeduteController.idAttoSindacato}">
 										<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
 										<f:selectItems itemValue="#{attoSind.idAtto}" var="attoSind"
@@ -1128,8 +1128,7 @@
 									<p:commandButton value="Aggiungi"
 										action="#{gestioneSeduteController.addCollegamentoAttoSindacato}"
 										id="addCollegamentoAttoSindacato"
-										update=":gestioneSeduteForm:gestioneSedute"
-										icon="new-icon" />
+										update=":gestioneSeduteForm:gestioneSedute" icon="new-icon" />
 								</p:column>
 
 							</p:row>

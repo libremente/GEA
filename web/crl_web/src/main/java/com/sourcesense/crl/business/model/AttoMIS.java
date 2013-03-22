@@ -19,13 +19,15 @@ public class AttoMIS extends Atto implements Cloneable{
 	private Date dataRispostaComitato;
 	private Date dataApprovazioneProgetto;
 	private Date dataApprovazioneUdP;
+	private Date dataTrasmissioneUdP;
 	private String numeroAttoUdp;
 	private Date dataScadenzaMV;
 	private Date dataEsameRapportoFinale;
 	private Date dataTrasmissioneCommissioni;
 	private String note;
 	private String istitutoIncaricato;
-	
+	private String relatore1;
+	private String relatore2;
 	
 	
 	public String getNumeroRepertorio() {
@@ -142,6 +144,29 @@ public class AttoMIS extends Atto implements Cloneable{
 	public void setIstitutoIncaricato(String istitutoIncaricato) {
 		this.istitutoIncaricato = istitutoIncaricato;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDataTrasmissioneUdP() {
+		return dataTrasmissioneUdP;
+	}
+	
+	
+	public void setDataTrasmissioneUdP(Date dataTrasmissioneUdP) {
+		this.dataTrasmissioneUdP = dataTrasmissioneUdP;
+	}
+	public String getRelatore1() {
+		return relatore1;
+	}
+	public void setRelatore1(String relatore1) {
+		this.relatore1 = relatore1;
+	}
+	public String getRelatore2() {
+		return relatore2;
+	}
+	public void setRelatore2(String relatore2) {
+		this.relatore2 = relatore2;
+	}
+	
 	
 	
 	

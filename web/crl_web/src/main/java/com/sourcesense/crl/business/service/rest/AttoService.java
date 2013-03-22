@@ -206,7 +206,7 @@ public class AttoService {
 		
 		try {
 			
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, false);
 			atto = objectMapper.readValue(responseMsg, Atto.class);
 
 		} catch (JsonMappingException e) {

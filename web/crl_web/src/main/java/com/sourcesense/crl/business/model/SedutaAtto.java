@@ -22,7 +22,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("sedutaAtto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class SedutaAtto {
+public class SedutaAtto implements Comparable<SedutaAtto>{
 	
 	
 	
@@ -33,6 +33,12 @@ public class SedutaAtto {
 	private List <Link> links = new ArrayList<Link>();
 	private String numVerbale;
 	
+	
+	@Override
+	public int compareTo(SedutaAtto o) {
+		return o.getDataSeduta().compareTo(this.dataSeduta);
+	}
+
 	
 	public String getIdSeduta() {
 		return idSeduta;

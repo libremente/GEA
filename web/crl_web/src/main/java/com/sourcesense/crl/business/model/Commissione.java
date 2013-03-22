@@ -1,7 +1,5 @@
 package com.sourcesense.crl.business.model;
 
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,13 +15,12 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 import com.sourcesense.crl.util.JsonNoteDeserializer;
 
-
 @JsonRootName("commissione")
 @JsonTypeName("commissione")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class Commissione implements Cloneable {
-	
+
 	public static final String STATO_PROPOSTO = "Proposto";
 	public static final String STATO_ASSEGNATO = "Assegnato";
 	public static final String STATO_IN_CARICO = "In Carico";
@@ -33,19 +30,19 @@ public class Commissione implements Cloneable {
 	public static final String STATO_COMITATO_RISTRETTO = "Lavori Comitato Ristretto";
 	public static final String STATO_TRASMESSO = "Trasmesso";
 	public static final String STATO_VERIFICATA_AMMISSIBILITA = "Verificata Ammissibilità";
-	
+
 	public static final String RUOLO_REFERENTE = "Referente";
 	public static final String RUOLO_COREFERENTE = "Co-Referente";
 	public static final String RUOLO_CONSULTIVA = "Consultiva";
 	public static final String RUOLO_REDIGENTE = "Redigente";
 	public static final String RUOLO_DELIBERANTE = "Deliberante";
-	
+
 	private String commissione;
 	private String descrizione;
 	private String nome;
 	private String ruolo;
 	private String stato;
-	//private String tipoVotazione;
+	// private String tipoVotazione;
 	private String esitoVotazione;
 	private String materia;
 	private String esitoVotoCommissioneReferente;
@@ -55,7 +52,7 @@ public class Commissione implements Cloneable {
 	private String noteGeneraliEsameCommissione;
 	private String esitoVotazioneIntesa;
 	private String noteClausolaValutativa;
-	
+
 	private Date dataAssegnazione;
 	private Date dataPresaInCarico;
 	private Date dataVotazione;
@@ -72,54 +69,50 @@ public class Commissione implements Cloneable {
 	private Date dataRichiestaIscrizioneAula;
 	private Date dataPresaInCaricoProposta;
 	private Date dataIntesa;
-	
-	
-	private List <Relatore> relatori = new ArrayList<Relatore>();
-	private List <Link> linksNoteEsameCommissione = new ArrayList<Link>();
-	private List <TestoAtto> testiAttoVotatoEsameCommissioni = new ArrayList<TestoAtto>();
-	private List <Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
-	private List <Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
-	private List <Allegato> testiClausola = new ArrayList<Allegato>();
-	private List <Allegato> allegati = new ArrayList<Allegato>();
-	
-	
+
+	private List<Relatore> relatori = new ArrayList<Relatore>();
+	private List<Link> linksNoteEsameCommissione = new ArrayList<Link>();
+	private List<TestoAtto> testiAttoVotatoEsameCommissioni = new ArrayList<TestoAtto>();
+	private List<Allegato> emendamentiEsameCommissioni = new ArrayList<Allegato>();
+	private List<Allegato> allegatiNoteEsameCommissioni = new ArrayList<Allegato>();
+	private List<Allegato> testiClausola = new ArrayList<Allegato>();
+	private List<Allegato> allegati = new ArrayList<Allegato>();
+
 	private boolean annullata = false;
 	private boolean presenzaComitatoRistretto;
 	private boolean passaggioDirettoInAula;
-	
-	private Integer numEmendPresentatiMaggiorEsameCommissioni ;
-	private Integer numEmendPresentatiMinorEsameCommissioni ;
-	private Integer numEmendPresentatiGiuntaEsameCommissioni ;
-	private Integer numEmendPresentatiMistoEsameCommissioni ;
+
+	private Integer numEmendPresentatiMaggiorEsameCommissioni;
+	private Integer numEmendPresentatiMinorEsameCommissioni;
+	private Integer numEmendPresentatiGiuntaEsameCommissioni;
+	private Integer numEmendPresentatiMistoEsameCommissioni;
 	private Integer numEmendApprovatiMaggiorEsameCommissioni;
 	private Integer numEmendApprovatiMinorEsameCommissioni;
 	private Integer numEmendApprovatiGiuntaEsameCommissioni;
-	private Integer numEmendApprovatiMistoEsameCommissioni ;
-	private Integer nonAmmissibiliEsameCommissioni ;
-	private Integer decadutiEsameCommissioni ;
-	private Integer ritiratiEsameCommissioni ;
-	private Integer respintiEsameCommissioni ;
-	
-	
+	private Integer numEmendApprovatiMistoEsameCommissioni;
+	private Integer nonAmmissibiliEsameCommissioni;
+	private Integer decadutiEsameCommissioni;
+	private Integer ritiratiEsameCommissioni;
+	private Integer respintiEsameCommissioni;
+
 	private Date dataSedutaStralcio;
 	private Date dataIniziativaStralcio;
 	private Date dataStralcio;
 	private String articoli;
 	private String noteStralcio;
 	private String quorumStralcio;
-	
+
 	private boolean sospensioneFeriale;
 	private Date dataInterruzione;
 	private Date dataRicezioneIntegrazioni;
-	
-	
+
 	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
-	
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -128,10 +121,7 @@ public class Commissione implements Cloneable {
 			return null;
 		}
 	}
-	
-  
-	
-	
+
 	public List<Allegato> getAllegati() {
 		return allegati;
 	}
@@ -140,12 +130,13 @@ public class Commissione implements Cloneable {
 		this.allegati = allegati;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataScadenzaEsameCommissioni() {
 		return dataScadenzaEsameCommissioni;
 	}
 
-	public void setDataScadenzaEsameCommissioni(Date dataScadenzaEsameCommissioni) {
+	public void setDataScadenzaEsameCommissioni(
+			Date dataScadenzaEsameCommissioni) {
 		this.dataScadenzaEsameCommissioni = dataScadenzaEsameCommissioni;
 	}
 
@@ -183,8 +174,8 @@ public class Commissione implements Cloneable {
 	public void setQuorumEsameCommissioni(String quorumEsameCommissioni) {
 		this.quorumEsameCommissioni = quorumEsameCommissioni;
 	}
- 
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaCommissione() {
 		return dataSedutaCommissione;
 	}
@@ -193,7 +184,7 @@ public class Commissione implements Cloneable {
 		this.dataSedutaCommissione = dataSedutaCommissione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaContinuazioneInReferente() {
 		return dataSedutaContinuazioneInReferente;
 	}
@@ -288,7 +279,8 @@ public class Commissione implements Cloneable {
 		return nonAmmissibiliEsameCommissioni;
 	}
 
-	public void setNonAmmissibiliEsameCommissioni(Integer nonAmmissibiliEsameCommissioni) {
+	public void setNonAmmissibiliEsameCommissioni(
+			Integer nonAmmissibiliEsameCommissioni) {
 		this.nonAmmissibiliEsameCommissioni = nonAmmissibiliEsameCommissioni;
 	}
 
@@ -374,7 +366,7 @@ public class Commissione implements Cloneable {
 		this.stato = stato;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazione() {
 		return dataAssegnazione;
 	}
@@ -383,7 +375,7 @@ public class Commissione implements Cloneable {
 		this.dataAssegnazione = dataAssegnazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPresaInCarico() {
 		return dataPresaInCarico;
 	}
@@ -392,13 +384,12 @@ public class Commissione implements Cloneable {
 		this.dataPresaInCarico = dataPresaInCarico;
 	}
 
-	/*public String getTipoVotazione() {
-		return tipoVotazione;
-	}
-
-	public void setTipoVotazione(String tipoVotazione) {
-		this.tipoVotazione = tipoVotazione;
-	}*/
+	/*
+	 * public String getTipoVotazione() { return tipoVotazione; }
+	 * 
+	 * public void setTipoVotazione(String tipoVotazione) { this.tipoVotazione =
+	 * tipoVotazione; }
+	 */
 
 	public String getEsitoVotazione() {
 		return esitoVotazione;
@@ -408,7 +399,7 @@ public class Commissione implements Cloneable {
 		this.esitoVotazione = esitoVotazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataVotazione() {
 		return dataVotazione;
 	}
@@ -417,7 +408,7 @@ public class Commissione implements Cloneable {
 		this.dataVotazione = dataVotazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataTrasmissione() {
 		return dataTrasmissione;
 	}
@@ -434,7 +425,7 @@ public class Commissione implements Cloneable {
 		this.relatori = relatori;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataProposta() {
 		return dataProposta;
 	}
@@ -443,7 +434,7 @@ public class Commissione implements Cloneable {
 		this.dataProposta = dataProposta;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAnnullo() {
 		return dataAnnullo;
 	}
@@ -460,7 +451,7 @@ public class Commissione implements Cloneable {
 		this.annullata = annullata;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataNomina() {
 		return dataNomina;
 	}
@@ -485,7 +476,7 @@ public class Commissione implements Cloneable {
 		this.materia = materia;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataScadenza() {
 		return dataScadenza;
 	}
@@ -493,7 +484,6 @@ public class Commissione implements Cloneable {
 	public void setDataScadenza(Date dataScadenza) {
 		this.dataScadenza = dataScadenza;
 	}
-
 
 	public boolean isPresenzaComitatoRistretto() {
 		return presenzaComitatoRistretto;
@@ -503,7 +493,7 @@ public class Commissione implements Cloneable {
 		this.presenzaComitatoRistretto = presenzaComitatoRistretto;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataIstituzioneComitato() {
 		return dataIstituzioneComitato;
 	}
@@ -512,7 +502,7 @@ public class Commissione implements Cloneable {
 		this.dataIstituzioneComitato = dataIstituzioneComitato;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataFineLavoriComitato() {
 		return dataFineLavoriComitato;
 	}
@@ -521,13 +511,12 @@ public class Commissione implements Cloneable {
 		this.dataFineLavoriComitato = dataFineLavoriComitato;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRichiestaIscrizioneAula() {
 		return dataRichiestaIscrizioneAula;
 	}
 
-	public void setDataRichiestaIscrizioneAula(
-			Date dataRichiestaIscrizioneAula) {
+	public void setDataRichiestaIscrizioneAula(Date dataRichiestaIscrizioneAula) {
 		this.dataRichiestaIscrizioneAula = dataRichiestaIscrizioneAula;
 	}
 
@@ -538,26 +527,26 @@ public class Commissione implements Cloneable {
 	public void setPassaggioDirettoInAula(boolean passaggioDirettoInAula) {
 		this.passaggioDirettoInAula = passaggioDirettoInAula;
 	}
-	
+
 	public List<Link> getLinksNoteEsameCommissione() {
 		return linksNoteEsameCommissione;
 	}
 
-	
-	public void setLinksNoteEsameCommissione(List<Link> linksNoteEsameCommissione) {
+	public void setLinksNoteEsameCommissione(
+			List<Link> linksNoteEsameCommissione) {
 		this.linksNoteEsameCommissione = linksNoteEsameCommissione;
 	}
-	
-	
+
 	public String getNoteGeneraliEsameCommissione() {
 		return noteGeneraliEsameCommissione;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
-	public void setNoteGeneraliEsameCommissione(String noteGeneraliEsameCommissione) {
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
+	public void setNoteGeneraliEsameCommissione(
+			String noteGeneraliEsameCommissione) {
 		this.noteGeneraliEsameCommissione = noteGeneraliEsameCommissione;
 	}
-	
+
 	public List<Allegato> getTestiClausola() {
 		return testiClausola;
 	}
@@ -566,7 +555,7 @@ public class Commissione implements Cloneable {
 		this.testiClausola = testiClausola;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPresaInCaricoProposta() {
 		return dataPresaInCaricoProposta;
 	}
@@ -575,7 +564,7 @@ public class Commissione implements Cloneable {
 		this.dataPresaInCaricoProposta = dataPresaInCaricoProposta;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataIntesa() {
 		return dataIntesa;
 	}
@@ -596,7 +585,7 @@ public class Commissione implements Cloneable {
 		return noteClausolaValutativa;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNoteClausolaValutativa(String noteClausolaValutativa) {
 		this.noteClausolaValutativa = noteClausolaValutativa;
 	}
@@ -672,8 +661,19 @@ public class Commissione implements Cloneable {
 	public void setDataRicezioneIntegrazioni(Date dataRicezioneIntegrazioni) {
 		this.dataRicezioneIntegrazioni = dataRicezioneIntegrazioni;
 	}
-	
-	
-	
+
+	public List<Relatore> getValidRelatori() {
+
+		List<Relatore> list = new ArrayList<Relatore>();
+
+		for (Relatore relatore : relatori) {
+			if (relatore.getDataUscita() == null) {
+				list.add(relatore);
+			}
+		}
+
+		return list;
+
+	}
 
 }

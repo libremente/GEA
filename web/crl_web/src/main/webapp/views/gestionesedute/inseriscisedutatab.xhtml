@@ -8,7 +8,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:of="http://omnifaces.org/functions">
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 
 
@@ -61,6 +62,100 @@
 			</p:confirmDialog>
 
 
+			<!-- FILE UPLOAD -->
+
+			<p:confirmDialog id="confirmVerbaleDialog"
+				message="Sei sicuro di voler eliminare il Verbale ?"
+				header="Cancellazione Verbale" severity="alert"
+				widgetVar="testoVerbaleDialog">
+
+				<p:commandButton id="confirmVerbaleBtn" value="Conferma"
+					oncomplete="testoVerbaleDialog.hide()"
+					action="#{gestioneSeduteController.removeVerbale}"
+					update="listaTestiVerbale" />
+				<p:commandButton id="declineVerbale" value="Annulla"
+					onclick="testoVerbaleDialog.hide()" type="button" />
+
+			</p:confirmDialog>
+
+
+			<p:confirmDialog id="confirmODGDialog"
+				message="Sei sicuro di voler eliminare il testo dell'odg ?"
+				header="Cancellazione Testo ODG" severity="alert"
+				widgetVar="testoODGDialog">
+
+				<p:commandButton id="confirmODBtn" value="Conferma"
+					oncomplete="testoODGDialog.hide()"
+					action="#{gestioneSeduteController.removeTestoODG}"
+					update="listaTestiODG" />
+				<p:commandButton id="declineODG" value="Annulla"
+					onclick="testoODGDialog.hide()" type="button" />
+
+			</p:confirmDialog>
+
+			<p:confirmDialog id="uploadODG" header="Caricamento"
+				widgetVar="uploadODGDialog" style="width:450px" message="Allega ODG">
+				<p:panelGrid id="uploadpanelODG">
+
+					<p:row>
+						<p:column>
+							<h:outputLabel for="isPubblicoOdg" value="Pubblica su Internet: " />
+							<p:selectBooleanCheckbox id="isPubblicoOdg"
+								value="#{gestioneSeduteController.currentFilePubblico}">
+								<p:ajax event="change" immediate="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:fileUpload label="Sfoglia" uploadLabel="Carica"
+								cancelLabel="Cancella" oncomplete="uploadODGDialog.hide()"
+								auto="false" update="listaTestiODG "
+								fileUploadListener="#{gestioneSeduteController.uploadODG}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton id="Odg" value="Annulla"
+								onclick="uploadODGDialog.hide()" type="button" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:confirmDialog>
+
+			<p:confirmDialog id="uploadVerbale" header="Caricamento"
+				widgetVar="uploadVerbaleDialog" style="width:450px"
+				message="Allega Verbale">
+				<p:panelGrid id="uploadpanelVerbale">
+
+					<p:row>
+						<p:column>
+							<h:outputLabel for="isPubblico" value="Pubblica su Internet: " />
+							<p:selectBooleanCheckbox id="isPubblico"
+								value="#{gestioneSeduteController.currentFilePubblico}">
+								<p:ajax event="change" immediate="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:fileUpload label="Sfoglia" uploadLabel="Carica"
+								cancelLabel="Cancella" oncomplete="uploadVerbaleDialog.hide()"
+								auto="false" update="listaTestiVerbale "
+								fileUploadListener="#{gestioneSeduteController.uploadVerbale}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton id="declineUploadFile" value="Annulla"
+								onclick="uploadVerbaleDialog.hide()" type="button" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:confirmDialog>
+
+
+			<!-- FILE UPLOAD -->
 
 			<p:fieldset styleClass="fieldSetTab" legend="Elenco sedute:"
 				collapsed="false" toggleable="false">
@@ -135,11 +230,11 @@
 										action="#{gestioneSeduteController.dettaglioOdg}"
 										oncomplete="gestioneSeduteTabs.select(1)" value="ODG"
 										update=":gestioneSeduteForm:gestioneSedute">
-										
+
 										<f:setPropertyActionListener
 											value="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"
 											target="#{gestioneSeduteController.dataSedutaSelected}" />
-										
+
 									</p:commandButton>	
 										
 									&nbsp;
@@ -147,7 +242,7 @@
 									<p:commandButton oncomplete="sedutaDialog.show()"
 										icon="delete-icon">
 
-										<f:setPropertyActionListener value="#{seduta.dataSeduta}" 
+										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
 											target="#{gestioneSeduteController.sedutaToDelete}" />
 									</p:commandButton>
 								</p:column>
@@ -172,7 +267,8 @@
 							<h:outputLabel for="dataSeduta" value="Data seduta:  " />
 						</p:column>
 						<p:column style="text-align:left;">
-							<p:calendar size="10" locale="it" id="dataSeduta" pattern="dd/MM/yyyy"
+							<p:calendar size="10" locale="it" id="dataSeduta"
+								pattern="dd/MM/yyyy"
 								value="#{gestioneSeduteController.dataSeduta}">
 								<p:ajax event="dateSelect" global="false"
 									listener="#{gestioneSeduteController.updateInserisciSedutaHandler}" />
@@ -197,11 +293,13 @@
 					<p:row>
 						<p:column colspan="2" style="text-align:left;">
 			         	Dalle ore : &nbsp; 
-			         	<p:calendar size="5" locale="it" pattern="HH:mm" value="#{gestioneSeduteController.dalleOre}"></p:calendar>
+			         	<p:calendar size="5" locale="it" pattern="HH:mm"
+								value="#{gestioneSeduteController.dalleOre}"></p:calendar>
 						
 				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alle ore : &nbsp;&nbsp;&nbsp; 
 				        &nbsp;&nbsp;&nbsp;
-				         <p:calendar size="5" locale="it" pattern="HH:mm" value="#{gestioneSeduteController.alleOre}"></p:calendar>
+				         <p:calendar size="5" locale="it" pattern="HH:mm"
+								value="#{gestioneSeduteController.alleOre}"></p:calendar>
 						</p:column>
 					</p:row>
 
@@ -218,6 +316,174 @@
 							</p:inputTextarea>
 						</p:column>
 					</p:row>
+
+					<p:row>
+						<p:column colspan="4">
+							<p:commandButton value="Carica ODG"
+								oncomplete="testoODGDialog.show()">
+							</p:commandButton>
+						</p:column>
+					</p:row>
+
+           
+
+					<p:row>
+
+						<p:column colspan="4">
+
+							<p:dataTable id="listaTestiODG"
+								value="#{gestioneSeduteController.odgList}" var="odg"
+								styleClass="generalInfoTab grey-text" editable="true">
+
+								<p:ajax event="rowEdit" update="@this"
+									listener="#{fileDownloadController.fileUpdate}" />
+
+								<p:column sortBy="#{odg.nome}">
+									<f:facet name="header">ODG</f:facet>
+									<h:outputText value="#{odg.nome}" />
+								</p:column>
+
+								<p:column
+									sortBy="#{fn:substring(odg.nome, fn:indexOf(odg.nome,'.')+1 ,fn:length(odg.nome) )}">
+									<f:facet name="header">Formato</f:facet>
+									<h:outputText
+										value="#{fn:substring(odg.nome, fn:indexOf(odg.nome,'.')+1 ,fn:length(odg.nome) )}" />
+
+								</p:column>
+
+								<p:column sortBy="#{odg.pubblico}">
+									<f:facet name="header">Pubblico</f:facet>
+
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="si" rendered="#{odg.pubblico}" />
+											<h:outputText value="no" rendered="#{!odg.pubblico}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectBooleanCheckbox value="#{odg.pubblico}" />
+										</f:facet>
+									</p:cellEditor>
+
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">Elimina</f:facet>
+									<p:commandButton oncomplete="odgDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener value="#{odg.id}"
+											target="#{gestioneSeduteController.odgToDelete}" />
+									</p:commandButton>
+								</p:column>p:column>
+						<p:column>
+									<f:facet name="header">Scarica</f:facet>
+
+									<p:commandButton id="downloadLink" icon="detail-icon"
+										ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+										<f:setPropertyActionListener value="#{odg.id}"
+											target="#{fileDownloadController.fileId}" />
+										<f:setPropertyActionListener value="#{odg.nome}"
+											target="#{fileDownloadController.fileName}" />
+										<f:setPropertyActionListener value="#{odg.mimetype}"
+											target="#{fileDownloadController.fileMimetype}" />
+										<p:fileDownload value="#{fileDownloadController.file}" />
+									</p:commandButton>
+
+								</p:column>
+
+								<p:column headerText="Modifica" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+
+
+							</p:dataTable>
+						</p:column>
+
+					</p:row>
+
+                    <p:row>
+						<p:column colspan="4">
+							<p:commandButton value="Carica Verbale"
+								oncomplete="testoVerbaleDialog.show()">
+							</p:commandButton>
+						</p:column>
+					</p:row>    
+
+					<p:row>
+
+						<p:column colspan="4">
+
+							<p:dataTable id="listaTestiVerbale"
+								value="#{gestioneSeduteController.verbaliList}" var="verbale"
+								styleClass="generalInfoTab grey-text" editable="true">
+
+								<p:ajax event="rowEdit" update="@this"
+									listener="#{fileDownloadController.fileUpdate}" />
+
+								<p:column sortBy="#{verbale.nome}">
+									<f:facet name="header">Verbale</f:facet>
+									<h:outputText value="#{verbale.nome}" />
+								</p:column>
+
+								<p:column
+									sortBy="#{fn:substring(verbale.nome, fn:indexOf(verbale.nome,'.')+1 ,fn:length(verbale.nome) )}">
+									<f:facet name="header">Formato</f:facet>
+									<h:outputText
+										value="#{fn:substring(verbale.nome, fn:indexOf(verbale.nome,'.')+1 ,fn:length(verbale.nome) )}" />
+
+								</p:column>
+
+								<p:column sortBy="#{verbale.pubblico}">
+									<f:facet name="header">Pubblico</f:facet>
+
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="si" rendered="#{verbale.pubblico}" />
+											<h:outputText value="no" rendered="#{!verbale.pubblico}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:selectBooleanCheckbox value="#{verbale.pubblico}" />
+										</f:facet>
+									</p:cellEditor>
+
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">Elimina</f:facet>
+									<p:commandButton oncomplete="verbaleDialog.show()"
+										icon="delete-icon">
+
+										<f:setPropertyActionListener value="#{verbale.id}"
+											target="#{gestioneSeduteController.verbaleToDelete}" />
+									</p:commandButton>
+								</p:column>p:column>
+						<p:column>
+									<f:facet name="header">Scarica</f:facet>
+
+									<p:commandButton id="downloadLink" icon="detail-icon"
+										ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+										<f:setPropertyActionListener value="#{verbale.id}"
+											target="#{fileDownloadController.fileId}" />
+										<f:setPropertyActionListener value="#{verbale.nome}"
+											target="#{fileDownloadController.fileName}" />
+										<f:setPropertyActionListener value="#{verbale.mimetype}"
+											target="#{fileDownloadController.fileMimetype}" />
+										<p:fileDownload value="#{fileDownloadController.file}" />
+									</p:commandButton>
+
+								</p:column>
+
+								<p:column headerText="Modifica" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+
+
+							</p:dataTable>
+						</p:column>
+
+					</p:row>
+
+
 					<p:row>
 						<p:column colspan="4" style="text-align:left;">
 							<p:panelGrid id="addLinkPanel" styleClass="tableAppend">
@@ -276,22 +542,23 @@
 								</p:column>
 
 								<p:column headerText="Indirizzo collegamento"
-										sortBy="#{link.indirizzo}">
-										<p:cellEditor>
-											<f:facet name="output">
-												<h:outputLink  value="http://#{link.indirizzo}"  target="_blank">
-													<h:outputText value="#{link.indirizzo}" />
-												</h:outputLink>
-											</f:facet>
-											<f:facet name="input">
-												<p:inputText value="#{link.indirizzo}" style="width:100%">
+									sortBy="#{link.indirizzo}">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputLink value="http://#{link.indirizzo}"
+												target="_blank">
+												<h:outputText value="#{link.indirizzo}" />
+											</h:outputLink>
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{link.indirizzo}" style="width:100%">
 
-												</p:inputText>
-											</f:facet>
-										</p:cellEditor>
+											</p:inputText>
+										</f:facet>
+									</p:cellEditor>
 
 
-									</p:column>
+								</p:column>
 
 
 								<p:column headerText="Elimina">
@@ -318,7 +585,7 @@
 								<p:commandButton value="Aggiungi / Salva"
 									action="#{gestioneSeduteController.salvaAggiungiSeduta}"
 									update=":gestioneSeduteForm">
-									
+
 								</p:commandButton>
 							</p>
 						</p:column>

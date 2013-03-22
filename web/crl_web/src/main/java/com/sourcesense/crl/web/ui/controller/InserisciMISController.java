@@ -3,11 +3,13 @@ package com.sourcesense.crl.web.ui.controller;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoMIS;
+import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
+import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 
 import com.sourcesense.crl.util.CRLMessage;
@@ -60,6 +62,10 @@ public class InserisciMISController {
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
 	
+	@ManagedProperty(value = "#{personaleServiceManager}")
+	private PersonaleServiceManager personaleServiceManager;
+	
+	
 	private AttoMIS atto = new AttoMIS();
 
 	private String numeroRepertorio;
@@ -72,6 +78,7 @@ public class InserisciMISController {
 	private Date dataRispostaComitato;
 	private Date dataApprovazioneProgetto;
 	private Date dataApprovazioneUdP;
+	private Date dataTrasmissioneUdP;
 	private String istitutoIncaricato;
 	private String numeroAttoUdp;
 	private Date dataScadenzaMV;
@@ -87,6 +94,11 @@ public class InserisciMISController {
 	private List<String> commissioni = new ArrayList<String>();
 	
 	private List<String> legislature = new ArrayList<String>();
+	
+	private List<Relatore> relatoriList = new ArrayList<Relatore>();
+	private String relatore1;
+	private String relatore2;
+	
 	
 	@PostConstruct
 	private void initializeValues(){
@@ -104,6 +116,7 @@ public class InserisciMISController {
 		
 		setCommissioni(commissioneServiceManager.getAll());
 		setLegislature(legislaturaServiceManager.list());
+		setRelatoriList(personaleServiceManager.getAllRelatori());
 		
 	}
 	
@@ -494,25 +507,56 @@ public class InserisciMISController {
 		this.atto.setLegislatura(legislatura);
 	}
 
-
-
-
-
-
 	public AttoRecordServiceManager getAttoRecordServiceManager() {
 		return attoRecordServiceManager;
 	}
-
-
-
-
-
 
 	public void setAttoRecordServiceManager(
 			AttoRecordServiceManager attoRecordServiceManager) {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
+	public PersonaleServiceManager getPersonaleServiceManager() {
+		return personaleServiceManager;
+	}
+
+	public void setPersonaleServiceManager(
+			PersonaleServiceManager personaleServiceManager) {
+		this.personaleServiceManager = personaleServiceManager;
+	}
+
+	public List<Relatore> getRelatoriList() {
+		return relatoriList;
+	}
+
+	public void setRelatoriList(List<Relatore> relatoriList) {
+		this.relatoriList = relatoriList;
+	}
+
+	public String getRelatore1() {
+		return atto.getRelatore1();
+	}
+
+	public void setRelatore1(String relatore1) {
+		this.atto.setRelatore1 ( relatore1);
+	}
+
+	public String getRelatore2() {
+		return atto.getRelatore2();
+	}
+
+	public void setRelatore2(String relatore2) {
+		this.atto.setRelatore2 ( relatore2);
+	}
+
+	public Date getDataTrasmissioneUdP() {
+		return atto.getDataTrasmissioneUdP();
+	}
+
+	public void setDataTrasmissioneUdP(Date dataTrasmissioneUdP) {
+		this.atto.setDataTrasmissioneUdP (dataTrasmissioneUdP);
+	}
+	
 	
 
 }

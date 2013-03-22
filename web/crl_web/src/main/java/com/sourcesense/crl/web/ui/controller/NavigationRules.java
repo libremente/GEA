@@ -374,6 +374,11 @@ public class NavigationRules {
 
 		if (attoBean.getTipoAtto().equals("REL")
 				|| attoBean.getTipoAtto().equals("INP")
+				|| attoBean.getTipoChiusura().equals("Per decadenza (fine legislatura)")
+				|| attoBean.getTipoChiusura().equals("Respinto dall'Aula")
+				|| attoBean.getTipoChiusura().equals("Ritirato dai promotori")
+				|| attoBean.getTipoChiusura().equals("Abbinato ad altro atto")
+				|| attoBean.getTipoChiusura().equals("Inammissibile")
 
 		) {
 			return false;

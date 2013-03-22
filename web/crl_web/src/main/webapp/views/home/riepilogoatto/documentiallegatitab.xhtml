@@ -17,6 +17,15 @@
 <p:fieldset legend="Testi Ufficiali :" toggleable="true"
 	collapsed="false" toggleSpeed="500">
 
+	<c:set var="colAttoComm" value="Atto votato in Commissione" />
+	<c:set var="colAttoServComm" value="Atto presentato" />
+
+	<c:if test="#{navigationBean.isSessionAttoPAR()}">
+
+		<c:set var="colAttoComm" value="Parere votato in Commissioni" />
+		<c:set var="colAttoServComm" value="DGR con richiesta Parere/Intesa" />
+	</c:if>
+
 	<p:panelGrid style="width:100%">
 		<p:row>
 			<p:column colspan="3">
@@ -28,15 +37,11 @@
 
 
 					<p:column sortBy="#{testoAtto.nome}">
-						<f:facet name="header">Testo Dell'Atto</f:facet>
+						<f:facet name="header">#{colAttoServComm}</f:facet>
 						<h:outputText value="#{testoAtto.nome}" />
 					</p:column>
 
-					<p:column sortBy="#{testoAtto.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
-						<h:outputText value="#{testoAtto.mimetype}" />
-					</p:column>
+
 
 					<p:column sortBy="#{testoAtto.pubblico}">
 						<f:facet name="header">Pubblico</f:facet>
@@ -69,13 +74,15 @@
 			<p:column colspan="3">
 
 
+
+
 				<p:dataTable id="listaTestiUfficialiCommissione"
 					value="#{attoBean.getTestiAttoCommissione()}" var="testoAtto"
 					styleClass="generalInfoTab grey-text">
 
 
 					<p:column sortBy="#{testoAtto.nome}">
-						<f:facet name="header">Testo Dell'Atto votato in commissione</f:facet>
+						<f:facet name="header">#{colAttoComm}</f:facet>
 						<h:outputText value="#{testoAtto.nome}" />
 					</p:column>
 
@@ -85,11 +92,7 @@
 					</p:column>
 
 
-					<p:column sortBy="#{testoAtto.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
-						<h:outputText value="#{testoAtto.mimetype}" />
-					</p:column>
+
 
 					<p:column sortBy="#{testoAtto.pubblico}">
 						<f:facet name="header">Pubblico</f:facet>
@@ -118,7 +121,7 @@
 			</p:column>
 		</p:row>
 
-		<p:row>
+		<p:row rendered="#{not navigationBean.isSessionAttoPAR()}">
 			<p:column colspan="3">
 
 
@@ -128,15 +131,11 @@
 
 
 					<p:column sortBy="#{testoAtto.nome}">
-						<f:facet name="header">Testo Dell'Atto votato in Aula</f:facet>
+						<f:facet name="header">Atto votato in Aula</f:facet>
 						<h:outputText value="#{testoAtto.nome}" />
 					</p:column>
 
-					<p:column sortBy="#{testoAtto.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<!-- <h:outputText value="#{fn:substring(testoAtto.nome, fn:indexOf(testoAtto.nome,'.')+1 ,fn:length(testoAtto.nome) )}" /> -->
-						<h:outputText value="#{testoAtto.mimetype}" />
-					</p:column>
+
 
 					<p:column sortBy="#{testoAtto.pubblico}">
 						<f:facet name="header">Pubblico</f:facet>
@@ -170,57 +169,10 @@
 
 <br />
 
-<p:fieldset legend="Comitato Ristretto/Gruppo di lavoro: "
-	toggleable="true" collapsed="false" toggleSpeed="500">
-
-
-	<p:panelGrid style="width:100%">
-
-		<p:row>
-			<p:column colspan="3">
-				<p:dataTable id="listaAltriAllegatiCommitatoRistr"
-					value="#{attoBean.getTestiComitatoRistretto()}" var="allegato"
-					styleClass="generalInfoTab grey-text">
-
-
-					<p:column sortBy="#{allegato.nome}">
-						<f:facet name="header">Allegati</f:facet>
-						<h:outputText value="#{allegato.nome}" />
-					</p:column>
-
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">Scarica</f:facet>
-
-						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
-							onclick="PrimeFaces.monitorDownload(start, stop)">
-							<f:setPropertyActionListener value="#{allegato.id}"
-								target="#{fileDownloadController.fileId}" />
-							<f:setPropertyActionListener value="#{allegato.nome}"
-								target="#{fileDownloadController.fileName}" />
-							<f:setPropertyActionListener value="#{allegato.mimetype}"
-								target="#{fileDownloadController.fileMimetype}" />
-							<p:fileDownload value="#{fileDownloadController.file}" />
-						</p:commandButton>
-
-					</p:column>
-
-
-				</p:dataTable>
-
-
-			</p:column>
-		</p:row>
-	</p:panelGrid>
-</p:fieldset>
 
 <br />
 
-<p:fieldset legend="Emendamenti: " toggleable="true" collapsed="false"
+<p:fieldset legend="Emendamenti: " toggleable="true" collapsed="false" rendered="#{navigationBean.testoAttoVotatoEnabled()}"
 	toggleSpeed="500">
 	<p:panelGrid style="width:100%">
 		<p:row>
@@ -231,7 +183,7 @@
 
 
 					<p:column sortBy="#{allegato.nome}">
-						<f:facet name="header">Emendamenti Commissioni</f:facet>
+						<f:facet name="header">Emendamenti presentati in Commissione</f:facet>
 						<h:outputText value="#{allegato.nome}" />
 					</p:column>
 
@@ -241,10 +193,7 @@
 					</p:column>
 
 
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
+
 
 					<p:column>
 						<f:facet name="header">Scarica</f:facet>
@@ -277,14 +226,10 @@
 
 
 					<p:column sortBy="#{allegato.nome}">
-						<f:facet name="header">Emendamenti Aula</f:facet>
+						<f:facet name="header">Emendamenti presentati in Aula</f:facet>
 						<h:outputText value="#{allegato.nome}" />
 					</p:column>
 
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
 
 					<p:column>
 						<f:facet name="header">Scarica</f:facet>
@@ -314,8 +259,8 @@
 
 <br />
 
-<p:fieldset legend="Consultazioni: " toggleable="true" collapsed="false"
-	toggleSpeed="500">
+<p:fieldset legend="Audizioni/Consultazioni: " toggleable="true"
+	collapsed="false" toggleSpeed="500">
 	<p:panelGrid style="width:100%">
 		<p:row>
 			<p:column colspan="3">
@@ -329,10 +274,7 @@
 						<h:outputText value="#{allegato.nome}" />
 					</p:column>
 
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
+
 
 					<p:column>
 						<f:facet name="header">Scarica</f:facet>
@@ -361,8 +303,8 @@
 
 <br />
 
-<p:fieldset legend="Pareri: " toggleable="true" collapsed="false"
-	toggleSpeed="500">
+<p:fieldset legend="Pareri degli Organismi statutari: "
+	toggleable="true" collapsed="false" toggleSpeed="500">
 
 	<p:panelGrid style="width:100%">
 		<p:row>
@@ -373,14 +315,11 @@
 
 
 					<p:column sortBy="#{allegato.nome}">
-						<f:facet name="header">Allegati</f:facet>
+						<f:facet name="header">Organismo</f:facet>
 						<h:outputText value="#{allegato.nome}" />
 					</p:column>
 
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
+
 
 					<p:column>
 						<f:facet name="header">Scarica</f:facet>
@@ -413,45 +352,6 @@
 
 	<p:panelGrid style="width:100%">
 
-		<!-- <p:row>
-			<p:column colspan="3">
-				<p:dataTable id="listaAltriAllegati"
-					value="#{attoBean.atto.allegati}" var="allegato"
-					styleClass="generalInfoTab grey-text">
-
-
-					<p:column sortBy="#{allegato.nome}">
-						<f:facet name="header">Allegati Servizio Commissioni</f:facet>
-						<h:outputText value="#{allegato.nome}" />
-					</p:column>
-
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">Scarica</f:facet>
-
-						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
-							onclick="PrimeFaces.monitorDownload(start, stop)">
-							<f:setPropertyActionListener value="#{allegato.id}"
-								target="#{fileDownloadController.fileId}" />
-							<f:setPropertyActionListener value="#{allegato.nome}"
-								target="#{fileDownloadController.fileName}" />
-							<f:setPropertyActionListener value="#{allegato.mimetype}"
-								target="#{fileDownloadController.fileMimetype}" />
-							<p:fileDownload value="#{fileDownloadController.file}" />
-						</p:commandButton>
-
-					</p:column>
-
-
-				</p:dataTable>
-
-
-			</p:column>
-		</p:row>-->
 
 		<p:row>
 			<p:column colspan="3">
@@ -471,10 +371,7 @@
 						<h:outputText value="#{allegato.commissione}" />
 					</p:column>
 
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
+
 
 					<p:column>
 						<f:facet name="header">Scarica</f:facet>
@@ -512,10 +409,7 @@
 						<h:outputText value="#{allegato.nome}" />
 					</p:column>
 
-					<p:column sortBy="#{allegato.mimetype}">
-						<f:facet name="header">Formato</f:facet>
-						<h:outputText value="#{allegato.mimetype}" />
-					</p:column>
+
 
 					<p:column>
 						<f:facet name="header">Scarica</f:facet>

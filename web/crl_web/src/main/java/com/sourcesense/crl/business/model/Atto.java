@@ -61,8 +61,8 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	@Override
 	public int compareTo(Atto arg0) {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(this.numeroAtto)
-				- Integer.parseInt(arg0.numeroAtto);
+		return Integer.parseInt(arg0.numeroAtto) 
+				- Integer.parseInt(this.numeroAtto);
 	}
 
 	private boolean pubblico;
@@ -134,9 +134,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	private Date dataNominaRelatore;
 	private List<Consultazione> consultazioni = new ArrayList<Consultazione>();
 	private List<Allegato> allegati = new ArrayList<Allegato>();
-	// private List <Allegato> allegatiNotePresentazioneAssegnazione = new
-	// ArrayList<Allegato>();
-
+	
 	private String elencoAbbinamenti;
 	private String esitoVotazioneCommissioneReferente;
 	private Date dataVotazioneCommissione;
@@ -988,7 +986,10 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	}
 
 	public List<SedutaAtto> getSeduteAtto() {
+		
+		
 		return seduteAtto;
+	
 	}
 
 	public void setSeduteAtto(List<SedutaAtto> seduteAtto) {

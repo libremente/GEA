@@ -23,6 +23,8 @@ public class ComitatoRistretto {
 	@JsonProperty("componenti")
 	private List<Componente> componenti = new ArrayList<Componente>();
 	
+	private String tipologia;
+	
 	private List<Allegato> testi = new ArrayList<Allegato>();
 	
 	@Override public String toString() {
@@ -41,6 +43,16 @@ public class ComitatoRistretto {
 	public void setTesti(List<Allegato> testi) {
 		this.testi = testi;
 	}
+
+	public String getTipologia() {
+		return tipologia;
+	}
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
+	}
+	
+	
 	
 	
 

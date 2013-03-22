@@ -132,6 +132,14 @@ public class RiepilogoAttoController {
 
 	}
 	
+	public String getDataTrasmissioneLabel(){
+		return  (Commissione.RUOLO_CONSULTIVA.equals(commissioneSelected.getRuolo()))?"Data trasmissione a Comm. referente:":"Data Trasmissione Aula:"; 
+	}
+	
+	public String getDataTrasmissioneLabelByRuolo(String ruolo){
+		return  (Commissione.RUOLO_CONSULTIVA.equals(ruolo))?"Data trasmissione a Comm. referente:":"Data Trasmissione Aula:"; 
+	}
+	
 
 	public void filtraRelatori(){
 		

@@ -12,7 +12,7 @@
 
 <h:form enctype="multipart/form-data">
 
-	
+
 	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
 		draggable="false" closable="false">
 		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
@@ -49,7 +49,8 @@
 			</p:row>
 			<p:row>
 				<p:column>
-					<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+					<p:fileUpload label="Sfoglia" uploadLabel="Carica"
+						cancelLabel="Cancella"
 						oncomplete="uploadAllegatoAttributesDialog.hide()" auto="false"
 						update="listaAllegati "
 						fileUploadListener="#{inserisciMISController.uploadAllegatoParere}" />
@@ -151,6 +152,40 @@
 
 			</p:row>
 
+
+			<p:row>
+
+
+				<p:column style="width: 25%; text-align:left;">
+				<h:outputText 
+						value="Nomina Relatori: " />
+				</p:column>
+
+				<p:column style="width: 25%; text-align:left;">
+					<p:selectOneMenu id="relatore1"
+						value="#{inserisciMISController.relatore1}">
+						<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+						<f:selectItems var="relatore" itemLabel="#{relatore.cognomeNome }"
+							itemValue="#{relatore.descrizione}"
+							value="#{inserisciMISController.relatoriList}" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column style="width: 25%; text-align:left;">
+					<p:selectOneMenu id="relatore2"
+						value="#{inserisciMISController.relatore2}">
+						<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+						<f:selectItems var="relatore" itemLabel="#{relatore.cognomeNome }"
+							itemValue="#{relatore.descrizione}"
+							value="#{inserisciMISController.relatoriList}" />
+					</p:selectOneMenu>
+				</p:column>
+				
+				<p:column></p:column>
+
+
+			</p:row>
+
 			<p:row>
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="commissionecomp"
@@ -179,9 +214,10 @@
 						value="#{inserisciMISController.esitoVotoIntesa}">
 						<f:selectItem itemLabel="Scegli esito" itemValue="" />
 						<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
-                        <f:selectItem itemLabel="Approvato con modifiche" itemValue="Approvato con modifiche" />
-                        <f:selectItem itemLabel="Non approvato" itemValue="Non approvato" />
-                         
+						<f:selectItem itemLabel="Approvato con modifiche"
+							itemValue="Approvato con modifiche" />
+						<f:selectItem itemLabel="Non approvato" itemValue="Non approvato" />
+
 
 					</p:selectOneMenu>
 				</p:column>
@@ -198,7 +234,7 @@
 			</p:row>
 
 
-			<p:row>
+			<!-- <p:row>
 
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="datarispostaromitato"
@@ -210,7 +246,7 @@
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataRispostaComitato}" />
 				</p:column>
-			</p:row>
+			</p:row>-->
 
 			<p:row>
 				<p:column style="width: 25%; text-align:left;">
@@ -218,11 +254,23 @@
 						value="Data Approvazione Progetto:" />
 				</p:column>
 
-				<p:column colspan="3" style="text-align:left;">
+				<p:column  style="text-align:left;">
 					<p:calendar size="10" locale="it" id="dataapprovazioneprogetto"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataApprovazioneProgetto}" />
 				</p:column>
+				
+				<p:column style="width: 25%; text-align:left;">
+					<h:outputLabel for="dataTrasmissioneUdP"
+						value="Data trasmissione a UdP:" />
+				</p:column>
+
+				<p:column  style="text-align:left;">
+					<p:calendar size="10" locale="it" id="dataTrasmissioneUdP"
+						pattern="dd/MM/yyyy"
+						value="#{inserisciMISController.dataTrasmissioneUdP }" />
+				</p:column>
+				
 			</p:row>
 
 			<p:row>
@@ -291,7 +339,7 @@
 			<p:row>
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataTrasmissioneCommissioni"
-						value="Data Trasmissione Commissioni:" />
+						value="Data Esame Commissioni:" />
 				</p:column>
 
 				<p:column colspan="3" style="text-align:left;">
@@ -375,7 +423,7 @@
 								<p:commandButton oncomplete="allegatoDialog.show()"
 									icon="delete-icon">
 
-									<f:setPropertyActionListener value="#{allegato.id}" 
+									<f:setPropertyActionListener value="#{allegato.id}"
 										target="#{inserisciMISController.allegatoMISToDelete}" />
 								</p:commandButton>
 							</h:column>

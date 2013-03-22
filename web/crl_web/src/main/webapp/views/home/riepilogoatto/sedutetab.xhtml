@@ -17,7 +17,7 @@
 					styleClass="generalInfoTab grey-text">
 
 					<p:column sortBy="#{sedutaAtto.nomeOrgano}">
-						<f:facet name="header">Organi Interni</f:facet>
+						<f:facet name="header">Organismo Interno</f:facet>
 							<h:outputText value="#{sedutaAtto.nomeOrgano}" />
     			       </p:column>
 
@@ -29,13 +29,13 @@
 				</p:column>
 
 					<p:column>
-						<f:facet name="header">ODG</f:facet>
+						<f:facet name="header">Atto discusso</f:facet>
 						<!-- <h:commandLink>
 							<h:graphicImage alt="pdf" value="/resources/img/pdf.png" />
 						</h:commandLink> -->
 					</p:column>
 					<p:column>
-						<f:facet name="header">Link Risorse Esterne</f:facet>
+						<f:facet name="header">Verbale</f:facet>
 						<!--<h:commandLink>
 							<h:graphicImage alt="html" value="/resources/img/html.png" />
 						</h:commandLink>-->
@@ -48,28 +48,7 @@
 			</p:column>
 		</p:row>
 
-		<p:row>
-			<p:column colspan="3">
-				<p:dataTable id="listaAltriOrgani"
-					value="#{attoBean.atto.organi}" var="organo"
-					styleClass="generalInfoTab grey-text">
-
-					<p:column sortBy="#{organo.nome}">
-						<f:facet name="header">Altri Organi</f:facet>
-							<h:outputText value="#{organo.nome}" />
-    			       </p:column>
-
-					<p:column sortBy="#{organo.dataSeduta}">
-						<f:facet name="header">Data Seduta</f:facet>
-					<h:outputText value="#{organo.dataSeduta}" />
-				</p:column>
-                
-				</p:dataTable>
-				
-                
-				
-			</p:column>
-		</p:row>
+		
 	</p:panelGrid>
 
 

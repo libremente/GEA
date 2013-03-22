@@ -99,7 +99,8 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+							<p:fileUpload label="Sfoglia" uploadLabel="Carica"
+								cancelLabel="Cancella"
 								oncomplete="uploadFileAttributesDialog.hide()" auto="false"
 								update="listaTestiComitatoRistretto ,comitatiMsg"
 								fileUploadListener="#{esameCommissioniController.uploadTestoComitatoRistretto}" />
@@ -122,8 +123,8 @@
 		</p:column>
 		<p:column>
 			<div id="presaInCarico">
-				<p:calendar size="10" locale="it" id="datapresaincarico" pattern="dd/MM/yyyy"
-					update="comitatiMsg"
+				<p:calendar size="10" locale="it" id="datapresaincarico"
+					pattern="dd/MM/yyyy" update="comitatiMsg"
 					value="#{esameCommissioniController.dataPresaInCarico}">
 					<p:ajax event="dateSelect"
 						listener="#{esameCommissioniController.updatePresaInCaricoHandler}" />
@@ -141,14 +142,16 @@
 		<p:column></p:column>
 		<p:column></p:column>
 	</p:row>
-	
-	
-	<p:row rendered="#{navigationBean.isSessionAttoPDL() and attoBean.votazioneUrgenza}">
 
-		
+
+	<p:row
+		rendered="#{navigationBean.isSessionAttoPDL() and attoBean.votazioneUrgenza}">
+
+
 		<p:column colspan="6">
-			<b><h:outputText style="color:red" value="Dichiarato Urgente"> </h:outputText></b>
-			
+			<b><h:outputText style="color:red" value="Dichiarato Urgente">
+				</h:outputText></b>
+
 		</p:column>
 	</p:row>
 
@@ -247,7 +250,7 @@
 					<p:calendar id="datascadenza" size="10"
 						value="#{esameCommissioniController.dataScadenza}" locale="it"
 						pattern="dd/MM/yyyy">
-						
+
 					</p:calendar>
 
 
@@ -415,20 +418,34 @@
 			id="gestionecomitatiristrettipanel">
 			<p:row>
 
-				<p:column style="width:200px">
+				<p:column  style="text-align:left;width:200px">
+
+					<b> <h:outputLabel style="v-align:top" for="tipocomitato" value="Tipo: " />
+					</b>
+				&nbsp;&nbsp;
+					<p:selectOneMenu id="tipocomitato"
+						value="#{esameCommissioniController.tipoComitato}">
+						<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
+						<f:selectItem itemLabel="Comitato ristretto" itemValue="Comitato ristretto" />
+						<f:selectItem itemLabel="Gruppo di lavoro" itemValue="Gruppo di lavoro" />
+					</p:selectOneMenu>
+				</p:column>
+
+
+				<p:column colspan="5" style="text-align:left">
 
 					<b> <h:outputLabel for="dataistituzionecomitato"
 							value="Data istituzione Comitato: " />
 					</b>
-				</p:column>
-				<p:column colspan="5">
-					<p>
-						<p:calendar size="10" locale="it" id="dataistituzionecomitato" pattern="dd/MM/yyyy"
+					&nbsp;&nbsp;
+					
+						<p:calendar size="10" locale="it" id="dataistituzionecomitato"
+							pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataIstituzioneComitato}">
 							<p:ajax event="dateSelect"
 								listener="#{esameCommissioniController.updateComitatoRistrettoHandler}" />
 						</p:calendar>
-					</p>
+					
 				</p:column>
 
 			</p:row>
@@ -692,7 +709,8 @@
 				</p:column>
 				<p:column>
 					<p>
-						<p:calendar size="10" locale="it" id="datafinelavori" pattern="dd/MM/yyyy"
+						<p:calendar size="10" locale="it" id="datafinelavori"
+							pattern="dd/MM/yyyy"
 							value="#{esameCommissioniController.dataFineLavori}">
 
 						</p:calendar>

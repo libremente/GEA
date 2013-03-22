@@ -31,6 +31,7 @@ public class Consultazione implements Cloneable{
 	private String note;
 	private String idAtto;
 	private String commissione;
+	private String ruoloCommissione;
 	private String soggetti;
 	
 	
@@ -150,6 +151,14 @@ public class Consultazione implements Cloneable{
 
 	public void setSoggetti(String soggetti) {
 		this.soggetti = soggetti;
+	}
+
+	public String getRuoloCommissione() {
+		return ruoloCommissione;
+	}
+
+	public void setRuoloCommissione(String ruoloCommissione) {
+		this.ruoloCommissione = ruoloCommissione;
 	}
 	
 	

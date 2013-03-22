@@ -105,7 +105,7 @@ public class EsameCommissioniController {
 
 	private List<Relatore> relatoriList = new ArrayList<Relatore>();
 	private List<Componente> membriComitatoList = new ArrayList<Componente>();
-
+    private String tipoComitato;
 	private String testoComitatoToDelete;
 
 	private List<Abbinamento> abbinamentiList = new ArrayList<Abbinamento>();
@@ -3049,6 +3049,16 @@ public class EsameCommissioniController {
 		this.commissioneUser.setQuorumStralcio(quorumStralcio);
 	}
 
+	
+	
+	public String getTipoComitato() {
+		return this.commissioneUser.getComitatoRistretto().getTipologia();
+	}
+
+	public void setTipoComitato(String tipoComitato) {
+		this.commissioneUser.getComitatoRistretto().setTipologia(tipoComitato);
+	}
+
 	public Date getDataAssegnazione() {
 		return this.commissioneUser.getDataAssegnazione();
 	}
@@ -3150,5 +3160,7 @@ public class EsameCommissioniController {
 
 		this.esitiVotazione = esitiVotazione;
 	}
+	
+	
 
 }

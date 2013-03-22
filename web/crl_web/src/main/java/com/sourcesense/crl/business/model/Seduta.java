@@ -45,6 +45,9 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 	private List<Consultazione> consultazioniAtti = new ArrayList<Consultazione>();	
 	private List<Audizione> audizioni = new ArrayList<Audizione>();	
 	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
+	
+	private List<Allegato> odgList = new ArrayList<Allegato>();
+	private List<Allegato> verbaliList = new ArrayList<Allegato>();
 
 	@JsonSerialize(using=JsonDateSerializer.class) 
 	public Date getDataSeduta() {
@@ -140,6 +143,22 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 	@JsonSerialize(using=JsonHourSerializer.class)
 	public void setAlleOre(Date alleOre) {
 		this.alleOre = alleOre;
+	}
+
+	public List<Allegato> getOdgList() {
+		return odgList;
+	}
+
+	public void setOdgList(List<Allegato> odgList) {
+		this.odgList = odgList;
+	}
+
+	public List<Allegato> getVerbaliList() {
+		return verbaliList;
+	}
+
+	public void setVerbaliList(List<Allegato> verbaliList) {
+		this.verbaliList = verbaliList;
 	}
 
 	
