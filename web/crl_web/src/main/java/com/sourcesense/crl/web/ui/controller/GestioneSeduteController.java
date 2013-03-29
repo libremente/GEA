@@ -325,7 +325,7 @@ public class GestioneSeduteController {
 				Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 				Consultazione cons = (Consultazione) consultazione.clone();
-				if (formatter.format(cons.getDataSeduta()).equals(
+				if (cons.getDataSeduta()!=null && formatter.format(cons.getDataSeduta()).equals(
 						formatter.format(sedutaSelected.getDataSeduta()))
 
 						&& userBean.getUser().getSessionGroup().getNome()

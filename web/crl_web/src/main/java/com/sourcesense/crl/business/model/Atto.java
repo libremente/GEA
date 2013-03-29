@@ -1020,7 +1020,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 			return "Presidente della Giunta";
 
-		} else if ("02_ATTO DI INIZIATIVA GIUNTA".equals(tipoIniziativa)) {
+		} else if ("02_ATTO DI INIZIATIVA DI GIUNTA".equals(tipoIniziativa)) {
 
 			return "Giunta";
 

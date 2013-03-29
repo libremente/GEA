@@ -443,6 +443,10 @@ public class NavigationRules {
 	public boolean isSessionAttoPDL() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDL");
 	}
+	
+	public boolean isSessionAttoINP() {
+		return attoBean.getTipoAtto().equalsIgnoreCase("INP");
+	}
 
 	public boolean isSessionAttoDOC() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("DOC");

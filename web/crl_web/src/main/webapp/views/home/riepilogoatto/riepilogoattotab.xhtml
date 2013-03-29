@@ -177,12 +177,10 @@
 
 
 
-					<p:column sortBy="#{abbinamento.tipoAttoAbbinato}">
+					<p:column sortBy="#{atto.tipoAttoAbbinato}">
 						<f:facet name="header">Abbinamenti</f:facet>
-
 						<c:set value="#{atto.idAttoAbbinato}" var="idAttoParam" />
 						<c:set value="#{atto.tipoAttoAbbinato}" var="tipoAttoParam" />
-
 						<h:commandLink action="#{searchAttoController.attoDetail()}">
 							<f:setPropertyActionListener
 								target="#{searchAttoController.idAttoSelected}"
@@ -193,16 +191,12 @@
 							<h:outputText
 								value="#{atto.tipoAttoAbbinato} - #{atto.numeroAttoAbbinato}" />
 						</h:commandLink>
-
-
-
-
 					</p:column>
 
-					<p:column sortBy="#{abbinamento.dataAbbinamento}">
+					<p:column sortBy="#{atto.dataAbbinamento}">
 						<f:facet name="header">Data abbinamento</f:facet>
 						<h:outputText style="font-weight: bold;"
-							value="#{abbinamento.dataAbbinamento}">
+							value="#{atto.dataAbbinamento}">
 							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
 						</h:outputText>
 
@@ -276,7 +270,7 @@
 					</p:column>
 
 					<p:column sortBy="#{commissione.descrizione}">
-						<f:facet name="header">Nome</f:facet>
+						<f:facet name="header">Commissione</f:facet>
 						<h:outputText value="#{commissione.descrizione}" />
 					</p:column>
 
@@ -445,9 +439,9 @@
 				<p:dataTable value="#{attoBean.getConsultazioni()}"
 					var="consultazione">
 
-					<c:set var="soggetti" value=" " />
+				
 
-					<p:column headerText="Data consultazione" rendered="#{isRelatore}">
+					<p:column headerText="Data consultazione" >
 						<h:outputText value="#{consultazione.dataConsultazione}">
 							<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -484,10 +478,8 @@
 				<p:dataTable value="#{attoBean.getValidOrganismiStatutari()}"
 					var="organismo">
 
-					<c:set var="soggetti" value=" " />
 
-					<p:column headerText="Organismo Statutario"
-						rendered="#{isRelatore}">
+					<p:column headerText="Organismo Statutario">
 						<h:outputText value="#{organismo.descrizione}">
 
 						</h:outputText>
@@ -579,7 +571,7 @@
 </p:fieldset>
 
 <p:fieldset legend="Chiusura iter" id="fsChiusura" toggleable="true"
-	collapsed="false" toggleSpeed="500">
+	collapsed="false" toggleSpeed="500" rendered="#{not navigationBean.isSessionAttoINP()}">
 	<p:panelGrid styleClass="infoTable" id="infoChiusuraIter">
 		<p:row>
 			<p:column>
@@ -1018,10 +1010,10 @@
 						<p:dataTable value="#{attoBean.getConsultazioni()}"
 							var="consultazione">
 
-							<c:set var="soggetti" value=" " />
+							
 
 							<p:column headerText="Data consultazione"
-								rendered="#{isRelatore}">
+								>
 								<h:outputText value="#{consultazione.dataConsultazione}">
 									<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 								</h:outputText>
@@ -1058,10 +1050,8 @@
 						<p:dataTable value="#{attoBean.getValidOrganismiStatutari()}"
 							var="organismo">
 
-							<c:set var="soggetti" value=" " />
 
-							<p:column headerText="Organismo Statutario"
-								rendered="#{isRelatore}">
+							<p:column headerText="Organismo Statutario">
 								<h:outputText value="#{organismo.descrizione}">
 
 								</h:outputText>
@@ -1151,7 +1141,7 @@
 		</p:fieldset>
 
 		<p:fieldset legend="Chiusura iter" toggleable="true" collapsed="false"
-			toggleSpeed="500">
+			toggleSpeed="500" rendered="#{not navigationBean.isSessionAttoINP()}">
 			<p:panelGrid styleClass="infoTable">
 				<p:row>
 					<p:column>

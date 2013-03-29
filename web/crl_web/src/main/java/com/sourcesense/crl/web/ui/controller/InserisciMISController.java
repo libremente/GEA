@@ -209,7 +209,7 @@ public class InserisciMISController {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				getAllegatiMIS().remove(element);
-				attoBean.getAttoMIS().setAllegati(Clonator.cloneList(getAllegatiMIS()));
+				//attoBean.getAttoMIS().setAllegati(Clonator.cloneList(getAllegatiMIS()));
 				break;
 			}
 		}

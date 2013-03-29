@@ -100,7 +100,7 @@ public class RiepilogoAttoController {
     		
     		setTipoIniziativa("Presidente della Giunta");
     		
-    	}else if("02_ATTO DI INIZIATIVA GIUNTA".equals(tipoIniziativa)){
+    	}else if("02_ATTO DI INIZIATIVA DI GIUNTA".equals(tipoIniziativa)){
     		
     		setTipoIniziativa("Giunta");
     		

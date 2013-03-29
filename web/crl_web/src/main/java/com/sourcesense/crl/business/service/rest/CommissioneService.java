@@ -171,7 +171,7 @@ public class CommissioneService {
 
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, false);
 			listCommissioniConsultive = objectMapper.readValue(responseMsg,
 					new TypeReference<List<CommissioneConsultiva>>() {
 			});
@@ -265,6 +265,8 @@ public class CommissioneService {
 			}
 
 			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, false);
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {
