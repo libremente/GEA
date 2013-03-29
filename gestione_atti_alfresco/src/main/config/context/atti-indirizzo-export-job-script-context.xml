@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
 <!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
-	license agreements. See the NOTICE file distributed with this work for additional 
-	information regarding copyright ownership. The ASF licenses this file to 
-	You under the Apache License, Version 2.0 (the "License"); you may not use 
-	this file except in compliance with the License. You may obtain a copy of 
-	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
-	by applicable law or agreed to in writing, software distributed under the 
-	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
-	OF ANY KIND, either express or implied. See the License for the specific 
-	language governing permissions and limitations under the License. -->
+license agreements. See the NOTICE file distributed with this work for additional 
+information regarding copyright ownership. The ASF licenses this file to 
+You under the Apache License, Version 2.0 (the "License"); you may not use 
+this file except in compliance with the License. You may obtain a copy of 
+the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+by applicable law or agreed to in writing, software distributed under the 
+License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+OF ANY KIND, either express or implied. See the License for the specific 
+language governing permissions and limitations under the License. -->
 <beans>
 
 
@@ -19,28 +19,28 @@
         </property>
     </bean>
 
-	 <bean id="cmisClientScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.CMISClientScript">
+    <bean id="cmisClientScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.CMISClientScript">
         <property name="extensionName">
             <value>cmisClient</value>
         </property>
         <property name="serviceRegistry">
             <ref bean="ServiceRegistry"/>
         </property>
-         <property name="attiIspettiviAlfrescoURL">
-            <value>http://10.177.4.11:8080/alfresco</value>
+        <property name="attiIspettiviAlfrescoURL">
+            <value>${nga:attiindirizzo.export.alfresco.url}</value>
         </property>
         <property name="attiIspettiviAlfrescoUser">
-            <value>integrazioneNGA</value>
+            <value>${nga:attiindirizzo.export.alfresco.username}</value>
         </property>
         <property name="attiIspettiviAlfrescoPsw">
-            <value>870apZ0O3h</value>
+            <value>${nga:attiindirizzo.export.alfresco.password}</value>
         </property>
-         <property name="attiIspettiviAlfrescoPath">
+        <property name="attiIspettiviAlfrescoPath">
             <value>/User Homes/integrazioneNGA/Import/NGA/Atti</value>
         </property>
     </bean>
 
-  <!--
+    <!--
     Execute the script /Company Home/Data Dictionary/Scripts/attiIndirizzoExporter.js
     -->
     <bean id="runAttiIndirizzoExportScriptAction" class="org.alfresco.repo.action.scheduled.SimpleTemplateActionDefinition">
@@ -98,7 +98,7 @@
             <value>PATH:"/app:company_home"</value> 
         </property>
         <property name="cronExpression">
-            <value>0 0/5 * * * ?</value>  <!-- <value>0 0/5 * * * ? 2099</value> add 2099 after ? to disable -->
+            <value>${nga:attiindirizzo.export.cron}</value>  <!-- <value>0 0/5 * * * ? 2099</value> add 2099 after ? to disable -->
         </property>
         <property name="jobName">
             <value>jobAttiIndirizzoExport</value>
