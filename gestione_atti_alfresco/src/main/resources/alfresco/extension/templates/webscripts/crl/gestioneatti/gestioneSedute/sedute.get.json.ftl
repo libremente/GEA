@@ -130,6 +130,42 @@
 			<#if audizione_has_next>,</#if>
 			</#list>
 		
+		],
+                "odgList" : [
+                        <#assign odg = seduta.childrenByXPath["*[@cm:name='OdG']"][0]>
+                        <#assign odgList = odg.getChildAssocsByType("crlatti:allegato")>
+                        <#list odgList as allegato>
+                        {
+                                "allegato": 
+                                {
+                                     "id":"${allegato.nodeRef}",
+                                     "nome":"${allegato.name}",
+                                     "downloadUrl":"${allegato.downloadUrl}",
+                                     "mimetype" : "${allegato.mimetype}",
+                                     "tipologia" : "<#if allegato.properties["crlatti:tipologia"]?exists>${allegato.properties["crlatti:tipologia"]}<#else></#if>",
+                                     "pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>"			
+                                }
+                        }
+                        <#if allegato_has_next>,</#if>
+                        </#list>
+		],
+                "verbaliList" : [
+                        <#assign verbali = seduta.childrenByXPath["*[@cm:name='Verbali']"][0]>
+                        <#assign verbaliList = verbali.getChildAssocsByType("crlatti:allegato")>
+                        <#list verbaliList as allegato>
+                        {
+                                "allegato": 
+                                {
+                                     "id":"${allegato.nodeRef}",
+                                     "nome":"${allegato.name}",
+                                     "downloadUrl":"${allegato.downloadUrl}",
+                                     "mimetype" : "${allegato.mimetype}",
+                                     "tipologia" : "<#if allegato.properties["crlatti:tipologia"]?exists>${allegato.properties["crlatti:tipologia"]}<#else></#if>",
+                                     "pubblico" : "<#if allegato.properties["crlatti:pubblico"]?exists>${allegato.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>"			
+                                }
+                        }
+                        <#if allegato_has_next>,</#if>
+                        </#list>
 		]
 	 }
    }<#if seduta_has_next>,</#if>
