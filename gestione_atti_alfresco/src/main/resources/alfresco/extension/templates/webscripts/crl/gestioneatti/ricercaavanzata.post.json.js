@@ -41,88 +41,88 @@ function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissi
 
 var atto = json.get("atto");
 
-var tipoAtto = atto.get("tipoAtto");
-var legislatura = atto.get("legislatura");
-var stato = atto.get("stato");
+var tipoAtto = getObj(atto, "tipoAtto");
+var legislatura = getObj(atto, "legislatura");
+var stato = getObj(atto, "stato");
 
-var numeroAttoDa = atto.get("numeroAttoDa");
-var numeroAttoA = atto.get("numeroAttoA");
+var numeroAttoDa = getObj(atto, "numeroAttoDa");
+var numeroAttoA = getObj(atto, "numeroAttoA");
 
-var numeroProtocollo = atto.get("numeroProtocollo");
-var tipoIniziativa = atto.get("tipoIniziativa");
-var numeroDcr = atto.get("numeroDcr");
-var primoFirmatario = atto.get("primoFirmatario");
-var gruppoPrimoFirmatario = atto.get("gruppoPrimoFirmatario");
-var oggetto = atto.get("oggetto");
-var firmatario = atto.get("firmatario");
-var gruppoFirmatario = atto.get("gruppoFirmatario");
-var dataIniziativaDa = atto.get("dataIniziativaDa");
-var dataIniziativaA = atto.get("dataIniziativaA");
+var numeroProtocollo = getObj(atto, "numeroProtocollo");
+var tipoIniziativa = getObj(atto, "tipoIniziativa");
+var numeroDcr = getObj(atto, "numeroDcr");
+var primoFirmatario = getObj(atto, "primoFirmatario");
+var gruppoPrimoFirmatario = getObj(atto, "gruppoPrimoFirmatario");
+var oggetto = getObj(atto, "oggetto");
+var firmatario = getObj(atto, "firmatario");
+var gruppoFirmatario = getObj(atto, "gruppoFirmatario");
+var dataIniziativaDa = getObj(atto, "dataIniziativaDa");
+var dataIniziativaA = getObj(atto, "dataIniziativaA");
 
-var dataAssegnazioneDa = atto.get("dataAssegnazioneDa");
-var dataAssegnazioneA = atto.get("dataAssegnazioneA");
+var dataAssegnazioneDa = getObj(atto, "dataAssegnazioneDa");
+var dataAssegnazioneA = getObj(atto, "dataAssegnazioneA");
 
-var dataChiusuraDa = atto.get("dataChiusuraDa");
-var dataChiusuraA = atto.get("dataChiusuraA");
+var dataChiusuraDa = getObj(atto, "dataChiusuraDa");
+var dataChiusuraA = getObj(atto, "dataChiusuraA");
 
-var dataLr = atto.get("dataLR");
+var dataLr = getObj(atto, "dataLR");
 
-var commissione1 = atto.get("commissione1");
-var commissione2 = atto.get("commissione2");
-var commissione3 = atto.get("commissione3");
-var commissioneUser = atto.get("commissioneUser");
+var commissione1 = getObj(atto, "commissione1");
+var commissione2 = getObj(atto, "commissione2");
+var commissione3 = getObj(atto, "commissione3");
+var commissioneUser = getObj(atto, "commissioneUser");
 
-var ruoloCommissione1 = atto.get("ruoloCommissione1");
-var ruoloCommissione2 = atto.get("ruoloCommissione2");
-var ruoloCommissione3 = atto.get("ruoloCommissione3");
+var ruoloCommissione1 = getObj(atto, "ruoloCommissione1");
+var ruoloCommissione2 = getObj(atto, "ruoloCommissione2");
+var ruoloCommissione3 = getObj(atto, "ruoloCommissione3");
 
 //pannello sinistra
-var tipoChiusura = atto.get("tipoChiusura");
-var esitoVotoComRef = atto.get("esitoVotoCommissioneReferente");
-var esitoVotoAula = atto.get("esitoVotoAula");
+var tipoChiusura = getObj(atto, "tipoChiusura");
+var esitoVotoComRef = getObj(atto, "esitoVotoCommissioneReferente");
+var esitoVotoAula = getObj(atto, "esitoVotoAula");
 
-var redigente = atto.get("redigente");
-var deliberante = atto.get("deliberante");
-var numeroLcr = atto.get("numeroLcr");
-var numeroLr = atto.get("numeroLr");
-var anno = atto.get("anno");
-var abbinamento = atto.get("abbinamento");
-var stralcio = atto.get("stralcio");
+var redigente = getObj(atto, "redigente");
+var deliberante = getObj(atto, "deliberante");
+var numeroLcr = getObj(atto, "numeroLcr");
+var numeroLr = getObj(atto, "numeroLr");
+var anno = getObj(atto, "anno");
+var abbinamento = getObj(atto, "abbinamento");
+var stralcio = getObj(atto, "stralcio");
 
 //pannello destra
-var dataPubblicazioneDa = atto.get("dataPubblicazioneDa");
-var dataPubblicazioneA = atto.get("dataPubblicazioneA");
+var dataPubblicazioneDa = getObj(atto, "dataPubblicazioneDa");
+var dataPubblicazioneA = getObj(atto, "dataPubblicazioneA");
 
-var dataSedutaScDa = atto.get("dataSedutaSCDa");
-var dataSedutaScA = atto.get("dataSedutaSCA");
+var dataSedutaScDa = getObj(atto, "dataSedutaSCDa");
+var dataSedutaScA = getObj(atto, "dataSedutaSCA");
 
-var dataSedutaCommDa = atto.get("dataSedutaCommissioneDa");
-var dataSedutaCommA = atto.get("dataSedutaCommissioneA");
+var dataSedutaCommDa = getObj(atto, "dataSedutaCommissioneDa");
+var dataSedutaCommA = getObj(atto, "dataSedutaCommissioneA");
 
-var dataSedutaAulaDa = atto.get("dataSedutaAulaDa");
-var dataSedutaAulaA = atto.get("dataSedutaAulaA");
+var dataSedutaAulaDa = getObj(atto, "dataSedutaAulaDa");
+var dataSedutaAulaA = getObj(atto, "dataSedutaAulaA");
 
-var relatore = atto.get("relatore");
-var organismoStatutario = atto.get("organismoStatutario");
-var soggettoConsultato = atto.get("soggettoConsultato");
-var emendato = atto.get("emendato");
-var emendatoAula = atto.get("emendatoAula");
-var sospeso = atto.get("sospeso");
-var numeroDgr = atto.get("numeroDGR");
-var dataDgr = atto.get("dataDGR");
+var relatore = getObj(atto, "relatore");
+var organismoStatutario = getObj(atto, "organismoStatutario");
+var soggettoConsultato = getObj(atto, "soggettoConsultato");
+var emendato = getObj(atto, "emendato");
+var emendatoAula = getObj(atto, "emendatoAula");
+var sospeso = getObj(atto, "sospeso");
+var numeroDgr = getObj(atto, "numeroDGR");
+var dataDgr = getObj(atto, "dataDGR");
 
-var numeroFascicolo = atto.get("numeroRepertorio");
-var rinviato = atto.get("rinviato");
+var numeroFascicolo = getObj(atto, "numeroRepertorio");
+var rinviato = getObj(atto, "rinviato");
 
 var luceneQuery = "PATH:\"/app:company_home/cm:CRL//*\" ";
 
 var tipoAttoString = ""+tipoAtto+"";
 var type = "crlatti:atto";
 
-var statiUtente = atto.get("statiUtente");
+var statiUtente = getObj(atto, "statiUtente");
 
-var ruoloUtente = atto.get("ruoloUtente");
-var tipoWorkingList = atto.get("tipoWorkingList");
+var ruoloUtente = getObj(atto, "ruoloUtente");
+var tipoWorkingList = getObj(atto, "tipoWorkingList");
 
 //atto -> statiUtente -> StatoAtto -> descrizione
 //statoAtto = statiUtente

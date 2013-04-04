@@ -217,3 +217,11 @@ function getIdAnagraficaLegislaturaByNumero(numeroLegislatura){
 	return idLegislatura;
 	
 }
+
+function getObj(jsonObject, keyName) {
+	if(jsonObject.has(keyName)) {
+		return jsonObject.get(keyName);
+	} else {
+		return null;
+	}
+}
