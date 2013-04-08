@@ -35,7 +35,7 @@ public class Constant {
     public static String COLUMN_LEGISLATURE_FROM = "durata_legislatura_da";
     public static String COLUMN_LEGISLATURE_TO = "durata_legislatura_a";
     
-    public static String QUERY_CURRENT_GRUPPI_CONSILIARI = "SELECT id_gruppo, codice_gruppo, nome_gruppo FROM gruppi_politici WHERE attivo = '1'";
+    public static String QUERY_CURRENT_GRUPPI_CONSILIARI = "SELECT id_gruppo, codice_gruppo, nome_gruppo FROM gruppi_politici WHERE attivo = '1' AND deleted = 0";
     public static String COLUMN_GRUPPI_CONSILIARI_ID = "id_gruppo";
     public static String COLUMN_GRUPPI_CONSILIARI_CODICE = "codice_gruppo";
     public static String COLUMN_GRUPPI_CONSILIARI_NOME = "nome_gruppo";
