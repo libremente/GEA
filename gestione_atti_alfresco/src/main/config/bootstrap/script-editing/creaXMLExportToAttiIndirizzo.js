@@ -11,10 +11,19 @@ if(document.properties["crlatti:statoExportAttiIndirizzo"]=="CREATE"){
 
 }
 
-
-
 function creaXMLExport(operazione){
-	
+    
+        var firmatariPath = "/app:company_home" +
+        "/cm:"+search.ISO9075Encode("CRL") +
+        "/cm:"+search.ISO9075Encode("Gestione Atti") +
+        "/cm:"+search.ISO9075Encode("Anagrafica") +
+        "/cm:"+search.ISO9075Encode("ConsiglieriAttivi") +"/*";
+    
+        var gruppiConsiliariPath = "/app:company_home" +
+        "/cm:"+search.ISO9075Encode("CRL") +
+        "/cm:"+search.ISO9075Encode("Gestione Atti") +
+        "/cm:"+search.ISO9075Encode("Anagrafica") +
+        "/cm:"+search.ISO9075Encode("GruppiConsiliari") +"/*";
 	
 	// proprietà del nodo atto da esportare in formato xml
 
@@ -27,8 +36,6 @@ function creaXMLExport(operazione){
 	
 	if(id_legislatura!=null){
 		
-		
-
 		// creazione dell'oggetto XML
 		var attoXML = new XML();
 
@@ -71,18 +78,40 @@ function creaXMLExport(operazione){
 			// creazione dei tag <firmatario>
 			// l'array è ciclato al contrario in modo da inserire il tag firmatario sempre al primo posto
 			for (var i=firmatariArray.length-1; i>=0; i--) {
-				
-				var firmatario = <firmatario id_firmario="" id_gruppo_firmatario="" nome_firmatario="" cognome_firmatario="" gruppo_frimatario=""></firmatario>;
+                            
+                            var firmatario = firmatariArray[i].properties["crlatti:nomeFirmatario"];
+                            
+                            //cerca il consigliere exact match - difficile
+                            var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"*"+firmatario+"\"";
+                            var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
+                            var consigliereAnagraficaNode = null;
+                            if(consigliereResults!=null && consigliereResults.length==1){
+                                
+                                consigliereAnagraficaNode = consigliereResults[0];
+                            
+                                // cerco il gruppo consiliare
+                                var gruppoConsiliare = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
+                                var idAnagraficaGruppoConsiliare = "";
+
+                                var gruppoConsiliareLuceneQuery = "PATH:\""+gruppiConsiliariPath+"\" AND TYPE:\"crlatti:gruppoConsiliareAnagrafica\" AND @crlatti\\:nomeGruppoConsiliareAnagrafica:\" "+gruppoConsiliare+"\"";
+                                var gruppoConsiliareResults = search.luceneSearch(gruppoConsiliareLuceneQuery);
+                                var gruppoConsiliareAnagraficaNode = null;
+                                if(gruppoConsiliareResults!=null && gruppoConsiliareResults.length==1){
+                                        gruppoConsiliareAnagraficaNode = gruppoConsiliareResults[0];
+                                        idAnagraficaGruppoConsiliare = gruppoConsiliareAnagraficaNode.properties["crlatti:idAnagrafica"];
+                                }
+                           
+				var firmatario = <firmatario id_firmatario="" id_gruppo_firmatario="" nome_firmatario="" cognome_firmatario="" gruppo_frimatario=""></firmatario>;
 			
-				// Non è previsto a sistema un id firmatario. Viene utilizzato il nomeFirmatario
-				firmatario.@id_firmario = firmatariArray[i].properties["crlatti:nomeFirmatario"];
-				firmatario.@id_gruppo_firmatario = firmatariArray[i].properties["crlatti:gruppoConsiliare"];
-				firmatario.@nome_firmatario = firmatariArray[i].properties["crlatti:nomeFirmatario"];
-				firmatario.@cognome_firmatario = "";
-				firmatario.@gruppo_frimatario = firmatariArray[i].properties["crlatti:gruppoConsiliare"];
+                                firmatario.@id_firmatario = consigliereAnagraficaNode.properties["crlatti:idAnagrafica"];
+				firmatario.@id_gruppo_firmatario = idAnagraficaGruppoConsiliare;
+				firmatario.@nome_firmatario = consigliereAnagraficaNode.properties["crlatti:nomeConsigliereAnagrafica"];
+				firmatario.@cognome_firmatario = consigliereAnagraficaNode.properties["crlatti:cognomeConsigliereAnagrafica"];
+				firmatario.@gruppo_frimatario = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
 
 				firmatari.insertChildAfter(null, firmatario);	
-					
+				
+                            }
 			}
 
 		}
@@ -120,7 +149,6 @@ function creaXMLExport(operazione){
 //				
 //		}
 
-
 		// Collegamenti atti indirizzo sindacato ispettivo
 		var collegamentiAttoIndirizzoXPathQuery = "*[@cm:name='AttiIndirizzoSindacatoIspettivo']";
 		var collegamentiAttoIndirizzoFolderNode = collegamentiFolderNode.childrenByXPath(collegamentiAttoIndirizzoXPathQuery)[0];
@@ -142,9 +170,7 @@ function creaXMLExport(operazione){
 				
 		}
 
-
 		attoXML.insertChildAfter(null, collegamenti);
-
 
 		// creo il contenuto nella cartella di export
 
@@ -179,18 +205,5 @@ function creaXMLExport(operazione){
 	}else{
 		attiIndirizzoExportLogger.error("File export per atto "+tipo_atto+" "+numero_atto+" non creato. Non è possibile determinare l'id della legislatura di riferimento.");
 	}
-	
-	
-	
+			
 }
-
-
-
-
-
-
-
-
-
-
-

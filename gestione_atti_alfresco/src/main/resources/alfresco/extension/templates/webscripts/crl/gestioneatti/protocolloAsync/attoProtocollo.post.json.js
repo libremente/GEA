@@ -183,32 +183,37 @@ if(username=="protocollo" || username=="admin"){
 						var prefix = "CONSIGLIERI REGIONALI:";
 						
 						if(esibenteMittente.indexOf(prefix)!=-1){
-							var esibenteMittenteFirmatari = esibenteMittente.split(prefix)[1];
-							var firmatariNomeCognomeSplitted = esibenteMittenteFirmatari.split("-");
-							var firmatariSplittedTemp = null;
+                                                    
+                                                        var esibenteMittenteFirmatari = esibenteMittente.split(prefix)[1];
+                                                        
+                                                        var firmatariNomeCognomeSplitted = new Array();
+                                                        
+                                                        if(esibenteMittenteFirmatari.indexOf("-")==-1) {
+                                                            firmatariNomeCognomeSplitted.push(esibenteMittenteFirmatari);
+                                                        } else {
+                                                            firmatariNomeCognomeSplitted = esibenteMittenteFirmatari.split("-");
+                                                        }
+                                                        
+                                                        var firmatariSplittedTemp = null;
 							var firmatariSplitted = new Array();
-							if(firmatariNomeCognomeSplitted.length>0){
-								for(var k=0; k<firmatariNomeCognomeSplitted.length; k++){
-									firmatariSplittedTemp = firmatariNomeCognomeSplitted[k].split(",");
-									for(var j=0; j<firmatariSplittedTemp.length; j++){
-										var firmatarioTemp = null;
-										if(firmatariSplittedTemp[j].indexOf("(")==-1){
-											firmatarioTemp = firmatariSplittedTemp[j];
-										}else{
-											firmatarioTemp = firmatariSplittedTemp[j].split("\\(")[0];
-										}
-										
-										firmatariSplitted.push(firmatarioTemp);
-									}
-								}
+							
+                                                        for(var k=0; k<firmatariNomeCognomeSplitted.length; k++){
+
+                                                                firmatariSplittedTemp = firmatariNomeCognomeSplitted[k].split(",");
+                                                                for(var j=0; j<firmatariSplittedTemp.length; j++){
+                                                                        var firmatarioTemp = null;
+                                                                        if(firmatariSplittedTemp[j].indexOf("(")==-1){
+                                                                                firmatarioTemp = firmatariSplittedTemp[j];
+                                                                        }else{
+                                                                                firmatarioTemp = firmatariSplittedTemp[j].split("\\(")[0];
+                                                                        }
+
+                                                                        firmatariSplitted.push(firmatarioTemp);
+                                                                }
+
+                                                        }
 								
-								//firmatariSplitted = esibenteMittenteFirmatari.split(",");
-							} 
-//							else {
-//								firmatariSplitted = firmatariNomeCognomeSplitted;
-//							}
-							
-							
+           							
 							for(var i=0; i<firmatariSplitted.length; i++){
 								if(firmatariSplitted[i].indexOf("(")==-1){
 									var firmatario = firmatariSplitted[i].trim();
@@ -267,11 +272,12 @@ if(username=="protocollo" || username=="admin"){
 								}
 							}
 						}
-					} else {
+					} 
+                                        //else {
 						
 						//firmatariArray.push(esibenteMittente);
 						//attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
-					}
+					//}
 					
 					// La proprietà firmatari viene valorizzata mediante una regola nella cartella firmatari dell'atto. 
 					// attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;

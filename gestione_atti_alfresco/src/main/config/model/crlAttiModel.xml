@@ -728,10 +728,20 @@
 				<property name="crlatti:codiceGruppoConsiliareAnagrafica">
 					<title>Codice</title>
 					<type>d:text</type>
+                                        <index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
 				</property>
 				<property name="crlatti:nomeGruppoConsiliareAnagrafica">
 					<title>Nome</title>
 					<type>d:text</type>
+                                        <index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
 				</property>
 			</properties>
 			<mandatory-aspects>
