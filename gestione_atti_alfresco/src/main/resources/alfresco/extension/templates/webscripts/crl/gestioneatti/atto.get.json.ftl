@@ -279,6 +279,10 @@
     				"numVerbale": "${sedutaAtto.numVerbale}",
     				"nomeOrgano": "${sedutaAtto.nomeOrgano}",
     				"dataSeduta": "${sedutaAtto.dataSeduta?string("yyyy-MM-dd")}",
+                                "idVerbale":"<#if sedutaAtto.idVerbale?exists>${sedutaAtto.idVerbale}<#else></#if>",
+                                "nomeVerbale":"<#if sedutaAtto.nomeVerbale?exists>${sedutaAtto.nomeVerbale}<#else></#if>",
+                                "mimetypeVerbale":"<#if sedutaAtto.mimetypeVerbale?exists>${sedutaAtto.mimetypeVerbale}<#else></#if>",
+                                "discusso":"<#if sedutaAtto.discusso?exists>${sedutaAtto.discusso?string("true","false")}<#else></#if>",
     				"links": [ 
 					<#list sedutaAtto.links as link>
 						{

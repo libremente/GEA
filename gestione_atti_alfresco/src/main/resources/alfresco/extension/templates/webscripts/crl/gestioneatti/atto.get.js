@@ -84,16 +84,30 @@ if(checkIsNotNull(id)){
 		sedutaResultObj.nomeOrgano = sedutaResult.parent.parent.parent.name;
 		sedutaResultObj.dataSeduta = sedutaResult.properties["crlatti:dataSedutaSedutaODG"];
 		sedutaResultObj.numVerbale = sedutaResult.properties["crlatti:numVerbaleSedutaODG"];
-		
-		
+                
+ 				
 		var linksFolderXpathQuery = "*[@cm:name='Links']";
 		var linksFolderNode = sedutaResult.childrenByXPath(linksFolderXpathQuery)[0];
 		sedutaResultObj.links = linksFolderNode.getChildAssocsByType("crlatti:link");
 
-			
+               sedutaResultObj.discusso = seduteResults[i].properties["crlatti:discussoAttoTrattatoODG"];
+
+                var verbaliFolderXpathQuery = "*[@cm:name='Verbali']";
+		var verbaliFolderNode = sedutaResult.childrenByXPath(verbaliFolderXpathQuery)[0];
+		var verbali = verbaliFolderNode.getChildAssocsByType("crlatti:allegato");
+                
+                if(verbali != null && verbali.length > 0) {
+                    
+                    var verbale = verbali[0];
+                    
+                    sedutaResultObj.idVerbale = verbale.nodeRef.toString();
+                    sedutaResultObj.nomeVerbale = verbale.name;
+                    sedutaResultObj.mimetypeVerbale = verbale.mimetype;
+                    
+                }
+                	
 		var passaggioFolderNode = getLastPassaggio(attoFolderNode);
-		
-		
+				
 		if(sedutaResultObj.nomeOrgano!="Aula" && sedutaResultObj.nomeOrgano!="ServizioCommissioni"){
 			
 			
