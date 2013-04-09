@@ -101,13 +101,13 @@ function creaXMLExport(operazione){
                                         idAnagraficaGruppoConsiliare = gruppoConsiliareAnagraficaNode.properties["crlatti:idAnagrafica"];
                                 }
                            
-				var firmatario = <firmatario id_firmatario="" id_gruppo_firmatario="" nome_firmatario="" cognome_firmatario="" gruppo_frimatario=""></firmatario>;
+				var firmatario = <firmatario id_firmatario="" id_gruppo_firmatario="" nome_firmatario="" cognome_firmatario="" gruppo_firmatario=""></firmatario>;
 			
                                 firmatario.@id_firmatario = consigliereAnagraficaNode.properties["crlatti:idAnagrafica"];
 				firmatario.@id_gruppo_firmatario = idAnagraficaGruppoConsiliare;
 				firmatario.@nome_firmatario = consigliereAnagraficaNode.properties["crlatti:nomeConsigliereAnagrafica"];
 				firmatario.@cognome_firmatario = consigliereAnagraficaNode.properties["crlatti:cognomeConsigliereAnagrafica"];
-				firmatario.@gruppo_frimatario = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
+				firmatario.@gruppo_firmatario = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
 
 				firmatari.insertChildAfter(null, firmatario);	
 				
