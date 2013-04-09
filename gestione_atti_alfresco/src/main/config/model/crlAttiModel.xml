@@ -280,6 +280,14 @@
                                 <property name="crlatti:attoProseguente">
 					<title>Atto proseguente</title>
 					<type>d:boolean</type>
+				</property>                              
+                                <property name="crlatti:numRegolamento">
+					<title>Numero regolamento</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:dataRegolamento">
+					<title>Data regolamento</title>
+					<type>d:date</type>
 				</property>
 			</properties>
 			<mandatory-aspects>
@@ -921,7 +929,27 @@
 				<property name="crlatti:dataSedutaCommAttoCommissione">
 					<title>Data Seduta Commissione Atto</title>
 					<type>d:date</type>
-				</property>	
+				</property>	                           
+                                <property name="crlatti:dataCalendarizzazioneCommissione">
+					<title>Data Calendarizzazione Commissione</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:dataDcrCommissione">
+					<title>Data Dcr Commissione</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:numeroDcrCommissione">
+					<title>Numero Dcr Commissione</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:dataRisCommissione">
+					<title>Data Ris Commissione</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:numeroRisCommissione">
+					<title>Numero Ris Commissione</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:emendamentiAspect</aspect>
@@ -1005,7 +1033,11 @@
 				<property name="crlatti:quorumEsameAula">
 					<title>Quorum</title>
 					<type>d:text</type>
-				</property>			
+				</property>	
+                                <property name="crlatti:numeroRegAula">
+					<title>Numero Reg</title>
+					<type>d:text</type>
+				</property>                                   		
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:emendamentiAspect</aspect>

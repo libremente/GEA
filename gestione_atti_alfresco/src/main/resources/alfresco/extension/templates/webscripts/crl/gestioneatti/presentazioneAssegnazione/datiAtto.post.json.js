@@ -19,6 +19,7 @@ var oggettoOriginale = filterParam(atto.get("oggettoOriginale"));
 var scadenza60gg = filterParam(atto.get("scadenza60gg"));
 var iterAula = filterParam(atto.get("iterAula"));
 var attoProseguente = filterParam(atto.get("attoProseguente"));
+var tipologia = filterParam(atto.get("tipologia"));
 
 // var di controllo per la creazione del file xml di export verso atti indirizzo
 var exportAttiIndirizzo = false;
@@ -42,6 +43,7 @@ if(checkIsNotNull(id)){
 	attoNode.properties["crlatti:scadenza60gg"] = scadenza60gg;
 	attoNode.properties["crlatti:iterAula"] = iterAula;
 	attoNode.properties["crlatti:attoProseguente"] = attoProseguente;
+        attoNode.properties["crlatti:tipologia"] = tipologia;
 
 	
 	if(checkIsNotNull(dataRepertorio)){

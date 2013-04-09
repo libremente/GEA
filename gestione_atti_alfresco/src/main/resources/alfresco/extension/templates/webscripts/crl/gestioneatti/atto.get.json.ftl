@@ -56,6 +56,8 @@
     "scadenza60gg":"<#if atto.properties["crlatti:scadenza60gg"]?exists>${atto.properties["crlatti:scadenza60gg"]?string("true","false")}<#else></#if>",
     "iterAula":"<#if atto.properties["crlatti:iterAula"]?exists>${atto.properties["crlatti:iterAula"]?string("true","false")}<#else></#if>",
     "attoProseguente" : "<#if atto.properties["crlatti:attoProseguente"]?exists>${atto.properties["crlatti:attoProseguente"]?string}<#else></#if>",
+    "numRegolamento" : "<#if atto.properties["crlatti:numRegolamento"]?exists>${atto.properties["crlatti:numRegolamento"]?string}<#else></#if>",
+    "dataRegolamento":"<#if atto.properties["crlatti:dataRegolamento"]?exists>${atto.properties["crlatti:dataRegolamento"]?string("yyyy-MM-dd")}<#else></#if>",
     
     <#if tipoAtto == "ORG">
 		"relatori" : [
@@ -340,6 +342,12 @@
 		
 							"passaggioDirettoInAula": "<#if commissione.properties["crlatti:passaggioDirettoInAulaCommissione"]?exists>${commissione.properties["crlatti:passaggioDirettoInAulaCommissione"]?string("true","false")}<#else></#if>",
 		
+                                                        "dataCalendarizzazione" : "<#if commissione.properties["crlatti:dataCalendarizzazioneCommissione"]?exists>${commissione.properties["crlatti:dataCalendarizzazioneCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+                                                        "dataDcr" : "<#if commissione.properties["crlatti:dataDcrCommissione"]?exists>${commissione.properties["crlatti:dataDcrCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+                                                        "numeroDcr" : "<#if commissione.properties["crlatti:numeroDcrCommissione"]?exists>${commissione.properties["crlatti:numeroDcrCommissione"]}<#else></#if>",
+                                                        "dataRis" : "<#if commissione.properties["crlatti:dataRisCommissione"]?exists>${commissione.properties["crlatti:dataRisCommissione"]?string("yyyy-MM-dd")}<#else></#if>",
+                                                        "numeroRis" : "<#if commissione.properties["crlatti:numeroRisCommissione"]?exists>${commissione.properties["crlatti:numeroRisCommissione"]}<#else></#if>",
+
 							<#assign comitato = commissione.childrenByXPath["*[@cm:name='ComitatoRistretto']"][0]>
 							"dataIstituzioneComitato" : "<#if comitato.properties["crlatti:dataIstituzioneCR"]?exists>${comitato.properties["crlatti:dataIstituzioneCR"]?string("yyyy-MM-dd")}<#else></#if>",
 							"dataFineLavoriComitato" : "<#if comitato.properties["crlatti:dataFineLavoriCR"]?exists>${comitato.properties["crlatti:dataFineLavoriCR"]?string("yyyy-MM-dd")}<#else></#if>",
@@ -569,6 +577,7 @@
 						 	"articoli": "<#if aula.properties["crlatti:articoliAula"]?exists>${aula.properties["crlatti:articoliAula"]}<#else></#if>",
 						 	"noteStralcio": "<#if aula.properties["crlatti:noteStralcioAula"]?exists>${aula.properties["crlatti:noteStralcioAula"]}<#else></#if>",
 						 	"quorumEsameAula": "<#if aula.properties["crlatti:quorumEsameAula"]?exists>${aula.properties["crlatti:quorumEsameAula"]}<#else></#if>",
+                                                        "numeroReg": "<#if aula.properties["crlatti:numeroRegAula"]?exists>${aula.properties["crlatti:numeroRegAula"]}<#else></#if>",
 						 	<#if aula.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]?exists>
 							<#assign noteGenerali = aula.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]>
 							

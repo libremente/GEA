@@ -14,6 +14,8 @@ var dataPubblicazioneBURL = filterParam(atto.get("dataPubblicazioneBURL"));
 
 var numeroDgrSeguito = filterParam(atto.get("numeroDgrSeguito"));
 var dataDgrSeguito = filterParam(atto.get("dataDgrSeguito"));
+var numRegolamento = filterParam(atto.get("numRegolamento"));
+var dataRegolamento = filterParam(atto.get("dataRegolamento"));
 
 //var numeroDcr = filterParam(atto.get("numeroDcr"));
 
@@ -57,9 +59,17 @@ if(atto!=null
 	}else{
 		attoFolderNode.properties["crlatti:dataDgrSeguito"] = null;
 	}
+        
+        attoFolderNode.properties["crlatti:numRegolamento"] = numRegolamento;
+	
+	if(checkIsNotNull(dataRegolamento)) {
+		var dataRegolamentoSplitted = dataRegolamento.split("-");
+		var dataRegolamentoParsed = new Date(dataRegolamentoSplitted[0],dataRegolamentoSplitted[1]-1,dataRegolamentoSplitted[2]);
+		attoFolderNode.properties["crlatti:dataRegolamento"] = dataDgrSeguitoParsed;
+	}else{
+		attoFolderNode.properties["crlatti:dataRegolamento"] = null;
+	}
 
-	
-	
 	attoFolderNode.properties["crlatti:statoAtto"] = stato;
 	attoFolderNode.save();
 	

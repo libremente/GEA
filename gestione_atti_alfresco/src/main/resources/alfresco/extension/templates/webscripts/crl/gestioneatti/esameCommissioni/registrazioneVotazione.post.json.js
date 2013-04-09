@@ -15,6 +15,11 @@ var dataVotazione = filterParam(commissioneTarget.get("dataSedutaCommissione"));
 var statoCommissione = filterParam(commissioneTarget.get("stato"));
 var ruoloCommissione = filterParam(commissioneTarget.get("ruolo"));
 
+var dataCalendarizzazione = filterParam(commissioneTarget.get("dataCalendarizzazione"));
+var dataDcr = filterParam(commissioneTarget.get("dataDcr"));
+var numeroDcr = filterParam(commissioneTarget.get("numeroDcr"));
+var dataRis = filterParam(commissioneTarget.get("dataRis"));
+var numeroRis = filterParam(commissioneTarget.get("numeroRis"));
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);
@@ -39,8 +44,10 @@ if(checkIsNotNull(id)){
 			commissioneFolderNode = commissioneUtenteResults[0];
 			
 			commissioneFolderNode.properties["crlatti:tipoVotazioneCommissione"] = tipoVotazione;
-			commissioneFolderNode.properties["crlatti:esitoVotazioneCommissione"] = esitoVotazione;
-			
+			commissioneFolderNode.properties["crlatti:esitoVotazioneCommissione"] = esitoVotazione;                        
+                        commissioneFolderNode.properties["crlatti:numeroDcrCommissione"] = numeroDcr;
+			commissioneFolderNode.properties["crlatti:numeroRisCommissione"] = numeroRis;
+                        
 			// data votazione
 			if(checkIsNotNull(dataVotazione)) {
 				var dataVotazioneSplitted = dataVotazione.split("-");
@@ -49,8 +56,33 @@ if(checkIsNotNull(id)){
 			}else{
 				commissioneFolderNode.properties["crlatti:dataVotazioneCommissione"] = null;
 			}
+                        
+                        // data calendarizzazione
+			if(checkIsNotNull(dataCalendarizzazione)) {
+				var dataCalendarizzazioneSplitted = dataCalendarizzazione.split("-");
+				var dataCalendarizzazioneParsed = new Date(dataCalendarizzazioneSplitted[0],dataCalendarizzazioneSplitted[1]-1,dataCalendarizzazioneSplitted[2]);
+				commissioneFolderNode.properties["crlatti:dataCalendarizzazioneCommissione"] = dataCalendarizzazioneParsed;
+			}else{
+				commissioneFolderNode.properties["crlatti:dataCalendarizzazioneCommissione"] = null;
+			}
 			
-			
+			// data Dcr
+			if(checkIsNotNull(dataDcr)) {
+				var dataDcrSplitted = dataDcr.split("-");
+				var dataDcrParsed = new Date(dataDcrSplitted[0],dataDcrSplitted[1]-1,dataDcrSplitted[2]);
+				commissioneFolderNode.properties["crlatti:dataDcrCommissione"] = dataDcrParsed;
+			}else{
+				commissioneFolderNode.properties["crlatti:dataDcrCommissione"] = null;
+			}
+                        
+                        // data Ris
+			if(checkIsNotNull(dataRis)) {
+				var dataRisSplitted = dataRis.split("-");
+				var dataRisParsed = new Date(dataRisSplitted[0],dataRisSplitted[1]-1,dataRisSplitted[2]);
+				commissioneFolderNode.properties["crlatti:dataRisCommissione"] = dataRisParsed;
+			}else{
+				commissioneFolderNode.properties["crlatti:dataRisCommissione"] = null;
+			}
 
 			// passaggio di stato per la commissione: votato in Commissione
 			commissioneFolderNode.properties["crlatti:statoCommissione"] = statoCommissione;
