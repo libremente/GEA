@@ -40,7 +40,7 @@ if(checkIsNotNull(id)
 	aulaFolderNode.properties["crlatti:emendatoAula"] = emendatoAula;
 	aulaFolderNode.properties["crlatti:noteVotazioneAula"] = noteVotazioneAula;
         aulaFolderNode.properties["crlatti:numeroRegAula"] = numeroReg;
-        aulaFolderNode.properties["crlatti:noteCollegamentiAula"] = quorumEsameAula;	
+        aulaFolderNode.properties["crlatti:quorumEsameAula"] = quorumEsameAula;	
 	
 	// presa in carico
 	if(checkIsNotNull(dataSedutaPassaggioAula)) {
