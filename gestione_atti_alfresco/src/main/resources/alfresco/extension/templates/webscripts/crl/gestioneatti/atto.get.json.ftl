@@ -58,6 +58,7 @@
     "attoProseguente" : "<#if atto.properties["crlatti:attoProseguente"]?exists>${atto.properties["crlatti:attoProseguente"]?string}<#else></#if>",
     "numRegolamento" : "<#if atto.properties["crlatti:numRegolamento"]?exists>${atto.properties["crlatti:numRegolamento"]?string}<#else></#if>",
     "dataRegolamento":"<#if atto.properties["crlatti:dataRegolamento"]?exists>${atto.properties["crlatti:dataRegolamento"]?string("yyyy-MM-dd")}<#else></#if>",
+    "noteCollegamenti":"<#if atto.properties["crlatti:noteCollegamenti"]?exists>${atto.properties["crlatti:noteCollegamenti"]}<#else></#if>",
     
     <#if tipoAtto == "ORG">
 		"relatori" : [
@@ -582,6 +583,7 @@
 						 	"noteStralcio": "<#if aula.properties["crlatti:noteStralcioAula"]?exists>${aula.properties["crlatti:noteStralcioAula"]}<#else></#if>",
 						 	"quorumEsameAula": "<#if aula.properties["crlatti:quorumEsameAula"]?exists>${aula.properties["crlatti:quorumEsameAula"]}<#else></#if>",
                                                         "numeroReg": "<#if aula.properties["crlatti:numeroRegAula"]?exists>${aula.properties["crlatti:numeroRegAula"]}<#else></#if>",
+                                                        "rinvioCommBilancio": "<#if aula.properties["crlatti:rinvioCommBilancioAula"]?exists>${aula.properties["crlatti:rinvioCommBilancioAula"]?string("true","false")}<#else></#if>",
 						 	<#if aula.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]?exists>
 							<#assign noteGenerali = aula.childrenByXPath["*[@cm:name='Note Generali.txt']"][0]>
 							

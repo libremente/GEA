@@ -16,6 +16,7 @@ var numeroLcrPassaggioAula = filterParam(passaggioTarget.get("aula").get("numero
 var emendatoAula = filterParam(passaggioTarget.get("aula").get("emendato"));
 var noteVotazioneAula = filterParam(passaggioTarget.get("aula").get("noteVotazione"));
 var numeroReg = filterParam(passaggioTarget.get("aula").get("numeroReg"));
+var quorumEsameAula = filterParam(passaggioTarget.get("aula").get("quorumEsameAula"));
 
 	
 if(checkIsNotNull(id)
@@ -38,7 +39,8 @@ if(checkIsNotNull(id)
 	aulaFolderNode.properties["crlatti:numeroLcrPassaggioAula"] = numeroLcrPassaggioAula;
 	aulaFolderNode.properties["crlatti:emendatoAula"] = emendatoAula;
 	aulaFolderNode.properties["crlatti:noteVotazioneAula"] = noteVotazioneAula;
-        aulaFolderNode.properties["crlatti:numeroRegAula"] = numeroReg;	
+        aulaFolderNode.properties["crlatti:numeroRegAula"] = numeroReg;
+        aulaFolderNode.properties["crlatti:noteCollegamentiAula"] = quorumEsameAula;	
 	
 	// presa in carico
 	if(checkIsNotNull(dataSedutaPassaggioAula)) {

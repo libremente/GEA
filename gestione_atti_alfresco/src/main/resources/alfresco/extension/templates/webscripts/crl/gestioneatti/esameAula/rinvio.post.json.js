@@ -11,6 +11,7 @@ var passaggioTarget = getPassaggioTarget(json, passaggio);
 var dataSedutaRinvio = filterParam(passaggioTarget.get("aula").get("dataSedutaRinvio"));
 var dataTermineMassimo = filterParam(passaggioTarget.get("aula").get("dataTermineMassimo"));
 var motivazioneRinvio = filterParam(passaggioTarget.get("aula").get("motivazioneRinvio"));
+var rinvioCommBilancio = filterParam(passaggioTarget.get("aula").get("rinvioCommBilancio"));
 
 
 if(checkIsNotNull(id)
@@ -27,11 +28,10 @@ if(checkIsNotNull(id)
 	var aulaXPathQuery = "*[@cm:name='Aula']";
 	var aulaFolderNode = passaggioFolderNode.childrenByXPath(aulaXPathQuery)[0];
 	
-	
+	aulaFolderNode.properties["crlatti:rinvioCommBilancioAula"] = rinvioCommBilancio;
 	aulaFolderNode.properties["crlatti:motivazioneRinvioAula"] = motivazioneRinvio;
 	aulaFolderNode.properties["crlatti:rinviato"] = true;
-	
-	
+		
 	if(checkIsNotNull(dataSedutaRinvio)) {
 		var dataSedutaRinvioSplitted = dataSedutaRinvio.split("-");
 		var dataSedutaRinvioParsed = new Date(dataSedutaRinvioSplitted[0],dataSedutaRinvioSplitted[1]-1,dataSedutaRinvioSplitted[2]);
@@ -104,12 +104,7 @@ if(checkIsNotNull(id)
 		commissioneTempNode.save();
 		
 	}
-	
-	
-	
-	
-	
-			
+		
 	attoNode.properties["crlatti:statoAtto"] = statoAtto;
 	attoNode.save();
 

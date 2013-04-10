@@ -289,6 +289,10 @@
 					<title>Data regolamento</title>
 					<type>d:date</type>
 				</property>
+                               <property name="crlatti:noteCollegamenti">
+					<title>Note collegamenti</title>
+					<type>d:text</type>
+				</property> 
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:pubblicabile</aspect>
@@ -1037,7 +1041,12 @@
                                 <property name="crlatti:numeroRegAula">
 					<title>Numero Reg</title>
 					<type>d:text</type>
-				</property>                                   		
+				</property>
+                                <property name="crlatti:rinvioCommBilancioAula">
+					<title>Rinvio Commissione Bilancio</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>                                                                                                                                                                                                                                                   		
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:emendamentiAspect</aspect>

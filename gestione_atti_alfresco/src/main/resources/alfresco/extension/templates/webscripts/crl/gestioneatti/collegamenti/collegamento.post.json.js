@@ -2,12 +2,16 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
+var noteCollegamenti = atto.get("noteCollegamenti");
 
 var collegamenti = atto.get("collegamenti");
 
 if(checkIsNotNull(id)){
 	
 	var attoFolderNode = utils.getNodeFromString(id);
+        
+        attoFolderNode.properties["crlatti:noteCollegamenti"] = noteCollegamenti;
+        attoFolderNode.save();
 	
 	var collegamentiXPathQuery = "*[@cm:name='Collegamenti']";
 	var collegamentiFolderNode = attoFolderNode.childrenByXPath(collegamentiXPathQuery)[0];

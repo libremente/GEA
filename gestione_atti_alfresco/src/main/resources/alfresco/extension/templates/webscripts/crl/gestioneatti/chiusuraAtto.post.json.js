@@ -65,7 +65,7 @@ if(atto!=null
 	if(checkIsNotNull(dataRegolamento)) {
 		var dataRegolamentoSplitted = dataRegolamento.split("-");
 		var dataRegolamentoParsed = new Date(dataRegolamentoSplitted[0],dataRegolamentoSplitted[1]-1,dataRegolamentoSplitted[2]);
-		attoFolderNode.properties["crlatti:dataRegolamento"] = dataDgrSeguitoParsed;
+		attoFolderNode.properties["crlatti:dataRegolamento"] = dataRegolamentoParsed;
 	}else{
 		attoFolderNode.properties["crlatti:dataRegolamento"] = null;
 	}
