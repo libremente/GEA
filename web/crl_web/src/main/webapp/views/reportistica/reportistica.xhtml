@@ -13,6 +13,20 @@
 .ui-fieldset-legend {
 	width: 200px;
 }
+
+
+.ui-tree .ui-treenode {
+    background-attachment: scroll;
+    background-color: transparent;
+    background-image: none;
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    list-style: none outside none;
+    margin: 5px;
+    padding: 1px 0 0;
+}
+
+
 </style>
 
 </h:head>
@@ -42,16 +56,16 @@
 				<p:column>
 
 					<p:tree style="width:90%;border:none" id="docTree"
-						value="#{reportisticaController.root}" var="node" dynamic="true"
-						cache="false" selectionMode="single"
+						value="#{reportisticaController.root}" var="node" dynamic="false"
+						cache="false" selectionMode="single" 
 						selection="#{reportisticaController.selectedNode}">
 
-						<p:ajax event="select" update=":reportForm:dettaglioPan"
-							immediate="true"
+						<p:ajax event="select" update=":reportForm:dettaglioPan,docTree"
+							
 							listener="#{reportisticaController.onNodeSelect}" />
 
-						<p:treeNode expandedIcon="ui-icon-folder-open"
-							collapsedIcon="ui-icon-folder-collapsed">
+						<p:treeNode  expandedIcon="ui-icon-folder-open"
+							collapsedIcon="ui-icon-folder-collapsed" >
 							<h:outputText value="#{node}" />
 						</p:treeNode>
 

@@ -154,6 +154,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali = new ArrayList<CollegamentoLeggiRegionali>();
 	private List<Passaggio> passaggi = new ArrayList<Passaggio>();
+	private String noteCollegamenti;
 	private String commissioniNonConsultive;
 	private String commissioniConsultive;
 
@@ -177,6 +178,10 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	private String numeroDgrSeguito;
 	private Date dataDgrSeguito;
 
+	private String numRegolamento;
+	private Date dataRegolamento;
+	
+	
 	private List<SedutaAtto> seduteAtto = new ArrayList<SedutaAtto>();
 
 	public Atto() {
@@ -811,6 +816,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.dataIniziativa = dataIniziativa;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazioneCommissioni() {
 		return dataAssegnazioneCommissioni;
 	}
@@ -855,6 +861,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.relatore = relatore;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataNominaRelatore() {
 		return dataNominaRelatore;
 	}
@@ -879,7 +886,8 @@ public class Atto implements Cloneable, Comparable<Atto> {
 			String esitoVotazioneCommissioneReferente) {
 		this.esitoVotazioneCommissioneReferente = esitoVotazioneCommissioneReferente;
 	}
-
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataVotazioneCommissione() {
 		return dataVotazioneCommissione;
 	}
@@ -888,6 +896,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.dataVotazioneCommissione = dataVotazioneCommissione;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataScadenza() {
 		return dataScadenza;
 	}
@@ -896,6 +905,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.dataScadenza = dataScadenza;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRichiestaIscrizioneAula() {
 		return dataRichiestaIscrizioneAula;
 	}
@@ -912,6 +922,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.esitoVotazioneAula = esitoVotazioneAula;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataVotazioneAula() {
 		return dataVotazioneAula;
 	}
@@ -994,6 +1005,36 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	public void setSeduteAtto(List<SedutaAtto> seduteAtto) {
 		this.seduteAtto = seduteAtto;
+	}
+	
+	
+
+	public String getNumRegolamento() {
+		return numRegolamento;
+	}
+
+	public void setNumRegolamento(String numRegolamento) {
+		this.numRegolamento = numRegolamento;
+	}
+
+	
+	
+	
+	public String getNoteCollegamenti() {
+		return noteCollegamenti;
+	}
+
+	public void setNoteCollegamenti(String noteCollegamenti) {
+		this.noteCollegamenti = noteCollegamenti;
+	}
+
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getDataRegolamento() {
+		return dataRegolamento;
+	}
+
+	public void setDataRegolamento(Date dataRegolamento) {
+		this.dataRegolamento = dataRegolamento;
 	}
 
 	public String getTipoIniziativaNome() {

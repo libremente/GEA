@@ -212,11 +212,15 @@ public class InserisciEACController {
 					if (collegamento.getIdAtto().equals(idAttoSindacato)) {
 
 						collegamento.setDescrizione(descrizioneAttoSindacato);
-						collegamentiAttiSindacato.add(collegamento);
+						atto.getCollegamentiAttiSindacato().add(collegamento);
 						break;
 					}
 
 				}
+				
+				
+				//attoServiceManager.persistEAC(atto);
+				attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 
 			}
 		}
@@ -240,15 +244,16 @@ public class InserisciEACController {
 
 	public void removeCollegamentoAttoSindacato() {
 
-		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
+		for (CollegamentoAttiSindacato element : atto.getCollegamentiAttiSindacato()) {
 
 			if (element.getNumeroAtto().equals(attoSindacatoToDelete)) {
 
-				collegamentiAttiSindacato.remove(element);
-
+				atto.getCollegamentiAttiSindacato().remove(element);                 
 				break;
 			}
 		}
+		
+		attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 	}
 
 	private boolean checkCollegamentiAttiSindacati() {
@@ -338,12 +343,12 @@ public class InserisciEACController {
 	}
 
 	public List<CollegamentoAttiSindacato> getCollegamentiAttiSindacato() {
-		return collegamentiAttiSindacato;
+		return atto.getCollegamentiAttiSindacato();
 	}
 
 	public void setCollegamentiAttiSindacato(
 			List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
-		this.collegamentiAttiSindacato = collegamentiAttiSindacato;
+		this.atto.setCollegamentiAttiSindacato ( collegamentiAttiSindacato);
 	}
 
 	public String getTipoAttoSindacato() {

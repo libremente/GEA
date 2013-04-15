@@ -432,7 +432,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissionePDAurgenza
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePDAurgenza.xhtml");
 		letteraTrasmissionePDAurgenza
-				.setNome("Lettera di Trasmissione PDA con urgenza");
+				.setNome("Lettera di Trasmissione con richiesta di trattazione urgente");
 		letteraTrasmissionePDAurgenza.setAuthorities(true, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePDAurgenza = new DefaultTreeNode(
 				"lettera", letteraTrasmissionePDAurgenza, nodeComm);
@@ -738,6 +738,14 @@ public class LettereNotificheController implements Serializable{
 			setUfficio(letteraRet.getUfficio());
 			
 		
+		}else{
+			
+			if (event.getTreeNode().isExpanded()){
+		         event.getTreeNode().setExpanded(false);
+			}else{ 
+		         event.getTreeNode().setExpanded(true);
+			}
+			
 		}
 
 	}

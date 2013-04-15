@@ -79,6 +79,20 @@
 								</p:calendar>
 							</p:column>
 						</p:row>
+						
+						<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+							<p:column>
+							
+							
+							Rinvio a comm. bilancio:
+			
+			</p:column>
+							<p:column>
+								<p:selectBooleanCheckbox value="#{esameAulaController.rinvioCommBilancio}">
+								
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
 						<p:row>
 							<p:column>
 

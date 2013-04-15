@@ -119,6 +119,16 @@
 
 		</p:row>
 
+		<p:row style="margin-bottom:20px"
+			rendered="#{navigationBean.isSessionAttoORG()}">
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Relatore: " />
+				<h:outputText value="#{attoBean.getRelatoreORG()}" />
+			</p:column>
+
+		</p:row>
+
+
 		<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
 			<p:column colspan="3">
 
@@ -207,6 +217,15 @@
 			</p:column>
 		</p:row>
 
+		<p:row style="margin-bottom:20px"
+			rendered="#{navigationBean.isSessionAttoPAR()}">
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Tipologia: " />
+				<h:outputText value="#{attoBean.tipologia}" />
+			</p:column>
+
+		</p:row>
+
 		<p:row>
 			<p:column colspan="3">
 
@@ -261,7 +280,8 @@
 						</f:facet>
 						<p:commandButton update=":formRiepilogo"
 							action="#{riepilogoAttoController.showCommissioneDetail}"
-							icon="detail-icon">
+							icon="detail-icon" alt="Clicca per visualizzare"
+							title="Clicca per visualizzare">
 
 							<f:setPropertyActionListener value="#{commissione.descrizione}"
 								target="#{riepilogoAttoController.nomeCommissione}" />
@@ -403,13 +423,33 @@
 				<h:outputText
 					value="#{riepilogoAttoController.commissioneSelected.esitoVotazione} - #{riepilogoAttoController.commissioneSelected.quorumEsameCommissioni}" />
 			</p:column>
-			<p:column colspan="2">
+			<p:column>
 				<h:outputText style="font-weight: bold;" value="Data Votazione: " />
 				<h:outputText
 					value="#{riepilogoAttoController.commissioneSelected.dataSedutaCommissione}">
 					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
+
+			<p:column>
+				<h:outputText
+					rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' 
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Co-Referente'
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Redigente' ) }"
+					style="font-weight: bold;" value="Calendarizzato il: " />
+
+				<h:outputText
+					rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' 
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Co-Referente'
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Redigente' ) }"
+					value="#{riepilogoAttoController.commissioneSelected.dataCalendarizzazione}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+			</p:column>
+
 		</p:row>
 		<p:row>
 
@@ -421,6 +461,49 @@
 					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
+		</p:row>
+
+
+		<p:row
+			rendered="#{riepilogoAttoController.commissioneSelected.ruolo eq 'Deliberante'}">
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero DCR: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.numeroDcr}" />
+			</p:column>
+
+			<p:column colspan="2">
+				<h:outputText style="font-weight: bold;" value="Data DCR: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataDcr}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+		</p:row>
+
+		<p:row
+			rendered="#{navigationBean.isRisTipo() and 
+			          (riepilogoAttoController.commissioneSelected.ruolo eq 'Referente'
+			           or riepilogoAttoController.commissioneSelected.ruolo eq 'Co-Referente'
+			           or riepilogoAttoController.commissioneSelected.ruolo eq 'Deliberante' 
+			           or riepilogoAttoController.commissioneSelected.ruolo eq 'Redigente' 
+			          )}">
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="Proposta di risoluzione n°: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.numeroRis}" />
+			</p:column>
+
+			<p:column colspan="2">
+				<h:outputText style="font-weight: bold;" value="Data: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataRis}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
 		</p:row>
 
 
@@ -439,9 +522,9 @@
 				<p:dataTable value="#{attoBean.getConsultazioni()}"
 					var="consultazione">
 
-				
 
-					<p:column headerText="Data consultazione" >
+
+					<p:column headerText="Data consultazione">
 						<h:outputText value="#{consultazione.dataConsultazione}">
 							<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 						</h:outputText>
@@ -512,7 +595,8 @@
 	rendered="#{ navigationBean.boxAulaVisible()}">
 	<p:panelGrid styleClass="infoTable" id="infoAula">
 		<p:row>
-			<p:column>
+			<p:column
+				rendered="#{not navigationBean.hasCommissioneDeliberante()}">
 				<h:outputText style="font-weight: bold;" value="Numero DCR: " />
 				<h:outputText value="#{attoBean.getWorkingAula().numeroDcr}" />
 			</p:column>
@@ -571,7 +655,8 @@
 </p:fieldset>
 
 <p:fieldset legend="Chiusura iter" id="fsChiusura" toggleable="true"
-	collapsed="false" toggleSpeed="500" rendered="#{not navigationBean.isSessionAttoINP()}">
+	collapsed="false" toggleSpeed="500"
+	rendered="#{not navigationBean.isSessionAttoINP()}">
 	<p:panelGrid styleClass="infoTable" id="infoChiusuraIter">
 		<p:row>
 			<p:column>
@@ -640,16 +725,6 @@
 				</h:outputText>
 			</p:column>
 		</p:row>
-
-		<!-- <p:row rendered="#{navigationBean.isSessionAttoPDA()}">
-			<p:column colspan="2">
-				<b><h:outputLabel for="numeroDcr" value="Numero DCR: " /> </b>
-				<h:outputText id="numeroDcr" value="#{attoBean.atto.numeroDcr}" />
-			</p:column>
-		</p:row> -->
-
-
-
 
 
 	</p:panelGrid>
@@ -740,6 +815,15 @@
 
 				</p:row>
 
+				<p:row style="margin-bottom:20px"
+					rendered="#{navigationBean.isSessionAttoORG()}">
+					<p:column colspan="3">
+						<h:outputText style="font-weight: bold;" value="Relatore: " />
+						<h:outputText value="#{attoBean.getRelatoreORG()}" />
+					</p:column>
+
+				</p:row>
+
 				<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
 					<p:column colspan="3">
 
@@ -820,6 +904,16 @@
 							rendered="#{empty attoBean.abbinamenti}">
 						</h:outputText>
 					</p:column>
+				</p:row>
+
+
+				<p:row style="margin-bottom:20px"
+					rendered="#{navigationBean.isSessionAttoPAR()}">
+					<p:column colspan="3">
+						<h:outputText style="font-weight: bold;" value="Tipologia: " />
+						<h:outputText value="#{attoBean.tipologia}" />
+					</p:column>
+
 				</p:row>
 
 				<p:row>
@@ -974,12 +1068,32 @@
 							<h:outputText
 								value="#{commissione.esitoVotazione} - #{commissione.quorumEsameCommissioni}" />
 						</p:column>
-						<p:column colspan="2">
+						<p:column>
 							<h:outputText style="font-weight: bold;" value="Data Votazione: " />
 							<h:outputText value="#{commissione.dataSedutaCommissione}">
 								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
+
+						<p:column>
+							<h:outputText
+								rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (commissione.ruolo eq 'Referente' 
+					                 or commissione.ruolo eq 'Co-Referente'
+					                 or commissione.ruolo eq 'Redigente' ) }"
+								style="font-weight: bold;" value="Calendarizzato il: " />
+
+							<h:outputText
+								rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (commissione.ruolo eq 'Referente' 
+					                 or commissione.ruolo eq 'Co-Referente'
+					                 or commissione.ruolo eq 'Redigente' ) }"
+								value="#{commissione.dataCalendarizzazione}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+
+						</p:column>
+
 					</p:row>
 					<p:row>
 						<p:column colspan="3">
@@ -990,6 +1104,44 @@
 								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
+					</p:row>
+
+					<p:row rendered="#{commissione.ruolo eq 'Deliberante'}">
+						<p:column
+							rendered="#{not navigationBean.hasCommissioneDeliberante()}">
+							<h:outputText style="font-weight: bold;" value="Numero DCR: " />
+							<h:outputText value="#{commissione.numeroDcr}" />
+						</p:column>
+
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;" value="Data DCR: " />
+							<h:outputText value="#{commissione.dataDcr}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+					</p:row>
+
+					<p:row
+						rendered="#{navigationBean.isRisTipo() and 
+			          (commissione.ruolo eq 'Referente'
+			           or commissione.ruolo eq 'Co-Referente'
+			           or commissione.ruolo eq 'Deliberante' 
+			           or commissione.ruolo eq 'Redigente' 
+			          )}">
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Proposta di risoluzione n°: " />
+							<h:outputText value="#{commissione.numeroRis}" />
+						</p:column>
+
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;" value="Data: " />
+							<h:outputText value="#{commissione.dataRis}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
 					</p:row>
 
 				</p:panelGrid>
@@ -1010,10 +1162,9 @@
 						<p:dataTable value="#{attoBean.getConsultazioni()}"
 							var="consultazione">
 
-							
 
-							<p:column headerText="Data consultazione"
-								>
+
+							<p:column headerText="Data consultazione">
 								<h:outputText value="#{consultazione.dataConsultazione}">
 									<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
 								</h:outputText>

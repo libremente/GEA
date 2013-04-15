@@ -19,6 +19,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.EsameAula;
@@ -29,6 +30,8 @@ import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 
 @Component(value = "seduteService")
@@ -256,6 +259,91 @@ public class SeduteService {
 		return responseFile;
 
 	}
+	
+	
+	public Allegato uploadOdg(String url, Seduta seduta, InputStream stream,
+			Allegato allegato) {
+
+		try {
+
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
+			part.field("id", seduta.getIdSeduta());
+			part.field("tipologia", "odg");
+			part.field("pubblico", ""+allegato.isPubblico());   
+			ClientResponse response = webResource
+					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8")
+					.post(ClientResponse.class, part);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			allegato = objectMapper.readValue(responseMsg, Allegato.class);
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return allegato;
+	}
+	
+	
+	public Allegato uploadVerbale(String url, Seduta seduta, InputStream stream,
+			Allegato allegato) {
+
+		try {
+
+			WebResource webResource = client.resource(url);
+			FormDataMultiPart part = new FormDataMultiPart();
+			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
+			part.field("id", seduta.getIdSeduta());
+			part.field("tipologia", "verbale");
+			part.field("pubblico", ""+allegato.isPubblico());   
+			ClientResponse response = webResource
+					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8")
+					.post(ClientResponse.class, part);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			allegato = objectMapper.readValue(responseMsg, Allegato.class);
+
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return allegato;
+	}
+	
 	
 	
 	

@@ -7,6 +7,28 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+	<style type="text/css">
+
+
+
+.ui-tree .ui-treenode {
+    background-attachment: scroll;
+    background-color: transparent;
+    background-image: none;
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    list-style: none outside none;
+    margin: 5px;
+    padding: 1px 0 0;
+}
+
+
+</style>
+
+</h:head>
+	
 
 <h:form id="lettereForm">
 
@@ -33,7 +55,7 @@
 									id="tree">
 
 
-									<p:ajax event="select" update=":lettereForm:tabView:dettaglioPan" immediate="true"
+									<p:ajax event="select" update=":lettereForm:tabView:dettaglioPan,tree" 
 										listener="#{lettereNotificheController.onNodeSelect}" />
 
 									<p:treeNode expandedIcon="ui-icon-folder-open"

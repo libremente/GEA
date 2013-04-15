@@ -63,10 +63,14 @@ public class Aula implements Cloneable{
 	private String noteStralcio;
 	private String quorumEsameAula;
 	
+	private String numeroReg;
 	
 	private List<Link> linksEsameAula = new ArrayList<Link>();
 	
 	private String noteGeneraliEsameAula;
+	
+	private boolean rinvioCommBilancio;
+	
 	
 	public Object clone() {
 		try {
@@ -396,6 +400,27 @@ public class Aula implements Cloneable{
 	}
 
 
+	public String getNumeroReg() {
+		return numeroReg;
+	}
+
+
+	public void setNumeroReg(String numeroReg) {
+		this.numeroReg = numeroReg;
+	}
+
+
+	public boolean isRinvioCommBilancio() {
+		return rinvioCommBilancio;
+	}
+
+
+	public void setRinvioCommBilancio(boolean rinvioCommBilancio) {
+		this.rinvioCommBilancio = rinvioCommBilancio;
+	}
+
+	
+    
 
 
 }

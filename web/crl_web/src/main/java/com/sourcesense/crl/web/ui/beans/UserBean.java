@@ -140,5 +140,11 @@ public class UserBean implements Serializable {
 		} 
 	}
 	
+	public String refreshSearch(){
+		refreshColonneUser();
+		return "pretty:Home";
+		
+	}
+	
 
 }

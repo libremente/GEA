@@ -645,7 +645,7 @@
 
 									<p:column>
 
-										<p:inputText id="numeroDcr"
+										<p:inputText id="numeroDcr" size="5" maxlength="5"
 											value="#{searchAttoController.numeroDcr}" />
 
 									</p:column>
@@ -796,7 +796,7 @@
 
 									<p:commandButton value="Cerca" update="listaAtti"
 										id="btncercaatto_cerca"
-										style="color:white; background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #045491;"
+										style="color:white; background: #045491;"
 										actionListener="#{searchAttoController.searchAtti()}" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
@@ -883,13 +883,16 @@
 				</p:column>
 				<p:column headerText="Azioni">
 
+					<c:set value="#{atto.id}" var="idAttoParam" />
+					<c:set value="#{atto.tipo}" var="tipoAttoParam" />
+
 					<p:commandButton
-						action="#{gestioneSeduteController.addAttoTrattato}"
+						action="#{gestioneSeduteController.addAttoTrattato(idAttoParam,tipoAttoParam)}"
 						title="Aggiungi ad atti iscritti" value=""
 						style="width:25px;height:25px;" immediate="true"
 						update=":gestioneSeduteForm:gestioneSedute" icon="new-icon">
-						<f:setPropertyActionListener value="#{atto.id}"
-							target="#{gestioneSeduteController.attoDaTrattare}" />
+						<!-- <f:setPropertyActionListener value="#{atto.id}"
+							target="#{gestioneSeduteController.attoDaTrattare}" /> -->
 					</p:commandButton>	
 					&nbsp; &nbsp; &nbsp;
 				</p:column>

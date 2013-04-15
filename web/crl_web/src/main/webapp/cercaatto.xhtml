@@ -52,7 +52,7 @@
 		</p:scrollPanel>
 		<p:commandButton id="confirmCommissione" value="Salva"
 			oncomplete="tableDialog.hide()"
-			action="#{userBean.refreshColonneUser}" update="listaAtti" />
+			action="#{userBean.refreshSearch}" ajax="false" />
 
 
 		<p:commandButton id="declineCommissione" value="Annulla"
@@ -643,7 +643,7 @@
 
 								<p:column>
 
-									<p:inputText id="numeroDcr"
+									<p:inputText id="numeroDcr" size="5" maxlength="5"
 										value="#{searchAttoController.numeroDcr}" />
 
 								</p:column>
@@ -794,7 +794,7 @@
 							<p:column colspan="2">
 
 								<p:commandButton value="Cerca" update="listaAtti"
-									style="color:white; background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #045491;"
+									style="color:white; background: #045491;"
 									id="btncercaatto_cerca"
 									actionListener="#{searchAttoController.searchAtti}" />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -862,7 +862,7 @@
 		<p:dataTable id="listaAtti" var="atto"
 			value="#{searchAttoController.listAtti}" rows="10" paginator="true"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
-			paginatorAlwaysVisible="false" paginatorPosition="bottom">
+			paginatorAlwaysVisible="false" paginatorPosition="bottom" draggableColumns="true">
 
 
 

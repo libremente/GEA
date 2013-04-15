@@ -185,6 +185,20 @@ padding: 0 ;
 	background-image: url(../img/add.png) !important;
 }
 
+
+.ui-icon-arrow-open{
+	
+	
+	background-image: url(../img/tree_op.jpeg) !important;
+}
+
+
+.ui-icon-arrow-collapsed{
+	
+	background-image: url(../img/tree_cl.jpeg) !important;
+}
+
+
 .delete-icon{
 	
 	background-image: url(../img/delete.png) !important;

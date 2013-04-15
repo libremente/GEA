@@ -121,6 +121,9 @@
 			</p:column>
 		</p:row>
 
+
+
+
 		<p:row rendered="#{not navigationBean.isSessionAttoPAR()}">
 			<p:column colspan="3">
 
@@ -167,13 +170,66 @@
 
 </p:fieldset>
 
+<p:fieldset legend="Pareri delle Commissioni consultive: "
+	toggleable="true" collapsed="false"
+	rendered="#{not navigationBean.isSessionAttoPAR()}" toggleSpeed="500">
+	<p:panelGrid style="width:100%">
+		<p:row >
+			<p:column colspan="3">
+
+				<p:dataTable 
+					value="#{attoBean.getTestiAttoCommissioneConsultive()}"
+					var="testoAtto" styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">Parere trasmesso</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+					<p:column sortBy="#{testoAtto.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{testoAtto.commissione}" />
+					</p:column>
+
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{testoAtto.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{testoAtto.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+</p:fieldset>
+
+<br />
 <br />
 
-
-<br />
-
-<p:fieldset legend="Emendamenti: " toggleable="true" collapsed="false" rendered="#{navigationBean.testoAttoVotatoEnabled()}"
-	toggleSpeed="500">
+<p:fieldset legend="Emendamenti: " toggleable="true" collapsed="false"
+	rendered="#{navigationBean.testoAttoVotatoEnabled()}" toggleSpeed="500">
 	<p:panelGrid style="width:100%">
 		<p:row>
 			<p:column colspan="3">

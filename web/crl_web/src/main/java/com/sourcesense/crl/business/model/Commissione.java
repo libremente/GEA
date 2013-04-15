@@ -105,6 +105,14 @@ public class Commissione implements Cloneable {
 	private boolean sospensioneFeriale;
 	private Date dataInterruzione;
 	private Date dataRicezioneIntegrazioni;
+	
+	private Date dataCalendarizzazione;
+	
+	private Date dataDcr;
+	private String numeroDcr;
+	
+	private Date dataRis;
+	private String numeroRis;
 
 	private ComitatoRistretto comitatoRistretto = new ComitatoRistretto();
 
@@ -590,6 +598,7 @@ public class Commissione implements Cloneable {
 		this.noteClausolaValutativa = noteClausolaValutativa;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaStralcio() {
 		return dataSedutaStralcio;
 	}
@@ -598,6 +607,7 @@ public class Commissione implements Cloneable {
 		this.dataSedutaStralcio = dataSedutaStralcio;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataIniziativaStralcio() {
 		return dataIniziativaStralcio;
 	}
@@ -606,6 +616,7 @@ public class Commissione implements Cloneable {
 		this.dataIniziativaStralcio = dataIniziativaStralcio;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataStralcio() {
 		return dataStralcio;
 	}
@@ -646,6 +657,7 @@ public class Commissione implements Cloneable {
 		this.sospensioneFeriale = sospensioneFeriale;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataInterruzione() {
 		return dataInterruzione;
 	}
@@ -654,12 +666,57 @@ public class Commissione implements Cloneable {
 		this.dataInterruzione = dataInterruzione;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRicezioneIntegrazioni() {
 		return dataRicezioneIntegrazioni;
 	}
 
 	public void setDataRicezioneIntegrazioni(Date dataRicezioneIntegrazioni) {
 		this.dataRicezioneIntegrazioni = dataRicezioneIntegrazioni;
+	}
+	
+	
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getDataRis() {
+		return dataRis;
+	}
+
+	public void setDataRis(Date dataRis) {
+		this.dataRis = dataRis;
+	}
+
+	public String getNumeroRis() {
+		return numeroRis;
+	}
+
+	public void setNumeroRis(String numeroRis) {
+		this.numeroRis = numeroRis;
+	}
+
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getDataDcr() {
+		return dataDcr;
+	}
+
+	public void setDataDcr(Date dataDcr) {
+		this.dataDcr = dataDcr;
+	}
+
+	public String getNumeroDcr() {
+		return numeroDcr;
+	}
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.numeroDcr = numeroDcr;
+	}
+
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getDataCalendarizzazione() {
+		return dataCalendarizzazione;
+	}
+
+	public void setDataCalendarizzazione(Date dataCalendarizzazione) {
+		this.dataCalendarizzazione = dataCalendarizzazione;
 	}
 
 	public List<Relatore> getValidRelatori() {

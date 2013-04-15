@@ -10,6 +10,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sourcesense.crl.business.model.Allegato;
+import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.CommissioneReferente;
 import com.sourcesense.crl.business.model.EsameAula;
@@ -52,6 +54,18 @@ public class SeduteServiceManager implements ServiceManager{
 		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
 	}
 	
+	
+	public Allegato uploadOgg(Seduta seduta, InputStream stream, Allegato testoAtto) {
+
+		return seduteService.uploadOdg(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_odg", null),seduta, stream, testoAtto);
+	}
+	
+	public Allegato uploadVerbale(Seduta seduta, InputStream stream, Allegato testoAtto) {
+
+		return seduteService.uploadVerbale(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_upload_verbale", null),seduta, stream, testoAtto);
+	}
 	
 	public InputStream getODGFile(String tipoTemplate,String idSeduta,String gruppo ) {
         //alf_retrieve_report_bin=crl/template/report/creareport?json={0}&tipoTemplate={1} 

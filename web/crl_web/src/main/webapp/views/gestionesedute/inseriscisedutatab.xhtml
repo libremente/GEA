@@ -67,14 +67,14 @@
 			<p:confirmDialog id="confirmVerbaleDialog"
 				message="Sei sicuro di voler eliminare il Verbale ?"
 				header="Cancellazione Verbale" severity="alert"
-				widgetVar="testoVerbaleDialog">
+				widgetVar="testoVerbaleDialogDel">
 
 				<p:commandButton id="confirmVerbaleBtn" value="Conferma"
-					oncomplete="testoVerbaleDialog.hide()"
+					oncomplete="testoVerbaleDialogDel.hide()"
 					action="#{gestioneSeduteController.removeVerbale}"
-					update="listaTestiVerbale" />
+					update="listaTestiVerbale , caricaVrblBtn" />
 				<p:commandButton id="declineVerbale" value="Annulla"
-					onclick="testoVerbaleDialog.hide()" type="button" />
+					onclick="testoVerbaleDialogDel.hide()" type="button" />
 
 			</p:confirmDialog>
 
@@ -82,14 +82,14 @@
 			<p:confirmDialog id="confirmODGDialog"
 				message="Sei sicuro di voler eliminare il testo dell'odg ?"
 				header="Cancellazione Testo ODG" severity="alert"
-				widgetVar="testoODGDialog">
+				widgetVar="testoODGDialogDel">
 
 				<p:commandButton id="confirmODBtn" value="Conferma"
-					oncomplete="testoODGDialog.hide()"
+					oncomplete="testoODGDialogDel.hide()"
 					action="#{gestioneSeduteController.removeTestoODG}"
 					update="listaTestiODG" />
 				<p:commandButton id="declineODG" value="Annulla"
-					onclick="testoODGDialog.hide()" type="button" />
+					onclick="testoODGDialogDel.hide()" type="button" />
 
 			</p:confirmDialog>
 
@@ -141,7 +141,7 @@
 						<p:column>
 							<p:fileUpload label="Sfoglia" uploadLabel="Carica"
 								cancelLabel="Cancella" oncomplete="uploadVerbaleDialog.hide()"
-								auto="false" update="listaTestiVerbale "
+								auto="false" update="listaTestiVerbale, caricaVrblBtn "
 								fileUploadListener="#{gestioneSeduteController.uploadVerbale}" />
 						</p:column>
 					</p:row>
@@ -320,7 +320,7 @@
 					<p:row>
 						<p:column colspan="4">
 							<p:commandButton value="Carica ODG"
-								oncomplete="testoODGDialog.show()">
+								oncomplete="uploadODGDialog.show()">
 							</p:commandButton>
 						</p:column>
 					</p:row>
@@ -332,7 +332,7 @@
 						<p:column colspan="4">
 
 							<p:dataTable id="listaTestiODG"
-								value="#{gestioneSeduteController.odgList}" var="odg"
+								value="#{gestioneSeduteController.sedutaSelected.odgList}" var="odg"
 								styleClass="generalInfoTab grey-text" editable="true">
 
 								<p:ajax event="rowEdit" update="@this"
@@ -368,7 +368,7 @@
 
 								<p:column>
 									<f:facet name="header">Elimina</f:facet>
-									<p:commandButton oncomplete="odgDialog.show()"
+									<p:commandButton oncomplete="testoODGDialogDel.show()"
 										icon="delete-icon">
 
 										<f:setPropertyActionListener value="#{odg.id}"
@@ -403,8 +403,8 @@
 
                     <p:row>
 						<p:column colspan="4">
-							<p:commandButton value="Carica Verbale"
-								oncomplete="testoVerbaleDialog.show()">
+							<p:commandButton id="caricaVrblBtn" value="Carica Verbale" disabled="#{ gestioneSeduteController.sedutaSelected.verbaliList.size() >= 1}"
+								oncomplete="uploadVerbaleDialog.show()">
 							</p:commandButton>
 						</p:column>
 					</p:row>    
@@ -414,7 +414,7 @@
 						<p:column colspan="4">
 
 							<p:dataTable id="listaTestiVerbale"
-								value="#{gestioneSeduteController.verbaliList}" var="verbale"
+								value="#{gestioneSeduteController.sedutaSelected.verbaliList}" var="verbale"
 								styleClass="generalInfoTab grey-text" editable="true">
 
 								<p:ajax event="rowEdit" update="@this"
@@ -450,7 +450,7 @@
 
 								<p:column>
 									<f:facet name="header">Elimina</f:facet>
-									<p:commandButton oncomplete="verbaleDialog.show()"
+									<p:commandButton oncomplete="testoVerbaleDialogDel.show()"
 										icon="delete-icon">
 
 										<f:setPropertyActionListener value="#{verbale.id}"

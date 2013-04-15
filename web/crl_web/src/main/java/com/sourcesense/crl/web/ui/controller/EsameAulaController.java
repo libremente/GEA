@@ -46,6 +46,7 @@ public class EsameAulaController {
 	private Date dataPresaInCarico;
 	private String relazioneScritta;
 	private String esitoVotazione;
+	private String quorum;
 	private String tipologiaVotazione;
 	private Date dataSedutaVotazione;
 	private String numeroDcr;
@@ -81,14 +82,14 @@ public class EsameAulaController {
 
 	private Date dataSedutaRinvio;
 	private Date dataTermineMassimo;
+	private boolean rinvioCommBilancio;
 	private String motivazioneRinvio;
 	private Date dataSedutaStralcio;
 	private Date dataIniziativaStralcio;
 	private Date dataStralcio;
 	private String articoli;
 	private String noteStralcio;
-	private String quorum;
-
+	
 	private String noteGenerali;
 
 	private String allegatoToDelete;
@@ -116,6 +117,8 @@ public class EsameAulaController {
 
 	private String oggetto;
 	private String oggettoOriginale;
+	
+	private String numeroReg;
 
 	@PostConstruct
 	public void init() {
@@ -501,6 +504,8 @@ public class EsameAulaController {
 		attoBean.getWorkingAula().setNumeroLcr(aulaUser.getNumeroLcr());
 		attoBean.getWorkingAula().setEmendato(isEmendato());
 		attoBean.getWorkingAula().setNoteVotazione(aulaUser.getNoteVotazione());
+		attoBean.getWorkingAula().setNumeroReg(aulaUser.getNumeroReg());
+		attoBean.getWorkingAula().setQuorumEsameAula(aulaUser.getQuorumEsameAula());
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
 
 		String message = "";
@@ -758,6 +763,9 @@ public class EsameAulaController {
 				aulaUser.getDataTermineMassimo());
 		attoBean.getWorkingAula().setMotivazioneRinvio(
 				aulaUser.getMotivazioneRinvio());
+		attoBean.getWorkingAula().setRinvioCommBilancio(
+				aulaUser.isRinvioCommBilancio());
+		
 		attoBean.setStato(StatoAtto.ASSEGNATO_COMMISSIONE);
 		attoBean.getAtto().getPassaggi().add(passaggio);
 		setAtto((Atto) attoBean.getAtto().clone());
@@ -1103,6 +1111,16 @@ public class EsameAulaController {
 
 	public void setNoteVotazione(String noteVotazione) {
 		this.aulaUser.setNoteVotazione(noteVotazione);
+	}
+	
+	
+
+	public String getNumeroReg() {
+		return this.aulaUser.getNumeroReg();
+	}
+
+	public void setNumeroReg(String numeroReg) {
+		this.aulaUser.setNumeroReg ( numeroReg);
 	}
 
 	public List<TestoAtto> getTestiAttoVotatoList() {
@@ -1505,6 +1523,16 @@ public class EsameAulaController {
 	public void setAulaUser(Aula aulaUser) {
 		this.aulaUser = aulaUser;
 	}
+	
+	
+
+	public boolean isRinvioCommBilancio() {
+		return this.aulaUser.isRinvioCommBilancio();
+	}
+
+	public void setRinvioCommBilancio(boolean rinvioCommBilancio) {
+		this.aulaUser.setRinvioCommBilancio ( rinvioCommBilancio);
+	}
 
 	public Passaggio getPassaggio() {
 		return passaggio;
@@ -1659,10 +1687,16 @@ public class EsameAulaController {
 	public void confermaRelatori() {
 
 		atto.setRelatori(relatoriList);
-
 		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean")); 
+		
+		
+		
 		attoServiceManager.salvaRelatoriAula(atto);
-
+        
+		attoBean.getAtto().setRelatori(Clonator.cloneList(atto.getRelatori()));
+		
 		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
 		context.addMessage(null, new FacesMessage(
 				"Relatori associati all'atto. ", ""));

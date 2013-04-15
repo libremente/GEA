@@ -30,24 +30,24 @@ public class DateUtils {
 					contaMargin++;
 				}
 
-				if (contaMargin >= 14) {
+				if (contaMargin >= 15) {
 
-					calendar.add(Calendar.DAY_OF_YEAR, 15);
+					calendar.add(Calendar.DAY_OF_YEAR, 16);
 
 				} else if (contaMargin == 0) {
 
-					Date dataCalc = sdf.parse("30/09/"
+					Date dataCalc = sdf.parse("01/10/"
 							+ calendar.get(Calendar.YEAR));
 					calendar.setTime(dataCalc);
 
 				} else {
 
-					calendar.add(Calendar.DAY_OF_YEAR, 60);
+					calendar.add(Calendar.DAY_OF_YEAR, 61);
 				}
 
 			} else {
 
-				calendar.add(Calendar.DAY_OF_YEAR, 15);
+				calendar.add(Calendar.DAY_OF_YEAR, 16);
 
 			}
 
@@ -101,24 +101,24 @@ public class DateUtils {
 					contaMargin++;
 				}
 
-				if (contaMargin >= 29) {
+				if (contaMargin >= 30) {
 
-					calendar.add(Calendar.DAY_OF_YEAR, 30);
+					calendar.add(Calendar.DAY_OF_YEAR, 31);
 
 				} else if (contaMargin == 0) {
 
-					Date dataCalc = sdf.parse("15/10/"+ calendar.get(Calendar.YEAR));
+					Date dataCalc = sdf.parse("16/10/"+ calendar.get(Calendar.YEAR));
 					
 					calendar.setTime(dataCalc);
 
 				} else {
 
-					calendar.add(Calendar.DAY_OF_YEAR, 75);
+					calendar.add(Calendar.DAY_OF_YEAR, 76);
 				}
 
 			} else {
 
-				calendar.add(Calendar.DAY_OF_YEAR, 30);
+				calendar.add(Calendar.DAY_OF_YEAR, 31);
 
 			}
 
@@ -156,23 +156,23 @@ public class DateUtils {
 					contaMargin++;
 				}
 
-				if (contaMargin >= 59) {
+				if (contaMargin >= 60) {
 
-					calendar.add(Calendar.DAY_OF_YEAR, 60);
+					calendar.add(Calendar.DAY_OF_YEAR, 61);
 				} else if (contaMargin == 0) {
 
-					Date dataCalc = sdf.parse("14/11/"+ calendar.get(Calendar.YEAR));
+					Date dataCalc = sdf.parse("15/11/"+ calendar.get(Calendar.YEAR));
 					
 					calendar.setTime(dataCalc);	
 
 				} else {
 
-					calendar.add(Calendar.DAY_OF_YEAR, 105);
+					calendar.add(Calendar.DAY_OF_YEAR, 106);
 				}
 
 			} else {
 
-				calendar.add(Calendar.DAY_OF_YEAR, 60);
+				calendar.add(Calendar.DAY_OF_YEAR, 61);
 
 			}
 

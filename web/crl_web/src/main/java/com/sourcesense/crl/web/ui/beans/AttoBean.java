@@ -23,6 +23,7 @@ import com.sourcesense.crl.business.model.Consultazione;
 import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.Passaggio;
+import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
@@ -189,14 +190,13 @@ public class AttoBean implements Serializable {
 
 	}
 
-	
 	public List<OrganismoStatutario> getValidOrganismiStatutari() {
 
 		List<OrganismoStatutario> listOrg = new ArrayList<OrganismoStatutario>();
 
 		for (OrganismoStatutario organismoRec : atto.getOrganismiStatutari()) {
 
-			if (organismoRec.getDataAnnullo()==null) {
+			if (organismoRec.getDataAnnullo() == null) {
 
 				listOrg.add(organismoRec);
 
@@ -206,8 +206,7 @@ public class AttoBean implements Serializable {
 		return listOrg;
 
 	}
-	
-	
+
 	public OrganismoStatutario getWorkingOrganismoStatutario(String organismo) {
 
 		OrganismoStatutario organismoRet = null;
@@ -305,12 +304,33 @@ public class AttoBean implements Serializable {
 		List<TestoAtto> returnList = new ArrayList<TestoAtto>();
 
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
+			if (!Commissione.RUOLO_CONSULTIVA.equals(commRec.getRuolo())) {
+				for (TestoAtto testoAtto : commRec
+						.getTestiAttoVotatoEsameCommissioni()) {
+					testoAtto.setCommissione(commRec.getDescrizione() + " - "
+							+ commRec.getRuolo());
+					returnList.add(testoAtto);
+				}
+			}
+		}
 
-			for (TestoAtto testoAtto : commRec
-					.getTestiAttoVotatoEsameCommissioni()) {
-				testoAtto.setCommissione(commRec.getDescrizione() + " - "
-						+ commRec.getRuolo());
-				returnList.add(testoAtto);
+		return returnList;
+	}
+
+	public List<TestoAtto> getTestiAttoCommissioneConsultive() {
+		List<TestoAtto> returnList = new ArrayList<TestoAtto>();
+
+		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
+
+			if (Commissione.RUOLO_CONSULTIVA.equals(commRec.getRuolo())) {
+				for (TestoAtto testoAtto : commRec
+						.getTestiAttoVotatoEsameCommissioni()) {
+					testoAtto.setCommissione(commRec.getDescrizione() 
+							//+ " - "
+							//+ commRec.getRuolo()
+							);
+					returnList.add(testoAtto);
+				}
 			}
 		}
 
@@ -548,6 +568,21 @@ public class AttoBean implements Serializable {
 			passaggio.getAula().setAllegatiEsameAula(appoList);
 
 		}
+
+	}
+
+	public String getRelatoreORG() {
+
+		String relatore = "";
+		for (Relatore rel : atto.getRelatori()) {
+
+			if (rel.getDataUscita() == null) {
+				relatore = rel.getDescrizione();
+			}
+
+		}
+
+		return relatore;
 
 	}
 

@@ -41,7 +41,11 @@ public class ChiusuraIterController {
 	private String numeroDgrSeguito;
 	private Date dataDgrSeguito;
     private boolean dgr;
+    private String numRegolamento;
+	private Date dataRegolamento;
 	
+    
+    
 	AttoBean attoBean;
 
 	@PostConstruct
@@ -52,8 +56,7 @@ public class ChiusuraIterController {
 		setAtto((Atto) attoBean.getAtto().clone());
 		
 		if(atto.getTipoChiusura()!=null){
-		dgr = "Parere negativo trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim()) 
-				|| "Parere favorevole trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim());
+		dgr = "Parere trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim());
 		}
 	
 	}
@@ -78,6 +81,8 @@ public class ChiusuraIterController {
 		attoBean.getAtto().setDataLR(getDataLr());
 		attoBean.getAtto().setNumeroDgrSeguito(getNumeroDgrSeguito());
 		attoBean.getAtto().setDataDgrSeguito(getDataDgrSeguito());
+		attoBean.getAtto().setNumRegolamento(getNumRegolamento());
+		attoBean.getAtto().setDataRegolamento(getDataRegolamento());
 		attoBean.setStato(StatoAtto.CHIUSO);
 		context.addMessage(null, new FacesMessage("Atto chiuso con successo", ""));
 	}
@@ -87,8 +92,7 @@ public class ChiusuraIterController {
 		
 		String tipo = atto.getTipoChiusura().trim();
 		
-		dgr = "Parere negativo trasmesso alla Giunta".trim().equals(tipo) 
-				|| "Parere favorevole trasmesso alla Giunta".trim().equals(tipo);
+		dgr = "Parere trasmesso alla Giunta".trim().equals(tipo);
 		
 	} 
 	
@@ -284,6 +288,26 @@ public String tipoChiusuraPar() {
 
 	public void setDgr(boolean dgr) {
 		this.dgr = dgr;
+	}
+
+
+	public String getNumRegolamento() {
+		return this.atto.getNumRegolamento();
+	}
+
+
+	public void setNumRegolamento(String numRegolamento) {
+		this.atto.setNumRegolamento ( numRegolamento);
+	}
+
+
+	public Date getDataRegolamento() {
+		return this.atto.getDataRegolamento();
+	}
+
+
+	public void setDataRegolamento(Date dataRegolamento) {
+		this.atto.setDataRegolamento ( dataRegolamento);
 	}
 	
 	

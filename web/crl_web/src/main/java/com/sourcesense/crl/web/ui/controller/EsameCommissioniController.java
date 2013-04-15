@@ -105,7 +105,7 @@ public class EsameCommissioniController {
 
 	private List<Relatore> relatoriList = new ArrayList<Relatore>();
 	private List<Componente> membriComitatoList = new ArrayList<Componente>();
-    private String tipoComitato;
+	private String tipoComitato;
 	private String testoComitatoToDelete;
 
 	private List<Abbinamento> abbinamentiList = new ArrayList<Abbinamento>();
@@ -123,6 +123,9 @@ public class EsameCommissioniController {
 	private String esitoVotazione;
 	private String quorum;
 	private Date dataSedutaRegistrazioneVotazione;
+	private Date dataCalendarizzazione;
+	private Date dataRis;
+	private String numeroRis;
 
 	private List<TestoAtto> testiAttoVotatoList = new ArrayList<TestoAtto>();
 	private List<Allegato> testiComitatoRistrettoList = new ArrayList<Allegato>();
@@ -186,7 +189,11 @@ public class EsameCommissioniController {
 	private Date dataRicezioneIntegrazioni;
 	private Date dataScadenza;
 
+	private Date dataDcr;
+	private String numeroDcr;
+
 	private List<String> esitiVotazione = new ArrayList<String>();
+	private List<String> quorumVotazione = new ArrayList<String>();
 
 	private String statoCommitRelatori = CRLMessage.COMMIT_DONE;
 	private String statoCommitComitatoRistretto = CRLMessage.COMMIT_DONE;
@@ -213,23 +220,31 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		// set atto di classe clone di attoBean
-		setAtto((Atto) attoBean.getAtto().clone());
-
 		// Utente di sessione e Commissione di appartenenza
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
+
+		// set atto di classe clone di attoBean
+		setAtto((Atto) attoBean.getAtto().clone());
 
 		// Ricavo le commisioni dall'ultimo passaggio
 		setCommissioniList(Clonator.cloneList(attoBean.getLastPassaggio()
 				.getCommissioni()));
 
+		setValoriCommissioneUtente(attoBean, userBean);
+		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
+		loadData(attoBean.getLastPassaggio(), attoBean);
+
+	}
+
+	private void setValoriCommissioneUtente(AttoBean attoBean, UserBean userBean) {
+
 		// I dati della commissione relativa all'utente loggato
 		// solo se admin prende la referente o deliberante
 		Commissione commTemp = findCommissione(userBean.getUser()
 				.getSessionGroup().getNome());
-
 		esitiVotazione.clear();
+		quorumVotazione.clear();
 
 		if (!commTemp.getRuolo().equals(Commissione.RUOLO_CONSULTIVA)) {
 
@@ -264,13 +279,34 @@ public class EsameCommissioniController {
 
 			}
 
-		} else {
+			
+	    }else {
 
 			esitiVotazione.add("Parere favorevole");
 			esitiVotazione.add("Parere favorevole con osservazioni");
 			esitiVotazione.add("Parere negativo");
 			esitiVotazione.add("Parere negativo con osservazioni");
 
+		}
+		
+		
+		if(commTemp.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)){
+			
+			quorumVotazione.add("Palese per alzata di mano");
+			quorumVotazione.add("Palese per appello nominale");
+			quorumVotazione.add("Segreta");
+			
+			esitiVotazione.clear();
+			esitiVotazione.add("Approvato");
+			esitiVotazione.add("Approvato non passaggio all'esame");
+			esitiVotazione.add("Respinto");
+			
+		}else{
+			
+			
+			quorumVotazione.add("Maggioranza");
+			quorumVotazione.add("Unanimità");
+			
 		}
 
 		if (commTemp == null) {
@@ -290,8 +326,6 @@ public class EsameCommissioniController {
 		}
 
 		setCommissioneUser(commTemp);
-		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
-		loadData(attoBean.getLastPassaggio(), attoBean);
 
 	}
 
@@ -2318,6 +2352,34 @@ public class EsameCommissioniController {
 				.setDataSedutaCommissione(dataSedutaRegistrazioneVotazione);
 	}
 
+	public Date getDataCalendarizzazione() {
+		return this.commissioneUser.getDataCalendarizzazione();
+	}
+
+	public void setDataCalendarizzazione(Date dataCalendarizzazione) {
+		this.commissioneUser.setDataCalendarizzazione(dataCalendarizzazione);
+
+	}
+	
+	
+	
+
+	public Date getDataRis() {
+		return this.commissioneUser.getDataRis();
+	}
+
+	public void setDataRis(Date dataRis) {
+		this.commissioneUser.setDataRis ( dataRis);
+	}
+
+	public String getNumeroRis() {
+		return this.commissioneUser.getNumeroRis();
+	}
+
+	public void setNumeroRis(String numeroRis) {
+		this.commissioneUser.setNumeroRis ( numeroRis);
+	}
+
 	public Date getDataSedutaContinuazioneLavori() {
 		return commissioneUser.getDataSedutaContinuazioneInReferente();
 	}
@@ -2505,6 +2567,22 @@ public class EsameCommissioniController {
 
 	public void setDataIntesa(Date dataIntesa) {
 		this.commissioneUser.setDataIntesa(dataIntesa);
+	}
+
+	public Date getDataDcr() {
+		return this.commissioneUser.getDataDcr();
+	}
+
+	public void setDataDcr(Date dataDcr) {
+		this.commissioneUser.setDataDcr(dataDcr);
+	}
+
+	public String getNumeroDcr() {
+		return this.commissioneUser.getNumeroDcr();
+	}
+
+	public void setNumeroDcr(String numeroDcr) {
+		this.commissioneUser.setNumeroDcr(numeroDcr);
 	}
 
 	public String getEsitoVotazioneIntesa() {
@@ -3049,8 +3127,6 @@ public class EsameCommissioniController {
 		this.commissioneUser.setQuorumStralcio(quorumStralcio);
 	}
 
-	
-	
 	public String getTipoComitato() {
 		return this.commissioneUser.getComitatoRistretto().getTipologia();
 	}
@@ -3160,7 +3236,13 @@ public class EsameCommissioniController {
 
 		this.esitiVotazione = esitiVotazione;
 	}
-	
-	
+
+	public List<String> getQuorumVotazione() {
+		return quorumVotazione;
+	}
+
+	public void setQuorumVotazione(List<String> quorumVotazione) {
+		this.quorumVotazione = quorumVotazione;
+	}
 
 }

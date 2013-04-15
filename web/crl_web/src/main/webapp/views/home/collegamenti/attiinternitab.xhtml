@@ -623,7 +623,7 @@
 
 								<p:column>
 
-									<p:inputText id="numeroDcr"
+									<p:inputText id="numeroDcr" size="5" maxlength="5"
 										value="#{searchAttoController.numeroDcr}" />
 
 								</p:column>
@@ -775,7 +775,7 @@
 
 								<p:commandButton value="Cerca" update="listaAtti"
 									id="btncercaatto_cerca"
-									style="color:white; background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0 0 #045491;"
+									style="color:white; background:  #045491;"
 									actionListener="#{searchAttoController.searchAtti()}" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
@@ -864,8 +864,9 @@
 			</p:column>
 			<p:column headerText="Azioni">
 				<c:set value="#{atto.id}" var="idAttoParam" />
+				<c:set value="#{atto.tipo}" var="tipoAttoParam" />
 				<p:commandButton value="Collega" id="addAbbinamento"
-					action="#{collegamentiController.addCollegamento(idAttoParam)}"
+					action="#{collegamentiController.addCollegamento(idAttoParam,tipoAttoParam)}"
 					update=":collegamentiForm:tabView:listaCollegamenti, :collegamentiForm:tabView:attiInterniMsg"
 					icon="new-icon" />
 			</p:column>
@@ -926,6 +927,27 @@
 				</p:dataTable>
 			</p:column>
 		</p:row>
+
+       <p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Note:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<b>Note generali: </b>
+					<br />
+					<br />
+					<p:inputTextarea rows="5" cols="101"
+						value="#{collegamentiController.noteCollegamenti}">
+						
+					</p:inputTextarea>
+
+					<h:outputText id="counter" />
+
+
+				</p:fieldset>
+			</p:column>
+		</p:row>    
+
 
 		<p:row rendered="#{not navigationBean.isCommissioneConsultiva()}">
 			<p:column>

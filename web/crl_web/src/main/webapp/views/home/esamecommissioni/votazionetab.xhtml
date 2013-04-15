@@ -111,20 +111,7 @@
 
 				</p:column>
 			</p:row>
-			<!-- <p:row>
-				<p:column>
-					<h:outputText style="font-weight: bold;" value="Quorum: " />
-				</p:column>
-				<p:column>
-					<p:selectOneMenu value="#{esameCommissioniController.quorum}">
-						<f:selectItem itemLabel="Scegli quorum" itemValue=" " />
-						<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
-						<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
-						<p:ajax event="change"
-							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
-					</p:selectOneMenu>
-				</p:column>
-			</p:row> -->
+			
 
 			<p:row>
 				<p:column>
@@ -144,8 +131,10 @@
 					&nbsp;&nbsp;
 					<p:selectOneMenu value="#{esameCommissioniController.quorum}">
 						<f:selectItem itemLabel="Scegli tipo" itemValue=" " />
-						<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
-						<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
+						
+						<f:selectItems value="#{esameCommissioniController.quorumVotazione}" />
+						
+						
 						<p:ajax event="change"
 							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
 					</p:selectOneMenu>
@@ -168,6 +157,79 @@
 				</p:column>
 			</p:row>
 
+
+           <p:row rendered="#{navigationBean.isCalendarizzazioneEnabled()}">
+				<p:column>
+					<b> <h:outputLabel for="datacalend" value="Data calendarizzazione: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="datacalend"
+						pattern="dd/MM/yyyy"
+						value="#{esameCommissioniController.dataCalendarizzazione}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:calendar>
+				</p:column>
+			</p:row>     
+
+
+           <p:row rendered="#{navigationBean.isCommissioneDeliberante()}">
+				<p:column>
+					<b> <h:outputLabel for="numDcr" value="Numero DCR: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:inputText id="numDcr" value="#{esameCommissioniController.numeroDcr}">
+						
+						
+					</p:inputText>
+				</p:column>
+				
+				
+				<p:column>
+					<b> <h:outputLabel for="dataDcr" value="Data DCR: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="dataDcr"
+						pattern="dd/MM/yyyy"
+						value="#{esameCommissioniController.dataDcr}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:calendar>
+				</p:column>
+				
+			</p:row>   
+
+
+           <p:row rendered="#{navigationBean.isRisEnabled()}">
+				<p:column>
+					<b> <h:outputLabel for="numRis" value="Numero RIS: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:inputText id="numRis" value="#{esameCommissioniController.numeroRis}">
+						
+						
+					</p:inputText>
+				</p:column>
+				
+				
+				<p:column>
+					<b> <h:outputLabel for="dataRis" value="Data RIS: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="dataRis"
+						pattern="dd/MM/yyyy"
+						value="#{esameCommissioniController.dataRis}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:calendar>
+				</p:column>
+				
+			</p:row>      
 
 			<p:row>
 				<p:column>

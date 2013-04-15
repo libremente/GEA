@@ -156,6 +156,20 @@
 									listener="#{esameAulaController.updateVotazioneHandler}" />
 							</p:selectOneMenu>
 						</p:column>
+						
+						
+						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">
+					Quorum:</p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">
+							<p:selectOneMenu id="quorumVotazione"
+								value="#{esameAulaController.quorum}" >
+								<f:selectItem itemLabel="Scegli quorum" itemValue="" />
+								<f:selectItem itemLabel="Sì"  itemValue="Sì" />
+								<f:selectItem itemLabel="No" itemValue="No" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:selectOneMenu>
+						</p:column>
 					
 						
 					</p:row>
@@ -194,6 +208,18 @@
 								</p:inputText>
 							</p:column>
 						</p:column>
+						
+						<p:column rendered="#{navigationBean.isSessionAttoPRE()}">Numero REG:</p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPRE()}">
+							<p:column>
+								<p:inputText  id="numeroReg"
+									value="#{esameAulaController.numeroReg}">
+									<p:ajax event="change"
+										listener="#{esameAulaController.updateVotazioneHandler}" />
+								</p:inputText>
+							</p:column>
+						</p:column>
+						
 					</p:row>
 					
 					

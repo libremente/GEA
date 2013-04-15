@@ -36,6 +36,7 @@ import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.Link;
 import com.sourcesense.crl.business.model.Seduta;
 import com.sourcesense.crl.business.model.Target;
+import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.SeduteServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
@@ -52,6 +53,9 @@ public class GestioneSeduteController {
 
 	@ManagedProperty(value = "#{seduteServiceManager}")
 	private SeduteServiceManager seduteServiceManager;
+
+	@ManagedProperty(value = "#{attoRecordServiceManager}")
+	private AttoRecordServiceManager attoRecordServiceManager;
 
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
@@ -207,7 +211,8 @@ public class GestioneSeduteController {
 			setDalleOre(sedutaSelected.getDalleOre());
 			setAlleOre(sedutaSelected.getAlleOre());
 			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));
-
+			// setVerbaliList(Clonator.cloneList(sedutaSelected.getVerbaliList()));
+			// setOdgList(Clonator.cloneList(sedutaSelected.getOdgList()));
 			setAttiTrattati(Clonator
 					.cloneList(sedutaSelected.getAttiTrattati()));
 			Collections.sort(attiTrattati);
@@ -325,8 +330,10 @@ public class GestioneSeduteController {
 				Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 				Consultazione cons = (Consultazione) consultazione.clone();
-				if (cons.getDataSeduta()!=null && formatter.format(cons.getDataSeduta()).equals(
-						formatter.format(sedutaSelected.getDataSeduta()))
+				if (cons.getDataSeduta() != null
+						&& formatter.format(cons.getDataSeduta())
+								.equals(formatter.format(sedutaSelected
+										.getDataSeduta()))
 
 						&& userBean.getUser().getSessionGroup().getNome()
 								.equals(cons.getCommissione())) {
@@ -527,6 +534,83 @@ public class GestioneSeduteController {
 					}
 				}
 				updateInserisciOdgHandler();
+			}
+		}
+	}
+
+	public void addAttoTrattato(String idAttoToAdd, String tipoAtto) {
+
+		if (!idAttoToAdd.trim().equals("")) {
+			if (!checkAttiTrattati(idAttoToAdd)) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Atto già iscritto ", ""));
+
+			} else {
+
+				Atto attoDaCollegare = null;
+				boolean collega = true;
+
+				if ("MIS".equalsIgnoreCase(tipoAtto)) {
+
+					
+					//TODO
+					//attoDaCollegare = attoServiceManager
+					//		.findMISById(idAttoToAdd);
+					collega = false;
+					
+				} else if ("EAC".equalsIgnoreCase(tipoAtto)) {
+
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(
+							null,
+							new FacesMessage(
+									FacesMessage.SEVERITY_ERROR,
+									"Attenzione ! Non è possibile collegare atti di questo tipo",
+									""));
+
+					collega = false;
+
+				} else {
+
+					attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
+
+				}
+
+				if (collega) {
+					AttoTrattato attoTrattato = new AttoTrattato();
+					attoTrattato.setAtto(attoDaCollegare);
+					attoTrattato.setPrevisto(true);
+					attiTrattati.add(attoTrattato);
+					FacesContext context = FacesContext.getCurrentInstance();
+					UserBean userBean = ((UserBean) context
+							.getExternalContext().getSessionMap()
+							.get("userBean"));
+
+					for (Consultazione consultazione : attoTrattato.getAtto()
+							.getConsultazioni()) {
+
+						Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+						Consultazione cons = (Consultazione) consultazione
+								.clone();
+						if (formatter.format(sedutaSelected.getDataSeduta())
+								.equals(formatter.format(cons.getDataSeduta()))
+
+								&& userBean.getUser().getSessionGroup()
+										.getNome()
+										.equals(cons.getCommissione())) {
+
+							cons.setNumeroAtto(attoTrattato.getAtto()
+									.getNumeroAtto());
+							cons.setTipoAtto(attoTrattato.getAtto()
+									.getTipoAtto());
+							cons.setIdAtto(attoTrattato.getAtto().getId());
+							consultazioniAtti.add(cons);
+						}
+					}
+					updateInserisciOdgHandler();
+				}
 			}
 		}
 	}
@@ -831,71 +915,92 @@ public class GestioneSeduteController {
 
 	}
 
-	public void removeTestoODG() {
-
-	}
-
 	public void uploadODG(FileUploadEvent event) {
+		if (sedutaSelected != null) {
+			Allegato allegatoRet = new Allegato();
+			allegatoRet.setNome(event.getFile().getFileName());
+			allegatoRet.setPubblico(currentFilePubblico);
 
-		String fileName = event.getFile().getFileName();
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+			try {
 
-		Allegato allegatoRet = new Allegato();
-		allegatoRet.setNome(event.getFile().getFileName());
-		allegatoRet.setPubblico(currentFilePubblico);
+				Allegato allegatoAlf = seduteServiceManager.uploadOgg(
+						sedutaSelected, event.getFile().getInputstream(),
+						allegatoRet);
 
-		// TODO
-		// try {
-		//
-		//
-		// Allegato allegatoAlf = commissioneServiceManager
-		// .uploadTestoComitatoRistretto(((AttoBean) FacesContext
-		// .getCurrentInstance().getExternalContext()
-		// .getSessionMap().get("attoBean")).getAtto(),
-		// event.getFile().getInputstream(), allegatoRet);
-		//
-		// allegatoRet.setId(allegatoAlf.getId());
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+				allegatoRet.setId(allegatoAlf.getId());
+				allegatoRet.setMimetype(allegatoAlf.getMimetype());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-		odgList.add(allegatoRet);
-
+			sedutaSelected.getOdgList().add(allegatoRet);
+		} else {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Selezionare una Seduta ", ""));
+		}
 	}
 
 	public void uploadVerbale(FileUploadEvent event) {
+		if (sedutaSelected != null) {
 
-		String fileName = event.getFile().getFileName();
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+			Allegato allegatoRet = new Allegato();
+			allegatoRet.setNome(event.getFile().getFileName());
+			allegatoRet.setPubblico(currentFilePubblico);
 
-		Allegato allegatoRet = new Allegato();
-		allegatoRet.setNome(event.getFile().getFileName());
-		allegatoRet.setPubblico(currentFilePubblico);
+			try {
 
-		// TODO
-		// try {
-		//
-		//
-		// Allegato allegatoAlf = commissioneServiceManager
-		// .uploadTestoComitatoRistretto(((AttoBean) FacesContext
-		// .getCurrentInstance().getExternalContext()
-		// .getSessionMap().get("attoBean")).getAtto(),
-		// event.getFile().getInputstream(), allegatoRet);
-		//
-		// allegatoRet.setId(allegatoAlf.getId());
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+				Allegato allegatoAlf = seduteServiceManager.uploadVerbale(
+						sedutaSelected, event.getFile().getInputstream(),
+						allegatoRet);
 
-		odgList.add(allegatoRet);
+				allegatoRet.setId(allegatoAlf.getId());
+				allegatoRet.setMimetype(allegatoAlf.getMimetype());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			sedutaSelected.getVerbaliList().add(allegatoRet);
+		} else {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Selezionare una Seduta ", ""));
+		}
 
 	}
 
 	public void removeVerbale() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		for (Allegato element : sedutaSelected.getVerbaliList()) {
+
+			if (element.getId().equals(verbaleToDelete)) {
+
+				attoRecordServiceManager.deleteFile(element.getId());
+				sedutaSelected.getVerbaliList().remove(element);
+				break;
+			}
+		}
+	}
+
+	public void removeTestoODG() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		for (Allegato element : sedutaSelected.getOdgList()) {
+
+			if (element.getId().equals(odgToDelete)) {
+
+				attoRecordServiceManager.deleteFile(element.getId());
+				sedutaSelected.getOdgList().remove(element);
+				break;
+			}
+		}
 
 	}
 
@@ -1298,6 +1403,15 @@ public class GestioneSeduteController {
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
+	}
+
+	public AttoRecordServiceManager getAttoRecordServiceManager() {
+		return attoRecordServiceManager;
+	}
+
+	public void setAttoRecordServiceManager(
+			AttoRecordServiceManager attoRecordServiceManager) {
+		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
 }

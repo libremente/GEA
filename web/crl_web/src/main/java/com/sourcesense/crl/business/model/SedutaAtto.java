@@ -32,6 +32,10 @@ public class SedutaAtto implements Comparable<SedutaAtto>{
 	private Date dataSeduta;
 	private List <Link> links = new ArrayList<Link>();
 	private String numVerbale;
+	private String idVerbale;
+	private String nomeVerbale;
+	private String mimetypeVerbale;
+	private boolean discusso;
 	
 	
 	@Override
@@ -78,6 +82,47 @@ public class SedutaAtto implements Comparable<SedutaAtto>{
 	public void setNumVerbale(String numVerbale) {
 		this.numVerbale = numVerbale;
 	}
+
+
+	public boolean isDiscusso() {
+		return discusso;
+	}
+
+
+	public void setDiscusso(boolean discusso) {
+		this.discusso = discusso;
+	}
+
+
+	public String getIdVerbale() {
+		return idVerbale;
+	}
+
+
+	public void setIdVerbale(String idVerbale) {
+		this.idVerbale = idVerbale;
+	}
+
+
+	public String getNomeVerbale() {
+		return nomeVerbale;
+	}
+
+
+	public void setNomeVerbale(String nomeVerbale) {
+		this.nomeVerbale = nomeVerbale;
+	}
+
+
+	public String getMimetypeVerbale() {
+		return mimetypeVerbale;
+	}
+
+
+	public void setMimetypeVerbale(String mimetypeVerbale) {
+		this.mimetypeVerbale = mimetypeVerbale;
+	}
+	
 	
 	
 	

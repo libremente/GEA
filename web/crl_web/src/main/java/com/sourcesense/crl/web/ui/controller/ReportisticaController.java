@@ -406,6 +406,13 @@ public class ReportisticaController implements Serializable {
 
 			setSelectedReport((Report) event.getTreeNode().getData());
 
+		}else{
+			
+			if (event.getTreeNode().isExpanded()){
+		         event.getTreeNode().setExpanded(false);
+			}else{ 
+		         event.getTreeNode().setExpanded(true);
+			}
 		}
 
 	}
