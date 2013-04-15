@@ -175,7 +175,7 @@ for(var i=0; i<xmlFileList.length; i++){
 				var firmatario_nome_cognome = nome_firmatario +" "+cognome_firmatario;
 				
 				//verifica l'esistenza del firmatrio
-				var existFirmatarioXPathQuery = "*[@cm:name='"+firmatario_nome_cognome+"']";
+				var existFirmatarioXPathQuery = "*[@cm:name=\""+firmatario_nome_cognome+"\"]";
 				var firmatarioEsistenteResults = firmatariFolderNode.childrenByXPath(existFirmatarioXPathQuery);
 				var firmatarioNode = null;
 				if(firmatarioEsistenteResults!=null && firmatarioEsistenteResults.length>0){

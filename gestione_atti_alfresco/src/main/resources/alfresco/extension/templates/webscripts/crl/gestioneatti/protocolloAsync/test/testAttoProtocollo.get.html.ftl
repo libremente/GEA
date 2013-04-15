@@ -14,7 +14,7 @@
 				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("POST", "http://localhost:8580/alfresco/service/crl/protocollo/atto?alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://localhost:8082/alfresco/service/crl/protocollo/atto?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(atto);
 	}
@@ -108,6 +108,8 @@
 			<td>Tipo:</td>
 			<td>
 				<select name="tipoAtto">
+                                <option value="null">NULL</option>
+                                <option value="AAA">AAA</option>
 				<#list tipiAttoResults as tipoAtto>
 					<option value="${tipoAtto.name}">${tipoAtto.name} - ${tipoAtto.properties.title}</option>
 				</#list>

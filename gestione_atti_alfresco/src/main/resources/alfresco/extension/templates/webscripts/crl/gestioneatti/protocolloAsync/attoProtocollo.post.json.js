@@ -98,22 +98,22 @@ if(username=="protocollo" || username=="admin"){
 					nodeType = "crlatti:attoRel";
 				} else if(tipoAtto=="ORG"){
 					nodeType = "crlatti:attoOrg";
-				} else{
-					status.code = 400;
-					status.message = "Tipo atto "+tipoAtto+" non gestito";
-					protocolloLogger.error(status.message);
-					status.redirect = true;
-				}
-				
+				} 
+                                
+                               if(nodeType != "crlatti:atto") {
+                               				
 				//verifica esistenza del folder dell'atto
 				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto+estensioneAtto);
 				var attoLuceneQuery = "PATH:\""+attoPath+"\"";
 				var attoResults = search.luceneSearch(attoLuceneQuery);
 					
 				var attoFolderNode = null;
+                                var update = false;
+                                
 				if(attoResults!=null && attoResults.length>0){
 					//atto presente
 					attoFolderNode = attoResults[0];
+                                        update = true;
 				} else {
 					//creazione del nodo del nuovo atto
 					var attoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Atto\"";
@@ -176,7 +176,7 @@ if(username=="protocollo" || username=="admin"){
 				"/cm:"+search.ISO9075Encode("ConsiglieriAttivi") +"/*";
 			
 				//gestione tipo iniziativa
-				if(checkIsNotNull(esibenteMittente)){
+				if((!update) && checkIsNotNull(esibenteMittente)){
 					var firmatariArray = new Array();
 					if(tipoIniziativa=="01_ATTO DI INIZIATIVA CONSILIARE"){
 						
@@ -212,8 +212,19 @@ if(username=="protocollo" || username=="admin"){
                                                                 }
 
                                                         }
+                                                        
+                                                        var childrenXPathQuery = "*[@cm:name='Firmatari']";
+							var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
+                                                        
+                                                        // elimino i firmatari eventualmente presenti per l'update
+                                                        if (update && firmatariSplitted.length>0) {
+                                                            var firmatari = firmatariFolderNode.children;
+                                                            for(var f=0; f<firmatari.length; f++) {
+                                                                firmatari[f].remove();
+                                                            }
+                                                        }
 								
-           							
+           						//for firmatari splitted	
 							for(var i=0; i<firmatariSplitted.length; i++){
 								if(firmatariSplitted[i].indexOf("(")==-1){
 									var firmatario = firmatariSplitted[i].trim();
@@ -245,10 +256,8 @@ if(username=="protocollo" || username=="admin"){
 											firmatariArray.push(nomeCompletoConsigliere);
 											
 											// creo i nodi di tipo firmatario
-											var childrenXPathQuery = "*[@cm:name='Firmatari']";
-											var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
-										
-											firmatarioNode = firmatariFolderNode.createNode(nomeCompletoConsigliere,"crlatti:firmatario");
+											
+  											firmatarioNode = firmatariFolderNode.createNode(nomeCompletoConsigliere,"crlatti:firmatario");
 											
 											// inserimento proprietà per l'ordinamento 01,02,03 ecc...
 											if(i<10) {
@@ -270,7 +279,7 @@ if(username=="protocollo" || username=="admin"){
 										}
 									}
 								}
-							}
+							} //for firmatari splitted
 						}
 					} 
                                         //else {
@@ -289,13 +298,14 @@ if(username=="protocollo" || username=="admin"){
 				var passaggiXPathQuery = "*[@cm:name='Passaggi']";
 				var passaggiFolderNode = attoFolderNode.childrenByXPath(passaggiXPathQuery)[0];
 				
-			
-				var passaggioSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Passaggio\"";
-				var passaggioSpaceTemplateNode = search.luceneSearch(passaggioSpaceTemplateQuery)[0];
-				var passaggioFolderNode = passaggioSpaceTemplateNode.copy(passaggiFolderNode, true); // deep copy
-				passaggioFolderNode.name = "Passaggio1";
-				passaggioFolderNode.save();
-		
+                                // Creo il primo passaggio solo durante la creazione atto
+                                if(!update) {
+                                    var passaggioSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Passaggio\"";
+                                    var passaggioSpaceTemplateNode = search.luceneSearch(passaggioSpaceTemplateQuery)[0];
+                                    var passaggioFolderNode = passaggioSpaceTemplateNode.copy(passaggiFolderNode, true); // deep copy
+                                    passaggioFolderNode.name = "Passaggio1";
+                                    passaggioFolderNode.save();
+                                }
 				
 				//aspect Dgr
 				if(attoFolderNode.hasAspect("crlatti:dgr")){
@@ -315,33 +325,50 @@ if(username=="protocollo" || username=="admin"){
 				model.atto = attoFolderNode;
 				
 				protocolloLogger.info("Atto trasferito correttamente dal sistema di protocollo. Atto numero:"+numeroAtto+" estensione:"+estensioneAtto+" tipo:"+tipoAtto+" idProtocollo:"+idProtocollo);	
-							
+			
+                        } else {
+                                status.code = 400;
+                                status.message = "Tipo atto "+tipoAtto+" non gestito";
+                                protocolloLogger.error(status.message);
+                                status.redirect = true;
+
+                        }
+                                               
 			} else if(checkIsNull(numeroAtto)){
 				status.code = 400;
 				status.message = "numero atto non valorizzato";
 				protocolloLogger.error(status.message);
 				status.redirect = true;
+
 			} else if(checkIsNull(tipoAtto)){
 				status.code = 400;
 				status.message = "tipoAtto per atto "+numeroAtto+" non valorizzato";
 				protocolloLogger.error(status.message);
 				status.redirect = true;
+
 			} else if(checkIsNull(legislatura)){
 				status.code = 400;
 				status.message = "Legislatura per atto "+numeroAtto+" non valorizzata";
 				protocolloLogger.error(status.message);
 				status.redirect = true;
+
 			} else if(checkIsNull(idProtocollo)){
 				status.code = 400;
 				status.message = "idProtocollo non valorizzato";
 				protocolloLogger.error(status.message);
 				status.redirect = true;
+
 			}
 			
 		} 
 		
 		
-	}
+	} else {
+            status.code = 400;
+            status.message = "Tipo atto non valorizzato";
+            protocolloLogger.error(status.message);
+            status.redirect = true;
+        }
 } else {
 	status.code = 401;
 	status.message = "utenza non abilitata ad accedere a questo servizio";

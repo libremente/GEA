@@ -12,13 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-
 public class DataExtractor {
 
     private static Log logger = LogFactory.getLog(DataExtractor.class);
-
     private DataSource dataSource;
-
 
     public DataSource getDataSource() {
         return dataSource;
@@ -28,7 +25,6 @@ public class DataExtractor {
         this.dataSource = dataSource;
     }
 
-    
     public List<Legislature> getLegislatures() {
         Connection conn = null;
         try {
@@ -61,8 +57,7 @@ public class DataExtractor {
             }
         }
     }
-    
-    
+
     public Legislature getCurrentLegislature() {
         Connection conn = null;
         try {
@@ -94,7 +89,6 @@ public class DataExtractor {
         }
     }
 
-
     public List<Councilor> getCouncilors(int idCurrentLegislature) {
         Connection conn = null;
         try {
@@ -117,19 +111,23 @@ public class DataExtractor {
                 if (committes != null && !"".equals(committes) && !"#".equals(committes)) {
                     StringTokenizer st = new StringTokenizer(committes, "#");
                     while (st.hasMoreTokens()) {
-                    	String comm = st.nextToken();
-                    	Committee c = new Committee();
-                    	
-                    	String[] strArray = comm.split("!");
-                    	if(strArray.length>0){
-                    		c.setName(strArray[0]);
-                    		if(strArray.length>1){
-                        		c.setOrder(Integer.valueOf(comm.split("!")[1]));
-                    		}else{
-                        		c.setOrder(1000);
-                        	}
-                    	}
-                    
+                        String comm = st.nextToken();
+                        Committee c = new Committee();
+
+                        String[] strArray = comm.split("!");
+                        if (strArray.length > 0) {
+                            String name = strArray[0];
+                            if (name != null) {
+                                name = name.replace('"', '\'');
+                            }
+                            c.setName(name);
+                            if (strArray.length > 1) {
+                                c.setOrder(Integer.valueOf(comm.split("!")[1]));
+                            } else {
+                                c.setOrder(1000);
+                            }
+                        }
+
                         councilor.addCommittee(c);
                     }
                 }
@@ -151,10 +149,7 @@ public class DataExtractor {
             }
         }
     }
-    
-  
-    
-    
+
     public List<Group> getGroups() {
         Connection conn = null;
         try {
@@ -186,7 +181,4 @@ public class DataExtractor {
             }
         }
     }
-
-
-
 }

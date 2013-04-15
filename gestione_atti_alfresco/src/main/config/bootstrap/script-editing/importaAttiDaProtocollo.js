@@ -152,7 +152,7 @@ function importaAtto(){
 	
 				var listaFirmatari = document.properties["crlatti:firmatari"];
 				
-				var childrenXPathQuery = "*[@cm:name='"+nomeFirmatario+"']";
+				var childrenXPathQuery = "*[@cm:name=\""+nomeFirmatario+"\"]";
 				var firmatarioNode = firmatariFolderNode.childrenByXPath(childrenXPathQuery);
 				
 				// inserisco i nuovi firmatari

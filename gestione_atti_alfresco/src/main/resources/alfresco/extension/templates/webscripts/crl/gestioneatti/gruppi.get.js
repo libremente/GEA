@@ -31,7 +31,8 @@ if(legislaturaCorrente != null){
 	var commissioneGroup = getCommissioneGroup(gruppiUtente);
 	
 	if(commissioneGroup!=null){
-		gruppi.push("COMM_"+commissioneGroup.properties['cm:authorityName'].substring(9));
+                var gruppoToken = commissioneGroup.properties['cm:authorityName'].split("_");
+		gruppi.push("COMM_" + gruppoToken[2]);
 	}else if(gruppiUtente[0]!=null){
 		gruppi.push(gruppiUtente[0].properties['cm:authorityName'].substring(6));	
 	}	

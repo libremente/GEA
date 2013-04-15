@@ -11,17 +11,17 @@ var legislatureArrayTemp = new Array();
 
 for(var i=0; i<legislatureResults.length; i++){
 	
-	legislatureArrayTemp.push(Number(deromanize(legislatureResults[i].properties["cm:name"])));
+	legislatureArrayTemp.push(new Number(deromanize(legislatureResults[i].properties["cm:name"])));
 	
 }
 
-legislatureArrayTemp.sort();
+legislatureArrayTemp.sort(function(a,b){return a-b});
 legislatureArrayTemp.reverse();
 
 var legislatureArray = new Array();
 
 
-for(var i=0; i<legislatureArrayTemp.length; i++){
+for(var i=0; i<2 && i<legislatureArrayTemp.length; i++){
 	
 	legislatureArray.push(romanize(legislatureArrayTemp[i]));
 	

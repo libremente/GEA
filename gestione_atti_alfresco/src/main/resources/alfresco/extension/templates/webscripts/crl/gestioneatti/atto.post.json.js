@@ -89,6 +89,8 @@ if(nodeType=="crlatti:attoEac"){
 		var eacAttoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:AttoEac\"";
 		var eacAttoSpaceTemplateNode = search.luceneSearch(eacAttoSpaceTemplateQuery)[0];
 		eacAttoFolderNode = eacAttoSpaceTemplateNode.copy(eacMeseFolderNode,true);
+                
+                eacAttoFolderNode.properties["crlatti:statoExportAttiIndirizzo"] = "CREATE";
 	}
 	
 	eacAttoFolderNode.name = numeroAtto+estensioneAtto;
