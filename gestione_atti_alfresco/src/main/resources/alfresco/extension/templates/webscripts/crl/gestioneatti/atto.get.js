@@ -114,7 +114,7 @@ if(checkIsNotNull(id)){
 			var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
 			var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
 			
-			var commissioneFolderXpathQuery = "*[@cm:name='"+sedutaResultObj.nomeOrgano+"']";
+			var commissioneFolderXpathQuery = "*[@cm:name=\""+sedutaResultObj.nomeOrgano+"\"]";
 			var commissioneFolderNode = commissioniFolderNode.childrenByXPath(commissioneFolderXpathQuery)[0];
 			
 			// Workaround nel caso in cui la commissione aggiunga all'odg un atto per cui non ha nessun ruolo
