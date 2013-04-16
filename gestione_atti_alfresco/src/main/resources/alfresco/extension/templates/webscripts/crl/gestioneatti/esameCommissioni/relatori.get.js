@@ -22,7 +22,7 @@ if(checkIsNotNull(idAtto) && checkIsNotNull(commissione) && checkIsNotNull(passa
 	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
 	// cerco la commissione
-	var commissioneXPathQuery = "*[@cm:name='"+commissione+"']";
+	var commissioneXPathQuery = "*[@cm:name=\""+commissione+"\"]";
 	var commissioneResults = commissioniFolderNode.childrenByXPath(commissioneXPathQuery);
 	
 	if(commissioneResults!=null && commissioneResults.length>0){

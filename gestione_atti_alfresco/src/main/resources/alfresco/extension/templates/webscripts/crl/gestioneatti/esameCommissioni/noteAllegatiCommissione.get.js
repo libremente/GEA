@@ -23,7 +23,7 @@ if(checkIsNotNull(id)
 	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
 	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
-	var commissioneXPathQuery = "*[@cm:name='"+commissione+"']";
+	var commissioneXPathQuery = "*[@cm:name=\""+commissione+"\"]";
 	var commissioneFolder = commissioniFolderNode.childrenByXPath(commissioneXPathQuery)[0];
 	
 	

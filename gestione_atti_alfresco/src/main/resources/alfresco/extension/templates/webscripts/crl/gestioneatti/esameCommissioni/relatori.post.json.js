@@ -32,7 +32,7 @@ if(checkIsNotNull(id)){
 	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
 	if(checkIsNotNull(commissioneUtente)){
-		var commissioneUtenteXPathQuery = "*[@cm:name='"+commissioneUtente+"']";
+		var commissioneUtenteXPathQuery = "*[@cm:name=\""+commissioneUtente+"\"]";
 		var commissioneUtenteResults = commissioniFolderNode.childrenByXPath(commissioneUtenteXPathQuery);
 		if(commissioneUtenteResults!=null && commissioneUtenteResults.length>0){
 			commissioneFolderNode = commissioneUtenteResults[0];
@@ -62,7 +62,7 @@ if(checkIsNotNull(id)){
 		var dataUscita = filterParam(relatore.get("dataUscita"));
 		
 		//verifica l'esistenza di un relatore nel repository
-		var existRelatoreXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var existRelatoreXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 		var relatoreEsistenteResults = relatoriFolderNode.childrenByXPath(existRelatoreXPathQuery);
 		var relatoreNode = null;
 		if(relatoreEsistenteResults!=null && relatoreEsistenteResults.length>0){

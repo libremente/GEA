@@ -43,7 +43,7 @@ if(nodeRefAtto == ""){
 	var commissioniXPathQuery = "*[@cm:name='Commissioni']";
 	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 
-	var commissioneUtenteXPathQuery = "*[@cm:name='"+provenienza+"']";
+	var commissioneUtenteXPathQuery = "*[@cm:name=\""+provenienza+"\"]";
 	var commissioneUtenteFolderNode = commissioniFolderNode.childrenByXPath(commissioneUtenteXPathQuery)[0];
 	
 	var allegatoNode = null;

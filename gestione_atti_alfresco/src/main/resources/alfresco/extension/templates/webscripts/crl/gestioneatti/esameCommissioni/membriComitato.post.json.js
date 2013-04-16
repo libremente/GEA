@@ -36,7 +36,7 @@ if(checkIsNotNull(id)){
 	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
 	if(checkIsNotNull(commissioneUtente)){
-		var commissioneUtenteXPathQuery = "*[@cm:name='"+commissioneUtente+"']";
+		var commissioneUtenteXPathQuery = "*[@cm:name=\""+commissioneUtente+"\"]";
 		var commissioneUtenteResults = commissioniFolderNode.childrenByXPath(commissioneUtenteXPathQuery);
 		if(commissioneUtenteResults!=null && commissioneUtenteResults.length>0){
 			commissioneFolderNode = commissioneUtenteResults[0];
@@ -84,7 +84,7 @@ if(checkIsNotNull(id)){
 		var coordinatore = filterParam(membro.get("coordinatore"));
 		
 		//verifica l'esistenza di un membro nel repository
-		var existMemebroXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var existMemebroXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 		var memebroEsistenteResults = comitatoFolderNode.childrenByXPath(existMemebroXPathQuery);
 		var membroNode = null;
 		if(memebroEsistenteResults!=null && memebroEsistenteResults.length>0){

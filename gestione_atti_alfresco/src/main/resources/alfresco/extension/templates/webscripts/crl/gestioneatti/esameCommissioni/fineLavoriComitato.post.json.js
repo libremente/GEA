@@ -31,7 +31,7 @@ if(checkIsNotNull(id)){
 	var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniXPathQuery)[0];
 	
 	if(checkIsNotNull(commissioneUtente)){
-		var commissioneUtenteXPathQuery = "*[@cm:name='"+commissioneUtente+"']";
+		var commissioneUtenteXPathQuery = "*[@cm:name=\""+commissioneUtente+"\"]";
 		var commissioneUtenteResults = commissioniFolderNode.childrenByXPath(commissioneUtenteXPathQuery);
 		if(commissioneUtenteResults!=null && commissioneUtenteResults.length>0){
 			commissioneFolderNode = commissioneUtenteResults[0];
