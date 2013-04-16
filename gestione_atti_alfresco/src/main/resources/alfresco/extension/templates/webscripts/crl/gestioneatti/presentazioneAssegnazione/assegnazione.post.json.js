@@ -56,7 +56,7 @@ if(checkIsNotNull(id)){
 		
 		
 		//verifica l'esistenza della commissione all'interno del folder Commissioni
-		var existCommissioneXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var existCommissioneXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 		var commissioneEsistenteResults = commissioniFolderNode.childrenByXPath(existCommissioneXPathQuery);
 		var commissioneNode = null;
 		

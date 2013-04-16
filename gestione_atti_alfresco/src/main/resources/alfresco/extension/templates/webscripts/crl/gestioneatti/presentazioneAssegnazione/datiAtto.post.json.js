@@ -91,7 +91,7 @@ if(checkIsNotNull(id)){
 			var numeroOrdinamento = filterParam(firmatario.get("numeroOrdinamento"));
 			
 			//verifica l'esistenza del firmatario all'interno del folder Firmatari
-			var existFirmatarioXPathQuery = "*[@cm:name='"+descrizione+"']";
+			var existFirmatarioXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 			var firmatarioEsistenteResults = firmatariFolderNode.childrenByXPath(existFirmatarioXPathQuery);
 			var firmatarioNode = null;
 			if(firmatarioEsistenteResults!=null && firmatarioEsistenteResults.length>0){
