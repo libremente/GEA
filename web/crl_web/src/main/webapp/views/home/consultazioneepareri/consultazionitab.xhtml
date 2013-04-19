@@ -251,24 +251,24 @@
 									styleClass="tableAppend">
 									<f:facet name="header">
 										<p:row>
-											<p:column>Soggetto Invitato</p:column>
-											<p:column>presente</p:column>
-											<p:column></p:column>
+											<p:column style="text-align:center">Soggetto Invitato</p:column>
+											<p:column style="text-align:center" >Presente</p:column>
+											<p:column style="text-align:center"></p:column>
 										</p:row>
 									</f:facet>
 									<p:row>
 
-										<p:column>
-											<p:inputText id="nomeSoggettoInvitato"
+										<p:column style="text-align:center">
+											<p:inputTextarea id="nomeSoggettoInvitato" rows="2" cols="82"
 												value="#{consultazioniPareriController.nomeSoggettoInvitato}" />
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:selectBooleanCheckbox id="soggettoInvitatoIntervenuto"
 												value="#{consultazioniPareriController.intervenuto}" />
 										</p:column>
 
-										<p:column>
+										<p:column style="text-align:center">
 											<p:commandButton value="Aggiungi"
 												action="#{consultazioniPareriController.addSoggettoInvitato}"
 												id="addSoggettoInvitato"

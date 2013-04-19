@@ -118,7 +118,7 @@ public class CommissioneServiceManager implements ServiceManager{
 	
 	
 	public void salvaStralci(EsameCommissione esameCommissione) {
-		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_commissioni", null), esameCommissione);
+		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_stralci_commissioni", null), esameCommissione);
 	}
 	
 	

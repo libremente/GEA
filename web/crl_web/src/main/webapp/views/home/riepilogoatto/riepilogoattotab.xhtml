@@ -132,7 +132,7 @@
 		<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
 			<p:column colspan="3">
 
-				<p:dataTable styleClass="generalInfoTab grey-text"
+				<p:dataTable styleClass="generalInfoTab grey-text" sortBy="#{firmatario.numeroOrdinamento}"
 					value="#{attoBean.atto.firmatari}" var="firmatario">
 
 
@@ -827,7 +827,7 @@
 				<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
 					<p:column colspan="3">
 
-						<p:dataTable styleClass="generalInfoTab grey-text"
+						<p:dataTable styleClass="generalInfoTab grey-text" sortBy="#{firmatario.numeroOrdinamento}"
 							value="#{attoBean.atto.firmatari}" var="firmatario">
 
 

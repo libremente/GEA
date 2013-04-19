@@ -368,7 +368,11 @@ public class NavigationRules {
 				|| "Respinto dall'Aula".equals(attoBean.getTipoChiusura())
 				|| "Ritirato dai promotori".equals(attoBean.getTipoChiusura())
 				|| "Abbinato ad altro atto".equals(attoBean.getTipoChiusura())
-				|| "Inammissibile".equals(attoBean.getTipoChiusura())) {
+				|| "Inammissibile".equals(attoBean.getTipoChiusura())
+				|| "Istruttoria conclusa".equals(attoBean.getTipoChiusura())
+				|| "Irricevibile".equals(attoBean.getTipoChiusura())
+				|| "Improcedibile".equals(attoBean.getTipoChiusura())
+				) {
 			return false;
 		} else {
 			return true;

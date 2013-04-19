@@ -139,7 +139,7 @@ public class InserisciMISController {
 		    this.atto=attoRet;
 		    context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_INFO,
-					"Atto EAC inserito con successo", "")); 			
+					"Atto MIS inserito con successo", "")); 			
 
 		} else if (attoRet!=null && attoRet.getError()!=null && !attoRet.getError().equals("")) {
 			
