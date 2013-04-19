@@ -9,7 +9,7 @@
 
 	<groupId>com.sourcesense.crl</groupId>
 	<artifactId>crl_web</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>crl_web</name>
@@ -22,9 +22,9 @@
 	</properties>
 
 	<scm>
-		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/tags/crl_web-1.1.0</developerConnection>
-		<connection>scm:svn:https://forge.pronetics.it/svn/crl/tags/crl_web-1.1.0</connection>
-		<url>scm:svn:https://forge.pronetics.it/svn/crl/tags/crl_web-1.1.0</url>
+		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/trunk/web/crl_web</developerConnection>
+		<connection>https://forge.pronetics.it/svn/crl</connection>
+		<url>https://forge.pronetics.it/svn/crl</url>
 	</scm>
 	<dependencies>
 
