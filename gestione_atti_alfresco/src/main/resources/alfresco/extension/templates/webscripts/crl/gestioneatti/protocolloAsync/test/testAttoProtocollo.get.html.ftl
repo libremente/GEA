@@ -67,7 +67,8 @@
 			}
 		};
 		
-		creaAtto(JSON.stringify(attoCustom));
+		creaAtto(JSON.stringify(attoCustom));   
+                //creaAtto(JSON.stringify(attoCustom));
 
 	}
 	

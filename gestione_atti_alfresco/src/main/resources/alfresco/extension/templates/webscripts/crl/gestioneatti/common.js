@@ -225,3 +225,33 @@ function getObj(jsonObject, keyName) {
 		return null;
 	}
 }
+
+function addOneZero(value) {
+    if(value < 10) {
+        return "0" + value;
+    } else {
+        return "" + value;
+    }
+}
+
+function addTwoZero(value) {
+    if(value < 10) {
+        return "00" + value;
+    } else if(value < 100) {
+        return "0" + value;
+    } else {
+        return "" + value;
+    }
+}
+
+function makeTimestamp() {
+    curr_date = new Date();
+    curr_year = curr_date.getFullYear();
+    curr_month = curr_date.getMonth() + 1;
+    curr_day = curr_date.getDate();
+    curr_hour = curr_date.getHours();
+    curr_min = curr_date.getMinutes();
+    curr_sec = curr_date.getSeconds();
+    curr_mill = curr_date.getMilliseconds();
+    return "" + curr_year + addOneZero(curr_month) + addOneZero(curr_day) + addOneZero(curr_hour) + addOneZero(curr_min) + addOneZero(curr_sec) + addTwoZero(curr_mill);
+}

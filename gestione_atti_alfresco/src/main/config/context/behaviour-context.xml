@@ -29,6 +29,9 @@
     	<property name="contentService">
     		<ref bean="contentService"/>
     	</property>
+        <property name="namespaceService">
+    		<ref bean="namespaceService"/>
+    	</property>
     </bean>  
     
 </beans>

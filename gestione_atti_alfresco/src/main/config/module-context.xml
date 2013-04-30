@@ -27,4 +27,7 @@
     <import resource="classpath:alfresco/module/${artifactId}/context/atti-indirizzo-export-job-script-context.xml" />
     <import resource="classpath:alfresco/module/${artifactId}/context/atti-indirizzo-import-job-script-context.xml" />
 	
+    <!-- Moduli per l'integrazione del sistema di Protocollo -->
+    <import resource="classpath:alfresco/module/${artifactId}/context/protocollo-import-job-script-context.xml" />
+        
 </beans>

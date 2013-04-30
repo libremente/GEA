@@ -1,3 +1,5 @@
+<import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
+
 var username = person.properties.userName;
 if(username=="protocollo" || username=="admin"){
 
@@ -49,14 +51,15 @@ if(username=="protocollo" || username=="admin"){
 		var importLuceneQuery = "PATH:\""+importProtocolloPath+"\"";
 		var importFolderNode = search.luceneSearch(importLuceneQuery)[0];
 		
+                filename = "" + makeTimestamp() + "_" + filename;
 		//verifica esistenza allegato
-		var allegatoResults = importFolderNode.childrenByXPath("*[@cm:name='"+filename+"']");
+//		var allegatoResults = importFolderNode.childrenByXPath("*[@cm:name='"+filename+"']");
 		var allegatoNode = null;
-		if(allegatoResults!=null && allegatoResults.length>0){
-			allegatoNode = allegatoResults[0];	
-		} else {
+//		if(allegatoResults!=null && allegatoResults.length>0){
+//			allegatoNode = allegatoResults[0];	
+//		} else {
 		    allegatoNode = importFolderNode.createNode(filename,"crlatti:allegato");
-		}
+//		}
 		
 		allegatoNode.properties["crlatti:idProtocollo"] = idProtocolloAllegato;
 		allegatoNode.properties.content.write(content);

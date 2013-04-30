@@ -199,6 +199,12 @@ function importaAtto(){
 		} else {
 			//creazione del nodo del nuovo atto
 			document.move(tipoFolderNode);
+                        
+                        // FIX PROTOCOLLO
+                        var attoFolderName = document.name;
+                        document.name = attoFolderName.substring(0, attoFolderName.lastIndexOf("_"));
+                        document.save();
+                        
 			if(document.hasAspect("crlatti:importatoDaProtocollo")){
 				document.removeAspect("crlatti:importatoDaProtocollo");
 			}

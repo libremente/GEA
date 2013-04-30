@@ -16,6 +16,8 @@ function importaAllegato(){
 	} else if(filename == ""){
 		
 	} else {
+            
+                filename = filename.substring(filename.indexOf("_") + 1);
 		
 		var importProtocolloPath = 
 			"/app:company_home" +

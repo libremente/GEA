@@ -103,25 +103,26 @@ if(username=="protocollo" || username=="admin"){
                                if(nodeType != "crlatti:atto") {
                                				
 				//verifica esistenza del folder dell'atto
-				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto+estensioneAtto);
-				var attoLuceneQuery = "PATH:\""+attoPath+"\"";
-				var attoResults = search.luceneSearch(attoLuceneQuery);
+//				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto+estensioneAtto);
+//				var attoLuceneQuery = "PATH:\""+attoPath+"\"";
+//				var attoResults = search.luceneSearch(attoLuceneQuery);
 					
 				var attoFolderNode = null;
                                 var update = false;
                                 
-				if(attoResults!=null && attoResults.length>0){
-					//atto presente
-					attoFolderNode = attoResults[0];
-                                        update = true;
-				} else {
+//				if(attoResults!=null && attoResults.length>0){
+//					//atto presente
+//					attoFolderNode = attoResults[0];
+//                                        update = true;
+//				} else {
 					//creazione del nodo del nuovo atto
 					var attoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Atto\"";
 					var attoSpaceTemplateNode = search.luceneSearch(attoSpaceTemplateQuery)[0];
 					attoFolderNode = attoSpaceTemplateNode.copy(importProtocolloFolderNode,true);
-				}
-					
-				attoFolderNode.name = numeroAtto+estensioneAtto;
+				//}
+                                
+                                // FIX PROTOCOLLO
+				attoFolderNode.name = numeroAtto + estensioneAtto + "_" + makeTimestamp();
 				attoFolderNode.specializeType(nodeType);
 				attoFolderNode.properties["crlatti:legislatura"] = legislatura;
 				attoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
