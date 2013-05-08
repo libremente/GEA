@@ -180,7 +180,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 					String commConsultiva = this.renderList(commConsultivaList);
 
 					currentTable.getRow(0).getCell(1)
-							.setText(this.checkStringEmpty(tipoAtto));
+							.setText(this.checkStringEmpty(tipoAtto.toUpperCase()));
 					currentTable.getRow(0).getCell(2)
 							.setText(this.checkStringEmpty(numeroAtto));
 					currentTable.getRow(1).getCell(1)

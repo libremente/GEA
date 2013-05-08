@@ -174,7 +174,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 						.getRow(0)
 						.getCell(1)
 						.setText(
-								this.checkStringEmpty(tipoAtto + " "
+								this.checkStringEmpty(tipoAtto.toUpperCase() + " "
 										+ numeroAtto));
 				currentTable.getRow(1).getCell(1)
 						.setText(this.checkStringEmpty(oggetto));

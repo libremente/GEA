@@ -26,197 +26,163 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
  * V2 -Big Ok
- * 
+ *
  * @author Alessandro Benedetti
- * 
+ *
  */
 public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
-	@Override
-	public byte[] generate(byte[] templateByteArray, String json,
-			StoreRef spacesStore) throws IOException {
-		ByteArrayOutputStream ostream = null;
-		try {
-			ByteArrayInputStream is = new ByteArrayInputStream(
-					templateByteArray);
-			DocxManager docxManager = new DocxManager(is);
+    @Override
+    public byte[] generate(byte[] templateByteArray, String json,
+            StoreRef spacesStore) throws IOException {
+        ByteArrayOutputStream ostream = null;
+        try {
+            ByteArrayInputStream is = new ByteArrayInputStream(
+                    templateByteArray);
+            DocxManager docxManager = new DocxManager(is);
 
-			this.initLegislatura(json);
-			this.initFirmatario(json);
-			this.initTipoFirma(json);
-			this.initDataAssegnazioneCommReferenteDa(json);
-			this.initDataAssegnazioneCommReferenteA(json);
-			this.initDataPresentazioneDa(json);
-			this.initDataPresentazioneA(json);
+            this.initLegislatura(json);
+            this.initFirmatario(json);
+            this.initTipoFirma(json);
+            this.initDataAssegnazioneCommReferenteDa(json);
+            this.initDataAssegnazioneCommReferenteA(json);
+            this.initDataPresentazioneDa(json);
+            this.initDataPresentazioneA(json);
 
-			String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
+            String sortField1 = "@{" + CRL_ATTI_MODEL + "}numeroAtto";
 
-			Map<String, ResultSet> firmatario2results = Maps.newHashMap();
-			SearchParameters sp = new SearchParameters();
-			sp.addStore(spacesStore);
-			sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-			String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:"+this.legislatura+"//*\" AND TYPE:\""
-					+ "crlatti:atto\"";
-			if (this.tipologiaFirma.equals("primo")) {
-				query = query + " AND @crlatti\\:primoFirmatario:\""
-						+ this.firmatario + "\"";
+            Map<String, ResultSet> firmatario2results = Maps.newHashMap();
+            SearchParameters sp = new SearchParameters();
+            sp.addStore(spacesStore);
+            sp.setLanguage(SearchService.LANGUAGE_LUCENE);
+            String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\" AND TYPE:\""
+                    + "crlatti:atto\"";
+            if (this.tipologiaFirma.equals("primo")) {
+                query = query + " AND @crlatti\\:primoFirmatario:\""
+                        + this.firmatario + "\"";
 
-			} else if (this.tipologiaFirma.equals("originari")) {
-				query = query + " AND @crlatti\\:firmatariOriginari:\""
-						+ this.firmatario + "\"";
-			}
-			if (!dataAssegnazioneCommReferenteDa.equals("*")
-					|| !dataAssegnazioneCommReferenteDa.equals("*")) {
-				query = query
-						+ " AND @crlatti\\:dataAssegnazioneCommissioneReferente:["
-						+ this.dataAssegnazioneCommReferenteDa + " TO "
-						+ this.dataAssegnazioneCommReferenteA + " ]";
-			}
-			if (!dataPresentazioneDa.equals("*")
-					|| !dataPresentazioneA.equals("*")) {
-				query += " AND @crlatti\\:dataIniziativa:["
-						+ this.dataPresentazioneDa + " TO "
-						+ this.dataPresentazioneA + " ]";
-			}
+            } else if (this.tipologiaFirma.equals("originari")) {
+                query = query + " AND @crlatti\\:firmatariOriginari:\""
+                        + this.firmatario + "\"";
+            }
+            if (!dataAssegnazioneCommReferenteDa.equals("*")
+                    || !dataAssegnazioneCommReferenteDa.equals("*")) {
+                query = query
+                        + " AND @crlatti\\:dataAssegnazioneCommissioneReferente:["
+                        + this.dataAssegnazioneCommReferenteDa + " TO "
+                        + this.dataAssegnazioneCommReferenteA + " ]";
+            }
+            if (!dataPresentazioneDa.equals("*")
+                    || !dataPresentazioneA.equals("*")) {
+                query += " AND @crlatti\\:dataIniziativa:["
+                        + this.dataPresentazioneDa + " TO "
+                        + this.dataPresentazioneA + " ]";
+            }
 
-			sp.setQuery(query);
-			sp.addSort(sortField1, true);
-			ResultSet attiResult = this.searchService.query(sp);
-			firmatario2results.put(this.firmatario, attiResult);
+            sp.setQuery(query);
+            sp.addSort(sortField1, true);
+            ResultSet attiResult = this.searchService.query(sp);
+            firmatario2results.put(this.firmatario, attiResult);
 
-			ArrayListMultimap<String, NodeRef> firmatario2atti = this
-					.retrieveAtti(firmatario2results);
-			// obtain as much table as the results spreaded across the resultSet
-			XWPFDocument generatedDocument = docxManager
-					.generateFromTemplateMap(
-							this.retrieveLenghtMap(firmatario2atti), 2, false);
-			// convert to input stream
-			ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
+            ArrayListMultimap<String, NodeRef> firmatario2atti = this.retrieveAtti(firmatario2results);
+            // obtain as much table as the results spreaded across the resultSet
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(firmatario2atti), 2, false);
+            // convert to input stream
+            ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
-			XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-					firmatario2atti);
-			ostream = new ByteArrayOutputStream();
-			finalDocument.write(ostream);
+            XWPFDocument finalDocument = this.fillTemplate(tempInputStream, firmatario2atti);
+            ostream = new ByteArrayOutputStream();
+            finalDocument.write(ostream);
 
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ostream.toByteArray();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return ostream.toByteArray();
 
-	}
+    }
 
-	protected ArrayListMultimap<String, NodeRef> retrieveAtti(
-			Map<String, ResultSet> attoChild2results) {
-		ArrayListMultimap<String, NodeRef> child2atti = ArrayListMultimap
-				.create();
-		for (String firmatario : attoChild2results.keySet()) {
-			ResultSet firmatarioResults = attoChild2results.get(firmatario);
-			List<NodeRef> nodeRefList = firmatarioResults.getNodeRefs();
-			for (NodeRef atto : nodeRefList) {
-				child2atti.put(firmatario, atto);
-			}
-		}
-		return child2atti;
-	}
+    protected ArrayListMultimap<String, NodeRef> retrieveAtti(
+            Map<String, ResultSet> attoChild2results) {
+        ArrayListMultimap<String, NodeRef> child2atti = ArrayListMultimap.create();
+        for (String firmatario : attoChild2results.keySet()) {
+            ResultSet firmatarioResults = attoChild2results.get(firmatario);
+            List<NodeRef> nodeRefList = firmatarioResults.getNodeRefs();
+            for (NodeRef atto : nodeRefList) {
+                child2atti.put(firmatario, atto);
+            }
+        }
+        return child2atti;
+    }
 
-	/**
-	 * @param finalDocStream
-	 * @param queryRes
-	 * @return
-	 * @throws IOException
-	 */
-	@SuppressWarnings("unchecked")
-	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ArrayListMultimap<String, NodeRef> firmatario2atti)
-			throws IOException {
-		XWPFDocument document = new XWPFDocument(finalDocStream);
-		int tableIndex = 0;
-		List<XWPFTable> tables = document.getTables();
-		for (String firmatario : firmatario2atti.keySet()) {
-			for (NodeRef currentAtto : firmatario2atti.get(firmatario)) {
-				XWPFTable currentTable = tables.get(tableIndex);
-				Map<QName, Serializable> attoProperties = nodeService
-						.getProperties(currentAtto);
+    /**
+     * @param finalDocStream
+     * @param queryRes
+     * @return
+     * @throws IOException
+     */
+    @SuppressWarnings("unchecked")
+    public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
+            ArrayListMultimap<String, NodeRef> firmatario2atti)
+            throws IOException {
+        XWPFDocument document = new XWPFDocument(finalDocStream);
+        int tableIndex = 0;
+        List<XWPFTable> tables = document.getTables();
+        for (String firmatario : firmatario2atti.keySet()) {
+            for (NodeRef currentAtto : firmatario2atti.get(firmatario)) {
+                XWPFTable currentTable = tables.get(tableIndex);
+                Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto);
 
-				// from Atto
-				QName nodeRefType = nodeService.getType(currentAtto);
-				String tipoAtto = (String) nodeRefType.getLocalName();
-				String numeroAtto = ""
-						+ (Integer) this.getNodeRefProperty(attoProperties,
-								"numeroAtto");
-				String iniziativa = (String) this.getNodeRefProperty(
-						attoProperties, "tipoIniziativa");
+                // from Atto
+                QName nodeRefType = nodeService.getType(currentAtto);
+                String tipoAtto = (String) nodeRefType.getLocalName();
+                if (tipoAtto.length() > 4) {
+                    tipoAtto = tipoAtto.substring(4);
+                }
+                
+                String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
 
-				ArrayList<String> firmatariList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties, "firmatari");
-				String firmatari = this.renderList(firmatariList);
+                ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
+                String firmatari = this.renderList(firmatariList);
 
-				Date dateAssegnazioneCommissione = (Date) this
-						.getNodeRefProperty(attoProperties,
-								"dataAssegnazioneCommissioneReferente");
+                Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(attoProperties, "dataAssegnazioneCommissioneReferente");
 
-				ArrayList<String> commReferenteList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties, "commReferente");
-				String commReferente = "";
-				for (String commissioneReferenteMulti : commReferenteList)
-					commReferente += commissioneReferenteMulti + " ";
+                ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
+                String commReferente = this.renderList(commReferenteList);          
 
-				ArrayList<String> commConsultivaList = (ArrayList<String>) this
-						.getNodeRefProperty(attoProperties, "commConsultiva");
-				String commConsultiva = this.renderList(commConsultivaList);
+                ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
+                String commConsultiva = this.renderList(commConsultivaList);
 
-				String abbinamenti = this.getAbbinamenti(currentAtto);
+                String abbinamenti = this.getAbbinamenti(currentAtto);
 
-				Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(
-						attoProperties, "dataSedutaComm");
+                Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(attoProperties, "dataSedutaComm");
 
-				String numeroLcr = (String) this.getNodeRefProperty(
-						attoProperties, "numeroLcr");
-				String numeroLr = (String) this.getNodeRefProperty(
-						attoProperties, "numeroLr");
-				Date dateLr = (Date) this.getNodeRefProperty(attoProperties,
-						"dataLr");
+                String numeroLcr = (String) this.getNodeRefProperty(attoProperties, "numeroLcr");
+                String numeroLr = (String) this.getNodeRefProperty(attoProperties, "numeroLr");
+                Date dateLr = (Date) this.getNodeRefProperty(attoProperties, "dataLr");
 
-				currentTable
-						.getRow(0)
-						.getCell(1)
-						.setText(
-								this.checkStringEmpty(tipoAtto + " "
-										+ numeroAtto));
-				currentTable.getRow(1).getCell(1)
-						.setText(this.checkStringEmpty(iniziativa));
-				currentTable.getRow(2).getCell(1)
-						.setText(this.checkStringEmpty(firmatari));
-				currentTable
-						.getRow(3)
-						.getCell(1)
-						.setText(
-								this.checkDateEmpty(dateAssegnazioneCommissione));
+                currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
+                currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(iniziativa));
+                currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(firmatari));
+                currentTable.getRow(3).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
 
-				currentTable.getRow(3).getCell(3)
-						.setText(this.checkStringEmpty(commReferente));
+                currentTable.getRow(3).getCell(3).setText(this.checkStringEmpty(commReferente));
 
-				currentTable.getRow(4).getCell(1)
-						.setText(this.checkStringEmpty(commConsultiva));
+                currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(commConsultiva));
 
-				currentTable.getRow(5).getCell(1)
-						.setText(this.checkStringEmpty(abbinamenti));
+                currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(abbinamenti));
 
-				currentTable.getRow(6).getCell(1)
-						.setText(this.checkDateEmpty(dateVotazioneCommissione));
-				currentTable.getRow(6).getCell(3)
-						.setText(this.checkStringEmpty(numeroLcr));
+                currentTable.getRow(6).getCell(1).setText(this.checkDateEmpty(dateVotazioneCommissione));
+                currentTable.getRow(6).getCell(3).setText(this.checkStringEmpty(numeroLcr));
 
-				currentTable.getRow(7).getCell(1)
-						.setText(this.checkStringEmpty(numeroLr));
-				currentTable.getRow(7).getCell(3)
-						.setText(this.checkDateEmpty(dateLr));
+                currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(numeroLr));
+                currentTable.getRow(7).getCell(3).setText(this.checkDateEmpty(dateLr));
 
-				tableIndex++;
-			}
-		}
+                tableIndex++;
+            }
+        }
 
-		return document;
-	}
+        return document;
+    }
 }
