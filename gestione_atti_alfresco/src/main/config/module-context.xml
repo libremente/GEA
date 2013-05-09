@@ -14,7 +14,7 @@
     <import resource="classpath:alfresco/module/${artifactId}/context/report-web-script-context.xml" />
     <import resource="classpath:alfresco/module/${artifactId}/context/odg-web-script-context.xml" />
     <import resource="classpath:alfresco/module/${artifactId}/context/script-context.xml" />
-    <!-- import resource="classpath:alfresco/module/${artifactId}/context/behaviour-context.xml" / -->
+    <import resource="classpath:alfresco/module/${artifactId}/context/behaviour-context.xml" />
 	
 	
 	
