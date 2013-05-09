@@ -40,24 +40,29 @@ public class Lettera implements Cloneable {
 	String emailFirmatario;
 	
 	
+	String assessore;
+	
 	boolean hasFirmatario;
 	boolean hasUfficio;
 	boolean hasDirezione;
 	boolean hasNumeroTelFirmatario;
 	boolean hasEmailFirmatario;
+	boolean hasAssessore;
 	
 
 	public void setAuthorities(boolean hasFirmatario,
 	boolean hasUfficio,
 	boolean hasDirezione,
 	boolean hasNumeroTelFirmatario,
-	boolean hasEmailFirmatario){
+	boolean hasEmailFirmatario,
+	boolean hasAssessore){
 		
 		this.hasFirmatario=hasFirmatario;
 		this.hasUfficio=hasUfficio;
 		this.hasDirezione=hasDirezione;
 		this.hasNumeroTelFirmatario=hasNumeroTelFirmatario;
 		this.hasEmailFirmatario=hasEmailFirmatario;
+		this.hasAssessore=hasAssessore;
 		
 	}
 	
@@ -172,6 +177,24 @@ public class Lettera implements Cloneable {
 	public void setHasEmailFirmatario(boolean hasEmailFirmatario) {
 		this.hasEmailFirmatario = hasEmailFirmatario;
 	}
+
+	public String getAssessore() {
+		return assessore;
+	}
+
+	public void setAssessore(String assessore) {
+		this.assessore = assessore;
+	}
+
+	public boolean isHasAssessore() {
+		return hasAssessore;
+	}
+
+	public void setHasAssessore(boolean hasAssessore) {
+		this.hasAssessore = hasAssessore;
+	}
+	
+	
 	
 	
 	

@@ -1,7 +1,9 @@
 package com.sourcesense.crl.business.service;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,10 +43,13 @@ public class TipoIniziativaServiceManager implements ServiceManager{
 	}
 
 	public Map<String, String> findAll() {
-		Map<String, String> tipiIniziative = new HashMap<String, String>();
+		Map<String, String> tipiIniziative = new LinkedHashMap<String, String>();
 
 		List<TipoIniziativa> listTipiIniziative = tipoIniziativaService.getAllTipoIniziativa(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_iniziative",null));
 
+		
+		Collections.sort(listTipiIniziative);
+		
 		for (TipoIniziativa tipoIniziativa : listTipiIniziative) {
 
 			tipiIniziative.put(tipoIniziativa.getDescrizione(), tipoIniziativa.getDescrizione());

@@ -39,6 +39,7 @@ public class LettereNotificheController implements Serializable{
 	private StreamedContent file;
 	
 	private String direzione;
+	private String assessore;
 	private String emailFirmatario;
 	private String firmatario;
 	private String numeroTelFirmatario;
@@ -70,7 +71,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraTrasmissioneCommissioneReferente.xhtml");
 		letteraTrasmissioneCommissioneReferente
 				.setNome("Lettera Trasmissione Commissione Referente");
-		letteraTrasmissioneCommissioneReferente.setAuthorities(true, false, false, false, false);
+		letteraTrasmissioneCommissioneReferente.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneCommissioneReferente = new DefaultTreeNode(
 				"lettera", letteraTrasmissioneCommissioneReferente,
 				nodeServCommPDL);
@@ -82,7 +83,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraTrasmissioneCommissioneReferenteConsultiva.xhtml");
 		letteraTrasmissioneCommissioneReferenteConsultiva
 				.setNome("Lettera Trasmissione Commissione Referente e Consultiva");
-		letteraTrasmissioneCommissioneReferenteConsultiva.setAuthorities(true, false, false, false, false);
+		letteraTrasmissioneCommissioneReferenteConsultiva.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneCommissioneReferenteConsultiva = new DefaultTreeNode(
 				"lettera", letteraTrasmissioneCommissioneReferenteConsultiva,
 				nodeServCommPDL);
@@ -94,7 +95,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario.xhtml");
 		letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario
 				.setNome("Lettera Trasmissione Commissione Referente, Consultiva e Organismo Statutario");
-		letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario.setAuthorities(true, false, false, false, false);
+		letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario = new DefaultTreeNode(
 				"lettera",
 				letteraTrasmissioneCommissioneReferenteConsultivaOrganismoStatutario,
@@ -106,7 +107,7 @@ public class LettereNotificheController implements Serializable{
 		letteraRettificaAssegnazione
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraRettificaAssegnazione.xhtml");
 		letteraRettificaAssegnazione.setNome("Lettera Rettifica Assegnazione");
-		letteraRettificaAssegnazione.setAuthorities(true, false, false, false, false);
+		letteraRettificaAssegnazione.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraRettificaAssegnazione = new DefaultTreeNode(
 				"lettera", letteraRettificaAssegnazione, nodeServCommPDL);
 
@@ -116,7 +117,7 @@ public class LettereNotificheController implements Serializable{
 		letteraIntegrazioneCPOServComm
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraIntegrazioneCPOServComm.xhtml");
 		letteraIntegrazioneCPOServComm.setNome("Lettera integrazione richiesta parere Organo statutario");
-		letteraIntegrazioneCPOServComm.setAuthorities(true, false, false, false, false);
+		letteraIntegrazioneCPOServComm.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraIntegrazioneCPOServComm = new DefaultTreeNode(
 				"lettera", letteraIntegrazioneCPOServComm, nodeServCommPDL);
 
@@ -125,7 +126,7 @@ public class LettereNotificheController implements Serializable{
 		letteraRitiro
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraRitiro.xhtml");
 		letteraRitiro.setNome("Lettera Ritiro");
-		letteraRitiro.setAuthorities(true, false, false, false, false);
+		letteraRitiro.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraRitiro = new DefaultTreeNode("lettera",
 				letteraRitiro, nodeServCommPDL);
 
@@ -135,7 +136,7 @@ public class LettereNotificheController implements Serializable{
 		letteraAggiuntaFirma
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraAggiuntaFirma.xhtml");
 		letteraAggiuntaFirma.setNome("Lettera aggiunta firma");
-		letteraAggiuntaFirma.setAuthorities(true, false, false, false, false);
+		letteraAggiuntaFirma.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAggiuntaFirma = new DefaultTreeNode("lettera",
 				letteraAggiuntaFirma, nodeServCommPDL);
 
@@ -145,7 +146,7 @@ public class LettereNotificheController implements Serializable{
 		letteraRitiroFirma
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraRitiroFirma.xhtml");
 		letteraRitiroFirma.setNome("Lettera ritiro firma");
-		letteraRitiroFirma.setAuthorities(true, false, false, false, false);
+		letteraRitiroFirma.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraRitiroFirma = new DefaultTreeNode("lettera",
 				letteraRitiroFirma, nodeServCommPDL);
 
@@ -164,7 +165,7 @@ public class LettereNotificheController implements Serializable{
 		letteraBilancioProgrammatico
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraBilancioProgrammatico.xhtml");
 		letteraBilancioProgrammatico.setNome("Lettera bilancio programmatico");
-		letteraBilancioProgrammatico.setAuthorities(true, false, false, false, false);
+		letteraBilancioProgrammatico.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraBilancioProgrammatico = new DefaultTreeNode(
 				"lettera", letteraBilancioProgrammatico, nodeServCommPDL);
 
@@ -175,7 +176,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.xhtml");
 		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni
 				.setNome("Lettera di fusione o distacco comuni");
-		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.setAuthorities(true, false, false, false, false);
+		letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraIniziativaPresidenteGiuntaFusioneDistacchiComuni = new DefaultTreeNode(
 				"lettera",
 				letteraIniziativaPresidenteGiuntaFusioneDistacchiComuni,
@@ -187,7 +188,7 @@ public class LettereNotificheController implements Serializable{
 		letteraIniziativaPopolare
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraIniziativaPopolare.xhtml");
 		letteraIniziativaPopolare.setNome("Lettera Iniziativa Popolare");
-		letteraIniziativaPopolare.setAuthorities(true, false, false, false, false);
+		letteraIniziativaPopolare.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraIniziativaPopolare = new DefaultTreeNode("lettera",
 				letteraIniziativaPopolare, nodeServCommPDL);
 
@@ -197,7 +198,7 @@ public class LettereNotificheController implements Serializable{
 		letteraRendicontoGenerale
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraRendicontoGenerale.xhtml");
 		letteraRendicontoGenerale.setNome("Lettera Rendiconto Generale");
-		letteraRendicontoGenerale.setAuthorities(true, false, false, false, false);
+		letteraRendicontoGenerale.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraRendicontoGenerale = new DefaultTreeNode("lettera",
 				letteraRendicontoGenerale, nodeServCommPDL);
 
@@ -207,7 +208,7 @@ public class LettereNotificheController implements Serializable{
 		letteraLeggeFinanziaria
 				.setUrlView("./lettere/servizioCommissioni/pdl/letteraRettificaAssegnazione.xhtml");
 		letteraLeggeFinanziaria.setNome("Lettera Legge Finanziaria");
-		letteraLeggeFinanziaria.setAuthorities(true, false, false, false, false);
+		letteraLeggeFinanziaria.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraLeggeFinanziaria = new DefaultTreeNode("lettera",
 				letteraLeggeFinanziaria, nodeServCommPDL);
 
@@ -219,7 +220,7 @@ public class LettereNotificheController implements Serializable{
 		letteraDOCassegnazionePSR
 				.setUrlView("./lettere/servizioCommissioni/doc/letteraDOCassegnazionePSR.xhtml");
 		letteraDOCassegnazionePSR.setNome("Lettera DOC assegnazione PSR");
-		letteraDOCassegnazionePSR.setAuthorities(true, false, false, false, false);
+		letteraDOCassegnazionePSR.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraDOCassegnazionePSR = new DefaultTreeNode("lettera",
 				letteraDOCassegnazionePSR, nodeServCommDOC);
 
@@ -229,7 +230,7 @@ public class LettereNotificheController implements Serializable{
 		letteraDOCassegnazioneDSA
 				.setUrlView("./lettere/servizioCommissioni/doc/letteraDOCassegnazioneDSA.xhtml");
 		letteraDOCassegnazioneDSA.setNome("Lettera DOC assegnazione DSA");
-		letteraDOCassegnazioneDSA.setAuthorities(true, false, false, false, false);
+		letteraDOCassegnazioneDSA.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraDOCassegnazioneDSA = new DefaultTreeNode("lettera",
 				letteraDOCassegnazioneDSA, nodeServCommDOC);
 
@@ -240,7 +241,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/doc/letteraAssegnazioneProgrammaLavoroCommissioneEuropea.xhtml");
 		letteraAssegnazioneProgrammaLavoroCommissioneEuropea
 				.setNome("Lettera Assegnazione Programma Lavoro Commissione Europea");
-		letteraAssegnazioneProgrammaLavoroCommissioneEuropea.setAuthorities(true, false, false, false, false);
+		letteraAssegnazioneProgrammaLavoroCommissioneEuropea.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazioneProgrammaLavoroCommissioneEuropea = new DefaultTreeNode(
 				"lettera",
 				letteraAssegnazioneProgrammaLavoroCommissioneEuropea,
@@ -254,7 +255,7 @@ public class LettereNotificheController implements Serializable{
 		letteraParereCommissione
 				.setUrlView("./lettere/servizioCommissioni/par/letteraParereCommissione.xhtml");
 		letteraParereCommissione.setNome("Lettera Parere Commissione");
-		letteraParereCommissione.setAuthorities(true, false, false, false, false);
+		letteraParereCommissione.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraParereCommissione = new DefaultTreeNode("lettera",
 				letteraParereCommissione, nodeServCommPAR);
 
@@ -265,7 +266,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/par/letteraIntesaCommissioneGiunta.xhtml");
 		letteraIntesaCommissioneGiunta
 				.setNome("Lettera Intesa Commissione Giunta");
-		letteraIntesaCommissioneGiunta.setAuthorities(true, false, false, false, false);
+		letteraIntesaCommissioneGiunta.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraIntesaCommissioneGiunta = new DefaultTreeNode(
 				"lettera", letteraIntesaCommissioneGiunta, nodeServCommPAR);
 
@@ -276,7 +277,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/par/letteraParereCommissioneSospensionepausaestiva.xhtml");
 		letteraParereCommissioneSospensionepausaestiva
 				.setNome("Lettera Parere Commissione con sospensione pausa estiva");
-		letteraParereCommissioneSospensionepausaestiva.setAuthorities(true, false, false, false, false);
+		letteraParereCommissioneSospensionepausaestiva.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraParereCommissioneSospensionepausaestiva = new DefaultTreeNode(
 				"lettera", letteraParereCommissioneSospensionepausaestiva,
 				nodeServCommPAR);
@@ -288,7 +289,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/par/letteraIntesaCommissioneGiuntasospensionepausaestiva.xhtml");
 		letteraIntesaCommissioneGiuntasospensionepausaestiva
 				.setNome("Lettera Intesa Commissione Giunta con sospensione pausa estiva");
-		letteraIntesaCommissioneGiuntasospensionepausaestiva.setAuthorities(true, false, false, false, false);
+		letteraIntesaCommissioneGiuntasospensionepausaestiva.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraIntesaCommissioneGiuntasospensionepausaestiva = new DefaultTreeNode(
 				"lettera",
 				letteraIntesaCommissioneGiuntasospensionepausaestiva,
@@ -301,7 +302,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/par/letteraParerePropostaRegolamento.xhtml");
 		letteraParerePropostaRegolamento
 				.setNome("Lettera Parere Proposta di Regolamento");
-		letteraParerePropostaRegolamento.setAuthorities(true, false, false, false, false);
+		letteraParerePropostaRegolamento.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraParerePropostaRegolamento = new DefaultTreeNode(
 				"lettera", letteraParerePropostaRegolamento, nodeServCommPAR);
 
@@ -314,7 +315,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pda/letteraAssegnazionesededeliberante.xhtml");
 		letteraAssegnazionesededeliberante
 				.setNome("Lettera Assegnazione in sede deliberante");
-		letteraAssegnazionesededeliberante.setAuthorities(true, false, false, false, false);
+		letteraAssegnazionesededeliberante.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazionesededeliberante = new DefaultTreeNode(
 				"lettera", letteraAssegnazionesededeliberante, nodeServCommPDA);
 
@@ -325,7 +326,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pda/letteraAssegnazionesedereferente.xhtml");
 		letteraAssegnazionesedereferente
 				.setNome("Lettera Assegnazione in sede referente");
-		letteraAssegnazionesedereferente.setAuthorities(true, false, false, false, false);
+		letteraAssegnazionesedereferente.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazionesedereferente = new DefaultTreeNode(
 				"lettera", letteraAssegnazionesedereferente, nodeServCommPDA);
 
@@ -338,7 +339,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/plp/letteraAssegnazioneistruttoria.xhtml");
 		letteraAssegnazioneistruttoria
 				.setNome("Lettera Assegnazione per istruttoria");
-		letteraAssegnazioneistruttoria.setAuthorities(true, false, false, false, false);
+		letteraAssegnazioneistruttoria.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazioneistruttoria = new DefaultTreeNode(
 				"lettera", letteraAssegnazioneistruttoria, nodeServCommPLP);
 
@@ -351,7 +352,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/rel/letteraRelazionepresentatagiunta.xhtml");
 		letteraRelazionepresentatagiunta
 				.setNome("Lettera Relazione presentata dalla giunta");
-		letteraRelazionepresentatagiunta.setAuthorities(true, false, false, false, false);
+		letteraRelazionepresentatagiunta.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraRelazionepresentatagiunta = new DefaultTreeNode(
 				"lettera", letteraRelazionepresentatagiunta, nodeServCommREL);
 
@@ -364,7 +365,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pre/letteraAssegnazioneistruttoriaPRE.xhtml");
 		letteraAssegnazioneistruttoriaPRE
 				.setNome("Lettera Assegnazione per istruttoria");
-		letteraAssegnazioneistruttoriaPRE.setAuthorities(true, false, false, false, false);
+		letteraAssegnazioneistruttoriaPRE.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazioneistruttoriaPRE = new DefaultTreeNode(
 				"lettera", letteraAssegnazioneistruttoriaPRE, nodeServCommPRE);
 
@@ -377,7 +378,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pre/letteraAssegnazioneistruttoriaREF.xhtml");
 		letteraAssegnazioneistruttoriaREF
 				.setNome("Lettera Assegnazione per istruttoria");
-		letteraAssegnazioneistruttoriaREF.setAuthorities(true, false, false, false, false);
+		letteraAssegnazioneistruttoriaREF.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazioneistruttoriaREF = new DefaultTreeNode(
 				"lettera", letteraAssegnazioneistruttoriaREF, nodeServCommREF);
 
@@ -390,7 +391,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/servizioCommissioni/pre/letteraAssegnazioneistruttoriaREF.xhtml");
 		letteraAssegnazioneistruttoriaINP
 				.setNome("Lettera Assegnazione per istruttoria");
-		letteraAssegnazioneistruttoriaINP.setAuthorities(true, false, false, false, false);
+		letteraAssegnazioneistruttoriaINP.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazioneistruttoriaINP = new DefaultTreeNode(
 				"lettera", letteraAssegnazioneistruttoriaINP, nodeServCommINP);
 
@@ -412,7 +413,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissionePDL
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePDL.xhtml");
 		letteraTrasmissionePDL.setNome("Lettera di trasmissione PDL");
-		letteraTrasmissionePDL.setAuthorities(true, false, false, false, false);
+		letteraTrasmissionePDL.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePDL = new DefaultTreeNode("lettera",
 				letteraTrasmissionePDL, nodeComm);
 
@@ -422,7 +423,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissionePDA
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePDA.xhtml");
 		letteraTrasmissionePDA.setNome("Lettera di Trasmissione PDA");
-		letteraTrasmissionePDA.setAuthorities(true, false, false, false, false);
+		letteraTrasmissionePDA.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePDA = new DefaultTreeNode("lettera",
 				letteraTrasmissionePDA, nodeComm);
 
@@ -433,7 +434,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePDAurgenza.xhtml");
 		letteraTrasmissionePDAurgenza
 				.setNome("Lettera di Trasmissione con richiesta di trattazione urgente");
-		letteraTrasmissionePDAurgenza.setAuthorities(true, false, false, false, false);
+		letteraTrasmissionePDAurgenza.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePDAurgenza = new DefaultTreeNode(
 				"lettera", letteraTrasmissionePDAurgenza, nodeComm);
 
@@ -443,7 +444,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissionePAR
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePAR.xhtml");
 		letteraTrasmissionePAR.setNome("Lettera di Trasmissione PAR");
-		letteraTrasmissionePAR.setAuthorities(true, false, false, false, false);
+		letteraTrasmissionePAR.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLletteraTrasmissionePAR = new DefaultTreeNode("lettera",
 				letteraTrasmissionePAR, nodeComm);
 
@@ -453,7 +454,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissionePLP
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePLP.xhtml");
 		letteraTrasmissionePLP.setNome("Lettera di Trasmissione PLP");
-		letteraTrasmissionePLP.setAuthorities(true, false, false, false, false);
+		letteraTrasmissionePLP.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePLP = new DefaultTreeNode("lettera",
 				letteraTrasmissionePLP, nodeComm);
 
@@ -463,7 +464,7 @@ public class LettereNotificheController implements Serializable{
 		letteraPresaAttoREL
 				.setUrlView("./lettere/commissioni/letteraPresaAttoREL.xhtml");
 		letteraPresaAttoREL.setNome("Lettera di Presa Atto REL");
-		letteraPresaAttoREL.setAuthorities(true, false, false, false, false);
+		letteraPresaAttoREL.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraPresaAttoREL = new DefaultTreeNode("lettera",
 				letteraPresaAttoREL, nodeComm);
 
@@ -473,7 +474,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissioneREF
 				.setUrlView("./lettere/commissioni/letteraTrasmissioneREF.xhtml");
 		letteraTrasmissioneREF.setNome("Lettera di Trasmissione REF");
-		letteraTrasmissioneREF.setAuthorities(true, false, false, false, false);
+		letteraTrasmissioneREF.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneREF = new DefaultTreeNode("lettera",
 				letteraTrasmissioneREF, nodeComm);
 
@@ -484,7 +485,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteraTrasmissionePareresedeconsultiva.xhtml");
 		letteraTrasmissionePareresedeconsultiva
 				.setNome("Lettera di Trasmissione Parere da sede consultiva");
-		letteraTrasmissionePareresedeconsultiva.setAuthorities(true, false, false, false, false);
+		letteraTrasmissionePareresedeconsultiva.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePareresedeconsultiva = new DefaultTreeNode(
 				"lettera", letteraTrasmissionePareresedeconsultiva, nodeComm);
 
@@ -495,7 +496,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteraTrasmissioneAulaleggeriordinonormativo.xhtml");
 		letteraTrasmissioneAulaleggeriordinonormativo
 				.setNome("Lettera di Trasmissione ad Aula legge di riordino (normativo)");
-		letteraTrasmissioneAulaleggeriordinonormativo.setAuthorities(true, false, false, false, false);
+		letteraTrasmissioneAulaleggeriordinonormativo.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneAulaleggeriordinonormativo = new DefaultTreeNode(
 				"lettera", letteraTrasmissioneAulaleggeriordinonormativo,
 				nodeComm);
@@ -507,7 +508,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteraTrasmissioneAulatestounicocompilativo.xhtml");
 		letteraTrasmissioneAulatestounicocompilativo
 				.setNome("Lettera di Trasmissione in Aula testo unico (compilativo)");
-		letteraTrasmissioneAulatestounicocompilativo.setAuthorities(true, false, false, false, false);
+		letteraTrasmissioneAulatestounicocompilativo.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneAulatestounicocompilativo = new DefaultTreeNode(
 				"lettera", letteraTrasmissioneAulatestounicocompilativo,
 				nodeComm);
@@ -519,7 +520,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteratrasmissioneDOCRISDSA.xhtml");
 		letteratrasmissioneDOCRISDSA
 				.setNome("Lettera di trasmissione RIS su DOC - DSA");
-		letteratrasmissioneDOCRISDSA.setAuthorities(true, false, false, false, false);
+		letteratrasmissioneDOCRISDSA.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteratrasmissioneDOCRISDSA = new DefaultTreeNode(
 				"lettera", letteratrasmissioneDOCRISDSA, nodeComm);
 
@@ -530,7 +531,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteratrasmissioneDOCRISProgrammaEuropeo.xhtml");
 		letteratrasmissioneDOCRISProgrammaEuropeo
 				.setNome("Lettera di trasmissione RIS su DOC - Programma europeo");
-		letteratrasmissioneDOCRISProgrammaEuropeo.setAuthorities(true, false, false, false, false);
+		letteratrasmissioneDOCRISProgrammaEuropeo.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteratrasmissioneDOCRISProgrammaEuropeo = new DefaultTreeNode(
 				"lettera", letteratrasmissioneDOCRISProgrammaEuropeo, nodeComm);
 
@@ -541,7 +542,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteratrasmissioneparereDOC.xhtml");
 		letteratrasmissioneparereDOC
 				.setNome("Lettera di trasmissione parere su DOC");
-		letteratrasmissioneparereDOC.setAuthorities(true, false, false, false, false);
+		letteratrasmissioneparereDOC.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteratrasmissioneparereDOC = new DefaultTreeNode(
 				"lettera", letteratrasmissioneparereDOC, nodeComm);
 
@@ -552,7 +553,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letterarichiestaparereNormafinanziaria.xhtml");
 		letterarichiestaparereNormafinanziaria
 				.setNome("Lettera di richiesta parere su Norma finanziaria");
-		letterarichiestaparereNormafinanziaria.setAuthorities(true, false, false, false, false);
+		letterarichiestaparereNormafinanziaria.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetterarichiestaparereNormafinanziaria = new DefaultTreeNode(
 				"lettera", letterarichiestaparereNormafinanziaria, nodeComm);
 
@@ -563,7 +564,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/commissioni/letteratrasmissioneparereNormafinanziaria.xhtml");
 		letteratrasmissioneparereNormafinanziaria
 				.setNome("Lettera di trasmissione parere su Norma finanziaria");
-		letteratrasmissioneparereNormafinanziaria.setAuthorities(true, false, false, false, false);
+		letteratrasmissioneparereNormafinanziaria.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteratrasmissioneparereNormafinanziaria = new DefaultTreeNode(
 				"lettera", letteratrasmissioneparereNormafinanziaria, nodeComm);
 
@@ -573,7 +574,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissioneRIS
 				.setUrlView("./lettere/commissioni/letteraTrasmissioneRIS.xhtml");
 		letteraTrasmissioneRIS.setNome("Lettera di Trasmissione RIS");
-		letteraTrasmissioneRIS.setAuthorities(true, false, false, false, false);
+		letteraTrasmissioneRIS.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneRIS = new DefaultTreeNode("lettera",
 				letteraTrasmissioneRIS, nodeComm);
 
@@ -594,7 +595,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissioneLCR
 				.setUrlView("./lettere/aula/letteraTrasmissioneLCR.xhtml");
 		letteraTrasmissioneLCR.setNome("Lettera di Trasmissione LCR");
-		letteraTrasmissioneLCR.setAuthorities(true, true, false, false, false);
+		letteraTrasmissioneLCR.setAuthorities(true, true, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneLCR = new DefaultTreeNode("lettera",
 				letteraTrasmissioneLCR, nodeAula);
 
@@ -604,7 +605,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissionePDAAula
 				.setUrlView("./lettere/aula/letteraTrasmissionePDAAula.xhtml");
 		letteraTrasmissionePDAAula.setNome("Lettera di Trasmissione PDA");
-		letteraTrasmissionePDAAula.setAuthorities(true, true, false, false, false);
+		letteraTrasmissionePDAAula.setAuthorities(true, true, false, false, false, false);
 		TreeNode nodeLetteraTrasmissionePDAAula = new DefaultTreeNode(
 				"lettera", letteraTrasmissionePDAAula, nodeAula);
 
@@ -615,7 +616,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/aula/letteraTrasmissionePDABilancio.xhtml");
 		letteraTrasmissionePDABilancio
 				.setNome("Lettera di Trasmissione PDA Bilancio");
-		letteraTrasmissionePDABilancio.setAuthorities(true, true, false, false, false);
+		letteraTrasmissionePDABilancio.setAuthorities(true, true, true, false, false,true);
 		TreeNode nodeLetteraTrasmissionePDABilancio = new DefaultTreeNode(
 				"lettera", letteraTrasmissionePDABilancio, nodeAula);
 
@@ -626,7 +627,7 @@ public class LettereNotificheController implements Serializable{
 				.setUrlView("./lettere/aula/letteraTrasmissionePDAVariazioneBilancio.xhtml");
 		letteraTrasmissionePDAVariazioneBilancio
 				.setNome("Lettera di Trasmissione PDA Variazione Bilancio");
-		letteraTrasmissionePDAVariazioneBilancio.setAuthorities(true, true, true, false, false);
+		letteraTrasmissionePDAVariazioneBilancio.setAuthorities(true, true, true, false, false, false);
 		TreeNode nodeLetteraTrasmissionePDAVariazioneBilancio = new DefaultTreeNode(
 				"lettera", letteraTrasmissionePDAVariazioneBilancio, nodeAula);
 
@@ -636,7 +637,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissioneREFAula
 				.setUrlView("./lettere/aula/letteraTrasmissioneREFAula.xhtml");
 		letteraTrasmissioneREFAula.setNome("Lettera di Trasmissione REF");
-		letteraTrasmissioneREFAula.setAuthorities(true, true, false, false, false);
+		letteraTrasmissioneREFAula.setAuthorities(true, true, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneREFAula = new DefaultTreeNode(
 				"lettera", letteraTrasmissioneREFAula, nodeAula);
 
@@ -646,7 +647,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissioneORG
 				.setUrlView("./lettere/aula/letteraTrasmissioneORG.xhtml");
 		letteraTrasmissioneORG.setNome("Lettera di Trasmissione ORG");
-		letteraTrasmissioneORG.setAuthorities(true, true, false, false, false);
+		letteraTrasmissioneORG.setAuthorities(true, true, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneORG = new DefaultTreeNode("lettera",
 				letteraTrasmissioneORG, nodeAula);
 
@@ -656,7 +657,7 @@ public class LettereNotificheController implements Serializable{
 		letteraConvalidaORG
 				.setUrlView("./lettere/aula/letteraConvalidaORG.xhtml");
 		letteraConvalidaORG.setNome("Lettera di Convalida ORG");
-		letteraConvalidaORG.setAuthorities(true, true, false, false, false);
+		letteraConvalidaORG.setAuthorities(true, true, false, false, false, false);
 		TreeNode nodeLetteraConvalidaORG = new DefaultTreeNode("lettera",
 				letteraConvalidaORG, nodeAula);
 
@@ -666,7 +667,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissioneBURL
 				.setUrlView("./lettere/aula/letteraTrasmissioneBURL.xhtml");
 		letteraTrasmissioneBURL.setNome("Lettera di Trasmissione BURL");
-		letteraTrasmissioneBURL.setAuthorities(true, true, false, true, true);
+		letteraTrasmissioneBURL.setAuthorities(true, true, false, true, true, false);
 		TreeNode nodeLetteraTrasmissioneBURL = new DefaultTreeNode("lettera",
 				letteraTrasmissioneBURL, nodeAula);
 
@@ -762,6 +763,7 @@ public class LettereNotificheController implements Serializable{
 			letteraSelected.setFirmatario(this.getFirmatario());
 			letteraSelected.setNumeroTelFirmatario(this.getNumeroTelFirmatario());
 			letteraSelected.setUfficio(this.getUfficio());
+			letteraSelected.setAssessore(this.getAssessore());
 			
 			lettereNotificheServiceManager.updateLettera(letteraSelected);
 			
@@ -859,6 +861,14 @@ public class LettereNotificheController implements Serializable{
 
 	public void setFile(StreamedContent file) {
 		this.file = file;
+	}
+
+	public String getAssessore() {
+		return assessore;
+	}
+
+	public void setAssessore(String assessore) {
+		this.assessore = assessore;
 	}
 
 	

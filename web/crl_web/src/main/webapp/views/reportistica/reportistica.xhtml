@@ -382,6 +382,24 @@
 
 
 
+                <p:row
+					rendered="#{reportisticaController.isDataConsultazioneVisible()}">
+
+					<p:column>
+						Data Consultazione  
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataConsultazioneDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataConsultazioneA}"></p:calendar>
+					</p:column>
+
+				</p:row>
+                  
+
+
 
 			</p:panelGrid>
 

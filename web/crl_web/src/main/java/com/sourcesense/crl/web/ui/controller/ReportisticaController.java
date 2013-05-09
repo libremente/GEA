@@ -99,6 +99,8 @@ public class ReportisticaController implements Serializable {
 	private Date dataAssegnazioneCommReferenteA;
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
+	private Date dataConsultazioneDa;
+	private Date dataConsultazioneA;
 
 	// SErv Comm
 	private final String ATTI_ASSE_COMM = "Atti assegnati alle commissioni";
@@ -115,7 +117,9 @@ public class ReportisticaController implements Serializable {
 	private final String ATTI_ASSEGNATI_COMM = "Atti assegnati alle commissioni";
 	private final String ELENCO_RELATORI = "Elenco dei relatori nominati in commissione per data nomina";
 	private final String ATTI_LICENZIATI_COMM = "Atti licenziati dalle commissioni";
-
+	private final String ELENCO_AUDIZ_COMM = "Elenco Audizioni delle commissioni";
+	
+	
 	// Aula
 	private final String ELENCO_LCR = "Elenco LCR";
 	private final String ELENCO_DCR = "Elenco DCR";
@@ -201,6 +205,12 @@ public class ReportisticaController implements Serializable {
 				"crlreport:reportAttiLicenziatiComm");
 		TreeNode nodeAttiLiceComm = new DefaultTreeNode("lettera",
 				repAttiLiceComm, commissione);
+		
+		Report repAudizioniCommissioniComm = new Report(ELENCO_AUDIZ_COMM,
+				"crlreport:reportAudizioniCommissioniComm");
+		TreeNode nodeAudizioniCommissioniComm = new DefaultTreeNode("lettera",
+				repAudizioniCommissioniComm, commissione);
+		
 
 		// AULA
 		TreeNode aula = new DefaultTreeNode("Aula", root);
@@ -245,8 +255,9 @@ public class ReportisticaController implements Serializable {
 				|| ELENCO_RELATORI.equals(selectedReport.getNome())
 				|| ATTI_LICENZIATI_COMM.equals(selectedReport.getNome())
 				|| ELENCO_DCR.equals(selectedReport.getNome())
-				|| ELENCO_ATTI_ISTRUTT.equals(selectedReport.getNome()) || ELENCO_ATTI_RINVIO
-					.equals(selectedReport.getNome()));
+				|| ELENCO_ATTI_ISTRUTT.equals(selectedReport.getNome()) 
+				|| ELENCO_ATTI_RINVIO.equals(selectedReport.getNome())
+				||ELENCO_AUDIZ_COMM.equals(selectedReport.getNome()));
 
 	}
 
@@ -258,11 +269,20 @@ public class ReportisticaController implements Serializable {
 				|| ATTI_RELATORE.equals(selectedReport.getNome())
 				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome())
 				|| ATTI_ASSE_COMM.equals(selectedReport.getNome())
-				|| ELENCO_RELATORI.equals(selectedReport.getNome()) || ATTI_LICENZIATI_COMM
-					.equals(selectedReport.getNome()))
+				|| ELENCO_RELATORI.equals(selectedReport.getNome()) 
+				|| ATTI_LICENZIATI_COMM.equals(selectedReport.getNome())
+				||ELENCO_AUDIZ_COMM.equals(selectedReport.getNome())
+				)
 
 		;
 
+	}
+	
+	
+	public boolean isDataConsultazioneVisible(){
+		
+		return ELENCO_AUDIZ_COMM.equals(selectedReport.getNome());
+		
 	}
 
 	public boolean isRuoloCommissioneVisible() {
@@ -280,8 +300,8 @@ public class ReportisticaController implements Serializable {
 
 		return (ATTI_ASSEGNATI_COMM.equals(selectedReport.getNome())
 				|| CONFERENZE.equals(selectedReport.getNome())
-				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome()) || ATTI_ASSE_COMM
-					.equals(selectedReport.getNome()))
+				|| ATTI_ISTRUTTORIA_COMM.equals(selectedReport.getNome()) 
+				|| ATTI_ASSE_COMM.equals(selectedReport.getNome()))
 
 		;
 	}
@@ -792,6 +812,30 @@ public class ReportisticaController implements Serializable {
 
 	public void setFirmatari(List<String> firmatari) {
 		this.firmatari = firmatari;
+	}
+
+
+
+	public Date getDataConsultazioneDa() {
+		return this.selectedReport.getDataConsultazioneDa();
+	}
+
+
+
+	public void setDataConsultazioneDa(Date dataConsultazioneDa) {
+		this.selectedReport.setDataConsultazioneDa ( dataConsultazioneDa);
+	}
+
+
+
+	public Date getDataConsultazioneA() {
+		return this.selectedReport.getDataConsultazioneA();
+	}
+
+
+
+	public void setDataConsultazioneA(Date dataConsultazioneA) {
+		this.selectedReport.setDataConsultazioneA ( dataConsultazioneA);
 	}
 	
 	

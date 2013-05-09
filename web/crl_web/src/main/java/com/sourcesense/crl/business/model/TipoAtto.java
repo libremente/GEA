@@ -12,12 +12,20 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("tipoAtto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class TipoAtto {
+public class TipoAtto implements Comparable<TipoAtto> {
 	
 	
 	private String descrizione;
 	
 	private String codice;
+	
+	@Override
+	public int compareTo(TipoAtto arg0) {
+		// TODO Auto-generated method stub
+		return this.descrizione.compareTo(arg0.descrizione);
+	}
+	
+	
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -38,6 +46,7 @@ public class TipoAtto {
 	public void setCodice(String codice) {
 		this.codice = codice;
 	}
+
 	
 	
 	

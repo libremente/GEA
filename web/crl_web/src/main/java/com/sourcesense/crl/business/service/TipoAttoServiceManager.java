@@ -2,7 +2,9 @@ package com.sourcesense.crl.business.service;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,9 +52,11 @@ public class TipoAttoServiceManager implements ServiceManager {
 	public Map<String, String> findAll() {
 		
 		
-		Map<String,String> tipiAtto = new HashMap<String, String>();
+		Map<String,String> tipiAtto = new LinkedHashMap<String, String>();
 		
 		List<TipoAtto> listTipiAtto = tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
+		Collections.sort(listTipiAtto);
+		
 		
         for (TipoAtto tipoAtto : listTipiAtto) {
 			
@@ -75,13 +79,18 @@ public class TipoAttoServiceManager implements ServiceManager {
         	tipiAtto.add(tipoAtto.getDescrizione());
         	
 		}
+        
+        Collections.sort(tipiAtto);
+        
 		return tipiAtto;
 	}
     
     public List<TipoAtto> retrieveAllTipoAtto() {
 		
-		
-    	return tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
+    	
+    	List <TipoAtto> list = tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
+		Collections.sort(list);
+    	return list;
 		
 		 
 	}

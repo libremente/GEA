@@ -36,6 +36,8 @@ public class Report {
 	private Date dataAssegnazioneCommReferenteA;
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
+	private Date dataConsultazioneDa;
+	private Date dataConsultazioneA;
 	
 	public Report(){
 		
@@ -244,6 +246,22 @@ public class Report {
 
 	public void setLegislatura(String legislatura) {
 		this.legislatura = legislatura;
+	}
+
+	public Date getDataConsultazioneDa() {
+		return dataConsultazioneDa;
+	}
+
+	public void setDataConsultazioneDa(Date dataConsultazioneDa) {
+		this.dataConsultazioneDa = dataConsultazioneDa;
+	}
+
+	public Date getDataConsultazioneA() {
+		return dataConsultazioneA;
+	}
+
+	public void setDataConsultazioneA(Date dataConsultazioneA) {
+		this.dataConsultazioneA = dataConsultazioneA;
 	}
 
 	

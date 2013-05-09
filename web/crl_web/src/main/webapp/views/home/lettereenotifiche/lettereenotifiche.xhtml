@@ -147,6 +147,23 @@
 								</p:column>
 
 							</p:row>
+							
+							
+							<p:row
+								rendered="#{lettereNotificheController.letteraSelected.hasAssessore}">
+
+								<p:column>
+									<h:outputLabel for="assessore" value="Assessore: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="assessore" immediate="true"
+										value="#{lettereNotificheController.assessore}" />
+								</p:column>
+
+
+							</p:row>
+							
 
 							<p:row
 								rendered="#{lettereNotificheController.letteraSelected.hasDirezione}">
@@ -164,7 +181,8 @@
 
 
 							</p:row>
-
+							
+							
 
 						</p:panelGrid>
 
