@@ -317,6 +317,10 @@
 					<title>Ufficio</title>
 					<type>d:text</type>
 				</property>
+                                <property name="crltemplate:direzione">
+					<title>Direzione</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
 		
@@ -333,17 +337,17 @@
 		<type name="crltemplate:letteraTrasmissionePDABilancioAula">
 			<title>Lettera di Trasmissione PDA Bilancio</title>
 			<parent>crltemplate:letteraAula</parent>
+                        <properties>		
+				<property name="crltemplate:assessore">
+					<title>Assessore</title>
+					<type>d:text</type>
+				</property> 	
+			</properties>
 		</type>
 		
 		<type name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula">
 			<title>Lettera di Trasmissione PDA Variazione Bilancio</title>
 			<parent>crltemplate:letteraAula</parent>
-			<properties>		
-				<property name="crltemplate:direzione">
-					<title>Direzione</title>
-					<type>d:text</type>
-				</property>
-			</properties>
 		</type>
 		
 		<type name="crltemplate:letteraTrasmissioneREFAula">

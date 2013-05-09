@@ -33,7 +33,7 @@ if(lettera!=null
 	// casi particolari
 	if(tipoTemplate == "crltemplate:letteraTrasmissionePDAVariazioneBilancioAula") {
 	
-		var direzione = lettera.get("direzione");
+                var direzione = lettera.get("direzione");
 		templateNode.properties["crltemplate:direzione"] = direzione;
 		
 		
@@ -44,7 +44,15 @@ if(lettera!=null
 		templateNode.properties["crltemplate:numeroTelFirmatario"] = numeroTelFirmatario;
 		templateNode.properties["crltemplate:emailFirmatario"] = emailFirmatario;
 		
-	}
+	} else if(tipoTemplate == "crltemplate:letteraTrasmissionePDABilancioAula") {
+            
+                var assessore = lettera.get("assessore");
+		templateNode.properties["crltemplate:assessore"] = assessore;
+                
+                var direzione = lettera.get("direzione");
+		templateNode.properties["crltemplate:direzione"] = direzione;
+            
+        }
 
 	
 	templateNode.save();

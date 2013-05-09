@@ -31,6 +31,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	// crlTemplateModel properties 
 	protected String PROP_FIRMATARIO = "firmatario";
 	protected String PROP_UFFICIO = "ufficio";
+        protected String PROP_ASSESSORE = "assessore";
 	protected String PROP_DIREZIONE = "direzione";
 	protected String PROP_NUMEROTELFIRMATARIO = "numeroTelFirmatario";
 	protected String PROP_EMAILFIRMATARIO = "emailFirmatario";
