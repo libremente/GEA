@@ -52,10 +52,10 @@ public class DocxManager {
 		int parCounter=0;
 		for (int i = 0; i < paragraphs.size(); i++) {
 			XWPFParagraph currentPar = paragraphs.get(i);
-			if(!currentPar.getText().trim().equals("")){
+			//if(!currentPar.getText().trim().equals("")){
 			newDoc.createParagraph();
 			newDoc.setParagraph(currentPar, parCounter);
-			parCounter++;}
+			parCounter++;// }
 		}
 		for (String key : group2count.keySet()) {
 			if ( group2count.get(key)>0) {
