@@ -85,6 +85,7 @@
 			<type name="crlreport:reportAttiIstruttoriaCommissioniComm" />
 			<type name="crlreport:reportAttiLicenziatiComm" />
 			<type name="crlreport:reportRelatoriDataNominaComm" />
+                        <type name="crlreport:reportAudizioniCommissioniComm" />
 			<type name="crlreport:reportAttiIstruttoriaAula" />
 			<type name="crlreport:reportAttiRinviatiAula" />
 			<type name="crlreport:reportDCRAula" />
@@ -180,6 +181,7 @@
 			<type name="crlreport:reportAttiIstruttoriaCommissioniComm" />
 			<type name="crlreport:reportAttiLicenziatiComm" />
 			<type name="crlreport:reportRelatoriDataNominaComm" />
+                        <type name="crlreport:reportAudizioniCommissioniComm" />
 			<type name="crlreport:reportAttiIstruttoriaAula" />
 			<type name="crlreport:reportAttiRinviatiAula" />
 			<type name="crlreport:reportDCRAula" />
@@ -273,6 +275,7 @@
 			<type name="crlreport:reportAttiIstruttoriaCommissioniComm" />
 			<type name="crlreport:reportAttiLicenziatiComm" />
 			<type name="crlreport:reportRelatoriDataNominaComm" />
+                        <type name="crlreport:reportAudizioniCommissioniComm" />    
 			<type name="crlreport:reportAttiIstruttoriaAula" />
 			<type name="crlreport:reportAttiRinviatiAula" />
 			<type name="crlreport:reportDCRAula" />

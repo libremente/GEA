@@ -99,6 +99,11 @@
 			<title>Report dei relatori nominati in commissione per data nomina - Commissioni</title>
 			<parent>crlreport:reportComm</parent>
 		</type>
+                
+                <type name="crlreport:reportAudizioniCommissioniComm">
+			<title>Report Elenco audizioni delle Commissioni - Commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
 		
 		<!-- Aula -->
 		

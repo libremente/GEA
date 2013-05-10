@@ -70,6 +70,10 @@
 	<bean id="reportAttiLicenziatiComm"
 		class="com.sourcesense.crl.webscript.report.commissioni.ReportAttiLicenziatiCommand"
 		parent="reportBaseCommand" />
+        
+        <bean id="reportAudizioniCommissioniComm"
+		class="com.sourcesense.crl.webscript.report.commissioni.ReportAudizioniCommissioniCommand"
+		parent="reportBaseCommand" />
 
 	<!-- Aula -->
 	<bean id="reportAttiIstruttoriaAula"
@@ -126,6 +130,9 @@
 				<entry key="crlreport:reportAttiIstruttoriaCommissioniComm"
 					value-ref="reportAttiIstruttoriaCommissioniComm" />
 				<entry key="crlreport:reportRelatoriDataNominaComm" value-ref="reportRelatoriDataNominaComm" />
+                                
+                                <entry key="crlreport:reportAudizioniCommissioniComm" value-ref="reportAudizioniCommissioniComm" />
+                                
 				<!-- Aula -->
 				<entry key="crlreport:reportAttiIstruttoriaAula" value-ref="reportAttiIstruttoriaAula" />
 				<entry key="crlreport:reportAttiRinviatiAula" value-ref="reportAttiRinviatiAula" />

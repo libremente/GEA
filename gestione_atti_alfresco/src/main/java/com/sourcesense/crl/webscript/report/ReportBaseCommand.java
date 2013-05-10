@@ -38,7 +38,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
-import java.util.AbstractList;
 import java.util.HashSet;
 
 public abstract class ReportBaseCommand implements ReportCommand {
@@ -86,6 +85,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
     protected List<String> relatoriJson;
     protected String firmatario;
     protected String tipologiaFirma;
+    protected String dataConsultazioneDa;
+    protected String dataConsultazioneA;
 
     @Override
     public abstract byte[] generate(byte[] templateByteArray, String json,
@@ -160,6 +161,39 @@ public abstract class ReportBaseCommand implements ReportCommand {
                     child2atti, commissione);
         }
         return child2atti;
+    }
+
+    protected ArrayListMultimap<String, NodeRef> retrieveConsultazioni(Map<String, ResultSet> attoChild2results, StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child) {
+        ArrayListMultimap<String, NodeRef> commissione2consultazioni = ArrayListMultimap.create();
+        for (String commissione : attoChild2results.keySet()) {
+            ResultSet commissioneResults = attoChild2results.get(commissione);
+            List<NodeRef> consultazioniNodeRefList = commissioneResults.getNodeRefs();
+
+            this.retrieveConsultazioniFromList(consultazioniNodeRefList, spacesStore, atto2child, commissione2consultazioni, commissione);
+        }
+        return commissione2consultazioni;
+    }
+
+    protected void retrieveConsultazioniFromList(List<NodeRef> nodeRefList,
+            StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
+            ArrayListMultimap<String, NodeRef> child2atti, String child) {
+        int resultLength = nodeRefList.size();
+        for (int i = 0; i < resultLength; i++) {
+            NodeRef childNodeRef = nodeRefList.get(i);
+            NodeRef attoNodeRef = childNodeRef;
+            boolean check = false;
+            while (!check) {// look for Atto in type hierarchy
+                ChildAssociationRef childAssociationRef = nodeService
+                        .getPrimaryParent(attoNodeRef);
+                attoNodeRef = childAssociationRef.getParentRef();
+                QName nodeRefType = nodeService.getType(attoNodeRef);
+                QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
+                check = dictionaryService.isSubClass(nodeRefType, attoRefType);
+            }
+            child2atti.put(child, childNodeRef);
+            atto2child.put(childNodeRef, attoNodeRef);
+
+        }
     }
 
     /**
@@ -525,16 +559,38 @@ public abstract class ReportBaseCommand implements ReportCommand {
             NodeRef abbinamentiFolderNode = nodeService.getChildByName(passaggio, ContentModel.ASSOC_CONTAINS, ABBINAMENTI_SPACE_NAME);
             Set<QName> childType = new HashSet<QName>();
             childType.add(QName.createQName(CRL_ATTI_MODEL, "abbinamento"));
-            List<ChildAssociationRef> abbinamenti = nodeService.getChildAssocs(abbinamentiFolderNode, childType);          
-            List<String> abbinamentiList = new ArrayList<String>();  
+            List<ChildAssociationRef> abbinamenti = nodeService.getChildAssocs(abbinamentiFolderNode, childType);
+            List<String> abbinamentiList = new ArrayList<String>();
             for (Iterator<ChildAssociationRef> iterator = abbinamenti.iterator(); iterator.hasNext();) {
                 ChildAssociationRef childAssociationRef = (ChildAssociationRef) iterator.next();
                 NodeRef abbinamento = childAssociationRef.getChildRef();
-                abbinamentiList.add(((String) nodeService.getProperty(abbinamento,ContentModel.PROP_NAME)).toUpperCase());
+                abbinamentiList.add(((String) nodeService.getProperty(abbinamento, ContentModel.PROP_NAME)).toUpperCase());
             }
-            abbinamentiValue = renderList(abbinamentiList);      
+            abbinamentiValue = renderList(abbinamentiList);
         }
         return abbinamentiValue;
+    }
+
+    protected String getSoggettiInvitati(NodeRef consultazione) {
+        String soggettiValue = StringUtils.EMPTY;
+        NodeRef soggettiInvitatiFolder = nodeService.getChildByName(consultazione, ContentModel.ASSOC_CONTAINS, "SoggettiInvitati");
+
+        if (soggettiInvitatiFolder != null) {
+
+            Set<QName> childType = new HashSet<QName>();
+            childType.add(QName.createQName(CRL_ATTI_MODEL, "soggettoInvitato"));
+            List<ChildAssociationRef> soggettiInvitati = nodeService.getChildAssocs(soggettiInvitatiFolder, childType);
+
+            List<String> soggettiList = new ArrayList<String>();
+            for (Iterator<ChildAssociationRef> iterator = soggettiInvitati.iterator(); iterator.hasNext();) {
+                ChildAssociationRef childAssociationRef = (ChildAssociationRef) iterator.next();
+                NodeRef soggetto = childAssociationRef.getChildRef();
+                soggettiList.add(((String) nodeService.getProperty(soggetto, QName.createQName(CRL_ATTI_MODEL, "descrizioneSoggettoInvitato"))));
+            }
+            soggettiValue = renderList(soggettiList);
+        }
+
+        return soggettiValue;
     }
 
     /**
@@ -726,6 +782,18 @@ public abstract class ReportBaseCommand implements ReportCommand {
         JSONObject rootJson = new JSONObject(json);
         this.relatoriJson = JsonUtils.retieveArrayListFromJson(rootJson,
                 "relatori");
+    }
+
+    protected void initDataConsultazioneDa(String json) throws JSONException {
+        JSONObject rootJson = new JSONObject(json);
+        this.dataConsultazioneDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+                "dataConsultazioneDa"));
+    }
+
+    protected void initDataConsultazioneA(String json) throws JSONException {
+        JSONObject rootJson = new JSONObject(json);
+        this.dataConsultazioneA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
+                "dataConsultazioneA"));
     }
 
     /**
