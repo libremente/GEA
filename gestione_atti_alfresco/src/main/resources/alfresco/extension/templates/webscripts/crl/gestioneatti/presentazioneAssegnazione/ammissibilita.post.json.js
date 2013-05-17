@@ -2,16 +2,16 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
-var valutazione = atto.get("valutazioneAmmissibilita");
-var dataRichiestaInformazioni = atto.get("dataRichiestaInformazioni");
-var dataRicevimentoInformazioni = atto.get("dataRicevimentoInformazioni");
-var aiutiStato = atto.get("aiutiStato");
-var normaFinanziaria = atto.get("normaFinanziaria");
-var richiestaUrgenza = atto.get("richiestaUrgenza");
-var votazioneUrgenza = atto.get("votazioneUrgenza");
-var dataVotazioneUrgenza = atto.get("dataVotazioneUrgenza");
-var note = atto.get("noteAmmissibilita");
-var stato = atto.get("stato");
+var valutazione = filterParam(atto.get("valutazioneAmmissibilita"));
+var dataRichiestaInformazioni = filterParam(atto.get("dataRichiestaInformazioni"));
+var dataRicevimentoInformazioni = filterParam(atto.get("dataRicevimentoInformazioni"));
+var aiutiStato = filterParam(atto.get("aiutiStato"));
+var normaFinanziaria = filterParam(atto.get("normaFinanziaria"));
+var richiestaUrgenza = filterParam(atto.get("richiestaUrgenza"));
+var votazioneUrgenza = filterParam(atto.get("votazioneUrgenza"));
+var dataVotazioneUrgenza = filterParam(atto.get("dataVotazioneUrgenza"));
+var note = filterParam(atto.get("noteAmmissibilita"));
+var stato = filterParam(atto.get("stato"));
 
 if(checkIsNotNull(id)){
 	var attoNode = utils.getNodeFromString(id);

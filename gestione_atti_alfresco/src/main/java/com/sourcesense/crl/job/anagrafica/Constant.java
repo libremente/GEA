@@ -98,4 +98,79 @@ public class Constant {
     public static String COLUMN_CODICE_GRUPPO = "codice_gruppo";
     public static String COLUMN_NUMERO_LEGISLATURA = "num_legislatura";
     public static String COLUMN_ORGANI = "Organi";
+    
+    public static String QUERY_CURRENT_GRUPPI_CONSILIARI_MIGRAZIONE = "SELECT gp.id_gruppo, gp.codice_gruppo, gp.nome_gruppo FROM gruppi_politici gp, join_gruppi_politici_legislature gpl WHERE gp.deleted = 0 AND gpl.deleted = 0 AND gpl.id_legislatura = 24 AND gp.id_gruppo = gpl.id_gruppo";
+    
+    public static String QUERY_ALL_COUNCILORS_FILTERED_BY_LEGISLATURE_MIGRAZIONE = "SELECT DISTINCT " +
+	"ll.num_legislatura, " +
+	"pp.id_persona, " +
+	"pp.cognome, " +
+	"pp.nome, " +
+	"gg.nome_gruppo, " +
+	"gg.codice_gruppo, " +
+	"( " +
+		"STUFF( " +
+			"( " +
+				"SELECT DISTINCT " +
+					"'#' + oo.nome_organo + '!' + ISNULL( " +
+						"convert(varchar(max), oo.ordinamento), " +
+						"'' " +
+					") " +
+				"FROM " +
+					"persona ppo " +
+				"INNER JOIN join_persona_organo_carica AS jpoc ON ppo.id_persona = jpoc.id_persona " +
+				"INNER JOIN legislature ll ON ll.id_legislatura = jpoc.id_legislatura " +
+				"INNER JOIN organi oo ON oo.id_organo = jpoc.id_organo " +
+				"WHERE " +
+					"ppo.deleted = 0 " +
+				"AND oo.deleted = 0 " +
+				"AND oo.id_tipo_organo = 2 " +
+				"AND jpoc.deleted = 0 " +
+				"AND jpoc.id_legislatura = ? " +
+				"AND ppo.id_persona = pp.id_persona " +
+				"FOR XML PATH (''), " +
+				"TYPE ).value('.', 'varchar(max)'), " +
+				"1, " +
+				"1, " +
+				"'' " +
+			") " +
+		") AS Organi " +
+		"FROM " +
+			"persona AS pp " +
+		"INNER JOIN join_persona_gruppi_politici jpg ON pp.id_persona = jpg.id_persona " +
+		"INNER JOIN gruppi_politici gg ON gg.id_gruppo = jpg.id_gruppo " +
+		"INNER JOIN join_persona_organo_carica AS jpoc ON pp.id_persona = jpoc.id_persona " +
+		"INNER JOIN legislature ll ON ll.id_legislatura = jpoc.id_legislatura " +
+		"INNER JOIN organi oo ON oo.id_organo = jpoc.id_organo " +
+		"WHERE " +
+			"pp.deleted = 0 " +
+		"AND jpoc.deleted = 0 " +
+		"AND pp.deleted = 0 " +
+		"AND jpg.deleted = 0 " +
+		"AND gg.deleted = 0 " +
+		"AND oo.deleted = 0 " +
+		"AND jpg.data_fine = ( " +
+			"SELECT " +
+				"MAX (jpg2.data_fine) " +
+			"FROM " +
+				"persona AS pp2 " +
+			"INNER JOIN join_persona_gruppi_politici jpg2 ON pp2.id_persona = jpg2.id_persona " +
+			"INNER JOIN gruppi_politici gg2 ON gg2.id_gruppo = jpg2.id_gruppo " +
+			"INNER JOIN join_persona_organo_carica AS jpoc2 ON pp2.id_persona = jpoc2.id_persona " +
+			"INNER JOIN legislature ll2 ON ll2.id_legislatura = jpoc2.id_legislatura " +
+			"INNER JOIN organi oo2 ON oo2.id_organo = jpoc2.id_organo " +
+			"WHERE " +
+				"pp.id_persona = pp2.id_persona " +
+			"AND pp2.deleted = 0 " +
+			"AND jpoc2.deleted = 0 " +
+			"AND pp2.deleted = 0 " +
+			"AND jpg2.deleted = 0 " +
+			"AND gg2.deleted = 0 " +
+			"AND oo2.deleted = 0 " +
+			"AND ll2.id_legislatura = ? " +
+		") " + 
+		"AND ll.id_legislatura = 24 " +
+		"ORDER BY " +
+			"cognome, " +
+			"nome";
 }
