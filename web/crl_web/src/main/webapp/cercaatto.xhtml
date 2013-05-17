@@ -378,11 +378,11 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="commissione1"
+									<p:selectOneMenu id="commissione1" style="width:160px"
 										value="#{searchAttoController.commissione1}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
 										<f:selectItems var="commissione"
-											itemLabel="#{fn:substring(commissione,0,25)}.."
+											itemLabel="#{commissione}"
 											itemValue="#{commissione}"
 											value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
@@ -414,11 +414,11 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="commissione2"
+									<p:selectOneMenu id="commissione2" style="width:160px"
 										value="#{searchAttoController.commissione2}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
 										<f:selectItems var="commissione"
-											itemLabel="#{fn:substring(commissione,0,25)}.."
+											itemLabel="#{commissione}"
 											itemValue="#{commissione}"
 											value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>
@@ -449,11 +449,11 @@
 								</p:column>
 								<p:column>
 
-									<p:selectOneMenu id="commissione3"
+									<p:selectOneMenu id="commissione3" style="width:160px"
 										value="#{searchAttoController.commissione3}">
 										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-										<f:selectItems var="commissione"
-											itemLabel="#{fn:substring(commissione,0,25)}.."
+										<f:selectItems var="commissione" 
+											itemLabel="#{commissione}"
 											itemValue="#{commissione}"
 											value="#{searchAttoController.commissioni}" />
 									</p:selectOneMenu>

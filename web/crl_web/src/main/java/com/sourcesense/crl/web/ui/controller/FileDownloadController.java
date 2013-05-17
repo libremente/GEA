@@ -54,7 +54,9 @@ public class FileDownloadController {
 
 	public StreamedContent getFile() {
 		
-		String fileToDownload = fileId.replaceAll(":/","") +"/"+ fileName.replaceAll(" ", "%20");
+		//String fileToDownload = fileId.replaceAll(":/","") +"/"+ fileName.replaceAll(" ", "%20");
+		String fileToDownload = fileId.replaceAll(":/","") +"/"+ URLEncoder.encode(fileName);
+		
 		InputStream stream = attoRecordServiceManager.getFileById(fileToDownload);
 		file = new DefaultStreamedContent(stream , fileMimetype ,fileName);
 		return file;
