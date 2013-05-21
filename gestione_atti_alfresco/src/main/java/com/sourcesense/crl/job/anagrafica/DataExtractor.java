@@ -120,7 +120,7 @@ public class DataExtractor {
                             if (name != null) {
                                 name = name.replace('"', '\'');
                             }
-                            c.setName(name);
+                            c.setName(name.trim());
                             if (strArray.length > 1) {
                                 c.setOrder(Integer.valueOf(comm.split("!")[1]));
                             } else {
