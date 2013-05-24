@@ -48,8 +48,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
             this.initDataAssegnazioneCommReferenteA(json);
             /* sorting fields */
             String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
-            String sortField2 = "@{" + CRL_ATTI_MODEL
-                    + "}numeroAttoCommissione";
+            String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
             /* query grouped by commissione */
             Map<String, ResultSet> commissione2results = Maps.newHashMap();
             for (String commissione : this.commissioniJson) {
@@ -65,7 +64,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                         + " AND @crlatti\\:ruoloCommissione:\""
                         + this.ruoloCommissione
                         + "\" AND @cm\\:name:\""
-                        + commissione
+                        + commissione   
                         + "\"";
                 if (!dataAssegnazioneCommReferenteDa.equals("*")
                         || !dataAssegnazioneCommReferenteA.equals("*")) {
@@ -74,26 +73,24 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                             + this.dataAssegnazioneCommReferenteA + " ]";
                 }
                 sp.setQuery(query);
-                sp.addSort(sortField1, false);
-                sp.addSort(sortField2, false);
+                
+                
+                ///// MODIFICATO IN TRUE
+                
+                sp.addSort(sortField1, true);
+                sp.addSort(sortField2, true);
                 ResultSet currentResults = this.searchService.query(sp);
                 commissione2results.put(commissione, currentResults);
             }
             Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
-            ArrayListMultimap<String, NodeRef> commissione2atti = this
-                    .retrieveAtti(commissione2results, spacesStore,
-                    atto2commissione);
+            ArrayListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager
-                    .generateFromTemplateMap(
-                    this.retrieveLenghtMapConditional(commissione2atti, false),
-                    3, false);
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMapConditional(commissione2atti, false), 3, false);
             // convert to input stream
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
-            XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-                    commissione2atti, atto2commissione);
+            XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissione2atti, atto2commissione);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
@@ -121,52 +118,29 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
         for (String commissione : commissione2atti.keySet()) {
             for (NodeRef currentAtto : commissione2atti.get(commissione)) {
 
-                Map<QName, Serializable> attoProperties = nodeService
-                        .getProperties(currentAtto);
-                Map<QName, Serializable> commissioneProperties = nodeService
-                        .getProperties(atto2commissione.get(currentAtto));
+                Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto);
+                Map<QName, Serializable> commissioneProperties = nodeService.getProperties(atto2commissione.get(currentAtto));
                 /* extracting values from Alfresco */
                 // from Atto
-                String statoAtto = (String) this.getNodeRefProperty(
-                        attoProperties, "statoAtto");
+                String statoAtto = (String) this.getNodeRefProperty(attoProperties, "statoAtto");
                 if (this.checkStatoAtto(statoAtto)) {
                     XWPFTable currentTable = tables.get(tableIndex);
-                    String numeroAtto = ""
-                            + (Integer) this.getNodeRefProperty(attoProperties,
-                            "numeroAtto");
-                    String iniziativa = (String) this.getNodeRefProperty(
-                            attoProperties, "tipoIniziativa");
-                    String oggetto = (String) this.getNodeRefProperty(
-                            attoProperties, "oggetto");
+                    String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                    String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
+                    String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
                     // from Commissione
-                    String tipoAtto = (String) this.getNodeRefProperty(
-                            commissioneProperties, "tipoAttoCommissione");
-                    Date dateAssegnazioneCommissione = (Date) this
-                            .getNodeRefProperty(commissioneProperties,
-                            "dataAssegnazioneCommissione");
+                    String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
+                    Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
                     // child of Atto
-                    ArrayList<String> firmatariList = (ArrayList<String>) this
-                            .getNodeRefProperty(attoProperties, "firmatari");
+                    ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
                     String firmatari = this.renderList(firmatariList);
 
                     /* writing values in the table */
-                    currentTable
-                            .getRow(0)
-                            .getCell(1)
-                            .setText(
-                            this.checkStringEmpty(tipoAtto.toUpperCase() + " "
-                            + numeroAtto));
-                    currentTable.getRow(1).getCell(1)
-                            .setText(this.checkStringEmpty(oggetto));
-                    currentTable.getRow(2).getCell(1)
-                            .setText(this.checkStringEmpty(iniziativa));
-                    currentTable.getRow(3).getCell(1)
-                            .setText(this.checkStringEmpty(firmatari));
-                    currentTable
-                            .getRow(4)
-                            .getCell(1)
-                            .setText(
-                            this.checkDateEmpty(dateAssegnazioneCommissione));
+                    currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
+                    currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(oggetto));
+                    currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(iniziativa));
+                    currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(firmatari));
+                    currentTable.getRow(4).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
                     tableIndex++;
                 }
             }
