@@ -788,15 +788,22 @@ public class EsameCommissioniController {
 
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(commissioniList);
+		
+		if (checkStatiRelatori()) {
+			
+			commissioneUser.setStato(Commissione.STATO_NOMINATO_RELATORE);
+		} else {
+			
+			commissioneUser.setStato(Commissione.STATO_IN_CARICO);
+		}
+		
 
 		if (canChangeStatoAtto()) {
 
 			if (checkStatiRelatori()) {
 				atto.setStato(StatoAtto.NOMINATO_RELATORE);
-				commissioneUser.setStato(Commissione.STATO_NOMINATO_RELATORE);
 			} else {
 				atto.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
-				commissioneUser.setStato(Commissione.STATO_IN_CARICO);
 			}
 
 		}
