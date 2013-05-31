@@ -221,7 +221,9 @@ if(username=="protocollo" || username=="admin"){
                                                         if (update && firmatariSplitted.length>0) {
                                                             var firmatari = firmatariFolderNode.children;
                                                             for(var f=0; f<firmatari.length; f++) {
+                                                                if (firmatari[f].isDocument) {
                                                                 firmatari[f].remove();
+                                                                }
                                                             }
                                                         }
 								
