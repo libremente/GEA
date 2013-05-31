@@ -143,7 +143,9 @@
 				
                 // elimino i firmatari esistenti
                 for each (firmatarioEsistente in firmatariFolderNode.children){
-                    firmatarioEsistente.remove();
+                    if(firmatarioEsistente.isDocument) {
+                        firmatarioEsistente.remove();
+                    }
                 }
 	
                 var listaFirmatari = attoProtocolloNode.properties["crlatti:firmatari"];

@@ -147,7 +147,9 @@ function importaAtto(){
 				
 				// elimino i firmatari esistenti
 				for each (firmatarioEsistente in firmatariFolderNode.children){
+                                    if(firmatarioEsistente.isDocument) {
 					firmatarioEsistente.remove();
+                                    }
 				}
 	
 				var listaFirmatari = document.properties["crlatti:firmatari"];
