@@ -1140,6 +1140,8 @@ public class PresentazioneAssegnazioneAttoController {
 
 			if (allegato.isTesto()) {
 
+				allegato.setTipoAllegato(TestoAtto.TESTO_PRESENTAZIONE_ASSEGNAZIONE);
+				
 				TestoAtto attoRec = attoServiceManager
 						.changeAllegatoPresentazioneAssegnazione(allegato);
 				testiAttoList.add(attoRec);

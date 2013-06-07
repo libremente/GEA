@@ -69,7 +69,7 @@ import org.primefaces.model.SortOrder;
 
 @ViewScoped
 @ManagedBean(name = "searchAttoController")
-public class SearchAttoController {
+public class SearchAttoController implements Serializable{
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -373,8 +373,8 @@ public class SearchAttoController {
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.list());
 		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
-		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
-		
+		//atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
+		atto.setLegislatura("IX");
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
