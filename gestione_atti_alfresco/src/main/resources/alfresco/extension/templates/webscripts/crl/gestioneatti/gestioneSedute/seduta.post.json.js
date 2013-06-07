@@ -71,12 +71,15 @@ if(checkIsNotNull(provenienza)){
 	var sedutaPath = mesePath + "/cm:" + search.ISO9075Encode(dataSeduta);
 	var sedutaLuceneQuery = "PATH:\""+sedutaPath+"\"";
 	var sedutaResults = search.luceneSearch(sedutaLuceneQuery);
+	var checkLegislaturaCorrente = false;
+	
 	if(sedutaResults!=null && sedutaResults.length>0){
 //		//seduta presente
 //		status.code = 500;
 //		status.message = "seduta in data "+dataSeduta+" per l'organo "+provenienza+" gia' presente nel repository";
 //		status.redirect = true;
 		sedutaFolderNode = sedutaResults[0];
+		checkLegislaturaCorrente = true;
 		
 	} else {
 		//creazione del nodo
@@ -84,65 +87,93 @@ if(checkIsNotNull(provenienza)){
 		var sedutaSpaceTemplateNode = search.luceneSearch(sedutaSpaceTemplateQuery)[0];
 		var sedutaFolderNode = sedutaSpaceTemplateNode.copy(meseFolderNode,true);
 		sedutaFolderNode.name = dataSeduta;
+		checkLegislaturaCorrente = false;
 	}
-		
-	var dataSedutaSplitted = dataSeduta.split("-");
-	var dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);
-	
-	sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataSedutaParsed;
-	
-	sedutaFolderNode.properties["crlatti:dalleOreSedutaODG"] = dalleOre;
-	sedutaFolderNode.properties["crlatti:alleOreSedutaODG"] = alleOre;
 
+	// controlla l'esecuzione dell'update
+	var eseguiUpdate = false;
 	
-	sedutaFolderNode.properties["crlatti:numVerbaleSedutaODG"] = numVerbale;
-	sedutaFolderNode.properties["crlatti:noteSedutaODG"] = note;
-        
-        sedutaFolderNode.properties["crlatti:legislaturaSedutaODG"] = legislatura;
-	
-	sedutaFolderNode.save();
-	
-	
-	// ricerco le consultazioni della legislatura corrente e inserisco eventuali atti trattati
-	
-	var gestioneAttiPath = "/app:company_home"+
-	"/cm:"+search.ISO9075Encode("CRL")+
-	"/cm:"+search.ISO9075Encode("Gestione Atti");
-	
-	
-	var legislaturaPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(getLegislaturaCorrente());
-	var consultazioniLuceneQuery = "PATH:\""+legislaturaPath+"//*\" AND TYPE:\"crlatti:consultazione\" ";
-	consultazioniLuceneQuery += "AND @crlatti\\:commissioneConsultazione:\""+provenienza+"\" ";
-	consultazioniLuceneQuery += "AND @crlatti\\:dataSedutaConsultazione:\""+dataSeduta+"T00:00:00.000Z\" ";
-
-	
-	var consultazioniResults = search.luceneSearch(consultazioniLuceneQuery);
-	
-	var attiXPathQuery = "*[@cm:name='AttiTrattati']";
-	var attiFolderNode = sedutaFolderNode.childrenByXPath(attiXPathQuery)[0];
-	
-	for(var k=0; k<consultazioniResults.length;k++){
+	if(checkLegislaturaCorrente){
+		//verifica se la seduta appartiene ad una legislatura corrente
+		var legislaturaSedutaODG = sedutaFolderNode.properties["crlatti:legislaturaSedutaODG"];
 		
+		if(legislaturaSedutaODG!=null && legislaturaSedutaODG!=""){
+			var luceneQueryLegislaturaAnagrafica = 
+				"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/*\" " +
+				"AND TYPE:\"crlatti:legislaturaAnagrafica\" " +
+				"AND @cm\\:name:\""+legislaturaSedutaODG+"\"";
 			
-			var atto = consultazioniResults[k].parent.parent;
-					
-			var tipoAttoTrattato = atto.typeShort.substring(12).toUpperCase();
-			var nomeAttoTrattato = tipoAttoTrattato +"-"+atto.name
+			var legislatureResults = search.luceneSearch(luceneQueryLegislaturaAnagrafica);
 			
+			if(legislatureResults!=null && legislatureResults.length>0){
+				var legislaturaAnagraficaNode = legislatureResults[0];
+				var isCorrenteLegislatura = legislaturaAnagraficaNode.properties["crlatti:correnteLegislatura"];
+				if(isCorrenteLegislatura){
+					eseguiUpdate = true;
+				}
+			}
+		}
+	}
+	
+	if(eseguiUpdate){
+	
+		var dataSedutaSplitted = dataSeduta.split("-");
+		var dataSedutaParsed = new Date(dataSedutaSplitted[0],dataSedutaSplitted[1]-1,dataSedutaSplitted[2]);
+		
+		sedutaFolderNode.properties["crlatti:dataSedutaSedutaODG"] = dataSedutaParsed;
+		
+		sedutaFolderNode.properties["crlatti:dalleOreSedutaODG"] = dalleOre;
+		sedutaFolderNode.properties["crlatti:alleOreSedutaODG"] = alleOre;
+	
+		
+		sedutaFolderNode.properties["crlatti:numVerbaleSedutaODG"] = numVerbale;
+		sedutaFolderNode.properties["crlatti:noteSedutaODG"] = note;
+	        
+	    sedutaFolderNode.properties["crlatti:legislaturaSedutaODG"] = legislatura;
+		
+		sedutaFolderNode.save();
+		
+		
+		// ricerco le consultazioni della legislatura corrente e inserisco eventuali atti trattati
+		
+		var gestioneAttiPath = "/app:company_home"+
+		"/cm:"+search.ISO9075Encode("CRL")+
+		"/cm:"+search.ISO9075Encode("Gestione Atti");
+		
+		
+		var legislaturaPath = gestioneAttiPath + "/cm:"+search.ISO9075Encode(getLegislaturaCorrente());
+		var consultazioniLuceneQuery = "PATH:\""+legislaturaPath+"//*\" AND TYPE:\"crlatti:consultazione\" ";
+		consultazioniLuceneQuery += "AND @crlatti\\:commissioneConsultazione:\""+provenienza+"\" ";
+		consultazioniLuceneQuery += "AND @crlatti\\:dataSedutaConsultazione:\""+dataSeduta+"T00:00:00.000Z\" ";
+	
+		
+		var consultazioniResults = search.luceneSearch(consultazioniLuceneQuery);
+		
+		var attiXPathQuery = "*[@cm:name='AttiTrattati']";
+		var attiFolderNode = sedutaFolderNode.childrenByXPath(attiXPathQuery)[0];
+		
+		for(var k=0; k<consultazioniResults.length;k++){
+			
+				
+				var atto = consultazioniResults[k].parent.parent;
 						
-			var attoTrattatoNode = attiFolderNode.createNode(nomeAttoTrattato,"crlatti:attoTrattatoODG");
-			attoTrattatoNode.content = nomeAttoTrattato;
+				var tipoAttoTrattato = atto.typeShort.substring(12).toUpperCase();
+				var nomeAttoTrattato = tipoAttoTrattato +"-"+atto.name
+				
+							
+				var attoTrattatoNode = attiFolderNode.createNode(nomeAttoTrattato,"crlatti:attoTrattatoODG");
+				attoTrattatoNode.content = nomeAttoTrattato;
+				
+				attoTrattatoNode.createAssociation(atto,"crlatti:attoTrattatoSedutaODG");
 			
-			attoTrattatoNode.createAssociation(atto,"crlatti:attoTrattatoSedutaODG");
-		
-			attoTrattatoNode.properties["crlatti:numeroAttoTrattatoODG"] = atto.name;
-			attoTrattatoNode.properties["crlatti:tipoAttoTrattatoODG"] = tipoAttoTrattato;
-			
-			attoTrattatoNode.save();
-			
+				attoTrattatoNode.properties["crlatti:numeroAttoTrattatoODG"] = atto.name;
+				attoTrattatoNode.properties["crlatti:tipoAttoTrattatoODG"] = tipoAttoTrattato;
+				
+				attoTrattatoNode.save();
+				
+		}
+	
 	}
-	
-	
 	
 		
 		
