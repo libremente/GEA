@@ -51,7 +51,7 @@ public class SeduteServiceManager implements ServiceManager{
 		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),gruppo,legislatura);
 	}
 	
-	//NUOVA DA FARE SU ALFRESCO
+	
 	public Seduta  getSeduta(String gruppo, String dataSeduta, String  legislatura) {
 	
 		return seduteService.findByDate(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_dettaglio_seduta", null),gruppo,dataSeduta, legislatura);
