@@ -159,19 +159,34 @@
 
 			<p:fieldset styleClass="fieldSetTab" legend="Elenco sedute:"
 				collapsed="false" toggleable="false">
+				
 
+					<h:outputLabel for="legislatura_query" value="Legislatura:  " />
+						&nbsp;&nbsp;
+							<p:selectOneMenu id="legislatura_query"
+								value="#{gestioneSeduteController.legislatura}">
+								<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
+								<f:selectItems value="#{gestioneSeduteController.legislature}" />
+								<p:ajax event="change" global="false"
+								listener="#{gestioneSeduteController.filterDataTable()}"
+								update="listaSedute,:gestioneSeduteForm:gestioneSedute:inserisciODGGrid" />
+							</p:selectOneMenu>
+					<br />
+					<br />
+					
+					
+							
 
-				<p:scrollPanel
-					style="width:430px;height:450px;border:0px;text-align:left;"
-					scrollMode="native">  				
-
-
+				<p:row>
 					Filtra data:&nbsp;&nbsp;&nbsp;
 					<h:outputLabel for="filtraData_da" value="da " />
 					<p:calendar id="filtraData_da"
 						value="#{gestioneSeduteController.dataSedutaDa}" locale="it"
-						pattern="dd/MM/yyyy" size="10">
+						pattern="dd/MM/yyyy" size="10" mode="popup">
 						<p:ajax event="dateSelect" global="false"
+							listener="#{gestioneSeduteController.filterDataTable()}"
+							update="listaSedute" />
+						<p:ajax event="change" global="false"
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
@@ -180,17 +195,20 @@
 					<p:calendar id="filtraData_a"
 						value="#{gestioneSeduteController.dataSedutaA}" locale="it"
 						pattern="dd/MM/yyyy" size="10">
-						<p:ajax event="dateSelect" global="false"
+						<p:ajax  event="dateSelect" global="false"
+							listener="#{gestioneSeduteController.filterDataTable()}"
+							update="listaSedute" />
+						<p:ajax event="change" global="false"
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
-
-
-
-
+					
+				</p:row>
 					<br />
-					<br />
-
+					<br />	
+				<p:scrollPanel
+					style="width:430px;height:450px;border:0px;text-align:left;"
+					scrollMode="native">  	
 					<p:row>
 						<p:column colspan="3">
 
@@ -198,7 +216,7 @@
 								value="#{gestioneSeduteController.seduteList}" var="seduta"
 								styleClass="generalInfoTab grey-text" editable="true"
 								style="width:100%">
-
+						
 								<p:column headerText="Dettagli" style="width:50px">
 									<p:commandButton
 										action="#{gestioneSeduteController.showSedutaDetail}"
@@ -212,12 +230,8 @@
 
 								<p:column headerText="Data Seduta" style="width:100px"
 									sortBy="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}">
-									
 									#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}
-									
 								</p:column>
-
-
 
 								<p:column headerText="#{numeroVerbale}" style="width:100px"
 									sortBy="#{seduta.numVerbale}">
@@ -229,19 +243,17 @@
 									<p:commandButton
 										action="#{gestioneSeduteController.dettaglioOdg}"
 										oncomplete="gestioneSeduteTabs.select(1)" value="ODG"
-										update=":gestioneSeduteForm:gestioneSedute">
-
+										  update=":gestioneSeduteForm:gestioneSedute:inserisciODGGrid">
 										<f:setPropertyActionListener
 											value="#{of:formatDate(seduta.dataSeduta,'dd/MM/yyyy')}"
 											target="#{gestioneSeduteController.dataSedutaSelected}" />
 
 									</p:commandButton>	
-										
+									
 									&nbsp;
 
 									<p:commandButton oncomplete="sedutaDialog.show()"
-										icon="delete-icon">
-
+										icon="delete-icon" disabled="#{(gestioneSeduteController.disableModifiche)}">
 										<f:setPropertyActionListener value="#{seduta.dataSeduta}"
 											target="#{gestioneSeduteController.sedutaToDelete}" />
 									</p:commandButton>
@@ -320,7 +332,7 @@
 					<p:row>
 						<p:column colspan="4">
 							<p:commandButton value="Carica ODG"
-								oncomplete="uploadODGDialog.show()">
+								oncomplete="uploadODGDialog.show()" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
 							</p:commandButton>
 						</p:column>
 					</p:row>
@@ -369,7 +381,7 @@
 								<p:column>
 									<f:facet name="header">Elimina</f:facet>
 									<p:commandButton oncomplete="testoODGDialogDel.show()"
-										icon="delete-icon">
+										icon="delete-icon" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
 
 										<f:setPropertyActionListener value="#{odg.id}"
 											target="#{gestioneSeduteController.odgToDelete}" />
@@ -379,7 +391,7 @@
 									<f:facet name="header">Scarica</f:facet>
 
 									<p:commandButton id="downloadLink" icon="detail-icon"
-										ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+										ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
 										<f:setPropertyActionListener value="#{odg.id}"
 											target="#{fileDownloadController.fileId}" />
 										<f:setPropertyActionListener value="#{odg.nome}"
@@ -392,7 +404,7 @@
 								</p:column>
 
 								<p:column headerText="Modifica" style="width:50px">
-									<p:rowEditor />
+									<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}"/>
 								</p:column>
 
 
@@ -451,7 +463,7 @@
 								<p:column>
 									<f:facet name="header">Elimina</f:facet>
 									<p:commandButton oncomplete="testoVerbaleDialogDel.show()"
-										icon="delete-icon">
+										icon="delete-icon" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
 
 										<f:setPropertyActionListener value="#{verbale.id}"
 											target="#{gestioneSeduteController.verbaleToDelete}" />
@@ -461,7 +473,7 @@
 									<f:facet name="header">Scarica</f:facet>
 
 									<p:commandButton id="downloadLink" icon="detail-icon"
-										ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+										ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
 										<f:setPropertyActionListener value="#{verbale.id}"
 											target="#{fileDownloadController.fileId}" />
 										<f:setPropertyActionListener value="#{verbale.nome}"
@@ -474,7 +486,7 @@
 								</p:column>
 
 								<p:column headerText="Modifica" style="width:50px">
-									<p:rowEditor />
+									<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}" />
 								</p:column>
 
 
@@ -510,7 +522,7 @@
 									<p:column>
 										<p:commandButton value="Aggiungi"
 											action="#{gestioneSeduteController.addLink}" id="addLink"
-											update="listaLinks , inserisciSedutaMsg" icon="new-icon" />
+											update="listaLinks , inserisciSedutaMsg" icon="new-icon" disabled="#{(gestioneSeduteController.isDisableModifiche())}"/>
 									</p:column>
 
 								</p:row>
@@ -565,7 +577,7 @@
 
 
 									<p:commandButton oncomplete="linkDialog.show()"
-										icon="delete-icon">
+										icon="delete-icon" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
 
 										<f:setPropertyActionListener value="#{link.descrizione}"
 											target="#{gestioneSeduteController.linkToDelete}" />
@@ -573,7 +585,7 @@
 								</p:column>
 
 								<p:column headerText="Modifica" style="width:50px">
-									<p:rowEditor />
+									<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}" />
 								</p:column>
 
 							</p:dataTable>
@@ -584,8 +596,7 @@
 							<p>
 								<p:commandButton value="Aggiungi / Salva"
 									action="#{gestioneSeduteController.salvaAggiungiSeduta}"
-									update=":gestioneSeduteForm">
-
+									update=":gestioneSeduteForm" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
 								</p:commandButton>
 							</p>
 						</p:column>
