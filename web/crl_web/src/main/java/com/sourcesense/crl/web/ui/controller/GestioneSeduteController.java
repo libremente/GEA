@@ -20,6 +20,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -38,12 +39,12 @@ import com.sourcesense.crl.business.model.Seduta;
 import com.sourcesense.crl.business.model.Target;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
+import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.SeduteServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
-
 @ManagedBean(name = "gestioneSeduteController")
 @ViewScoped
 public class GestioneSeduteController {
@@ -56,17 +57,24 @@ public class GestioneSeduteController {
 
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
+	
+	@ManagedProperty(value = "#{legislaturaServiceManager}")
+	private LegislaturaServiceManager legislaturaServiceManager;
 
+	private String legislatura;
+	private List<String> legislature = new ArrayList<String>();
+	
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
 	private List<Seduta> seduteList = new ArrayList<Seduta>();
 	private List<Seduta> seduteListAll = new ArrayList<Seduta>();
-
 	private List<String> dateSeduteList = new ArrayList<String>();
 	private String dataSedutaSelected;
 	private String attoDaTrattare;
 	private Date sedutaToDelete;
 	private Seduta sedutaSelected;
+	
+	private String legislaturaCorrente;
 
 	private Date dataSeduta;
 	private String numVerbale;
@@ -116,21 +124,29 @@ public class GestioneSeduteController {
 	private String odgToDelete;
 	private String verbaleToDelete;
 	private boolean currentFilePubblico;
-
+	// false per legislatura corrente e true per vecchie legislature
+	private boolean disableModifiche; 
+	
 	@PostConstruct
 	protected void init() {
+		
+		disableModifiche = false;
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
-
+		
+		setLegislature(legislaturaServiceManager.list());
+		setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
+		legislaturaCorrente = legislatura;
 		seduteListAll = seduteServiceManager.getSedute(userBean.getUser()
-				.getSessionGroup().getNome());
-
+				.getSessionGroup().getNome(),legislatura);
+	
 		seduteList = Clonator.cloneList(seduteListAll);
 		Collections.sort(seduteList);
 		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
+		
 		setDateSeduteList();
 
 	}
@@ -169,37 +185,59 @@ public class GestioneSeduteController {
 	// Inserisci Seduta***********************************
 
 	public void filterDataTable() {
-
+		
+		dateSeduteList.clear();
 		seduteList.clear();
-
-		for (Seduta seduta : seduteListAll) {
-
-			if (getDataSedutaDa() != null
-					&& getDataSedutaA() != null
-					&& seduta.getDataSeduta().getTime()
-							- dataSedutaDa.getTime() >= 0
-					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
-
-				seduteList.add((Seduta) seduta.clone());
-
-			} else if (getDataSedutaDa() != null
-					&& getDataSedutaA() == null
-					&& seduta.getDataSeduta().getTime()
-							- dataSedutaDa.getTime() >= 0) {
-
-				seduteList.add((Seduta) seduta.clone());
-
-			} else if (getDataSedutaDa() == null
-					&& getDataSedutaA() != null
-					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
-
-				seduteList.add((Seduta) seduta.clone());
-			}
-
+		if (!legislatura.equals(legislaturaCorrente)){
+			disableModifiche = true;
 		}
-
-	}
-
+		else {
+			disableModifiche = false;
+		}
+		
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean = ((UserBean) context.getExternalContext()
+				.getSessionMap().get("userBean"));
+		seduteListAll = seduteServiceManager.getSedute(userBean.getUser()
+				.getSessionGroup().getNome(),legislatura);
+	
+				
+		for (Seduta seduta : seduteListAll) {
+							
+				if  (getDataSedutaDa() == null && getDataSedutaA() == null){
+					
+					seduteList.add((Seduta) seduta.clone());
+				
+				}
+				
+				else if (getDataSedutaDa() != null
+						&& getDataSedutaA() != null
+						&& seduta.getDataSeduta().getTime()
+								- dataSedutaDa.getTime() >= 0
+						&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
+	
+					seduteList.add((Seduta) seduta.clone());
+	
+				} else if (getDataSedutaDa() != null
+						&& getDataSedutaA() == null
+						&& seduta.getDataSeduta().getTime()
+								- dataSedutaDa.getTime() >= 0) {
+	
+					seduteList.add((Seduta) seduta.clone());
+	
+				} else if (getDataSedutaDa() == null
+						&& getDataSedutaA() != null
+						&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
+	
+					seduteList.add((Seduta) seduta.clone());
+				}
+			}
+		
+		setDateSeduteList();
+		}	
+	
+	
 	public void showSedutaDetail() {
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 
@@ -262,11 +300,13 @@ public class GestioneSeduteController {
 			setAudizioni(new ArrayList<Audizione>());
 		}
 	}
-
+	
+	
 	public Seduta findSeduta(String dataSeduta) {
 		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		for (Seduta element : seduteList) {
+		
 			if (dataSeduta.equals(formatter.format(element.getDataSeduta()))) {
 				return element;
 			}
@@ -311,6 +351,7 @@ public class GestioneSeduteController {
 	public String dettaglioOdg() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
+		
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
@@ -346,7 +387,7 @@ public class GestioneSeduteController {
 			}
 
 		}
-		return null;
+	return null;
 	}
 
 	public void addLink() {
@@ -410,6 +451,10 @@ public class GestioneSeduteController {
 		if (getDataSeduta() != null) {
 
 			Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+			
+			//ABILITARE DOPO MODIFICA DI ALFRESCO
+			 //Seduta seduta =  seduteServiceManager.getSeduta(userBean
+			//.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente);
 			Seduta seduta = findSeduta(formatter.format(getDataSeduta()));
 
 			// Inserimento
@@ -421,6 +466,7 @@ public class GestioneSeduteController {
 				seduta.setNumVerbale(getNumVerbale());
 				seduta.setNote(getNote());
 				seduta.setLinks(Clonator.cloneList(getLinksList()));
+				seduta.setLegislatura(legislaturaCorrente);
 				gestioneSedute.setSeduta(seduta);
 				Seduta sedutaRet = seduteServiceManager
 						.salvaSeduta(gestioneSedute);
@@ -428,13 +474,13 @@ public class GestioneSeduteController {
 				setSedutaSelected(seduta);
 				seduteListAll.add(seduta);
 				seduteList.add(seduta);
-
 				dateSeduteList.add(formatter.format(seduta.getDataSeduta()));
 				seduteListAll = seduteServiceManager.getSedute(userBean
-						.getUser().getSessionGroup().getNome());
+						.getUser().getSessionGroup().getNome(),legislaturaCorrente);
 
 				seduteList = Clonator.cloneList(seduteListAll);
 				Collections.sort(seduteList);
+			
 				// Modifica
 			} else {
 				seduta.setNumVerbale(getNumVerbale());
@@ -445,6 +491,7 @@ public class GestioneSeduteController {
 				gestioneSedute.setSeduta(seduta);
 				seduta = seduteServiceManager.updateSeduta(gestioneSedute);
 				setSedutaSelected(seduta);
+				
 			}
 
 			updateInserisciSedutaHandler();
@@ -461,6 +508,8 @@ public class GestioneSeduteController {
 					"Attenzione ! Inserire Data seduta ", ""));
 		}
 	}
+	
+
 
 	private void refreshInsert() {
 
@@ -1009,10 +1058,27 @@ public class GestioneSeduteController {
 	}
 
 	// Getters & Setters***********************************
+	
+	public String getLegislatura() {
+		return legislatura;
+	}
+
+	public void setLegislatura(String legislatura) {
+		this.legislatura = legislatura;
+	}
+
+	public List<String> getLegislature() {
+		return legislature;
+	}
+
+	public void setLegislature(List<String> legislature) {
+		this.legislature = legislature;
+	}
+
 	public Date getDataSedutaDa() {
 		return dataSedutaDa;
 	}
-
+	
 	public void setDataSedutaDa(Date dataSedutaDa) {
 		this.dataSedutaDa = dataSedutaDa;
 	}
@@ -1275,6 +1341,14 @@ public class GestioneSeduteController {
 		}
 	}
 
+	public String getLegislaturaCorrente() {
+		return legislaturaCorrente;
+	}
+
+	public void setLegislaturaCorrente(String legislaturaCorrente) {
+		this.legislaturaCorrente = legislaturaCorrente;
+	}
+
 	public String getAttoDaTrattare() {
 		return attoDaTrattare;
 	}
@@ -1413,5 +1487,23 @@ public class GestioneSeduteController {
 			AttoRecordServiceManager attoRecordServiceManager) {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
+	
+	public LegislaturaServiceManager getLegislaturaServiceManager() {
+		return legislaturaServiceManager;
+	}
 
+	public void setLegislaturaServiceManager(
+			LegislaturaServiceManager legislaturaServiceManager) {
+		this.legislaturaServiceManager = legislaturaServiceManager;
+	}
+
+	public boolean isDisableModifiche() {
+		return disableModifiche;
+	}
+
+	public void setDisableModifiche(boolean disableModifiche) {
+		this.disableModifiche = disableModifiche;
+	}
+	
+	
 }
