@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Path;
@@ -47,14 +48,14 @@ public class SeduteService {
 	
 	
 	
-	public List<Seduta> findByGroup (String url,String param){
+	public List<Seduta> findByGroup (String url,String param, String legislatura){
 
 		List<Seduta> sedute =null;
 		//?provenienza={0}
 		try {
 			WebResource webResource = client.resource(url);
 			ClientResponse response = webResource
-					.queryParam("provenienza", param)
+					.queryParam("provenienza", param).queryParam("legislatura", legislatura)
 					.accept(MediaType.APPLICATION_JSON+ ";charset=utf-8")
 					.get(ClientResponse.class);
 
@@ -87,6 +88,50 @@ public class SeduteService {
 		}
 		return sedute;
 	}
+	
+	public Seduta findByDate (String url,String param, String dataSeduta, String legislatura){
+
+		Seduta seduta =null;
+		//?provenienza={0}
+		
+		try {
+			WebResource webResource = client.resource(url);
+			ClientResponse response = webResource
+					.queryParam("provenienza", param).queryParam("dataSeduta", dataSeduta).queryParam("legislatura",legislatura)
+					.accept(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+					.get(ClientResponse.class);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+			}
+
+			String responseMsg = response.getEntity(String.class);
+			objectMapper.configure(
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			seduta = objectMapper.readValue(responseMsg,
+					new TypeReference<Seduta>() {
+			});
+
+
+		}catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return seduta;
+	}
+	
+	
 	
 	public Seduta create(String url, GestioneSedute gestioneSedute) {
 		
