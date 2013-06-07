@@ -92,26 +92,26 @@ public class SeduteService {
 	public Seduta findByDate (String url,String param, String dataSeduta, String legislatura){
 
 		Seduta seduta =null;
-		
 		try {
 			WebResource webResource = client.resource(url);
 			ClientResponse response = webResource
 					.queryParam("provenienza", param).queryParam("dataSeduta", dataSeduta).queryParam("legislatura",legislatura)
 					.accept(MediaType.APPLICATION_JSON+ ";charset=utf-8")
 					.get(ClientResponse.class);
-
-			if (response.getStatus() != 200) {
+			
+			if (response.getStatus() == 404) {
+				return null;
+			}
+			else if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "
 						+ response.getStatus()
 						+ ": Alfresco non raggiungibile ");
 			}
-			else if (response.getStatus() == 404) {
-				return null;
-			}
+			
 
 			String responseMsg = response.getEntity(String.class);
 			objectMapper.configure(
-					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+					DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, false);
 			seduta = objectMapper.readValue(responseMsg,
 					new TypeReference<Seduta>() {
 			});
