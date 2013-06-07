@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -44,11 +45,18 @@ public class SeduteServiceManager implements ServiceManager{
 		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
 	}
 	
-	public List<Seduta>  getSedute(String gruppo) {
+	public List<Seduta>  getSedute(String gruppo, String legislatura) {
 		
 		//return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", new String[]{gruppo}).replaceAll(" ", "%20"));
-		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),gruppo);
+		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),gruppo,legislatura);
 	}
+	
+	//NUOVA DA FARE SU ALFRESCO
+	public Seduta  getSeduta(String gruppo, String dataSeduta, String  legislatura) {
+	
+		return seduteService.findByDate(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_dettaglio_seduta", null),gruppo,dataSeduta, legislatura);
+	}
+	
 	
 	public void salvaOdg(Seduta seduta) {
 		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
