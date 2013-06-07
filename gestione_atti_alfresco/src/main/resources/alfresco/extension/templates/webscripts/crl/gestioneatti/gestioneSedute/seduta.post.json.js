@@ -73,6 +73,9 @@ if(checkIsNotNull(provenienza)){
 	var sedutaResults = search.luceneSearch(sedutaLuceneQuery);
 	var checkLegislaturaCorrente = false;
 	
+	// controlla l'esecuzione dell'update
+	var eseguiUpdate = false;
+	
 	if(sedutaResults!=null && sedutaResults.length>0){
 //		//seduta presente
 //		status.code = 500;
@@ -88,10 +91,8 @@ if(checkIsNotNull(provenienza)){
 		var sedutaFolderNode = sedutaSpaceTemplateNode.copy(meseFolderNode,true);
 		sedutaFolderNode.name = dataSeduta;
 		checkLegislaturaCorrente = false;
+		eseguiUpdate=true;
 	}
-
-	// controlla l'esecuzione dell'update
-	var eseguiUpdate = false;
 	
 	if(checkLegislaturaCorrente){
 		//verifica se la seduta appartiene ad una legislatura corrente
