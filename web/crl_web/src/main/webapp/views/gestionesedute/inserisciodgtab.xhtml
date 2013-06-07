@@ -895,17 +895,22 @@
 						action="#{gestioneSeduteController.addAttoTrattato(idAttoParam,tipoAttoParam)}"
 						title="Aggiungi ad atti iscritti" value=""
 						style="width:25px;height:25px;" immediate="true"
-						update=":gestioneSeduteForm:gestioneSedute" icon="new-icon">
+						update=":gestioneSeduteForm:gestioneSedute" icon="new-icon"
+						disabled="#{(gestioneSeduteController.disableModifiche) || searchAttoController.legislatura != gestioneSeduteController.legislaturaCorrente }">
+						
 						<!-- <f:setPropertyActionListener value="#{atto.id}"
-							target="#{gestioneSeduteController.attoDaTrattare}" /> -->
+							target="#{gestioneSeduteController.attoDaTrattare}" /> 
+						
+							-->
 					</p:commandButton>	
-					&nbsp; &nbsp; &nbsp;
+					&nbsp; &nbsp; &nbsp; 
+					  
 				</p:column>
 			</p:dataTable>
 
 			<br />
 
-			<p:panelGrid styleClass="infoTable">
+			<p:panelGrid styleClass="infoTable" id="panel">
 				<p:row>
 					<p:column>
 
@@ -914,8 +919,9 @@
 						
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
-						<p:selectOneMenu id="selezioneSeduta"
+					<p:selectOneMenu id="selezioneSeduta"
 							value="#{gestioneSeduteController.dataSedutaSelected}">
+						  
 							<f:selectItem itemLabel="Seleziona una seduta"></f:selectItem>
 							<f:selectItems value="#{gestioneSeduteController.dateSeduteList}" />
 							<p:ajax event="change"
@@ -936,21 +942,21 @@
 						<table class="generalInfoTab" id="ordineDelGiorno"
 							style="width: 100%;" border="0">
 							<thead>
-								<th>Ordine del Giorno per la seduta del <h:outputText
-										value="#{gestioneSeduteController.dataSedutaSelected}">
-										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-									</h:outputText>
+								<th>Ordine del Giorno per la seduta del
+								 	<h:outputText 	value="#{gestioneSeduteController.dataSedutaSelected}">
+										 <f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>							
 								</th>
 
 							</thead>
 						</table>
-
+							
 
 					</p:column>
 				</p:row>
 			</p:panelGrid>
 			<p:fieldset styleClass="fieldSetTab" legend="Atti iscritti"
-				collapsed="false" toggleable="false">
+				collapsed="false" toggleable="false" >
 
 				<script>
 					hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton');
@@ -1030,14 +1036,14 @@
 
 
 					<p:column headerText="Modifica" style="width:50px">
-						<p:rowEditor />
+						<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}" />
 
 					</p:column>
 
 					<p:column headerText="Elimina">
 
 						<p:commandButton update="listaAttiTrattati"
-							oncomplete="attoTrattatoDialog.show()" icon="delete-icon">
+							oncomplete="attoTrattatoDialog.show()" icon="delete-icon" disabled="#{(gestioneSeduteController.disableModifiche)}">
 
 							<f:setPropertyActionListener value="#{attoTrattato.atto.id}"
 								target="#{gestioneSeduteController.idAttoTrattatoToDelete}" />
@@ -1136,7 +1142,7 @@
 									<p:commandButton value="Aggiungi"
 										action="#{gestioneSeduteController.addCollegamentoAttoSindacato}"
 										id="addCollegamentoAttoSindacato"
-										update=":gestioneSeduteForm:gestioneSedute" icon="new-icon" />
+										update=":gestioneSeduteForm:gestioneSedute" icon="new-icon" disabled="#{(gestioneSeduteController.disableModifiche)}" />
 								</p:column>
 
 							</p:row>
@@ -1189,7 +1195,7 @@
 									oncomplete="collegamentoAttoSindacatoDialog.show()"
 									icon="delete-icon">
 									<f:setPropertyActionListener value="#{collegamento.idAtto}"
-										target="#{gestioneSeduteController.attoSindacatoToDelete}" />
+										target="#{gestioneSeduteController.attoSindacatoToDelete}" disabled="#{(gestioneSeduteController.disableModifiche)}"/>
 								</p:commandButton>
 							</p:column>
 						</p:dataTable>
@@ -1233,7 +1239,7 @@
 		<p:column>
 			<p:commandButton value="Salva"
 				action="#{gestioneSeduteController.salvaInserisciOdg}"
-				update="inserisciOdgMsg" />
+				update="inserisciOdgMsg" disabled="#{(gestioneSeduteController.disableModifiche)}"/>
 		</p:column>
 	</p:row>
 </p:panelGrid>
