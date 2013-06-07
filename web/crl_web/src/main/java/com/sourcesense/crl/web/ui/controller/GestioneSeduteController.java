@@ -188,6 +188,7 @@ public class GestioneSeduteController {
 		
 		dateSeduteList.clear();
 		seduteList.clear();
+		refreshInsert();
 		if (!legislatura.equals(legislaturaCorrente)){
 			disableModifiche = true;
 		}
@@ -235,6 +236,7 @@ public class GestioneSeduteController {
 			}
 		
 		setDateSeduteList();
+
 		}	
 	
 	
@@ -450,13 +452,14 @@ public class GestioneSeduteController {
 
 		if (getDataSeduta() != null) {
 
-			Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-			Seduta seduta =  seduteServiceManager.getSeduta(userBean
-			.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente);
-			//Seduta seduta = findSeduta(formatter.format(getDataSeduta()));
-
+			Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Seduta seduta = null;
+			
+			seduta = seduteServiceManager.getSeduta(userBean
+					.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),"legislaturaCorrente");
+			
 			// Inserimento
-			if (seduta == null) {
+			if ( seduta == null) {
 				seduta = new Seduta();
 				seduta.setDalleOre(getDalleOre());
 				seduta.setAlleOre(getAlleOre());
@@ -480,7 +483,11 @@ public class GestioneSeduteController {
 				Collections.sort(seduteList);
 			
 				// Modifica
-			} else {
+				} 
+			  else {
+							
+				formatter = new SimpleDateFormat("dd/MM/yyyy");
+				seduta = findSeduta(formatter.format(getDataSeduta()));
 				seduta.setNumVerbale(getNumVerbale());
 				seduta.setNote(getNote());
 				seduta.setDalleOre(getDalleOre());
@@ -489,15 +496,16 @@ public class GestioneSeduteController {
 				gestioneSedute.setSeduta(seduta);
 				seduta = seduteServiceManager.updateSeduta(gestioneSedute);
 				setSedutaSelected(seduta);
+				}
 				
-			}
+			
 
-			updateInserisciSedutaHandler();
-			context.addMessage(null, new FacesMessage(
+				updateInserisciSedutaHandler();
+				context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_INFO, "Seduta numero "
 							+ getNumVerbale() + " salvata con successo", ""));
 
-			refreshInsert();
+				refreshInsert();
 
 		} else {
 
