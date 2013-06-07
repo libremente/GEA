@@ -2,12 +2,12 @@
 
 
 var seduta = json.get("seduta").get("seduta");
-var dataSeduta = seduta.get("dataSeduta");
+var dataSeduta = filterParam(seduta.get("dataSeduta"));
 var dalleOre = filterParam(seduta.get("dalleOre"));
 var alleOre = filterParam(seduta.get("alleOre"));
-var numVerbale = seduta.get("numVerbale");
-var note = seduta.get("note");
-var links = seduta.get("links");
+var numVerbale = filterParam(seduta.get("numVerbale"));
+var note = filterParam(seduta.get("note"));
+var links = filterParam(seduta.get("links"));
 
 var provenienza = json.get("target").get("target").get("provenienza");
 
