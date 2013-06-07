@@ -56,7 +56,7 @@ if(checkIsNotNull(id)){
 	var comitatoXPathQuery = "*[@cm:name='ComitatoRistretto']";
 	var comitatoFolderNode = commissioneFolderNode.childrenByXPath(comitatoXPathQuery)[0];
 	
-	// setting delle proprietà del comitato ristretto
+	// setting delle propriet�� del comitato ristretto
 	
 	comitatoFolderNode.properties["crlatti:presenzaCR"] = presenzaComitato;
         comitatoFolderNode.properties["crlatti:tipologiaCR"] = tipologia;
@@ -76,7 +76,7 @@ if(checkIsNotNull(id)){
 	
 	for(var k=0; k<numeroMembri; k++) {
 		
-		var membro = membri.get(k);
+		var membro = membri.get(k).get("componente");
 	
 		var descrizione = filterParam(membro.get("descrizione"));
 		var dataNomina = filterParam(membro.get("dataNomina"));
@@ -124,7 +124,7 @@ if(checkIsNotNull(id)){
 		
 		//cerco il nome del memebro nel repo all'interno del json
 		for (var q=0; q<membri.length(); q++){
-			var membro = membri.get(q);
+			var membro = membri.get(q).get("componente");
 			var descrizione = filterParam(membro.get("descrizione"));
 			if(""+descrizione+""==""+membroNelRepository.name+""){
 				trovato = true;
