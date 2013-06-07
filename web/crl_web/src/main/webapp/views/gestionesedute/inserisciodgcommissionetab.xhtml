@@ -105,7 +105,9 @@
 
 
 				<p:column headerText="Modifica" style="width:50px">
-					<p:rowEditor />
+				
+				<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}"/>
+				
 				</p:column>
 
 			</p:dataTable>
@@ -149,7 +151,7 @@
 						<p:commandButton value="Aggiungi"
 							action="#{gestioneSeduteController.addAudizione}"
 							id="addAudizione" update="listaAudizioni , inserisciOdgMsg"
-							icon="new-icon" />
+							icon="new-icon" disabled="#{(gestioneSeduteController.disableModifiche)}"/>
 					</p:column>
 
 				</p:row>
@@ -193,7 +195,7 @@
 				<p:column headerText="Elimina">
 
 					<p:commandButton oncomplete="audizioneDialog.show()"
-						icon="delete-icon">
+						icon="delete-icon" disabled="#{(gestioneSeduteController.disableModifiche)}">
 
 						<f:setPropertyActionListener
 							value="#{audizione.soggettoPartecipante}"
@@ -202,7 +204,9 @@
 				</p:column>
 
 				<p:column headerText="Modifica">
-					<p:rowEditor />
+					
+					<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}"/>
+				
 				</p:column>
 
 			</p:dataTable>
