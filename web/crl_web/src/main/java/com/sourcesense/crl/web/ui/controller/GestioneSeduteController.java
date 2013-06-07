@@ -451,11 +451,9 @@ public class GestioneSeduteController {
 		if (getDataSeduta() != null) {
 
 			Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-			
-			//ABILITARE DOPO MODIFICA DI ALFRESCO
-			 //Seduta seduta =  seduteServiceManager.getSeduta(userBean
-			//.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente);
-			Seduta seduta = findSeduta(formatter.format(getDataSeduta()));
+			Seduta seduta =  seduteServiceManager.getSeduta(userBean
+			.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente);
+			//Seduta seduta = findSeduta(formatter.format(getDataSeduta()));
 
 			// Inserimento
 			if (seduta == null) {
