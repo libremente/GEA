@@ -1201,6 +1201,10 @@
 					<title>Note</title>
 					<type>d:text</type>
 				</property>
+                                <property name="crlatti:legislaturaSedutaODG">
+					<title>Legislatura</title>
+					<type>d:text</type>
+				</property>
 			</properties>
 		</type>
 		

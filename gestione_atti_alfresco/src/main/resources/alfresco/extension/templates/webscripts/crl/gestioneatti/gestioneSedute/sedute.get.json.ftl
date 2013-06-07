@@ -11,6 +11,7 @@
 		"alleOre" : "<#if seduta.properties["crlatti:alleOreSedutaODG"]?exists>${seduta.properties["crlatti:alleOreSedutaODG"]}<#else></#if>",		
 		"numVerbale" : "<#if seduta.properties["crlatti:numVerbaleSedutaODG"]?exists>${seduta.properties["crlatti:numVerbaleSedutaODG"]}<#else></#if>",
 		"note" : "<#if seduta.properties["crlatti:noteSedutaODG"]?exists>${seduta.properties["crlatti:noteSedutaODG"]}<#else></#if>",
+                "legislatura" : "<#if seduta.properties["crlatti:legislaturaSedutaODG"]?exists>${seduta.properties["crlatti:legislaturaSedutaODG"]}<#else></#if>",
 		"links":[
 			<#assign links = seduta.childrenByXPath["*[@cm:name='Links']"][0]>
 			<#assign linksList = links.getChildAssocsByType("crlatti:link")>

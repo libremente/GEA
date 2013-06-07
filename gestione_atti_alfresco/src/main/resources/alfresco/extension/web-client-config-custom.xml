@@ -865,6 +865,7 @@
 			<show-property name="crlatti:dataSedutaSedutaODG" />
 			<show-property name="crlatti:numVerbaleSedutaODG" />
 			<show-property name="crlatti:noteSedutaODG" />
+                        <show-property name="crlatti:legislaturaSedutaODG" />
 		</property-sheet>
 	</config>
 

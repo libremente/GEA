@@ -105,7 +105,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
             Date dataVerbalePrec = verbale.getDataSeduta();
 
             if (dataVerbalePrec != null) {
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
+                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", Locale.ITALY);
                 String dataScadenzaString = formatter.format(dataVerbalePrec);
                 searchTerms.put("dataVerbalePrec", dataScadenzaString);
             }

@@ -8,6 +8,7 @@ var alleOre = filterParam(seduta.get("alleOre"));
 var numVerbale = filterParam(seduta.get("numVerbale"));
 var note = filterParam(seduta.get("note"));
 var links = filterParam(seduta.get("links"));
+var legislatura = seduta.get("legislatura");
 
 var provenienza = json.get("target").get("target").get("provenienza");
 
@@ -96,6 +97,8 @@ if(checkIsNotNull(provenienza)){
 	
 	sedutaFolderNode.properties["crlatti:numVerbaleSedutaODG"] = numVerbale;
 	sedutaFolderNode.properties["crlatti:noteSedutaODG"] = note;
+        
+        sedutaFolderNode.properties["crlatti:legislaturaSedutaODG"] = legislatura;
 	
 	sedutaFolderNode.save();
 	
