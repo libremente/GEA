@@ -39,7 +39,7 @@ if(checkIsNull(nodeRefAllegato)){
 	var content = allegatoNode.properties.content;
 	
 	//scrittura properties all'interno del nodo testo
-	attoRecordNode.properties["crlatti:tipologia"] = tipologia;
+	attoRecordNode.properties["crlatti:tipologia"] = "testo_atto";
 	attoRecordNode.properties["crlatti:pubblico"] = pubblico;
 	attoRecordNode.properties["crlatti:provenienza"] = provenienza;
 	attoRecordNode.properties.content.write(content);
@@ -47,7 +47,7 @@ if(checkIsNull(nodeRefAllegato)){
 	attoRecordNode.properties.content.guessMimetype(filename);
 	attoRecordNode.save();
 	
-	//rimozione del vecchio allegato che adesso è presente come testo dell'atto
+	//rimozione del vecchio allegato che adesso �� presente come testo dell'atto
 	allegatoNode.remove();
 
 	model.attoRecord = attoRecordNode;
