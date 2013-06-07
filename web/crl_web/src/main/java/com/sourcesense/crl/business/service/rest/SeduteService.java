@@ -92,7 +92,6 @@ public class SeduteService {
 	public Seduta findByDate (String url,String param, String dataSeduta, String legislatura){
 
 		Seduta seduta =null;
-		//?provenienza={0}
 		
 		try {
 			WebResource webResource = client.resource(url);
@@ -105,6 +104,9 @@ public class SeduteService {
 				throw new ServiceNotAvailableException("Errore - "
 						+ response.getStatus()
 						+ ": Alfresco non raggiungibile ");
+			}
+			else if (response.getStatus() == 404) {
+				return null;
 			}
 
 			String responseMsg = response.getEntity(String.class);
