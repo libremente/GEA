@@ -32,7 +32,8 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 	@Override public String toString() {
 		return Pojomatic.toString(this);
 	}
-
+	
+	private String legislatura;
 	private Date dalleOre;
 	private Date alleOre;
 	private String idSeduta;
@@ -161,11 +162,13 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 		this.verbaliList = verbaliList;
 	}
 
-	
-	
-	
-	
-	
-	
+	public String getLegislatura() {
+		return legislatura;
+	}
 
+	public void setLegislatura(String legislatura) {
+		this.legislatura = legislatura;
+	}
+
+	
 }
