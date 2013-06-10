@@ -167,7 +167,7 @@
 								value="#{gestioneSeduteController.legislatura}">
 								<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
 								<f:selectItems value="#{gestioneSeduteController.legislature}" />
-								<p:ajax event="change" global="false"
+								<p:ajax event="change"
 								listener="#{gestioneSeduteController.filterDataTable()}"
 								update="listaSedute,:gestioneSeduteForm:gestioneSedute:inserisciODGGrid,:gestioneSeduteForm:gestioneSedute:dettagliSeduta" />
 							</p:selectOneMenu>
@@ -183,10 +183,10 @@
 					<p:calendar id="filtraData_da"
 						value="#{gestioneSeduteController.dataSedutaDa}" locale="it"
 						pattern="dd/MM/yyyy" size="10" mode="popup">
-						<p:ajax event="dateSelect" global="false"
+						<p:ajax event="dateSelect"
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
-						<p:ajax event="change" global="false"
+						<p:ajax event="change"
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
@@ -195,10 +195,10 @@
 					<p:calendar id="filtraData_a"
 						value="#{gestioneSeduteController.dataSedutaA}" locale="it"
 						pattern="dd/MM/yyyy" size="10">
-						<p:ajax  event="dateSelect" global="false"
+						<p:ajax  event="dateSelect"
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
-						<p:ajax event="change" global="false"
+						<p:ajax event="change" 
 							listener="#{gestioneSeduteController.filterDataTable()}"
 							update="listaSedute" />
 					</p:calendar>
