@@ -277,8 +277,8 @@
     		{
     			"sedutaAtto": {
     				"idSeduta": "${sedutaAtto.idSeduta}",
-    				"numVerbale": "${sedutaAtto.numVerbale}",
-    				"nomeOrgano": "${sedutaAtto.nomeOrgano}",
+                                "numVerbale":"<#if sedutaAtto.numVerbale?exists>${sedutaAtto.numVerbale}<#else></#if>",
+                                "nomeOrgano":"<#if sedutaAtto.nomeOrgano?exists>${sedutaAtto.nomeOrgano}<#else></#if>",
     				"dataSeduta": "${sedutaAtto.dataSeduta?string("yyyy-MM-dd")}",
                                 "idVerbale":"<#if sedutaAtto.idVerbale?exists>${sedutaAtto.idVerbale}<#else></#if>",
                                 "nomeVerbale":"<#if sedutaAtto.nomeVerbale?exists>${sedutaAtto.nomeVerbale}<#else></#if>",
