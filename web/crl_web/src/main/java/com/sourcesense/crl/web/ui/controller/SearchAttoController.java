@@ -291,8 +291,8 @@ public class SearchAttoController implements Serializable{
 						new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
 				atto.getStatiUtente().add(
 						new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.EAC));
+				/*atto.getStatiUtente().add(
+						new StatoAtto(StatoAtto.EAC));*/
 
 			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
 					.getSessionGroup().getNome())) {
@@ -420,8 +420,8 @@ public class SearchAttoController implements Serializable{
 					new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
 			atto.getStatiUtente().add(
 					new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.EAC));
+			/*atto.getStatiUtente().add(
+					new StatoAtto(StatoAtto.EAC));*/
 
 		} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
 				.getSessionGroup().getNome())) {

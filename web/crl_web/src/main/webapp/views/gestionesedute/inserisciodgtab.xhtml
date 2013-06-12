@@ -86,8 +86,8 @@
 									<p:column style="width:5%;vertical-align: middle;">
 									Tipo atto:
 								</p:column>
-									<p:column style="width:30%;">
-										<p:selectOneMenu id="tipoatto"
+									<p:column style="width:27%;">
+										<p:selectOneMenu id="tipoatto" style="width:150px"
 											value="#{searchAttoController.tipoatto}">
 											<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
 											<f:selectItems value="#{searchAttoController.tipiAtto}" />
@@ -108,8 +108,8 @@
 									<p:column style="vertical-align: middle;width:5%;">
 									Legislatura:
 								</p:column>
-									<p:column style="width:20%;">
-										<p:selectOneMenu id="legislatura"
+									<p:column style="width:23%;">
+										<p:selectOneMenu id="legislatura" style="width:150px"
 											value="#{searchAttoController.legislatura}">
 											<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
 											<f:selectItems value="#{searchAttoController.legislature}" />
@@ -134,7 +134,7 @@
 									Tipo Iniziativa:
 								</p:column>
 									<p:column>
-										<p:selectOneMenu id="tipoiniziativa"
+										<p:selectOneMenu id="tipoiniziativa" style="width:150px"
 											value="#{searchAttoController.tipoiniziativa}">
 											<f:selectItem itemLabel="Scegli Tipo Iniziativa" itemValue="" />
 
@@ -190,7 +190,7 @@
 								   Oggetto:
 								</p:column>
 									<p:column>
-										<p:inputText id="oggetto" size="45"
+										<p:inputText id="oggetto" size="40"
 											value="#{searchAttoController.oggetto}"></p:inputText>
 									</p:column>
 
@@ -198,7 +198,7 @@
 									Stato:
 								</p:column>
 									<p:column>
-										<p:selectOneMenu id="stato"
+										<p:selectOneMenu id="stato" style="width:150px"
 											value="#{searchAttoController.stato}">
 											<f:selectItem itemLabel="Scegli Stato" itemValue="" />
 											<f:selectItems value="#{searchAttoController.stati}" />
@@ -210,7 +210,7 @@
 									Tipo Chiusura:
 								</p:column>
 									<p:column>
-										<p:selectOneMenu id="tipoChiusura"
+										<p:selectOneMenu id="tipoChiusura" style="width:150px"
 											value="#{searchAttoController.tipoChiusura}">
 											<f:selectItem itemLabel="Scegli Tipo Chiusura" itemValue="" />
 											<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
@@ -271,7 +271,7 @@
 								   Firmatario:
 								</p:column>
 									<p:column style="width:30%">
-										<p:selectOneMenu id="firmatario" style="width:150px"
+										<p:selectOneMenu id="firmatario" style="width:180px"
 											value="#{searchAttoController.firmatario}">
 											<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
 											<f:selectItems value="#{searchAttoController.relatori}"
@@ -285,7 +285,7 @@
 								   Primo Firmatario:
 								</p:column>
 									<p:column colspan="2" style="width:20%">
-										<p:selectOneMenu id="primoFirmatario" style="width:250px"
+										<p:selectOneMenu id="primoFirmatario" style="width:200px"
 											value="#{searchAttoController.primofirmatario}">
 											<f:selectItem itemLabel="Scegli Primo Firmatario"
 												itemValue="" />
@@ -303,7 +303,7 @@
 								   Gruppo Consiliare:
 								</p:column>
 									<p:column style="width:30%">
-										<p:selectOneMenu id="gruppoConsiliare" style="width:150px"
+										<p:selectOneMenu id="gruppoConsiliare" style="width:180px"
 											value="#{searchAttoController.gruppoFirmatario}">
 											<f:selectItem itemLabel="Scegli Gruppo Consiliare"
 												itemValue="" />
@@ -317,10 +317,10 @@
 								   Gruppo Consiliare Primo Firmatario:
 								</p:column>
 									<p:column colspan="2" style="width:20%">
-										<p:selectOneMenu id="gruppoConsiliarePF" style="width:250px"
+										<p:selectOneMenu id="gruppoConsiliarePF" style="width:200px"
 											value="#{searchAttoController.gruppoPrimoFirmatario}">
 											<f:selectItem
-												itemLabel="Scegli Gruppo Consiliare Primo Firmatario"
+												itemLabel="Scegli Gruppo Consiliare P.F."
 												itemValue="" />
 											<f:selectItems
 												value="#{searchAttoController.gruppiConsiliari}" />
@@ -493,7 +493,7 @@
 								</p:column>
 									<p:column>
 
-										<p:selectOneMenu id="esitoVotoComRef"
+										<p:selectOneMenu id="esitoVotoComRef" style="width:150px"
 											value="#{searchAttoController.esitoVotoCommissioneReferente}">
 											<f:selectItem itemLabel="Scegli Esito" itemValue="" />
 
@@ -628,7 +628,7 @@
 
 									<p:column colspan="5">
 
-										<p:selectOneMenu id="esitoVotoAula" style="width:180px"
+										<p:selectOneMenu id="esitoVotoAula" style="width:200px"
 											value="#{searchAttoController.esitoVotoAula}">
 											<f:selectItem itemLabel="Scegli Esito Voto Aula" itemValue="" />
 											<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
