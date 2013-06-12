@@ -21,6 +21,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
@@ -71,7 +72,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
             ResultSet pareriResult = this.searchService.query(sp);
             organo2results.put(this.organismo, pareriResult);
             Map<NodeRef, NodeRef> atto2parere = new HashMap<NodeRef, NodeRef>();
-            ArrayListMultimap<String, NodeRef> parere2atti = this.retrieveAtti(organo2results, spacesStore, atto2parere);
+            LinkedListMultimap<String, NodeRef> parere2atti = this.retrieveAtti(organo2results, spacesStore, atto2parere);
 
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(parere2atti), 2, false);
@@ -98,7 +99,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
      */
     @SuppressWarnings("unchecked")
     public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-            ArrayListMultimap<String, NodeRef> organo2atti,
+            LinkedListMultimap<String, NodeRef> organo2atti,
             Map<NodeRef, NodeRef> atto2parere) throws IOException {
         XWPFDocument document = new XWPFDocument(finalDocStream);
         int tableIndex = 0;

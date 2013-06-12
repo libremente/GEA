@@ -20,6 +20,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
@@ -67,7 +68,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
                 ResultSet attiResult = this.searchService.query(sp);
                 tipoAtto2results.put(tipoAtto, attiResult);
             }
-            ArrayListMultimap<String, NodeRef> tipoAtto2atti = this
+            LinkedListMultimap<String, NodeRef> tipoAtto2atti = this
                     .retrieveAtti(tipoAtto2results);
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager
@@ -89,9 +90,9 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
     }
 
-    private ArrayListMultimap<String, NodeRef> retrieveAtti(
+    private LinkedListMultimap<String, NodeRef> retrieveAtti(
             Map<String, ResultSet> tipoAtto2results) {
-        ArrayListMultimap<String, NodeRef> tipo2atti = ArrayListMultimap.create();
+        LinkedListMultimap<String, NodeRef> tipo2atti = LinkedListMultimap.create();
         for (String tipo : tipoAtto2results.keySet()) {
             ResultSet resultSet = tipoAtto2results.get(tipo);
             for (NodeRef atto : resultSet.getNodeRefs()) {
@@ -119,7 +120,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
      */
     @SuppressWarnings("unchecked")
     public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-            ArrayListMultimap<String, NodeRef> tipoAtto2atti) throws IOException {
+            LinkedListMultimap<String, NodeRef> tipoAtto2atti) throws IOException {
         XWPFDocument document = new XWPFDocument(finalDocStream);
         int tableIndex = 0;
         List<XWPFTable> tables = document.getTables();

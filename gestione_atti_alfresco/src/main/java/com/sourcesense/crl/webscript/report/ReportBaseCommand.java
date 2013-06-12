@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -41,6 +42,7 @@ import com.sourcesense.crl.webscript.report.util.JsonUtils;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 
 public abstract class ReportBaseCommand implements ReportCommand {
     
@@ -151,11 +153,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @param atto2child - NodeRef type Atto -> NodeRef type Commissione
      * @return
      */
-    protected ArrayListMultimap<String, NodeRef> retrieveAtti(
+    protected LinkedListMultimap<String, NodeRef> retrieveAtti(
             Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
             Map<NodeRef, NodeRef> atto2child) {
-        ArrayListMultimap<String, NodeRef> child2atti = ArrayListMultimap
-                .create();
+        LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
         for (String commissione : attoChild2results.keySet()) {
             ResultSet commissioneResults = attoChild2results.get(commissione);
             List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
@@ -244,7 +245,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      */
     protected void retrieveAttiFromList(List<NodeRef> nodeRefList,
             StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
-            ArrayListMultimap<String, NodeRef> child2atti, String child) {
+            LinkedListMultimap<String, NodeRef> child2atti, String child) {
         int resultLength = nodeRefList.size();
         for (int i = 0; i < resultLength; i++) {
             NodeRef childNodeRef = nodeRefList.get(i);
@@ -479,8 +480,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @return
      */
     protected Map<String, Integer> retrieveLenghtMapConditional(
-            ArrayListMultimap<String, NodeRef> commissione2atti, Boolean doubleCheck) {
-        Map<String, Integer> commissione2count = new HashMap<String, Integer>();
+            LinkedListMultimap<String, NodeRef> commissione2atti, Boolean doubleCheck) {
+        Map<String, Integer> commissione2count = new LinkedHashMap<String, Integer>();
         for (String commissione : commissione2atti.keySet()) {
             int count = 0;
             for (NodeRef currentAtto : commissione2atti.get(commissione)) {

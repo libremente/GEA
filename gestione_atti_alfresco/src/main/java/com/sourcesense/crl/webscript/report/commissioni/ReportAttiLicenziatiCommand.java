@@ -22,6 +22,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
@@ -79,7 +80,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 				commissione2results.put(commissione, currentResults);
 			}
 			Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
-			ArrayListMultimap<String, NodeRef> commissione2atti = this
+			LinkedListMultimap<String, NodeRef> commissione2atti = this
 					.retrieveAtti(commissione2results, spacesStore,
 							atto2commissione);
 
@@ -119,7 +120,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 	 */
 	@SuppressWarnings("unchecked")
 	public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-			ArrayListMultimap<String, NodeRef> commissione2atti,
+			LinkedListMultimap<String, NodeRef> commissione2atti,
 			Map<NodeRef, NodeRef> atto2commissione, DocxManager docxManager)
 			throws IOException {
 		XWPFDocument document = new XWPFDocument(finalDocStream);

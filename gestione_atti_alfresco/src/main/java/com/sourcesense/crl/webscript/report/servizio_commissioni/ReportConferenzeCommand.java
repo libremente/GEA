@@ -21,9 +21,11 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
+import java.util.LinkedHashMap;
 
 /**
  * V2 - Big Ok
@@ -50,7 +52,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
             String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
             String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
             /* query grouped by commissione */
-            Map<String, ResultSet> commissione2results = Maps.newHashMap();
+            Map<String, ResultSet> commissione2results = Maps.newLinkedHashMap();
             for (String commissione : this.commissioniJson) {
                 SearchParameters sp = new SearchParameters();
                 sp.addStore(spacesStore);
@@ -82,8 +84,8 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                 ResultSet currentResults = this.searchService.query(sp);
                 commissione2results.put(commissione, currentResults);
             }
-            Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
-            ArrayListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
+            Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
+            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMapConditional(commissione2atti, false), 3, false);
@@ -110,7 +112,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
      */
     @SuppressWarnings("unchecked")
     public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-            ArrayListMultimap<String, NodeRef> commissione2atti,
+            LinkedListMultimap<String, NodeRef> commissione2atti,
             Map<NodeRef, NodeRef> atto2commissione) throws IOException {
         XWPFDocument document = new XWPFDocument(finalDocStream);
         int tableIndex = 0;
