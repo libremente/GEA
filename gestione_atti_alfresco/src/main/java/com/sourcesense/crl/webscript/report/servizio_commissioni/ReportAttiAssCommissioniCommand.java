@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +19,11 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
+import java.util.LinkedHashMap;
 
 /**
  * V2 Big - OK
@@ -49,7 +48,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
             /* define sorting fields */
             String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
             String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
-            Map<String, ResultSet> commissione2results = Maps.newHashMap();
+            Map<String, ResultSet> commissione2results = Maps.newLinkedHashMap();
             /* execute guery grouped by Commissione */
             for (String commissione : this.commissioniJson) {
                 SearchParameters sp = new SearchParameters();
@@ -79,7 +78,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
 
-            Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
+            Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
             LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet

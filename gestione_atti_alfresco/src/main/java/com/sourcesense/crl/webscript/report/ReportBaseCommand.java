@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -446,7 +445,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      */
     protected Map<String, Integer> retrieveLenghtMap(
             Multimap<String, NodeRef> commissione2atti) {
-        Map<String, Integer> commissione2count = new HashMap<String, Integer>();
+        Map<String, Integer> commissione2count = new LinkedHashMap<String, Integer>();
         for (String commissione : commissione2atti.keySet()) {
             int count = commissione2atti.get(commissione).size();
             commissione2count.put(commissione, count);
@@ -463,7 +462,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      */
     protected Map<String, Integer> retrieveLenghtMap(
             Map<String, List<NodeRef>> commissione2atti) {
-        Map<String, Integer> commissione2count = new HashMap<String, Integer>();
+        Map<String, Integer> commissione2count = new LinkedHashMap<String, Integer>();
         for (String commissione : commissione2atti.keySet()) {
             int count = commissione2atti.get(commissione).size();
             commissione2count.put(commissione, count);

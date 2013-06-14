@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
+import java.util.LinkedHashMap;
 import org.alfresco.model.ContentModel;
 
 /**
@@ -47,7 +47,7 @@ public class ReportAudizioniCommissioniCommand extends ReportBaseCommand {
             String sortField1 = "@{" + CRL_ATTI_MODEL + "}tipoAttoCommissione";
             String sortField2 = "@{" + CRL_ATTI_MODEL + "}numeroAttoCommissione";
 
-            Map<String, ResultSet> commissione2results = Maps.newHashMap();
+            Map<String, ResultSet> commissione2results = Maps.newLinkedHashMap();
 
             for (String commissione : this.commissioniJson) {
                 SearchParameters sp = new SearchParameters();
@@ -71,7 +71,7 @@ public class ReportAudizioniCommissioniCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
 
-            Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
+            Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
             ArrayListMultimap<String, NodeRef> commissione2atti = this.retrieveConsultazioni(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet
