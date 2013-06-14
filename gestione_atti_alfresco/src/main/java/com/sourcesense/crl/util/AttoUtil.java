@@ -319,7 +319,7 @@ public class AttoUtil {
     	String abbinamentoType = "{"+CRL_ATTI_MODEL+"}"+ABBINAMENTO_TYPE;
     	
     	ResultSet abbinamentiNodes = searchService.query(attoNodeRef.getStoreRef(),
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Abbinamenti/*\" AND TYPE:\""+abbinamentoType+"\"");
+  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Abbinamenti/*\" AND TYPE:\""+abbinamentoType+"\" AND ISNULL:\"crlatti:dataDisabbinamento\"");
     	
     	//System.out.println((String) nodeService.getProperty(attoNodeRef, ContentModel.PROP_NAME));
 		
