@@ -15,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RowEditEvent;
 
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
@@ -475,6 +476,7 @@ public class EsameAulaController {
 		}
 	}
 
+	
 	public String salvaVotazione() {
 
 		String navigation = "";
@@ -597,8 +599,65 @@ public class EsameAulaController {
 			}
 		}
 	}
+	
 
-	public void totaleEmendPresentati() {
+	
+	public void updateAllegato(RowEditEvent event) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		Allegato allegato = (Allegato) event.getObject();
+
+		
+		if (Allegato.TESTO_ESAME_AULA_EMENDAMENTO
+				.equals(allegato.getTipologia())) {
+	
+			allegato.setTipoAllegato(Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
+			attoRecordServiceManager.updateAllegato(allegato);
+			attoBean.getLastPassaggio().getAula()
+			.setEmendamentiEsameAula(Clonator.cloneList(emendamentiList));
+	
+		} else if (Allegato.TIPO_ESAME_AULA_ALLEGATO
+				.equals(allegato.getTipologia())) {
+	
+			allegato.setTipoAllegato(Allegato.TIPO_ESAME_AULA_ALLEGATO);
+			attoRecordServiceManager.updateAllegato(allegato);
+						attoBean.getLastPassaggio().getAula()
+			.setAllegatiEsameAula(Clonator.cloneList(allegatiList));
+		} 
+			
+		
+	}
+
+
+
+	public void updateTestoAtto(RowEditEvent event) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		TestoAtto testoCom = (TestoAtto) event.getObject();
+		
+		
+		if (TestoAtto.TESTO_ESAME_AULA_VOTAZIONE
+				.equals(testoCom.getTipologia())){
+			
+					testoCom.setTipoAllegato(TestoAtto.TESTO_ESAME_AULA_VOTAZIONE);
+					attoRecordServiceManager.updateTestoAtto(testoCom);
+					attoBean.getLastPassaggio()
+					.getAula()
+					.setTestiAttoVotatoEsameAula(
+							Clonator.cloneList(testiAttoVotatoList));
+		}
+		
+	
+	}
+		
+		
+		public void totaleEmendPresentati() {
 
 		numEmendPresentatiTotale = 0;
 
@@ -853,7 +912,6 @@ public class EsameAulaController {
 			allegatoRet.setNome(fileName);
 			allegatoRet.setPubblico(currentFilePubblico);
 			allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
-
 			try {
 				allegatoRet = aulaServiceManager
 						.uploadAllegatoNoteAllegatiEsameAula(
@@ -866,8 +924,7 @@ public class EsameAulaController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			setCurrentFilePubblico(false);
+            setCurrentFilePubblico(false);
 			attoBean.getWorkingAula().getAllegatiEsameAula().add(allegatoRet);
 
 			allegatiList.add(allegatoRet);
@@ -907,6 +964,14 @@ public class EsameAulaController {
 		}
 	}
 
+
+	
+	
+	
+	
+	
+	
+	
 	public void addLink() {
 
 		if (nomeLink != null && !nomeLink.trim().equals("")) {

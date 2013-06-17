@@ -19,6 +19,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.print.attribute.standard.Severity;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RowEditEvent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
@@ -357,6 +358,40 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	
+	public void updateTestoAtto(RowEditEvent event) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		TestoAtto testoCom = (TestoAtto) event.getObject();
+	
+		testoCom.setTipoAllegato(TestoAtto.TESTO_PRESENTAZIONE_ASSEGNAZIONE);
+		attoRecordServiceManager.updateTestoAtto(testoCom);
+		attoBean.getAtto().setTestiAtto(
+				Clonator.cloneList(testiAttoList));
+			
+	}
+	
+	
+	public void updateAllegato(RowEditEvent event) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		Allegato allegato = (Allegato) event.getObject();
+		allegato.setTipoAllegato(Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
+		attoRecordServiceManager.updateAllegato(allegato);
+		attoBean.getAtto()
+		.setAllegati(Clonator.cloneList(allegatiList));
+			
+
+	}
+
+	
+	
 	public void handleFirmatarioChange() {
 
 		for (Firmatario firmatario : firmatari) {

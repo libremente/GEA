@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RowEditEvent;
 
 import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
@@ -279,8 +280,7 @@ public class EsameCommissioniController {
 
 			}
 
-			
-	    }else {
+		} else {
 
 			esitiVotazione.add("Parere favorevole");
 			esitiVotazione.add("Parere favorevole con osservazioni");
@@ -288,25 +288,23 @@ public class EsameCommissioniController {
 			esitiVotazione.add("Parere negativo con osservazioni");
 
 		}
-		
-		
-		if(commTemp.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)){
-			
+
+		if (commTemp.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)) {
+
 			quorumVotazione.add("Palese per alzata di mano");
 			quorumVotazione.add("Palese per appello nominale");
 			quorumVotazione.add("Segreta");
-			
+
 			esitiVotazione.clear();
 			esitiVotazione.add("Approvato");
 			esitiVotazione.add("Approvato non passaggio all'esame");
 			esitiVotazione.add("Respinto");
-			
-		}else{
-			
-			
+
+		} else {
+
 			quorumVotazione.add("Maggioranza");
 			quorumVotazione.add("Unanimità");
-			
+
 		}
 
 		if (commTemp == null) {
@@ -788,15 +786,14 @@ public class EsameCommissioniController {
 
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(commissioniList);
-		
+
 		if (checkStatiRelatori()) {
-			
+
 			commissioneUser.setStato(Commissione.STATO_NOMINATO_RELATORE);
 		} else {
-			
+
 			commissioneUser.setStato(Commissione.STATO_IN_CARICO);
 		}
-		
 
 		if (canChangeStatoAtto()) {
 
@@ -1087,6 +1084,61 @@ public class EsameCommissioniController {
 			}
 		}
 	}
+
+	public void updateAllegato(RowEditEvent event) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		Allegato allegato = (Allegato) event.getObject();
+
+	//CLAUSOLA COMMISSIONI	
+		if (Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA
+				.equals(allegato.getTipologia())) {
+	
+			allegato.setTipoAllegato(Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
+			attoRecordServiceManager.updateAllegatoCommissione(allegato);
+			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
+			.setTestiClausola(Clonator.cloneList(testiClausolaList));
+			
+	//TESTO ATTO COMITATO RISTRETTO
+		} else if (Allegato.TESTO_ESAME_COMMISSIONE_COMITATO
+				.equals(allegato.getTipologia())) {
+	
+			allegato.setTipoAllegato(Allegato.TESTO_ESAME_COMMISSIONE_COMITATO);
+			attoRecordServiceManager.updateAllegato(allegato);
+			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
+			.setAllegatiNoteEsameCommissioni(
+					Clonator.cloneList(testiComitatoRistrettoList));
+	
+	// EMENDAMENTI COMMISSIONI
+		} else if (Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO
+				.equals(allegato.getTipologia())) {
+	
+			allegato.setTipoAllegato(Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO);
+			attoRecordServiceManager.updateAllegatoCommissione(allegato);
+			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
+			.setEmendamentiEsameCommissioni(
+					Clonator.cloneList(emendamentiList));
+		}
+	// ALLEGATI COMMISSIONI	
+		else if (Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO
+				.equals(allegato.getTipologia())) {
+			
+			allegato.setTipoAllegato(Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
+			attoRecordServiceManager.updateAllegato(allegato);
+			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
+			.setAllegati(Clonator.cloneList(allegatiList));
+			
+		}
+			
+		
+	}
+
+
+	
+	
 
 	public void confermaFineLavori() {
 		commissioneUser.setDataFineLavoriComitato(getDataFineLavori());
@@ -1577,6 +1629,26 @@ public class EsameCommissioniController {
 		}
 	}
 
+	
+	public void updateTestoAttoVotato(RowEditEvent event) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		TestoAtto allegato = (TestoAtto) event.getObject();
+	
+		allegato.setTipoAllegato(TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
+		attoRecordServiceManager.updateTestoAtto(allegato);
+		attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
+		.setTestiAttoVotatoEsameCommissioni(
+				Clonator.cloneList(testiAttoVotatoList));
+
+	
+		}
+	
+	
+	
 	public void cambiaRuoloInReferente() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -2125,7 +2197,6 @@ public class EsameCommissioniController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-		
 
 		for (Allegato element : allegatiList) {
 
@@ -2368,16 +2439,13 @@ public class EsameCommissioniController {
 		this.commissioneUser.setDataCalendarizzazione(dataCalendarizzazione);
 
 	}
-	
-	
-	
 
 	public Date getDataRis() {
 		return this.commissioneUser.getDataRis();
 	}
 
 	public void setDataRis(Date dataRis) {
-		this.commissioneUser.setDataRis ( dataRis);
+		this.commissioneUser.setDataRis(dataRis);
 	}
 
 	public String getNumeroRis() {
@@ -2385,7 +2453,7 @@ public class EsameCommissioniController {
 	}
 
 	public void setNumeroRis(String numeroRis) {
-		this.commissioneUser.setNumeroRis ( numeroRis);
+		this.commissioneUser.setNumeroRis(numeroRis);
 	}
 
 	public Date getDataSedutaContinuazioneLavori() {
