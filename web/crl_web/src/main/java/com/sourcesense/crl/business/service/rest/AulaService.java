@@ -148,9 +148,7 @@ public class AulaService {
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream,
 			Allegato allegato, String tipologia) {
 
-		
-
-		try {
+			try {
 
 			WebResource webResource = client.resource(url);
 			FormDataMultiPart part = new FormDataMultiPart();
@@ -158,6 +156,7 @@ public class AulaService {
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
 			part.field("passaggio", allegato.getPassaggio()); 
+			part.field("pubblico", allegato.isPubblico()+"");
 			ClientResponse response = webResource
 					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
 					.header("Accept-Charset", "UTF-8")

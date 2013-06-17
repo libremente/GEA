@@ -167,6 +167,50 @@ public class AttoRecordService {
 
 	}
 	
+	public Allegato updateAllegatoCommissione(String url,Allegato allegato) {
+		
+//		Allegato allegatoRet = null; 
+		
+		WebResource webResource = client.resource(url);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+				false);
+		
+		try {
+			String json = objectMapper.writeValueAsString(allegato);
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+			
+			if (response.getStatus() != 200) {
+
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+
+			}
+			/*objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,true);
+			String responseMsg = response.getEntity(String.class);
+			
+			allegatoRet = objectMapper.readValue(responseMsg, Allegato.class);
+			allegato.setId(allegatoRet.getId());
+*/
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		
+		return allegato;
+	}
+	
 		
 	public Allegato updateAllegato(String url,Allegato allegato) {
 		
@@ -176,15 +220,11 @@ public class AttoRecordService {
 		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
 				false);
 		
-
 		try {
 			String json = objectMapper.writeValueAsString(allegato);
 			ClientResponse response = webResource.type(
 					MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
-
-			
-			
 			
 			if (response.getStatus() != 200) {
 
@@ -193,12 +233,11 @@ public class AttoRecordService {
 						+ ": Alfresco non raggiungibile ");
 
 			}
-			
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+					true);
 			String responseMsg = response.getEntity(String.class);
 			allegatoRet = objectMapper.readValue(responseMsg, Allegato.class);
 			allegato.setId(allegatoRet.getId());
-
-			
 
 		} catch (JsonMappingException e) {
 
