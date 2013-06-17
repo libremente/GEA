@@ -68,8 +68,13 @@
 											<p:column>
 												<h:outputLabel for="isPubblicoEmendamento"
 													value="Pubblica su Internet: " />
-												<p:selectBooleanCheckbox id="isPubblicoEmendamentoAllegato"
+												<!-- <p:selectBooleanCheckbox id="isPubblicoEmendamentoAllegato"
 													value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+													<p:ajax event="change" immediate="true"></p:ajax>
+												</p:selectBooleanCheckbox> -->
+												
+												<p:selectBooleanCheckbox id="isPubblicoEmendamentoAllegato"
+													value="#{esameCommissioniController.currentFilePubblico}">
 													<p:ajax event="change" immediate="true"></p:ajax>
 												</p:selectBooleanCheckbox>
 											</p:column>
@@ -102,7 +107,7 @@
 											<p:column>
 												<h:outputLabel for="isPubblicoClausola" value="Pubblica su Internet: " />
 												<p:selectBooleanCheckbox id="isPubblicoClausolaAllegato"
-													value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+													value="#{esameCommissioniController.currentFilePubblico}">
 													<p:ajax event="change" immediate="true"></p:ajax>
 												</p:selectBooleanCheckbox>
 											</p:column>
@@ -146,7 +151,8 @@
 									editable="true">
 
 									<p:ajax event="rowEdit" update="@this"
-										listener="#{fileDownloadController.fileUpdate}" />
+										listener="#{esameCommissioniController.updateAllegato}" />
+										
 
 									<p:column sortBy="#{emendamento.nome}">
 										<f:facet name="header">Emendamento</f:facet>
@@ -501,8 +507,9 @@
 									var="testoClausola" styleClass="generalInfoTab grey-text"
 									editable="true">
 
+									
 									<p:ajax event="rowEdit" update="@this"
-										listener="#{fileDownloadController.fileUpdate}" />
+										listener="#{esameCommissioniController.updateAllegato}" />
 
 
 									<p:column sortBy="#{testoClausola.nome}">

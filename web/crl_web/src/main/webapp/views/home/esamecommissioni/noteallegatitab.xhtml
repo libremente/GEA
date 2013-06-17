@@ -137,8 +137,12 @@
 									var="allegato" styleClass="generalInfoTab grey-text"
 									editable="true">
 
+									
 									<p:ajax event="rowEdit" update="@this"
-										listener="#{fileDownloadController.fileUpdate}" />
+										listener="#{esameCommissioniController.updateAllegato}" />
+										
+										
+
 
 									<p:column sortBy="#{allegato.nome}">
 										<f:facet name="header">Descrizione Allegato</f:facet>

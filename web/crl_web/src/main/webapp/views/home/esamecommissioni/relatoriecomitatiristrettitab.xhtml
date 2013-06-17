@@ -516,6 +516,7 @@
 						var="componente" styleClass="generalInfoTab grey-text"
 						editable="true">
 
+
 						<p:column headerText="Componenti"
 							sortBy="#{componente.descrizione}">
 
@@ -620,7 +621,7 @@
 						editable="true">
 
 						<p:ajax event="rowEdit" update="@this"
-							listener="#{fileDownloadController.fileUpdate}" />
+							listener="#{esameCommissioniController.updateAllegato}" />
 
 						<p:column
 							sortBy="#{of:formatDate(testoComitato.dataSeduta,'dd/MM/yyyy')}">

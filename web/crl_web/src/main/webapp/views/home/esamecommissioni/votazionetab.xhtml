@@ -267,8 +267,9 @@
 						var="testoAttoVotato" styleClass="generalInfoTab grey-text"
 						editable="true">
 
-						<p:ajax event="rowEdit" update="@this"
-							listener="#{fileDownloadController.fileUpdate}" />
+						
+							<p:ajax event="rowEdit" update="@this"
+										listener="#{esameCommissioniController.updateTestoAttoVotato}" />
 
 						<p:column sortBy="#{testoAttoVotato.nome}">
 							<f:facet name="header">Testo Dell'Atto</f:facet>
