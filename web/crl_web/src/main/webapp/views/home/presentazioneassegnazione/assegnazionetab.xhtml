@@ -489,9 +489,9 @@
 									value="#{presentazioneAssegnazioneAttoController.testiAttoList}"
 									var="testoAtto" styleClass="generalInfoTab grey-text"
 									editable="true">
-
+										
 									<p:ajax event="rowEdit" update="@this"
-										listener="#{fileDownloadController.fileUpdate}" />
+									listener="#{presentazioneAssegnazioneAttoController.updateTestoAtto}" />
 
 									<p:column sortBy="#{testoAtto.nome}">
 										<f:facet name="header">Testo Dell'Atto</f:facet>
