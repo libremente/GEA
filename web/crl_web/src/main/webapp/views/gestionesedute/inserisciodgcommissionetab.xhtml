@@ -125,29 +125,29 @@
 
 				<f:facet name="header">
 					<p:row>
-						<p:column>Soggetto Partecipante</p:column>
-						<p:column>Previsto</p:column>
-						<p:column>Discusso</p:column>
-						<p:column></p:column>
+						<p:column style="text-align:center">Soggetto Partecipante</p:column>
+						<p:column style="text-align:center">Previsto</p:column>
+						<p:column style="text-align:center">Discusso</p:column>
+						<p:column style="text-align:center"></p:column>
 					</p:row>
 				</f:facet>
 				<p:row>
-					<p:column>
+					<p:column style="text-align:center">
 						<p:inputText
-							value="#{gestioneSeduteController.soggettoPartecipante}"  size="50"/>
+							value="#{gestioneSeduteController.soggettoPartecipante}"  size="80"/>
 					</p:column>
 
-					<p:column>
+					<p:column style="text-align:center">
 						<p:selectBooleanCheckbox
 							value="#{gestioneSeduteController.previsto}" />
 					</p:column>
 
-					<p:column>
+					<p:column style="text-align:center">
 						<p:selectBooleanCheckbox
 							value="#{gestioneSeduteController.discusso}" />
 					</p:column>
 
-					<p:column>
+					<p:column style="text-align:center">
 						<p:commandButton value="Aggiungi"
 							action="#{gestioneSeduteController.addAudizione}"
 							id="addAudizione" update="listaAudizioni , inserisciOdgMsg"
