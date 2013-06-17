@@ -131,10 +131,9 @@
 								<p:dataTable id="listaAllegati"
 									value="#{esameAulaController.allegatiList}" var="allegato"
 									styleClass="generalInfoTab grey-text" editable="true">
-
+										
 									<p:ajax event="rowEdit" update="@this"
-										listener="#{fileDownloadController.fileUpdate}" />
-
+										listener="#{esameAulaController.updateAllegato}" />
 									<p:column sortBy="#{allegato.nome}">
 										<f:facet name="header">Descrizione Allegato</f:facet>
 										<h:outputText value="#{allegato.nome}" />

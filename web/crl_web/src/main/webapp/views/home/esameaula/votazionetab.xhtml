@@ -293,8 +293,9 @@
 						<p:dataTable id="listaTestiAtto"
 							value="#{esameAulaController.testiAttoVotatoList}"
 							var="testoAttoVotato" styleClass="generalInfoTab grey-text" editable="true">
-							
-							<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+					
+							<p:ajax event="rowEdit" update="@this"
+										listener="#{esameAulaController.updateTestoAtto}" />
 
 							<p:column sortBy="#{testoAttoVotato.nome}">
 								<f:facet name="header">Testo Dell'Atto</f:facet>

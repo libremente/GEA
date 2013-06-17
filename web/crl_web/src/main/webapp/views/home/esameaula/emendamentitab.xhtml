@@ -94,7 +94,8 @@
 								value="#{esameAulaController.emendamentiList}" var="emendamento"
 								styleClass="generalInfoTab grey-text" editable="true">
 								
-								<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+								<p:ajax event="rowEdit" update="@this"
+										listener="#{esameAulaController.updateAllegato}" />
 
 								<p:column sortBy="#{emendamento.nome}">
 									<f:facet name="header">Emendamento</f:facet>
