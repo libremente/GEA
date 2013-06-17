@@ -48,6 +48,13 @@ public class AttoRecordServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_update_allegato", null), allegato);
 	}
 	
+	public Allegato updateAllegatoCommissione(Allegato allegato) {
+
+		return attoRecordService.updateAllegatoCommissione(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_update_allegato", null), allegato);
+	}
+	
+	
 	public TestoAtto updateTestoAtto(TestoAtto testoAtto) {
 
 		return attoRecordService.updateTestoAtto(urlBuilder.buildAlfrescoURL(
