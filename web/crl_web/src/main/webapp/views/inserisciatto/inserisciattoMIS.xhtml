@@ -9,7 +9,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-
 <h:form enctype="multipart/form-data">
 
 
@@ -192,11 +191,14 @@
 						value="Commissione competente: " />
 				</p:column>
 				<p:column colspan="3" style="text-align:left;">
-					<p:selectOneMenu id="commissionecomp"
+										
+					<p:selectOneMenu id="commissionecomp" 
 						value="#{inserisciMISController.commissioneCompetente}">
 						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
-						<f:selectItems value="#{inserisciMISController.commissioni}" />
-
+						<f:selectItems var="commissione"
+							itemLabel="#{commissione}"
+							itemValue="#{commissione}"
+							value="#{inserisciMISController.commissioni}" />
 					</p:selectOneMenu>
 				</p:column>
 
@@ -354,9 +356,11 @@
 			<p:row>
 
 				<p:column colspan="2" style="text-align:left;">
-					<p:commandButton ajax="false" update="insertattopanel"
-						disabled="#{navigationBean.isMISDisabled()}" id="insertattobtn"
-						value="Salva" action="#{inserisciMISController.inserisciAtto}" />
+					<p:commandButton ajax="false" 
+						id="insertattobtn" value="Salva"  update="insertattopanel"
+						disabled="#{navigationBean.isMISDisabled()}"
+						actionListener="#{inserisciMISController.inserisciAtto}" />
+						
 				</p:column>
 			</p:row>
 
@@ -466,4 +470,5 @@ if (("#{attoBean.getAtto()}").length) {
 };
 
 </script> -->
+
 </html>
