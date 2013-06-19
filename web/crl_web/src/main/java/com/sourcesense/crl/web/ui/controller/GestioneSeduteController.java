@@ -318,8 +318,10 @@ public class GestioneSeduteController {
 
 	public void removeFromDateSedutaList(Date dataSeduta) {
 
+		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+		
 		for (String element : dateSeduteList) {
-			if (dataSeduta.equals(element)) {
+			if (formatter.format(dataSeduta).equals(element)) {
 				dateSeduteList.remove(element);
 				break;
 			}
@@ -349,9 +351,11 @@ public class GestioneSeduteController {
 			}
 		}
 	}
+	
 
 	public String dettaglioOdg() {
 
+	
 		FacesContext context = FacesContext.getCurrentInstance();
 		
 		UserBean userBean = ((UserBean) context.getExternalContext()
@@ -453,10 +457,11 @@ public class GestioneSeduteController {
 		if (getDataSeduta() != null) {
 
 			Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Format formatNew = new SimpleDateFormat("dd/MM/yyyy");
 			Seduta seduta = null;
 			
 			seduta = seduteServiceManager.getSeduta(userBean
-					.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),"legislaturaCorrente");
+					.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente);
 			
 			// Inserimento
 			if ( seduta == null) {
@@ -475,7 +480,7 @@ public class GestioneSeduteController {
 				setSedutaSelected(seduta);
 				seduteListAll.add(seduta);
 				seduteList.add(seduta);
-				dateSeduteList.add(formatter.format(seduta.getDataSeduta()));
+				dateSeduteList.add(formatNew.format(seduta.getDataSeduta()));
 				seduteListAll = seduteServiceManager.getSedute(userBean
 						.getUser().getSessionGroup().getNome(),legislaturaCorrente);
 
@@ -496,6 +501,7 @@ public class GestioneSeduteController {
 				gestioneSedute.setSeduta(seduta);
 				seduta = seduteServiceManager.updateSeduta(gestioneSedute);
 				setSedutaSelected(seduta);
+
 				}
 				
 			
