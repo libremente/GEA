@@ -43,8 +43,9 @@
 				<p:commandButton id="confirmSeduta" value="Conferma"
 					oncomplete="sedutaDialog.hide()"
 					action="#{gestioneSeduteController.removeSeduta}"
-					update=":gestioneSeduteForm" />
-				<p:commandButton id="declineSeduta" value="Annulla"
+					update ="listaSedute"/>	
+					<!-- update=":gestioneSeduteForm" /> -->
+					<p:commandButton id="declineSeduta" value="Annulla"
 					onclick="sedutaDialog.hide()" type="button" />
 
 			</p:confirmDialog>
@@ -415,7 +416,7 @@
 
                     <p:row>
 						<p:column colspan="4">
-							<p:commandButton id="caricaVrblBtn" value="Carica Verbale" disabled="#{ gestioneSeduteController.sedutaSelected.verbaliList.size() >= 1}"
+							<p:commandButton id="caricaVrblBtn" value="Carica Verbale" disabled="#{(gestioneSeduteController.sedutaSelected.verbaliList.size() >= 1) || (gestioneSeduteController.isDisableModifiche())}"
 								oncomplete="uploadVerbaleDialog.show()">
 							</p:commandButton>
 						</p:column>
@@ -596,7 +597,8 @@
 							<p>
 								<p:commandButton value="Aggiungi / Salva"
 									action="#{gestioneSeduteController.salvaAggiungiSeduta}"
-									update=":gestioneSeduteForm" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
+									update="listaSedute,:gestioneSeduteForm:gestioneSedute:dettagliSeduta" disabled="#{(gestioneSeduteController.isDisableModifiche())}">
+									<!-- update=":gestioneSeduteForm" /> -->
 								</p:commandButton>
 							</p>
 						</p:column>
