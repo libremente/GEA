@@ -156,8 +156,7 @@
 
 
 				<p:column style="width: 25%; text-align:left;">
-				<h:outputText 
-						value="Nomina Relatori: " />
+					<h:outputText value="Nomina Relatori: " />
 				</p:column>
 
 				<p:column style="width: 25%; text-align:left;">
@@ -179,7 +178,7 @@
 							value="#{inserisciMISController.relatoriList}" />
 					</p:selectOneMenu>
 				</p:column>
-				
+
 				<p:column></p:column>
 
 
@@ -191,14 +190,19 @@
 						value="Commissione competente: " />
 				</p:column>
 				<p:column colspan="3" style="text-align:left;">
-										
-					<p:selectOneMenu id="commissionecomp" 
-						value="#{inserisciMISController.commissioneCompetente}">
+
+					<p:selectOneMenu id="commissionecomp"
+						value="#{inserisciMISController.commissioneCompetente}" >
 						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
-						<f:selectItems var="commissione"
-							itemLabel="#{commissione}"
+						<f:selectItems value="#{inserisciMISController.commissioni}" />
+
+						<f:selectItems var="commissione" 
+						    itemLabel="#{commissione}"
 							itemValue="#{commissione}"
-							value="#{inserisciMISController.commissioni}" />
+							 value="#{inserisciMISController.commissioni}"  />
+							
+							
+							
 					</p:selectOneMenu>
 				</p:column>
 
@@ -236,7 +240,7 @@
 			</p:row>
 
 
-			
+
 
 			<p:row>
 				<p:column style="width: 25%; text-align:left;">
@@ -244,23 +248,23 @@
 						value="Data Approvazione Progetto:" />
 				</p:column>
 
-				<p:column  style="text-align:left;">
+				<p:column style="text-align:left;">
 					<p:calendar size="10" locale="it" id="dataapprovazioneprogetto"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataApprovazioneProgetto}" />
 				</p:column>
-				
+
 				<p:column style="width: 25%; text-align:left;">
 					<h:outputLabel for="dataTrasmissioneUdP"
 						value="Data trasmissione a UdP:" />
 				</p:column>
 
-				<p:column  style="text-align:left;">
+				<p:column style="text-align:left;">
 					<p:calendar size="10" locale="it" id="dataTrasmissioneUdP"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataTrasmissioneUdP }" />
 				</p:column>
-				
+
 			</p:row>
 
 			<p:row>
@@ -356,11 +360,11 @@
 			<p:row>
 
 				<p:column colspan="2" style="text-align:left;">
-					<p:commandButton ajax="true" 
-						id="insertattobtn" value="Salva"  update="insertattopanel"
+					<p:commandButton  id="insertattobtn" value="Salva"
+						update="insertattopanel"
 						disabled="#{navigationBean.isMISDisabled()}"
 						actionListener="#{inserisciMISController.inserisciAtto}" />
-						
+
 				</p:column>
 			</p:row>
 

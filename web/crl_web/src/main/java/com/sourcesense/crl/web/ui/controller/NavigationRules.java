@@ -199,7 +199,8 @@ public class NavigationRules {
 				|| attoBean.getTipoAtto().equals("PRE")
 				|| attoBean.getTipoAtto().equals("REF")
 				|| attoBean.getTipoAtto().equals("PDL")
-				|| attoBean.getTipoAtto().equals("DOC"))
+				|| attoBean.getTipoAtto().equals("DOC")
+				|| attoBean.getTipoAtto().equals("REL"))
 
 		{
 			return true;

@@ -109,6 +109,20 @@ public class PersonaleServiceManager implements ServiceManager{
 		}
 		return firmatari;
 	}
+	
+	
+	public List<String> getAllFirmatariStorici(String legislatura) {
+		List<String> firmatari = new ArrayList<String>();
+
+		List<Firmatario> listFirmatari = personaleService.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_all",new String[]{legislatura}));
+
+		for (Firmatario firmatario : listFirmatari) {
+
+			firmatari.add(firmatario.getDescrizione());
+
+		}
+		return firmatari;
+	}
 
 	
 	public List<String>  getAllRelatore() {

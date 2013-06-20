@@ -365,7 +365,7 @@ public class SearchAttoController implements Serializable{
 
 		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
-		setFirmatari(personaleServiceManager.getAllFirmatario());
+		
 		setRelatori(personaleServiceManager.getAllRelatori());
 		setStati(statoAttoServiceManager.findAll());
 		setTipiChiusura(tipoChiusuraServiceManager.findAll());
@@ -374,7 +374,8 @@ public class SearchAttoController implements Serializable{
 		setLegislature(legislaturaServiceManager.list());
 		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
 		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
-		//atto.setLegislatura("IX");
+		setFirmatari(personaleServiceManager.getAllFirmatariStorici(atto.getLegislatura()));
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));

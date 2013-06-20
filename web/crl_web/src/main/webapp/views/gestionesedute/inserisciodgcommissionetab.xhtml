@@ -134,7 +134,7 @@
 				<p:row>
 					<p:column style="text-align:center">
 						<p:inputText
-							value="#{gestioneSeduteController.soggettoPartecipante}"  size="80"/>
+							value="#{gestioneSeduteController.soggettoPartecipante}"  size="85"/>
 					</p:column>
 
 					<p:column style="text-align:center">
@@ -164,8 +164,18 @@
 				styleClass="generalInfoTab grey-text" editable="true">
 
 				<p:column headerText="Soggetto Partecipante">
-									#{audizione.soggettoPartecipante}
-									</p:column>
+									
+					<p:cellEditor>
+						<f:facet name="output">
+							#{audizione.soggettoPartecipante}
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText
+							value="#{audizione.soggettoPartecipante}"  size="85"/>
+						</f:facet>
+					</p:cellEditor>
+				
+				</p:column>
 
 
 				<p:column headerText="Previsto">
