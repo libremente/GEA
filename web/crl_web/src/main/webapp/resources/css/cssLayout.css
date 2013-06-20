@@ -23,7 +23,9 @@
 #footer_menu li a,footer_menu li a:visited,footer_menu li a:hover,footer_menu li a:active{text-decoration:none;}
 
 
-
+.attiSindacatoSelect, .ui-selectonemenu-panel {
+    width: 450px;
+}
 
 
  #left {

@@ -1122,10 +1122,10 @@
 
 
 								<p:column>
-									<p:selectOneMenu id="numAttoSindacato" style="width:200px"
-										value="#{gestioneSeduteController.idAttoSindacato}">
+									<p:selectOneMenu id="numAttoSindacato" style="width:200px;left:0 !important"
+										value="#{gestioneSeduteController.idAttoSindacato}" styleClass="attiSindacatoSelect">
 										<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
-										<f:selectItems itemValue="#{attoSind.idAtto}" var="attoSind"
+										<f:selectItems  itemValue="#{attoSind.idAtto}" var="attoSind"
 											value="#{gestioneSeduteController.numeriAttoSindacato}"
 											itemLabel="#{attoSind.numeroAtto} - #{attoSind.oggettoAtto}" />
 									</p:selectOneMenu>
