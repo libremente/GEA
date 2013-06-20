@@ -43,6 +43,21 @@
 					</p:confirmDialog>
 
 
+					<p:confirmDialog id="confirmRitiroFirmatari"
+					message="Sei sicuro di voler confermare Ritiro per mancanza firmatari?"
+					header="Conferma Ritiro" severity="alert"
+					widgetVar="rititrofirmatarioDialog">
+
+					<p:commandButton id="confirmRitiro" value="Conferma"
+						oncomplete="rititrofirmatarioDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}"/>
+					<p:commandButton id="declineRitiroFirmatari" value="Annulla"
+						onclick="rititrofirmatarioDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+					
+			
+
 					<b> <h:outputLabel for="datapresaincarico"
 							value="Data presa in carico: " /> <p:calendar size="10"
 							locale="it" id="datapresaincarico" pattern="dd/MM/yyyy"
@@ -512,8 +527,8 @@
 
 			<p:row>
 				<p:column>
-					<p:commandButton value="Ritiro per mancanza firmatari"
-						action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}" />
+					
+						<p:commandButton value="Ritiro per mancanza firmatari" oncomplete="rititrofirmatarioDialog.show()" />
 				</p:column>
 
 				<p:column colspan="5">
