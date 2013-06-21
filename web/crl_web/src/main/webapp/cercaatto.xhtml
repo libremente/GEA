@@ -280,9 +280,9 @@
 									<p:selectOneMenu id="firmatario"
 										value="#{searchAttoController.firmatario}">
 										<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
-										<f:selectItems value="#{searchAttoController.relatori}"
-											var="relatore" itemLabel="#{relatore.descrizione}"
-											itemValue="#{relatore.descrizione}" />
+										<f:selectItems value="#{searchAttoController.firmatari}"
+											var="relatore" itemLabel="#{relatore}"
+											itemValue="#{relatore}" />
 									</p:selectOneMenu>
 										
 								</p:column>
@@ -294,9 +294,9 @@
 									<p:selectOneMenu id="primoFirmatario"
 										value="#{searchAttoController.primofirmatario}">
 										<f:selectItem itemLabel="Scegli Primo Firmatario" itemValue="" />
-										<f:selectItems value="#{searchAttoController.relatori}"
-											var="relatore" itemLabel="#{relatore.descrizione}"
-											itemValue="#{relatore.descrizione}" />
+										<f:selectItems value="#{searchAttoController.firmatari}"
+											var="relatore" itemLabel="#{relatore}"
+											itemValue="#{relatore}" />
 									</p:selectOneMenu>
 								</p:column>
 
