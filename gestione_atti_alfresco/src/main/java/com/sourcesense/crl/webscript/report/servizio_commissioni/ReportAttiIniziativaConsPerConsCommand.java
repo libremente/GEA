@@ -19,7 +19,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
-import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
@@ -56,7 +56,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
             sp.addStore(spacesStore);
             sp.setLanguage(SearchService.LANGUAGE_LUCENE);
             String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\" AND TYPE:\""
-                    + "crlatti:atto\"";
+                    + "crlatti:atto\" AND @crlatti\\:tipoIniziativa:\"01_ATTO DI INIZIATIVA CONSILIARE\"";
             if (this.tipologiaFirma.equals("primo")) {
                 query = query + " AND @crlatti\\:primoFirmatario:\""
                         + this.firmatario + "\"";
@@ -64,7 +64,13 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
             } else if (this.tipologiaFirma.equals("originari")) {
                 query = query + " AND @crlatti\\:firmatariOriginari:\""
                         + this.firmatario + "\"";
+            } else if (this.tipologiaFirma.equals("aggiunti")) {
+                query = query + " AND @crlatti\\:firmatari:\""
+                        + this.firmatario + "\"";
+                query = query + " AND NOT @crlatti\\:firmatariOriginari:\""
+                        + this.firmatario + "\"";
             }
+
             if (!dataAssegnazioneCommReferenteDa.equals("*")
                     || !dataAssegnazioneCommReferenteDa.equals("*")) {
                 query = query
@@ -84,7 +90,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
             ResultSet attiResult = this.searchService.query(sp);
             firmatario2results.put(this.firmatario, attiResult);
 
-            ArrayListMultimap<String, NodeRef> firmatario2atti = this.retrieveAtti(firmatario2results);
+            LinkedListMultimap<String, NodeRef> firmatario2atti = this.retrieveAtti(firmatario2results);
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(firmatario2atti), 2, false);
             // convert to input stream
@@ -102,9 +108,9 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
     }
 
-    protected ArrayListMultimap<String, NodeRef> retrieveAtti(
+    protected LinkedListMultimap<String, NodeRef> retrieveAtti(
             Map<String, ResultSet> attoChild2results) {
-        ArrayListMultimap<String, NodeRef> child2atti = ArrayListMultimap.create();
+        LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
         for (String firmatario : attoChild2results.keySet()) {
             ResultSet firmatarioResults = attoChild2results.get(firmatario);
             List<NodeRef> nodeRefList = firmatarioResults.getNodeRefs();
@@ -123,7 +129,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
      */
     @SuppressWarnings("unchecked")
     public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,
-            ArrayListMultimap<String, NodeRef> firmatario2atti)
+            LinkedListMultimap<String, NodeRef> firmatario2atti)
             throws IOException {
         XWPFDocument document = new XWPFDocument(finalDocStream);
         int tableIndex = 0;
@@ -139,7 +145,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
                 if (tipoAtto.length() > 4) {
                     tipoAtto = tipoAtto.substring(4);
                 }
-                
+
                 String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
                 String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
 
@@ -149,7 +155,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
                 Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(attoProperties, "dataAssegnazioneCommissioneReferente");
 
                 ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
-                String commReferente = this.renderList(commReferenteList);          
+                String commReferente = this.renderList(commReferenteList);
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
                 String commConsultiva = this.renderList(commConsultivaList);
