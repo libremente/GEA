@@ -62,52 +62,12 @@
             var gestioneAttiFolderNode = search.luceneSearch(gestioneAttiLuceneQuery)[0];
             legislaturaFolderNode = gestioneAttiFolderNode.createFolder(legislatura);
         }
-		
-        //creazione spazio anno
-        var annoPath = legislaturaPath + "/cm:" + search.ISO9075Encode(anno);
-        var annoLuceneQuery = "PATH:\""+annoPath+"\"";
-        var annoResults = search.luceneSearch(annoLuceneQuery);
-        var annoFolderNode = null;
-        if(annoResults!=null && annoResults.length>0){
-            annoFolderNode = annoResults[0];
-        } else {
-            annoFolderNode = legislaturaFolderNode.createFolder(anno);
-        }
-		
-        //creazione spazio mese
-        var mesePath = annoPath + "/cm:" + search.ISO9075Encode(mese);
-        var meseLuceneQuery = "PATH:\""+mesePath+"\"";
-        var meseResults = search.luceneSearch(meseLuceneQuery);
-        var meseFolderNode = null;
-        if(meseResults!=null && meseResults.length>0){
-            meseFolderNode = meseResults[0];
-        } else {
-            meseFolderNode = annoFolderNode.createFolder(mese);
-        }
-		
-	
-        // creazione spazio "tipo" con copia dello space template ContenitoreAtto. 
-        // Nello space sono presenti le regole necessarie alla creazione degli xml di export
-        // verso il sistema di gestione Atti Indirizzo
-        var tipoPath = mesePath + "/cm:" + search.ISO9075Encode(tipoAtto);
-        var tipoLuceneQuery = "PATH:\""+tipoPath+"\"";
-        var tipoResults = search.luceneSearch(tipoLuceneQuery);
-        var tipoFolderNode = null;
-        if(tipoResults!=null && tipoResults.length>0){
-            tipoFolderNode = tipoResults[0];
-        } else {
-            var contenitoreAttoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:ContenitoreAtto\"";
-            var contenitoreAttoSpaceTemplateNode = search.luceneSearch(contenitoreAttoSpaceTemplateQuery)[0];
-            tipoFolderNode = contenitoreAttoSpaceTemplateNode.copy(meseFolderNode,true);
-            tipoFolderNode.name = tipoAtto;
-            tipoFolderNode.save();
-        }
-		
-        //verifica esistenza del folder dell'atto
-        var attoPath = tipoPath + "/cm:" + search.ISO9075Encode(numeroAtto+""+estensioneAtto);
+        
+        //verifica esistenza del folder dell'atto 
+        var attoPath = legislaturaPath + "/*/*" + "/cm:" + search.ISO9075Encode(tipoAtto) + "/cm:" + search.ISO9075Encode(numeroAtto+""+estensioneAtto);
         var attoLuceneQuery = "PATH:\""+attoPath+"\"";
-        var attoResults = search.luceneSearch(attoLuceneQuery);
-		
+        var attoResults = search.luceneSearch(attoLuceneQuery);     
+  		
         //var esisteAttoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocollo+"\" AND @cm\\:name:\""+numeroAtto+"\"";
 		
         var attoFolderNode = null;
@@ -195,6 +155,47 @@
             protocolloLogger.info("Atto importato correttamente. Operazione: Modifica atto esistente - Atto numero:"+numeroAtto+" idProtocollo:"+idProtocollo);	
 			
         } else {
+            
+            //creazione spazio anno
+            var annoPath = legislaturaPath + "/cm:" + search.ISO9075Encode(anno);
+            var annoLuceneQuery = "PATH:\""+annoPath+"\"";
+            var annoResults = search.luceneSearch(annoLuceneQuery);
+            var annoFolderNode = null;
+            if(annoResults!=null && annoResults.length>0){
+                annoFolderNode = annoResults[0];
+            } else {
+                annoFolderNode = legislaturaFolderNode.createFolder(anno);
+            }
+
+            //creazione spazio mese
+            var mesePath = annoPath + "/cm:" + search.ISO9075Encode(mese);
+            var meseLuceneQuery = "PATH:\""+mesePath+"\"";
+            var meseResults = search.luceneSearch(meseLuceneQuery);
+            var meseFolderNode = null;
+            if(meseResults!=null && meseResults.length>0){
+                meseFolderNode = meseResults[0];
+            } else {
+                meseFolderNode = annoFolderNode.createFolder(mese);
+            }
+
+
+            // creazione spazio "tipo" con copia dello space template ContenitoreAtto. 
+            // Nello space sono presenti le regole necessarie alla creazione degli xml di export
+            // verso il sistema di gestione Atti Indirizzo
+            var tipoPath = mesePath + "/cm:" + search.ISO9075Encode(tipoAtto);
+            var tipoLuceneQuery = "PATH:\""+tipoPath+"\"";
+            var tipoResults = search.luceneSearch(tipoLuceneQuery);
+            var tipoFolderNode = null;
+            if(tipoResults!=null && tipoResults.length>0){
+                tipoFolderNode = tipoResults[0];
+            } else {
+                var contenitoreAttoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:ContenitoreAtto\"";
+                var contenitoreAttoSpaceTemplateNode = search.luceneSearch(contenitoreAttoSpaceTemplateQuery)[0];
+                tipoFolderNode = contenitoreAttoSpaceTemplateNode.copy(meseFolderNode,true);
+                tipoFolderNode.name = tipoAtto;
+                tipoFolderNode.save();
+            }
+            
             //creazione del nodo del nuovo atto
             attoProtocolloNode.move(tipoFolderNode);
                         
@@ -236,6 +237,12 @@ function importaAllegato(allegatoProtocolloNode){
 	} else {
             
                 filename = filename.substring(filename.indexOf("_") + 1);
+                
+                //file ext to lower case
+                var idx = filename.lastIndexOf(".");
+                var fname = filename.substring(0, (idx + 1));
+                var fext = filename.substring(idx + 1);
+                filename = fname + fext.toLowerCase();
 		
 		var importProtocolloPath = 
 			"/app:company_home" +
