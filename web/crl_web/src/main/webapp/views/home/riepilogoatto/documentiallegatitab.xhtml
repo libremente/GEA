@@ -566,12 +566,12 @@
 					styleClass="generalInfoTab grey-text">
 
 
-					<p:column sortBy="#{testoAtto.nome}">
+					<p:column sortBy="#{testoAtto.nome}" style="width:200px;">
 						<f:facet name="header">#{colAttoComm}</f:facet>
 						<h:outputText value="#{testoAtto.nome}" />
 					</p:column>
 
-					<p:column sortBy="#{testoAtto.commissione}">
+					<p:column sortBy="#{testoAtto.commissione}" style="width:200px;">
 						<f:facet name="header">Commissione</f:facet>
 						<h:outputText value="#{testoAtto.commissione}" />
 					</p:column>
@@ -579,7 +579,7 @@
 
 
 
-					<p:column sortBy="#{testoAtto.pubblico}">
+					<p:column sortBy="#{testoAtto.pubblico}" style="width:120px;">
 						<f:facet name="header">Pubblico</f:facet>
 						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
 						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
@@ -682,7 +682,7 @@
 					styleClass="generalInfoTab grey-text">
 
 
-					<p:column sortBy="#{allegato.nome}">
+					<p:column sortBy="#{allegato.nome}" style="width:300px;">
 						<f:facet name="header">Emendamenti presentati in Commissione</f:facet>
 						<h:outputText value="#{allegato.nome}" />
 					</p:column>
