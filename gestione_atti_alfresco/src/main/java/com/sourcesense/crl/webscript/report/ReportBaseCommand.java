@@ -57,9 +57,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
     protected static final String RUOLO_COMM_CONSULTIVA = "Consultiva";
     protected static final String RUOLO_COMM_REDIGENTE = "Redigente";
     protected static final String RUOLO_COMM_DELIBERANTE = "Deliberante";
+    public static final String TRASMESSO_AULA = "Trasmesso ad Aula";
+    public static final String PRESO_CARICO_AULA = "Preso in carico da Aula";
+    public static final String VOTATO_AULA = "Votato in Aula";
+    public static final String PUBBLICATO = "Pubblicato";
     public static final String ASSEGNATO_COMMISSIONE = "Assegnato a Commissione";
     public static final String PRESO_CARICO_COMMISSIONE = "Preso in carico da Commissioni";
-    public static final String PRESO_CARICO_AULA = "Preso in carico da Aula";
     public static final String NOMINATO_RELATORE = "Nominato Relatore";
     public static final String VOTATO_COMMISSIONE = "Votato in Commissione";
     public static final String LAVORI_COMITATO_RISTRETTO = "Lavori Comitato Ristretto";

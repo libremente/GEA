@@ -79,19 +79,14 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
-            LinkedListMultimap<String, NodeRef> commissione2atti = this
-                    .retrieveAtti(commissione2results, spacesStore,
-                    atto2commissione);
+            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager
-                    .generateFromTemplateMap(
-                    this.retrieveLenghtMap(commissione2atti), 2, false);
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMapConditional(commissione2atti, false), 2, false);
             // convert to input stream
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
-            XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
-                    commissione2atti, atto2commissione, docxManager);
+            XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissione2atti, atto2commissione, docxManager);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
@@ -127,106 +122,80 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
         List<XWPFTable> tables = document.getTables();
         for (String commissione : commissione2atti.keySet()) {
             for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+
                 NodeRef currentCommissione = atto2commissione.get(currentAtto);
-                ResultSet relatori = this.getRelatori(currentCommissione);
-                XWPFTable currentTable = tables.get(tableIndex);
-                Map<QName, Serializable> attoProperties = nodeService
-                        .getProperties(currentAtto);
 
-                Map<QName, Serializable> commissioneProperties = nodeService
-                        .getProperties(currentCommissione);
+                Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto);
+                Map<QName, Serializable> commissioneProperties = nodeService.getProperties(currentCommissione);
 
-                // from Atto
-                String numeroAtto = ""
-                        + (Integer) this.getNodeRefProperty(attoProperties,
-                        "numeroAtto");
-                String iniziativa = (String) this.getNodeRefProperty(
-                        attoProperties, "tipoIniziativa");
-                String oggetto = (String) this.getNodeRefProperty(
-                        attoProperties, "oggetto");
-                String numeroBurl = (String) this.getNodeRefProperty(
-                        attoProperties, "numeroPubblicazioneBURL");
-                Date dateBurl = (Date) this.getNodeRefProperty(attoProperties,
-                        "dataPubblicazioneBURL");
+                String statoAtto = (String) this.getNodeRefProperty(attoProperties, "statoAtto");
 
-                String numeroLr = (String) this.getNodeRefProperty(
-                        attoProperties, "numeroLr");
-                Date dateLr = (Date) this.getNodeRefProperty(attoProperties,
-                        "dataLr");
+                if (this.checkStatoAtto(statoAtto)) {
 
-                ArrayList<String> firmatariList = (ArrayList<String>) this
-                        .getNodeRefProperty(attoProperties, "firmatari");
-                String firmatari = this.renderList(firmatariList);
+                    XWPFTable currentTable = tables.get(tableIndex);
+                    ResultSet relatori = this.getRelatori(currentCommissione);
 
-                // from Commissione
-                String tipoAtto = (String) this.getNodeRefProperty(
-                        commissioneProperties, "tipoAttoCommissione");
-                String esitoValutazione = (String) this.getNodeRefProperty(
-                        commissioneProperties, "esitoVotazioneCommissione");
-                Date dateAssegnazioneCommissione = (Date) this
-                        .getNodeRefProperty(commissioneProperties,
-                        "dataAssegnazioneCommissione");
-                Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(
-                        commissioneProperties, "dataVotazioneCommissione");
-                String ruoloCommissione = (String) this.getNodeRefProperty(
-                        commissioneProperties, "ruoloCommissione");
-                // from Atto
+                    // from Atto
+                    String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                    String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
+                    String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
+                    String numeroBurl = (String) this.getNodeRefProperty(attoProperties, "numeroPubblicazioneBURL");
+                    Date dateBurl = (Date) this.getNodeRefProperty(attoProperties, "dataPubblicazioneBURL");
 
-                List<String> elencoRelatori = Lists.newArrayList();
-                List<String> elencoDateNomina = Lists.newArrayList();
-                for (int i = 0; i < relatori.length(); i++) {
-                    NodeRef relatoreNodeRef = relatori.getNodeRef(i);
-                    Map<QName, Serializable> relatoreProperties = nodeService
-                            .getProperties(relatoreNodeRef);
-                    Date dateNomina = (Date) this.getNodeRefProperty(
-                            relatoreProperties, "dataNominaRelatore");
-                    String relatore = (String) nodeService.getProperty(
-                            relatoreNodeRef, ContentModel.PROP_NAME);
-                    String dateNominaString = this.checkDateEmpty(dateNomina);
-                    elencoRelatori.add(relatore);
-                    elencoDateNomina.add(dateNominaString);
+                    String numeroLr = (String) this.getNodeRefProperty(attoProperties, "numeroLr");
+                    Date dateLr = (Date) this.getNodeRefProperty(attoProperties, "dataLr");
+
+                    ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
+                    String firmatari = this.renderList(firmatariList);
+
+                    // from Commissione
+                    String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
+                    String esitoValutazione = (String) this.getNodeRefProperty(commissioneProperties, "esitoVotazioneCommissione");
+                    Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
+                    Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataVotazioneCommissione");
+                    String ruoloCommissione = (String) this.getNodeRefProperty(commissioneProperties, "ruoloCommissione");
+                    // from Atto
+
+                    List<String> elencoRelatori = Lists.newArrayList();
+                    List<String> elencoDateNomina = Lists.newArrayList();
+                    for (int i = 0; i < relatori.length(); i++) {
+                        NodeRef relatoreNodeRef = relatori.getNodeRef(i);
+                        Map<QName, Serializable> relatoreProperties = nodeService.getProperties(relatoreNodeRef);
+                        Date dateNomina = (Date) this.getNodeRefProperty(relatoreProperties, "dataNominaRelatore");
+                        String relatore = (String) nodeService.getProperty(relatoreNodeRef, ContentModel.PROP_NAME);
+                        String dateNominaString = this.checkDateEmpty(dateNomina);
+                        elencoRelatori.add(relatore);
+                        elencoDateNomina.add(dateNominaString);
+                    }
+
+                    currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
+                    currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(oggetto));
+                    currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(ruoloCommissione));
+                    currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(iniziativa));
+                    currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(firmatari));
+                    currentTable.getRow(5).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
+                    currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(esitoValutazione));
+                    currentTable.getRow(7).getCell(1).setText(this.checkDateEmpty(dateVotazioneCommissione));
+                    currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(numeroBurl));
+                    currentTable.getRow(9).getCell(1).setText(this.checkDateEmpty(dateBurl));
+                    currentTable.getRow(10).getCell(1).setText(this.checkStringEmpty(numeroLr));
+                    currentTable.getRow(10).getCell(3).setText(this.checkDateEmpty(dateLr));
+                    docxManager.insertListInCell(currentTable.getRow(11).getCell(1), elencoRelatori);
+                    docxManager.insertListInCell(currentTable.getRow(11).getCell(3), elencoDateNomina);
+
+                    tableIndex++;
                 }
-
-                currentTable
-                        .getRow(0)
-                        .getCell(1)
-                        .setText(
-                        this.checkStringEmpty(tipoAtto.toUpperCase() + " "
-                        + numeroAtto));
-                currentTable.getRow(1).getCell(1)
-                        .setText(this.checkStringEmpty(oggetto));
-                currentTable.getRow(2).getCell(1)
-                        .setText(this.checkStringEmpty(ruoloCommissione));
-                currentTable.getRow(3).getCell(1)
-                        .setText(this.checkStringEmpty(iniziativa));
-                currentTable.getRow(4).getCell(1)
-                        .setText(this.checkStringEmpty(firmatari));
-                currentTable
-                        .getRow(5)
-                        .getCell(1)
-                        .setText(
-                        this.checkDateEmpty(dateAssegnazioneCommissione));
-                currentTable.getRow(6).getCell(1)
-                        .setText(this.checkStringEmpty(esitoValutazione));
-                currentTable.getRow(7).getCell(1)
-                        .setText(this.checkDateEmpty(dateVotazioneCommissione));
-                currentTable.getRow(8).getCell(1)
-                        .setText(this.checkStringEmpty(numeroBurl));
-                currentTable.getRow(9).getCell(1)
-                        .setText(this.checkDateEmpty(dateBurl));
-                currentTable.getRow(10).getCell(1)
-                        .setText(this.checkStringEmpty(numeroLr));
-                currentTable.getRow(10).getCell(3)
-                        .setText(this.checkDateEmpty(dateLr));
-                docxManager.insertListInCell(
-                        currentTable.getRow(11).getCell(1), elencoRelatori);
-                docxManager.insertListInCell(
-                        currentTable.getRow(11).getCell(3), elencoDateNomina);
-
-                tableIndex++;
             }
         }
 
         return document;
+    }
+
+    protected boolean checkStatoAtto(String statoAtto) {
+        return statoAtto.equals(TRASMESSO_AULA)
+                || statoAtto.equals(PRESO_CARICO_AULA)
+                || statoAtto.equals(VOTATO_AULA)
+                || statoAtto.equals(PUBBLICATO)
+                || statoAtto.equals(CHIUSO);
     }
 }
