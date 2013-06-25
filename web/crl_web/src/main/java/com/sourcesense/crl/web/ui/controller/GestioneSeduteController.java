@@ -277,14 +277,15 @@ public class GestioneSeduteController {
 					Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 					Consultazione cons = (Consultazione) consultazione.clone();
-					if (formatter.format(cons.getDataSeduta()).equals(
-							formatter.format(sedutaSelected.getDataSeduta()))
+					if (cons.getDataSeduta() != null 
+							&& formatter.format(cons.getDataSeduta()).equals(
+								formatter.format(sedutaSelected.getDataSeduta()))
 							&& userBean.getUser().getSessionGroup().getNome()
-									.equals(cons.getCommissione())) {
-						cons.setNumeroAtto(element.getAtto().getNumeroAtto());
-						cons.setTipoAtto(element.getAtto().getTipoAtto());
-						cons.setIdAtto(element.getAtto().getId());
-						consultazioniAtti.add(cons);
+										.equals(cons.getCommissione())) {
+							cons.setNumeroAtto(element.getAtto().getNumeroAtto());
+							cons.setTipoAtto(element.getAtto().getTipoAtto());
+							cons.setIdAtto(element.getAtto().getId());
+							consultazioniAtti.add(cons);
 					}
 				}
 
