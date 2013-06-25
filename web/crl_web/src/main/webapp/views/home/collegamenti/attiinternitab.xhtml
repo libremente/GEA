@@ -784,6 +784,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
 									<p:dataExporter type="xls" target="listaAtti"
+									postProcessor="#{searchAttoController.postProcessXLS}"
 										fileName="lista_atti" />
 								</h:commandLink>
 							</p:column>
