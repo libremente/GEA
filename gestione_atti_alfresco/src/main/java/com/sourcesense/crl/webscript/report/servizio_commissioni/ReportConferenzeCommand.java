@@ -140,7 +140,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                     /* writing values in the table */
                     currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
                     currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(oggetto));
-                    currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(iniziativa));
+                    currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
                     currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(firmatari));
                     currentTable.getRow(4).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
                     tableIndex++;

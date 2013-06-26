@@ -163,7 +163,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
                             this.checkStringEmpty(tipoAtto.toUpperCase() + " "
                             + numeroAtto));
                     currentTable.getRow(1).getCell(1)
-                            .setText(this.checkStringEmpty(iniziativa));
+                            .setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
                     currentTable.getRow(2).getCell(1)
                             .setText(this.checkStringEmpty(firmatari));
                     currentTable.getRow(3).getCell(1)

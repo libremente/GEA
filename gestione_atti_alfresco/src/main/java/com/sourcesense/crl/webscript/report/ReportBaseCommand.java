@@ -40,6 +40,7 @@ import com.google.common.collect.Multimap;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
@@ -94,6 +95,18 @@ public abstract class ReportBaseCommand implements ReportCommand {
     protected String tipologiaFirma;
     protected String dataConsultazioneDa;
     protected String dataConsultazioneA;
+    protected static Map<String, String> tipoIniziativaDecode = new HashMap<String, String>();
+
+    static {
+        tipoIniziativaDecode.put("01_ATTO DI INIZIATIVA CONSILIARE", "Consiliare");
+        tipoIniziativaDecode.put("02_ATTO DI INIZIATIVA DI GIUNTA", "Giunta");
+        tipoIniziativaDecode.put("03_ATTO DI INIZIATIVA POPOLARE", "Popolare");
+        tipoIniziativaDecode.put("04_ATTO DI INIZIATIVA COMMISSIONI", "Commissioni");
+        tipoIniziativaDecode.put("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA", "Ufficio di Presidenza");
+        tipoIniziativaDecode.put("06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA", "Presidente della Giunta");
+        tipoIniziativaDecode.put("07_ATTO DI INIZIATIVA AUTONOMIE LOCALI", "Consiglio delle Autonomie locali");
+        tipoIniziativaDecode.put("08_ATTO DI ALTRA INIZIATIVA", "Altra Iniziativa");
+    }
 
     @Override
     public abstract byte[] generate(byte[] templateByteArray, String json,
@@ -365,6 +378,23 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 + "/cm:Relatori/*\" AND TYPE:\"" + relatoreType + "\"");
 
         return relatoreNodes;
+    }
+
+    protected String decodeTipoIniziativa(String value) {
+
+        value = value.trim();
+        String tipoIniziativa = tipoIniziativaDecode.get(value);
+
+        if (tipoIniziativa == null || tipoIniziativa.length() < 1) {
+            int idx = value.indexOf('_');
+            if (idx >= 0) {
+                tipoIniziativa = value.substring(idx + 1);
+            } else {
+                tipoIniziativa = value;
+            }
+        }
+
+        return tipoIniziativa;
     }
 
     /**

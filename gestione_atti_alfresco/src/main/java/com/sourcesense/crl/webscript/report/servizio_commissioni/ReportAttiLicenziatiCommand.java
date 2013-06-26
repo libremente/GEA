@@ -184,7 +184,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                 currentTable.getRow(2).getCell(1)
                         .setText(this.checkStringEmpty(ruoloCommissione));
                 currentTable.getRow(3).getCell(1)
-                        .setText(this.checkStringEmpty(iniziativa));
+                        .setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
                 currentTable.getRow(4).getCell(1)
                         .setText(this.checkStringEmpty(firmatari));
                 currentTable
