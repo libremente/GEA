@@ -26,9 +26,13 @@ if(atto!=null
 	
 	var attoFolderNode = utils.getNodeFromString(id);
 	
-	var dataChiusuraSplitted = dataChiusura.split("-");
-	var dataChiusuraParsed = new Date(dataChiusuraSplitted[0],dataChiusuraSplitted[1]-1,dataChiusuraSplitted[2]);
-	attoFolderNode.properties["crlatti:dataChiusura"] = dataChiusuraParsed;
+        if(checkIsNotNull(dataChiusura)) {
+            var dataChiusuraSplitted = dataChiusura.split("-");
+            var dataChiusuraParsed = new Date(dataChiusuraSplitted[0],dataChiusuraSplitted[1]-1,dataChiusuraSplitted[2]);
+            attoFolderNode.properties["crlatti:dataChiusura"] = dataChiusuraParsed;
+        } else {
+            attoFolderNode.properties["crlatti:dataChiusura"] = null;
+        }
 	
 	attoFolderNode.properties["crlatti:tipoChiusura"] = tipoChiusura;
 	attoFolderNode.properties["crlatti:noteChiusura"] = noteChiusuraIter;
@@ -40,7 +44,9 @@ if(atto!=null
 		var dataLrSplitted = dataLr.split("-");
 		var dataLrParsed = new Date(dataLrSplitted[0],dataLrSplitted[1]-1,dataLrSplitted[2]);
 		attoFolderNode.properties["crlatti:dataLr"] = dataLrParsed;
-	}
+	} else {
+            attoFolderNode.properties["crlatti:dataLr"] = null;
+        }
 	
 	attoFolderNode.properties["crlatti:numeroPubblicazioneBURL"] = numeroPubblicazioneBURL;
 	
@@ -48,7 +54,9 @@ if(atto!=null
 		var dataPubblicazioneBURLSplitted = dataPubblicazioneBURL.split("-");
 		var dataPubblicazioneBURLParsed = new Date(dataPubblicazioneBURLSplitted[0],dataPubblicazioneBURLSplitted[1]-1,dataPubblicazioneBURLSplitted[2]);
 		attoFolderNode.properties["crlatti:dataPubblicazioneBURL"] = dataPubblicazioneBURLParsed;
-	}
+	} else {
+            attoFolderNode.properties["crlatti:dataPubblicazioneBURL"] = null;
+        }
 	
 	attoFolderNode.properties["crlatti:numeroDgrSeguito"] = numeroDgrSeguito;
 	
