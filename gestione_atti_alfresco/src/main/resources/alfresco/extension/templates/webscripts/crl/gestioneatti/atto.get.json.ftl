@@ -283,6 +283,8 @@
                                 "idVerbale":"<#if sedutaAtto.idVerbale?exists>${sedutaAtto.idVerbale}<#else></#if>",
                                 "nomeVerbale":"<#if sedutaAtto.nomeVerbale?exists>${sedutaAtto.nomeVerbale}<#else></#if>",
                                 "mimetypeVerbale":"<#if sedutaAtto.mimetypeVerbale?exists>${sedutaAtto.mimetypeVerbale}<#else></#if>",
+                                "pubblico" : "<#if sedutaAtto.pubblico?exists>${sedutaAtto.pubblico?string("true","false")}<#else></#if>",
+                                "downloadUrl":"<#if sedutaAtto.downloadUrl?exists>${sedutaAtto.downloadUrl}<#else></#if>",
                                 "discusso":"<#if sedutaAtto.discusso?exists>${sedutaAtto.discusso?string("true","false")}<#else></#if>",
     				"links": [ 
 					<#list sedutaAtto.links as link>

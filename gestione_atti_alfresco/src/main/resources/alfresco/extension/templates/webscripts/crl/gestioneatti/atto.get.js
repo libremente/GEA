@@ -105,6 +105,8 @@ if(checkIsNotNull(id)){
                         sedutaResultObj.idVerbale = verbale.nodeRef.toString();
                         sedutaResultObj.nomeVerbale = verbale.name;
                         sedutaResultObj.mimetypeVerbale = verbale.mimetype;
+                        sedutaResultObj.pubblico = verbale.properties["crlatti:pubblico"];
+                        sedutaResultObj.downloadUrl = verbale.downloadUrl;  
 
                     }
 
