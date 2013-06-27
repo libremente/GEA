@@ -33,6 +33,8 @@ public class SedutaAtto implements Comparable<SedutaAtto>{
 	private List <Link> links = new ArrayList<Link>();
 	private String numVerbale;
 	private String idVerbale;
+	private boolean pubblico;
+	private String downloadUrl;
 	private String nomeVerbale;
 	private String mimetypeVerbale;
 	private boolean discusso;
@@ -121,6 +123,26 @@ public class SedutaAtto implements Comparable<SedutaAtto>{
 
 	public void setMimetypeVerbale(String mimetypeVerbale) {
 		this.mimetypeVerbale = mimetypeVerbale;
+	}
+
+
+	public boolean isPubblico() {
+		return pubblico;
+	}
+
+
+	public void setPubblico(boolean pubblico) {
+		this.pubblico = pubblico;
+	}
+
+
+	public String getDownloadUrl() {
+		return downloadUrl;
+	}
+
+
+	public void setDownloadUrl(String downloadUrl) {
+		this.downloadUrl = downloadUrl;
 	}
 	
 	
