@@ -403,6 +403,12 @@ public class ReportisticaController implements Serializable {
 				&& !selectedReport.getTipoTemplate().equals("")) {
 
 			
+			if(ELENCO_RELATORI.equals(selectedReport.getNome()) && selectedReport.getRelatori().size()==0){
+				
+				selectedReport.setRelatori(relatori);
+				
+			}
+			
 			InputStream stream = reportServiceManager.getReportFile(selectedReport);
 			StreamedContent file = new DefaultStreamedContent(stream,
 					"document", selectedReport.getNome() + ".docx");
