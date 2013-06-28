@@ -40,6 +40,8 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 	private String numVerbale;
 	private String note;
 	private List<Link> links = new ArrayList<Link>();
+	private String legislatura;
+	
 
 	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();	
 	private List<Consultazione> consultazioniAtti = new ArrayList<Consultazione>();	
@@ -159,6 +161,14 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 
 	public void setVerbaliList(List<Allegato> verbaliList) {
 		this.verbaliList = verbaliList;
+	}
+
+	public String getLegislatura() {
+		return legislatura;
+	}
+
+	public void setLegislatura(String legislatura) {
+		this.legislatura = legislatura;
 	}
 
 	

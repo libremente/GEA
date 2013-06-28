@@ -380,7 +380,7 @@ public class Aula implements Cloneable{
 		this.dataPresaInCaricoEsameAula = dataPresaInCaricoEsameAula;
 	}
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataIniziativaStralcio() {
 		return dataIniziativaStralcio;
 	}

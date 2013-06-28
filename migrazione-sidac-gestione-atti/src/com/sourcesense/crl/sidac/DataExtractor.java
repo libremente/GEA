@@ -2,8 +2,10 @@ package com.sourcesense.crl.sidac;
 
 import javax.sql.DataSource;
 
+import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoTrattato;
 import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Collegamento;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
@@ -18,6 +20,7 @@ import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.model.Organo;
 import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.model.Relatore;
+import com.sourcesense.crl.business.model.Seduta;
 import com.sourcesense.crl.business.model.TestoAtto;
 
 import java.sql.Connection;
@@ -41,8 +44,358 @@ public class DataExtractor {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-
 	
+	
+	public List<TestoAtto> getTestiAtto(String idAtto) {
+		
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(Constant.QUERY_TESTI);
+			ps.setString(1, idAtto);
+			ResultSet rs = ps.executeQuery();
+			long startTime = System.currentTimeMillis();
+			long endTime = 0;
+			List<TestoAtto> testi = new ArrayList<TestoAtto>();
+			System.out.println("QUERY TESTI per atto "+idAtto);
+			
+			while (rs.next()) {
+                    
+				TestoAtto testo= new TestoAtto();
+				testo.setAppoPath(rs.getString(Constant.TEST_COLUMN_PATH).replace("D:", "F:"));
+				testo.setAppoProvenienza(rs.getString(Constant.TEST_COLUMN_PROVENIENZA));
+				testo.setAppoTitolo(rs.getString(Constant.TEST_COLUMN_TITOLO));
+				testi.add(testo);
+			}
+
+			rs.close();
+			ps.close();
+			endTime = System.currentTimeMillis();
+			System.out.println("QUERY TESTI :" + (endTime - startTime) / 1000 + " sec");
+
+			return testi;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing...
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	public String getCommissioneSidac(String idCommissione){
+		
+		Connection conn = null;
+        System.out.println("Get Commissione :"+idCommissione); 
+		
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement("select descrizione from COMMISSIONI where id=?");
+			ps.setString(1, idCommissione);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+			
+				return rs.getString("descrizione");
+			}
+			rs.close();
+			ps.close();
+			return "";
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing...
+				}
+			}
+		}
+		
+	}
+	
+	
+	
+	public List<Seduta> getSeduteAula(List<Atto> atti) {
+
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(Constant.QUERY_SEDUTE_AULA);
+			ResultSet rs = ps.executeQuery();
+			long startTime = System.currentTimeMillis();
+			long endTime = 0;
+			List<Seduta> sedute = new ArrayList<Seduta>();
+			System.out.println("QUERY SEDUTE AULA");
+
+			String appoIdSeduta = "";
+			Seduta seduta = null;
+			while (rs.next()) {
+
+				// Stessa seduta
+				if (appoIdSeduta.equals(rs.getString(Constant.SED_COLUMN_ID_SEDUTA))) {
+
+					for (Atto attoRec : atti) {
+
+						String numeroAtt = rs.getString(Constant.SED_COLUMN_NUM_ATTO);
+						String tipoAtt = rs.getString(Constant.SED_COLUMN_TIPO_ATTO);
+
+						if (numeroAtt.equals(attoRec.getNumeroAtto()) && tipoAtt.equals(attoRec.getTipoAtto())) {
+
+							AttoTrattato attoTratt = new AttoTrattato();
+							attoTratt.setAtto(attoRec);
+							attoTratt.setDiscusso(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_DISCUSSO)));
+							attoTratt.setPrevisto(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_PREVISTO)));
+							sedute.get(sedute.size()-1).getAttiTrattati().add(attoTratt);
+							break;
+						}
+					}
+
+					// Nuova seduta
+				} else {
+
+				
+					seduta = new Seduta();
+					seduta.setDalleOre(rs.getDate(Constant.SED_COLUMN_ORA_INIZIO));
+					seduta.setDataSeduta(rs.getDate(Constant.SED_COLUMN_DATA));
+					seduta.setNumVerbale(rs.getString(Constant.SED_COLUMN_NUM_VERBALE));
+					seduta.setLegislatura("IX");
+					for (Atto attoRec : atti) {
+
+						String numeroAtt = rs.getString(Constant.SED_COLUMN_NUM_ATTO);
+						String tipoAtt = rs.getString(Constant.SED_COLUMN_TIPO_ATTO);
+
+						if (numeroAtt.equals(attoRec.getNumeroAtto()) && tipoAtt.equals(attoRec.getTipoAtto())) {
+
+							AttoTrattato attoTratt = new AttoTrattato();
+							attoTratt.setAtto(attoRec);
+							attoTratt.setDiscusso(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_DISCUSSO)));
+							attoTratt.setPrevisto(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_PREVISTO)));
+							seduta.getAttiTrattati().add(attoTratt);
+							break;
+						}
+						
+					}
+					
+					sedute.add(seduta);
+
+				}
+
+				appoIdSeduta = rs.getString(Constant.SED_COLUMN_ID_SEDUTA);
+
+			}
+
+			rs.close();
+			ps.close();
+			endTime = System.currentTimeMillis();
+			System.out.println("QUERY SEDUTE AULA :" + (endTime - startTime) / 1000 + " sec");
+
+			return sedute;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing...
+				}
+			}
+		}
+
+	}
+	
+
+	public List<Seduta> getSeduteCommissione(String commissioneInitials, List<Atto> atti) {
+
+		Connection conn = null;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(Constant.QUERY_SEDUTE_COMM);
+			ps.setString(1, commissioneInitials);
+			ResultSet rs = ps.executeQuery();
+			long startTime = System.currentTimeMillis();
+			long endTime = 0;
+			List<Seduta> sedute = new ArrayList<Seduta>();
+			System.out.println("QUERY SEDUTE COMM");
+
+			String appoIdSeduta = "";
+			Seduta seduta = new Seduta();
+			while (rs.next()) {
+
+				// Stessa seduta
+				if (appoIdSeduta.equals(rs.getString(Constant.SED_COLUMN_ID_SEDUTA))) {
+
+					for (Atto attoRec : atti) {
+
+						String numeroAtt = rs.getString(Constant.SED_COLUMN_NUM_ATTO);
+						String tipoAtt = rs.getString(Constant.SED_COLUMN_TIPO_ATTO);
+
+						if (numeroAtt.equals(attoRec.getNumeroAtto()) && tipoAtt.equals(attoRec.getTipoAtto())) {
+
+							AttoTrattato attoTratt = new AttoTrattato();
+							attoTratt.setAtto(attoRec);
+							attoTratt.setDiscusso(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_DISCUSSO)));
+							attoTratt.setPrevisto(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_PREVISTO)));
+							sedute.get(sedute.size()-1).getAttiTrattati().add(attoTratt);
+							break;
+						}
+					}
+
+					// Nuova seduta
+				} else {
+
+					
+
+					seduta = new Seduta();
+					seduta.setDalleOre(rs.getDate(Constant.SED_COLUMN_ORA_INIZIO));
+					seduta.setDataSeduta(rs.getDate(Constant.SED_COLUMN_DATA));
+					seduta.setNumVerbale(rs.getString(Constant.SED_COLUMN_NUM_VERBALE));
+					seduta.setLegislatura("IX");
+					for (Atto attoRec : atti) {
+
+						String numeroAtt = rs.getString(Constant.SED_COLUMN_NUM_ATTO);
+						String tipoAtt = rs.getString(Constant.SED_COLUMN_TIPO_ATTO);
+
+						if (numeroAtt.equals(attoRec.getNumeroAtto()) && tipoAtt.equals(attoRec.getTipoAtto())) {
+
+							AttoTrattato attoTratt = new AttoTrattato();
+							attoTratt.setAtto(attoRec);
+							attoTratt.setDiscusso(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_DISCUSSO)));
+							attoTratt.setPrevisto(Util.getBooleanFromChar(rs.getString(Constant.SED_COLUMN_PREVISTO)));
+							seduta.getAttiTrattati().add(attoTratt);
+							sedute.add(seduta);
+							break;
+						}
+						
+					}
+
+				}
+
+				appoIdSeduta = rs.getString(Constant.SED_COLUMN_ID_SEDUTA);
+
+			}
+
+			rs.close();
+			ps.close();
+			endTime = System.currentTimeMillis();
+			System.out.println("QUERY SEDUTE COMM :" + (endTime - startTime) / 1000 + " sec");
+
+			return sedute;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing...
+				}
+			}
+		}
+
+	}
+
+	public boolean getAbbinamenti(Atto attoIn, List<Atto> atti) {
+		Connection conn = null;
+		boolean hasAbbinamenti = false;
+
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(Constant.QUERY_ABBINAMENTI_ATTO);
+			ps.setString(1, attoIn.getSidacId());
+			ResultSet rs = ps.executeQuery();
+			long startTime = System.currentTimeMillis();
+			long endTime = 0;
+			List<Abbinamento> abbinamenti = new ArrayList<Abbinamento>();
+			System.out.println("QUERY ABBINAMENTI");
+
+			while (rs.next()) {
+
+				// Alcuni atti sono abbinati a loro stessi
+				if (!rs.getString(Constant.ABB_COLUMN_ID).equals(attoIn.getSidacId())) {
+
+					hasAbbinamenti = true;
+
+					String numeroAbb = rs.getString(Constant.ABB_COLUMN_NUM_ATTO);
+					String tipoAbb = rs.getString(Constant.ABB_COLUMN_TIPO);
+
+					Abbinamento abbinamento = new Abbinamento();
+					abbinamento.setDataAbbinamento(rs.getDate(Constant.ABB_COLUMN_DATA));
+					abbinamento.setDataDisabbinamento(rs.getDate(Constant.ABB_COLUMN_ANNULLO_DATA));
+					abbinamento.setIdAtto(attoIn.getId());
+
+					for (Atto attoRec : atti) {
+
+						if (numeroAbb.equals(attoRec.getNumeroAtto()) && tipoAbb.equals(attoRec.getTipoAtto())) {
+
+							abbinamento.setIdAttoAbbinato(attoRec.getId());
+							break;
+
+						}
+
+					}
+
+					abbinamento.setNote(rs.getString(Constant.ABB_COLUMN_NOTE));
+					abbinamento.setNumeroAttoAbbinato(numeroAbb);
+					abbinamento.setTipoAttoAbbinato(tipoAbb);
+					abbinamento.setTipoTesto(convertTipoAbbinamento(rs.getString(Constant.ABB_COLUMN_TIPO_ABB)));
+					abbinamenti.add(abbinamento);
+				}
+
+			}
+
+			if (hasAbbinamenti) {
+
+				for (Passaggio passag : attoIn.getPassaggi()) {
+
+					passag.setAbbinamenti(abbinamenti);
+
+				}
+
+			}
+
+			rs.close();
+			ps.close();
+			endTime = System.currentTimeMillis();
+			System.out.println("QUERY ABBINAMENTI :" + (endTime - startTime) / 1000 + " sec");
+
+			return hasAbbinamenti;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing...
+				}
+			}
+		}
+
+	}
 
 	public List<Atto> getAtti() {
 
@@ -144,6 +497,7 @@ public class DataExtractor {
 					atto = new Atto();
 					// SERVIZIO COMMISSIONI
 					atto.setId(rs.getString(Constant.COLUMN_ID_ATTO));
+					atto.setSidacId(rs.getString(Constant.COLUMN_ID_ATTO));
 					atto.setNumeroRepertorio(rs.getString(Constant.COLUMN_REPERTORIO));
 					atto.setDataRepertorio(rs.getDate(Constant.COLUMN_DATA_REPERTORIO));
 					atto.setLegislatura(rs.getString(Constant.COLUMN_LEGISLATURA));
@@ -196,7 +550,7 @@ public class DataExtractor {
 					/*
 					 * atto.setDataPresentazione(); atto.setDataPubblicazione();
 					 * atto.setDataSedutaSc(); atto.setDataIniziativa();
-					 * atto.setTipologia();  atto.setDataAssegnazione();
+					 * atto.setTipologia(); atto.setDataAssegnazione();
 					 * atto.setEsitoValidazione(); atto.setDataValidazione();
 					 * atto.setDataAssegnazioneCommissioni();
 					 * atto.setTipoIniziativaNome(); atto.setNumeroLr();
@@ -309,7 +663,7 @@ public class DataExtractor {
 					Passaggio passaggio = null;
 
 					int numPassaggio = Integer.parseInt(rs.getString("NUM_PASSAGGIO"));
-                    
+
 					// Secondo passaggio
 					if (numPassaggio > 1 && numPassaggio <= attoRec.getPassaggi().size()) {
 
@@ -374,30 +728,30 @@ public class DataExtractor {
 			System.out.println("QUERY RELATORI");
 			startTime = System.currentTimeMillis();
 			for (Atto attoRec : atti) {
-				
+
 				for (Passaggio passaggio : attoRec.getPassaggi()) {
-					
+
 					ps = conn.prepareStatement(Constant.QUERY_RELATORI_COMM);
 					ps.setString(1, passaggio.getAppoId());
 					rs = ps.executeQuery();
 					while (rs.next()) {
-                         
+
 						for (Commissione comm : passaggio.getCommissioni()) {
-							
-							if(comm.getDescrizione().equals(rs.getString(Constant.REL_COLUMN_COMM_NOME))){
-								
+
+							if (comm.getDescrizione().equals(rs.getString(Constant.REL_COLUMN_COMM_NOME))) {
+
 								Relatore rel = new Relatore();
 								rel.setDescrizione(rs.getString(Constant.REL_COLUMN_RELATORE));
 								rel.setDataNomina(rs.getDate(Constant.REL_COLUMN_NOMINA_REL));
-						        rel.setDataUscita(rs.getDate(Constant.REL_COLUMN_FINE_REL));
+								rel.setDataUscita(rs.getDate(Constant.REL_COLUMN_FINE_REL));
 								comm.getRelatori().add(rel);
 								break;
 							}
-							
+
 						}
-						
+
 					}
-					
+
 				}
 
 				rs.close();
@@ -406,26 +760,23 @@ public class DataExtractor {
 
 			endTime = System.currentTimeMillis();
 			System.out.println("QUERY RELATORI END :" + (endTime - startTime) / 1000 + " sec");
-			
-			
-			
+
 			System.out.println("QUERY COMITATO RISTRETTO");
 			startTime = System.currentTimeMillis();
 			for (Atto attoRec : atti) {
-				
+
 				for (Passaggio passaggio : attoRec.getPassaggi()) {
-					
+
 					ps = conn.prepareStatement(Constant.QUERY_COMITATI_RISTRETTI);
 					ps.setString(1, passaggio.getAppoId());
 					rs = ps.executeQuery();
 					while (rs.next()) {
-                        
-						
+
 						for (Commissione comm : passaggio.getCommissioni()) {
-						
+
 							comm.getComitatoRistretto().setTipologia("Comitato ristretto");
-							
-							if(comm.getDescrizione().equals(rs.getString(Constant.COMRIS_COLUMN_COMM_NOME))){
+
+							if (comm.getDescrizione().equals(rs.getString(Constant.COMRIS_COLUMN_COMM_NOME))) {
 								Componente compo = new Componente();
 								compo.setDataNomina(rs.getDate(Constant.COMRIS_COLUMN_NOMINA_COM));
 								compo.setDataUscita(rs.getDate(Constant.COMRIS_COLUMN_FINE_COM));
@@ -433,11 +784,11 @@ public class DataExtractor {
 								comm.getComitatoRistretto().getComponenti().add(compo);
 								break;
 							}
-							
+
 						}
-						
+
 					}
-					
+
 				}
 
 				rs.close();
@@ -446,10 +797,7 @@ public class DataExtractor {
 
 			endTime = System.currentTimeMillis();
 			System.out.println("QUERY COMITATO RISTRETTO END :" + (endTime - startTime) / 1000 + " sec");
-			
-			
-			
-			
+
 			return atti;
 
 		} catch (SQLException e) {
@@ -465,4 +813,18 @@ public class DataExtractor {
 			}
 		}
 	}
+
+	private String convertTipoAbbinamento(String tipo) {
+
+		if (tipo == null || "".equals(tipo)) {
+			return "";
+		} else if ("B".equals(tipo)) {
+			return "Testo base";
+		} else {
+			return "Testo unificato";
+
+		}
+
+	}
+
 }

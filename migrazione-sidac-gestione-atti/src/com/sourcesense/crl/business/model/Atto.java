@@ -70,6 +70,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	private boolean attoProseguente;
 
 	private String id;
+	private String sidacId;
 	private String nome;
 	private String tipo;
 	private String codice;
@@ -1039,6 +1040,14 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	
 	
 	
+
+	public String getSidacId() {
+		return sidacId;
+	}
+
+	public void setSidacId(String sidacId) {
+		this.sidacId = sidacId;
+	}
 
 	public String getAppoCollegamenti() {
 		return appoCollegamenti;

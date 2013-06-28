@@ -28,15 +28,16 @@ public class AbbinamentoService {
 	@Autowired
 	Client client;
 
-	@Autowired
-	ObjectMapper objectMapper;
+	
 
 	public void merge(String url, GestioneAbbinamento abbinamento) {
 		try {
 
 			WebResource webResource = client.resource(url);
 
-			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			/*DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			objectMapper.getSerializationConfig().setDateFormat(myDateFormat);
 
 			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
@@ -45,9 +46,10 @@ public class AbbinamentoService {
 					false);
 			objectMapper.configure(
 					SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
-					false);
+					false);*/
 
 			String json = objectMapper.writeValueAsString(abbinamento);
+			System.out.println("JSON abbinamento :"+ json);
 
 			ClientResponse response = webResource.type(
 					MediaType.APPLICATION_JSON)

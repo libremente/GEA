@@ -13,6 +13,8 @@ import org.pojomatic.annotations.AutoProperty;
 public class TestoAtto implements Cloneable {
 
 	
+	//TYPE:"crlatti:testo" AND NOT @crlatti\:tipologia:"testo_atto" AND NOT @crlatti\:tipologia:"testo_atto_votato_commissione" AND NOT @crlatti\:tipologia:"testo_atto_votato_aula"
+	
 	public static final String TESTO_PRESENTAZIONE_ASSEGNAZIONE = "testo_atto";
 	public static final String TESTO_ESAME_COMMISSIONE_VOTAZIONE = "testo_atto_votato_commissione";
 	public static final String TESTO_ESAME_AULA_VOTAZIONE = "testo_atto_votato_aula";
@@ -30,6 +32,11 @@ public class TestoAtto implements Cloneable {
 	private String dataSeduta;
 	private String passaggio;
 	private String commissione;
+	
+	
+	private String appoTitolo;
+	private String appoProvenienza;
+	private String appoPath;
 	
 	
 	public Object clone() {
@@ -122,6 +129,30 @@ public class TestoAtto implements Cloneable {
 
 	public void setCommissione(String commissione) {
 		this.commissione = commissione;
+	}
+
+	public String getAppoTitolo() {
+		return appoTitolo;
+	}
+
+	public void setAppoTitolo(String appoTitolo) {
+		this.appoTitolo = appoTitolo;
+	}
+
+	public String getAppoProvenienza() {
+		return appoProvenienza;
+	}
+
+	public void setAppoProvenienza(String appoProvenienza) {
+		this.appoProvenienza = appoProvenienza;
+	}
+
+	public String getAppoPath() {
+		return appoPath;
+	}
+
+	public void setAppoPath(String appoPath) {
+		this.appoPath = appoPath;
 	}
 	
 	

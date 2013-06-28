@@ -32,48 +32,51 @@ public class SeduteServiceManager implements ServiceManager{
 	@Autowired
 	private  URLBuilder urlBuilder;
 	
-	public void deleteSeduta(String idSeduta) {
-		 seduteService.delete(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elimina_seduta", new String[]{idSeduta}));
-	}
 	
 	public Seduta salvaSeduta(GestioneSedute gestioneSedute) {
 		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
 	}
 	
-	public Seduta updateSeduta(GestioneSedute gestioneSedute) {
-		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
-	}
-	
-	public List<Seduta>  getSedute(String gruppo) {
-		
-		//return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", new String[]{gruppo}).replaceAll(" ", "%20"));
-		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),gruppo);
-	}
-	
-	public void salvaOdg(Seduta seduta) {
+//	public void deleteSeduta(String idSeduta) {
+//		 seduteService.delete(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elimina_seduta", new String[]{idSeduta}));
+//	}
+//	
+//	
+//	
+//	public Seduta updateSeduta(GestioneSedute gestioneSedute) {
+//		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
+//	}
+//	
+//	public List<Seduta>  getSedute(String gruppo) {
+//		
+//		//return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", new String[]{gruppo}).replaceAll(" ", "%20"));
+//		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),gruppo);
+//	}
+//	
+public void salvaOdg(Seduta seduta) {
 		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
 	}
-	
-	
-	public Allegato uploadOgg(Seduta seduta, InputStream stream, Allegato testoAtto) {
-
-		return seduteService.uploadOdg(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_odg", null),seduta, stream, testoAtto);
-	}
-	
-	public Allegato uploadVerbale(Seduta seduta, InputStream stream, Allegato testoAtto) {
-
-		return seduteService.uploadVerbale(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_verbale", null),seduta, stream, testoAtto);
-	}
-	
-	public InputStream getODGFile(String tipoTemplate,String idSeduta,String gruppo ) {
-        //alf_retrieve_report_bin=crl/template/report/creareport?json={0}&tipoTemplate={1} 
-		return seduteService.getFile(urlBuilder.buildAlfrescoURL(
-				//"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,URLEncoder.encode(gruppo,"UTF-8")}));
-				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,gruppo}));
-		
-	}
+//	
+//	
+//	public Allegato uploadOgg(Seduta seduta, InputStream stream, Allegato testoAtto) {
+//
+//		return seduteService.uploadOdg(urlBuilder.buildAlfrescoURL(
+//				"alfresco_context_url", "alf_upload_odg", null),seduta, stream, testoAtto);
+//	}
+//	
+//	public Allegato uploadVerbale(Seduta seduta, InputStream stream, Allegato testoAtto) {
+//
+//		return seduteService.uploadVerbale(urlBuilder.buildAlfrescoURL(
+//				"alfresco_context_url", "alf_upload_verbale", null),seduta, stream, testoAtto);
+//	}
+//	
+//	public InputStream getODGFile(String tipoTemplate,String idSeduta,String gruppo ) {
+//        //alf_retrieve_report_bin=crl/template/report/creareport?json={0}&tipoTemplate={1} 
+//		return seduteService.getFile(urlBuilder.buildAlfrescoURL(
+//				//"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,URLEncoder.encode(gruppo,"UTF-8")}));
+//				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,gruppo}));
+//		
+//	}
 	
 	
 	@Override
