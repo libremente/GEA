@@ -57,7 +57,7 @@ public class ReportLCRCommand extends ReportBaseCommand {
             ResultSet attiResults = this.searchService.query(sp);
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-                    attiResults.length(), 2, false);
+                    attiResults.length(), 3, false);
             // convert to input stream
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
