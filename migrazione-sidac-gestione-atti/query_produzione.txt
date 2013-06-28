@@ -1,0 +1,231 @@
+
+-------Query atti aula definitiva START
+SELECT  ag.ID as ID_ATTO_APPO , delc.*, ag.*, pc.*,alg.*, ti.DESCRIZIONE as TIPO_INIZIATIVA, le.NUM_ROMANO as LEGISLATURA, ta.DESCRIZIONE as TIPO_ATTO,
+        st.DESCRIZIONE as STATO , tipa.DESCRIZIONE as AMMISSIBILITA , qo.DESCRIZIONE as QUORUM_AULA , st_voto.DESCRIZIONE as VOTO_AULA ,riic.* , stral.*
+from ATTI_GENERALE ag, PASSAGGI_CONSIGLIO pc , TIPI_ATTI ta , STATI st ,STATI st_voto ,LEGISLATURA le , TIPI_INIZIATIVA ti , 
+TIPI_AMMISSIBILITA tipa , DELIBERE_CONSIGLIO delc , QUORUM qo , ATTI_LNK_GIUNTA alg , RINVII_IN_COMMISSIONE riic , STRALCI stral
+where le.NUM_ROMANO = 'IX' 
+and ag.ID_LEGISLATURA = le.ID 
+and ag.ID_TIPO_ATTO  in (1,7,8,9,10,11,12,13,14)  
+and ag.ID = pc.ID_ATTO (+)
+and ag.ID_TIPO_ATTO  = ta.ID 
+and ag.ID_STATO = st.ID 
+and ag.ID_TIPO_INIZIATIVA  = ti.ID (+)
+and ag.ACCETTABILITA  = tipa.ID (+)
+and ag.ID = alg.ID_ATTO (+)
+and pc.ID = delc.ID_PASSAGGIO (+)
+and delc.VOTO = st_voto.ID (+)
+and delc.QUORUM = qo.ID (+)
+and pc.ID =   riic.id_passaggio_cons (+)
+and ag.ID = stral.ID_ATTO_ORIGINALE (+)
+order by  ag.NUM_ATTO asc,TIPO_ATTO asc , pc.NUM_PASSAGGIO asc;
+-------Query atti aula definitiva END
+
+
+--------Query Commissioni START
+SELECT   ass."ID" as ID_ATTO, co.descrizione  as COMM_NOME, stat_ass.descrizione as STATO_ASSEGNAZIONE, stat_com.descrizione as STATO_COMM ,st_voto.DESCRIZIONE as VOTO_COM, 
+      alc.*,  ass.* , atseg.* , pascom.* , pascom.id as ID_PASS
+FROM ATTI_GENERALE ag ,ASSEGNAZIONI ass ,ASSEGNAZIONI_LNK_COMMISSIONI alc ,COMMISSIONI co , STATI stat_ass , STATI stat_com , STATI st_voto,ATTI_SEGUITO atseg ,PASSAGGI_COMMISSIONI pascom
+WHERE ag.ID = '48BD78B0-9821-4321-A868-1F81906DDCB7' 
+and ag.ID = ass.ID_ATTO 
+and ass.ID = alc.ID_ASSEGNAZIONE 
+and ass.NUM_PROPOSTA = (select max(ass_sub.NUM_PROPOSTA) from ASSEGNAZIONI ass_sub where ass_sub.id_atto = ag.id)
+and alc.ID_COMMISSIONE = co.ID 
+and ass.id_stato = stat_ass.id
+and atseg.ID_ATTO_GENERALE = ag.ID
+and atseg.ID_COMMISSIONE  = co.ID 
+and atseg.ID = pascom.ID_SEGUITO
+and pascom.VOTO = st_voto.ID (+)
+and atseg.id_stato = stat_com.id 
+order by pascom.NUM_PASSAGGIO asc;
+--------Query Commissioni END
+
+
+--------Query Promotori START-----------
+SELECT  CONCAT( CONCAT(sog.NOME,' ') ,sog.COGNOME) as FIRMATARIO , gr.ABBREVIAZIONE , aliprom.DATA_DEPOSITO , aliprom.DATA_RITIRO , aliprom.ORDINAMENTO 
+from  ATTI_LNK_PROMOTORI aliprom ,SOGGETTI sog , GRUPPI gr
+where aliprom.ID_ATTO = '0017FBEE-AD19-425A-B53F-9FD8BFEB8968' 
+and aliprom.ID_FIRMATARIO_CONS = sog.id
+and aliprom.ID_FIRMATARIO_GRP = gr.ID (+) 
+ORDER BY aliprom.ORDINAMENTO ;
+--------Query Promotori END-----------
+
+--------Query Organi START-----------
+SELECT org.NOME_ORGANO , ricpar.DATA_RICHIESTA , ricpar.DATA_RICEZIONE
+FROM RICHIESTA_PARERI ricpar , ORGANI_ESTERNI org
+WHERE ricpar.ID_ATTO =  '02C3E6D9-5EA4-4E1D-99AB-70CF7CE7C05E' 
+and ricpar.ID_ORGANO = org.ID
+--------Query Organi END-----------
+
+--------Query Collegamenti START-----------
+SELECT  1
+from ATTI_GENERALE ag, TIPI_ATTI ta , LEGISLATURA le 
+where le.NUM_ROMANO = 'IX' 
+and ag.ID_LEGISLATURA = le.ID 
+and ag.NUM_ATTO = '1'
+and ta.descrizione = 'PDL'
+and ta.id = ag.ID_TIPO_ATTO
+--------Query Collegamenti END-----------
+
+
+--------Query Relatori START-----------
+SELECT  comlrel.DATA_NOMINA as NOMINA_REL, comlrel.DATA_CESSAZIONE as FINE_REL,  CONCAT( CONCAT(sog.NOME,' ') ,sog.COGNOME) as RELATORE , co.DESCRIZIONE 
+FROM COMMISSIONI co ,PASSAGGI_COMMISSIONI pascom ,COMMISSIONI_LNK_RELATORI comlrel, SOGGETTI sog , ATTI_SEGUITO atseg
+WHERE pascom.id = '6096233A-052F-43B2-B91C-8E4BAF68FEC3'
+and comlrel.ID_PASSAGGIO = pascom.id
+and comlrel.ID_SOGGETTO = sog.id
+and pascom.ID_SEGUITO = atseg.ID
+and atseg.ID_COMMISSIONE = co.id
+order by pascom.NUM_PASSAGGIO asc , pascom.id;
+--------Query Relatori END-----------
+
+
+--------Query Comitati Ristretti START-----------
+SELECT   CONCAT( CONCAT(sog.NOME,' ') ,sog.COGNOME) as COMITATO_SOG,
+		comrist.DATA as DATA_COMITATO , comlinsog.DATA_IN ,comlinsog.DATA_OUT , co.descrizione 
+FROM COMMISSIONI co ,PASSAGGI_COMMISSIONI pascom , SOGGETTI sog , ATTI_SEGUITO atseg , COMITATI_RISTRETTI comrist , COMITATO_LNK_SOGGETTI comlinsog
+WHERE pascom.id = 'BC0EF002-19F8-401D-B0F5-E1380A66AB91'
+and pascom.ID_SEGUITO = atseg.ID
+and atseg.ID_COMMISSIONE = co.id
+and pascom.ID = comrist.ID_PASSAGGIO
+and comrist.ID = comlinsog.ID_COMITATO
+and comlinsog.ID_SOGGETTO  = sog.ID
+order by pascom.NUM_PASSAGGIO asc , pascom.id;
+--------Query Comitati Ristretti END-----------
+
+
+--------Query Abbinamenti START-----------
+select  abb_atto.id , abb_atto.num_atto , abb_tipo.descrizione as TIPO,  abb_stato.descrizione  as STATO, ala.*  , abb.* , ala.ANNULLO_DATA as DATA_ANNULLO , abb.TIPO as TIPO_ABB
+from ABBINAMENTI_LNK_ATTI ala , ABBINAMENTI abb ,
+     ATTI_GENERALE abb_atto , TIPI_ATTI abb_tipo , STATI abb_stato 
+where  ala.id_atto = '1483FD9C-8A07-4CA4-90CC-F28D61335C62'
+and ala.id_abbinamento = abb.id
+and abb.id_atto_proseguente = abb_atto.id
+and abb_atto.ID_TIPO_ATTO  = abb_tipo.ID 
+and abb_atto.ID_STATO = abb_stato.ID 
+--------Query Abbinamenti END-----------
+
+
+
+
+--------Query Sedute Commissioni START--------
+select ag.NUM_ATTO , ta.DESCRIZIONE as TIPO_ATTO, sc.*,aloc.*
+from SEDUTE_COMMISSIONI sc, COMMISSIONI com , LEGISLATURA le , ATTI_LNK_ODG_COM aloc , ATTI_GENERALE ag , 
+     PASSAGGI_COMMISSIONI pascom , ATTI_SEGUITO atseg , TIPI_ATTI ta
+where le.NUM_ROMANO = 'IX'
+and com.ID_LEGISLATURA = le.ID
+and SUBSTR(com.DESCRIZIONE, 0, 2) = 'IV' 
+and sc.ID_COMMISSIONI = com.ID
+and aloc.ID_SEDUTA = sc.ID
+and aloc.ID_PASSAGGIO = pascom.ID
+and pascom.ID_SEGUITO = atseg.ID
+and atseg.ID_ATTO_GENERALE = ag.ID
+and ag.ID_TIPO_ATTO = ta.ID
+order by aloc.ID_SEDUTA,aloc.NUM_ORDINE,com.DESCRIZIONE , sc.NUM_VERBALE , sc.DATA desc
+--------Query Sedute Commissioni END--------
+
+
+
+--------Query Sedute Aula START--------
+select ag.NUM_ATTO , ta.DESCRIZIONE as TIPO_ATTO ,sc.*  ,aloc.*
+from SEDUTE_CONSIGLIO sc, ATTI_GENERALE ag , LEGISLATURA le , ATTI_LNK_ODG_CONS aloc , PASSAGGI_CONSIGLIO pc , TIPI_ATTI ta   
+where le.NUM_ROMANO = 'IX'
+and ag.ID_LEGISLATURA = le.ID  
+and ag.ID_TIPO_ATTO = ta.ID
+and ag.ID_TIPO_ATTO  in (1,7,8,9,10,11,12,13,14) 
+and ag.ID = pc.ID_ATTO
+and pc.ID = aloc.ID_PASSAGGIO
+and aloc.ID_SEDUTA = sc.ID
+order by aloc.ID_SEDUTA,aloc.NUM_ORDINE, sc.NUM_VERBALE , sc.DATA desc
+--------Query Sedute Aula END--------
+
+--------Query Testi START--------
+Select *
+    From
+        (select t.id_atto, t.titolo, t.provenienza, tt.descrizione, ltt.id_doc from Testi T, Testi_lnk_tipi lTT, Tipi_testi TT
+            where t.id = lTT.id_testo
+               And lTT.id_tipotesto = TT.id) Sidac,
+        (Select id_document, 
+            (SELECT PATH FROM W2KODISSEA.fbc_volume where id = 'AF63782A-08AD-4550-933C-B40F9E3E3C5E')  || PATH as FILE_PATH
+            from W2KODISSEA.fbc_phy_file PF , W2KODISSEA.fbc_lnk_log_phy_file llp, W2KODISSEA.gsl_system_coord_map cm 
+            where cm.id_log_file = llp.id_log_file
+                and llp.id_phy_file = pf.id
+                and cm.map_type = 1) Odissea
+    where Sidac.id_doc = Odissea.id_document
+  and Sidac.id_atto = 'A46F423D-F0D8-4637-A6B1-A77270EDC1C1'  ;  
+--------Query Testi END--------
+
+
+
+
+
+
+
+SELECT  ag.ID as ID_ATTO_APPO , delc.*, ag.*, pc.*,alg.*, ti.DESCRIZIONE as TIPO_INIZIATIVA, le.NUM_ROMANO as LEGISLATURA, ta.DESCRIZIONE as TIPO_ATTO,
+        st.DESCRIZIONE as STATO , tipa.DESCRIZIONE as AMMISSIBILITA , qo.DESCRIZIONE as QUORUM_AULA , st_voto.DESCRIZIONE as VOTO_AULA ,riic.* , stral.*
+from ATTI_GENERALE ag, PASSAGGI_CONSIGLIO pc , TIPI_ATTI ta , STATI st ,STATI st_voto ,LEGISLATURA le , TIPI_INIZIATIVA ti , 
+TIPI_AMMISSIBILITA tipa , DELIBERE_CONSIGLIO delc , QUORUM qo , ATTI_LNK_GIUNTA alg , RINVII_IN_COMMISSIONE riic , STRALCI stral
+where le.NUM_ROMANO = 'IX' 
+and ag.ID_LEGISLATURA = le.ID 
+and ag.ID_TIPO_ATTO  in (1,7,8,9,10,11,12,13,14)  
+and ag.ID = pc.ID_ATTO (+)
+and ag.ID_TIPO_ATTO  = ta.ID 
+and ag.ID_STATO = st.ID 
+and ag.ID_TIPO_INIZIATIVA  = ti.ID (+)
+and ag.ACCETTABILITA  = tipa.ID (+)
+and ag.ID = alg.ID_ATTO (+)
+and pc.ID = delc.ID_PASSAGGIO (+)
+and delc.VOTO = st_voto.ID (+)
+and delc.QUORUM = qo.ID (+)
+and pc.ID =   riic.id_passaggio_cons (+)
+and ag.ID = stral.ID_ATTO_ORIGINALE (+)
+order by  ag.NUM_ATTO asc,TIPO_ATTO asc , pc.NUM_PASSAGGIO asc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select * from COMMISSIONI where id_legislatura = '495A8E1F-26F4-4F45-A528-7B958EF63063'; 
+
+
+select * from LEGISLATURA
+
+select descrizione from COMMISSIONI
+where id=?
+
+
+
+
+Select *
+    From
+        (select t.id_atto, t.titolo, t.provenienza, tt.descrizione, ltt.id_doc from Testi T, Testi_lnk_tipi lTT, Tipi_testi TT
+            where t.id = lTT.id_testo
+               And lTT.id_tipotesto = TT.id) Sidac,
+        (Select id_document, 
+            (SELECT PATH FROM W2KODISSEA.fbc_volume where id = 'AF63782A-08AD-4550-933C-B40F9E3E3C5E')  || PATH as FILE_PATH
+            from W2KODISSEA.fbc_phy_file PF , W2KODISSEA.fbc_lnk_log_phy_file llp, W2KODISSEA.gsl_system_coord_map cm 
+            where cm.id_log_file = llp.id_log_file
+                and llp.id_phy_file = pf.id
+                and cm.map_type = 1) Odissea,
+          
+
+
+    where Sidac.id_doc = Odissea.id_document
+    and Sidac.id_atto = ?  ;  
+
+
+
+
+
+
