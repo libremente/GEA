@@ -144,12 +144,13 @@
 									</f:facet>
 									<p:row>
 										<p:column style="text-align:center">
-											<p:selectOneMenu id="commissione"
+											<p:selectOneMenu id="commissione" style="width:160px"
 												value="#{presentazioneAssegnazioneAttoController.nomeCommissione}">
 												<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
-
+                                                 <!-- itemLabel="#{fn:substring(commissione,0,15)}" --> 
+                                                  
 												<f:selectItems var="commissione"
-													itemLabel="#{fn:substring(commissione,0,15)}"
+													itemLabel="#{commissione}"
 													itemValue="#{commissione}"
 													value="#{presentazioneAssegnazioneAttoController.commissioni}" />
 											</p:selectOneMenu>
