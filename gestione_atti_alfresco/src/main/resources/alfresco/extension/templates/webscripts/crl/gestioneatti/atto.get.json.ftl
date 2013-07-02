@@ -494,9 +494,10 @@
 						<#assign commissioniAnnullate = passaggio.childrenByXPath["*[@cm:name='CommissioniAnnullate']"][0]>
 			    		<#assign commissioniAnnullateList = commissioniAnnullate.getChildAssocsByType("crlatti:commissione")>
 			    		
-			    		<#if commissioniAnnullateList?has_content>
+			    		<#if commissioniList?has_content && commissioniAnnullateList?has_content>
 			    		,
 			    		</#if>
+
 			    		<#list commissioniAnnullateList as commissione>
 			    		<#assign nomeCommissioneAnnullata = commissione.name?split("#")[0]> 
 			    		{ 

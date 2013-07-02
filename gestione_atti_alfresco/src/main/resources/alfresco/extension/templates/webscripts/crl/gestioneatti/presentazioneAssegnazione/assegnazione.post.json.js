@@ -78,10 +78,14 @@ if(checkIsNotNull(id)){
 				var nomeCommissioneAnnullata = commissioneAnnullata.properties["cm:name"];
 				
 				// controllo su nomecommissione, dataAssegnazione, dataAnnullo, ruolo
-				if(nomeCommissioneAnnullata.indexOf(descrizione) == 0 &&
-						dataAssegnazioneParsed.getTime()  == commissioneAnnullata.properties["crlatti:dataAssegnazioneCommissione"].getTime() &&
-						dataAnnulloParsed.getTime() == commissioneAnnullata.properties["crlatti:dataAnnulloCommissione"].getTime() &&
-						ruolo == commissioneAnnullata.properties["crlatti:ruoloCommissione"]){
+				if(nomeCommissioneAnnullata.indexOf(descrizione) == 0 && 
+                                        ((dataAssegnazioneParsed == null && commissioneAnnullata.properties["crlatti:dataAssegnazioneCommissione"] == null) || 
+                                        (dataAssegnazioneParsed !=null && commissioneAnnullata.properties["crlatti:dataAssegnazioneCommissione"] != null && 
+                                        dataAssegnazioneParsed.getTime() == commissioneAnnullata.properties["crlatti:dataAssegnazioneCommissione"].getTime())) &&
+                                        ((dataAnnulloParsed == null && commissioneAnnullata.properties["crlatti:dataAnnulloCommissione"] == null) || 
+                                        (dataAnnulloParsed != null && commissioneAnnullata.properties["crlatti:dataAnnulloCommissione"] != null && 
+                                        dataAnnulloParsed.getTime() == commissioneAnnullata.properties["crlatti:dataAnnulloCommissione"].getTime())) &&
+					ruolo == commissioneAnnullata.properties["crlatti:ruoloCommissione"]){
 					
 					// prendo il nodo relativo alla commissione precedentemente annullata
 					commissioneNode = commissioneAnnullata;
