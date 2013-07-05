@@ -55,7 +55,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                 String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\""
                         + " AND TYPE:\""
                         + "crlatti:commissione"
-                        + "\" AND "
+                        + "\" AND NOT @crlatti\\:statoCommissione:\"Annullato\" AND "
                         + convertListToString("@crlatti\\:tipoAttoCommissione",
                         this.tipiAttoLucene, true)
                         + " AND @crlatti\\:ruoloCommissione:\""
