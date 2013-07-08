@@ -65,7 +65,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
                         + " AND "
                         + convertListToString("@crlatti\\:commissioneRelatore",
                         this.commissioniJson, false)
-                        + " AND @cm\\:name:\"" + relatore + "\"";
+                        + " AND @cm\\:name:\"" + relatore + "\" AND ISNOTNULL:\"crlatti:dataNominaRelatore\"";
 
                 if (!dataNominaRelatoreDa.equals("*")
                         || !dataNominaRelatoreA.equals("*")) {
