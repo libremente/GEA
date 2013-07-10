@@ -534,7 +534,7 @@ for(var i=0; i< attiResults.length; i++){
 		for(var j=0; j<elencoFirmatariArray.length; j++){
 			elencoFirmatariString += elencoFirmatariArray[j];
 			if(j!=elencoFirmatariArray.length-1){
-				elencoFirmatariString += ",";
+				elencoFirmatariString += ", ";
 			}
 		}
 	}
@@ -549,7 +549,7 @@ for(var i=0; i< attiResults.length; i++){
 		for(var j=0; j<commissioniConsultiveArray.length; j++){
 			commissioniConsultiveString += commissioniConsultiveArray[j];
 			if(j!=commissioniConsultiveArray.length-1){
-				commissioniConsultiveString += ",";
+				commissioniConsultiveString += ", ";
 			}
 		}
 	}
@@ -558,19 +558,33 @@ for(var i=0; i< attiResults.length; i++){
 	
 	var commissioniReferentiArray = attoResult.properties["crlatti:commReferente"];
 	var commissioniReferentiString = "";
+        
+        if(commissioniReferentiArray == null) {
+            commissioniReferentiArray = new Array();
+        }
+        
+        if(attoResult.properties["crlatti:commCoreferente"] != null) {
+            commissioniReferentiArray.push(attoResult.properties["crlatti:commCoreferente"]);
+        }
+        
+        if(attoResult.properties["crlatti:commRedigente"] != null) {
+            commissioniReferentiArray.push(attoResult.properties["crlatti:commRedigente"]);
+        }
+        
+        if(attoResult.properties["crlatti:commDeliberante"] != null) {
+            commissioniReferentiArray.push(attoResult.properties["crlatti:commDeliberante"]);
+        }
 	
 	if (commissioniReferentiArray!=null){
 		for(var j=0; j<commissioniReferentiArray.length; j++){
 			commissioniReferentiString += commissioniReferentiArray[j];
 			if(j!=commissioniReferentiArray.length-1){
-				commissioniReferentiString += ",";
+				commissioniReferentiString += ", ";
 			}
 		}
 	}
-		
-	
-	attoResultObj.commissioniNonConsultive = commissioniReferentiString + "," + attoResult.properties["crlatti:commCoreferente"] + "," + 
-		attoResult.properties["crlatti:commRedigente"] + "," + attoResult.properties["crlatti:commDeliberante"]
+        
+        attoResultObj.commissioniNonConsultive = commissioniReferentiString;
 
 	if(attoResult.typeShort != "crlatti:attoMis" && attoResult.typeShort != "crlatti:attoEac") {
 		
@@ -578,14 +592,14 @@ for(var i=0; i< attiResults.length; i++){
 		
 		var abbinamentiFolderXpathQuery = "*[@cm:name='Abbinamenti']";
 		var abbinamentiFolderNode = passaggioFolderNode.childrenByXPath(abbinamentiFolderXpathQuery)[0];
-		abbinamenti = abbinamentiFolderNode.getChildAssocsByType("crlatti:abbinamento");
+		var abbinamenti = abbinamentiFolderNode.getChildAssocsByType("crlatti:abbinamento");
 		
-		abbinamentiString = "";
+		var abbinamentiString = "";
 		
-		for(var j=0 ; j<abbinamenti.lenght; j++){
-			abbinamentiString += abbinamenti[j].name;
+		for(var j=0 ; j<abbinamenti.length; j++){
+			abbinamentiString += abbinamenti[j].name.toUpperCase();
 			if(j!=abbinamenti.length-1){
-				abbinamentiString += ",";
+				abbinamentiString += ", ";
 			}
 		}
 		
@@ -594,9 +608,9 @@ for(var i=0; i< attiResults.length; i++){
 		
 		var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
 		var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
-		commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
+		var commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
 
-		for(var j=0 ; j<commissioni.lenght; j++){
+		for(var j=0 ; j<commissioni.length; j++){
 
 			var commissioneCorrente = commissioni[j];
 			
@@ -613,8 +627,10 @@ for(var i=0; i< attiResults.length; i++){
 				
 				var relatoriNode = relatoriCommissioneFolderNode.getChildAssocsByType("crlatti:relatore");
 				
-				attoResultObj.relatore = relatoriNode[0].name;
-				attoResultObj.dataNominaRelatore = relatoriNode[0].properties["crlatti:dataNominaRelatore"];		
+                                if(relatoriNode != null && relatoriNode.length > 0) {
+                                    attoResultObj.relatore = relatoriNode[0].name;
+                                    attoResultObj.dataNominaRelatore = relatoriNode[0].properties["crlatti:dataNominaRelatore"];	
+                                }
 			}
 		}
 		
@@ -651,9 +667,5 @@ for(var i=0; i< attiResults.length; i++){
 	attiResultsObj.push(attoResultObj);
 	
 }
-
-
-
-
 
 model.atti = attiResultsObj;
