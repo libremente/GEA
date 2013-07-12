@@ -144,9 +144,10 @@ public class InserisciMISController {
 		} else if (attoRet!=null && attoRet.getError()!=null && !attoRet.getError().equals("")) {
 			
 			
-			
 			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));
+					FacesMessage.SEVERITY_ERROR, "ATTENZIONE: atto già presente per la legislatura indicata", ""));
+			/*context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));*/
 			
 			
 		}	
