@@ -93,18 +93,22 @@ public class InserisciEACController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-
-		if (attoBean.getAttoEAC().getId() != null
-				&& !"".equals(attoBean.getAttoEAC().getId())) {
-
-			atto = (AttoEAC) attoBean.getAttoEAC().clone();
-
-			setCollegamentiAttiSindacato(attoServiceManager
-					.findAttiSindacatoById(atto.getId()));
-
-			attoBean.setAttoEAC(null);
+		
+		//Modificato controllo dopo inserimento controllo numero atto duplicato 
+		
+		if (attoBean.getAttoEAC() != null){
+		
+			if (attoBean.getAttoEAC().getId() != null
+					&& !"".equals(attoBean.getAttoEAC().getId())) { 
+	
+				atto = (AttoEAC) attoBean.getAttoEAC().clone();
+	
+				setCollegamentiAttiSindacato(attoServiceManager
+						.findAttiSindacatoById(atto.getId()));
+	
+				attoBean.setAttoEAC(null);
+			}
 		}
-
 		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 
@@ -129,8 +133,10 @@ public class InserisciEACController {
 		} else if (attoRet != null && attoRet.getError() != null
 				&& !attoRet.getError().equals("")) {
 
+			/*context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));*/
 			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));
+					FacesMessage.SEVERITY_ERROR, "ATTENZIONE: atto già presente per la legislatura indicata", ""));
 
 		}
 	}
