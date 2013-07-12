@@ -93,7 +93,8 @@
                 attoFolderNode.properties["crlatti:numeroDgr"] = attoProtocolloNode.properties["crlatti:numeroDgr"];
                 attoFolderNode.properties["crlatti:dataDgr"] = attoProtocolloNode.properties["crlatti:dataDgr"];
             }
-			
+		
+            /*	
             if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){
                 // i firmatari verranno infasati con la rule sulla cartella firmatari
                 // attoFolderNode.properties["crlatti:firmatari"] = attoProtocolloNode.properties["crlatti:firmatari"];
@@ -142,6 +143,7 @@
                 }
 	
             }
+            */
 			
             attoFolderNode.save();
 			

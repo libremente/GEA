@@ -180,6 +180,8 @@ if(username=="protocollo" || username=="admin"){
 				if((!update) && checkIsNotNull(esibenteMittente)){
 					var firmatariArray = new Array();
 					if(tipoIniziativa=="01_ATTO DI INIZIATIVA CONSILIARE"){
+                                            
+                                                protocolloLogger.info("esibenteMittente [" + tipoAtto + " " + numeroAtto + estensioneAtto + "]: " + esibenteMittente);
 						
 						var prefix = "CONSIGLIERI REGIONALI:";
 						
@@ -208,7 +210,7 @@ if(username=="protocollo" || username=="admin"){
                                                                         }else{
                                                                                 firmatarioTemp = firmatariSplittedTemp[j].split("\\(")[0];
                                                                         }
-
+                                                                                                                                             
                                                                         firmatariSplitted.push(firmatarioTemp);
                                                                 }
 
@@ -231,7 +233,7 @@ if(username=="protocollo" || username=="admin"){
 							for(var i=0; i<firmatariSplitted.length; i++){
 								if(firmatariSplitted[i].indexOf("(")==-1){
 									var firmatario = firmatariSplitted[i].trim();
-									
+                                                                        						
 									//cerca il consigliere exact match - difficile
 									var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"*"+firmatario+"\"";
 									var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
@@ -256,6 +258,9 @@ if(username=="protocollo" || username=="admin"){
 										var gruppoConsigliere = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
 										if(checkIsNotNull(nomeConsigliere) && checkIsNotNull(cognomeConsigliere)){
 											var nomeCompletoConsigliere = nomeConsigliere + " " + cognomeConsigliere;
+                                                                                        
+                                                                                        protocolloLogger.info("firmatario: [" + tipoAtto + " " + numeroAtto + estensioneAtto + "]: " + nomeCompletoConsigliere);
+                                                                                        
 											firmatariArray.push(nomeCompletoConsigliere);
 											
 											// creo i nodi di tipo firmatario
@@ -275,7 +280,7 @@ if(username=="protocollo" || username=="admin"){
 											if(i==0){
 												firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
 											}
-											firmatarioNode.content = "";
+											firmatarioNode.content = nomeCompletoConsigliere;
 											firmatarioNode.save();
 											
 											
