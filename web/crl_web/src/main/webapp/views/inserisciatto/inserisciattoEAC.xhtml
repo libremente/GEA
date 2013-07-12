@@ -70,11 +70,11 @@
 
 
 
-			<p:growl id="inserimentoMsg" showDetail="true" sticky="false" />
+			<!-- <p:growl id="inserimentoMsg" showDetail="true" sticky="false" /> -->
 
 			<p:row>
 				<p:column colspan="3">
-					<p:messages id="msgs" />
+					<p:messages name ="pippo" id="msgs" severity="error, info"/>
 				</p:column>
 			</p:row>
 
@@ -128,7 +128,7 @@
 			<p:row>
 
 				<p:column colspan="2" style="text-align:left;">
-					<p:commandButton ajax="false" update="insertattopanel"
+					<p:commandButton ajax="false" update="insertattopanel,msgs"
 						id="insertattobtn" value="Salva"
 						disabled="#{navigationBean.isEACDisabled()}"
 						action="#{inserisciEACController.inserisciAtto}" />
@@ -224,7 +224,7 @@
 				<p:column colspan="4">
 
 					<!-- Messaggio azioni -->
-					<p:growl id="attiIndirizzoMsg" showDetail="true" sticky="false" />
+					<p:growl id="attiIndirizzoMsg" showDetail="true" sticky="false" severity="warn"/>
 
 					<!-- Confirm dialog -->
 					<p:confirmDialog id="confirmCollegamentoAttoSindacatoDialog"
