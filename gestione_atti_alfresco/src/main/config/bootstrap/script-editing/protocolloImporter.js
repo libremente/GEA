@@ -295,8 +295,9 @@ function importaAllegato(allegatoProtocolloNode){
 				var provenienza = allegatoProtocolloNode.properties["crlatti:provenienza"];
 				var content = allegatoProtocolloNode.properties.content;
 				
-				//scrittura properties all'interno del nodo testo
-				attoRecordNode.properties["crlatti:tipologia"] = tipologia;
+				//scrittura properties all'interno del nodo testo                 
+				//toRecordNode.properties["crlatti:tipologia"] = tipologia;
+                                attoRecordNode.properties["crlatti:tipologia"] = "testo_atto";
 				attoRecordNode.properties["crlatti:pubblico"] = pubblico;
 				attoRecordNode.properties["crlatti:provenienza"] = provenienza;
 				attoRecordNode.properties.content.write(content);

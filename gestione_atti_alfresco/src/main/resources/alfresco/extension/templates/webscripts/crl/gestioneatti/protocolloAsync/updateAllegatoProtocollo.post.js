@@ -117,6 +117,8 @@ if(username=="protocollo" || username=="admin"){
 		    allegatoNode = importFolderNode.createNode(filename,"crlatti:allegato");
 //		}
 		
+                allegatoNode.properties["crlatti:tipologia"] = "allegato_atto";
+                
 		allegatoNode.properties["crlatti:idProtocollo"] = idProtocolloAllegato;
 		allegatoNode.properties.content.write(content);
 		allegatoNode.properties.content.setEncoding("UTF-8");
