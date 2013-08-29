@@ -271,7 +271,7 @@ function importaAllegato(allegatoProtocolloNode){
 				
 				var testiFolderNode = attoFolderNode.childrenByXPath("*[@cm:name='Testi']")[0];
 				
-				var recordXPathQuery = "*[@cm:name='"+filename+"']";
+				var recordXPathQuery = "*[@cm:name=\""+filename+"\"]";
 				var testiResults = testiFolderNode.childrenByXPath(recordXPathQuery);
 				
 				var attoRecordNode = null;
@@ -313,7 +313,7 @@ function importaAllegato(allegatoProtocolloNode){
 				var allegatiFolderNode = attoFolderNode.childrenByXPath("*[@cm:name='Allegati']")[0];
 				
 				
-				var allegatoResults = allegatiFolderNode.childrenByXPath("*[@cm:name='"+filename+"']");
+				var allegatoResults = allegatiFolderNode.childrenByXPath("*[@cm:name=\""+filename+"\"]");
 				var allegatoNode = null;
 				if(allegatoResults!=null && allegatoResults.length>0){
 					allegatoNode = allegatoResults[0];
