@@ -70,7 +70,8 @@ function getCommissioneTarget(json, passaggio, commissione){
 			for(var j=0; j<commissioni.length(); j++) {
 				var commissioneTemp = commissioni.get(j);
 				
-				if(""+commissioneTemp.get("descrizione")+"" == ""+commissione+"") {
+				if( (""+commissioneTemp.get("descrizione")+"" == ""+commissione+"")
+						&& (""+commissioneTemp.get("stato") != "Annullato")) {
 					
 					commissioneTarget = commissioneTemp;
 					
