@@ -188,7 +188,7 @@ if(checkIsNotNull(provenienza)){
 			var descrizione = link.get("descrizione");
 			var indirizzo = link.get("indirizzo");
 			
-			var existLinkXPathQuery = "*[@cm:name='"+descrizione+"']";
+			var existLinkXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 			var existLinkResults = linksFolderNode.childrenByXPath(existLinkXPathQuery);
 			
 			var linkNode = null;

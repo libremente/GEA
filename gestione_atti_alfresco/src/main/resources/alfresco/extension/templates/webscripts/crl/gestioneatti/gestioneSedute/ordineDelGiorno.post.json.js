@@ -41,7 +41,7 @@ if(checkIsNotNull(id)){
 		var nomeAttoTrattato = tipoAttoTrattato +"-"+attoTrattatoFolderNode.name
 		
 		//verifica l'esistenza dell'atto all'interno del folder AttiTrattati
-		var existAttoTrattatoXPathQuery = "*[@cm:name='"+nomeAttoTrattato+"']";
+		var existAttoTrattatoXPathQuery = "*[@cm:name=\""+nomeAttoTrattato+"\"]";
 		var attoTrattatoEsistenteResults = attiFolderNode.childrenByXPath(existAttoTrattatoXPathQuery);
 		
 		var attoTrattatoNode = null;
@@ -117,7 +117,7 @@ if(checkIsNotNull(id)){
 		var attoIndirizzoTrattatoFolderNode = utils.getNodeFromString(idAttoTrattato);
 		
 		//verifica l'esistenza dell'atto all'interno del folder AttiTrattati
-		var existAttoIndirizzoTrattatoXPathQuery = "*[@cm:name='"+attoIndirizzoTrattatoFolderNode.name+"']";
+		var existAttoIndirizzoTrattatoXPathQuery = "*[@cm:name=\""+attoIndirizzoTrattatoFolderNode.name+"\"]";
 		var attoIndirizzoTrattatoEsistenteResults = attiSindacatoFolderNode.childrenByXPath(existAttoIndirizzoTrattatoXPathQuery);
 		
 		var attoIndirizzoTrattatoNode = null;
@@ -188,7 +188,7 @@ if(checkIsNotNull(id)){
 		
 		
 		//verifica l'esistenza della consultazione
-		var existConsultazioneXPathQuery = "*[@cm:name='"+nomeConsultazione+"']";
+		var existConsultazioneXPathQuery = "*[@cm:name=\""+nomeConsultazione+"\"]";
 		var consultazioneEsistenteResults = consultazioniFolderNode.childrenByXPath(existConsultazioneXPathQuery);
 	
 	
@@ -227,7 +227,7 @@ if(checkIsNotNull(id)){
 		var discussoAudizione = filterParam(audizione.get("discusso"));
 		
 		//verifica l'esistenza dell'audizione all'interno del folder Audizioni
-		var existAudizioneXPathQuery = "*[@cm:name='"+soggettoPartecipante+"']";
+		var existAudizioneXPathQuery = "*[@cm:name=\""+soggettoPartecipante+"\"]";
 		var audizioneEsistenteResults = audizioniFolderNode.childrenByXPath(existAudizioneXPathQuery);
 		
 		var audizioneNode = null;
