@@ -27,7 +27,7 @@ if(checkIsNotNull(id)
 	var consultazioniXPathQuery = "*[@cm:name='Consultazioni']";
 	var consultazioniFolderNode = attoFolderNode.childrenByXPath(consultazioniXPathQuery)[0];
 	
-	var consultazionePathQuery = "*[@cm:name='"+consultazioneTarget+"']";
+	var consultazionePathQuery = "*[@cm:name=\""+consultazioneTarget+"\"]";
 	var consultazioneNode = consultazioniFolderNode.childrenByXPath(consultazionePathQuery)[0];
 	
 	var soggettiInvitatiPathQuery = "*[@cm:name='SoggettiInvitati']";
@@ -41,11 +41,11 @@ if(checkIsNotNull(id)
 	
 		var soggettoInvitato = soggettiInvitati.get(j).get("soggettoInvitato");
 	
-		var descrizione = filterParam(soggettoInvitato.get("descrizione"));
+		var descrizione = filterParam(soggettoInvitato.get("descrizione")).trim();
 		var intervenuto = filterParam(soggettoInvitato.get("intervenuto"));
 			
 		//verifica l'esistenza della consultazione all'interno del folder Consultazioni
-		var existSogettoXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var existSogettoXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 		var soggettoNodeEsistenteResults = soggettiInvitatiFolderNode.childrenByXPath(existSogettoXPathQuery);
 		var soggettoNode = null;
 		if(soggettoNodeEsistenteResults!=null && soggettoNodeEsistenteResults.length>0){
@@ -73,7 +73,7 @@ if(checkIsNotNull(id)
 		//cerco il nome del soggetto nel repo all'interno del json
 		for (var q=0; q<soggettiInvitati.length(); q++){
 			var soggetto = soggettiInvitati.get(q).get("soggettoInvitato");
-			var descrizione = filterParam(soggetto.get("descrizione"));
+			var descrizione = filterParam(soggetto.get("descrizione")).trim();
 			if(""+descrizione+""==""+soggettoNelRepository.name+""){
 				trovato = true;
 				break

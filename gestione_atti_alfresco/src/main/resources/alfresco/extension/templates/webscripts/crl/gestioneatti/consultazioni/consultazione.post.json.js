@@ -31,7 +31,7 @@ if(checkIsNotNull(id)
 	var consultazioniXPathQuery = "*[@cm:name='Consultazioni']";
 	var consultazioniFolderNode = attoFolderNode.childrenByXPath(consultazioniXPathQuery)[0];
 	
-	var consultazionePathQuery = "*[@cm:name='"+consultazioneTarget+"']";
+	var consultazionePathQuery = "*[@cm:name=\""+consultazioneTarget+"\"]";
 	var consultazioneNode = consultazioniFolderNode.childrenByXPath(consultazionePathQuery)[0];
 	
 	if(checkIsNotNull(dataSeduta)) {

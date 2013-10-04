@@ -20,7 +20,7 @@ if(checkIsNotNull(id)){
 	
 		var consultazione = consultazioni.get(i).get("consultazione");
 	
-		var descrizione = filterParam(consultazione.get("descrizione"));
+		var descrizione = filterParam(consultazione.get("descrizione")).trim();
 		var dataSeduta = filterParam(consultazione.get("dataSeduta"));
 		var dataConsultazione =  filterParam(consultazione.get("dataConsultazione"));
 		var prevista =  filterParam(consultazione.get("prevista"));
@@ -33,7 +33,7 @@ if(checkIsNotNull(id)){
 		
 			
 		//verifica l'esistenza della consultazione all'interno del folder Consultazioni
-		var existConsultazioneXPathQuery = "*[@cm:name='"+descrizione+"']";
+		var existConsultazioneXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 		var consultazioneEsistenteResults = consultazioniFolderNode.childrenByXPath(existConsultazioneXPathQuery);
 		var consultazioneNode = null;
 		if(consultazioneEsistenteResults!=null && consultazioneEsistenteResults.length>0){
@@ -84,7 +84,7 @@ if(checkIsNotNull(id)){
 				
 				// verifico che l'atto non sia già tra gli atti trattati nella seduta
 				
-				var attoTrattatoXPathQuery = "*[@cm:name='"+nomeAttoTrattato+"']";
+				var attoTrattatoXPathQuery = "*[@cm:name=\""+nomeAttoTrattato+"\"]";
 				var attoTrattatoEsistenteResults = attiFolderNode.childrenByXPath(attoTrattatoXPathQuery);
 				
 				if(attoTrattatoEsistenteResults!=null && attoTrattatoEsistenteResults.length>0){
@@ -146,11 +146,11 @@ if(checkIsNotNull(id)){
 		
 			var soggettoInvitato = soggettiInvitati.get(j).get("soggettoInvitato");
 		
-			var descrizione = filterParam(soggettoInvitato.get("descrizione"));
+			var descrizione = filterParam(soggettoInvitato.get("descrizione")).trim();
 			var intervenuto = filterParam(soggettoInvitato.get("intervenuto"));
 				
 			//verifica l'esistenza della consultazione all'interno del folder Consultazioni
-			var existSogettoXPathQuery = "*[@cm:name='"+descrizione+"']";
+			var existSogettoXPathQuery = "*[@cm:name=\""+descrizione+"\"]";
 			var soggettoNodeEsistenteResults = soggettiInvitatiFolderNode.childrenByXPath(existSogettoXPathQuery);
 			var soggettoNode = null;
 			if(soggettoNodeEsistenteResults!=null && soggettoNodeEsistenteResults.length>0){
@@ -178,7 +178,7 @@ if(checkIsNotNull(id)){
 			//cerco il nome del soggetto nel repo all'interno del json
 			for (var q=0; q<soggettiInvitati.length(); q++){
 				var soggetto = soggettiInvitati.get(q).get("soggettoInvitato");
-				var descrizione = filterParam(soggetto.get("descrizione"));
+				var descrizione = filterParam(soggetto.get("descrizione")).trim();
 				if(""+descrizione+""==""+soggettoNelRepository.name+""){
 					trovato = true;
 					break
@@ -206,7 +206,7 @@ if(checkIsNotNull(id)){
 		//cerco il nome della consultazione nel repo all'interno del json
 		for (var q=0; q<consultazioni.length(); q++){
 			var consult = consultazioni.get(q).get("consultazione");
-			var descrizione = filterParam(consult.get("descrizione"));
+			var descrizione = filterParam(consult.get("descrizione")).trim();
 			if(""+descrizione+""==""+consultazioneNelRepository.name+""){
 				trovato = true;
 				break
