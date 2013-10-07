@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
@@ -427,9 +429,17 @@ public class NavigationRules {
 	}
 
 	public boolean isSessionAttoChiuso() {
+		
 		return StatoAtto.CHIUSO.equals(attoBean.getStato());
 	}
 
+	public boolean isSessionAttoPARChiuso() {
+		
+		boolean isCommissione = userBean.getUser().getSessionGroup().isCommissione();
+		return !(isSessionAttoPAR() && isCommissione) 
+					&& isSessionAttoChiuso();
+	}
+	
 	public boolean isSessionAttoPAR() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PAR");
 	}
