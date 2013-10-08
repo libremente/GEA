@@ -161,16 +161,17 @@ if(checkIsNotNull(provenienza)){
 				var tipoAttoTrattato = atto.typeShort.substring(12).toUpperCase();
 				var nomeAttoTrattato = tipoAttoTrattato +"-"+atto.name
 				
-							
-				var attoTrattatoNode = attiFolderNode.createNode(nomeAttoTrattato,"crlatti:attoTrattatoODG");
-				attoTrattatoNode.content = nomeAttoTrattato;
+				if (attiFolderNode.childByNamePath(nomeAttoTrattato) == null){			
+					var attoTrattatoNode = attiFolderNode.createNode(nomeAttoTrattato,"crlatti:attoTrattatoODG");
+					attoTrattatoNode.content = nomeAttoTrattato;
+					
+					attoTrattatoNode.createAssociation(atto,"crlatti:attoTrattatoSedutaODG");
 				
-				attoTrattatoNode.createAssociation(atto,"crlatti:attoTrattatoSedutaODG");
-			
-				attoTrattatoNode.properties["crlatti:numeroAttoTrattatoODG"] = atto.name;
-				attoTrattatoNode.properties["crlatti:tipoAttoTrattatoODG"] = tipoAttoTrattato;
-				
-				attoTrattatoNode.save();
+					attoTrattatoNode.properties["crlatti:numeroAttoTrattatoODG"] = atto.name;
+					attoTrattatoNode.properties["crlatti:tipoAttoTrattatoODG"] = tipoAttoTrattato;
+					
+					attoTrattatoNode.save();
+				}
 				
 		}
 	
