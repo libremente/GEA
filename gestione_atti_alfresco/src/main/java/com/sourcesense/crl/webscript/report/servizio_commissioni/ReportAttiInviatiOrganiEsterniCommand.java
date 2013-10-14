@@ -20,7 +20,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
@@ -55,10 +54,8 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
             SearchParameters sp = new SearchParameters();
             sp.addStore(spacesStore);
             sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-            String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\""
-                    + "AND TYPE:\"crlatti:parere"
-                    + "\" AND @crlatti\\:organismoStatutarioParere:\""
-                    + this.organismo + "\"";
+            String query = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\""
+                    + "AND TYPE:\"crlatti:parere\" AND @crlatti\\:organismoStatutarioParere:\"" + this.organismo + "\"";
             if (!dataAssegnazioneParereDa.equals("*")
                     || !dataAssegnazioneParereA.equals("*")) {
                 query += " AND @crlatti\\:dataAssegnazioneParere:["
@@ -72,7 +69,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
             ResultSet pareriResult = this.searchService.query(sp);
             organo2results.put(this.organismo, pareriResult);
             Map<NodeRef, NodeRef> atto2parere = new HashMap<NodeRef, NodeRef>();
-            LinkedListMultimap<String, NodeRef> parere2atti = this.retrieveAtti(organo2results, spacesStore, atto2parere);
+            LinkedListMultimap<String, NodeRef> parere2atti = this.retrieveAttiParere(organo2results, spacesStore, atto2parere);
 
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(parere2atti), 2, false);

@@ -186,6 +186,32 @@ public abstract class ReportBaseCommand implements ReportCommand {
         }
         return child2atti;
     }
+    
+    /**
+     * For each Commissione(String) in input , access to its resultSet and
+     * retrieve the list of Atto NodeRef.
+     *
+     * @param attoChild2results - String commissione -> ResultSet
+     * @param spacesStore - current space store of search
+     * @param atto2child - NodeRef type Atto -> NodeRef type Commissione
+     * @return
+     */
+    protected LinkedListMultimap<String, NodeRef> retrieveAttiParere(
+            Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
+            Map<NodeRef, NodeRef> atto2child) {
+        LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
+        for (String commissione : attoChild2results.keySet()) {
+            ResultSet commissioneResults = attoChild2results.get(commissione);
+            List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
+
+            //ORDER LIST
+            sortAttiParere(nodeRefList);
+
+            this.retrieveAttiFromList(nodeRefList, spacesStore, atto2child,
+                    child2atti, commissione);
+        }
+        return child2atti;
+    }
 
     protected void sortAttiCommissione(List<NodeRef> nodeRefList) {
 
@@ -203,6 +229,33 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
                 String numeroAtto1 = (String) nodeService.getProperty(node1, QName.createQName(CRL_ATTI_MODEL, "numeroAttoCommissione"));
                 String numeroAtto2 = (String) nodeService.getProperty(node2, QName.createQName(CRL_ATTI_MODEL, "numeroAttoCommissione"));
+
+                Integer numAtto1 = new Integer(numeroAtto1);
+                Integer numAtto2 = new Integer(numeroAtto2);
+
+                return numAtto1.compareTo(numAtto2);
+
+            }
+        });
+
+    }
+    
+    protected void sortAttiParere(List<NodeRef> nodeRefList) {
+
+        Collections.sort(nodeRefList, new Comparator<NodeRef>() {
+            public int compare(NodeRef node1, NodeRef node2) {
+
+                String tipoAtto1 = (String) nodeService.getProperty(node1, QName.createQName(CRL_ATTI_MODEL, "tipoAttoParere"));
+                String tipoAtto2 = (String) nodeService.getProperty(node2, QName.createQName(CRL_ATTI_MODEL, "tipoAttoParere"));
+
+                int tipoResult = tipoAtto1.compareTo(tipoAtto2);
+
+                if (tipoResult != 0) {
+                    return tipoResult;
+                }
+
+                String numeroAtto1 = (String) nodeService.getProperty(node1, QName.createQName(CRL_ATTI_MODEL, "numeroAttoParere"));
+                String numeroAtto2 = (String) nodeService.getProperty(node2, QName.createQName(CRL_ATTI_MODEL, "numeroAttoParere"));
 
                 Integer numAtto1 = new Integer(numeroAtto1);
                 Integer numAtto2 = new Integer(numeroAtto2);
