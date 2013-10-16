@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import org.alfresco.service.cmr.search.ResultSet;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -83,6 +83,58 @@ public class DocxManager {
 				// newDoc.setTable(initialTablePos + (k+1), currentTable);
 				k++;
 				newPage = false;
+			}
+			XWPFParagraph breakPar = newDoc.createParagraph();
+			XWPFRun run = breakPar.createRun();
+			run.addBreak();
+		}
+		return newDoc;
+	}
+	
+	/**
+	 * Extracts the table from the input Docx ( template) and copy the table n
+	 * times ( n is the size of luceneDocs in input)
+	 * 
+	 * @param breakBetween
+	 *            TODO
+	 * @param luceneDocs
+	 * 
+	 * @return
+	 */
+	public XWPFDocument generateFromTemplateMapConferenza( Map<String,Integer> group2count) {
+		XWPFDocument newDoc = new XWPFDocument();
+		List<XWPFTable> tables = document.getTables();
+		XWPFTable tableExt = tables.get(0);//template table
+		int k = 0;
+		/*Copy template paragraphs*/
+		List<XWPFParagraph> paragraphs = document.getParagraphs();
+		int parCounter=0;
+		for (int i = 0; i < paragraphs.size(); i++) {
+			XWPFParagraph currentPar = paragraphs.get(i);
+			newDoc.createParagraph();
+			newDoc.setParagraph(currentPar, parCounter);
+			parCounter++;
+		}
+		String previousKey = StringUtils.EMPTY;
+		String currentKey = StringUtils.EMPTY;
+		int counter = 0;
+		for (String key : group2count.keySet()) {
+			if ( group2count.get(key)>0) {
+				/*create key title*/
+				XWPFParagraph keyTitle = newDoc.createParagraph();
+				XWPFRun keyRun = keyTitle.createRun();
+				currentKey = key.trim();
+				keyRun.setText(key);
+				if (!previousKey.equals(key) && counter!=0) {
+					keyTitle.setPageBreak(true);
+					previousKey = currentKey;
+				}
+				counter++;
+			}
+			for (int j = 0; j < group2count.get(key); j++) {
+				newDoc.createTable();
+				newDoc.setTable(k, tableExt);
+				k++;
 			}
 			XWPFParagraph breakPar = newDoc.createParagraph();
 			XWPFRun run = breakPar.createRun();

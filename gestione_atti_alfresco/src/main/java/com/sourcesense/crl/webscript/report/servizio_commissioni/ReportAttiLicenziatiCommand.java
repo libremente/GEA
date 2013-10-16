@@ -16,6 +16,7 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -153,7 +154,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                 // from Atto
                 ArrayList<String> firmatariList = (ArrayList<String>) this
                         .getNodeRefProperty(attoProperties, "firmatari");
-                String firmatari = this.renderList(firmatariList);
+                String firmatari = this.renderFirmatariConGruppoList(firmatariList);
                 // from Atto
                 ArrayList<String> pareriList = (ArrayList<String>) this
                         .getNodeRefProperty(attoProperties,
@@ -165,12 +166,13 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                     }
                 }
                 // from Commissione
-                String elencoRelatori = "";
+                String elencoRelatori = StringUtils.EMPTY;
                 for (int i = 0; i < relatori.length(); i++) {
                     NodeRef relatoreNodeRef = relatori.getNodeRef(i);
                     String relatore = (String) nodeService.getProperty(
                             relatoreNodeRef, ContentModel.PROP_NAME);
-                    elencoRelatori += relatore + " ";
+                    String gruppoConsiliare = getGruppoConsiliare(relatore);
+                    elencoRelatori += relatore + "("+gruppoConsiliare+")" + " ";
                 }
                 /* Writing values in the table */
                 currentTable

@@ -16,6 +16,7 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -146,7 +147,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                     Date dateLr = (Date) this.getNodeRefProperty(attoProperties, "dataLr");
 
                     ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
-                    String firmatari = this.renderList(firmatariList);
+                    String firmatari = this.renderFirmatariConGruppoList(firmatariList);
 
                     // from Commissione
                     String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
@@ -164,6 +165,10 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                         Date dateNomina = (Date) this.getNodeRefProperty(relatoreProperties, "dataNominaRelatore");
                         String relatore = (String) nodeService.getProperty(relatoreNodeRef, ContentModel.PROP_NAME);
                         String dateNominaString = this.checkDateEmpty(dateNomina);
+                        String gruppoConsiliare = getGruppoConsiliare(relatore);
+                        if(StringUtils.isNotEmpty(gruppoConsiliare)){
+                        	relatore += " ("+gruppoConsiliare+")";
+                        }
                         elencoRelatori.add(relatore);
                         elencoDateNomina.add(dateNominaString);
                     }

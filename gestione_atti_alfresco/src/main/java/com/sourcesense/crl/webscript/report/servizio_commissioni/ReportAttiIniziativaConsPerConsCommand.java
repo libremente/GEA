@@ -55,7 +55,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
             SearchParameters sp = new SearchParameters();
             sp.addStore(spacesStore);
             sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-            String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\" AND TYPE:\""
+            String query = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\" AND TYPE:\""
                     + "crlatti:atto\" AND @crlatti\\:tipoIniziativa:\"01_ATTO DI INIZIATIVA CONSILIARE\"";
             if (this.tipologiaFirma.equals("primo")) {
                 query = query + " AND @crlatti\\:primoFirmatario:\""
@@ -150,7 +150,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
                 String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
 
                 ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
-                String firmatari = this.renderList(firmatariList);
+                String firmatari = this.renderFirmatariConGruppoList(firmatariList);
 
                 Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(attoProperties, "dataAssegnazioneCommissioneReferente");
 

@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -122,7 +124,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
                         "descrizioneIniziativa");
                 ArrayList<String> firmatariList = (ArrayList<String>) this
                         .getNodeRefProperty(attoProperties, "firmatari");
-                String firmatari = this.renderList(firmatariList);
+                String firmatari = this.renderFirmatariConGruppoList(firmatariList);
                 ArrayList<String> commReferenteList = (ArrayList<String>) this
                         .getNodeRefProperty(attoProperties, "commReferente");
                 String commReferente = "";
@@ -135,6 +137,17 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
                 ArrayList<String> relatoriList = (ArrayList<String>) this
                         .getNodeRefProperty(attoProperties, "relatori");
 
+                Iterator<String> relatoriIterator = relatoriList.iterator();
+                ArrayList<String> relatoriConGruppoList = new ArrayList<String>();
+                while(relatoriIterator.hasNext()){
+                	String relatore = relatoriIterator.next();
+                	String gruppoConsiliare = getGruppoConsiliare(relatore);
+                	if(StringUtils.isNotEmpty(gruppoConsiliare)){
+                		relatore += " ("+gruppoConsiliare+")";
+                	}
+                	relatoriConGruppoList.add(relatore);
+                }
+                
                 String relazioneScritta = "";// to complete
                 String noteGenerali = "";// to complete
 				/* write values in table */
@@ -155,7 +168,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
                 currentTable.getRow(6).getCell(1)
                         .setText(this.checkStringEmpty(commReferente));
                 docxManager.insertListInCell(currentTable.getRow(7).getCell(1),
-                        relatoriList);
+                		relatoriConGruppoList);
                 currentTable.getRow(7).getCell(3)
                         .setText(this.checkStringEmpty(relazioneScritta));
                 currentTable.getRow(8).getCell(1)

@@ -7,8 +7,13 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +32,6 @@ import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
-import org.alfresco.util.ISO9075;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.json.JSONException;
@@ -39,11 +43,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 
 public abstract class ReportBaseCommand implements ReportCommand {
 
@@ -97,7 +96,19 @@ public abstract class ReportBaseCommand implements ReportCommand {
     protected String dataConsultazioneDa;
     protected String dataConsultazioneA;
     protected static Map<String, String> tipoIniziativaDecode = new HashMap<String, String>();
+    private static final String QUERY_REPLACER = "REP";
+    private static final QName PROP_CODICE_GRUPPO = QName.createQName(CRL_ATTI_MODEL, "codiceGruppoConsigliereAnagrafica");
+    private static final QName PROP_STATO_ATTO = QName.createQName(CRL_ATTI_MODEL, "statoAtto");
+    
+    private static final String GRUPPO_FIRMATARIO_QUERY_ATTIVI = 
+    		"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:ConsiglieriAttivi//*\" " +
+    		"AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\""+QUERY_REPLACER+"\"";
+    
+    private static final String GRUPPO_FIRMATARIO_QUERY_STORICI = 
+    		"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:ConsiglieriStorici//*\" " +
+    		"AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\""+QUERY_REPLACER+"\"";
 
+    
     static {
         tipoIniziativaDecode.put("01_ATTO DI INIZIATIVA CONSILIARE", "Consiliare");
         tipoIniziativaDecode.put("02_ATTO DI INIZIATIVA DI GIUNTA", "Giunta");
@@ -182,6 +193,32 @@ public abstract class ReportBaseCommand implements ReportCommand {
             sortAttiCommissione(nodeRefList);
 
             this.retrieveAttiFromList(nodeRefList, spacesStore, atto2child,
+                    child2atti, commissione);
+        }
+        return child2atti;
+    }
+    
+    /**
+     * For each Commissione(String) in input , access to its resultSet and
+     * retrieve the list of Atto NodeRef.
+     *
+     * @param attoChild2results - String commissione -> ResultSet
+     * @param spacesStore - current space store of search
+     * @param atto2child - NodeRef type Atto -> NodeRef type Commissione
+     * @return
+     */
+    protected LinkedListMultimap<String, NodeRef> retrieveAttiReportAssCommissione(
+            Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
+            Map<NodeRef, NodeRef> atto2child) {
+        LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
+        for (String commissione : attoChild2results.keySet()) {
+            ResultSet commissioneResults = attoChild2results.get(commissione);
+            List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
+
+            //ORDER LIST
+            sortAttiCommissione(nodeRefList);
+
+            this.retrieveAttiAssCommissioneFromList(nodeRefList, spacesStore, atto2child,
                     child2atti, commissione);
         }
         return child2atti;
@@ -332,6 +369,52 @@ public abstract class ReportBaseCommand implements ReportCommand {
             child2atti.put(child, attoNodeRef);
             atto2child.put(attoNodeRef, childNodeRef);
 
+        }
+    }
+    
+    /**
+     * Retrieve Atto from a NodeRef list of results from the query. For example
+     * a list of Commissione or Parere. Then from each child node, it find the
+     * related Atto.
+     *
+     * @param nodeRefList - the list of Commissione NodeRef
+     * @param spacesStore - the current space store workspace://SpacesStore
+     * @param atto2child - a map that relates each atto to its specif
+     * childNodes( for example Commissione NodeRef)
+     * @param child2atti - a map that relates a specific child NodeRef
+     * @param child - the String of the child related to different Atto ( for
+     * example Commissione I)
+     */
+    protected void retrieveAttiAssCommissioneFromList(List<NodeRef> nodeRefList,
+            StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
+            LinkedListMultimap<String, NodeRef> child2atti, String child) {
+        int resultLength = nodeRefList.size();
+        for (int i = 0; i < resultLength; i++) {
+            NodeRef childNodeRef = nodeRefList.get(i);
+            NodeRef attoNodeRef = childNodeRef;
+            boolean check = false;
+            while (!check) {// look for Atto in type hierarchy
+                ChildAssociationRef childAssociationRef = nodeService
+                        .getPrimaryParent(attoNodeRef);
+                attoNodeRef = childAssociationRef.getParentRef();
+                QName nodeRefType = nodeService.getType(attoNodeRef);
+                QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
+                check = dictionaryService.isSubClass(nodeRefType, attoRefType);
+            }
+            
+            String stato = (String) nodeService.getProperty(attoNodeRef, PROP_STATO_ATTO);
+            if(StringUtils.isNotEmpty(stato)){
+            	if(!stato.equals("Protocollato")
+            			&& !stato.equals("Preso in carico da S.C.")
+            			&& !stato.startsWith("Verificata ammissibilit")
+            			&& !stato.equals("Proposta assegnazione")){
+            		
+	            	child2atti.put(child, attoNodeRef);
+	                atto2child.put(attoNodeRef, childNodeRef);
+	                
+            	}
+            }
+            
         }
     }
 
@@ -715,6 +798,50 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
+     * Encode a list of values in a single String , comma separed
+     *
+     * @param stringList
+     * @return
+     */
+    protected String renderFirmatariConGruppoList(List<String> firmatari) {
+        String encodedString = StringUtils.EMPTY;
+        if (firmatari != null) {
+            for (String firmatario : firmatari) {
+            	String codiceGruppoConsiliare = getGruppoConsiliare(firmatario);
+                encodedString += firmatario + " ("+codiceGruppoConsiliare+"), ";
+                
+            }
+        }
+        if (!encodedString.equals(StringUtils.EMPTY)) {
+            encodedString = encodedString.substring(0,
+                    encodedString.length() - 2);
+        }
+        return encodedString;
+    }
+    
+    protected String getGruppoConsiliare(String firmatario) {
+		String gruppoConsiliare = StringUtils.EMPTY;
+    	String luceneQuery = GRUPPO_FIRMATARIO_QUERY_ATTIVI.replaceAll(QUERY_REPLACER, firmatario);
+		ResultSet firmatarioAttiviResults = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_LUCENE, luceneQuery);
+		NodeRef firmatarioNodeRef = null;
+		if(firmatarioAttiviResults.length()>0){
+			//e' un consigliere attivo
+			firmatarioNodeRef = firmatarioAttiviResults.getNodeRef(0);
+		} else {
+			//cerco tra i consiglieri storici
+			luceneQuery = GRUPPO_FIRMATARIO_QUERY_STORICI.replaceAll(QUERY_REPLACER, firmatario);
+			ResultSet firmatarioStoriciResults = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_LUCENE, luceneQuery);
+			if(firmatarioStoriciResults.length()>0){
+				firmatarioNodeRef = firmatarioStoriciResults.getNodeRef(0);
+			}
+		}
+		if(firmatarioNodeRef!=null){
+			gruppoConsiliare = (String) nodeService.getProperty(firmatarioNodeRef, PROP_CODICE_GRUPPO);
+		}
+		return gruppoConsiliare;
+	}
+
+	/**
      * Encode a list of values in a single String , comma separed
      *
      * @param stringList

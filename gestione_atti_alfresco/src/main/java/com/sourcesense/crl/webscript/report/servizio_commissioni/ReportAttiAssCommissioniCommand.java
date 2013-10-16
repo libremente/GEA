@@ -136,7 +136,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                     String commReferente = this.renderList(commReferenteList);
 
                     ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
-                    String firmatari = this.renderList(firmatariList);
+                    String firmatari = this.renderFirmatariConGruppoList(firmatariList);
                     String numeroDgr = (String) this.getNodeRefProperty(attoProperties, "numeroDgr");
 
                     // from Commissione

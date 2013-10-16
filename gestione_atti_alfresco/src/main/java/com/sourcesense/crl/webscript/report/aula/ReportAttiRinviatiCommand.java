@@ -120,7 +120,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
             String motivazioneRinvio = "";
             ArrayList<String> relatoriList = (ArrayList<String>) this
                     .getNodeRefProperty(attoProperties, "relatori");
-            String relatori = this.renderList(relatoriList);
+            String relatori = this.renderFirmatariConGruppoList(relatoriList);
 
             currentTable
                     .getRow(0)

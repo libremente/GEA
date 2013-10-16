@@ -75,7 +75,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
-            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
+            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAttiReportAssCommissione(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMapConditional(commissione2atti, false), 3, false);

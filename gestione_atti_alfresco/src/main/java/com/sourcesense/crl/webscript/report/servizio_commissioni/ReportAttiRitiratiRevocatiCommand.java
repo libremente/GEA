@@ -155,7 +155,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
                     // child of Atto
                     ArrayList<String> firmatariList = (ArrayList<String>) this
                             .getNodeRefProperty(attoProperties, "firmatari");
-                    String firmatari = this.renderList(firmatariList);
+                    String firmatari = this.renderFirmatariConGruppoList(firmatariList);
                     currentTable
                             .getRow(0)
                             .getCell(1)

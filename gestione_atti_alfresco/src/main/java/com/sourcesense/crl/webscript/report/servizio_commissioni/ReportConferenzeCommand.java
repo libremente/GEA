@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,12 +20,10 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
-import java.util.LinkedHashMap;
 
 /**
  * V2 - Big Ok
@@ -135,8 +133,9 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                     Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
                     // child of Atto
                     ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
-                    String firmatari = this.renderList(firmatariList);
-
+                    String firmatari = this.renderFirmatariConGruppoList(firmatariList);
+                    
+                    
                     /* writing values in the table */
                     currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
                     currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(oggetto));
