@@ -325,7 +325,8 @@
 
 					<p:column>
 						<p:selectOneMenu id="tipologiaFirma"
-							value="#{reportisticaController.tipologiaFirma}">
+							value="#{reportisticaController.tipologiaFirma}" required="true" 
+											requiredMessage="Tipologia firma obbligatoria">
 							<f:selectItem itemValue="" itemLabel="Scegli Tipologia Firma" />
                             <f:selectItem itemValue="primo" itemLabel="Primo" />
                             <f:selectItem itemValue="originari" itemLabel="Originari" />
