@@ -12,8 +12,11 @@ import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.sourcesense.crl.util.AttoUtil;
 
 
 public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
@@ -28,26 +31,33 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	HashMap<String, String> searchTerms = new HashMap<String, String>();
 
 		// Set properties from template
-    	String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(attoUtil.CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));	
+    	String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(AttoUtil.CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));	
 		searchTerms.put("<firmatario>", firmatario);
 		
 		QName templateType  =  nodeService.getType(templateNodeRef);
 		String nomeTemplate = templateType.getLocalName();
     	
     	// Set properties from atto
-    	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_NUM_ATTO))) + 
-    			((String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ESTENSIONE_ATTO)));
-    	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
-    	String iniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_INIZIATIVA));
-    	String descrizioneIniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DESCRIZIONE_INIZIATIVA));
-    	String numeroRepertorio = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_NUMERO_REPERTORIO));
-    	String numeroDgr = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_NUMERO_DGR));
-    	Date dataDgr = (Date) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_DGR));
+    	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_NUM_ATTO))) + 
+    			((String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_ESTENSIONE_ATTO)));
+    	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_OGGETTO_ATTO));
+    	String iniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_TIPO_INIZIATIVA));
+    	String descrizioneIniziativa = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_DESCRIZIONE_INIZIATIVA));
+    	String numeroRepertorio = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_NUMERO_REPERTORIO));
+    	String numeroDgr = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_NUMERO_DGR));
+    	Date dataDgr = (Date) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_DATA_DGR));
+    	Date dataRitiro = (Date) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_DATA_CHIUSURA_ATTO));
     	
     	if(dataDgr != null) {
     		SimpleDateFormat dataDgrFormatter = new SimpleDateFormat("dd/MM/yy");
     		String dataDgrString = dataDgrFormatter.format(dataDgr);
     		searchTerms.put("<dataDGR>", dataDgrString);
+    	}
+    	
+    	if(dataRitiro != null) {
+    		SimpleDateFormat dataRitiroFormatter = new SimpleDateFormat("dd/MM/yy");
+    		String dataRitiroString = dataRitiroFormatter.format(dataRitiro);
+    		searchTerms.put("<dataRitiroAtto>", dataRitiroString);
     	}
     		
     	DictionaryService dictionaryService = serviceRegistry.getDictionaryService();		
@@ -62,8 +72,8 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 		
 		
     	//  Set firmatari list
-    	List<String> firmatariList = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_FIRMATARI));
-    	String firmatari = "";
+    	List<String> firmatariList = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_FIRMATARI));
+    	String firmatari = StringUtils.EMPTY;
     	
     	if(firmatariList!=null) {
 	    	for(int i=0; i<firmatariList.size(); i++){	
@@ -83,8 +93,8 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	}
     	
 
-    	if(iniziativa!=null && iniziativa!=""){
-	    	if(iniziativa.equals(attoUtil.INIZIATIVA_CONSILIARE)){
+    	if(iniziativa!=null && iniziativa!=StringUtils.EMPTY){
+	    	if(iniziativa.equals(AttoUtil.INIZIATIVA_CONSILIARE)){
 	    		
 	    		descrizioneIniziativa = "di iniziativa dei Consiglieri regionali: ";
 	        	
@@ -99,7 +109,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 	        	
 	        	searchTerms.put("<iniziativa>", iniziativa.substring(8));
 	        	
-	        }else if(iniziativa.equals(attoUtil.INIZIATIVA_PRESIDENTE_GIUNTA)){
+	        }else if(iniziativa.equals(AttoUtil.INIZIATIVA_PRESIDENTE_GIUNTA)){
 	        	
 	        	iniziativa = "DI INIZIATIVA: PRESIDENTE DELLA GIUNTA REGIONALE";
 	        	searchTerms.put("<iniziativa>", iniziativa);
@@ -116,12 +126,12 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	}
     	
 		
-	 	List<String> commissioniReferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONI_REFERENTI));
-    	List<String> commissioniConsultive = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONI_CONSULTIVE));
-    	String commissioneCoreferente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_COREFERENTE));
-    	String commissioneRedigente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_REDIGENTE));
-    	String commissioneDeliberante = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_DELIBERANTE));
-    	List<String> organismiStatutari = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ORGANISMI_STATUTARI));
+	 	List<String> commissioniReferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONI_REFERENTI));
+    	List<String> commissioniConsultive = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONI_CONSULTIVE));
+    	String commissioneCoreferente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONE_COREFERENTE));
+    	String commissioneRedigente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONE_REDIGENTE));
+    	String commissioneDeliberante = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONE_DELIBERANTE));
+    	List<String> organismiStatutari = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_ORGANISMI_STATUTARI));
   
     	
     	List<String> listaCommissioniPrincipali = new ArrayList<String>();
@@ -132,19 +142,19 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     		listaCommissioniPrincipali.add(commissioniReferenti.get(0));
     		
     		// Check for commmissione co-referente
-    		if(commissioneCoreferente!=null && !commissioneCoreferente.equals("")) {
+    		if(commissioneCoreferente!=null && !commissioneCoreferente.equals(StringUtils.EMPTY)) {
     			listaCommissioniPrincipali.add(commissioneCoreferente);
     		}
     	// Commissione referente not exists	
     	}else {
     		
     		// Check for commissione redigente
-    		if(commissioneRedigente!=null && !commissioneRedigente.equals("")) {
+    		if(commissioneRedigente!=null && !commissioneRedigente.equals(StringUtils.EMPTY)) {
     			listaCommissioniPrincipali.add(commissioneRedigente);
     			
     		// If commissione redigente not exists than Check for commissione deliberante	
     		}else {
-    			if(commissioneDeliberante!=null && !commissioneDeliberante.equals("")) {
+    			if(commissioneDeliberante!=null && !commissioneDeliberante.equals(StringUtils.EMPTY)) {
     				listaCommissioniPrincipali.add(commissioneDeliberante);
     			}
     		}
@@ -152,7 +162,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	}
     	
     	// Create commissioni principali address list 
-    	String listaCommissioniPrincipaliDestString = "";
+    	String listaCommissioniPrincipaliDestString = StringUtils.EMPTY;
     	
     	for(int i=0; i<listaCommissioniPrincipali.size(); i++) {
     		
@@ -165,7 +175,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	searchTerms.put("<listaCommissioniPrincipaliDest>", listaCommissioniPrincipaliDestString);
 
     	// Create commissioni consultive address list 
-    	String listaCommissioniConsultiveDestString = "";
+    	String listaCommissioniConsultiveDestString = StringUtils.EMPTY;
     	String listaCommissioniConsultiveInvitiString = "Commissione consiliare ";
     	
     	// Check for commissione consultive
@@ -190,8 +200,8 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	searchTerms.put("<listaCommissioniConsultiveInviti>", listaCommissioniConsultiveInvitiString);
     	
     	// Create organismi statutari address list 
-    	String listaOrganismiStatutariDestString = "";	
-    	String listaOrganismiStatutariInvitiString = "";
+    	String listaOrganismiStatutariDestString = StringUtils.EMPTY;	
+    	String listaOrganismiStatutariInvitiString = StringUtils.EMPTY;
     	
     	// Check for organismi statutari
     	if(organismiStatutari!=null && organismiStatutari.size()>0) {
@@ -219,7 +229,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	List<NodeRef> listaCommissioniPrincipaliNodeRef = attoUtil.getCommissioniPrincipali(attoNodeRef);
     	
     	if(listaCommissioniPrincipaliNodeRef.size() > 0){
-    		Date dataAssegnazioneCommissionePrincipale = (Date) nodeService.getProperty(listaCommissioniPrincipaliNodeRef.get(0), QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONE));
+    		Date dataAssegnazioneCommissionePrincipale = (Date) nodeService.getProperty(listaCommissioniPrincipaliNodeRef.get(0), QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONE));
 
     		if(dataAssegnazioneCommissionePrincipale!=null){
     			SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yy", Locale.ITALY);

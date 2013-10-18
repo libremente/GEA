@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.alfresco.model.ContentModel;
@@ -20,11 +20,12 @@ import org.alfresco.web.bean.repository.Repository;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONObject;
 import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
+
+import com.sourcesense.crl.util.AttoUtil;
 
 
 
@@ -49,14 +50,48 @@ public class LetteraWebScript extends AbstractWebScript {
     		String tipoTemplate = (String)req.getParameter("tipoTemplate");
     		String gruppo = (String)req.getParameter("gruppo");
     		
-			// Search document template node	
-			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
-					SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"");
 			
-			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
 			
 			// Get atto node
 			NodeRef attoNodeRef = new NodeRef(idAtto);
+			
+			
+			//scelta template per le forme plurali
+			List<String> firmatariList = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_FIRMATARI));
+			
+			boolean isTemplateFormaSingolare = true;
+			
+			ResultSet templatesResults = null;
+			ResultSet templatesResultsPlurale = null;
+			
+			// template per la forma singolare	
+			ResultSet templatesResultsSingolare = 
+					searchService.query(Repository.getStoreRef(), 
+					SearchService.LANGUAGE_LUCENE, 
+					"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"" +
+							" AND @cm\\:name:\"singolar*\"");
+					
+			if(firmatariList!=null && !firmatariList.isEmpty()){
+				if(firmatariList.size()>1){
+					//template per la forma plurale
+					templatesResultsPlurale = searchService.query(Repository.getStoreRef(), 
+							SearchService.LANGUAGE_LUCENE, 
+							"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\" " +
+									"AND @cm\\:name:\"plural*\"");
+					if(templatesResultsPlurale!=null && templatesResultsPlurale.length()>0){
+						//possiamo usare un template in forma plurale perche' presente nel repo
+						isTemplateFormaSingolare = false;
+					}
+				}
+			}
+			
+			if(isTemplateFormaSingolare){
+				templatesResults = templatesResultsSingolare;
+			} else {
+				templatesResults = templatesResultsPlurale;
+			}
+			
+			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
 			
 			// Get byte array of template node content
 	    	ContentReader reader = contentService.getReader(templateNodeRef, ContentModel.PROP_CONTENT);

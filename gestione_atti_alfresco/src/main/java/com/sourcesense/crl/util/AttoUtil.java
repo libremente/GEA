@@ -72,6 +72,7 @@ public class AttoUtil {
 	public static final String PROP_RELAZIONE_SCRITTA_AULA = "relazioneScrittaAula";
 	public static final String PROP_COMMISSIONE_CONSULTAZIONE_ATTO = "commissioneConsultazione";
 	public static final String PROP_DATA_CONSULTAZIONE_ATTO = "dataConsultazione";
+	public static final String PROP_DATA_CHIUSURA_ATTO = "dataChiusura";
 	
 
 	public static final String PROP_TIPO_ATTO_INDIRIZZO = "tipoAttoIndirizzo";
