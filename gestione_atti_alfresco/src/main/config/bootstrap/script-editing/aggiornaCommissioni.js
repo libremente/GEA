@@ -71,7 +71,7 @@ attoNode.properties["crlatti:commConsultiva"] = commConsultivaAtto;
 attoNode.properties["crlatti:commReferente"] = commReferenteAtto;
 
 if(commCoReferenteAtto.length>0) {
-	attoNode.properties["crlatti:commCoreferente"] = commCoReferenteAtto[0];
+	attoNode.properties["crlatti:commCoreferente"] = commCoReferenteAtto;
 }
 if(commRedigenteAtto.length>0) {
 	attoNode.properties["crlatti:commRedigente"] = commRedigenteAtto[0];
@@ -95,6 +95,3 @@ if(numeroEmendamentiApprovati>0){
 }
 
 attoNode.save();
-
-
-

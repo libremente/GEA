@@ -715,6 +715,8 @@
 			<show-property name="crlatti:isPrimoFirmatario" />
 		</property-sheet>
 	</config>
+	
+	
 
 	<config evaluator="node-type" condition="crlatti:attoPdl">
 		<property-sheet>
@@ -748,7 +750,7 @@
 			<show-property name="crlatti:dataSedutaAula" />
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:redigente" />
 			<show-property name="crlatti:deliberante" />
 
@@ -815,7 +817,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -878,7 +880,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -941,7 +943,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1004,7 +1006,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1067,7 +1069,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1130,7 +1132,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1191,9 +1193,10 @@
 			<show-property name="crlatti:dataAssegnazioneCommissioneReferente" />
 			<show-property name="crlatti:dataSedutaAula" />
 			<show-property name="crlatti:commConsultiva" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1256,7 +1259,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1319,7 +1322,7 @@
 			<show-property name="crlatti:commConsultiva" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			<show-property name="crlatti:coreferente" />
+			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1507,7 +1510,7 @@
 				<meta-data type="crlatti:atto" property="crlatti:relatori" />
 
 				<meta-data type="crlatti:atto" property="crlatti:redigente" />
-				<meta-data type="crlatti:atto" property="crlatti:coreferente" />
+				<meta-data type="crlatti:atto" property="crlatti:commCoreferente" />
 				<meta-data type="crlatti:atto" property="crlatti:deliberante" />
 				<meta-data type="crlatti:atto" property="crlatti:organismoStatutario" />
 				<meta-data type="crlatti:atto" property="crlatti:numeroLcr" />

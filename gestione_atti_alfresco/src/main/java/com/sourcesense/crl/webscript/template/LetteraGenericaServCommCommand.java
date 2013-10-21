@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -128,7 +129,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 		
 	 	List<String> commissioniReferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONI_REFERENTI));
     	List<String> commissioniConsultive = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONI_CONSULTIVE));
-    	String commissioneCoreferente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONE_COREFERENTE));
+    	List<String> commissioniCoreferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONE_COREFERENTE));
     	String commissioneRedigente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONE_REDIGENTE));
     	String commissioneDeliberante = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_COMMISSIONE_DELIBERANTE));
     	List<String> organismiStatutari = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_ORGANISMI_STATUTARI));
@@ -141,10 +142,6 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     		
     		listaCommissioniPrincipali.add(commissioniReferenti.get(0));
     		
-    		// Check for commmissione co-referente
-    		if(commissioneCoreferente!=null && !commissioneCoreferente.equals(StringUtils.EMPTY)) {
-    			listaCommissioniPrincipali.add(commissioneCoreferente);
-    		}
     	// Commissione referente not exists	
     	}else {
     		
@@ -160,6 +157,13 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     		}
     		
     	}
+    	
+    	if(commissioniCoreferenti != null && commissioniCoreferenti.size() > 0){
+        	Iterator<String> i = commissioniCoreferenti.iterator();
+        	while(i.hasNext()){
+        		listaCommissioniPrincipali.add(i.next());
+        	}
+        }
     	
     	// Create commissioni principali address list 
     	String listaCommissioniPrincipaliDestString = StringUtils.EMPTY;

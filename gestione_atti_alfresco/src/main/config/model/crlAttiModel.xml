@@ -159,6 +159,7 @@
 				<property name="crlatti:commCoreferente">
 					<title>Commissione Co-Referente</title>
 					<type>d:text</type>
+					<multiple>true</multiple>
 					<index enabled="true">
 						<atomic>true</atomic>
 						<stored>false</stored>
@@ -460,6 +461,7 @@
 			<mandatory-aspects>
 				<aspect>crlatti:dgr</aspect>
 				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
 			</mandatory-aspects>
 		</type>
 		

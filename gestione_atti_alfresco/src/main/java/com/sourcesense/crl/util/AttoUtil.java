@@ -98,6 +98,7 @@ public class AttoUtil {
 	public static final String INIZIATIVA_POPOLARE = "03_ATTO DI INIZIATIVA POPOLARE";
 	public static final String INIZIATIVA_PRESIDENTE_GIUNTA = "06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA";
 
+	public static final QName PROP_DATA_VOTAZIONE = QName.createQName(CRL_ATTI_MODEL, PROP_DATA_VOTAZIONE_COMMISSIONE);
 	
 
 	public NodeRef getLegislaturaCorrente(){

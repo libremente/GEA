@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,7 +56,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
 		
 
 	 	List<String> commissioniReferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONI_REFERENTI));
-    	String commissioneCoreferente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_COREFERENTE));
+    	List<String> commissioniCoreferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_COREFERENTE));
     	String commissioneRedigente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_REDIGENTE));
     	String commissioneDeliberante = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_DELIBERANTE));
     	
@@ -66,10 +67,6 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     		
     		listaCommissioniPrincipali.add(commissioniReferenti.get(0));	
     		
-    		// Check for commmissione co-referente
-    		if(commissioneCoreferente!=null && !commissioneCoreferente.equals("")) {
-    			listaCommissioniPrincipali.add(commissioneCoreferente);
-    		}
     	// Commissione referente not exists	
     	}else {
     		
@@ -85,6 +82,13 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     		}
     		
     	}
+    	
+    	if(commissioniCoreferenti != null && commissioniCoreferenti.size() > 0){
+        	Iterator<String> i = commissioniCoreferenti.iterator();
+        	while(i.hasNext()){
+        		listaCommissioniPrincipali.add(i.next());
+        	}
+        }
     	
     	// Create commissioni principali address list 
     	String listaCommissioniPrincipaliDestString = "";

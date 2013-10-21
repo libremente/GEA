@@ -42,6 +42,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.sourcesense.crl.util.AttoUtil;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
 
 public abstract class ReportBaseCommand implements ReportCommand {
@@ -69,7 +70,6 @@ public abstract class ReportBaseCommand implements ReportCommand {
     public static final String LAVORI_COMITATO_RISTRETTO = "Lavori Comitato Ristretto";
     public static final String CHIUSO = "Chiuso";
     public static final String RITIRATO = "Ritirato dai promotori";
-    private static final String SEP = ", ";
     private static final String ABBINAMENTI_SPACE_NAME = "Abbinamenti";
     protected List<String> tipiAttoLucene;
     protected String ruoloCommissione;
@@ -193,6 +193,32 @@ public abstract class ReportBaseCommand implements ReportCommand {
             sortAttiCommissione(nodeRefList);
 
             this.retrieveAttiFromList(nodeRefList, spacesStore, atto2child,
+                    child2atti, commissione);
+        }
+        return child2atti;
+    }
+    
+    /**
+     * For each Commissione(String) in input , access to its resultSet and
+     * retrieve the list of Atto NodeRef.
+     *
+     * @param attoChild2results - String commissione -> ResultSet
+     * @param spacesStore - current space store of search
+     * @param atto2child - NodeRef type Atto -> NodeRef type Commissione
+     * @return
+     */
+    protected LinkedListMultimap<String, NodeRef> retrieveAttiLicenziati(
+            Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
+            Map<NodeRef, NodeRef> atto2child) {
+        LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
+        for (String commissione : attoChild2results.keySet()) {
+            ResultSet commissioneResults = attoChild2results.get(commissione);
+            List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
+
+            //ORDER LIST
+            sortAttiCommissione(nodeRefList);
+
+            this.retrieveAttiLicenziatiFromList(nodeRefList, spacesStore, atto2child,
                     child2atti, commissione);
         }
         return child2atti;
@@ -369,6 +395,45 @@ public abstract class ReportBaseCommand implements ReportCommand {
             child2atti.put(child, attoNodeRef);
             atto2child.put(attoNodeRef, childNodeRef);
 
+        }
+    }
+    
+    /**
+     * Retrieve Atto from a NodeRef list of results from the query. For example
+     * a list of Commissione or Parere. Then from each child node, it find the
+     * related Atto.
+     *
+     * @param nodeRefList - the list of Commissione NodeRef
+     * @param spacesStore - the current space store workspace://SpacesStore
+     * @param atto2child - a map that relates each atto to its specif
+     * childNodes( for example Commissione NodeRef)
+     * @param child2atti - a map that relates a specific child NodeRef
+     * @param child - the String of the child related to different Atto ( for
+     * example Commissione I)
+     */
+    protected void retrieveAttiLicenziatiFromList(List<NodeRef> nodeRefList,
+            StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
+            LinkedListMultimap<String, NodeRef> child2atti, String child) {
+        int resultLength = nodeRefList.size();
+        for (int i = 0; i < resultLength; i++) {
+            NodeRef childNodeRef = nodeRefList.get(i);
+            NodeRef attoNodeRef = childNodeRef;
+            boolean check = false;
+            while (!check) {// look for Atto in type hierarchy
+                ChildAssociationRef childAssociationRef = nodeService
+                        .getPrimaryParent(attoNodeRef);
+                attoNodeRef = childAssociationRef.getParentRef();
+                QName nodeRefType = nodeService.getType(attoNodeRef);
+                QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
+                check = dictionaryService.isSubClass(nodeRefType, attoRefType);
+            }
+            
+            //controllo per la dataVotazione che dovrebbe essere sempre valorizzata per gli atti licenziati
+            Date dataVotazione = (Date) nodeService.getProperty(attoNodeRef, AttoUtil.PROP_DATA_VOTAZIONE);
+            if(dataVotazione!=null){
+            	child2atti.put(child, attoNodeRef);
+            	atto2child.put(attoNodeRef, childNodeRef);
+            }
         }
     }
     
