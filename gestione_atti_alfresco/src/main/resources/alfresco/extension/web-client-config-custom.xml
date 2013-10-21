@@ -296,6 +296,7 @@
 			<aspect name="crlatti:obbligatorioAspect" />
 			<aspect name="crlatti:protocollato" />
 			<aspect name="crlatti:importatoDaProtocollo" />
+			<aspect name="crlatti:coreferenziabile" />
 		</aspects>
 	</config>
 
@@ -321,6 +322,12 @@
 			<type name="crlatti:sedutaODG" />
 			<type name="crlatti:attoIndirizzo" />
 		</folder-types>
+	</config>
+
+	<config evaluator="aspect-name" condition="crlatti:coreferenziabile">
+		<property-sheet>
+			<show-property name="crlatti:coreferentePrimaria" />
+		</property-sheet>
 	</config>
 
 	<config evaluator="aspect-name" condition="crlatti:protocollato">

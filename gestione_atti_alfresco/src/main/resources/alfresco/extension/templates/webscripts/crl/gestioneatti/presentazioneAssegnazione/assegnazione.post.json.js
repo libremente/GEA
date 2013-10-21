@@ -35,6 +35,7 @@ if(checkIsNotNull(id)){
 		var ruolo = filterParam(commissione.get("ruolo"));
 		var stato = filterParam(commissione.get("stato"));
 		var dataAnnullo = filterParam(commissione.get("dataAnnullo"));
+		var primaria = filterParam(commissione.get("primaria"));
 		
 		var dataPropostaParsed = null;
 		if(checkIsNotNull(dataProposta)){
@@ -61,14 +62,14 @@ if(checkIsNotNull(id)){
 		var commissioneNode = null;
 		
 		
-		// se lo stato della commissione è Annullato allora la commissione esiste già nel repository
+		// se lo stato della commissione �� Annullato allora la commissione esiste gi�� nel repository
 		if(stato == "Annullato"){
 			
 			
 			// Gestione delle commissioni annullate. 
 			// Le commissioni annullate vengono spostate nella cartella commissioniAnnullate 
-			// in fase di update viene effettuato un controllo su alcune proprietà per capire se le commmissioni sono state già annullate 
-			// (cioè sono già presenti nella cartella commissioniAnnullate) o devono essere annullate per la prima volta
+			// in fase di update viene effettuato un controllo su alcune propriet�� per capire se le commmissioni sono state gi�� annullate 
+			// (cio�� sono gi�� presenti nella cartella commissioniAnnullate) o devono essere annullate per la prima volta
 			
 			var check = false;
 			
@@ -139,6 +140,15 @@ if(checkIsNotNull(id)){
 		commissioneNode.properties["crlatti:dataPropostaCommissione"] = dataPropostaParsed;
 		commissioneNode.properties["crlatti:ruoloCommissione"] = ruolo;
 		commissioneNode.properties["crlatti:statoCommissione"] = stato;
+		
+		//se ruolo Co-Referente bisogna aggiungere l'aspect coreferenziabile
+		//per aggiungere il booleano della gestione primaria/secondario
+		
+		if(ruolo=="Co-Referente"){
+			commissioneNode.addAspect("crlatti:coreferenziabile");
+			commissioneNode.properties["crlatti:coreferentePrimaria"] = primaria;
+		}
+		
 		commissioneNode.save();
 		
 
@@ -253,7 +263,7 @@ if(checkIsNotNull(id)){
 		var tipoAttoRelatore = attoNode.typeShort.substring(12);
 		var numeroAttoRelatore = attoNode.name;
 		
-		// proprietà necessarie alla reportistica
+		// propriet�� necessarie alla reportistica
 		parereNode.properties["crlatti:tipoAttoParere"] = tipoAttoRelatore;
 		parereNode.properties["crlatti:numeroAttoParere"] = numeroAttoRelatore;
 		

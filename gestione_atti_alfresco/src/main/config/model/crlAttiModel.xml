@@ -1712,6 +1712,18 @@
 			</properties>
 		</aspect>
 		
+		<aspect name="crlatti:coreferenziabile">
+			<title>Coreferenziabile</title>
+			<description>Aspetto dedicato alla gestione della commissione Co-Referente</description>
+			<properties>
+				<property name="crlatti:coreferentePrimaria">
+					<title>Primaria</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		
 	</aspects>
 
 </model>
