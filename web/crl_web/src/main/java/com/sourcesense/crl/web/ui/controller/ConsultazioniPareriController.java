@@ -389,6 +389,8 @@ public class ConsultazioniPareriController {
 					setNoteConsultazione("");
 					setSoggettiInvitatiList(new ArrayList<SoggettoInvitato>());
 					setCommissioneDestinataria(null);
+					// SCRL-325
+					setConsultazioneSelected(null);
 					
 				}
 				
@@ -414,26 +416,36 @@ public class ConsultazioniPareriController {
 	}
 
 	public void addSoggettoInvitato() {
-
-		if (nomeSoggettoInvitato != null
-				&& !nomeSoggettoInvitato.trim().equals("")) {
-			if (!checkSoggettiInvitati()) {
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Soggetto invitato "
-								+ nomeSoggettoInvitato + " già presente ", ""));
-
-			} else {
-				SoggettoInvitato soggetto = new SoggettoInvitato();
-				soggetto.setDescrizione(nomeSoggettoInvitato);
-				soggetto.setIntervenuto(intervenuto);
-				soggettiInvitatiList.add(soggetto);
-                setNomeSoggettoInvitato("");
-                setIntervenuto(false);
-				updateConsultazioniHandler();
+		//controllo  per SCRL-325
+		if (consultazioneSelected != null) {
+			if (nomeSoggettoInvitato != null
+					&& !nomeSoggettoInvitato.trim().equals("")) {
+				if (!checkSoggettiInvitati()) {
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Soggetto invitato "
+									+ nomeSoggettoInvitato + " già presente ", ""));
+	
+				} else {
+					SoggettoInvitato soggetto = new SoggettoInvitato();
+					soggetto.setDescrizione(nomeSoggettoInvitato);
+					soggetto.setIntervenuto(intervenuto);
+					soggettiInvitatiList.add(soggetto);
+	                setNomeSoggettoInvitato("");
+	                setIntervenuto(false);
+					updateConsultazioniHandler();
+				}
 			}
 		}
+		//controllo  per SCRL-325
+		else
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! salvare prima la consultazione ", ""));
+		}	
 	}
 
 	public void removeSoggettoInvitato() {
@@ -464,30 +476,42 @@ public class ConsultazioniPareriController {
 	}
 
 	public void salvaConsultazione() {
-		consultazioneSelected.setDataSeduta(getDataSedutaConsultazione());
-		consultazioneSelected.setPrevista(isPrevista());
-		consultazioneSelected.setDiscussa(isDiscussa());
-		consultazioneSelected.setNote(getNoteConsultazione());
-		consultazioneSelected.setCommissione(commissioneSelected);
-		atto.setConsultazioni(getConsultazioniList());
-		attoServiceManager.salvaConsultazioni(atto);
-		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
 		
-
-		Collections.sort(getConsultazioniList(), new Comparator<Consultazione>() {
-			public int compare(Consultazione m1, Consultazione m2) {
-				return m1.getDataConsultazione().compareTo(
-						m2.getDataConsultazione());
+		// aggiunta if insieme  a modifiche per  SCRL-325
+		if (consultazioneSelected != null) {
+			consultazioneSelected.setDataSeduta(getDataSedutaConsultazione());
+			consultazioneSelected.setPrevista(isPrevista());
+			consultazioneSelected.setDiscussa(isDiscussa());
+			consultazioneSelected.setNote(getNoteConsultazione());
+			consultazioneSelected.setCommissione(commissioneSelected);
+			atto.setConsultazioni(getConsultazioniList());
+			attoServiceManager.salvaConsultazioni(atto);
+			FacesContext context = FacesContext.getCurrentInstance();
+			AttoBean attoBean = ((AttoBean) context.getExternalContext()
+					.getSessionMap().get("attoBean"));
+			
+	
+			Collections.sort(getConsultazioniList(), new Comparator<Consultazione>() {
+				public int compare(Consultazione m1, Consultazione m2) {
+					return m1.getDataConsultazione().compareTo(
+							m2.getDataConsultazione());
+				}
+			});
+			
+			attoBean.getAtto().setConsultazioni(getConsultazioniList());
+	
+			setStatoCommitConsultazioni(CRLMessage.COMMIT_DONE);
+			context.addMessage(null, new FacesMessage(
+					"Consultazioni salvati con successo", ""));
 			}
-		});
-		
-		attoBean.getAtto().setConsultazioni(getConsultazioniList());
-
-		setStatoCommitConsultazioni(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage(
-				"Consultazioni salvati con successo", ""));
+		//SCRL-325
+		else
+		{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(
+					FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! definire prima la consultazione ", ""));
+		}	
 	}
 
 	public void uploadAllegatoConsultazione(FileUploadEvent event) {
