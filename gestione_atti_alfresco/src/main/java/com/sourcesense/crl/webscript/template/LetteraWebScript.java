@@ -91,6 +91,15 @@ public class LetteraWebScript extends AbstractWebScript {
 				templatesResults = templatesResultsPlurale;
 			}
 			
+			if(templatesResults==null
+					|| (templatesResults!=null && templatesResults.length()==0)){
+				//non esiste un template con la gestione del singolare e del plurale
+				templatesResults = 
+						searchService.query(Repository.getStoreRef(), 
+						SearchService.LANGUAGE_LUCENE, 
+						"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"");
+			}
+			
 			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
 			
 			// Get byte array of template node content
@@ -114,8 +123,8 @@ public class LetteraWebScript extends AbstractWebScript {
             responseOutputStream.write(documentFilledByteArray);        
             
     	}catch(Exception e) {
-    		logger.error("Exception details: "+e.getMessage());
-    		throw new WebScriptException("Unable to generate document from template");
+    		logger.error("Exception details: "+e.getMessage(),e);
+    		throw new WebScriptException("Unable to generate document from template",e);
     	}finally {
     		if(templateInputStream != null) {
     			templateInputStream.close();
