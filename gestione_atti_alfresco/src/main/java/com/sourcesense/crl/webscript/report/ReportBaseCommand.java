@@ -1163,7 +1163,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      */
     protected String checkDateEmpty(Date attributeDate) {
         if (attributeDate == null) {
-            return "";
+            return StringUtils.EMPTY;
         } else {
             SimpleDateFormat dateFormatter = new SimpleDateFormat(DATA_FORMAT);
             return dateFormatter.format(attributeDate);

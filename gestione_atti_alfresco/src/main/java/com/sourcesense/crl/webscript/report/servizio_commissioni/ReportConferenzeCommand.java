@@ -16,6 +16,7 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -41,6 +42,9 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
             ByteArrayInputStream is = new ByteArrayInputStream(
                     templateByteArray);
             DocxManager docxManager = new DocxManager(is);
+            docxManager.setNodeService(nodeService);
+            docxManager.setSearchService(searchService);
+            
             /* init json params */
             this.initLegislatura(json);
             this.initCommonParams(json);
@@ -86,7 +90,8 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
             LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMapConditional(commissione2atti, false), 3, false);
+            Map<String, Integer> group2count = this.retrieveLenghtMapConditional(commissione2atti, false);
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMapConferenza(group2count, commissione2atti, 3, atto2commissione);
             // convert to input stream
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -125,7 +130,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                 String statoAtto = (String) this.getNodeRefProperty(attoProperties, "statoAtto");
                 if (this.checkStatoAtto(statoAtto)) {
                     XWPFTable currentTable = tables.get(tableIndex);
-                    String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                    String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
                     String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
                     String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
                     // from Commissione
@@ -149,6 +154,8 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
         return document;
     }
+    
+    
 
     /**
      * Check if the statoAtto is comprehended between "preso in carico e votato"
