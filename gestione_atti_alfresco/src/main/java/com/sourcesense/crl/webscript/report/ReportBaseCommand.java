@@ -242,7 +242,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
             List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
 
             //ORDER LIST
-            sortAttiCommissione(nodeRefList);
+            sortAttiPerNumeroAtto(nodeRefList);
 
             this.retrieveAttiAssCommissioneFromList(nodeRefList, spacesStore, atto2child,
                     child2atti, commissione);
@@ -289,6 +289,24 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 if (tipoResult != 0) {
                     return tipoResult;
                 }
+
+                String numeroAtto1 = (String) nodeService.getProperty(node1, QName.createQName(CRL_ATTI_MODEL, "numeroAttoCommissione"));
+                String numeroAtto2 = (String) nodeService.getProperty(node2, QName.createQName(CRL_ATTI_MODEL, "numeroAttoCommissione"));
+
+                Integer numAtto1 = new Integer(numeroAtto1);
+                Integer numAtto2 = new Integer(numeroAtto2);
+
+                return numAtto1.compareTo(numAtto2);
+
+            }
+        });
+
+    }
+    
+    protected void sortAttiPerNumeroAtto(List<NodeRef> nodeRefList) {
+
+        Collections.sort(nodeRefList, new Comparator<NodeRef>() {
+            public int compare(NodeRef node1, NodeRef node2) {
 
                 String numeroAtto1 = (String) nodeService.getProperty(node1, QName.createQName(CRL_ATTI_MODEL, "numeroAttoCommissione"));
                 String numeroAtto2 = (String) nodeService.getProperty(node2, QName.createQName(CRL_ATTI_MODEL, "numeroAttoCommissione"));
