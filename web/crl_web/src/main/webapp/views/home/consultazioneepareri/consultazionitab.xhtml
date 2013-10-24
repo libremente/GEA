@@ -287,7 +287,7 @@
 
 								<p:dataTable id="listaSoggettiInvitati"
 									value="#{consultazioniPareriController.soggettiInvitatiList}"
-									var="soggettoInvitato" styleClass="generalInfoTab grey-text">
+									var="soggettoInvitato" styleClass="generalInfoTab grey-text" editable ="true">
 
 									<p:column sortBy="#{soggettoInvitato.descrizione}">
 										<f:facet name="header">Soggetti Invitati</f:facet>
@@ -300,18 +300,29 @@
 									</p:column>
 
 									<p:column sortBy="#{soggettoInvitato.intervenuto}">
+										
 										<f:facet name="header">Presenti</f:facet>
-										<h:outputText value="si"
-											rendered="#{soggettoInvitato.intervenuto}" />
-										<h:outputText value="no"
-											rendered="#{!soggettoInvitato.intervenuto}" />
-											
-											 <f:facet name="footer">  
-            								  Totale: #{consultazioniPareriController.totSogettiPresenti()}
-       									     </f:facet>  
-
+										<p:cellEditor >
+											<f:facet name="output">
+											<h:outputText value="si"
+												rendered="#{soggettoInvitato.intervenuto}" />
+											<h:outputText value="no"
+												rendered="#{!soggettoInvitato.intervenuto}" />
+											</f:facet>	
+											<f:facet  name="input">
+												<p:selectBooleanCheckbox 
+												value="#{soggettoInvitato.intervenuto}" />
+											</f:facet>
+										</p:cellEditor>
+										<f:facet name="footer">  
+           								  Totale: #{consultazioniPareriController.totSogettiPresenti()}
+      									     </f:facet> 
+										
 									</p:column>
-
+									
+								<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor   />
+								</p:column>
 									<p:column>
 										<f:facet name="header">Elimina</f:facet>
 
