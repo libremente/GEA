@@ -242,7 +242,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
             List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
 
             //ORDER LIST
-            sortAttiPerNumeroAtto(nodeRefList);
+            sortAttiCommissione(nodeRefList);
 
             this.retrieveAttiAssCommissioneFromList(nodeRefList, spacesStore, atto2child,
                     child2atti, commissione);
