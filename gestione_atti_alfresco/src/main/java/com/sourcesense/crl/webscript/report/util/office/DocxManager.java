@@ -25,6 +25,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHdrFtrRef;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.sourcesense.crl.util.AttoUtil;
@@ -131,6 +132,66 @@ public class DocxManager {
 		return newDoc;
 	}
 	
+	/**
+	 * Extracts the table from the input Docx ( template) and copy the table n
+	 * times ( n is the size of luceneDocs in input)
+	 * 
+	 * @param breakBetween
+	 *            TODO
+	 * @param luceneDocs
+	 * 
+	 * @return
+	 */
+	public XWPFDocument generateFromTemplateMapAssCommissioni( Map<String,Integer> group2count, int kpage,
+			boolean breakBetween) {
+		XWPFDocument newDoc = new XWPFDocument();
+		boolean newPage = false;// new page on title
+		List<XWPFTable> tables = document.getTables();
+		XWPFTable tableExt = tables.get(0);//template table
+		int k = 0;
+		/*Copy template paragraphs*/
+		List<XWPFParagraph> paragraphs = document.getParagraphs();
+		int parCounter=0;
+		for (int i = 0; i < paragraphs.size(); i++) {
+			XWPFParagraph currentPar = paragraphs.get(i);
+			//if(!currentPar.getText().trim().equals("")){
+			newDoc.createParagraph();
+			newDoc.setParagraph(currentPar, parCounter);
+			parCounter++;// }
+		}
+		for (String key : group2count.keySet()) {
+			if ( group2count.get(key)>0) {
+				/*create key title*/
+				XWPFParagraph keyTitle = newDoc.createParagraph();
+				
+				if (k % kpage == 0 && k != 0) {
+					keyTitle.setPageBreak(true);
+					newPage = true;
+				}
+			}
+			for (int j = 0; j < group2count.get(key); j++) {
+				XWPFParagraph createParagraph = newDoc.createParagraph();
+				if ((k % kpage == 0 && k!=0) && (!newPage)) {
+					createParagraph.setPageBreak(true);
+					
+				}
+				if (k % kpage == 0 && k!=0) {
+					XWPFRun run = createParagraph.createRun();
+					run.addBreak();
+				}
+				newDoc.createTable();
+				newDoc.setTable(k, tableExt);
+				
+				k++;
+				newPage = false;
+			}
+			XWPFParagraph breakPar = newDoc.createParagraph();
+			XWPFRun run = breakPar.createRun();
+			run.addBreak();
+		}
+		return newDoc;
+	}
+	
 	protected void sortAttiPerConferenze(List<NodeRef> nodeRefList) {
 
         Collections.sort(nodeRefList, new Comparator<NodeRef>() {
@@ -227,6 +288,7 @@ public class DocxManager {
 					keyRun.setFontSize(16);
 					keyRun.setItalic(true);
 					keyTitle.setPageBreak(true);
+					
 				}
 				
 				XWPFTable currentTable = new XWPFTable(tableExt.getCTTbl(),tableExt.getBody());
