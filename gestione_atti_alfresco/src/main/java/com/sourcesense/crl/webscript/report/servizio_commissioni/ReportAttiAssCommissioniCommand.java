@@ -134,6 +134,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                     String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
                     ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
                     String commReferente = this.renderList(commReferenteList);
+                    
+                    ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
+                    String commCoReferente = this.renderList(commCoReferenteList);
 
                     ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
                     String firmatari = this.renderFirmatariConGruppoList(firmatariList);
@@ -155,6 +158,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                     currentTable.getRow(6).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
                     currentTable.getRow(7).getCell(1).setText(this.checkDateEmpty(dateVotazioneCommissione));
                     currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commReferente));
+                    currentTable.getRow(9).getCell(1).setText(this.checkStringEmpty(commCoReferente));
                     tableIndex++;
                 }
             }

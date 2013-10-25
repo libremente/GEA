@@ -943,6 +943,28 @@ public abstract class ReportBaseCommand implements ReportCommand {
         }
         return encodedString;
     }
+    
+    /**
+     * Encode a list of values in a single String , comma separed
+     *
+     * @param stringList
+     * @return
+     */
+    protected String renderWithExclusionList(List<String> stringList, String toExclude) {
+        String encodedString = StringUtils.EMPTY;
+        if (stringList != null) {
+            for (String singleValue : stringList) {
+            	if(!singleValue.equals(toExclude)){
+            		encodedString += singleValue + ", ";
+            	}
+            }
+        }
+        if (!encodedString.equals(StringUtils.EMPTY)) {
+            encodedString = encodedString.substring(0,
+                    encodedString.length() - 2);
+        }
+        return encodedString;
+    }
 
     /**
      * Return "Si" for True or "No" for False. Useful in front end rendering.

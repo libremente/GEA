@@ -156,6 +156,9 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
                 ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
                 String commReferente = this.renderList(commReferenteList);
+                
+                ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
+                String commCoReferente = this.renderList(commCoReferenteList);
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
                 String commConsultiva = this.renderList(commConsultivaList);
@@ -174,16 +177,18 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
                 currentTable.getRow(3).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
 
                 currentTable.getRow(3).getCell(3).setText(this.checkStringEmpty(commReferente));
+                
+                currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(commCoReferente));
 
-                currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(commConsultiva));
+                currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(commConsultiva));
 
-                currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(abbinamenti));
+                currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(abbinamenti));
 
-                currentTable.getRow(6).getCell(1).setText(this.checkDateEmpty(dateVotazioneCommissione));
-                currentTable.getRow(6).getCell(3).setText(this.checkStringEmpty(numeroLcr));
+                currentTable.getRow(7).getCell(1).setText(this.checkDateEmpty(dateVotazioneCommissione));
+                currentTable.getRow(7).getCell(3).setText(this.checkStringEmpty(numeroLcr));
 
-                currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(numeroLr));
-                currentTable.getRow(7).getCell(3).setText(this.checkDateEmpty(dateLr));
+                currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(numeroLr));
+                currentTable.getRow(8).getCell(3).setText(this.checkDateEmpty(dateLr));
 
                 tableIndex++;
             }

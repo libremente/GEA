@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
-import java.util.LinkedHashMap;
 
 /**
  * V2
@@ -169,12 +169,11 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
                     ArrayList<String> commReferenteList = (ArrayList<String>) this
                             .getNodeRefProperty(attoProperties, "commReferente");
-                    String commReferente = "";
-                    if (commReferenteList != null) {
-                        for (String commissioneReferenteMulti : commReferenteList) {
-                            commReferente += commissioneReferenteMulti + " ";
-                        }
-                    }
+                    String commReferente = this.renderList(commReferenteList);
+                    
+                    ArrayList<String> commCoReferenteList = (ArrayList<String>) this
+                            .getNodeRefProperty(attoProperties, "commCoreferente");
+                    String commCoReferente = this.renderList(commCoReferenteList);
 
                     ArrayList<String> commConsultivaList = (ArrayList<String>) this
                             .getNodeRefProperty(attoProperties,
@@ -197,11 +196,16 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
                     currentTable.getRow(3).getCell(3)
                             .setText(this.checkStringEmpty(commReferente));
+                    
                     currentTable.getRow(4).getCell(1)
+                    .setText(this.checkStringEmpty(commCoReferente));
+            
+                    
+                    currentTable.getRow(5).getCell(1)
                             .setText(this.checkStringEmpty(commConsultiva));
-                    docxManager.insertListInCell(currentTable.getRow(5)
+                    docxManager.insertListInCell(currentTable.getRow(6)
                             .getCell(1), elencoRelatori);
-                    docxManager.insertListInCell(currentTable.getRow(5)
+                    docxManager.insertListInCell(currentTable.getRow(6)
                             .getCell(3), elencoDateNomina);
                     tableIndex++;
                 }

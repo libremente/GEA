@@ -151,6 +151,13 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                         commissioneProperties, "dataVotazioneCommissione");
                 String ruoloCommissione = (String) this.getNodeRefProperty(
                         commissioneProperties, "ruoloCommissione");
+                
+                if(ruoloCommissione.equals("Co-Referente")){
+                	ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
+                    String commCoReferenteEsclusaLaCorrenteCommissione = this.renderWithExclusionList(commCoReferenteList,commissione);
+                    ruoloCommissione+= ": "+commCoReferenteEsclusaLaCorrenteCommissione;
+                }
+                
                 // from Atto
                 ArrayList<String> firmatariList = (ArrayList<String>) this
                         .getNodeRefProperty(attoProperties, "firmatari");

@@ -118,7 +118,10 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
                 String iniziativa = (String) this.getNodeRefProperty(attoProperties, "descrizioneIniziativa");
                 String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
                 ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
-                String commReferente = this.renderList(commReferenteList);       
+                String commReferente = this.renderList(commReferenteList);
+                
+                ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
+                String commCoReferente = this.renderList(commCoReferenteList);
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
                 String commConsultiva = this.renderList(commConsultivaList);
@@ -135,9 +138,10 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
                 currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(oggetto));
                 currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(commReferente));
                 currentTable.getRow(3).getCell(3).setText(this.checkStringEmpty(altriPareri));
-                currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(commConsultiva));
-                currentTable.getRow(4).getCell(3).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
-                currentTable.getRow(5).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneParere));
+                currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(commCoReferente));
+                currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(commConsultiva));
+                currentTable.getRow(5).getCell(3).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
+                currentTable.getRow(6).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneParere));
 
                 tableIndex++;
             }

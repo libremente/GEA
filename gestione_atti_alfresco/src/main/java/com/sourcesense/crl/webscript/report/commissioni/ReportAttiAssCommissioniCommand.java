@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -24,7 +24,6 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
-import java.util.LinkedHashMap;
 
 /**
  * V2 - Big Ok
@@ -130,6 +129,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                     String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
                     ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
                     String commReferente = this.renderList(commReferenteList);
+                    
+                    ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
+                    String commCoReferente = this.renderList(commCoReferenteList);
 
                     // from Commissione
                     String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
@@ -147,10 +149,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                     currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
                     currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(oggetto));
                     currentTable.getRow(4).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
-
                     currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(altriPareri));
-
                     currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(commReferente));
+                    currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commCoReferente));
                     currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commConsultiva));
 
                     tableIndex++;

@@ -171,9 +171,17 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
                 ArrayList<String> commReferenteList = (ArrayList<String>) this
                         .getNodeRefProperty(attoProperties, "commReferente");
                 
+                ArrayList<String> commCoReferenteList = (ArrayList<String>) this
+                        .getNodeRefProperty(attoProperties, "commCoreferente");
+                
                 String commReferente = StringUtils.EMPTY;
                 if(commReferenteList!=null && !commReferenteList.isEmpty()){
 	                commReferente = this.renderList(commReferenteList);
+                }
+                
+                String commCoReferente = StringUtils.EMPTY;
+                if(commCoReferenteList!=null && !commCoReferenteList.isEmpty()){
+                	commCoReferente = this.renderList(commCoReferenteList);
                 }
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this
@@ -195,6 +203,8 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
                 currentTable.getRow(1).getCell(2)
                         .setText(this.checkStringEmpty(commReferente));
                 currentTable.getRow(2).getCell(2)
+                		.setText(this.checkStringEmpty(commCoReferente));
+                currentTable.getRow(3).getCell(2)
                         .setText(this.checkStringEmpty(commConsultiva));
 
                 tableIndex++;

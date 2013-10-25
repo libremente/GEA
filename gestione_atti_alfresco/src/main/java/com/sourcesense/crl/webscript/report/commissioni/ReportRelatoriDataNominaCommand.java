@@ -166,6 +166,9 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 
                 ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
                 String commReferente = this.renderList(commReferenteList);
+                
+                ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
+                String commCoReferente = this.renderList(commCoReferenteList);
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
                 String commConsultiva = this.renderList(commConsultivaList);
@@ -178,7 +181,8 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
                 currentTable.getRow(0).getCell(0).setText(this.checkStringEmpty(consigliere));
                 currentTable.getRow(0).getCell(1).setText("Nominato il " + checkDateEmpty(dataNomina) + " - " + checkStringEmpty(tipoAtto.toUpperCase()) + " " + checkStringEmpty(numeroAtto) + oggetto);
                 currentTable.getRow(1).getCell(2).setText(this.checkStringEmpty(commReferente));
-                currentTable.getRow(2).getCell(2).setText(this.checkStringEmpty(commConsultiva));
+                currentTable.getRow(2).getCell(2).setText(this.checkStringEmpty(commCoReferente));
+                currentTable.getRow(3).getCell(2).setText(this.checkStringEmpty(commConsultiva));
 
                 tableIndex++;
             }
