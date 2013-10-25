@@ -172,11 +172,8 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
                         .getNodeRefProperty(attoProperties, "commReferente");
                 
                 String commReferente = StringUtils.EMPTY;
-                
                 if(commReferenteList!=null && !commReferenteList.isEmpty()){
-	                for (String commissioneReferenteMulti : commReferenteList) {
-	                    commReferente += commissioneReferenteMulti + " ";
-	                }
+	                commReferente = this.renderList(commReferenteList);
                 }
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this

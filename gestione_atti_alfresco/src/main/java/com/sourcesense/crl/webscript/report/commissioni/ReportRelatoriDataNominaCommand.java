@@ -18,6 +18,7 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -164,10 +165,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
                 String consigliere = currentAtto.getConsigliere();
 
                 ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
-                String commReferente = "";
-                for (String commissioneReferenteMulti : commReferenteList) {
-                    commReferente += commissioneReferenteMulti + " ";
-                }
+                String commReferente = this.renderList(commReferenteList);
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
                 String commConsultiva = this.renderList(commConsultivaList);

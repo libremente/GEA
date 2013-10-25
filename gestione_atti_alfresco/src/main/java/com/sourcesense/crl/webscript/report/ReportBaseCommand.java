@@ -931,13 +931,13 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @return
      */
     protected String renderList(List<String> stringList) {
-        String encodedString = "";
+        String encodedString = StringUtils.EMPTY;
         if (stringList != null) {
             for (String singleValue : stringList) {
                 encodedString += singleValue + ", ";
             }
         }
-        if (!encodedString.equals("")) {
+        if (!encodedString.equals(StringUtils.EMPTY)) {
             encodedString = encodedString.substring(0,
                     encodedString.length() - 2);
         }
@@ -951,7 +951,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @return
      */
     protected String processBoolean(String booleano) {
-        String result = "";
+        String result = StringUtils.EMPTY;
         if (booleano.equals("true")) {
             result = "Si";
         } else {
