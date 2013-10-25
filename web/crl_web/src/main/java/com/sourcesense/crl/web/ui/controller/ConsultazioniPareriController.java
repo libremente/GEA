@@ -502,7 +502,7 @@ public class ConsultazioniPareriController {
 	
 			setStatoCommitConsultazioni(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage(
-					"Consultazioni salvati con successo", ""));
+					"Consultazioni salvate con successo", ""));
 			}
 		//SCRL-325
 		else
