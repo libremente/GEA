@@ -23,6 +23,7 @@ import org.json.JSONException;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Maps;
+import com.sourcesense.crl.util.AttoUtil;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
@@ -91,7 +92,8 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
             // obtain as much table as the results spreaded across the resultSet
             Map<String, Integer> group2count = this.retrieveLenghtMapConditional(commissione2atti, false);
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMapConferenza(group2count, commissione2atti, 3, atto2commissione);
+            
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMapConferenza2(group2count, commissione2atti, 3, atto2commissione);
             // convert to input stream
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
@@ -169,4 +171,42 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                 || statoAtto.equals(NOMINATO_RELATORE)
                 || statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
     }
+    
+    
+    
+    
+    @Override
+    protected Map<String, Integer> retrieveLenghtMapConditional(
+            LinkedListMultimap<String, NodeRef> commissione2atti, Boolean doubleCheck) {
+        Map<String, Integer> commissione2count = new LinkedHashMap<String, Integer>();
+        for (String commissione : commissione2atti.keySet()) {
+            int count = 0;
+            for (NodeRef currentAtto : commissione2atti.get(commissione)) {
+                Map<QName, Serializable> attoProperties = nodeService
+                        .getProperties(currentAtto);
+                String statoAtto = (String) this.getNodeRefProperty(
+                        attoProperties, "statoAtto");
+                String tipoChiusura = (String) this.getNodeRefProperty(
+                        attoProperties, "tipoChiusura");
+                if (!doubleCheck) {
+                    if (this.checkStatoAtto(statoAtto)) {
+                        count++;
+                    }else {
+                    	commissione2atti.get(commissione).remove(currentAtto);
+                    }
+                } else {
+                    if (this.checkStatoAtto(statoAtto, tipoChiusura)) {
+                        count++;
+                    }
+                }
+
+            }
+            if (count != 0) {
+                commissione2count.put(commissione, count);
+            }
+
+        }
+        return commissione2count;
+    }
+    
 }
