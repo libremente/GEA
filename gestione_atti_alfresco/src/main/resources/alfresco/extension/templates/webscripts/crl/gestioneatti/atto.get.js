@@ -110,28 +110,27 @@ if(checkIsNotNull(id)){
 
                     }
 
-                    var passaggioFolderNode = getLastPassaggio(attoFolderNode);
+                    var tipoAtto = attoFolderNode.typeShort;
+                    if(!tipoAtto.endsWith("Mis")){
+	                    var passaggioFolderNode = getLastPassaggio(attoFolderNode);
+	
+	                    if(sedutaResultObj.nomeOrgano!="Aula" && sedutaResultObj.nomeOrgano!="ServizioCommissioni"){
+	
+	
+	                            var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
+	                            var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
+	
+	                            var commissioneFolderXpathQuery = "*[@cm:name=\""+sedutaResultObj.nomeOrgano+"\"]";
+	                            var commissioneFolderNode = commissioniFolderNode.childrenByXPath(commissioneFolderXpathQuery)[0];
+	
+	                            // Workaround nel caso in cui la commissione aggiunga all'odg un atto per cui non ha nessun ruolo
+	                            if(commissioneFolderNode!=null){
+	                                    sedutaResultObj.nomeOrgano = commissioneFolderNode.properties["crlatti:ruoloCommissione"] + " - " + sedutaResultObj.nomeOrgano;
+	                            }
+	                    }
 
-                    if(sedutaResultObj.nomeOrgano!="Aula" && sedutaResultObj.nomeOrgano!="ServizioCommissioni"){
-
-
-                            var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
-                            var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
-
-                            var commissioneFolderXpathQuery = "*[@cm:name=\""+sedutaResultObj.nomeOrgano+"\"]";
-                            var commissioneFolderNode = commissioniFolderNode.childrenByXPath(commissioneFolderXpathQuery)[0];
-
-                            // Workaround nel caso in cui la commissione aggiunga all'odg un atto per cui non ha nessun ruolo
-                            if(commissioneFolderNode!=null){
-                                    sedutaResultObj.nomeOrgano = commissioneFolderNode.properties["crlatti:ruoloCommissione"] + " - " + sedutaResultObj.nomeOrgano;
-                            }
+	                    seduteResultsObj.push(sedutaResultObj);
                     }
-
-
-
-
-                    seduteResultsObj.push(sedutaResultObj);
-                  
                 }
 	}
 	
