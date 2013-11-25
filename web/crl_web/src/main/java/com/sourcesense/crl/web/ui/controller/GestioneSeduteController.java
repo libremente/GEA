@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -26,6 +27,7 @@ import org.primefaces.model.StreamedContent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoTrattato;
 import com.sourcesense.crl.business.model.Audizione;
 import com.sourcesense.crl.business.model.Collegamento;
@@ -126,6 +128,11 @@ public class GestioneSeduteController {
 	private boolean currentFilePubblico;
 	// false per legislatura corrente e true per vecchie legislature
 	private boolean disableModifiche; 
+	
+	
+	//pattern per il Soggetto partecipante
+	private static final Pattern soggettoPattern = Pattern
+			.compile("(.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)");
 	
 	@PostConstruct
 	protected void init() {
@@ -614,16 +621,8 @@ public class GestioneSeduteController {
 
 				Atto attoDaCollegare = null;
 				boolean collega = true;
-
-				if ("MIS".equalsIgnoreCase(tipoAtto)) {
-
-					
-					//TODO
-					//attoDaCollegare = attoServiceManager
-					//		.findMISById(idAttoToAdd);
-					collega = false;
-					
-				} else if ("EAC".equalsIgnoreCase(tipoAtto)) {
+				
+				if ("EAC".equalsIgnoreCase(tipoAtto)) {
 
 					FacesContext context = FacesContext.getCurrentInstance();
 					context.addMessage(
@@ -635,13 +634,17 @@ public class GestioneSeduteController {
 
 					collega = false;
 
+				} else if ("MIS".equalsIgnoreCase(tipoAtto)) {
+					
+					attoDaCollegare = attoServiceManager.findMISById(idAttoToAdd);
+					
 				} else {
 
 					attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
-
 				}
-
-				if (collega) {
+				
+				if (collega)
+				{	
 					AttoTrattato attoTrattato = new AttoTrattato();
 					attoTrattato.setAtto(attoDaCollegare);
 					attoTrattato.setPrevisto(true);
@@ -673,12 +676,17 @@ public class GestioneSeduteController {
 							consultazioniAtti.add(cons);
 						}
 					}
-					updateInserisciOdgHandler();
+				}
+				updateInserisciOdgHandler();
+				
 				}
 			}
 		}
-	}
 
+
+	
+	
+	
 	public void removeAttoTrattato() {
 
 		for (AttoTrattato element : attiTrattati) {
@@ -703,27 +711,43 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-
+	
+	private boolean isValidSoggettoPartecipante(String soggetto) {
+		return !soggettoPattern.matcher(soggetto).matches(); 
+	}
+	
 	public void addAudizione() {
 
 		if (!soggettoPartecipante.trim().equals("")) {
-			if (!checkAudizioni(soggettoPartecipante)) {
+			if (isValidSoggettoPartecipante(soggettoPartecipante)){
+			
+				if (!checkAudizioni(soggettoPartecipante)) {
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Soggetto già inserito ", ""));
+
+				} else {
+				
+					Audizione audizione = new Audizione();
+					audizione.setSoggettoPartecipante(getSoggettoPartecipante());
+					audizione.setDiscusso(isDiscusso());
+					audizione.setPrevisto(isPrevisto());
+					audizioni.add(audizione);
+
+					updateInserisciOdgHandler();
+				}
+			}
+			else{
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Soggetto già inserito ", ""));
-
-			} else {
-				Audizione audizione = new Audizione();
-				audizione.setSoggettoPartecipante(getSoggettoPartecipante());
-				audizione.setDiscusso(isDiscusso());
-				audizione.setPrevisto(isPrevisto());
-				audizioni.add(audizione);
-
-				updateInserisciOdgHandler();
-			}
+						"Attenzione ! I caratteri \" | * < > \\ ? / :" + 
+						" non sono consentiti. Il Soggetto partecipante non può terminare con un punto ", ""));
+			}	
 		}
-	}
+	}	
+	
 
 	public void removeAudizione() {
 
