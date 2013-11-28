@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -83,7 +84,9 @@ public class ConsultazioniPareriController {
 	private String soggettoInvitatoToDelete;
 	
 	
-
+	//pattern per il Soggetto invitato
+		private static final Pattern soggettoPattern = Pattern
+				.compile("(.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)");
 	
 
 	private String statoCommitPareri = CRLMessage.COMMIT_DONE;
@@ -342,29 +345,46 @@ public class ConsultazioniPareriController {
 		}
 		return null;
 	}
+	
+	
+	private boolean isValidSoggetto(String soggetto) {
+		return !soggettoPattern.matcher(soggetto).matches(); 
+	}
 
+	
+	
 	public void addConsultazione() {
 
 		if (soggettoConsultato != null && !soggettoConsultato.trim().equals("")) {
-			if (!checkConsultazioni()) {
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Soggetto consultato "
-								+ soggettoConsultato + " già presente ", ""));
-
-			} else {
-				Consultazione consultazione = new Consultazione();
-				consultazione.setDescrizione(soggettoConsultato);
-				consultazione.setDataConsultazione(dataConsultazione);
-				consultazione.setPrevista(true);
-				consultazioniList.add(consultazione);
-                
-				setDescrizioneConsultazioneSelected(soggettoConsultato);
-				showConsultazioneDetail();
-				updateConsultazioniHandler();
-				setSoggettoConsultato("");
-				setDataConsultazione(null);
+			if (isValidSoggetto(soggettoConsultato)){
+				
+				if (!checkConsultazioni()) {
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Soggetto consultato "
+									+ soggettoConsultato + " già presente ", ""));
+	
+				} else {
+					Consultazione consultazione = new Consultazione();
+					consultazione.setDescrizione(soggettoConsultato);
+					consultazione.setDataConsultazione(dataConsultazione);
+					consultazione.setPrevista(true);
+					consultazioniList.add(consultazione);
+	                
+					setDescrizioneConsultazioneSelected(soggettoConsultato);
+					showConsultazioneDetail();
+					updateConsultazioniHandler();
+					setSoggettoConsultato("");
+					setDataConsultazione(null);
+				}
+			}
+			else{
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(null, new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! I caratteri \" | * < > \\ ? / :" + 
+							" non sono consentiti. Il Soggetto consultato non può terminare con un punto ", ""));
 			}
 		}
 	}
@@ -420,21 +440,30 @@ public class ConsultazioniPareriController {
 		if (consultazioneSelected != null) {
 			if (nomeSoggettoInvitato != null
 					&& !nomeSoggettoInvitato.trim().equals("")) {
-				if (!checkSoggettiInvitati()) {
-					FacesContext context = FacesContext.getCurrentInstance();
-					context.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Soggetto invitato "
-									+ nomeSoggettoInvitato + " già presente ", ""));
-	
-				} else {
-					SoggettoInvitato soggetto = new SoggettoInvitato();
-					soggetto.setDescrizione(nomeSoggettoInvitato);
-					soggetto.setIntervenuto(intervenuto);
-					soggettiInvitatiList.add(soggetto);
-	                setNomeSoggettoInvitato("");
-	                setIntervenuto(false);
-					updateConsultazioniHandler();
+				if (isValidSoggetto(nomeSoggettoInvitato)){
+					if (!checkSoggettiInvitati()) {
+						FacesContext context = FacesContext.getCurrentInstance();
+						context.addMessage(null, new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Attenzione ! Soggetto invitato "
+										+ nomeSoggettoInvitato + " già presente ", ""));
+		
+					} else {
+						SoggettoInvitato soggetto = new SoggettoInvitato();
+						soggetto.setDescrizione(nomeSoggettoInvitato);
+						soggetto.setIntervenuto(intervenuto);
+						soggettiInvitatiList.add(soggetto);
+		                setNomeSoggettoInvitato("");
+		                setIntervenuto(false);
+						updateConsultazioniHandler();
+					}
+				}
+				else{
+						FacesContext context = FacesContext.getCurrentInstance();
+						context.addMessage(null, new FacesMessage(
+								FacesMessage.SEVERITY_ERROR,
+								"Attenzione ! I caratteri \" | * < > \\ ? / :" + 
+								" non sono consentiti. Il Soggetto invitato non può terminare con un punto ", ""));
 				}
 			}
 		}
