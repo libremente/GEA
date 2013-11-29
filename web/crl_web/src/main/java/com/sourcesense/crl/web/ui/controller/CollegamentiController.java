@@ -159,20 +159,10 @@ public class CollegamentiController {
 			} else {
 
 				Atto attoDaCollegare = null;
-
 				boolean collega = true;
 
-				if ("MIS".equalsIgnoreCase(tipoAtto)) {
-
-					
-					//TODO
-					//attoDaCollegare = attoServiceManager
-					//		.findMISById(idAttoToAdd);
-
-					
-					collega = false;
-					
-				} else if ("EAC".equalsIgnoreCase(tipoAtto)) {
+				
+				if ("EAC".equalsIgnoreCase(tipoAtto) || "MIS".equalsIgnoreCase(tipoAtto)) {
 
 					FacesContext context = FacesContext.getCurrentInstance();
 					context.addMessage(
@@ -184,12 +174,15 @@ public class CollegamentiController {
 
 					collega = false;
 
-				} else {
+				} /*else if ("MIS".equalsIgnoreCase(tipoAtto)) {
+					
+					attoDaCollegare = attoServiceManager.findMISById(idAttoToAdd);
+					
+				}*/ else {
 
 					attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
-
 				}
-
+				
 				if (collega) {
 					Collegamento collegamento = new Collegamento();
 					collegamento.setIdAttoCollegato(attoDaCollegare.getId());
