@@ -384,7 +384,7 @@ public class ConsultazioniPareriController {
 					context.addMessage(null, new FacesMessage(
 							FacesMessage.SEVERITY_ERROR,
 							"Attenzione ! I caratteri \" | * < > \\ ? / :" + 
-							" non sono consentiti. Il Soggetto invitato non può terminare con un punto ", ""));
+							" non sono consentiti. Il Soggetto invitato non può terminare con un punto o uno spazio", ""));
 			}
 		}
 	}
@@ -463,7 +463,7 @@ public class ConsultazioniPareriController {
 						context.addMessage(null, new FacesMessage(
 								FacesMessage.SEVERITY_ERROR,
 								"Attenzione ! I caratteri \" | * < > \\ ? / :" + 
-								" non sono consentiti. Il Soggetto invitato non può terminare con un punto ", ""));
+								" non sono consentiti. Il Soggetto invitato non può terminare con un punto o uno spazio", ""));
 				}
 			}
 		}

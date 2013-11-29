@@ -743,7 +743,7 @@ public class GestioneSeduteController {
 				context.addMessage(null, new FacesMessage(
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! I caratteri \" | * < > \\ ? / :" + 
-						" non sono consentiti. Il Soggetto partecipante non può terminare con un punto ", ""));
+						" non sono consentiti. Il Soggetto partecipante non può terminare con un punto o uno spazio", ""));
 			}	
 		}
 	}	
