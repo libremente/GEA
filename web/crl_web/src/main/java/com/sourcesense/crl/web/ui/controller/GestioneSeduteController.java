@@ -622,7 +622,7 @@ public class GestioneSeduteController {
 				Atto attoDaCollegare = null;
 				boolean collega = true;
 				
-				if ("EAC".equalsIgnoreCase(tipoAtto) || "MIS".equalsIgnoreCase(tipoAtto)) {
+				if ("EAC".equalsIgnoreCase(tipoAtto))  {
 
 					FacesContext context = FacesContext.getCurrentInstance();
 					context.addMessage(
@@ -634,11 +634,11 @@ public class GestioneSeduteController {
 
 					collega = false;
 
-				} /*else if ("MIS".equalsIgnoreCase(tipoAtto)) {
+				} else if ("MIS".equalsIgnoreCase(tipoAtto)) {
 					
-					attoDaCollegare = attoServiceManager.findMISById(idAttoToAdd);
-					
-				}*/ else {
+					//attoDaCollegare = attoServiceManager.findMISById(idAttoToAdd);
+					collega = false;
+				} else {
 
 					attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
 				}
