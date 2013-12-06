@@ -160,7 +160,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
             String tipoIniziativaAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_INIZIATIVA));
 
-
+            searchTerms.put("prgX", ""+(3+(i+1)));
             searchTerms.put("titoloAtto", tipoAttoDescrizione + " N. " + nomeAttoTrattato);
             searchTerms.put("oggettoAtto", oggettoAtto);
 
@@ -218,7 +218,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
             }
 
-
+            searchAndReplaceParagraph(row.getCell(0), searchTerms);
             searchAndReplaceParagraph(row.getCell(1), searchTerms);
             searchAndReplaceParagraph(row.getCell(2), searchTerms);
 
@@ -315,7 +315,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
             String tipoAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_ATTO_INDIRIZZO));
             String oggettoAttoTrattato = (String) nodeService.getProperty(attoTrattato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO_INDIRIZZO));
 
-
+            searchTerms.put("prgY", ""+(3+(i+1)+attiTrattati.size()));
             searchTerms.put("titoloAtto", tipoAttoTrattato + " N. " + numeroAttoTrattato);
             searchTerms.put("oggettoAtto", oggettoAttoTrattato);
 
@@ -360,7 +360,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
                 searchAndReplaceParagraph(row.getCell(2), searchTermsRispAssessore);
             }
 
-
+            searchAndReplaceParagraph(row.getCell(0), searchTerms);
             searchAndReplaceParagraph(row.getCell(1), searchTerms);
 
         }
