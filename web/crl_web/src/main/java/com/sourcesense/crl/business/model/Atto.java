@@ -460,8 +460,10 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	public void setTipoIniziativa(String tipoIniziativa) {
 		this.tipoIniziativa = tipoIniziativa;
+		//setto tipoIniziativaNome per SCRL-347
+		this.tipoIniziativaNome = this.getTipoIniziativaNome();
 	}
-
+	
 	public String getFirmatario() {
 		return firmatario;
 	}
