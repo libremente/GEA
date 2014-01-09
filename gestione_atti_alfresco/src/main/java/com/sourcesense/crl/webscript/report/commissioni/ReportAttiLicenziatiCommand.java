@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -26,7 +29,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
-import java.util.LinkedHashMap;
 
 /**
  * V2 - Big Ok ( scavalla pagine a 2, come comportarsi con fogli vuoti?
@@ -36,6 +38,8 @@ import java.util.LinkedHashMap;
  */
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
+	private static Log logger = LogFactory.getLog(ReportAttiLicenziatiCommand.class);
+	
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
         ByteArrayOutputStream ostream = null;
@@ -69,11 +73,12 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
                 if (!dataVotazioneCommReferenteDa.equals("*")
                         || !dataVotazioneCommReferenteA.equals("*")) {
-                    query += " AND @crlatti\\:dataSedutaCommAttoCommissione:["
+                    query += " AND @crlatti\\:dataVotazioneCommissione:["
                             + this.dataVotazioneCommReferenteDa
                             + " TO "
-                            + this.dataVotazioneCommReferenteA + " ]";
+                            + this.dataVotazioneCommReferenteA + "]";
                 }
+                logger.info(query);
                 sp.setQuery(query);
                 sp.addSort(sortField1, true);
                 ResultSet currentResults = this.searchService.query(sp);
