@@ -563,15 +563,15 @@ for(var i=0; i< attiResults.length; i++){
             commissioniReferentiArray = new Array();
         }
         
-        if(attoResult.properties["crlatti:commCoreferente"] != null) {
+        if(checkIsNotNull(attoResult.properties["crlatti:commCoreferente"])) {
             commissioniReferentiArray.push(attoResult.properties["crlatti:commCoreferente"]);
         }
         
-        if(attoResult.properties["crlatti:commRedigente"] != null) {
+        if(checkIsNotNull(attoResult.properties["crlatti:commRedigente"])) {
             commissioniReferentiArray.push(attoResult.properties["crlatti:commRedigente"]);
         }
         
-        if(attoResult.properties["crlatti:commDeliberante"] != null) {
+        if(checkIsNotNull(attoResult.properties["crlatti:commDeliberante"])) {
             commissioniReferentiArray.push(attoResult.properties["crlatti:commDeliberante"]);
         }
 	
