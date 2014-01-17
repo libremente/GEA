@@ -256,8 +256,14 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
                 String tipoIniziativaAttoAbbinato = (String) nodeService.getProperty(attoAbbinato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_INIZIATIVA));
 
                 abbinamentiStringList.add(new AttiAbbinatiLineObject(tipoAttoDescrizioneAttoAbbinato + " N." + nomeAttoAbbinato, true, false, 10));
-                abbinamentiStringList.add(new AttiAbbinatiLineObject(oggettoAttoAbbinato, false, false, 10));
-
+                
+                //Inserito controllo non essendo obbligatorio l'oggetto degli atti
+                //su TEST e sviluppo generava errore
+                if (oggettoAttoAbbinato != null) {
+                		
+                	abbinamentiStringList.add(new AttiAbbinatiLineObject(oggettoAttoAbbinato, false, false, 10));
+            	}
+                
                 if (tipoIniziativaAttoAbbinato != null && tipoIniziativaAttoAbbinato.length() > 20) {
                     abbinamentiStringList.add(new AttiAbbinatiLineObject("Atto di iniziativa " + tipoIniziativaAttoAbbinato.substring(22).toLowerCase(), false, true, 10));
                 }
