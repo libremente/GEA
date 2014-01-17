@@ -199,12 +199,10 @@ public class TestDateUtils {
         int numDays = 0;
         Calendar calendarDateIn = new GregorianCalendar();
         calendarDateIn.setTime(dateIn);
-
         while (calendarDateIn.getTime().before(startDate)) {
             calendarDateIn.add(Calendar.DAY_OF_YEAR, 1);
             numDays++;
         }
-
         return numDays;
     }
 
