@@ -1,5 +1,6 @@
 package com.sourcesense.crl.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,127 +62,170 @@ public class DateUtils {
 
 	}
 
-	public static Date getDataScadenzaPar(Date dataPresaInCarico,
-			boolean isRegolamento, boolean sospensioneFeriale) {
-
+	public static Date getDataScadenzaPar(Date dataPresaInCarico, boolean isRegolamento, boolean sospensioneFeriale) {
 		if (isRegolamento) {
-
-			return generateDataScadenzaParRegolamento(dataPresaInCarico,
-					sospensioneFeriale);
-
+			return generateDataScadenzaParRegolamento(dataPresaInCarico, sospensioneFeriale);
 		} else {
-
-			return generateDataScadenzaParDgr(dataPresaInCarico,
-					sospensioneFeriale);
-
+			return generateDataScadenzaParDgr(dataPresaInCarico, sospensioneFeriale);
 		}
-
 	}
 
-	private static Date generateDataScadenzaParDgr(Date dateIn,
-			boolean sospensioneFeriale) {
-		try {
+    private static Date generateDataScadenzaParRegolamento(Date dateIn, boolean sospensioneFeriale) {
+        return generateDataScadenzaPar(60, dateIn, sospensioneFeriale);
+    }
 
-			Calendar calendar = new GregorianCalendar();
-			calendar.setTime(dateIn);
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private static Date generateDataScadenzaParDgr(Date dateIn, boolean sospensioneFeriale) {
+        return generateDataScadenzaPar(30, dateIn, sospensioneFeriale);
+    }
 
-			if (sospensioneFeriale) {
+    private static Date generateDataScadenzaPar(int DELAY, Date dateIn, boolean sospensioneFeriale) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(dateIn);
+        if (sospensioneFeriale) {
+            final Date PRIMO_AGOSTO = primoAgostoDate(dateIn);
+            final boolean before = dateIn.before(PRIMO_AGOSTO);
+            final int delta = numDaysBeetwen(dateIn, PRIMO_AGOSTO);
+            if (delta > DELAY) {
+                calendar.add(Calendar.DAY_OF_YEAR, DELAY);
+            } else if (delta > 0 && delta <= DELAY) {
+                calendar.add(Calendar.DAY_OF_YEAR, DELAY + 46);
+            } else if (delta == 0) {
+                int delay = DELAY;
+                if (before) delay += 46;
+                calendar.add(Calendar.DAY_OF_YEAR, delay);
+            }
+        } else {
+            calendar.add(Calendar.DAY_OF_YEAR, DELAY);
+        }
+        return calendar.getTime();
+    }
 
-				Calendar calendarAppo = new GregorianCalendar();
-				calendarAppo.setTime(dateIn);
+    private static int numDaysBeetwen(Date dateIn, Date startDate) {
+        int numDays = 0;
+        Calendar calendarDateIn = new GregorianCalendar();
+        calendarDateIn.setTime(dateIn);
 
-				Date dataStart = sdf.parse("01/08/"
-						+ calendar.get(Calendar.YEAR));
+        while (calendarDateIn.getTime().before(startDate)) {
+            calendarDateIn.add(Calendar.DAY_OF_YEAR, 1);
+            numDays++;
+        }
 
-				int contaMargin = 0;
+        return numDays;
+    }
 
-				while (calendarAppo.getTime().before(dataStart)) {
-					calendarAppo.add(Calendar.DAY_OF_YEAR, 1);
-					contaMargin++;
-				}
+    private static Date primoAgostoDate(Date dateIn) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(dateIn);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataPrimoAgosto;
+        try {
+            dataPrimoAgosto = sdf.parse("01/08/" + calendar.get(Calendar.YEAR));
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Unparsable Date");
+        }
+        return dataPrimoAgosto;
+    }
 
-				if (contaMargin >= 30) {
-
-					calendar.add(Calendar.DAY_OF_YEAR, 31);
-
-				} else if (contaMargin == 0) {
-
-					Date dataCalc = sdf.parse("16/10/"+ calendar.get(Calendar.YEAR));
-					
-					calendar.setTime(dataCalc);
-
-				} else {
-
-					calendar.add(Calendar.DAY_OF_YEAR, 76);
-				}
-
-			} else {
-
-				calendar.add(Calendar.DAY_OF_YEAR, 31);
-
-			}
-
-			return calendar.getTime();
-
-		} catch (Exception e) {
-
-		}
-
-		return null;
-
-	}
-
-	private static Date generateDataScadenzaParRegolamento(Date dateIn,
-			boolean sospensioneFeriale) {
-
-		try {
-
-			Calendar calendar = new GregorianCalendar();
-			calendar.setTime(dateIn);
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-			if (sospensioneFeriale) {
-
-				Calendar calendarAppo = new GregorianCalendar();
-				calendarAppo.setTime(dateIn);
-
-				Date dataStart = sdf.parse("01/08/"
-						+ calendar.get(Calendar.YEAR));
-
-				int contaMargin = 0;
-
-				while (calendarAppo.getTime().before(dataStart)) {
-					calendarAppo.add(Calendar.DAY_OF_YEAR, 1);
-					contaMargin++;
-				}
-
-				if (contaMargin >= 60) {
-
-					calendar.add(Calendar.DAY_OF_YEAR, 61);
-				} else if (contaMargin == 0) {
-
-					Date dataCalc = sdf.parse("15/11/"+ calendar.get(Calendar.YEAR));
-					
-					calendar.setTime(dataCalc);	
-
-				} else {
-
-					calendar.add(Calendar.DAY_OF_YEAR, 106);
-				}
-
-			} else {
-
-				calendar.add(Calendar.DAY_OF_YEAR, 61);
-
-			}
-
-			return calendar.getTime();
-
-		} catch (Exception e) {
-
-		}
-
-		return null;
-	}
+//	private static Date generateDataScadenzaParDgr(Date dateIn,
+//			boolean sospensioneFeriale) {
+//		try {
+//
+//			Calendar calendar = new GregorianCalendar();
+//			calendar.setTime(dateIn);
+//			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//
+//			if (sospensioneFeriale) {
+//
+//				Calendar calendarAppo = new GregorianCalendar();
+//				calendarAppo.setTime(dateIn);
+//
+//				Date dataStart = sdf.parse("01/08/"
+//						+ calendar.get(Calendar.YEAR));
+//
+//				int contaMargin = 0;
+//
+//				while (calendarAppo.getTime().before(dataStart)) {
+//					calendarAppo.add(Calendar.DAY_OF_YEAR, 1);
+//					contaMargin++;
+//				}
+//
+//				if (contaMargin >= 30) {
+//
+//					calendar.add(Calendar.DAY_OF_YEAR, 31);
+//
+//				} else if (contaMargin == 0) {
+//
+//					Date dataCalc = sdf.parse("16/10/"+ calendar.get(Calendar.YEAR));
+//
+//					calendar.setTime(dataCalc);
+//
+//				} else {
+//
+//					calendar.add(Calendar.DAY_OF_YEAR, 76);
+//				}
+//
+//			} else {
+//				calendar.add(Calendar.DAY_OF_YEAR, 31);
+//			}
+//
+//			return calendar.getTime();
+//
+//		} catch (Exception e) {
+//
+//		}
+//
+//		return null;
+//
+//	}
+//
+//	private static Date generateDataScadenzaParRegolamento(Date dateIn,
+//			boolean sospensioneFeriale) {
+//
+//		try {
+//
+//			Calendar calendar = new GregorianCalendar();
+//			calendar.setTime(dateIn);
+//			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//
+//			if (sospensioneFeriale) {
+//
+//				Calendar calendarAppo = new GregorianCalendar();
+//				calendarAppo.setTime(dateIn);
+//
+//				Date dataStart = sdf.parse("01/08/"
+//						+ calendar.get(Calendar.YEAR));
+//
+//				int contaMargin = 0;
+//
+//				while (calendarAppo.getTime().before(dataStart)) {
+//					calendarAppo.add(Calendar.DAY_OF_YEAR, 1);
+//					contaMargin++;
+//				}
+//
+//				if (contaMargin >= 60) {
+//
+//					calendar.add(Calendar.DAY_OF_YEAR, 61);
+//				} else if (contaMargin == 0) {
+//
+//					Date dataCalc = sdf.parse("15/11/"+ calendar.get(Calendar.YEAR));
+//
+//					calendar.setTime(dataCalc);
+//                } else {
+//                    calendar.add(Calendar.DAY_OF_YEAR, 106);
+//				}
+//
+//			} else {
+//
+//				calendar.add(Calendar.DAY_OF_YEAR, 61);
+//
+//			}
+//
+//			return calendar.getTime();
+//
+//		} catch (Exception e) {
+//
+//		}
+//
+//		return null;
+//	}
 }
