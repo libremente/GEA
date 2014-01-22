@@ -132,7 +132,11 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                     
                     ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
                     String commCoReferente = this.renderList(commCoReferenteList);
-
+                    
+                    //SCRL-352
+                    ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
+                    String firmatari = this.renderFirmatariConGruppoList(firmatariList);
+                    
                     // from Commissione
                     String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
                     Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
@@ -148,12 +152,14 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                     currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(ruoloCommissione));
                     currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
                     currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(oggetto));
-                    currentTable.getRow(4).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
-                    currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(altriPareri));
-                    currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(commReferente));
-                    currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commCoReferente));
-                    currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commConsultiva));
-
+                    //SCRL-352
+                    currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(firmatari));
+                    currentTable.getRow(5).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
+                    currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(altriPareri));
+                    currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commReferente));
+                    currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commCoReferente));
+                    currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commConsultiva));
+                    
                     tableIndex++;
                 }
             }
