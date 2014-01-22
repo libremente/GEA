@@ -166,6 +166,9 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                         elencoRelatori.add(relatore);
                         elencoDateNomina.add(dateNominaString);
                     }
+                    // SCRL-352
+                    ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
+                    String firmatari = this.renderFirmatariConGruppoList(firmatariList);
 
                     ArrayList<String> commReferenteList = (ArrayList<String>) this
                             .getNodeRefProperty(attoProperties, "commReferente");
@@ -180,33 +183,18 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                             "commConsultiva");
                     String commConsultiva = this.renderList(commConsultivaList);
 
-                    currentTable.getRow(0).getCell(1)
-                            .setText(this.checkStringEmpty(tipoAtto.toUpperCase()));
-                    currentTable.getRow(0).getCell(2)
-                            .setText(this.checkStringEmpty(numeroAtto));
-                    currentTable.getRow(1).getCell(1)
-                            .setText(this.checkStringEmpty(oggetto));
-                    currentTable.getRow(2).getCell(1)
-                            .setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
-                    currentTable
-                            .getRow(3)
-                            .getCell(1)
-                            .setText(
-                            this.checkDateEmpty(dateAssegnazioneCommissione));
-
-                    currentTable.getRow(3).getCell(3)
-                            .setText(this.checkStringEmpty(commReferente));
-                    
-                    currentTable.getRow(4).getCell(1)
-                    .setText(this.checkStringEmpty(commCoReferente));
-            
-                    
-                    currentTable.getRow(5).getCell(1)
-                            .setText(this.checkStringEmpty(commConsultiva));
-                    docxManager.insertListInCell(currentTable.getRow(6)
-                            .getCell(1), elencoRelatori);
-                    docxManager.insertListInCell(currentTable.getRow(6)
-                            .getCell(3), elencoDateNomina);
+                    currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase()));
+                    currentTable.getRow(0).getCell(2).setText(this.checkStringEmpty(numeroAtto));
+                    currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(oggetto));
+                    currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
+                    currentTable.getRow(3).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
+                    currentTable.getRow(3).getCell(3).setText(this.checkStringEmpty(commReferente));
+                    currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(commCoReferente));
+                    currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(commConsultiva));
+                    //SCRL-352
+                    currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(firmatari));
+                    docxManager.insertListInCell(currentTable.getRow(7).getCell(1), elencoRelatori);
+                    docxManager.insertListInCell(currentTable.getRow(7).getCell(3), elencoDateNomina);
                     tableIndex++;
                 }
             }
