@@ -104,7 +104,7 @@ public class ReportisticaController implements Serializable {
 
 	// SErv Comm
 	private final String ATTI_ASSE_COMM = "Atti assegnati alle commissioni";
-	private final String CONFERENZE = "Conferenze (atti in istruttoria)";
+	private final String CONFERENZE = "Conferenza (atti in istruttoria)";
 	private final String ATTI_LICENZ = "Atti licenziati";
 	private final String ATTI_RITIRATI = "Atti ritirati e revocati";
 	private final String ATTI_RELATORE = "Elenco atti per relatore";
