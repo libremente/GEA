@@ -151,7 +151,9 @@ public class GestioneSeduteController {
 	
 		seduteList = Clonator.cloneList(seduteListAll);
 		Collections.sort(seduteList);
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		//MODIFICA 
+		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
+		//setAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 		
 		setDateSeduteList();
@@ -826,18 +828,24 @@ public class GestioneSeduteController {
 	}
 
 	public void handleAttoSindacatoChange() {
+		
+		//MODIFICA 
+		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato));
 
 		getNumeriAttoSindacato().clear();
-
-		for (CollegamentoAttiSindacato collegamento : attiSindacato) {
-
+		setNumeriAttoSindacato(attiSindacato);
+		//MODIFICA
+		//eliminato ciclo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
+		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+			eliminato controllo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
 			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
 
 				getNumeriAttoSindacato().add(collegamento);
 
 			}
 
-		}
+		}*/
 
 	}
 

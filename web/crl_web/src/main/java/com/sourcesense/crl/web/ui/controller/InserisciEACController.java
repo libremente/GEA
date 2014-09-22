@@ -109,7 +109,9 @@ public class InserisciEACController {
 				attoBean.setAttoEAC(null);
 			}
 		}
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		//MODIFICA 
+		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
+		//setAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 
 	}
@@ -234,9 +236,14 @@ public class InserisciEACController {
 
 	public void handleAttoSindacatoChange() {
 
+		//MODIFICA 
+		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato));
 		getNumeriAttoSindacato().clear();
-
-		for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+		setNumeriAttoSindacato(attiSindacato);
+		//MODIFICA
+		//eliminato ciclo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
+		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
 
 			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
 
@@ -244,7 +251,7 @@ public class InserisciEACController {
 
 			}
 
-		}
+		}*/
 
 	}
 

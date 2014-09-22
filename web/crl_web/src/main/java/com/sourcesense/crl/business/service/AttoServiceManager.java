@@ -169,10 +169,11 @@ public class AttoServiceManager implements ServiceManager {
 				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
 	}
 	
-	
-	public List<CollegamentoAttiSindacato> findAllAttiSindacato() {
+	//MODIFICA
+	//Aggiunto parametro del tipoAttoIndirizzo
+	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String tipoAtto) {
 		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_retrieve_atti_indirizzo",null));
+				"alfresco_context_url", "alf_retrieve_atti_indirizzo",new String[]{tipoAtto}));
 	}
 	
 	
