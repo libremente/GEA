@@ -819,7 +819,7 @@ public class GestioneSeduteController {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
 
-			if (element.getNumeroAtto().equals(idAttoSindacato)) {
+			if (element.getIdAtto().equals(idAttoSindacato)) {
 
 				return false;
 			}
