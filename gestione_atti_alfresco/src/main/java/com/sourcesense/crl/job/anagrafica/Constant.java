@@ -60,7 +60,7 @@ public class Constant {
                                                                "ON oo.id_organo = jpoc.id_organo " +
                                                        "WHERE ppo.deleted = 0 " +
                                                          "AND oo.deleted = 0 " +
-                                                         "AND oo.id_tipo_organo = 2 " +
+                                                         "AND (oo.id_tipo_organo = 2 OR oo.id_tipo_organo = 5) " +
                                                          "AND jpoc.deleted = 0 " +
                                                          "AND jpoc.id_legislatura = ? " +
                                                          "AND jpoc.data_fine is null " +
