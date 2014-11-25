@@ -9,6 +9,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 import com.sourcesense.crl.util.JsonNoteDeserializer;
+import com.sourcesense.crl.util.JsonIntegerDeserializer;
 
 public class Aula implements Cloneable{
 	
@@ -167,15 +168,19 @@ public class Aula implements Cloneable{
 	public Integer getNumEmendPresentatiMaggiorEsameAula() {
 		return numEmendPresentatiMaggiorEsameAula;
 	}
+	
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiMaggiorEsameAula(
 			Integer numEmendPresentatiMaggiorEsameAula) {
 		this.numEmendPresentatiMaggiorEsameAula = numEmendPresentatiMaggiorEsameAula;
 	}
-
+	
+	
 	public Integer getNumEmendPresentatiMinorEsameAula() {
 		return numEmendPresentatiMinorEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiMinorEsameAula(
 			Integer numEmendPresentatiMinorEsameAula) {
 		this.numEmendPresentatiMinorEsameAula = numEmendPresentatiMinorEsameAula;
@@ -185,6 +190,7 @@ public class Aula implements Cloneable{
 		return numEmendPresentatiGiuntaEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiGiuntaEsameAula(
 			Integer numEmendPresentatiGiuntaEsameAula) {
 		this.numEmendPresentatiGiuntaEsameAula = numEmendPresentatiGiuntaEsameAula;
@@ -194,6 +200,7 @@ public class Aula implements Cloneable{
 		return numEmendPresentatiMistoEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiMistoEsameAula(
 			Integer numEmendPresentatiMistoEsameAula) {
 		this.numEmendPresentatiMistoEsameAula = numEmendPresentatiMistoEsameAula;
@@ -203,6 +210,7 @@ public class Aula implements Cloneable{
 		return numEmendApprovatiMaggiorEsameAula;
 	}
 	
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiMaggiorEsameAula(
 			Integer numEmendApprovatiMaggiorEsameAula) {
 		this.numEmendApprovatiMaggiorEsameAula = numEmendApprovatiMaggiorEsameAula;
@@ -212,6 +220,7 @@ public class Aula implements Cloneable{
 		return numEmendApprovatiMinorEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiMinorEsameAula(
 			Integer numEmendApprovatiMinorEsameAula) {
 		this.numEmendApprovatiMinorEsameAula = numEmendApprovatiMinorEsameAula;
@@ -221,6 +230,7 @@ public class Aula implements Cloneable{
 		return numEmendApprovatiGiuntaEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiGiuntaEsameAula(
 			Integer numEmendApprovatiGiuntaEsameAula) {
 		this.numEmendApprovatiGiuntaEsameAula = numEmendApprovatiGiuntaEsameAula;
@@ -230,6 +240,7 @@ public class Aula implements Cloneable{
 		return numEmendApprovatiMistoEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiMistoEsameAula(
 			Integer numEmendApprovatiMistoEsameAula) {
 		this.numEmendApprovatiMistoEsameAula = numEmendApprovatiMistoEsameAula;
@@ -239,6 +250,7 @@ public class Aula implements Cloneable{
 		return nonAmmissibiliEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNonAmmissibiliEsameAula(Integer nonAmmissibiliEsameAula) {
 		this.nonAmmissibiliEsameAula = nonAmmissibiliEsameAula;
 	}
@@ -247,6 +259,7 @@ public class Aula implements Cloneable{
 		return decadutiEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setDecadutiEsameAula(Integer decadutiEsameAula) {
 		this.decadutiEsameAula = decadutiEsameAula;
 	}
@@ -255,6 +268,7 @@ public class Aula implements Cloneable{
 		return ritiratiEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setRitiratiEsameAula(Integer ritiratiEsameAula) {
 		this.ritiratiEsameAula = ritiratiEsameAula;
 	}
@@ -263,6 +277,7 @@ public class Aula implements Cloneable{
 		return respintiEsameAula;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setRespintiEsameAula(Integer respintiEsameAula) {
 		this.respintiEsameAula = respintiEsameAula;
 	}
