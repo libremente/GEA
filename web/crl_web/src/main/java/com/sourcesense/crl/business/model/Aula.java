@@ -286,6 +286,7 @@ public class Aula implements Cloneable{
 		return totaleNonApprovatiEsameAula;
 	}
 	
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setTotaleNonApprovatiEsameAula(Integer totaleNonApprovatiEsameAula) {
 		this.totaleNonApprovatiEsameAula = totaleNonApprovatiEsameAula;
 	}
