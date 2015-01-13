@@ -13,6 +13,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
+import com.sourcesense.crl.util.JsonIntegerDeserializer;
 import com.sourcesense.crl.util.JsonNoteDeserializer;
 
 @JsonRootName("commissione")
@@ -215,6 +216,7 @@ public class Commissione implements Cloneable {
 		return numEmendPresentatiMaggiorEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiMaggiorEsameCommissioni(
 			Integer numEmendPresentatiMaggiorEsameCommissioni) {
 		this.numEmendPresentatiMaggiorEsameCommissioni = numEmendPresentatiMaggiorEsameCommissioni;
@@ -224,6 +226,7 @@ public class Commissione implements Cloneable {
 		return numEmendPresentatiMinorEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiMinorEsameCommissioni(
 			Integer numEmendPresentatiMinorEsameCommissioni) {
 		this.numEmendPresentatiMinorEsameCommissioni = numEmendPresentatiMinorEsameCommissioni;
@@ -233,24 +236,29 @@ public class Commissione implements Cloneable {
 		return numEmendPresentatiGiuntaEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiGiuntaEsameCommissioni(
 			Integer numEmendPresentatiGiuntaEsameCommissioni) {
 		this.numEmendPresentatiGiuntaEsameCommissioni = numEmendPresentatiGiuntaEsameCommissioni;
 	}
 
+	
 	public Integer getNumEmendPresentatiMistoEsameCommissioni() {
 		return numEmendPresentatiMistoEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendPresentatiMistoEsameCommissioni(
 			Integer numEmendPresentatiMistoEsameCommissioni) {
 		this.numEmendPresentatiMistoEsameCommissioni = numEmendPresentatiMistoEsameCommissioni;
 	}
 
+	
 	public Integer getNumEmendApprovatiMaggiorEsameCommissioni() {
 		return numEmendApprovatiMaggiorEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiMaggiorEsameCommissioni(
 			Integer numEmendApprovatiMaggiorEsameCommissioni) {
 		this.numEmendApprovatiMaggiorEsameCommissioni = numEmendApprovatiMaggiorEsameCommissioni;
@@ -260,6 +268,7 @@ public class Commissione implements Cloneable {
 		return numEmendApprovatiMinorEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiMinorEsameCommissioni(
 			Integer numEmendApprovatiMinorEsameCommissioni) {
 		this.numEmendApprovatiMinorEsameCommissioni = numEmendApprovatiMinorEsameCommissioni;
@@ -269,6 +278,7 @@ public class Commissione implements Cloneable {
 		return numEmendApprovatiGiuntaEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiGiuntaEsameCommissioni(
 			Integer numEmendApprovatiGiuntaEsameCommissioni) {
 		this.numEmendApprovatiGiuntaEsameCommissioni = numEmendApprovatiGiuntaEsameCommissioni;
@@ -278,6 +288,7 @@ public class Commissione implements Cloneable {
 		return numEmendApprovatiMistoEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNumEmendApprovatiMistoEsameCommissioni(
 			Integer numEmendApprovatiMistoEsameCommissioni) {
 		this.numEmendApprovatiMistoEsameCommissioni = numEmendApprovatiMistoEsameCommissioni;
@@ -286,7 +297,8 @@ public class Commissione implements Cloneable {
 	public Integer getNonAmmissibiliEsameCommissioni() {
 		return nonAmmissibiliEsameCommissioni;
 	}
-
+	
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setNonAmmissibiliEsameCommissioni(
 			Integer nonAmmissibiliEsameCommissioni) {
 		this.nonAmmissibiliEsameCommissioni = nonAmmissibiliEsameCommissioni;
@@ -296,6 +308,7 @@ public class Commissione implements Cloneable {
 		return decadutiEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setDecadutiEsameCommissioni(Integer decadutiEsameCommissioni) {
 		this.decadutiEsameCommissioni = decadutiEsameCommissioni;
 	}
@@ -304,6 +317,7 @@ public class Commissione implements Cloneable {
 		return ritiratiEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setRitiratiEsameCommissioni(Integer ritiratiEsameCommissioni) {
 		this.ritiratiEsameCommissioni = ritiratiEsameCommissioni;
 	}
@@ -312,6 +326,7 @@ public class Commissione implements Cloneable {
 		return respintiEsameCommissioni;
 	}
 
+	@JsonDeserialize(using=JsonIntegerDeserializer.class)
 	public void setRespintiEsameCommissioni(Integer respintiEsameCommissioni) {
 		this.respintiEsameCommissioni = respintiEsameCommissioni;
 	}
