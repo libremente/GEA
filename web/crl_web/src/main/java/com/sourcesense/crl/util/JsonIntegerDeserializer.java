@@ -16,7 +16,7 @@ public class JsonIntegerDeserializer extends JsonDeserializer<Integer>{
 		// TODO Auto-generated method stub
 		Integer value =0;
 		
-		if(jp.getText()!=null){
+		if(jp.getText()!=null && jp.getTextLength() > 0){
 		  
 		  value = Integer.valueOf(jp.getText().replaceAll(",",""));
 		}
