@@ -18,7 +18,18 @@ public class JsonIntegerDeserializer extends JsonDeserializer<Integer>{
 		
 		if(jp.getText()!=null && jp.getTextLength() > 0){
 		  
-		  value = Integer.valueOf(jp.getText().replaceAll(",",""));
+			if (jp.getText().contains(",")){
+			
+				value = Integer.valueOf(jp.getText().replace(",",""));
+			}
+			else if (jp.getText().contains(".")){
+			
+				value = Integer.valueOf(jp.getText().replace(".",""));
+			}
+			else{
+			
+				value = Integer.valueOf(jp.getText());
+			}
 		}
 		
 		return value;
