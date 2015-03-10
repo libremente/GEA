@@ -192,17 +192,16 @@
 				<p:column colspan="3" style="text-align:left;">
 
 					<p:selectOneMenu id="commissionecomp"
-						value="#{inserisciMISController.commissioneCompetente}" >
+						value="#{inserisciMISController.commissioneCompetente}">
 						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
 						<f:selectItems value="#{inserisciMISController.commissioni}" />
 
-						<f:selectItems var="commissione" 
-						    itemLabel="#{commissione}"
+						<f:selectItems var="commissione" itemLabel="#{commissione}"
 							itemValue="#{commissione}"
-							 value="#{inserisciMISController.commissioni}"  />
-							
-							
-							
+							value="#{inserisciMISController.commissioni}" />
+
+
+
 					</p:selectOneMenu>
 				</p:column>
 
@@ -323,10 +322,20 @@
 						value="Data Esame Rapporto Finale:" />
 				</p:column>
 
-				<p:column colspan="3" style="text-align:left;">
+				<p:column style="width: 25%; text-align:left;">
 					<p:calendar size="10" locale="it" id="dataEsameRapportoFinale"
 						pattern="dd/MM/yyyy"
 						value="#{inserisciMISController.dataEsameRapportoFinale}" />
+				</p:column>
+
+				<p:column style="width: 25%; text-align:left;">
+					<h:outputLabel for="chiudiAtto" value="Chiudere Atto?:" />
+				</p:column>
+
+				<p:column style="width: 25%; text-align:left;">
+					<p:selectBooleanCheckbox id="chiudiAtto"
+						value="#{inserisciMISController.checkAttoChiuso}" />
+
 				</p:column>
 			</p:row>
 
@@ -360,7 +369,7 @@
 			<p:row>
 
 				<p:column colspan="2" style="text-align:left;">
-					<p:commandButton  id="insertattobtn" value="Salva"
+					<p:commandButton id="insertattobtn" value="Salva"
 						update="insertattopanel"
 						disabled="#{navigationBean.isMISDisabled()}"
 						actionListener="#{inserisciMISController.inserisciAtto}" />

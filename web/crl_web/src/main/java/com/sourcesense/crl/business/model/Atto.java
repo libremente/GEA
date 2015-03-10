@@ -16,10 +16,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
-import org.codehaus.jackson.annotate.JsonUnwrapped;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -61,7 +59,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	@Override
 	public int compareTo(Atto arg0) {
 		// TODO Auto-generated method stub
-		return Integer.parseInt(arg0.numeroAtto) 
+		return Integer.parseInt(arg0.numeroAtto)
 				- Integer.parseInt(this.numeroAtto);
 	}
 
@@ -135,7 +133,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	private Date dataNominaRelatore;
 	private List<Consultazione> consultazioni = new ArrayList<Consultazione>();
 	private List<Allegato> allegati = new ArrayList<Allegato>();
-	
+
 	private String elencoAbbinamenti;
 	private String esitoVotazioneCommissioneReferente;
 	private Date dataVotazioneCommissione;
@@ -181,8 +179,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	private String numRegolamento;
 	private Date dataRegolamento;
-	
-	
+
 	private List<SedutaAtto> seduteAtto = new ArrayList<SedutaAtto>();
 
 	public Atto() {
@@ -244,8 +241,6 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	public void setOldOggetto(String oldOggetto) {
 		this.oggetto = oldOggetto;
 	}
-
-	
 
 	public String getOggettoOriginale() {
 		return oggettoOriginale;
@@ -388,7 +383,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.numeroRepertorio = numeroRepertorio;
 	}
 
-	//SCRL-396 Gestione Fascicolo Archivistico
+	// SCRL-396 Gestione Fascicolo Archivistico
 	public String getUrlFascicolo() {
 		return urlFascicolo;
 	}
@@ -470,10 +465,10 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	public void setTipoIniziativa(String tipoIniziativa) {
 		this.tipoIniziativa = tipoIniziativa;
-		//setto tipoIniziativaNome per SCRL-347
+		// setto tipoIniziativaNome per SCRL-347
 		this.tipoIniziativaNome = this.getTipoIniziativaNome();
 	}
-	
+
 	public String getFirmatario() {
 		return firmatario;
 	}
@@ -898,7 +893,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 			String esitoVotazioneCommissioneReferente) {
 		this.esitoVotazioneCommissioneReferente = esitoVotazioneCommissioneReferente;
 	}
-	
+
 	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataVotazioneCommissione() {
 		return dataVotazioneCommissione;
@@ -1009,17 +1004,14 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	}
 
 	public List<SedutaAtto> getSeduteAtto() {
-		
-		
+
 		return seduteAtto;
-	
+
 	}
 
 	public void setSeduteAtto(List<SedutaAtto> seduteAtto) {
 		this.seduteAtto = seduteAtto;
 	}
-	
-	
 
 	public String getNumRegolamento() {
 		return numRegolamento;
@@ -1029,9 +1021,6 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.numRegolamento = numRegolamento;
 	}
 
-	
-	
-	
 	public String getNoteCollegamenti() {
 		return noteCollegamenti;
 	}

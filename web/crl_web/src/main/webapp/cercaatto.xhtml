@@ -887,7 +887,7 @@
 				<p:commandLink
 					action="#{searchAttoController.attoDetail(idAttoParam,tipoAttoParam)}"
 					update="listaAtti">
-					<h:outputText value="#{atto.numeroAtto}" />
+					<h:outputText value="#{atto.numeroAtto}#{atto.estensioneAtto}" />
 				</p:commandLink>
 			</p:column>
 
