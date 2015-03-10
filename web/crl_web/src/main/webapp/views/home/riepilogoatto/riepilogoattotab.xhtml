@@ -35,8 +35,13 @@
 				<p:printer target="printPanel">
 
 				</p:printer>
+				
 			</p:commandButton>
+			<!-- SCRL-396 fascicolo archivistico  -->
+			<p:button onclick="window.open('#{attoBean.urlFascicolo}'); return false;" value="Visualizza Fascicolo" 
+			rendered="#{not empty attoBean.urlFascicolo}"/>
 		</p:column>
+		
 	</p:row>
 
 </p:panelGrid>

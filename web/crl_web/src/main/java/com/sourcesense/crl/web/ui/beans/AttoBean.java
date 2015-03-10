@@ -6,11 +6,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.springframework.context.MessageSource;
 
 import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.Allegato;
@@ -50,6 +52,7 @@ public class AttoBean implements Serializable {
 	private String statoAttuale;
 	private String classificazione;
 	private String numeroRepertorio;
+	private String urlFascicolo;
 	private Date dataRepertorio;
 	private Date dataIniziativa;
 	private String tipoIniziativa;
@@ -111,6 +114,10 @@ public class AttoBean implements Serializable {
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
 
+	@ManagedProperty(value = "#{messageSource}")
+	MessageSource messageSource;
+	
+	
 	public int getNumeroPassaggi() {
 
 		return this.atto.getPassaggi().size();
@@ -469,6 +476,15 @@ public class AttoBean implements Serializable {
 
 	}
 
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
 	/* Services */
 	public AttoServiceManager getAttoServiceManager() {
 		return attoServiceManager;
@@ -621,6 +637,22 @@ public class AttoBean implements Serializable {
 
 	public void setTipologia(String tipologia) {
 		this.atto.setTipologia(tipologia);
+	}
+	//SCRL-396 Gestione Fascicolo Archivistico
+	public String getUrlFascicolo() {
+		
+		String path = this.atto.getUrlFascicolo();
+		if (!path.isEmpty()){
+			String context = messageSource.getMessage("host.urlFascicolo", null, Locale.ITALY);
+			return  context.concat(path);
+		}
+		else{
+			return null;
+		}
+	}
+
+	public void setUrlFascicolo(String urlFascicolo) {
+		this.atto.setUrlFascicolo(urlFascicolo);
 	}
 
 	public String getLegislatura() {

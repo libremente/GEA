@@ -96,6 +96,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	private String nRepertorio;
 	private Date dataRepertorio;
 	private String numeroRepertorio;
+	private String urlFascicolo;
 	private String descrizioneIniziativa;
 	private String numeroDgr;
 	private Date dataDgr;
@@ -385,6 +386,15 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	public void setNumeroRepertorio(String numeroRepertorio) {
 		this.numeroRepertorio = numeroRepertorio;
+	}
+
+	//SCRL-396 Gestione Fascicolo Archivistico
+	public String getUrlFascicolo() {
+		return urlFascicolo;
+	}
+
+	public void setUrlFascicolo(String urlFascicolo) {
+		this.urlFascicolo = urlFascicolo;
 	}
 
 	public String getDescrizioneIniziativa() {
