@@ -1,6 +1,8 @@
 package com.sourcesense.crl.business.model;
 
-public class ColonnaAtto {
+import java.io.Serializable;
+
+public class ColonnaAtto implements Serializable {
 
 	/*
 	 * Tipo atto N° atto Oggetto Tipo iniziativa Firmatari Stato Tipo chiusura
@@ -12,6 +14,8 @@ public class ColonnaAtto {
 	 * N° LR Data LR
 	 */
 
+	private static final long serialVersionUID = 4556503563459586700L;
+	
 	private String nome;
 	private String attoProperty;
 	private boolean visible;
@@ -26,7 +30,7 @@ public class ColonnaAtto {
 
 		this.nome = nome;
 		this.visible = visible;
-		this.attoProperty =attoProperty;
+		this.attoProperty = attoProperty;
 	}
 
 	
