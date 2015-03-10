@@ -1,11 +1,16 @@
 //Script da attivare solo su una regola con scope con aspect crlatti:importatoDaProtocollo
-
+protocolloLogger.info("Inizio importazione allegato");
 crlUtility.sudo(importaAllegato, "admin");
 
 
 function importaAllegato(){
 
 	var idProtocolloAtto = document.properties["crlatti:idProtocolloAtto"];
+	
+	if(idProtocolloAtto!=null && idProtocolloAtto!=undefined && idProtocolloAtto!=""){
+		protocolloLogger.info("Inizio importazione allegato con idProcollo: "+idProtocolloAtto);
+	}
+	
 	var idProtocolloAllegato = document.properties["crlatti:idProtocollo"];
 	var filename = document.name;
 	
@@ -105,6 +110,8 @@ function importaAllegato(){
 					
 					document.remove();
 					
+					
+					protocolloLogger.info(document.name+" eliminato correttamente.");
 				} else {
 					
 					if(document.hasAspect("crlatti:importatoDaProtocollo")){
@@ -112,15 +119,32 @@ function importaAllegato(){
 					}
 					
 					document.move(allegatiFolderNode);
+					allegatoNode = document;
+					protocolloLogger.info(document.name+" spostato correttamente.");
 				}
 				
-				
-				
+				//gestione del file TSD
+				var newFileName = new String(allegatoNode.name);
+				var filenameSplitted = newFileName.split(".");
+				if(filenameSplitted!=null && filenameSplitted.length>1){
+					var extension = filenameSplitted[1];
+					if(extension!=null && extension!=""){
+						extension = extension.toLowerCase();
+						if(extension=="tsd"){
+							var allegatoPdfNode = allegatoNode.copy(allegatiFolderNode,false);
+							var pdfFileName = filenameSplitted[0] + ".pdf";
+							allegatoPdfNode.name = pdfFileName;
+							allegatoPdfNode.properties["cm:title"] = pdfFileName;
+							allegatoPdfNode.properties.content.setEncoding("UTF-8");
+							allegatoPdfNode.properties.content.guessMimetype(pdfFileName);
+							allegatoPdfNode.save();
+							protocolloLogger.info("Creazione pdf da tsd eseguita: "+allegatoPdfNode.name);
+						}
+					}
+				}
+
 			}
-			
-			
-			
-			
+
 		}
 	}
 }

@@ -53,6 +53,7 @@ if(username=="protocollo" || username=="admin"){
 			var numeroProtocollo = atto.get("numeroProtocollo");
 			var numeroRepertorio = atto.get("numeroRepertorio");
 			var dataRepertorio = atto.get("dataRepertorio");
+			var urlFascicolo = atto.get("urlFascicolo");
 			var classificazione = atto.get("classificazione");
 			var oggetto = atto.get("oggetto");
 			
@@ -138,8 +139,10 @@ if(username=="protocollo" || username=="admin"){
 				attoFolderNode.properties["crlatti:descrizioneIniziativa"] = descrizioneIniziativa;
 				attoFolderNode.properties["crlatti:assegnazione"] = assegnazione;
 				attoFolderNode.properties["crlatti:pubblico"] = true;
+				attoFolderNode.properties["crlatti:urlFascicolo"] = urlFascicolo;
 				
 				attoFolderNode.properties["crlatti:statoAtto"] = "Protocollato";
+				
 				
 				//dataRepertorio
 				if(checkIsNotNull(dataRepertorio)){

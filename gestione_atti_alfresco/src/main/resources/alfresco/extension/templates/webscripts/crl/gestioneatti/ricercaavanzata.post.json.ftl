@@ -9,6 +9,7 @@
 		    "nome" : "<#if atto.name?exists>${atto.name}<#else></#if>",
 			"tipo" : "<#if atto.tipo?exists>${atto.tipo}<#else></#if>",
 			"numeroAtto" : "${atto.numeroAtto?c}",
+			"estensioneAtto" : "<#if atto.estensioneAtto?exists>${atto.estensioneAtto}<#else></#if>",
 			"oggetto" : "<#if atto.oggetto?exists>${atto.oggetto}<#else></#if>",
 			"primoFirmatario" : "<#if atto.primoFirmatario?exists>${atto.primoFirmatario}<#else></#if>",
 			"elencoFirmatari" : "<#if atto.elencoFirmatario?exists>${atto.elencoFirmatari}<#else></#if>",

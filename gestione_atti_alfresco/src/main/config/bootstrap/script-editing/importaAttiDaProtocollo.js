@@ -30,6 +30,8 @@ function importaAtto(){
 	var assegnazione = document.properties["crlatti:assegnazione"];
 	var firmatari = document.properties["crlatti:firmatari"];
 	
+	var urlFascicolo = document.properties["crlatti:urlFascicolo"];
+	
 	var dataImportazione = new Date();
 	var mese = dataImportazione.getMonth() + 1;
 	var anno = dataImportazione.getFullYear();
@@ -132,6 +134,7 @@ function importaAtto(){
 			attoFolderNode.properties["crlatti:assegnazione"] = assegnazione;
 			attoFolderNode.properties["crlatti:dataIniziativa"] = document.properties["crlatti:dataIniziativa"];
 			attoFolderNode.properties["crlatti:dataRepertorio"] = document.properties["crlatti:dataRepertorio"];
+			attoFolderNode.properties["crlatti:urlFascicolo"] = document.properties["crlatti:urlFascicolo"];
 			
 			if(attoFolderNode.hasAspect("crlatti:dgr")){
 				attoFolderNode.properties["crlatti:numeroDgr"] = document.properties["crlatti:numeroDgr"];

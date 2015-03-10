@@ -490,7 +490,7 @@ if(checkIsNotNull(statiUtente)){
                     luceneQuery = verifyOR(luceneQuery);
                     luceneQuery += "(TYPE:\"crlatti:attoOrg\" AND @crlatti\\:statoAtto:\"Protocollato\")";
                     luceneQuery = verifyOR(luceneQuery); 
-                    luceneQuery += "(TYPE:\"crlatti:attoPda\" AND @crlatti\\:tipoIniziativa:\"05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA\" AND @crlatti\\:statoAtto:\"Protocollato\")"
+                    luceneQuery += "(TYPE:\"crlatti:attoPda\" AND @crlatti\\:tipoIniziativa:\"05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA\" AND @crlatti\\:statoAtto:\"Protocollato\")";
                 }
                 
 		luceneQuery += " ) ";
@@ -499,10 +499,21 @@ if(checkIsNotNull(statiUtente)){
 
 protocolloLogger.info(luceneQuery);
 
+var start = new Date().getTime();
+protocolloLogger.info("Ricerca - Lucene Query start:"+start);
+
 var attiResults = search.luceneSearch(luceneQuery);
+
+var end = new Date().getTime();
+var time = end - start;
+protocolloLogger.info("Ricerca - Lucene Query eseguita in: "+time);
+
 
 
 // logica per la creazione degli oggetti da visualizzare nei risultati
+var startDb = new Date().getTime();
+protocolloLogger.info("Ricerca - Database - start:"+startDb);
+
 
 var attiResultsObj = new Array();
 
@@ -525,6 +536,7 @@ for(var i=0; i< attiResults.length; i++){
 	attoResultObj.tipoIniziativa = attoResult.properties["crlatti:tipoIniziativa"];
 	attoResultObj.dataPresentazione = attoResult.properties["crlatti:dataIniziativa"];
 	attoResultObj.tipoChiusura = attoResult.properties["crlatti:tipoChiusura"];
+	attoResultObj.estensioneAtto = attoResult.properties["crlatti:estensioneAtto"];
 	
 		
 	var elencoFirmatariArray = attoResult.properties["crlatti:firmatari"];
@@ -539,7 +551,7 @@ for(var i=0; i< attiResults.length; i++){
 		}
 	}
 	
-	attoResultObj.elencoFirmatari = elencoFirmatariString
+	attoResultObj.elencoFirmatari = elencoFirmatariString;
 	
 	
 	var commissioniConsultiveArray = attoResult.properties["crlatti:commConsultiva"];
@@ -554,7 +566,7 @@ for(var i=0; i< attiResults.length; i++){
 		}
 	}
 	
-	attoResultObj.commissioniConsultive = commissioniConsultiveString
+	attoResultObj.commissioniConsultive = commissioniConsultiveString;
 	
 	var commissioniReferentiArray = attoResult.properties["crlatti:commReferente"];
 	var commissioniReferentiString = "";
@@ -667,5 +679,10 @@ for(var i=0; i< attiResults.length; i++){
 	attiResultsObj.push(attoResultObj);
 	
 }
+
+var endDb = new Date().getTime();
+var timeDb = endDb - startDb;
+protocolloLogger.info("Ricerca - Database - eseguita in :"+timeDb);
+
 
 model.atti = attiResultsObj;

@@ -46,6 +46,11 @@
 					<title>Numero repertorio</title>
 					<type>d:text</type>
 				</property>
+				<property name="crlatti:urlFascicolo">
+					<title>URL fascicolo</title>
+					<type>d:text</type>
+					<index enabled="false"/>
+				</property>
 				<property name="crlatti:dataRepertorio">
 					<title>Data repertorio</title>
 					<type>d:date</type>

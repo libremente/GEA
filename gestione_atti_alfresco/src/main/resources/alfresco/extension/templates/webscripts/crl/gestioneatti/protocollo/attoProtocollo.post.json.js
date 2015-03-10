@@ -29,6 +29,8 @@ if(username=="protocollo" || username=="admin"){
 	var mese = dataImportazione.getMonth() + 1;
 	var anno = dataImportazione.getFullYear();
 	
+	var urlFascicolo = atto.get("urlFascicolo");
+	
 	if(checkIsNotNull(legislatura)
 			&& checkIsNotNull(numeroAtto)
 			&& checkIsNotNull(tipoAtto)
@@ -130,6 +132,7 @@ if(username=="protocollo" || username=="admin"){
 		attoFolderNode.properties["crlatti:tipoIniziativa"] = tipoIniziativa;
 		attoFolderNode.properties["crlatti:descrizioneIniziativa"] = descrizioneIniziativa;
 		attoFolderNode.properties["crlatti:assegnazione"] = assegnazione;
+		attoFolderNode.properties["crlatti:urlFascicolo"] = urlFascicolo;
 		
 		//dataRepertorio
 		if(checkIsNotNull(dataRepertorio)){

@@ -55,6 +55,10 @@ if(username=="protocollo" || username=="admin"){
 			allegatoNode.properties.content.setEncoding("UTF-8");
 			allegatoNode.properties.content.guessMimetype(filename);
 			allegatoNode.save();
+			
+			
+			
+			
 					
 		} else {
 			status.code = 400;
