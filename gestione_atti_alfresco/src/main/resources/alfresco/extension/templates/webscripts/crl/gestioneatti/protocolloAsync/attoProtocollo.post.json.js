@@ -25,7 +25,7 @@ if(username=="protocollo" || username=="admin"){
 			estensioneAtto = atto.get("estensioneAtto");
 		}
 	
-	}catch(err){
+	}catch(err) {
 		// do nothing
 	}
 	
@@ -101,26 +101,17 @@ if(username=="protocollo" || username=="admin"){
 					nodeType = "crlatti:attoOrg";
 				} 
                                 
-                               if(nodeType != "crlatti:atto") {
-                               				
-				//verifica esistenza del folder dell'atto
-//				var attoPath = importProtocolloPath + "/cm:" + search.ISO9075Encode(numeroAtto+estensioneAtto);
-//				var attoLuceneQuery = "PATH:\""+attoPath+"\"";
-//				var attoResults = search.luceneSearch(attoLuceneQuery);
+                if(nodeType != "crlatti:atto") {
+                               			
 					
 				var attoFolderNode = null;
-                                var update = false;
+                var update = false;
                                 
-//				if(attoResults!=null && attoResults.length>0){
-//					//atto presente
-//					attoFolderNode = attoResults[0];
-//                                        update = true;
-//				} else {
 					//creazione del nodo del nuovo atto
 					var attoSpaceTemplateQuery = "PATH:\"/app:company_home/app:dictionary/app:space_templates/cm:Atto\"";
 					var attoSpaceTemplateNode = search.luceneSearch(attoSpaceTemplateQuery)[0];
 					attoFolderNode = attoSpaceTemplateNode.copy(importProtocolloFolderNode,true);
-				//}
+				
                                 
                                 // FIX PROTOCOLLO
 				attoFolderNode.name = numeroAtto + estensioneAtto + "_" + makeTimestamp();
@@ -232,75 +223,61 @@ if(username=="protocollo" || username=="admin"){
                                                             }
                                                         }
 								
-           						//for firmatari splitted	
-							for(var i=0; i<firmatariSplitted.length; i++){
-								if(firmatariSplitted[i].indexOf("(")==-1){
-									var firmatario = firmatariSplitted[i].trim();
-                                                                        						
-									//cerca il consigliere exact match - difficile
-									var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"*"+firmatario+"\"";
-									var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
-									var consigliereAnagraficaNode = null;
-									if(consigliereResults!=null && consigliereResults.length==1){
-										consigliereAnagraficaNode = consigliereResults[0];
-									} 
-									
-//									else {
-//										//cerca il consigliere per nome o per cognome
-//										var nomeCognomeConsigliereLuceneQuery = 
-//											"TYPE:\"crlatti:consigliereAnagrafica\" AND ( @crlatti\\:nomeConsigliereAnagrafica:\""+firmatario+"\" OR @crlatti\\:cognomeConsigliereAnagrafica:\""+firmatario+"\")";
-//										var nomeCognomeConsigliereResults = search.luceneSearch(nomeCognomeConsigliereLuceneQuery);
-//										if(nomeCognomeConsigliereResults!=null && nomeCognomeConsigliereResults.length==1){
-//											consigliereAnagraficaNode = nomeCognomeConsigliereResults[0];
-//										}
-//									}
-									
-									if(consigliereAnagraficaNode!=null){
-										var nomeConsigliere = consigliereAnagraficaNode.properties["crlatti:nomeConsigliereAnagrafica"];
-										var cognomeConsigliere = consigliereAnagraficaNode.properties["crlatti:cognomeConsigliereAnagrafica"];
-										var gruppoConsigliere = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
-										if(checkIsNotNull(nomeConsigliere) && checkIsNotNull(cognomeConsigliere)){
-											var nomeCompletoConsigliere = nomeConsigliere + " " + cognomeConsigliere;
-                                                                                        
-                                                                                        protocolloLogger.info("firmatario: [" + tipoAtto + " " + numeroAtto + estensioneAtto + "]: " + nomeCompletoConsigliere);
-                                                                                        
-											firmatariArray.push(nomeCompletoConsigliere);
-											
-											// creo i nodi di tipo firmatario
-											
-  											firmatarioNode = firmatariFolderNode.createNode(nomeCompletoConsigliere,"crlatti:firmatario");
-											
-											// inserimento proprietà per l'ordinamento 01,02,03 ecc...
-											if(i<10) {
-												firmatarioNode.properties["crlatti:numeroOrdinamento"] = "0"+i+"";
-											}else{
-												firmatarioNode.properties["crlatti:numeroOrdinamento"] = ""+i+"";
+           						//for firmatari splitted
+                            //modifica per gli atti di tipo PAR e PRE - non hanno firmatari
+                            if(tipoAtto!="PAR" && tipoAtto!="PRE") {
+								for(var i=0; i<firmatariSplitted.length; i++){
+									if(firmatariSplitted[i].indexOf("(")==-1){
+										var firmatario = firmatariSplitted[i].trim();
+	                                                                        						
+										//cerca il consigliere exact match - difficile
+										var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"*"+firmatario+"\"";
+										var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
+										var consigliereAnagraficaNode = null;
+										if(consigliereResults!=null && consigliereResults.length==1){
+											consigliereAnagraficaNode = consigliereResults[0];
+										}
+										
+										if(consigliereAnagraficaNode!=null){
+											var nomeConsigliere = consigliereAnagraficaNode.properties["crlatti:nomeConsigliereAnagrafica"];
+											var cognomeConsigliere = consigliereAnagraficaNode.properties["crlatti:cognomeConsigliereAnagrafica"];
+											var gruppoConsigliere = consigliereAnagraficaNode.properties["crlatti:gruppoConsigliereAnagrafica"];
+											if(checkIsNotNull(nomeConsigliere) && checkIsNotNull(cognomeConsigliere)){
+												var nomeCompletoConsigliere = nomeConsigliere + " " + cognomeConsigliere;
+	                                                                                        
+	                                                                                        protocolloLogger.info("firmatario: [" + tipoAtto + " " + numeroAtto + estensioneAtto + "]: " + nomeCompletoConsigliere);
+	                                                                                        
+												firmatariArray.push(nomeCompletoConsigliere);
+												
+												// creo i nodi di tipo firmatario
+												
+	  											firmatarioNode = firmatariFolderNode.createNode(nomeCompletoConsigliere,"crlatti:firmatario");
+												
+												// inserimento proprietà per l'ordinamento 01,02,03 ecc...
+												if(i<10) {
+													firmatarioNode.properties["crlatti:numeroOrdinamento"] = "0"+i+"";
+												}else{
+													firmatarioNode.properties["crlatti:numeroOrdinamento"] = ""+i+"";
+												}
+												
+												firmatarioNode.properties["crlatti:nomeFirmatario"] = ""+nomeCompletoConsigliere+"";
+												firmatarioNode.properties["crlatti:gruppoConsiliare"] = ""+gruppoConsigliere+"";
+												
+												if(i==0){
+													firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
+												}
+												firmatarioNode.content = nomeCompletoConsigliere;
+												firmatarioNode.save();
+												
+												
 											}
-											
-											firmatarioNode.properties["crlatti:nomeFirmatario"] = ""+nomeCompletoConsigliere+"";
-											firmatarioNode.properties["crlatti:gruppoConsiliare"] = ""+gruppoConsigliere+"";
-											
-											if(i==0){
-												firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
-											}
-											firmatarioNode.content = nomeCompletoConsigliere;
-											firmatarioNode.save();
-											
-											
 										}
 									}
-								}
-							} //for firmatari splitted
+								} //for firmatari splitted
+							} // check PAR e PRE
 						}
 					} 
-                                        //else {
-						
-						//firmatariArray.push(esibenteMittente);
-						//attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
-					//}
-					
-					// La proprietà firmatari viene valorizzata mediante una regola nella cartella firmatari dell'atto. 
-					// attoFolderNode.properties["crlatti:firmatari"] = firmatariArray;
+
 				}
 				
 				// creazione passaggio1 

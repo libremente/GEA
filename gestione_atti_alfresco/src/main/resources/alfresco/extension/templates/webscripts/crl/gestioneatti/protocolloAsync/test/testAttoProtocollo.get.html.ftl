@@ -14,7 +14,7 @@
 				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 		}
-		xmlhttp.open("POST", "http://localhost:8082/alfresco/service/crl/protocollo/atto?alf_ticket=${session.ticket}", true);
+		xmlhttp.open("POST", "http://dev.pronetics.it:8081/alfresco/service/crl/protocollo/atto?alf_ticket=${session.ticket}", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
 		xmlhttp.send(atto);
 	}
@@ -43,6 +43,7 @@
 		var assegnazione = currentForm.assegnazione.value;
 		
 		var esibenteMittente = currentForm.esibenteMittente.value;
+		var urlFascicolo = currentForm.urlFascicolo.value;
 		
 		var attoCustom = {
 		"atto" : {
@@ -63,7 +64,8 @@
 			"numeroDgr" : ""+numeroDgr+"",
 			"dataDgr" : ""+dataDgr+"",
 			"assegnazione" : ""+assegnazione+"",
-			"esibenteMittente" : ""+esibenteMittente+""
+			"esibenteMittente" : ""+esibenteMittente+"",
+			"urlFascicolo" : ""+urlFascicolo+""
 			}
 		};
 		
@@ -174,6 +176,10 @@
 		<tr>
 			<td>Esibente / Mittente:</td>
 			<td><input type="text" name="esibenteMittente" value="CONSIGLIERI REGIONALI: Pinco Pallino - Mario Rossi - Agostino Alloni - Alessandro Alfieri"></td>
+		</tr>
+		<tr>
+			<td>URL Fascicolo:</td>
+			<td><input type="text" name="urlFascicolo" value="/url/al/fascicolo"></td>
 		</tr>
 		<tr>
 		<td></td>

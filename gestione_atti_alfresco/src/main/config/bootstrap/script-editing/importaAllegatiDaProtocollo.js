@@ -22,17 +22,8 @@ function importaAllegato(){
 		
 	} else {
             
-                filename = filename.substring(filename.indexOf("_") + 1);
+        filename = filename.substring(filename.indexOf("_") + 1);
 		
-		var importProtocolloPath = 
-			"/app:company_home" +
-			"/cm:"+search.ISO9075Encode("CRL")+
-			"/cm:"+search.ISO9075Encode("Gestione Atti")+
-			"/cm:"+search.ISO9075Encode("Import protocollo")+
-			"/cm:"+search.ISO9075Encode("Allegati");
-		
-		var importLuceneQuery = "PATH:\""+importProtocolloPath+"\"";
-		var importFolderNode = search.luceneSearch(importLuceneQuery)[0];
 		
 		var attoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocolloAtto+"\"";
 		var attoResults = search.luceneSearch(attoLuceneQuery);
@@ -119,12 +110,13 @@ function importaAllegato(){
 					}
 					
 					document.move(allegatiFolderNode);
+					document.name = filename;
 					allegatoNode = document;
 					protocolloLogger.info(document.name+" spostato correttamente.");
 				}
 				
 				//gestione del file TSD
-				var newFileName = new String(allegatoNode.name);
+				var newFileName = new String(filename);
 				var filenameSplitted = newFileName.split(".");
 				if(filenameSplitted!=null && filenameSplitted.length>1){
 					var extension = filenameSplitted[1];
