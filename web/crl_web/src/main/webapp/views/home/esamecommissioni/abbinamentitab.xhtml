@@ -798,7 +798,8 @@
 				<f:setPropertyActionListener
 					target="#{searchAttoController.tipoAttoSelected}"
 					value="#{tipoAttoParam}" />
-				<h:outputText value="#{atto.numeroAtto}" />
+				<!-- SCRL-387 tolto atto.numeroAtto e messo atto.nome per visualizzare i BIS-->
+				<h:outputText value="#{atto.nome}" />
 			</h:commandLink>
 		</p:column>
 		<p:column headerText="N° Protocollo">

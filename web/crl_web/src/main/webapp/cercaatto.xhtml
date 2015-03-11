@@ -851,13 +851,7 @@
 		</p:panelGrid>
 
 
-
-
-
 		<!-- Pannello ricerca end -->
-
-
-
 
 		<p style="text-align: right">
 
@@ -871,11 +865,7 @@
 			value="#{searchAttoController.listAtti}" rows="10" paginator="true"
 			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
 			paginatorAlwaysVisible="false" paginatorPosition="bottom" draggableColumns="true">
-
-
-
-
-			<p:column sortBy="#{atto.tipo}">
+		<p:column sortBy="#{atto.tipo}">
 				<f:facet name="header">Tipo</f:facet>
 				<h:outputText value="#{atto.tipo}" />
 			</p:column>
@@ -889,7 +879,6 @@
 					update="listaAtti" disabled = "#{searchAttoController.isLinkAttoVisible(atto.stato)}">
 					<!-- SCRL-387 tolto atto.numeroAtto e messo atto.nome per visualizzare i BIS-->
 					<h:outputText value="#{atto.nome}" />
-
 				</p:commandLink>
 			</p:column>
 
