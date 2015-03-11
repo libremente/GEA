@@ -876,7 +876,7 @@
 				<c:set value="#{atto.tipo}" var="tipoAttoParam" />
 				<p:commandLink
 					action="#{searchAttoController.attoDetail(idAttoParam,tipoAttoParam)}"
-					update="listaAtti" disabled = "#{searchAttoController.isLinkAttoVisible(atto.stato)}">
+					update="listaAtti">
 					<!-- SCRL-387 tolto atto.numeroAtto e messo atto.nome per visualizzare i BIS-->
 					<h:outputText value="#{atto.nome}" />
 				</p:commandLink>
