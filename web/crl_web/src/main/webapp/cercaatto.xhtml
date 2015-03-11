@@ -836,7 +836,7 @@
 					<p:selectOneMenu id="listaLavoro"
 						value="#{searchAttoController.listaLavoro}">
 						<p:ajax event="change" update="listaAtti"
-							process="@this searchPanel"
+							process="@this searchPanel RicercaAvanzataPanel"
 							listener="#{searchAttoController.searchAtti}" />
 						<f:selectItem itemLabel=" In istruttoria"
 							itemValue="inlavorazione" />
@@ -886,8 +886,10 @@
 				<c:set value="#{atto.tipo}" var="tipoAttoParam" />
 				<p:commandLink
 					action="#{searchAttoController.attoDetail(idAttoParam,tipoAttoParam)}"
-					update="listaAtti">
-					<h:outputText value="#{atto.numeroAtto}#{atto.estensioneAtto}" />
+					update="listaAtti" disabled = "#{searchAttoController.isLinkAttoVisible(atto.stato)}">
+					<!-- SCRL-387 tolto atto.numeroAtto e messo atto.nome per visualizzare i BIS-->
+					<h:outputText value="#{atto.nome}" />
+
 				</p:commandLink>
 			</p:column>
 
