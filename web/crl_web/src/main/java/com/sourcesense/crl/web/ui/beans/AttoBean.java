@@ -641,14 +641,12 @@ public class AttoBean implements Serializable {
 	//SCRL-396 Gestione Fascicolo Archivistico
 	public String getUrlFascicolo() {
 		
-		String path = this.atto.getUrlFascicolo();
-		if (!path.isEmpty()){
+		String url = this.atto.getUrlFascicolo();
+		if (url != null && !url.isEmpty()){
 			String context = messageSource.getMessage("host.urlFascicolo", null, Locale.ITALY);
-			return  context.concat(path);
+			url = context.concat(url); 
 		}
-		else{
-			return null;
-		}
+		return url;
 	}
 
 	public void setUrlFascicolo(String urlFascicolo) {

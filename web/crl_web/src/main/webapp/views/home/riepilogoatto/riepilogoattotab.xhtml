@@ -39,7 +39,7 @@
 			</p:commandButton>
 			<!-- SCRL-396 fascicolo archivistico  -->
 			<p:button onclick="window.open('#{attoBean.urlFascicolo}'); return false;" value="Visualizza Fascicolo" 
-			rendered="#{not empty attoBean.urlFascicolo}"/>
+			rendered="#{not empty attoBean.urlFascicolo and attoBean.urlFascicolo ne null}"/>
 		</p:column>
 		
 	</p:row>
