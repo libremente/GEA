@@ -17,7 +17,7 @@ if(atto!=null
 	}
 	
 	var dataPresaInCaricoSplitted = dataPresaInCarico.split("-");
-	var dataPresaInCaricoParsed = new Date(dataPresaInCaricoSplitted[0],dataPresaInCaricoSplitted[1]-1,dataPresaInCaricoSplitted[2])	
+	var dataPresaInCaricoParsed = new Date(dataPresaInCaricoSplitted[0],dataPresaInCaricoSplitted[1]-1,dataPresaInCaricoSplitted[2]);
 
 	
 	attoFolderNode.properties["crlatti:statoAtto"] = stato;
