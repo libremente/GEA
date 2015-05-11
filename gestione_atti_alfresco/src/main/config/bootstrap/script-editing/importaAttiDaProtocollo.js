@@ -31,7 +31,9 @@ function importaAtto(){
 	var firmatari = document.properties["crlatti:firmatari"];
 	
 	var urlFascicolo = document.properties["crlatti:urlFascicolo"];
-	
+
+    //MG (rimuovere dopo che è stata confermata la risoluzione atti duplicati)
+    //   var dataImportazione = new Date(2015,6,1);
 	var dataImportazione = new Date();
 	var mese = dataImportazione.getMonth() + 1;
 	var anno = dataImportazione.getFullYear();
@@ -111,7 +113,9 @@ function importaAtto(){
 		
 		//verifica esistenza del folder dell'atto
 		var attoPath = tipoPath + "/cm:" + search.ISO9075Encode(numeroAtto+""+estensioneAtto);
-		var attoLuceneQuery = "PATH:\""+attoPath+"\""; // TYPE:"crlatti:attoPdl" AND @crlatti\:numeroAtto:"238" "
+		//var attoLuceneQuery = "PATH:\""+attoPath+"\""; // TYPE:"crlatti:attoPdl" AND @crlatti\:numeroAtto:"238" "
+        var attoLuceneQuery = ' +PATH:"'+legislaturaPath+'//*" +TYPE:"'+document.typeShort+'" +@crlAtti\\:numeroAtto:"'+numeroAtto+'" +@crlAtti\\:estensioneAtto:"'+estensioneAtto+'" ';
+        var attoResults = search.luceneSearch(attoLuceneQuery);
 		var attoResults = search.luceneSearch(attoLuceneQuery);
 		
 		//var esisteAttoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocollo+"\" AND @cm\\:name:\""+numeroAtto+"\"";
