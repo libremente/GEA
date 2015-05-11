@@ -41,6 +41,8 @@ function creaLuceneQueryCommissioniRuoli(luceneQuery, commissione, ruoloCommissi
 
 var atto = json.get("atto");
 
+var isHome = getObj(atto, "isHome");
+
 var tipoAtto = getObj(atto, "tipoAtto");
 var legislatura = getObj(atto, "legislatura");
 var stato = getObj(atto, "stato");
@@ -494,6 +496,31 @@ if(checkIsNotNull(statiUtente)){
                 }
                 
 		luceneQuery += " ) ";
+	}
+}
+
+if(isHome!=null && isHome!=undefined && isHome!=""){
+	if(isHome){
+		//condizione di recenti modifiche negli ultimi 7 giorni
+		var dataOggi = new Date();
+		dataOggi.setDate(-7);
+
+		var anno = dataOggi.getFullYear();
+		var mese = dataOggi.getMonth()+2;
+		var giorno = dataOggi.getDate();
+
+		if(mese<10){
+			mese = "0"+mese; 
+		}
+
+		if(giorno<10){
+			giorno = "0"+giorno;
+		}
+
+		var dataPartenzaQuery = anno+"\\-"+mese+"\\-"+giorno+"T00:00:00 TO NOW";
+		var ultimeModificheLuceneQuery = " AND @cm\\:modified:["+dataPartenzaQuery+"]";
+
+		luceneQuery = luceneQuery + ultimeModificheLuceneQuery;
 	}
 }
 

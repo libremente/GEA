@@ -9,6 +9,7 @@ import org.alfresco.service.cmr.repository.ContentService;
 import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.cmr.security.AuthorityService;
@@ -114,24 +115,24 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
             }
             
             /* Locate all committes nodes on Alfresco repository */
-            ResultSet committesNodesResultSet = searchService.query(Repository.getStoreRef(),
-                                                                SearchService.LANGUAGE_LUCENE,
-                                                                "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"");
-            logger.info("Trovate " + committesNodesResultSet.length() + " commissioni nel repository");
+//            ResultSet committesNodesResultSet = searchService.query(Repository.getStoreRef(),
+//                                                                SearchService.LANGUAGE_LUCENE,
+//                                                                "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"");
+//            logger.info("Trovate " + committesNodesResultSet.length() + " commissioni nel repository");
             
 
             /* Delete all committees on Alfresco repository */
-            if (committesNodesResultSet.length() > 0) {
-                for (int j=0; j<committesNodesResultSet.length(); j++) {
-                	
-                	String nomeCommissione = (String) nodeService.getProperty(committesNodesResultSet.getNodeRef(j), ContentModel.PROP_NAME);
-                	
-                	if(!nomeCommissione.equals("Commissione1") && !nomeCommissione.equals("Commissione2") && !nomeCommissione.equals("Commissione3")){
-	                    fileFolderService.delete(committesNodesResultSet.getNodeRef(j));
-	                    logger.info("Cancellato il nodo '" + nomeCommissione + "' dal repository");
-                	}
-                }
-            }
+//            if (committesNodesResultSet.length() > 0) {
+//                for (int j=0; j<committesNodesResultSet.length(); j++) {
+//                	
+//                	String nomeCommissione = (String) nodeService.getProperty(committesNodesResultSet.getNodeRef(j), ContentModel.PROP_NAME);
+//                	
+//                	if(!nomeCommissione.equals("Commissione1") && !nomeCommissione.equals("Commissione2") && !nomeCommissione.equals("Commissione3")){
+//	                    fileFolderService.delete(committesNodesResultSet.getNodeRef(j));
+//	                    logger.info("Cancellato il nodo '" + nomeCommissione + "' dal repository");
+//                	}
+//                }
+//            }
             
             /* Locate all group nodes on Alfresco repository */
             ResultSet groupNodesResultSet = searchService.query(Repository.getStoreRef(),
@@ -220,27 +221,31 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
                 	/* if committe does not exist...create it and insert the NodeRef in map */
                 	if(!committesMap.containsKey(committeName)){
                 		
-                		FileInfo committeFolderInfo = fileFolderService.create(committesFolderNodeResultSet.getNodeRef(0), 
-                				committeName, Constant.TYPE_COMMISSIONE_ANAGRAFICA);
+//                		FileInfo committeFolderInfo = fileFolderService.create(committesFolderNodeResultSet.getNodeRef(0), 
+//                				committeName, Constant.TYPE_COMMISSIONE_ANAGRAFICA);
                 		
-                	
-                		nodeService.setProperty(committeFolderInfo.getNodeRef(), Constant.PROP_NUMERO_ORDINAMENTO_COMMISSIONE_ANAGRAFICA, committeOrder);
+                		String luceneQueryCommissione = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/cm:"+ISO9075.encode(committeName)+"\"";
                 		
-                		
-                		/* create alfresco authority (group) named as "LEGISLATURA_NomeCommissione" if does not exist */
-                		String alfrescoGroupName = nomeLegislaturaCorrente + "_" + committeName;
-                		
-                		if(authorityService.getAuthorityNodeRef("GROUP_"+alfrescoGroupName)==null){
-                			authorityService.createAuthority(AuthorityType.GROUP, alfrescoGroupName);
-                			authorityService.addAuthority(Constant.GROUP_COMMISSIONI, "GROUP_"+alfrescoGroupName);
-                			logger.info("Creata l'authority '"+alfrescoGroupName+"'"); 
+                		ResultSet commissioneResults = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_LUCENE, luceneQueryCommissione);
+                		if(commissioneResults!=null && commissioneResults.length()>0){
+                			NodeRef commissioneCorrente = commissioneResults.getNodeRef(0);
+	                		nodeService.setProperty(commissioneCorrente, Constant.PROP_NUMERO_ORDINAMENTO_COMMISSIONE_ANAGRAFICA, committeOrder);
+	                		
+	                		
+	                		/* create alfresco authority (group) named as "LEGISLATURA_NomeCommissione" if does not exist */
+	                		String alfrescoGroupName = nomeLegislaturaCorrente + "_" + committeName;
+	                		
+	                		if(authorityService.getAuthorityNodeRef("GROUP_"+alfrescoGroupName)==null){
+	                			authorityService.createAuthority(AuthorityType.GROUP, alfrescoGroupName);
+	                			authorityService.addAuthority(Constant.GROUP_COMMISSIONI, "GROUP_"+alfrescoGroupName);
+	                			logger.info("Creata l'authority '"+alfrescoGroupName+"'"); 
+	                		}
+	                		
+
+	                		committesMap.put(committeName,commissioneCorrente);
+	                		 
+	                		logger.info("Aggiornato il nodo folder '"+commissioneCorrente+"' nel repository di Alfresco"); 
                 		}
-                		
-                		
-                		
-                		committesMap.put(committeName,committeFolderInfo.getNodeRef());
-                		 
-                		logger.info("Creato il nodo folder '"+committeFolderInfo.getName()+"' nel repository di Alfresco"); 
                 	}
                 	createCouncilor(councilor, committesMap.get(committeName), nomeLegislaturaCorrente); 
                 	

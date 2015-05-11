@@ -111,7 +111,7 @@ function importaAtto(){
 		
 		//verifica esistenza del folder dell'atto
 		var attoPath = tipoPath + "/cm:" + search.ISO9075Encode(numeroAtto+""+estensioneAtto);
-		var attoLuceneQuery = "PATH:\""+attoPath+"\"";
+		var attoLuceneQuery = "PATH:\""+attoPath+"\""; // TYPE:"crlatti:attoPdl" AND @crlatti\:numeroAtto:"238" "
 		var attoResults = search.luceneSearch(attoLuceneQuery);
 		
 		//var esisteAttoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocollo+"\" AND @cm\\:name:\""+numeroAtto+"\"";
@@ -132,13 +132,13 @@ function importaAtto(){
 			attoFolderNode.properties["crlatti:tipoIniziativa"] = tipoIniziativa;
 			attoFolderNode.properties["crlatti:descrizioneIniziativa"] = descrizioneIniziativa;
 			attoFolderNode.properties["crlatti:assegnazione"] = assegnazione;
-			attoFolderNode.properties["crlatti:dataIniziativa"] = document.properties["crlatti:dataIniziativa"];
-			attoFolderNode.properties["crlatti:dataRepertorio"] = document.properties["crlatti:dataRepertorio"];
-			attoFolderNode.properties["crlatti:urlFascicolo"] = document.properties["crlatti:urlFascicolo"];
+			attoFolderNode.properties["crlatti:dataIniziativa"] = dataIniziativa;
+			attoFolderNode.properties["crlatti:dataRepertorio"] = dataRepertorio;
+			attoFolderNode.properties["crlatti:urlFascicolo"] = urlFascicolo;
 			
 			if(attoFolderNode.hasAspect("crlatti:dgr")){
-				attoFolderNode.properties["crlatti:numeroDgr"] = document.properties["crlatti:numeroDgr"];
-				attoFolderNode.properties["crlatti:dataDgr"] = document.properties["crlatti:dataDgr"];
+				attoFolderNode.properties["crlatti:numeroDgr"] = numeroDgr;
+				attoFolderNode.properties["crlatti:dataDgr"] = dataDgr;
 			}
 			
 			if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){
@@ -155,7 +155,7 @@ function importaAtto(){
                                     }
 				}
 	
-				var listaFirmatari = document.properties["crlatti:firmatari"];
+				var listaFirmatari = firmatari;
 				
 				var childrenXPathQuery = "*[@cm:name=\""+nomeFirmatario+"\"]";
 				var firmatarioNode = firmatariFolderNode.childrenByXPath(childrenXPathQuery);

@@ -12,20 +12,12 @@
     var tipologia = attoProtocolloNode.properties["crlatti:tipologia"];
     var numeroProtocollo = attoProtocolloNode.properties["crlatti:numeroProtocollo"];
     var numeroRepertorio = attoProtocolloNode.properties["crlatti:numeroRepertorio"];
-    var dataRepertorio = attoProtocolloNode.properties["crlatti:dataRepertorio"];
+    
     var classificazione = attoProtocolloNode.properties["crlatti:classificazione"];
     var oggetto = attoProtocolloNode.properties["crlatti:oggetto"];
-	
     var tipoIniziativa = attoProtocolloNode.properties["crlatti:tipoIniziativa"];
-    var dataIniziativa = attoProtocolloNode.properties["crlatti:dataIniziativa"];
     var descrizioneIniziativa = attoProtocolloNode.properties["crlatti:descrizioneIniziativa"];
-	
-    var numeroDgr = attoProtocolloNode.properties["crlatti:numeroDgr"];
-    var dataDgr = attoProtocolloNode.properties["crlatti:dataDgr"];
-	
     var assegnazione = attoProtocolloNode.properties["crlatti:assegnazione"];
-    var firmatari = attoProtocolloNode.properties["crlatti:firmatari"];
-    
     var urlFascicolo = attoProtocolloNode.properties["crlatti:urlFascicolo"];
 	
     var dataImportazione = new Date();
@@ -70,7 +62,6 @@
         var attoLuceneQuery = "PATH:\""+attoPath+"\"";
         var attoResults = search.luceneSearch(attoLuceneQuery);     
   		
-        //var esisteAttoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocollo+"\" AND @cm\\:name:\""+numeroAtto+"\"";
 		
         var attoFolderNode = null;
         if(attoResults!=null && attoResults.length>0){
@@ -96,57 +87,6 @@
                 attoFolderNode.properties["crlatti:numeroDgr"] = attoProtocolloNode.properties["crlatti:numeroDgr"];
                 attoFolderNode.properties["crlatti:dataDgr"] = attoProtocolloNode.properties["crlatti:dataDgr"];
             }
-		
-            /*	
-            if(attoFolderNode.hasAspect("crlatti:firmatariAspect")){
-                // i firmatari verranno infasati con la rule sulla cartella firmatari
-                // attoFolderNode.properties["crlatti:firmatari"] = attoProtocolloNode.properties["crlatti:firmatari"];
-	
-                var childrenXPathQuery = "*[@cm:name='Firmatari']";
-                var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
-				
-                // elimino i firmatari esistenti
-                for each (firmatarioEsistente in firmatariFolderNode.children){
-                    if(firmatarioEsistente.isDocument) {
-                        firmatarioEsistente.remove();
-                    }
-                }
-	
-                var listaFirmatari = attoProtocolloNode.properties["crlatti:firmatari"];
-				
-                //var childrenXPathQuery = "*[@cm:name=\""+nomeFirmatario+"\"]";
-                //var firmatarioNode = firmatariFolderNode.childrenByXPath(childrenXPathQuery);
-				
-                // inserisco i nuovi firmatari
-                if(listaFirmatari!=null) {
-                    for(var k=0; k < listaFirmatari.length; k++) {
-						
-                        var nomeFirmatario = listaFirmatari[k];
-						
-                        var firmatarioNode = firmatariFolderNode.createNode(nomeFirmatario,"crlatti:firmatario");	
-		
-                        // inserimento proprietà per l'ordinamento 01,02,03 ecc...
-                        if(k<10) {
-                            firmatarioNode.properties["crlatti:numeroOrdinamento"] = "0"+k+"";
-                        }else{
-                            firmatarioNode.properties["crlatti:numeroOrdinamento"] = ""+k+"";
-                        }
-						
-                        // il primo firmatario della lista è contrassegnato come primo firmatario
-                        if(k==0){
-                            firmatarioNode.properties["crlatti:isPrimoFirmatario"] = true;
-                        }
-						
-                        // se non setto la proprietà content Share da un errore nella visualizzazione
-                        firmatarioNode.content = "";
-							
-                        firmatarioNode.save();
-						
-                    }
-                }
-	
-            }
-            */
 			
             attoFolderNode.save();
 			
@@ -249,15 +189,6 @@ function importaAllegato(allegatoProtocolloNode){
                 var fext = filename.substring(idx + 1);
                 filename = fname + fext.toLowerCase();
 		
-		var importProtocolloPath = 
-			"/app:company_home" +
-			"/cm:"+search.ISO9075Encode("CRL")+
-			"/cm:"+search.ISO9075Encode("Gestione Atti")+
-			"/cm:"+search.ISO9075Encode("Import protocollo")+
-			"/cm:"+search.ISO9075Encode("Allegati");
-		
-		var importLuceneQuery = "PATH:\""+importProtocolloPath+"\"";
-		var importFolderNode = search.luceneSearch(importLuceneQuery)[0];
 		
 		var attoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocolloAtto+"\"";
 		var attoResults = search.luceneSearch(attoLuceneQuery);
@@ -293,14 +224,14 @@ function importaAllegato(allegatoProtocolloNode){
 
 				
 				//prelevamento properties dall'allegato
-				var tipologia = allegatoProtocolloNode.properties["crlatti:tipologia"];
+				
 				var pubblico = allegatoProtocolloNode.properties["crlatti:pubblico"];
 				var provenienza = allegatoProtocolloNode.properties["crlatti:provenienza"];
 				var content = allegatoProtocolloNode.properties.content;
 				
 				//scrittura properties all'interno del nodo testo                 
-				//toRecordNode.properties["crlatti:tipologia"] = tipologia;
-                                attoRecordNode.properties["crlatti:tipologia"] = "testo_atto";
+				
+                attoRecordNode.properties["crlatti:tipologia"] = "testo_atto";
 				attoRecordNode.properties["crlatti:pubblico"] = pubblico;
 				attoRecordNode.properties["crlatti:provenienza"] = provenienza;
 				attoRecordNode.properties.content.write(content);
@@ -311,7 +242,7 @@ function importaAllegato(allegatoProtocolloNode){
 				//rimozione del vecchio allegato che adesso è presente come testo dell'atto
 				allegatoProtocolloNode.remove();
 				
-			}else{
+			} else {
 				
 				var allegatiFolderNode = attoFolderNode.childrenByXPath("*[@cm:name='Allegati']")[0];
 				
@@ -344,8 +275,8 @@ function importaAllegato(allegatoProtocolloNode){
 					
 					allegatoProtocolloNode.move(allegatiFolderNode);
                                         
-                                        allegatoProtocolloNode.name = filename;
-                                        allegatoProtocolloNode.save();
+                    allegatoProtocolloNode.name = filename;
+                    allegatoProtocolloNode.save();
 				}
 				
 				
@@ -362,12 +293,6 @@ function importaAllegato(allegatoProtocolloNode){
 
 //Script per l'importazione degli atti verso il sistema di Protocollo
 protocolloLogger.info("Importazione Atti da Sistema di Protocollo avviato...");
-
-//var importFolderXPathQuery = "*[@cm:name='Import']";
-//var importFolderNode = companyhome.childrenByXPath(importFolderXPathQuery)[0];
-//
-//var gestioneAttiFolderXPathQuery = "*[@cm:name='Gestione Atti']";
-//var gestioneAttiFolderNode = importFolderNode.childrenByXPath(gestioneAttiFolderXPathQuery)[0];
 
 
 var gestioneAttiProtocolloPath = "/app:company_home"+
@@ -403,12 +328,6 @@ protocolloLogger.info("Importazione Atti terminata. Elementi importati: "+count)
 //Script per l'importazione degli allegati verso il sistema di Protocollo
 protocolloLogger.info("Importazione Allegati da Sistema di Protocollo avviato...");
 
-//var importFolderXPathQuery = "*[@cm:name='Import']";
-//var importFolderNode = companyhome.childrenByXPath(importFolderXPathQuery)[0];
-//
-//var gestioneAttiFolderXPathQuery = "*[@cm:name='Gestione Atti']";
-//var gestioneAttiFolderNode = importFolderNode.childrenByXPath(gestioneAttiFolderXPathQuery)[0];
-
 
 var gestioneAllegatiProtocolloPath = "/app:company_home"+
     "/cm:"+search.ISO9075Encode("Import")+
@@ -416,10 +335,10 @@ var gestioneAllegatiProtocolloPath = "/app:company_home"+
     "/cm:"+search.ISO9075Encode("Protocollo") +
     "/cm:"+search.ISO9075Encode("Allegati");
 
-var gestioneAllegatiProtocolloQuery = "PATH:\""+gestioneAllegatiProtocolloPath+"/*\" AND TYPE:\"crlatti:allegato\" AND ASPECT:\"crlatti:importatoDaProtocollo\""; //ASPECT: importatoDaprotocollo ASPECT:"crlatti:importatoDaProtocollo"
+var gestioneAllegatiProtocolloQuery = "PATH:\""+gestioneAllegatiProtocolloPath+"/*\" AND TYPE:\"crlatti:allegato\" AND ASPECT:\"crlatti:importatoDaProtocollo\"";
 var allegatiProtocolloList = search.luceneSearch(gestioneAllegatiProtocolloQuery, "cm:name", true);
 
-protocolloLogger.info("Inizio importazione allegati. Elementi da importare: "+allegatiProtocolloList.length);
+protocolloLogger.info("Inizio importazione allegati. Elementi da processare: "+allegatiProtocolloList.length);
 
 var count = 0;
 
@@ -428,15 +347,14 @@ for(var i=0; i<allegatiProtocolloList.length; i++){
     var allegatoProtocollo =  allegatiProtocolloList[i];
     var allegatoName = allegatoProtocollo.name;
 	
-    //xmlFile.move(attiParsedFolderNode);
     importaAllegato(allegatoProtocollo);
     
-    protocolloLogger.info("Importato il file "+allegatoName);
+    protocolloLogger.info("Processato l'allegato "+allegatoName);
     count++;
 	
 }
 
-protocolloLogger.info("Importazione Allegati terminata. Elementi importati: "+count);
+protocolloLogger.info("Importazione Allegati terminata. Elementi processati: "+count);
 
 
 
