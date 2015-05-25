@@ -102,7 +102,7 @@ function importaAllegato(){
 					document.remove();
 					
 					
-					protocolloLogger.info(document.name+" eliminato correttamente.");
+					protocolloLogger.info(filename+" eliminato correttamente.");
 				} else {
 					
 					if(document.hasAspect("crlatti:importatoDaProtocollo")){
@@ -112,7 +112,7 @@ function importaAllegato(){
 					document.move(allegatiFolderNode);
 					document.name = filename;
 					allegatoNode = document;
-					protocolloLogger.info(document.name+" spostato correttamente.");
+					protocolloLogger.info(filename+" spostato correttamente.");
 				}
 				
 				//gestione del file TSD
