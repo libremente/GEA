@@ -1,3 +1,4 @@
+/*
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
 var legislaturaCorrente = getLegislaturaCorrente();
@@ -38,3 +39,6 @@ function contains(a, obj) {
     }
     return false;
 }
+*/
+
+model.tipiAtto = ["ITR", "IQT", "ITL", "MOZ", "ODG", "RIS"].sort();
