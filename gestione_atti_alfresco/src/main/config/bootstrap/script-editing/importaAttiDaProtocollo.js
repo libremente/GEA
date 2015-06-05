@@ -116,8 +116,7 @@ function importaAtto(){
 		//var attoLuceneQuery = "PATH:\""+attoPath+"\""; // TYPE:"crlatti:attoPdl" AND @crlatti\:numeroAtto:"238" "
         var attoLuceneQuery = ' +PATH:"'+legislaturaPath+'//*" +TYPE:"'+document.typeShort+'" +@crlAtti\\:numeroAtto:"'+numeroAtto+'" +@crlAtti\\:estensioneAtto:"'+estensioneAtto+'" ';
         var attoResults = search.luceneSearch(attoLuceneQuery);
-		var attoResults = search.luceneSearch(attoLuceneQuery);
-		
+
 		//var esisteAttoLuceneQuery = "TYPE:\"crlatti:atto\" AND @crlatti\\:idProtocollo:\""+idProtocollo+"\" AND @cm\\:name:\""+numeroAtto+"\"";
 		
 		var attoFolderNode = null;
