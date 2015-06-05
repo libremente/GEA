@@ -136,8 +136,7 @@ if(checkIsNotNull(id)){
                             var aulaFolderXpathQuery = "*[@cm:name='Aula']";
                             var aulaFolderNode = passaggioFolderNode.childrenByXPath(aulaFolderXpathQuery)[0];
 
-                            //TODO: ottimizzare: basta cercare sotto Atti/*[@crlatti:tipologia='allegato_aula'] ma non funziona
-                            var allegatoAulaQuery = "*/*[@crlatti:tipologia='allegato_aula']";
+                            var allegatoAulaQuery = "*[@cm:name='Allegati']/*[@crlatti:tipologia='allegato_aula']"
                             var allegatoAula = aulaFolderNode.childrenByXPath(allegatoAulaQuery)[0];
                             sedutaResultObj.downloadUrl = allegatoAula.downloadUrl;
                         }
