@@ -139,6 +139,10 @@ if(checkIsNotNull(id)){
                             var allegatoAulaQuery = "*[@cm:name='Allegati']/*[@crlatti:tipologia='allegato_aula']"
                             var allegatoAula = aulaFolderNode.childrenByXPath(allegatoAulaQuery)[0];
                             if (allegatoAula){
+                                sedutaResultObj.idVerbale = allegatoAula.nodeRef.toString();
+                                sedutaResultObj.nomeVerbale = allegatoAula.name;
+                                sedutaResultObj.mimetypeVerbale = allegatoAula.mimetype;
+                                sedutaResultObj.pubblico = allegatoAula.properties["crlatti:pubblico"];
                                 sedutaResultObj.downloadUrl = allegatoAula.downloadUrl;
                             }
                         }
