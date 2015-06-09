@@ -116,7 +116,7 @@ var dataDgr = getObj(atto, "dataDGR");
 var numeroFascicolo = getObj(atto, "numeroRepertorio");
 var rinviato = getObj(atto, "rinviato");
 
-var luceneQuery = "PATH:\"/app:company_home/cm:CRL//*\" ";
+var luceneQuery = " ";
 
 var tipoAttoString = ""+tipoAtto+"";
 var type = "crlatti:atto";
@@ -163,7 +163,7 @@ if(checkIsNotNull(tipoAttoString)){
 	}
 }
 
-luceneQuery += "AND TYPE:\""+type+"\"";
+luceneQuery += " TYPE:\""+type+"\"";
 
 if(type=="crlatti:atto" || type=="crlatti:attoEac"){
 	
