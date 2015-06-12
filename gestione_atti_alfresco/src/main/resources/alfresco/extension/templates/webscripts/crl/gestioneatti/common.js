@@ -256,3 +256,19 @@ function makeTimestamp() {
     curr_mill = curr_date.getMilliseconds();
     return "" + curr_year + addOneZero(curr_month) + addOneZero(curr_day) + addOneZero(curr_hour) + addOneZero(curr_min) + addOneZero(curr_sec) + addTwoZero(curr_mill);
 }
+
+/*
+    lucene path queries are deadly slow
+    if attributes filter most of the documents and path only needs to filter few ones, this function's faster
+ */
+function luceneSearch(query, pathPrefix){
+    var tmpRes = search.luceneSearch(attoLuceneQuery);
+    res = new Array();
+    for (var i=0; i<tmpRes.length; i++){
+        var doc = tmpRes[i];
+        if (doc.displayPath.startsWith(pathPrefix)){
+            res.push(doc);
+        }
+    }
+    return res;
+}
