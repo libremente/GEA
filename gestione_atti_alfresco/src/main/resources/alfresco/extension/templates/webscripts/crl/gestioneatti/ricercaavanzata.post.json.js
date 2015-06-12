@@ -547,6 +547,15 @@ var attiResultsObj = new Array();
 for(var i=0; i< attiResults.length; i++){
 	
 	var attoResult = attiResults[i];
+
+    /*
+     A quick way to retrieve only documents under this folder
+     a lucene path query is much slower when the document to filter are few as in this case
+     */
+    if (!attoResult.displayPath.startsWith("/Company Home/CRL")){
+        continue;
+    }
+
 	var attoResultObj = new Object();
 	
 	attoResultObj.id = attoResult.nodeRef.toString();
