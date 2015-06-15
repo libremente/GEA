@@ -311,7 +311,7 @@ if (username == "protocollo" || username == "admin") {
                                             }
 
                                             //cerca il consigliere exact match - difficile
-                                            var consigliereLuceneQuery = "PATH:\"" + firmatariPath + "\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:" + firmatario + "\"";
+                                            var consigliereLuceneQuery = "PATH:\"" + firmatariPath + "\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"" + firmatario + "\"";
                                             var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
                                             var consigliereAnagraficaNode = null;
                                             if (consigliereResults != null && consigliereResults.length == 1) {

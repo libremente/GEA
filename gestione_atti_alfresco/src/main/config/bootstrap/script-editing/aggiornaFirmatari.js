@@ -37,7 +37,7 @@ for (var i=0; i<firmatari.length; i++) {
 		
 		// per ridondare il gruppo del firmatario sull'atto (ricerca) lo prelevo dall'anagrafica
 		
-		var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"*"+firmatari[i].name+"\"";
+		var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\""+firmatari[i].name+"\"";
 		var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
 		if(consigliereResults!=null && consigliereResults.length==1){
 			consigliereAnagraficaNode = consigliereResults[0];
@@ -54,7 +54,7 @@ for (var i=0; i<firmatari.length; i++) {
 	if(firmatari[i].properties["crlatti:dataRitiro"]==null || firmatari[i].properties["crlatti:dataRitiro"]==undefined ){
 		firmatariAtto.push(firmatari[i].name);
 		
-		var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\"*"+firmatari[i].name+"\"";
+		var consigliereLuceneQuery = "PATH:\""+firmatariPath+"\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @cm\\:name:\""+firmatari[i].name+"\"";
 		var consigliereResults = search.luceneSearch(consigliereLuceneQuery);
 		if(consigliereResults!=null && consigliereResults.length==1){
 			consigliereAnagraficaNode = consigliereResults[0];
