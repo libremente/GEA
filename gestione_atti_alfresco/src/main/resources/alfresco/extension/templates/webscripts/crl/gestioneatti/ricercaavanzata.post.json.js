@@ -544,6 +544,8 @@ protocolloLogger.info("Ricerca - Database - start:"+startDb);
 
 var attiResultsObj = new Array();
 
+var commissioniAbbinamentiDuration = 0;
+
 for(var i=0; i< attiResults.length; i++){
 	
 	var attoResult = attiResults[i];
@@ -634,10 +636,11 @@ for(var i=0; i< attiResults.length; i++){
         
         attoResultObj.commissioniNonConsultive = commissioniReferentiString;
 
+    var startTsCommissioniAbbinamenti = Date.now();
 	if(attoResult.typeShort != "crlatti:attoMis" && attoResult.typeShort != "crlatti:attoEac") {
-		
+		//MG
 		var passaggioFolderNode = getLastPassaggio(attoResult);
-		
+
 		var abbinamentiFolderXpathQuery = "*[@cm:name='Abbinamenti']";
 		var abbinamentiFolderNode = passaggioFolderNode.childrenByXPath(abbinamentiFolderXpathQuery)[0];
 		var abbinamenti = abbinamentiFolderNode.getChildAssocsByType("crlatti:abbinamento");
@@ -653,7 +656,8 @@ for(var i=0; i< attiResults.length; i++){
 		
 		attoResultObj.elencoAbbinamenti = abbinamentiString;
 		
-		
+		//MG
+
 		var commissioniFolderXpathQuery = "*[@cm:name='Commissioni']";
 		var commissioniFolderNode = passaggioFolderNode.childrenByXPath(commissioniFolderXpathQuery)[0];
 		var commissioni = commissioniFolderNode.getChildAssocsByType("crlatti:commissione");
@@ -669,7 +673,8 @@ for(var i=0; i< attiResults.length; i++){
 				attoResultObj.esitoVotazioneCommissioneReferente = commissioneCorrente.properties["crlatti:esitoVotazioneCommissione"];
 				attoResultObj.dataVotazioneCommissione = commissioneCorrente.properties["crlatti:dataVotazioneCommissione"];
 				attoResultObj.dataRichiestaIscrizioneAula = commissioneCorrente.properties["crlatti:dataRichiestaIscrizioneAula"];
-			
+
+                //MG
 				var relatoriXPathQuery = "*[@cm:name='Relatori']";
 				var relatoriCommissioneFolderNode = commissioneCorrente.childrenByXPath(relatoriXPathQuery)[0];
 				
@@ -681,10 +686,10 @@ for(var i=0; i< attiResults.length; i++){
                                 }
 			}
 		}
-		
+
 		
 	}
-	
+    commissioniAbbinamentiDuration += Date.now()-startTsCommissioniAbbinamenti;
 	
 
 	attoResultObj.dataScadenza = attoResult.properties["crlatti:dataScadenza"];
@@ -703,7 +708,7 @@ for(var i=0; i< attiResults.length; i++){
 	
 	attoResultObj.pubblico = attoResult.properties["crlatti:pubblico"];
 	
-	
+	//MG
 	var noteGeneraliFilename = "Note Generali.txt";
 	var noteGeneraliXPathQuery = "*[@cm:name='"+noteGeneraliFilename+"']";
 	var noteGenerali = attoResult.childrenByXPath(noteGeneraliXPathQuery)[0];
@@ -719,6 +724,6 @@ for(var i=0; i< attiResults.length; i++){
 var endDb = new Date().getTime();
 var timeDb = endDb - startDb;
 protocolloLogger.info("Ricerca - Database - eseguita in :"+timeDb);
-
+logger.log("output commissioni e abbinamenti: "+commissioniAbbinamentiDuration+"ms");
 
 model.atti = attiResultsObj;

@@ -102,7 +102,8 @@ function getPassaggioTarget(json, passaggio){
 }
 
 function getLastPassaggio(attoNodeRef){
-	
+	var startTs = Date.now();
+
 	var passaggio;
 	
 	var passaggiXPathQuery = "*[@cm:name='Passaggi']";
@@ -123,7 +124,8 @@ function getLastPassaggio(attoNodeRef){
 			passaggio = listaPassaggiFolderNode[i] ;
 		}
 	}
-		
+
+    logger.log("getLastPassaggio(), duration:"+(Date.now()-startTs)+"ms");
 	return passaggio;
 }
 
