@@ -251,7 +251,7 @@ if (username == "protocollo" || username == "admin") {
                     var firmatariCreationTs = new Date().getTime();
                     //gestione tipo iniziativa
                     if (checkIsNotNull(esibenteMittente)) {
-                        var firmatariArray = new Array();
+                        //var firmatariArray = new Array();
                         if (tipoIniziativa == "01_ATTO DI INIZIATIVA CONSILIARE") {
 
                             protocolloLogger.info("esibenteMittente [" + tipoAtto + " " + numeroAtto + estensioneAtto + "]: " + esibenteMittente);
@@ -290,14 +290,14 @@ if (username == "protocollo" || username == "admin") {
                                 var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
 
                                 // elimino i firmatari eventualmente presenti per l'update
-                                if (firmatariSplitted.length > 0) {
+                                /*if (firmatariSplitted.length > 0) {
                                     var firmatari = firmatariFolderNode.children;
                                     for (var f = 0; f < firmatari.length; f++) {
                                         if (firmatari[f].isDocument) {
                                             firmatari[f].remove();
                                         }
                                     }
-                                }
+                                }*/
 
                                 //for firmatari splitted
                                 //modifica per gli atti di tipo PAR e PRE - non hanno firmatari
@@ -327,10 +327,24 @@ if (username == "protocollo" || username == "admin") {
 
                                                     protocolloLogger.info("firmatario: [" + tipoAtto + " " + numeroAtto + estensioneAtto + "]: " + nomeCompletoConsigliere);
 
-                                                    firmatariArray.push(nomeCompletoConsigliere);
+                                                    //firmatariArray.push(nomeCompletoConsigliere);
 
                                                     // creo i nodi di tipo firmatario
-
+                                                    /*
+                                                        verifico se il nodo era stato cancellato
+                                                        attoFolderNode.properties["crlatti:firmatariDeletedWithGea"]
+                                                        se si
+                                                        continue;
+                                                     */
+                                                    firmatarioNode = firmatariFolderNode.childByNamePath(nomeCompletoConsigliere);
+                                                    if (firmatarioNode){
+                                                        /*
+                                                            verifico se il nodo era stato modificato con gea
+                                                            se si
+                                                            continue;
+                                                         */
+                                                        firmatarioNode.remove();
+                                                    }
                                                     firmatarioNode = firmatariFolderNode.createNode(nomeCompletoConsigliere, "crlatti:firmatario");
 
                                                     // inserimento proprietà per l'ordinamento 01,02,03 ecc...
