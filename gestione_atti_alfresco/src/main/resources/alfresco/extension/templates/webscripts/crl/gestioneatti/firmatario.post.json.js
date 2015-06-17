@@ -1,12 +1,15 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
 var jsonFirmatario = filterParam(json.get("firmatario"));
-var idAtto = filterParam(jsonFirmatario.get("idAtto"));
-var descrizione = filterParam(jsonFirmatario.get("descrizione"));
-var gruppoConsiliare = filterParam(jsonFirmatario.get("gruppoConsiliare"));
-var dataFirma = filterParam(jsonFirmatario.get("dataFirma"));
-var dataRitiro = filterParam(jsonFirmatario.get("dataRitiro"));
-var primoFirmatario = filterParam(jsonFirmatario.get("primoFirmatario"));
+/*
+    concatenate +"" to force the creation of a javascript string (json.get -> java String which doesn't always behave as expected)
+*/
+var idAtto = filterParam(jsonFirmatario.get("idAtto")+"");
+var descrizione = filterParam(jsonFirmatario.get("descrizione")+"");
+var gruppoConsiliare = filterParam(jsonFirmatario.get("gruppoConsiliare")+"");
+var dataFirma = filterParam(jsonFirmatario.get("dataFirma")+"");
+var dataRitiro = filterParam(jsonFirmatario.get("dataRitiro")+"");
+var primoFirmatario = filterParam(jsonFirmatario.get("primoFirmatario")+"");
 var firmatarioNode = null;
 
 if(checkIsNotNull(jsonFirmatario)
@@ -56,7 +59,14 @@ if(checkIsNotNull(jsonFirmatario)
 	firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
 	firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
 	firmatarioNode.save();
-	
+
+    var firmatariDeleted = attoFolderNode.properties["crlatti:firmatariDeleted"];
+    var idx = firmatariDeleted.indexOf(descrizione);
+    if (idx != -1){
+        firmatariDeleted.splice(idx,1);
+        attoFolderNode.properties["crlatti:firmatariDeleted"] = firmatariDeleted;
+        attoFolderNode.save();
+    }
 	
 	attoFolderNode.properties["crlatti:statoExportAttiIndirizzo"]="UPDATE";
 	

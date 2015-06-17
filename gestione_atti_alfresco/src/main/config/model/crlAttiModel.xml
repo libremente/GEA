@@ -298,7 +298,12 @@
                                <property name="crlatti:noteCollegamenti">
 					<title>Note collegamenti</title>
 					<type>d:text</type>
-				</property> 
+				</property>
+        <property name="crlatti:firmatariDeleted">
+          <title>Firmatari cancellati in GEA</title>
+          <type>d:text</type>
+          <multiple>true</multiple>
+        </property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:pubblicabile</aspect>
@@ -809,6 +814,10 @@
 					<title>Primo firmatario</title>
 					<type>d:boolean</type>
 				</property>
+        <property name="crlatti:isfirmatarioModified">
+          <title>Firmatario modificato in GEA</title>
+          <type>d:boolean</type>
+        </property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:ordinamentoAspect</aspect>
@@ -1496,7 +1505,7 @@
 			<title>Ammissibilità base</title>
 			<properties>
 				<property name="crlatti:ammissibilitaValutazione">
-					<title>Valutazione ammissibilità</title>
+					<title>Valutazione ammissibilita</title>
 					<type>d:text</type>
 				</property>
 				<property name="crlatti:ammissibilitaDataRichiestaInformazioni">
@@ -1508,7 +1517,7 @@
 					<type>d:date</type>
 				</property>
 				<property name="crlatti:ammissibilitaNote">
-					<title>Note ammissibilità</title>
+					<title>Note ammissibilita</title>
 					<type>d:text</type>
 				</property>
 			</properties>

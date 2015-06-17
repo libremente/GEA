@@ -290,14 +290,14 @@ if (username == "protocollo" || username == "admin") {
                                 var firmatariFolderNode = attoFolderNode.childrenByXPath(childrenXPathQuery)[0];
 
                                 // elimino i firmatari eventualmente presenti per l'update
-                                /*if (firmatariSplitted.length > 0) {
+                                if (firmatariSplitted.length > 0) {
                                     var firmatari = firmatariFolderNode.children;
                                     for (var f = 0; f < firmatari.length; f++) {
-                                        if (firmatari[f].isDocument) {
+                                        if (firmatari[f].typeShort == "crlatti:firmatario" && !firmatari[f].properties["crlatti:isfirmatarioModified"] ) {
                                             firmatari[f].remove();
                                         }
                                     }
-                                }*/
+                                }
 
                                 //for firmatari splitted
                                 //modifica per gli atti di tipo PAR e PRE - non hanno firmatari
@@ -335,15 +335,18 @@ if (username == "protocollo" || username == "admin") {
                                                         attoFolderNode.properties["crlatti:firmatariDeletedWithGea"]
                                                         se si
                                                         continue;
+
+                                                        FIXME: se viene cancellato con gea bisogna reinserirlo con gea?
                                                      */
+                                                    var firmatariDeleted = attoFolderNode.properties["crlatti:firmatariDeleted"];
+                                                    if (firmatariDeleted && (firmatariDeleted.indexOf(nomeCompletoConsigliere) != -1) ){
+                                                        continue;
+                                                    }
                                                     firmatarioNode = firmatariFolderNode.childByNamePath(nomeCompletoConsigliere);
                                                     if (firmatarioNode){
-                                                        /*
-                                                            verifico se il nodo era stato modificato con gea
-                                                            se si
+                                                        if (firmatarioNode.properties["crlatti:isfirmatarioModified"]){
                                                             continue;
-                                                         */
-                                                        firmatarioNode.remove();
+                                                        }
                                                     }
                                                     firmatarioNode = firmatariFolderNode.createNode(nomeCompletoConsigliere, "crlatti:firmatario");
 

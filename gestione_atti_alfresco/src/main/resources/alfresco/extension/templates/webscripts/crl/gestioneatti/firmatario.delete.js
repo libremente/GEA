@@ -4,6 +4,7 @@ var id = args.id;
 
 if(checkIsNotNull(id)){
 	var firmatarioNode = utils.getNodeFromString(id);
+    var firmatarioName = firmatarioNode.name;
 	var firmatariSpace = firmatarioNode.parent;
 	firmatarioNode.remove();
 	
@@ -22,6 +23,14 @@ if(checkIsNotNull(id)){
 	}
 	var attoNode = firmatariSpace.parent;
 	attoNode.properties["crlatti:firmatari"] = firmatariAtto;
+    var firmatariDeleted = attoNode.properties["crlatti:firmatariDeleted"];
+    if (!firmatariDeleted){
+        firmatariDeleted = [];
+    }
+    if (firmatariDeleted.indexOf(firmatarioName) == -1){
+        firmatariDeleted.push(firmatarioName);
+    }
+    attoNode.properties["crlatti:firmatariDeleted"] = firmatariDeleted;
 	attoNode.save();
 	
 	
