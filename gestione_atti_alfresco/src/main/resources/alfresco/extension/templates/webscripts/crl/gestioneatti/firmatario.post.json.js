@@ -58,6 +58,7 @@ if(checkIsNotNull(jsonFirmatario)
 	firmatarioNode.properties["crlatti:dataRitiro"] = dataRitiroParsed;
 	firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
 	firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
+    firmatarioNode.properties["crlatti:isfirmatarioModified"] = true;
 	firmatarioNode.save();
 
     var firmatariDeleted = attoFolderNode.properties["crlatti:firmatariDeleted"];
