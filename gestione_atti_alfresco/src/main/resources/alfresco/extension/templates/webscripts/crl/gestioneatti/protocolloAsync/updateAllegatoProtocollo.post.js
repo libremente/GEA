@@ -53,7 +53,7 @@ if(username=="protocollo" || username=="admin"){
                         
 		}
                  
-        var importProtocolloPath = 
+        /*var importProtocolloPath =
 		"/app:company_home" +
 		"/cm:"+search.ISO9075Encode("Import")+
 		"/cm:"+search.ISO9075Encode("Gestione Atti")+
@@ -61,8 +61,9 @@ if(username=="protocollo" || username=="admin"){
 		"/cm:"+search.ISO9075Encode("Allegati");
 		
 		var importLuceneQuery = "PATH:\""+importProtocolloPath+"\"";
-		var importFolderNode = search.luceneSearch(importLuceneQuery)[0];
-		
+		var importFolderNode = search.luceneSearch(importLuceneQuery)[0];*/
+        var importFolderNode = companyhome.childByNamePath("Import/Gestione Atti/Protocollo/Allegati");
+
         filename = "" + makeTimestamp() + "_" + filename;
         
 		var allegatoNode = importFolderNode.createNode(filename,"crlatti:allegato");
