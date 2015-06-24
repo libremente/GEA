@@ -31,11 +31,11 @@ var firmatariPath = "/app:company_home" +
     "/cm:"+search.ISO9075Encode("Anagrafica") +
     "/cm:"+search.ISO9075Encode("ConsiglieriAttivi") +"/*";
 
-var firmatariOriginari = [];
-var firmatariCorrenti = [];
-var gruppoFirmatari = [];
-
 for (var i = 0; i < data.length; i++) {
+    var firmatariOriginari = [];
+    var firmatariCorrenti = [];
+    var gruppoFirmatari = [];
+
     var atto = data[i];
     var attoPath = atto.atto.replace("/Company Home/", "");
     var attoNode = companyhome.childByNamePath(attoPath);
