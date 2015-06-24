@@ -3,7 +3,7 @@
   <description>Protocollo - crea o aggiorna i metadati di un nodo atto</description>
   <url>/crl/protocollo/synch/atto</url>
   <format default="json"/>
-  <authentication>admin</authentication>
+  <authentication>user</authentication>
   <transaction>required</transaction>
   <family>CRL - Gestione Atti - Protocollo - Synch</family>
 </webscript>
