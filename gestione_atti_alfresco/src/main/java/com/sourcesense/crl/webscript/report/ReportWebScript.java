@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentService;
@@ -37,10 +38,13 @@ public class ReportWebScript extends AbstractWebScript {
 	private static Log logger = LogFactory.getLog(ReportWebScript.class);
 
 public void execute(WebScriptRequest req, WebScriptResponse res) throws IOException {
-    	
+      long startTs = System.currentTimeMillis();
+
+      AuthenticationUtil.setRunAsUserSystem();
+
     	OutputStream responseOutputStream = null;
     	InputStream templateInputStream = null;
-    	
+
     	try {
     
 	    	// Get json properties
@@ -88,7 +92,9 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     		 *  }
     		 */
 	    	byte[] documentFilledByteArray = reportCommandMap.get(tipoTemplate).generate(templateByteArray,json, searchStoreRef);
-	    	
+
+        long duration = System.currentTimeMillis() - startTs;
+        logger.info("Report "+tipoTemplate+" finished in "+duration+"ms");
 	    	
 	    	String nomeLettera = tipoTemplate.split(":")[1];
     				
