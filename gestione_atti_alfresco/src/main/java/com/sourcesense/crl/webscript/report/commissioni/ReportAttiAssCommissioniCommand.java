@@ -37,7 +37,10 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
         ByteArrayOutputStream ostream = null;
+
         try {
+            long startTs = System.currentTimeMillis();
+
             ByteArrayInputStream is = new ByteArrayInputStream(
                     templateByteArray);
             DocxManager docxManager = new DocxManager(is);
@@ -74,6 +77,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                 ResultSet currentResults = this.searchService.query(sp);
                 commissione2results.put(commissione, currentResults);
             }
+            System.out.println("End of search phase: "+(System.currentTimeMillis()-startTs)+"ms");
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
             LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAttiReportAssCommissione(commissione2results, spacesStore, atto2commissione);
 
@@ -82,10 +86,13 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
             // convert to input stream
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
+            System.out.println("Before fill template: "+(System.currentTimeMillis()-startTs)+"ms");
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissione2atti, atto2commissione);
+
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
+            System.out.println("outputstream written: "+(System.currentTimeMillis()-startTs)+"ms");
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -119,47 +126,49 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
                 String statoAtto = (String) this.getNodeRefProperty(attoProperties, "statoAtto");
 
+                if (this.checkStatoAtto(statoAtto)) {
 
-                XWPFTable currentTable = tables.get(tableIndex);
-                /* value extraction from Alfresco */
-                // from Atto
-                String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
-                String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
-                String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
-                ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
-                String commReferente = this.renderList(commReferenteList);
+                  XWPFTable currentTable = tables.get(tableIndex);
+                  /* value extraction from Alfresco */
+                  // from Atto
+                  String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                  String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
+                  String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
+                  ArrayList<String> commReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commReferente");
+                  String commReferente = this.renderList(commReferenteList);
 
-                ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
-                String commCoReferente = this.renderList(commCoReferenteList);
+                  ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
+                  String commCoReferente = this.renderList(commCoReferenteList);
 
-                //SCRL-352
-                ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
-                String firmatari = this.renderFirmatariConGruppoList(firmatariList);
+                  //SCRL-352
+                  ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
+                  String firmatari = this.renderFirmatariConGruppoList(firmatariList);
 
-                // from Commissione
-                String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
-                Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
-                String ruoloCommissione = (String) this.getNodeRefProperty(commissioneProperties, "ruoloCommissione");
-                // from Atto
-                ArrayList<String> pareriList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "organismiStatutari");
-                String altriPareri = this.renderList(pareriList);
+                  // from Commissione
+                  String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
+                  Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
+                  String ruoloCommissione = (String) this.getNodeRefProperty(commissioneProperties, "ruoloCommissione");
+                  // from Atto
+                  ArrayList<String> pareriList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "organismiStatutari");
+                  String altriPareri = this.renderList(pareriList);
 
-                ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
-                String commConsultiva = this.renderList(commConsultivaList);
+                  ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
+                  String commConsultiva = this.renderList(commConsultivaList);
 
-                currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
-                currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(ruoloCommissione));
-                currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
-                currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(oggetto));
-                //SCRL-352
-                currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(firmatari));
-                currentTable.getRow(5).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
-                currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(altriPareri));
-                currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commReferente));
-                currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commCoReferente));
-                currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commConsultiva));
+                  currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
+                  currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(ruoloCommissione));
+                  currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
+                  currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(oggetto));
+                  //SCRL-352
+                  currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(firmatari));
+                  currentTable.getRow(5).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
+                  currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(altriPareri));
+                  currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commReferente));
+                  currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commCoReferente));
+                  currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commConsultiva));
 
-                tableIndex++;
+                  tableIndex++;
+                }
             }
         }
 
@@ -167,10 +176,6 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
     }
 
     protected boolean checkStatoAtto(String statoAtto) {
-        return statoAtto.equals(ASSEGNATO_COMMISSIONE)
-                || statoAtto.equals(PRESO_CARICO_COMMISSIONE)
-                || statoAtto.equals(VOTATO_COMMISSIONE)
-                || statoAtto.equals(NOMINATO_RELATORE)
-                || statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
+        return true;
     }
 }
