@@ -123,8 +123,13 @@ function importaAllegato(){
 					if(extension!=null && extension!=""){
 						extension = extension.toLowerCase();
 						if(extension=="tsd"){
-							var allegatoPdfNode = allegatoNode.copy(allegatiFolderNode,false);
-							var pdfFileName = filenameSplitted[0] + ".pdf";
+                            var pdfFileName = filenameSplitted[0] + ".pdf";
+                            var oldAllegatoPdfNode = allegatiFolderNode.childByNamePath(pdfFileName);
+                            if (oldAllegatoPdfNode){
+                                oldAllegatoPdfNode.remove();
+                            }
+
+                            var allegatoPdfNode = allegatoNode.copy(allegatiFolderNode,false);
 							allegatoPdfNode.name = pdfFileName;
 							allegatoPdfNode.properties["cm:title"] = pdfFileName;
 							allegatoPdfNode.properties.content.setEncoding("UTF-8");
