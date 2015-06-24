@@ -125,7 +125,7 @@ function getLastPassaggio(attoNodeRef){
 		}
 	}
 
-    logger.log("getLastPassaggio(), duration:"+(Date.now()-startTs)+"ms");
+    //logger.log("getLastPassaggio(), duration:"+(Date.now()-startTs)+"ms");
 	return passaggio;
 }
 
