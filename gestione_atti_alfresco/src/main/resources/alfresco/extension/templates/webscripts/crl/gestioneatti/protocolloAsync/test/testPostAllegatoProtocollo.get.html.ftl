@@ -6,7 +6,7 @@
 		<h1>Protocollo - Test upload allegato</h1>
 	</div>
 	
-	<form action="/alfresco/service/crl/protocollo/atto/allegato/insert?alf_ticket=${session.ticket}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+	<form action="/alfresco/service/crl/protocollo/async/atto/allegato/insert?alf_ticket=${session.ticket}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 	<table>
 		<tr>
 			<td>

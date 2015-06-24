@@ -3,7 +3,7 @@
   <description>Protocollo - Test per l'upload di un allegato</description>
   <url>/crl/test/protocollo/post/allegato</url>
   <format default="html"/>
-  <authentication>admin</authentication>
+  <authentication>user</authentication>
   <transaction allow="readonly">required</transaction>
   <family>CRL - Gestione Atti - Protocollo - Asynch</family>
 </webscript>
