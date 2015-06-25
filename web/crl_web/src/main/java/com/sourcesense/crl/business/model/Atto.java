@@ -182,6 +182,8 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	private List<SedutaAtto> seduteAtto = new ArrayList<SedutaAtto>();
 
+  private boolean summary;
+
 	public Atto() {
 		Passaggio passaggio = new Passaggio();
 		passaggio.setNome("Passaggio1");
@@ -1092,4 +1094,11 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.attoProseguente = attoProseguente;
 	}
 
+  public boolean isSummary() {
+    return summary;
+  }
+
+  public void setSummary(boolean isDetailed) {
+    this.summary = isDetailed;
+  }
 }

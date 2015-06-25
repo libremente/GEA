@@ -22,22 +22,17 @@ import com.sourcesense.crl.business.service.TipoChiusuraServiceManager;
 import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.business.service.VotazioneServiceManager;
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoEAC;
-import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoSearch;
 import com.sourcesense.crl.business.model.ColonnaAtto;
-import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.StatoAtto;
-import com.sourcesense.crl.util.LazyAttoDataModel;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,19 +43,14 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.swing.plaf.ListUI;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
 /**
  * 
@@ -356,6 +346,7 @@ public class SearchAttoController implements Serializable{
 		}
 
 		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
+    atto.setSummary(true);
 		setListAtti(attoServiceManager.searchAtti(atto));
 		Collections.sort(listAtti);
 	}
@@ -430,6 +421,7 @@ public class SearchAttoController implements Serializable{
 			atto.setTipoAtto("MIS");
 
 		}
+    atto.setSummary(true);
 
 		setListAtti(attoServiceManager.searchAtti(atto));
 		Collections.sort(listAtti);
