@@ -55,9 +55,12 @@ public class SeduteService {
 		try {
 			WebResource webResource = client.resource(url);
 			ClientResponse response = webResource
-					.queryParam("provenienza", param).queryParam("legislatura", legislatura)
+					.queryParam("provenienza", param)
+          .queryParam("legislatura", legislatura)
+          .queryParam("summary", "true")
 					.accept(MediaType.APPLICATION_JSON+ ";charset=utf-8")
 					.get(ClientResponse.class);
+      //
 
 			if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "

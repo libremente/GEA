@@ -250,7 +250,19 @@ public class GestioneSeduteController {
 	
 	
 	public void showSedutaDetail() {
-		setSedutaSelected(findSeduta(dataSedutaSelected));
+		//setSedutaSelected(findSeduta(dataSedutaSelected));
+
+    //data seduta formatted as yyyy-mm-dd
+    String[] tokens = dataSedutaSelected.split("/");
+    String dataSedutaIso = tokens[2]+"-"+tokens[1]+"-"+tokens[0];
+    //provenienza
+    FacesContext context1 = FacesContext.getCurrentInstance();
+    UserBean userBean1 = ((UserBean) context1.getExternalContext()
+        .getSessionMap().get("userBean"));
+    String provenienza = userBean1.getUser().getSessionGroup().getNome();
+
+    Seduta seduta = seduteServiceManager.getSeduta(provenienza, dataSedutaIso,legislatura);
+    setSedutaSelected(seduta);
 
 		if (sedutaSelected != null) {
 
