@@ -165,7 +165,8 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                   currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(altriPareri));
                   currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commReferente));
                   currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commCoReferente));
-                  currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commConsultiva));
+                  //SCRL-415
+                  currentTable.getRow(9).getCell(1).setText(this.checkStringEmpty(commConsultiva));
 
                   tableIndex++;
                 }
