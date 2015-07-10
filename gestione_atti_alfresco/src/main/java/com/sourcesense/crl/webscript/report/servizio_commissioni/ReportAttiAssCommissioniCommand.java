@@ -166,12 +166,13 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
         return document;
     }
-
+    
     protected boolean checkStatoAtto(String statoAtto) {
-        return statoAtto.equals(ASSEGNATO_COMMISSIONE)
+       /* return statoAtto.equals(ASSEGNATO_COMMISSIONE)
                 || statoAtto.equals(PRESO_CARICO_COMMISSIONE)
                 || statoAtto.equals(VOTATO_COMMISSIONE)
                 || statoAtto.equals(NOMINATO_RELATORE)
-                || statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
+                || statoAtto.equals(LAVORI_COMITATO_RISTRETTO);*/
+    return true;
     }
 }
