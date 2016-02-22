@@ -193,7 +193,7 @@
 						<p:column>Numero DCR:</p:column>
 						<p:column>
 							<p:inputMask  id="numeroDcr"
-								value="#{esameAulaController.numeroDcr}" mask="#{esameAulaController.atto.legislatura}/999">
+								value="#{esameAulaController.numeroDcr}" mask="#{esameAulaController.atto.legislatura}/99999">
 								<p:ajax event="change"
 									listener="#{esameAulaController.updateVotazioneHandler}" />
 							</p:inputMask>
