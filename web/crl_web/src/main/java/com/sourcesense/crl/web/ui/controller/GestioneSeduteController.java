@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -110,6 +111,7 @@ public class GestioneSeduteController {
 
 	private List<String> tipiAttoSindacato = new ArrayList<String>();
 	private String tipoAttoSindacato;
+	private String annoCreazione;
 	private List<CollegamentoAttiSindacato> numeriAttoSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
 
@@ -842,9 +844,16 @@ public class GestioneSeduteController {
 	public void handleAttoSindacatoChange() {
 		
 		//MODIFICA 
-		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato));
-
+		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo
+		//MODIFICA
+		//Aggiunta ricerca per range di date determinate dall'anno selezionato
+		Calendar c = Calendar.getInstance();
+		c.set(Integer.parseInt(annoCreazione), 0, 1);
+		Date dataCreazioneDa= c.getTime();
+		c.set(Integer.parseInt(annoCreazione), 11, 31);
+		Date dataCreazioneA= c.getTime();
+		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato, formatter.format(dataCreazioneDa), formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
 		setNumeriAttoSindacato(attiSindacato);
 		//MODIFICA
@@ -1399,6 +1408,16 @@ public class GestioneSeduteController {
 			dateSeduteList.add(formatter.format(seduta.getDataSeduta()));
 		}
 	}
+	
+	public List<String> annoCreazioneList(String annoPartenzaString) {
+		int annoPartenza=Integer.parseInt(annoPartenzaString);
+		int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
+		List<String> annoCreazioneStringList = new ArrayList<String>();
+		for (int i=annoPartenza; i<annoCorrente; i++){
+			annoCreazioneStringList.add(String.valueOf(i));
+		}
+		return annoCreazioneStringList;
+	}
 
 	public String getLegislaturaCorrente() {
 		return legislaturaCorrente;
@@ -1563,6 +1582,11 @@ public class GestioneSeduteController {
 	public void setDisableModifiche(boolean disableModifiche) {
 		this.disableModifiche = disableModifiche;
 	}
-	
-	
+	public String getAnnoCreazione() {
+		return annoCreazione;
+	}
+
+	public void setAnnoCreazione(String annoCreazione) {
+		this.annoCreazione = annoCreazione;
+	}
 }

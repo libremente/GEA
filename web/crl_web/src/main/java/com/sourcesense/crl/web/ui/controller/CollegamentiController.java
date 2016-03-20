@@ -1,6 +1,9 @@
 package com.sourcesense.crl.web.ui.controller;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -247,7 +250,10 @@ public class CollegamentiController {
 
 		//MODIFICA 
 		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato));
+		//MODIFICA
+		//Aggiunta ricerca per range di date
+		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato,formatter.format(new Date(Long.MIN_VALUE)),formatter.format(new Date(Long.MAX_VALUE))));
 		getNumeriAttoSindacato().clear();
 		setNumeriAttoSindacato(attiSindacato);
 		//MODIFICA

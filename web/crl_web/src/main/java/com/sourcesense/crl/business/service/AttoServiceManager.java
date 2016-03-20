@@ -171,9 +171,9 @@ public class AttoServiceManager implements ServiceManager {
 	
 	//MODIFICA
 	//Aggiunto parametro del tipoAttoIndirizzo
-	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String tipoAtto) {
+	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String tipoAtto, String dataCreazioneDa, String dataCreazioneA) {
 		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_retrieve_atti_indirizzo",new String[]{tipoAtto}));
+				"alfresco_context_url", "alf_retrieve_atti_indirizzo",new String[]{tipoAtto,dataCreazioneDa, dataCreazioneA}));
 	}
 	
 	
