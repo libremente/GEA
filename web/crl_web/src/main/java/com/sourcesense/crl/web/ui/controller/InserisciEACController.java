@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +67,7 @@ public class InserisciEACController {
 
 	private List<String> tipiAttoSindacato = new ArrayList<String>();
 	private String tipoAttoSindacato;
-
+	private String annoCreazione;
 	private String idAttoSindacato;
 	private List<CollegamentoAttiSindacato> numeriAttoSindacato = new ArrayList<CollegamentoAttiSindacato>();
 	private List<CollegamentoAttiSindacato> collegamentiAttiSindacato = new ArrayList<CollegamentoAttiSindacato>();
@@ -241,9 +242,14 @@ public class InserisciEACController {
 		//MODIFICA 
 		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
 		//MODIFICA
-		//Aggiunta ricerca per range di date
+		//Aggiunta ricerca per range di date determinate dall'anno selezionato
+		Calendar c = Calendar.getInstance();
+		c.set(Integer.parseInt(annoCreazione), 0, 1);
+		Date dataCreazioneDa= c.getTime();
+		c.set(Integer.parseInt(annoCreazione), 11, 31);
+		Date dataCreazioneA= c.getTime();
 		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato,formatter.format(new Date(Long.MIN_VALUE)),formatter.format(new Date(Long.MAX_VALUE))));
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato,formatter.format(dataCreazioneDa),formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
 		setNumeriAttoSindacato(attiSindacato);
 		//MODIFICA
@@ -466,6 +472,14 @@ public class InserisciEACController {
 
 	public void setIdAttoSindacato(String idAttoSindacato) {
 		this.idAttoSindacato = idAttoSindacato;
+	}
+
+	public String getAnnoCreazione() {
+		return annoCreazione;
+	}
+
+	public void setAnnoCreazione(String annoCreazione) {
+		this.annoCreazione = annoCreazione;
 	}
 
 }

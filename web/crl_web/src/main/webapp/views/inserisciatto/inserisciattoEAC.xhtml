@@ -249,6 +249,8 @@
 					<p:panelGrid id="addAttoSindacatoPanel" styleClass="tableAppend">
 						<f:facet name="header">
 							<p:row>
+								<!-- Modifica aggiunta ricerca per anno -->
+								<p:column>Anno</p:column> 
 								<p:column>Tipo</p:column>
 								<p:column>N. Atto</p:column>
 								<p:column>Descrizione</p:column>
@@ -256,6 +258,19 @@
 							</p:row>
 						</f:facet>
 						<p:row>
+						
+							<!-- Modifica aggiunta ricerca per anno -->
+							<p:column>
+								<p:selectOneMenu id="annoCreazioneAttoSindacato"
+									value="#{inserisciEACController.annoCreazione}" >
+									<f:selectItem itemLabel="Anno" itemValue="" />
+									<f:selectItems
+											value="#{gestioneSeduteController.annoCreazioneList(2010)}" />
+									<p:ajax update="numAttoSindacato" 
+											listener="#{inserisciEACController.handleAttoSindacatoChange}" />
+								</p:selectOneMenu>
+							</p:column>
+							
 						    <p:column>
 								<p:selectOneMenu id="tipoAttoSindacato"
 									value="#{inserisciEACController.tipoAttoSindacato}">

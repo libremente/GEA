@@ -1413,7 +1413,7 @@ public class GestioneSeduteController {
 		int annoPartenza=Integer.parseInt(annoPartenzaString);
 		int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
 		List<String> annoCreazioneStringList = new ArrayList<String>();
-		for (int i=annoPartenza; i<annoCorrente; i++){
+		for (int i=annoPartenza; i<=annoCorrente; i++){
 			annoCreazioneStringList.add(String.valueOf(i));
 		}
 		return annoCreazioneStringList;
