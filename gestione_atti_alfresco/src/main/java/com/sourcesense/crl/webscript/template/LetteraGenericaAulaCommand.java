@@ -76,8 +76,10 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
 
         String dataOdiernaString = formatter.format(new Date());
         searchTerms.put("<dataOdierna>", dataOdiernaString);
-
-
+        //aggiunto tipo atto nel modello
+      	String tipoAttoSigla= getTipoAttoSigla(attoNodeRef);
+      	
+        searchTerms.put("<tipoAttoSigla>", tipoAttoSigla);
         searchTerms.put("<numeroAtto>", numeroAtto);
         searchTerms.put("<oggettoAtto>", oggettoAtto);
         searchTerms.put("<numeroLCR>", numeroLCR);

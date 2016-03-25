@@ -64,7 +64,10 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	DictionaryService dictionaryService = serviceRegistry.getDictionaryService();		
 		TypeDefinition typeDef = dictionaryService.getType(nodeService.getType(attoNodeRef));
 		String tipoAttoDescrizione = typeDef.getTitle().toLowerCase();
-
+		//aggiunto tipo atto nel modello
+		String tipoAttoSigla= getTipoAttoSigla(attoNodeRef);
+		
+        searchTerms.put("<tipoAttoSigla>", tipoAttoSigla);
 		searchTerms.put("<numeroAtto>", numeroAtto);
 		searchTerms.put("<oggettoAtto>", oggettoAtto);
 		searchTerms.put("<numeroRepertorio>", numeroRepertorio);

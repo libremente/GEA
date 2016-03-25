@@ -48,8 +48,11 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     		String dataDgrString = dataDgrFormatter.format(dataDgr);
     		searchTerms.put("<dataDGR>", dataDgrString);
     	}
-    		
-		searchTerms.put("<numeroAtto>", numeroAtto);
+    	//aggiunto tipo atto nel modello
+      	String tipoAttoSigla= getTipoAttoSigla(attoNodeRef);
+      	
+        searchTerms.put("<tipoAttoSigla>", tipoAttoSigla);
+    	searchTerms.put("<numeroAtto>", numeroAtto);
 		searchTerms.put("<oggettoAtto>", oggettoAtto);
 		searchTerms.put("<numeroRepertorio>", numeroRepertorio);
 		searchTerms.put("<numeroDGR>", numeroDgr);

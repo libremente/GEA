@@ -144,7 +144,13 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	}
 	
 	
-	
+	//Aggiunto metodo per il recupero della sigla identificativa al tipo di atto mediante la tipologia definita nel modello 
+	protected String getTipoAttoSigla(NodeRef attoNodeRef){
+		QName typeQname= nodeService.getType(attoNodeRef);
+		String type= typeQname.getLocalName();
+		String typeSigla= type.substring(type.length()-3, type.length());
+		return typeSigla.toUpperCase();
+	}
 	
 	
 	
