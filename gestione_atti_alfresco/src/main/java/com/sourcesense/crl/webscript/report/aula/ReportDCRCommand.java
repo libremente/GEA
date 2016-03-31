@@ -33,6 +33,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
         ByteArrayOutputStream ostream = null;
+        ResultSet attiResults = null;
         try {
             ByteArrayInputStream is = new ByteArrayInputStream(
                     templateByteArray);
@@ -54,7 +55,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
             }
             sp.setQuery(query);
             sp.addSort(sortField1, true);
-            ResultSet attiResults = this.searchService.query(sp);
+            attiResults = this.searchService.query(sp);
             // obtain as much table as the results spreaded across the resultSet
             XWPFDocument generatedDocument = docxManager.generateFromTemplate(
                     attiResults.length(), 3, false);
@@ -69,6 +70,10 @@ public class ReportDCRCommand extends ReportBaseCommand {
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+        	if (attiResults!=null){
+        		attiResults.close();
+        	}
         }
         return ostream.toByteArray();
 

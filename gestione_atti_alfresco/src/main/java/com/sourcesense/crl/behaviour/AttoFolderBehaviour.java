@@ -112,14 +112,20 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         StoreRef storeRef = new StoreRef("workspace://SpacesStore");
 
         // Get legislature
-        ResultSet legislatureNodes = searchService.query(storeRef,
+        ResultSet legislatureNodes=null;
+        try{
+        legislatureNodes = searchService.query(storeRef,
                 SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/cm:" + numeroLegislatura + "\"");
 
         if (legislatureNodes.length() > 0) {
             legislatura = legislatureNodes.getNodeRef(0);
             idLegislatura = (String) nodeService.getProperty(legislatura, QName.createQName(CRL_ATTI_MODEL, PROP_ID_ANAGRAFICA)).toString();
         }
-
+        }finally{
+        	if (legislatureNodes!=null){
+        		legislatureNodes.close();
+        	}
+        }
 
 
         String tipoAtto = nodeService.getType(nodeRef).getLocalName().substring(4).toUpperCase();
@@ -128,7 +134,9 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder;
-
+        
+        
+        ResultSet exportFolderNodeResultSet=null;
         try {
 
             docBuilder = docFactory.newDocumentBuilder();
@@ -167,7 +175,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.transform(new DOMSource(doc), new StreamResult(output));
-
+            
             String xmlString = output.toString();
 
             Calendar calendar = new GregorianCalendar();
@@ -182,7 +190,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 
             String nomeFileExport = "export_atto_" + numeroAtto + "_" + anno + "-" + mese + "-" + giorno + "_" + ora + "-" + minuto + "-" + secondo + ".xml";
 
-            ResultSet exportFolderNodeResultSet = searchService.query(Repository.getStoreRef(),
+            exportFolderNodeResultSet = searchService.query(Repository.getStoreRef(),
                     SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:Export/cm:Gestione_x0020_Atti/cm:AttiIndirizzo\"");
 
             FileInfo xmlFileInfo = fileFolderService.create(exportFolderNodeResultSet.getNodeRef(0), nomeFileExport, ContentModel.TYPE_CONTENT);
@@ -198,6 +206,10 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 
         } catch (Exception e) {
             logger.info("Errore nella creazione del file xml di export: operazione DELETE su atto " + tipoAtto + " " + numeroAtto);
+        } finally{
+        	if (exportFolderNodeResultSet!=null){
+        		exportFolderNodeResultSet.close();
+        	}
         }
 
 

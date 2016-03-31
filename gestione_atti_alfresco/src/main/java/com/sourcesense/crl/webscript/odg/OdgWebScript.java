@@ -49,11 +49,19 @@ public class OdgWebScript extends AbstractWebScript {
     		String tipoTemplate = (String)req.getParameter("tipoTemplate");
     		String gruppo = (String)req.getParameter("gruppo");
     		
-			// Search document template node	
-			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
-					SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"");
-			
-			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
+    		ResultSet templatesResults=null;
+    		NodeRef templateNodeRef=null;
+			// Search document template node
+			try{
+	    		templatesResults = searchService.query(Repository.getStoreRef(), 
+						SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"");
+				
+				templateNodeRef = templatesResults.getNodeRef(0);
+			} finally {
+				if (templatesResults!=null){
+					templatesResults.close();
+				}
+			}
 			
 			// Get seduta node
 			NodeRef sedutaNodeRef = new NodeRef(idSeduta);

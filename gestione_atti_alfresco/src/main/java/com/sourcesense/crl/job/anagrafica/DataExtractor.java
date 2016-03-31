@@ -27,10 +27,11 @@ public class DataExtractor {
 
     public List<Legislature> getLegislatures() {
         Connection conn = null;
+        ResultSet rs=null;
+        PreparedStatement ps=null;
         try {
             conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(Constant.QUERY_LEGISLATURE);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             Legislature legislature = null;
             List<Legislature> legislatures = new ArrayList<Legislature>();
             while (rs.next()) {
@@ -41,8 +42,6 @@ public class DataExtractor {
                 legislature.setTo(rs.getDate(Constant.COLUMN_LEGISLATURE_TO));
                 legislatures.add(legislature);
             }
-            rs.close();
-            ps.close();
             return legislatures;
         } catch (SQLException e) {
             logger.error("Cannot get current legislature id", e);
@@ -55,15 +54,31 @@ public class DataExtractor {
                     // Do nothing...
                 }
             }
+            if ( rs!=null){
+            	try {
+	            	rs.close();
+	            } catch (SQLException e) {
+	                // Do nothing...
+	            }
+            }
+           if (ps!=null){
+        	   try {
+	        	   ps.close();
+	           } catch (SQLException e) {
+	               // Do nothing...
+	           }
+           }
         }
     }
 
     public Legislature getCurrentLegislature() {
         Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(Constant.QUERY_CURRENT_LEGISLATURE);
-            ResultSet rs = ps.executeQuery();
+            ps = conn.prepareStatement(Constant.QUERY_CURRENT_LEGISLATURE);
+            rs = ps.executeQuery();
             Legislature legislature = null;
             if (rs.next()) {
                 legislature = new Legislature();
@@ -72,8 +87,6 @@ public class DataExtractor {
                 legislature.setFrom(rs.getDate(Constant.COLUMN_LEGISLATURE_FROM));
                 legislature.setTo(rs.getDate(Constant.COLUMN_LEGISLATURE_TO));
             }
-            rs.close();
-            ps.close();
             return legislature;
         } catch (SQLException e) {
             logger.error("Cannot get current legislature id", e);
@@ -86,19 +99,34 @@ public class DataExtractor {
                     // Do nothing...
                 }
             }
+            if ( rs!=null){
+            	try {
+	            	rs.close();
+	            } catch (SQLException e) {
+	                // Do nothing...
+	            }
+            }
+           if (ps!=null){
+        	   try {
+	        	   ps.close();
+	           } catch (SQLException e) {
+	               // Do nothing...
+	           }
+           }
         }
     }
 
     public List<Councilor> getCouncilors(int idCurrentLegislature) {
         Connection conn = null;
+        PreparedStatement ps=null;
+        ResultSet rs= null;
         try {
             conn = dataSource.getConnection();
-
-            PreparedStatement ps = conn.prepareStatement(Constant.QUERY_ALL_COUNCILORS_FILTERED_BY_LEGISLATURE);
+            ps = conn.prepareStatement(Constant.QUERY_ALL_COUNCILORS_FILTERED_BY_LEGISLATURE);
             ps.setInt(1, idCurrentLegislature);
             ps.setInt(2, idCurrentLegislature);
             List<Councilor> councilors = new ArrayList<Councilor>();
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Councilor councilor = new Councilor();
                 councilor.setId(rs.getInt(Constant.COLUMN_ID_PERSONA));
@@ -133,8 +161,6 @@ public class DataExtractor {
                 }
                 councilors.add(councilor);
             }
-            rs.close();
-            ps.close();
             return councilors;
         } catch (SQLException e) {
             logger.error("Cannot get all councilors of current legislature", e);
@@ -147,15 +173,31 @@ public class DataExtractor {
                     // Do nothing...
                 }
             }
+            if ( rs!=null){
+            	try {
+	            	rs.close();
+	            } catch (SQLException e) {
+	                // Do nothing...
+	            }
+            }
+           if (ps!=null){
+        	   try {
+	        	   ps.close();
+	           } catch (SQLException e) {
+	               // Do nothing...
+	           }
+           }
         }
     }
 
     public List<Group> getGroups() {
         Connection conn = null;
+        PreparedStatement ps=null;
+        ResultSet rs=null;
         try {
             conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(Constant.QUERY_CURRENT_GRUPPI_CONSILIARI);
-            ResultSet rs = ps.executeQuery();
+            ps = conn.prepareStatement(Constant.QUERY_CURRENT_GRUPPI_CONSILIARI);
+            rs = ps.executeQuery();
             Group group = null;
             List<Group> groups = new ArrayList<Group>();
             while (rs.next()) {
@@ -179,6 +221,20 @@ public class DataExtractor {
                     // Do nothing...
                 }
             }
+            if ( rs!=null){
+            	try {
+	            	rs.close();
+	            } catch (SQLException e) {
+	                // Do nothing...
+	            }
+            }
+            if (ps!=null){
+            	try {
+            		ps.close();
+            	} catch (SQLException e) {
+	               // Do nothing...
+            	}
+            }	
         }
     }
 }

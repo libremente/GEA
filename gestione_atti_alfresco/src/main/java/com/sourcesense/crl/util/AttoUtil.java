@@ -110,17 +110,23 @@ public class AttoUtil {
         StoreRef storeRef = new StoreRef("workspace://SpacesStore");
         
 		// Get legislature
-    	ResultSet legislatureNodes = searchService.query(storeRef,
-  				SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/*\" AND TYPE:\""+legislaturaType+"\" AND @crlatti\\:correnteLegislatura:\"true\"");
-		
-    	if(legislatureNodes.length() > 1){
-			logger.error("Piu' di una legislatura attiva presente. Non e' stato possibile determinare la legislatura attiva.");
-		}else if(legislatureNodes.length() == 0){
-			logger.error("Nessuna legislatura attiva presente.. Non e' stato possibile determinare la legislatura attiva.");
-		}else{
-			legislatura = legislatureNodes.getNodeRef(0);
-		}
-    	
+        ResultSet legislatureNodes=null;
+        try{
+	    	legislatureNodes = searchService.query(storeRef,
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/*\" AND TYPE:\""+legislaturaType+"\" AND @crlatti\\:correnteLegislatura:\"true\"");
+			
+	    	if(legislatureNodes.length() > 1){
+				logger.error("Piu' di una legislatura attiva presente. Non e' stato possibile determinare la legislatura attiva.");
+			}else if(legislatureNodes.length() == 0){
+				logger.error("Nessuna legislatura attiva presente.. Non e' stato possibile determinare la legislatura attiva.");
+			}else{
+				legislatura = legislatureNodes.getNodeRef(0);
+			}
+        } finally {
+        	if (legislatureNodes!=null){
+        		legislatureNodes.close();
+        	}
+        }
     	return legislatura;
 	}
 	
@@ -137,24 +143,30 @@ public class AttoUtil {
 
 		
     	String luceneAttoNodePath = nodeService.getPath(attoNodeRef).toPrefixString(namespacePrefixResolver);
+    	ResultSet passaggiNodes=null;
+    	try  {
+		  	passaggiNodes = searchService.query(attoNodeRef.getStoreRef(), 
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneAttoNodePath+"/cm:Passaggi/*\"");
+	   
+		  	int numeroPassaggio = 0;
+		  	String nomePassaggio = "";
+		  	int passaggioMax = 0;
+			for(int i=0; i<passaggiNodes.length(); i++) {
 				
-	  	ResultSet passaggiNodes = searchService.query(attoNodeRef.getStoreRef(), 
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneAttoNodePath+"/cm:Passaggi/*\"");
-   
-	  	int numeroPassaggio = 0;
-	  	String nomePassaggio = "";
-	  	int passaggioMax = 0;
-		for(int i=0; i<passaggiNodes.length(); i++) {
-			
-			nomePassaggio = (String) nodeService.getProperty(passaggiNodes.getNodeRef(i), ContentModel.PROP_NAME);
-			numeroPassaggio = Integer.parseInt(nomePassaggio.substring(9));
-			
-			if(numeroPassaggio > passaggioMax) {
-				passaggioMax = numeroPassaggio;
-				passaggio = passaggiNodes.getNodeRef(i) ;
+				nomePassaggio = (String) nodeService.getProperty(passaggiNodes.getNodeRef(i), ContentModel.PROP_NAME);
+				numeroPassaggio = Integer.parseInt(nomePassaggio.substring(9));
+				
+				if(numeroPassaggio > passaggioMax) {
+					passaggioMax = numeroPassaggio;
+					passaggio = passaggiNodes.getNodeRef(i) ;
+				}
+				
 			}
-			
-		}
+    	}finally{
+    		if (passaggiNodes!=null){
+    			passaggiNodes.close();
+    		}
+    	}
 		
 		return passaggio;
 	}
@@ -175,52 +187,70 @@ public class AttoUtil {
     	NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
     	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
   
-		
-		// Get commissione referente
-    	ResultSet commissioneReferenteNodes = searchService.query(attoNodeRef.getStoreRef(),
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_REFERENTE+"\"");
-    	
-    	
-    	// Check for commissione referente and co-referente
-    	if(commissioneReferenteNodes.length()>0) {
-    		
-    		
-    		commissioniPrincipaliList.add(commissioneReferenteNodes.getNodeRef(0));
-    	
-    		ResultSet commissioneCoreferenteNodes = searchService.query(attoNodeRef.getStoreRef(),
-      				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_COREFERENTE+"\"");
-        
-    		if(commissioneCoreferenteNodes.length()>0) {
-    			
-    			commissioniPrincipaliList.add(commissioneCoreferenteNodes.getNodeRef(0));
-    		}
-    		
-    	// If commissione referente not exists	
-    	}else{
-    		
-    		ResultSet commissioneRedigenteNodes = searchService.query(attoNodeRef.getStoreRef(),
-      				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_REDIGENTE+"\"");
-    		
-    		// Check for commissione redigente
-    		if(commissioneRedigenteNodes.length()>0) {
-    			
-    			commissioniPrincipaliList.add(commissioneRedigenteNodes.getNodeRef(0));
-    		
-    		// If commissione redigente not exists
-    		}else {
-    			
-    			ResultSet commissioneDeliberanteNodes = searchService.query(attoNodeRef.getStoreRef(),
-          				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_DELIBERANTE+"\"");
-    			
-    			// Check for commissione redigente
-        		if(commissioneDeliberanteNodes.length()>0) {
-    			
-        			commissioniPrincipaliList.add(commissioneDeliberanteNodes.getNodeRef(0));
-        		}
-    			
-    		}
-    		
-    	}    	
+    	ResultSet commissioneReferenteNodes=null;
+    	ResultSet commissioneCoreferenteNodes=null;
+    	ResultSet commissioneRedigenteNodes=null;
+    	ResultSet commissioneDeliberanteNodes=null;
+		try{
+	    	// Get commissione referente
+	    	commissioneReferenteNodes = searchService.query(attoNodeRef.getStoreRef(),
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_REFERENTE+"\"");
+	    	
+	    	
+	    	// Check for commissione referente and co-referente
+	    	if(commissioneReferenteNodes.length()>0) {
+	    		
+	    		
+	    		commissioniPrincipaliList.add(commissioneReferenteNodes.getNodeRef(0));
+	    	
+	    		commissioneCoreferenteNodes = searchService.query(attoNodeRef.getStoreRef(),
+	      				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_COREFERENTE+"\"");
+	        
+	    		if(commissioneCoreferenteNodes.length()>0) {
+	    			
+	    			commissioniPrincipaliList.add(commissioneCoreferenteNodes.getNodeRef(0));
+	    		}
+	    		
+	    	// If commissione referente not exists	
+	    	}else{
+	    		
+	    		commissioneRedigenteNodes = searchService.query(attoNodeRef.getStoreRef(),
+	      				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_REDIGENTE+"\"");
+	    		
+	    		// Check for commissione redigente
+	    		if(commissioneRedigenteNodes.length()>0) {
+	    			
+	    			commissioniPrincipaliList.add(commissioneRedigenteNodes.getNodeRef(0));
+	    		
+	    		// If commissione redigente not exists
+	    		}else {
+	    			
+	    			commissioneDeliberanteNodes = searchService.query(attoNodeRef.getStoreRef(),
+	          				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+RUOLO_COMM_DELIBERANTE+"\"");
+	    			
+	    			// Check for commissione redigente
+	        		if(commissioneDeliberanteNodes.length()>0) {
+	    			
+	        			commissioniPrincipaliList.add(commissioneDeliberanteNodes.getNodeRef(0));
+	        		}
+	    			
+	    		}
+	    		
+	    	}
+		}finally{
+			if (commissioneReferenteNodes!=null){
+				commissioneReferenteNodes.close();
+			}
+	    	if (commissioneCoreferenteNodes!=null){
+	    		commissioneCoreferenteNodes.close();
+	    	}
+	    	if (commissioneRedigenteNodes!=null){
+	    		commissioneRedigenteNodes.close();
+	    	}
+	    	if (commissioneDeliberanteNodes!=null){
+	    		commissioneDeliberanteNodes.close();
+	    	}
+		}
 		return commissioniPrincipaliList;
 	}
 
@@ -240,12 +270,19 @@ public class AttoUtil {
         String relatoreType = "{"+CRL_ATTI_MODEL+"}"+RELATORE_TYPE;
         
 		// Get relatore
-    	ResultSet relatoreNodes = searchService.query(commissioneNodeRef.getStoreRef(),
+        ResultSet relatoreNodes=null;
+        try{
+        	relatoreNodes = searchService.query(commissioneNodeRef.getStoreRef(),
   				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneCommissioneNodePath+"/cm:Relatori/*\" AND TYPE:\""+relatoreType+"\"");
     	
-    	if(relatoreNodes.length()>0){
-    		relatore = relatoreNodes.getNodeRef(0);
-    	}
+	    	if(relatoreNodes.length()>0){
+	    		relatore = relatoreNodes.getNodeRef(0);
+	    	}
+        }finally{
+        	if (relatoreNodes!=null){
+        		relatoreNodes.close();
+        	}
+        }
     	
 		return relatore; 
 	}
@@ -264,17 +301,24 @@ public class AttoUtil {
     	NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
     	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
   
-		
-		// Get commissione referente
-    	ResultSet aulaNodes = searchService.query(attoNodeRef.getStoreRef(),
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Aula\"");
-    	
+    	ResultSet aulaNodes=null;
     	NodeRef aula = null;
-    	
-    	if(aulaNodes.length()>0){
-    		aula = aulaNodes.getNodeRef(0);
-    	}
-    	
+		try{
+			// Get commissione referente
+	    	aulaNodes = searchService.query(attoNodeRef.getStoreRef(),
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Aula\"");
+	    	
+	    	
+	    	
+	    	if(aulaNodes.length()>0){
+	    		aula = aulaNodes.getNodeRef(0);
+	    	}
+		} finally {
+			if (aulaNodes!=null){
+				aulaNodes.close();
+			}
+			
+		}
 		return aula; 
 	}
 	
@@ -291,15 +335,22 @@ public class AttoUtil {
         // Get current Passaggio 
     	NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
     	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
-        
-		// Get commissione
-    	ResultSet commissioneTargetNodes = searchService.query(attoNodeRef.getStoreRef(),
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @cm\\:name:\""+commissioneTarget+"\"");
-    	
-    	if(commissioneTargetNodes.length()>0){
-    		commissione = commissioneTargetNodes.getNodeRef(0);
+    	ResultSet commissioneTargetNodes=null;
+		
+    	// Get commissione
+    	try{
+	    	commissioneTargetNodes = searchService.query(attoNodeRef.getStoreRef(),
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @cm\\:name:\""+commissioneTarget+"\"");
+	    	
+	    	if(commissioneTargetNodes.length()>0){
+	    		commissione = commissioneTargetNodes.getNodeRef(0);
+	    	}
+    	}finally{
+    		if (commissioneTargetNodes!=null){
+    			commissioneTargetNodes.close();
+    		}
     	}
-    	
+    
 		return commissione; 
 	}
 
@@ -314,34 +365,43 @@ public class AttoUtil {
         namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
         namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
     	
+        
+        
     	// Get current Passaggio 
     	NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
     	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
   
     	String abbinamentoType = "{"+CRL_ATTI_MODEL+"}"+ABBINAMENTO_TYPE;
+    	ResultSet abbinamentiNodes=null;
+    	try{
+    		
     	
-    	ResultSet abbinamentiNodes = searchService.query(attoNodeRef.getStoreRef(),
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Abbinamenti/*\" AND TYPE:\""+abbinamentoType+"\" AND ISNULL:\"crlatti:dataDisabbinamento\"");
-    	
-    	//System.out.println((String) nodeService.getProperty(attoNodeRef, ContentModel.PROP_NAME));
-		
-    	
-    	for(int i=0; i<abbinamentiNodes.length(); i++) {
-    		
-    		NodeRef abbinamento = abbinamentiNodes.getNodeRef(i);
-    		
-    		//System.out.println((String) nodeService.getProperty(abbinamento, ContentModel.PROP_NAME));
-    		
-    		List<AssociationRef> attiAbbinatiAssociati = nodeService.getTargetAssocs(abbinamento,
-    				QName.createQName(CRL_ATTI_MODEL, ASSOC_ATTO_ASSOCIATO_ABBINAMENTO));
-    		
-    		if(attiAbbinatiAssociati.size()>0){
-    			attiAbbinatiList.add(attiAbbinatiAssociati.get(0).getTargetRef());
+	    	abbinamentiNodes = searchService.query(attoNodeRef.getStoreRef(),
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Abbinamenti/*\" AND TYPE:\""+abbinamentoType+"\" AND ISNULL:\"crlatti:dataDisabbinamento\"");
+	    	
+	    	//System.out.println((String) nodeService.getProperty(attoNodeRef, ContentModel.PROP_NAME));
+			
+	    	
+	    	for(int i=0; i<abbinamentiNodes.length(); i++) {
+	    		
+	    		NodeRef abbinamento = abbinamentiNodes.getNodeRef(i);
+	    		
+	    		//System.out.println((String) nodeService.getProperty(abbinamento, ContentModel.PROP_NAME));
+	    		
+	    		List<AssociationRef> attiAbbinatiAssociati = nodeService.getTargetAssocs(abbinamento,
+	    				QName.createQName(CRL_ATTI_MODEL, ASSOC_ATTO_ASSOCIATO_ABBINAMENTO));
+	    		
+	    		if(attiAbbinatiAssociati.size()>0){
+	    			attiAbbinatiList.add(attiAbbinatiAssociati.get(0).getTargetRef());
+	    		}
+	    		
+	    		
+	    	}
+    	} finally {
+    		if (abbinamentiNodes!=null){
+    			abbinamentiNodes.close();
     		}
-    		
-    		
     	}
-    	
     	
     	
 		return attiAbbinatiList;

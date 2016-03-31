@@ -79,6 +79,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
             }
             System.out.println("End of search phase: "+(System.currentTimeMillis()-startTs)+"ms");
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
+            //Resultset chiusi in retrieveAttiReportAssCommissione
             LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAttiReportAssCommissione(commissione2results, spacesStore, atto2commissione);
 
             // obtain as much table as the results spreaded across the resultSet

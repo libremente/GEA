@@ -57,13 +57,18 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     	    JSONObject jsonObj = new JSONObject(json);
     	    String tipoTemplate = (String)jsonObj.get("tipoTemplate");
     		 
-			// Search document template node	
-			ResultSet templatesResults = searchService.query(Repository.getStoreRef(), 
-		    
-		    SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Reports//*\" AND TYPE:\""+tipoTemplate+"\"");
-			
-			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
-
+    	    ResultSet templatesResults=null;
+    	    NodeRef templateNodeRef=null;
+    	    try {
+	    	    // Search document template node	
+				templatesResults = searchService.query(Repository.getStoreRef(), 
+			    
+			    SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Reports//*\" AND TYPE:\""+tipoTemplate+"\"");
+				
+				templateNodeRef = templatesResults.getNodeRef(0);
+    	    } finally {
+    	    	templatesResults.close();
+    	    }
 			// Get byte array of template node content
 	    	ContentReader reader = contentService.getReader(templateNodeRef, ContentModel.PROP_CONTENT);
 	    	templateInputStream = reader.getContentInputStream();

@@ -494,27 +494,38 @@ public class DocxManager {
 		String gruppoConsiliare = StringUtils.EMPTY;
 		String luceneQuery = GRUPPO_FIRMATARIO_QUERY_ATTIVI.replaceAll(
 				QUERY_REPLACER, firmatario);
-		ResultSet firmatarioAttiviResults = searchService.query(
-				StoreRef.STORE_REF_WORKSPACE_SPACESSTORE,
-				SearchService.LANGUAGE_LUCENE, luceneQuery);
-		NodeRef firmatarioNodeRef = null;
-		if (firmatarioAttiviResults.length() > 0) {
-			// e' un consigliere attivo
-			firmatarioNodeRef = firmatarioAttiviResults.getNodeRef(0);
-		} else {
-			// cerco tra i consiglieri storici
-			luceneQuery = GRUPPO_FIRMATARIO_QUERY_STORICI.replaceAll(
-					QUERY_REPLACER, firmatario);
-			ResultSet firmatarioStoriciResults = searchService.query(
+		ResultSet firmatarioAttiviResults=null;
+		ResultSet firmatarioStoriciResults=null;
+		try{
+			firmatarioAttiviResults = searchService.query(
 					StoreRef.STORE_REF_WORKSPACE_SPACESSTORE,
 					SearchService.LANGUAGE_LUCENE, luceneQuery);
-			if (firmatarioStoriciResults.length() > 0) {
-				firmatarioNodeRef = firmatarioStoriciResults.getNodeRef(0);
+			NodeRef firmatarioNodeRef = null;
+			if (firmatarioAttiviResults.length() > 0) {
+				// e' un consigliere attivo
+				firmatarioNodeRef = firmatarioAttiviResults.getNodeRef(0);
+			} else {
+				// cerco tra i consiglieri storici
+				luceneQuery = GRUPPO_FIRMATARIO_QUERY_STORICI.replaceAll(
+						QUERY_REPLACER, firmatario);
+				firmatarioStoriciResults = searchService.query(
+						StoreRef.STORE_REF_WORKSPACE_SPACESSTORE,
+						SearchService.LANGUAGE_LUCENE, luceneQuery);
+				if (firmatarioStoriciResults.length() > 0) {
+					firmatarioNodeRef = firmatarioStoriciResults.getNodeRef(0);
+				}
 			}
-		}
-		if (firmatarioNodeRef != null) {
-			gruppoConsiliare = (String) nodeService.getProperty(
-					firmatarioNodeRef, PROP_CODICE_GRUPPO);
+			if (firmatarioNodeRef != null) {
+				gruppoConsiliare = (String) nodeService.getProperty(
+						firmatarioNodeRef, PROP_CODICE_GRUPPO);
+			}
+		} finally{
+			if (firmatarioAttiviResults!=null){
+				firmatarioAttiviResults.close();
+			}
+			if (firmatarioStoriciResults!=null){
+				firmatarioStoriciResults.close();
+			}
 		}
 		return gruppoConsiliare;
 	}

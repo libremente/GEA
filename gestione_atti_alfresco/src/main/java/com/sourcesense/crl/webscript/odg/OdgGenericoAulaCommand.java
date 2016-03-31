@@ -222,18 +222,26 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 
 	        String firmatarioType = "{"+attoUtil.CRL_ATTI_MODEL+"}"+"firmatarioAttoIndirizzo";
 	        
+	        ResultSet firmatariNodes=null;
+	        
 			// Get firmatari
-	    	ResultSet firmatariNodes = searchService.query(attoTrattato.getStoreRef(),
-	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneFirmatariNodePath+"/cm:Firmatari/*\" AND TYPE:\""+firmatarioType+"\"");
-			
-			
-			for(int j=0; j<firmatariNodes.length(); j++){
-				firmatariAttoTrattato += (String) nodeService.getProperty(firmatariNodes.getNodeRef(j), ContentModel.PROP_NAME);
-				if(j<firmatariNodes.length()-1){
-					firmatariAttoTrattato += ", ";
+	    	try{
+	    		
+		        firmatariNodes = searchService.query(attoTrattato.getStoreRef(),
+		  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneFirmatariNodePath+"/cm:Firmatari/*\" AND TYPE:\""+firmatarioType+"\"");
+				
+				
+				for(int j=0; j<firmatariNodes.length(); j++){
+					firmatariAttoTrattato += (String) nodeService.getProperty(firmatariNodes.getNodeRef(j), ContentModel.PROP_NAME);
+					if(j<firmatariNodes.length()-1){
+						firmatariAttoTrattato += ", ";
+					}
 				}
-			}
-			
+	    	} finally {
+	    		if (firmatariNodes!=null) {
+	    			firmatariNodes.close();
+	    		}
+	    	}
 			
 			
 			searchTerms.put("firmatariAttoIndirizzo", firmatariAttoTrattato);

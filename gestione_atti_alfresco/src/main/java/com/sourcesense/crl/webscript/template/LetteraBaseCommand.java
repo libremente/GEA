@@ -66,16 +66,23 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
     	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
   
 		
-		// Get commissioni consultive
-    	ResultSet commissioniConsultiveNodes = searchService.query(attoNodeRef.getStoreRef(),
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+attoUtil.RUOLO_COMM_CONSULTIVA+"\"");
-    	
-    	
-    	for (int i=0; i<commissioniConsultiveNodes.length(); i++) {
-    			
-    		commissioniConsultiveList.add(commissioniConsultiveNodes.getNodeRef(i));
+    	ResultSet commissioniConsultiveNodes = null;
+    	try{
+	    	// Get commissioni consultive
+	    	commissioniConsultiveNodes = searchService.query(attoNodeRef.getStoreRef(),
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+attoUtil.RUOLO_COMM_CONSULTIVA+"\"");
+	    	
+	    	
+	    	for (int i=0; i<commissioniConsultiveNodes.length(); i++) {
+	    			
+	    		commissioniConsultiveList.add(commissioniConsultiveNodes.getNodeRef(i));
+	    	}
+    	} finally {
+    		if (commissioniConsultiveNodes!=null){
+    			commissioniConsultiveNodes.close();
+    		}
+    		
     	}
-    	
 		
 		return commissioniConsultiveList;
 	}
@@ -103,11 +110,19 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
         String field = "{"+attoUtil.CRL_ATTI_MODEL+"}"+attoUtil.PROP_DATA_ASSEGNAZIONE_PARERE;
         sp.addSort(field, false);
     
-        ResultSet pareriNodes = serviceRegistry.getSearchService().query(sp);
-           
-        if(pareriNodes.getNodeRefs().size()>0){
-        	lastOrgano = pareriNodes.getNodeRef(0); 
+        ResultSet pareriNodes = null;
+        try{
+        	pareriNodes = serviceRegistry.getSearchService().query(sp);
+            
+            if(pareriNodes.getNodeRefs().size()>0){
+            	lastOrgano = pareriNodes.getNodeRef(0); 
+            }
+        } finally {
+        	if (pareriNodes!=null){
+        		pareriNodes.close();
+        	}
         }
+        
 		
 		return lastOrgano; 
 	}
@@ -134,12 +149,18 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
         String field = "@{"+attoUtil.CRL_ATTI_MODEL+"}"+attoUtil.PROP_DATA_FIRMA_FIRMATARIO;
         sp.addSort(field, false);
     
-        ResultSet firmatariNodes = serviceRegistry.getSearchService().query(sp);
-           
-        if(firmatariNodes.getNodeRefs().size()>0){
-        	lastFirmatario = firmatariNodes.getNodeRef(0); 
+        ResultSet firmatariNodes=null;
+        try{
+	        firmatariNodes = serviceRegistry.getSearchService().query(sp);
+	           
+	        if(firmatariNodes.getNodeRefs().size()>0){
+	        	lastFirmatario = firmatariNodes.getNodeRef(0); 
+	        }
+        } finally {
+        	if (firmatariNodes!=null){
+        		firmatariNodes.close();
+        	}
         }
-		
 		return lastFirmatario; 
 	}
 	

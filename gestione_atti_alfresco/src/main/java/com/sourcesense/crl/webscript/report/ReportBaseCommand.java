@@ -188,10 +188,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
         for (String commissione : attoChild2results.keySet()) {
             ResultSet commissioneResults = attoChild2results.get(commissione);
             List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
-
+            commissioneResults.close();
             //ORDER LIST
             sortAttiCommissione(nodeRefList);
-
+            
             this.retrieveAttiFromList(nodeRefList, spacesStore, atto2child,
                     child2atti, commissione);
         }
@@ -240,7 +240,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
         for (String commissione : attoChild2results.keySet()) {
             ResultSet commissioneResults = attoChild2results.get(commissione);
             List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
-
+            commissioneResults.close();
             //ORDER LIST
             sortAttiCommissione(nodeRefList);
 

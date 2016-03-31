@@ -81,21 +81,27 @@ public abstract class OdgBaseCommand implements OdgCommand{
         namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
         
     	String luceneSedutaNodePath = nodeService.getPath(sedutaNodeRef).toPrefixString(namespacePrefixResolver);
-        
-    	ResultSet attiTrattatiODG = searchService.query(sedutaNodeRef.getStoreRef(), 
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:AttiTrattati/*\"");
-    	
-    	for(int i=0; i< attiTrattatiODG.length(); i++){
-    		
-    		NodeRef attoTrattatoODGNodeRef = attiTrattatiODG.getNodeRef(i);
-   
-    		
-    		List<AssociationRef> attiTrattatiAssociati = nodeService.getTargetAssocs(attoTrattatoODGNodeRef,
-    				QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.ASSOC_ATTO_TRATTATO_SEDUTA));
-    		
-    		if(attiTrattatiAssociati.size() > 0){
-    			attiTrattati.add(attiTrattatiAssociati.get(0).getTargetRef());    		}
-    		
+    	ResultSet attiTrattatiODG = null;
+    	try{
+	    	attiTrattatiODG = searchService.query(sedutaNodeRef.getStoreRef(), 
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:AttiTrattati/*\"");
+	    	
+	    	for(int i=0; i< attiTrattatiODG.length(); i++){
+	    		
+	    		NodeRef attoTrattatoODGNodeRef = attiTrattatiODG.getNodeRef(i);
+	   
+	    		
+	    		List<AssociationRef> attiTrattatiAssociati = nodeService.getTargetAssocs(attoTrattatoODGNodeRef,
+	    				QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.ASSOC_ATTO_TRATTATO_SEDUTA));
+	    		
+	    		if(attiTrattatiAssociati.size() > 0){
+	    			attiTrattati.add(attiTrattatiAssociati.get(0).getTargetRef());    		}
+	    		
+	    	}
+    	} finally {
+    		if (attiTrattatiODG!=null){
+    			attiTrattatiODG.close();
+    		}
     	}
     	
     	return attiTrattati;
@@ -112,21 +118,27 @@ public abstract class OdgBaseCommand implements OdgCommand{
         namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
         
     	String luceneSedutaNodePath = nodeService.getPath(sedutaNodeRef).toPrefixString(namespacePrefixResolver);
-        
-    	ResultSet attiIndirizzoTrattatiODG = searchService.query(sedutaNodeRef.getStoreRef(), 
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:AttiSindacato/*\"");
-    	
-    	for(int i=0; i< attiIndirizzoTrattatiODG.length(); i++){
-    		
-    		NodeRef attoIndirizzoTrattatoODGNodeRef = attiIndirizzoTrattatiODG.getNodeRef(i);
-   
-    		
-    		List<AssociationRef> attiTrattatiAssociati = nodeService.getTargetAssocs(attoIndirizzoTrattatoODGNodeRef,
-    				QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.ASSOC_ATTO_INDIRIZZO_TRATTATO_SEDUTA));
-    		
-    		if(attiTrattatiAssociati.size() > 0){
-    			attiTrattati.add(attiTrattatiAssociati.get(0).getTargetRef());    		}
-    		
+    	ResultSet attiIndirizzoTrattatiODG=null;
+    	try{
+	    	attiIndirizzoTrattatiODG = searchService.query(sedutaNodeRef.getStoreRef(), 
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:AttiSindacato/*\"");
+	    	
+	    	for(int i=0; i< attiIndirizzoTrattatiODG.length(); i++){
+	    		
+	    		NodeRef attoIndirizzoTrattatoODGNodeRef = attiIndirizzoTrattatiODG.getNodeRef(i);
+	   
+	    		
+	    		List<AssociationRef> attiTrattatiAssociati = nodeService.getTargetAssocs(attoIndirizzoTrattatoODGNodeRef,
+	    				QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.ASSOC_ATTO_INDIRIZZO_TRATTATO_SEDUTA));
+	    		
+	    		if(attiTrattatiAssociati.size() > 0){
+	    			attiTrattati.add(attiTrattatiAssociati.get(0).getTargetRef());    		}
+	    		
+	    	}
+    	} finally {
+    		if (attiIndirizzoTrattatiODG!=null){
+    			attiIndirizzoTrattatiODG.close();
+    		}
     	}
     	
     	return attiTrattati;
@@ -144,12 +156,19 @@ public abstract class OdgBaseCommand implements OdgCommand{
         namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
         
     	String luceneSedutaNodePath = nodeService.getPath(sedutaNodeRef).toPrefixString(namespacePrefixResolver);
-        
-    	ResultSet conusultazioniODG = searchService.query(sedutaNodeRef.getStoreRef(), 
-  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:Audizioni/*\"");
     	
-    	for(int i=0; i< conusultazioniODG.length(); i++){
-    		consultazioniGenerali.add(conusultazioniODG.getNodeRef(i));
+    	ResultSet conusultazioniODG=null;
+    	try{
+	    	conusultazioniODG = searchService.query(sedutaNodeRef.getStoreRef(), 
+	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneSedutaNodePath+"/cm:Audizioni/*\"");
+	    	
+	    	for(int i=0; i< conusultazioniODG.length(); i++){
+	    		consultazioniGenerali.add(conusultazioniODG.getNodeRef(i));
+	    	}
+    	} finally {
+    		if (conusultazioniODG!=null) {
+    			conusultazioniODG.close();
+    		}
     	}
     	
     	return consultazioniGenerali;
@@ -169,19 +188,24 @@ public abstract class OdgBaseCommand implements OdgCommand{
         namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
 		
         String consultazioneType = "{"+attoUtil.CRL_ATTI_MODEL+"}consultazione";
-        
+        ResultSet consultazioniAttoTrattato=null;
     	for(int i=0; i< attiTrattati.size(); i++){
     		    			
     			String luceneAttoTrattatoNodePath = nodeService.getPath(attiTrattati.get(i)).toPrefixString(namespacePrefixResolver);
-    			
-    			ResultSet consultazioniAttoTrattato = searchService.query(attiTrattati.get(i).getStoreRef(), 
-    	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneAttoTrattatoNodePath+"/cm:Consultazioni/*\" AND TYPE:\""+consultazioneType+"\" " +
-    	  						"AND @crlatti\\:commissioneConsultazione:\""+gruppo+"\" " +
-    	  						"AND @crlatti\\:dataSedutaConsultazione:["+ dataSedutaConsultazione + " TO "+ dataSedutaConsultazione + " ]");
-    			
-    			
-    			for(int j=0; j<consultazioniAttoTrattato.length(); j++){	
-    				consultazioni.add(consultazioniAttoTrattato.getNodeRef(j));
+    			try {
+	    			consultazioniAttoTrattato = searchService.query(attiTrattati.get(i).getStoreRef(), 
+	    	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+luceneAttoTrattatoNodePath+"/cm:Consultazioni/*\" AND TYPE:\""+consultazioneType+"\" " +
+	    	  						"AND @crlatti\\:commissioneConsultazione:\""+gruppo+"\" " +
+	    	  						"AND @crlatti\\:dataSedutaConsultazione:["+ dataSedutaConsultazione + " TO "+ dataSedutaConsultazione + " ]");
+	    			
+	    			
+	    			for(int j=0; j<consultazioniAttoTrattato.length(); j++){	
+	    				consultazioni.add(consultazioniAttoTrattato.getNodeRef(j));
+	    			}
+    			} finally {
+    				if (consultazioniAttoTrattato!=null){
+    					consultazioniAttoTrattato.close();
+    				}
     			}
     		
     	}
@@ -213,24 +237,30 @@ public abstract class OdgBaseCommand implements OdgCommand{
 		sp.setQuery(query);
 		sp.addSort(sortField, false);
 		sp.setLimit(2);
-	
-	
-		ResultSet sedute = searchService.query(sp);
-	
 		VerbaleObject verbale = null;
+		ResultSet sedute=null;
+		try{
+			sedute = searchService.query(sp);
 		
-		if(sedute.length()>1){
-			NodeRef sedutaPrec = sedute.getNodeRef(1);
 			
-			String numeroSedutaPrec = (String) nodeService.getProperty(sedutaPrec, QName.createQName(attoUtil.CRL_ATTI_MODEL, "numVerbaleSedutaODG"));
-			Date dataSedutaPrec = (Date) nodeService.getProperty(sedutaPrec, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SEDUTA));
 			
-			if(numeroSedutaPrec==null){
-				numeroSedutaPrec = "";
+			if(sedute.length()>1){
+				NodeRef sedutaPrec = sedute.getNodeRef(1);
+				
+				String numeroSedutaPrec = (String) nodeService.getProperty(sedutaPrec, QName.createQName(attoUtil.CRL_ATTI_MODEL, "numVerbaleSedutaODG"));
+				Date dataSedutaPrec = (Date) nodeService.getProperty(sedutaPrec, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SEDUTA));
+				
+				if(numeroSedutaPrec==null){
+					numeroSedutaPrec = "";
+				}
+				
+				verbale = new VerbaleObject(numeroSedutaPrec, dataSedutaPrec);
+		
 			}
-			
-			verbale = new VerbaleObject(numeroSedutaPrec, dataSedutaPrec);
-	
+		} finally {
+			if (sedute!=null){
+				sedute.close();
+			}
 		}
 				
 		return verbale;

@@ -79,6 +79,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
+            // Chiusura resultset in retrieveAtti
             LinkedListMultimap<String, NodeRef> commissione2atti = this
                     .retrieveAtti(commissione2results, spacesStore,
                     atto2commissione);
