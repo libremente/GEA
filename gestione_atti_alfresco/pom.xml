@@ -30,7 +30,7 @@
 		below as the AMP module version. Instead we use the
 		buildnumber-maven-plugin. This requires a scm connection.
 	-->
-	<version>1.1.29-SNAPSHOT</version>
+	<version>1.1.29</version>
 	<description>CRL Gestione Atti AMP project</description>
  	
  	<!-- Repositories without proxing from Pronetics -->
@@ -272,9 +272,9 @@
 		for AMP version numbering
 	-->
 	<scm>
-		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/trunk/gestione_atti_alfresco</developerConnection>
-		<connection>https://forge.pronetics.it/svn/crl</connection>
-		<url>https://forge.pronetics.it/svn/crl</url>
+		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/tags/crl_gestione_atti_alfresco-1.1.29</developerConnection>
+		<connection>scm:svn:https://forge.pronetics.it/svn/crl/tags/crl_gestione_atti_alfresco-1.1.29</connection>
+		<url>scm:svn:https://forge.pronetics.it/svn/crl/tags/crl_gestione_atti_alfresco-1.1.29</url>
 	</scm>
 	<build>
         <plugins>
