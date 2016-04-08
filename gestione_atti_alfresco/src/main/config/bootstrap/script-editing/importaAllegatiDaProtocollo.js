@@ -79,12 +79,9 @@ function importaAllegato(){
 			}else{
 				
 				var allegatiFolderNode = attoFolderNode.childrenByXPath("*[@cm:name='Allegati']")[0];
-				
-				
-				var allegatoResults = allegatiFolderNode.childrenByXPath("*[@cm:name='"+filename+"']");
-				var allegatoNode = null;
-				if(allegatoResults!=null && allegatoResults.length>0){
-					allegatoNode = allegatoResults[0];
+				//Modifica per gestire filename contenenti apici
+				var allegatoNode = allegatiFolderNode.childByNamePath(filename);
+				if(allegatoNode!=null){
 					allegatoNode.properties["crlatti:idProtocollo"] = idProtocolloAllegato;
 					allegatoNode.properties.content.write(document.properties.content);
 					allegatoNode.properties.content.setEncoding("UTF-8");
