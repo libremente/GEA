@@ -31,6 +31,7 @@ public class DataExtractor {
         PreparedStatement ps=null;
         try {
             conn = dataSource.getConnection();
+            ps = conn.prepareStatement(Constant.QUERY_LEGISLATURE);
             rs = ps.executeQuery();
             Legislature legislature = null;
             List<Legislature> legislatures = new ArrayList<Legislature>();
