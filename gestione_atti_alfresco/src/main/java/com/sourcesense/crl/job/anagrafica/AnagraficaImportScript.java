@@ -218,9 +218,9 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 	            
 	            /* Locate committes folder node on Alfresco repository */
 	            // never used
-//	            ResultSet committesFolderNodeResultSet = searchService.query(Repository.getStoreRef(),
-//	                                                                          SearchService.LANGUAGE_LUCENE,
-//	                                                                          "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni\"");
+	            ResultSet committesFolderNodeResultSet = searchService.query(Repository.getStoreRef(),
+	                                                                          SearchService.LANGUAGE_LUCENE,
+	                                                                          "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni\"");
 	            
 	            /* Load all councilors extracted from DB on Alfresco repository */
 	           
@@ -254,24 +254,27 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 	                		String luceneQueryCommissione = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/cm:"+ISO9075.encode(committeName)+"\"";
 	                		
 	                		ResultSet commissioneResults = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_LUCENE, luceneQueryCommissione);
+	                		NodeRef commissioneCorrente;
 	                		if(commissioneResults!=null && commissioneResults.length()>0){
-	                			NodeRef commissioneCorrente = commissioneResults.getNodeRef(0);
-		                		nodeService.setProperty(commissioneCorrente, Constant.PROP_NUMERO_ORDINAMENTO_COMMISSIONE_ANAGRAFICA, committeOrder);
+	                			commissioneCorrente = commissioneResults.getNodeRef(0);
+	                		}else {
+	                			commissioneCorrente = fileFolderService.create(committesFolderNodeResultSet.getNodeRef(0),committeName, Constant.TYPE_COMMISSIONE_ANAGRAFICA).getNodeRef();
+	                		}	
+	                			nodeService.setProperty(commissioneCorrente, Constant.PROP_NUMERO_ORDINAMENTO_COMMISSIONE_ANAGRAFICA, committeOrder);
 		                		
 		                		
-		                		/* create alfresco authority (group) named as "LEGISLATURA_NomeCommissione" if does not exist */
-		                		String alfrescoGroupName = nomeLegislaturaCorrente + "_" + committeName;
-		                		
-		                		if(authorityService.getAuthorityNodeRef("GROUP_"+alfrescoGroupName)==null){
-		                			authorityService.createAuthority(AuthorityType.GROUP, alfrescoGroupName);
-		                			authorityService.addAuthority(Constant.GROUP_COMMISSIONI, "GROUP_"+alfrescoGroupName);
-		                			logger.info("Creata l'authority '"+alfrescoGroupName+"'"); 
-		                		}
-		                		
-	
-		                		committesMap.put(committeName,commissioneCorrente);
-		                		logger.info("Aggiornato il nodo folder '"+commissioneCorrente+"' nel repository di Alfresco"); 
+	                		/* create alfresco authority (group) named as "LEGISLATURA_NomeCommissione" if does not exist */
+	                		String alfrescoGroupName = nomeLegislaturaCorrente + "_" + committeName;
+	                		
+	                		if(authorityService.getAuthorityNodeRef("GROUP_"+alfrescoGroupName)==null){
+	                			authorityService.createAuthority(AuthorityType.GROUP, alfrescoGroupName);
+	                			authorityService.addAuthority(Constant.GROUP_COMMISSIONI, "GROUP_"+alfrescoGroupName);
+	                			logger.info("Creata l'authority '"+alfrescoGroupName+"'"); 
 	                		}
+	                		
+
+	                		committesMap.put(committeName,commissioneCorrente);
+	                		logger.info("Aggiornato il nodo folder '"+commissioneCorrente+"' nel repository di Alfresco"); 
 	                		if (commissioneResults!=null){
 	                			commissioneResults.close();
 	                		}
