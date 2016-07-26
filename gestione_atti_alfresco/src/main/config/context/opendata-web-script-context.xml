@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+
+<beans>
+	<bean id="openDataCommand" class="com.sourcesense.crl.util.OpenDataCommand">
+		<property name="nodeService" ref="NodeService" />
+		<property name="listSeparator">
+			<value>${nga:opendata.separator.list}</value>
+		</property>
+		<property name="linkAtto">
+			<value>${nga:opendata.bancadati.link.atto}</value>
+		</property>
+	</bean>
+
+	<bean id="webscript.crl.gestioneatti.exportExcel.list.get"
+		class="com.sourcesense.crl.webscript.opendata.NodeListDownloadWebScript"
+		parent="webscript">
+		<property name="nodeService" ref="NodeService" />
+		<property name="contentService" ref="ContentService" />
+		<property name="personService" ref="PersonService" />
+		<property name="namespaceService" ref="namespaceService" />
+		<property name="dictionaryService" ref="dictionaryService" />
+		<property name="searchService" ref="searchService" />
+		<property name="openDataCommand" ref="openDataCommand" />
+		<property name="overHeadings">
+			<value>id_atto;legislatura;tipo_atto;n_atto;oggetto;data_presentazione;stato;primo_firmatario;tutti_firmatari;tipo_iniziativa;tipo_chiusura;com_referente_co-referente_redigente_deliberante;data_assegnazione;commissioni_consultive;relatore;data_nomina_relatore;abbinamenti;esito_votazione_commissione_referente_redigente_deliberante;data_votazione_commissione;esito_votazione_aula;data_votazione_aula;N_DCR;BURL;Data_BURL;n_lr;data_lr;link_testo_presentato;link_atto_bancadati</value>
+		</property>
+		<property name="overDescriptions">
+			<!-- <value>id_atto;tipo_atto;n_atto;oggetto;data_presentazione;stato;id_primo_firmatario;primo_firmatario;id_tutti_firmatari;tutti_firmatari;tipo_iniziativa;tipo_chiusura;com_referente_co-referente_redigente_deliberante;data_assegnazione;commissioni_consultive;id_relatore;relatore;data_nomina_relatore;abbinamenti;esito_votazione_commissione_referente_redigente_deliberante;data_votazione_commissione;esito_votazione_aula;data_votazione_aula;N 
+				DCR;BURL;Data BURL;n_lr;data_lr;ids_lr;link_testo_presentato;link_atto_bancadati 
+				</value> -->
+			<value>ID ATTO</value>
+		</property>
+		<property name="modelProperties">
+			<!-- <value>crlatti:numeroAtto</value> -->
+			<!-- <value>cm:name;</value> -->
+			<value>openDataCommand:getIdAtto;crlatti:legislatura;openDataCommand:getTipoAtto;crlatti:numeroAtto;crlatti:oggetto;crlatti:dataIniziativa;crlatti:statoAtto;crlatti:primoFirmatario;openDataCommand:nope;crlatti:tipoIniziativa;crlatti:tipoChiusura;crlatti:commReferente;crlatti:dataAssegnazioneCommissioneReferente;crlatti:commConsultiva;crlatti:relatori;openDataCommand:nope;openDataCommand:nope;crlatti:esitoVotoComRef;openDataCommand:nope;openDataCommand:nope;openDataCommand:nope;crlatti:numeroDcrPassaggioAula;crlatti:numeroPubblicazioneBURL;crlatti:dataPubblicazioneBURL;crlatti:numeroLr;crlatti:dataLr;openDataCommand:nope;openDataCommand:linkAtto</value>
+		</property>
+		<property name="openDataDateFormat">
+			<value>${nag:opendata.date.format}</value>
+		</property>
+		
+	</bean>
+</beans>

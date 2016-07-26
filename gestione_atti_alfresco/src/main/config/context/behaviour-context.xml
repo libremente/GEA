@@ -11,28 +11,63 @@
 	OF ANY KIND, either express or implied. See the License for the specific 
 	language governing permissions and limitations under the License. -->
 <beans>
-    
-    
-    <bean id="com.sourcesense.crl.behaviour.AttoFolderBehaviour" class="com.sourcesense.crl.behaviour.AttoFolderBehaviour" init-method="init">
-    	<property name="policyComponent">
-    		<ref bean="policyComponent"/>
-    	</property>
-    	<property name="nodeService">
-    		<ref bean="nodeService"/>
-    	</property>
-    	<property name="searchService">
-    		<ref bean="searchService"/>
-    	</property>
-    	<property name="fileFolderService">
-    		<ref bean="fileFolderService"/>
-    	</property>
-    	<property name="contentService">
-    		<ref bean="contentService"/>
-    	</property>
-        <property name="namespaceService">
-    		<ref bean="namespaceService"/>
-    	</property>
-    </bean>  
-    
+
+	<bean id="upsertOpenData"
+		class="com.sourcesense.crl.webservice.opendata.client.UpsertOpenData">
+	</bean>
+
+	<bean id="com.sourcesense.crl.behaviour.AttoFolderBehaviour"
+		class="com.sourcesense.crl.behaviour.AttoFolderBehaviour" depends-on="openDataCommand"
+		init-method="init">
+		<property name="tipoAtto">
+			<value>${nga:opendata.behaviour.tipoAtto}</value>
+		</property>
+		<property name="policyComponent">
+			<ref bean="policyComponent" />
+		</property>
+		<property name="nodeService">
+			<ref bean="nodeService" />
+		</property>
+		<property name="searchService">
+			<ref bean="searchService" />
+		</property>
+		<property name="fileFolderService">
+			<ref bean="fileFolderService" />
+		</property>
+		<property name="contentService">
+			<ref bean="contentService" />
+		</property>
+		<property name="namespaceService">
+			<ref bean="namespaceService" />
+		</property>
+		<property name="actionService">
+			<ref bean="actionService" />
+		</property>
+		<property name="openDataAdminMailAddress">
+			<value>${nga:opendata.admin.mailaddress}</value>
+		</property>
+		<property name="privateToken">
+			<value>${nga:opendata.soap.privateToken}</value>
+		</property>
+		<property name="dataSeparator">
+			<value>${nga:opendata.separator.data}</value>
+		</property>
+		<property name="upsertOpenData">
+			<ref bean="upsertOpenData" />
+		</property>
+		<property name="openDataCommand">
+			<ref bean="openDataCommand" />
+		</property>
+
+		<property name="modelProperties">
+			<!-- <value>crlatti:numeroAtto</value> -->
+			<!-- <value>cm:name;</value> -->
+			<value>openDataCommand:getIdAtto;crlatti:legislatura;openDataCommand:getTipoAtto;crlatti:numeroAtto;crlatti:oggetto;crlatti:dataIniziativa;crlatti:statoAtto;crlatti:primoFirmatario;openDataCommand:nope;crlatti:tipoIniziativa;crlatti:tipoChiusura;crlatti:commReferente;crlatti:dataAssegnazioneCommissioneReferente;crlatti:commConsultiva;crlatti:relatori;openDataCommand:nope;openDataCommand:nope;crlatti:esitoVotoComRef;openDataCommand:nope;openDataCommand:nope;openDataCommand:nope;crlatti:numeroDcrPassaggioAula;crlatti:numeroPubblicazioneBURL;crlatti:dataPubblicazioneBURL;crlatti:numeroLr;crlatti:dataLr;openDataCommand:nope;openDataCommand:linkAtto</value>
+		</property>
+		<property name="openDataDateFormat">
+			<value>${nga:opendata.date.format}</value>
+		</property>
+	</bean>
+
 </beans>
     
