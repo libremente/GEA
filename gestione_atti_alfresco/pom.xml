@@ -258,7 +258,7 @@
 			<version>2.1.7</version>
 			<scope>provided</scope>
 		</dependency>
-		-->
+		
 		<!--
 			Example AMP dependency: will be properly overlayed in the WAR
 			produced by the integration-test phase in profile 'webapp'
