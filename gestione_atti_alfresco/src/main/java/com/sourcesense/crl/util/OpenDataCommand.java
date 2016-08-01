@@ -149,7 +149,7 @@ public class OpenDataCommand {
 			try {
 				String idAnagrafica = getIdAnagrafica(primoFirmatario);
 				if (idAnagrafica.length() > 0) {
-					firmatario = idAnagrafica + "-" + primoFirmatario;
+					firmatario = "-" + idAnagrafica + "-" + primoFirmatario;
 				}
 			} catch (Exception e) {
 				logger.error("Impossibile recuperare il primo firmatario", e);
@@ -173,9 +173,9 @@ public class OpenDataCommand {
 						String idAnagrafica = getIdAnagrafica(firmatari.get(i));
 						if (idAnagrafica.length() > 0) {
 							if (firmatariString.isEmpty()) {
-								firmatariString += idAnagrafica + "-" + firmatari.get(i);
+								firmatariString += "-" + idAnagrafica + "-" + firmatari.get(i);
 							} else {
-								firmatariString += listSeparator + idAnagrafica + "-" + firmatari.get(i);
+								firmatariString += listSeparator + "-" + idAnagrafica + "-" + firmatari.get(i);
 							}
 						}
 					} catch (Exception e) {
@@ -275,7 +275,7 @@ public class OpenDataCommand {
 			try {
 				String idAnagrafica = getIdAnagrafica(relatoreName);
 				if (idAnagrafica.length() > 0) {
-					relatore = idAnagrafica + "-" + relatoreName;
+					relatore = "-" + idAnagrafica + "-" + relatoreName;
 				}
 			} catch (Exception e) {
 				logger.error("Impossibile recuperare il relatore", e);
