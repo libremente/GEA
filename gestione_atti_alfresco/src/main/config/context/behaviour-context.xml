@@ -3,7 +3,7 @@
 <!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
 	license agreements. See the NOTICE file distributed with this work for additional 
 	information regarding copyright ownership. The ASF licenses this file to 
-	You under the Apache License, Version 2.0 (the "License"); you may not use 
+	You under the Apache License, Version 2.0 (the "License"), you may not use 
 	this file except in compliance with the License. You may obtain a copy of 
 	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
 	by applicable law or agreed to in writing, software distributed under the 
@@ -61,11 +61,14 @@
 
 		<property name="modelProperties">
 			<!-- <value>crlatti:numeroAtto</value> -->
-			<!-- <value>cm:name;</value> -->
-			<value>openDataCommand:getIdAtto;crlatti:legislatura;openDataCommand:getTipoAtto;crlatti:numeroAtto;crlatti:oggetto;crlatti:dataIniziativa;crlatti:statoAtto;crlatti:primoFirmatario;openDataCommand:nope;crlatti:tipoIniziativa;crlatti:tipoChiusura;crlatti:commReferente;crlatti:dataAssegnazioneCommissioneReferente;crlatti:commConsultiva;crlatti:relatori;openDataCommand:nope;openDataCommand:nope;crlatti:esitoVotoComRef;openDataCommand:nope;openDataCommand:nope;openDataCommand:nope;crlatti:numeroDcrPassaggioAula;crlatti:numeroPubblicazioneBURL;crlatti:dataPubblicazioneBURL;crlatti:numeroLr;crlatti:dataLr;openDataCommand:nope;openDataCommand:linkAtto</value>
+			<!-- <value>cm:name,</value> -->
+			<value>openDataCommand:getIdAtto,crlatti:legislatura,openDataCommand:getTipoAtto,crlatti:numeroAtto,crlatti:oggetto,crlatti:dataIniziativa,crlatti:statoAtto,openDataCommand:getPrimoFirmatario,openDataCommand:getTuttiFirmatari,crlatti:tipoIniziativa,crlatti:tipoChiusura,crlatti:commReferente,crlatti:dataAssegnazioneCommissioneReferente,crlatti:commConsultiva,openDataCommand:getRelatore,openDataCommand:getDataNominaRelatore,openDataCommand:getAbbinamenti,crlatti:esitoVotoComRef,openDataCommand:getDataVotazioneCommissione,openDataCommand:getEsitoVotazioneAula,openDataCommand:getDataVotazioneAula,crlatti:numeroDcrPassaggioAula,crlatti:numeroPubblicazioneBURL,crlatti:dataPubblicazioneBURL,crlatti:numeroLr,crlatti:dataLr,openDataCommand:nope,openDataCommand:linkAtto</value>
 		</property>
 		<property name="openDataDateFormat">
 			<value>${nga:opendata.date.format}</value>
+		</property>
+		<property name="listSeparator">
+			<value>${nga:opendata.separator.list}</value>
 		</property>
 	</bean>
 

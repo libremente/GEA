@@ -34,10 +34,13 @@ public class AttoUtil {
 	public static final String FIRMATARIO_TYPE = "firmatario";
 	public static final String TYPE_LEGISLATURA = "legislaturaAnagrafica";
 	public static final QName TYPE_ATTO = QName.createQName(CRL_ATTI_MODEL, "atto");
+	public static final QName TYPE_AULA = QName.createQName(CRL_ATTI_MODEL, "aula");
+	public static final QName COMMISSIONE_TYPE_QNAME = QName.createQName(CRL_ATTI_MODEL, COMMISSIONE_TYPE);
+	public static final QName TYPE_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL, RELATORE_TYPE);
 	public static final String ABBINAMENTO_TYPE = "abbinamento";
 
 	// crlAttiModel properties
-	public static final String PROP_STATO_ATTO = "stato_atto";
+	public static final String PROP_STATO_ATTO = "statoAtto";
 	public static final String PROP_ANNO = "anno";
 	public static final String PROP_MESE = "mese";
 	public static final String PROP_LEGISLATURA = "legislatura";
@@ -79,10 +82,27 @@ public class AttoUtil {
 	public static final String PROP_NUMERO_ATTO_INDIRIZZO = "numeroAttoIndirizzo";
 	public static final String PROP_OGGETTO_ATTO_INDIRIZZO = "oggettoAttoIndirizzo";
 
+	public static final String PROP_PRIMO_FIRMATARIO = "primoFirmatario";
+	public static final String PROP_DATA_NOMINA_RELATORE = "dataNominaRelatore";
+
+	public static final String ESITO_VOTO_PASSAGGIO_AULA = "esitoVotoPassaggioAula";
+	public static final String DATA_SEDUTA_PASSAGGIO_AULA = "dataSedutaPassaggioAula";
+
 	public static final QName PROP_STATO_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_STATO_ATTO);
 	public static final QName PROP_LEGISLATURA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA);
 	public static final QName PROP_NUMERO_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO);
 	public static final QName PROP_TIPO_INIZIATIVA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_TIPO_INIZIATIVA);
+	public static final QName PROP_PRIMO_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_PRIMO_FIRMATARIO);
+	public static final QName PROP_FIRMATARI_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_FIRMATARI);
+	public static final QName PROP_DATA_NOMINA_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			PROP_DATA_NOMINA_RELATORE);
+	public static final QName PROP_ESITO_VOTAZIONE_COMMISSIONE_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			PROP_ESITO_VOTAZIONE_COMMISSIONE);
+	public static final QName ESITO_VOTO_PASSAGGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			ESITO_VOTO_PASSAGGIO_AULA);
+
+	public static final QName DATA_SEDUTA_PASSAGGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			DATA_SEDUTA_PASSAGGIO_AULA);
 
 	// crl associations
 	public static final String ASSOC_ATTO_TRATTATO_SEDUTA = "attoTrattatoSedutaODG";

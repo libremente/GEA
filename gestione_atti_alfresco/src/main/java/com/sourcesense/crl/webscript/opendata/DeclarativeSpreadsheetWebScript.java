@@ -137,12 +137,12 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 		}
 	}
 
-	public void setOverHeadings(String headingsString) {
-		this.overHeadings = headingsString.split(";");
+	public void setOverHeadings(String[] headingsString) {
+		this.overHeadings = headingsString;
 	}
 
-	public void setOverDescriptions(String descriptionsString) {
-		this.overDescriptions = descriptionsString.split(";");
+	public void setOverDescriptions(String[] descriptionsString) {
+		this.overDescriptions = descriptionsString;
 	}
 
 	/**

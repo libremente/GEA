@@ -2,6 +2,7 @@ package com.sourcesense.crl.behaviour;
 
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -70,12 +71,13 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 	private ActionService actionService;
 	private String openDataAdminMailAddress;
 	private String dataSeparator;
+	private String listSeparator;
 	private OpenDataCommand openDataCommand;
 	private String[] modelProperties;
 	private String openDataDateFormat;
 	private UpsertOpenData upsertOpenData;
 	private NamespaceService namespaceService;
-	private String tipoAtto;
+	private String[] tipoAtto;
 	private String privateToken;
 
 	public void setPrivateToken(String privateToken) {
@@ -86,7 +88,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 		this.openDataCommand = openDataCommand;
 	}
 
-	public void setTipoAtto(String tipoAtto) {
+	public void setTipoAtto(String[] tipoAtto) {
 		this.tipoAtto = tipoAtto;
 	}
 
@@ -130,12 +132,16 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 		this.dataSeparator = dataSeparator;
 	}
 
-	public void setModelProperties(String modelPropertiesString) {
-		this.modelProperties = modelPropertiesString.split(";");
+	public void setModelProperties(String[] modelPropertiesString) {
+		this.modelProperties = modelPropertiesString;
 	}
 
 	public void setOpenDataDateFormat(String openDataDateFormat) {
 		this.openDataDateFormat = openDataDateFormat;
+	}
+
+	public void setListSeparator(String listSeparator) {
+		this.listSeparator = listSeparator;
 	}
 
 	public void init() {
@@ -146,11 +152,13 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 		onUpdateProperties = new JavaBehaviour(this, "onUpdateProperties",
 				Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
 		onCreateNode = new JavaBehaviour(this, "onCreateNode", Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
-		QName tipoAttoQName = QName.createQName(AttoUtil.CRL_ATTI_MODEL, tipoAtto);
-		this.policyComponent.bindClassBehaviour(NodeServicePolicies.OnUpdatePropertiesPolicy.QNAME, tipoAttoQName,
-				onUpdateProperties);
-		this.policyComponent.bindClassBehaviour(NodeServicePolicies.OnCreateNodePolicy.QNAME, tipoAttoQName,
-				onCreateNode);
+		for (int i = 0; i < tipoAtto.length; i++) {
+			QName tipoAttoQName = QName.createQName(AttoUtil.CRL_ATTI_MODEL, tipoAtto[i]);
+			this.policyComponent.bindClassBehaviour(NodeServicePolicies.OnUpdatePropertiesPolicy.QNAME, tipoAttoQName,
+					onUpdateProperties);
+			this.policyComponent.bindClassBehaviour(NodeServicePolicies.OnCreateNodePolicy.QNAME, tipoAttoQName,
+					onCreateNode);
+		}
 	}
 
 	public void beforeDeleteNode(NodeRef nodeRef) {
@@ -323,12 +331,58 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				val = openDataCommand.getLinkAtto(childRef);
 				break;
 			}
+			case "{openDataCommand}getPrimoFirmatario": {
+				val = openDataCommand.getPrimoFirmatario(childRef);
+				break;
+			}
+			case "{openDataCommand}getTuttiFirmatari": {
+				val = openDataCommand.getTuttiFirmatari(childRef);
+				break;
+			}
+			case "{openDataCommand}getRelatore": {
+				val = openDataCommand.getRelatore(childRef);
+				break;
+			}
+			case "{openDataCommand}getDataNominaRelatore": {
+				val = openDataCommand.getDataNominaRelatore(childRef);
+				break;
+			}
+			case "{openDataCommand}getAbbinamenti": {
+				val = openDataCommand.getAbbinamenti(childRef);
+				break;
+			}
+			case "{openDataCommand}getDataVotazioneCommissione": {
+				val = openDataCommand.getDataVotazioneCommissione(childRef);
+				break;
+			}
+			case "{openDataCommand}getEsitoVotazioneAula": {
+				val = openDataCommand.getEsitoVotazioneAula(childRef);
+				break;
+			}
+			case "{openDataCommand}getDataVotazioneAula": {
+				val = openDataCommand.getDataVotazioneAula(childRef);
+				break;
+			}
 			default: {
 				val = nodeService.getProperty(childRef, propertyQName);
 				if (val instanceof Date) {
 					val = DateFormatUtils.format((Date) val, openDataDateFormat);
+				} else if (val instanceof ArrayList) {
+					StringBuilder tmpVal = new StringBuilder("");
+					int z = ((ArrayList) val).size();
+					for (int j = 0; i < z; j++) {
+						((ArrayList) val).get(j);
+						tmpVal.append(((ArrayList) val).get(j).toString());
+						if (j < z - 1) {
+							tmpVal.append(listSeparator);
+						}
+					}
+					val = tmpVal.toString();
 				}
 			}
+			}
+			if (val == null) {
+				val = "";
 			}
 			odAtto.append(val);
 			if (i < n - 1) {
@@ -343,6 +397,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 		String odAtto = "";
 		try {
 			odAtto = generateOdAtto(childAssocRef.getChildRef());
+			logger.debug("odAtto: " + odAtto);
 			String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken);
 			logger.info("Il webservice ha restituito " + response);
 		} catch (Exception e) {
@@ -368,6 +423,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 						+ nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
 				String odAtto = "";
 				odAtto = generateOdAtto(nodeRef);
+				logger.debug("odAtto: " + odAtto);
 				String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken);
 				logger.info("Il webservice ha restituito " + response);
 			} catch (Exception e) {
@@ -386,6 +442,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				logger.info("Notifica cancellazione dell'atto " + nodeService.getType(nodeRef) + " "
 						+ nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
 				idAtto = openDataCommand.getIdAtto(nodeRef);
+				logger.debug("idAtto: " + idAtto);
 				String response = upsertOpenData.getUpsertOpenDataSoap().deleteATTO(idAtto, privateToken);
 				logger.info("Il webservice ha restituito " + response);
 			} catch (Exception e) {
