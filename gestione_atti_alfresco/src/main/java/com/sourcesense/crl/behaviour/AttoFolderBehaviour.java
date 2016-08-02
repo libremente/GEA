@@ -345,7 +345,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 			}
 			case "{openDataCommand}getDataNominaRelatore": {
 				val = openDataCommand.getDataNominaRelatore(childRef);
-				val = DateFormatUtils.format((Date) val, openDataDateFormat);
+				if (val != null)
+					val = DateFormatUtils.format((Date) val, openDataDateFormat);
 				break;
 			}
 			case "{openDataCommand}getAbbinamenti": {
@@ -354,7 +355,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 			}
 			case "{openDataCommand}getDataVotazioneCommissione": {
 				val = openDataCommand.getDataVotazioneCommissione(childRef);
-				val = DateFormatUtils.format((Date) val, openDataDateFormat);
+				if (val != null)
+					val = DateFormatUtils.format((Date) val, openDataDateFormat);
 				break;
 			}
 			case "{openDataCommand}getEsitoVotazioneAula": {
@@ -363,7 +365,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 			}
 			case "{openDataCommand}getDataVotazioneAula": {
 				val = openDataCommand.getDataVotazioneAula(childRef);
-				val = DateFormatUtils.format((Date) val, openDataDateFormat);
+				if (val != null)
+					val = DateFormatUtils.format((Date) val, openDataDateFormat);
 				break;
 			}
 			default: {
