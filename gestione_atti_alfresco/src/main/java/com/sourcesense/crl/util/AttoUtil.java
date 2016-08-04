@@ -38,6 +38,10 @@ public class AttoUtil {
 	public static final QName COMMISSIONE_TYPE_QNAME = QName.createQName(CRL_ATTI_MODEL, COMMISSIONE_TYPE);
 	public static final QName TYPE_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL, RELATORE_TYPE);
 	public static final String ABBINAMENTO_TYPE = "abbinamento";
+	public static final String TYPE_TESTO = "testo";
+	public static final QName TYPE_TESTO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_TESTO);
+	public static final String TYPE_ALLEGATO = "allegato";
+	public static final QName TYPE_ALLEGATO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_ALLEGATO);
 
 	// crlAttiModel properties
 	public static final String PROP_STATO_ATTO = "statoAtto";
@@ -87,6 +91,7 @@ public class AttoUtil {
 
 	public static final String ESITO_VOTO_PASSAGGIO_AULA = "esitoVotoPassaggioAula";
 	public static final String DATA_SEDUTA_PASSAGGIO_AULA = "dataSedutaPassaggioAula";
+	public static final String PROP_TIPOLOGIA = "tipologia";
 
 	public static final QName PROP_STATO_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_STATO_ATTO);
 	public static final QName PROP_LEGISLATURA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA);
@@ -103,6 +108,7 @@ public class AttoUtil {
 
 	public static final QName DATA_SEDUTA_PASSAGGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			DATA_SEDUTA_PASSAGGIO_AULA);
+	public static final QName PROP_TIPOLOGIA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_TIPOLOGIA);
 
 	// crl associations
 	public static final String ASSOC_ATTO_TRATTATO_SEDUTA = "attoTrattatoSedutaODG";

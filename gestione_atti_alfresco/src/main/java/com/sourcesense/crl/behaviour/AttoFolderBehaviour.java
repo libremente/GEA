@@ -333,6 +333,10 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				val = openDataCommand.getTipoIniziativa(childRef);
 				break;
 			}
+			case "{openDataCommand}getLinkVotoFinaleAula": {
+				val = openDataCommand.getLinkVotoFinaleAula(childRef);
+				break;
+			}
 			case "{openDataCommand}linkAtto": {
 				val = openDataCommand.getLinkAtto(childRef);
 				break;

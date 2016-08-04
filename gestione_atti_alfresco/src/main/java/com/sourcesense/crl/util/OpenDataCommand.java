@@ -352,4 +352,30 @@ public class OpenDataCommand {
 			return null;
 		}
 	}
+
+	public String getLinkVotoFinaleAula(NodeRef item) {
+		NodeRef aula = getAula(item);
+		if (aula != null) {
+			List<NodeRef> allegati = searchService.selectNodes(aula, "*[@cm:name='Allegati']", null,
+					this.namespaceService, false);
+			if (!allegati.isEmpty()) {
+				Set<QName> allegatoFolderQnames = new HashSet<QName>(1, 1.0f);
+				allegatoFolderQnames.add(AttoUtil.TYPE_ALLEGATO_QNAME);
+				List<ChildAssociationRef> allegatiList = nodeService.getChildAssocs(allegati.get(0),
+						allegatoFolderQnames);
+				for (ChildAssociationRef allegato : allegatiList) {
+					if (((String) nodeService.getProperty(allegato.getChildRef(), AttoUtil.PROP_TIPOLOGIA_QNAME))
+							.equalsIgnoreCase("allegato_aula")) {
+						MessageFormat mf = new MessageFormat(this.linkVotoFinale);
+						String parameterFormatting[] = new String[] {
+								(String) nodeService.getProperty(allegato.getChildRef(), ContentModel.PROP_NODE_UUID) };
+						return mf.format(parameterFormatting);
+					}
+
+				}
+			}
+
+		}
+		return null;
+	}
 }
