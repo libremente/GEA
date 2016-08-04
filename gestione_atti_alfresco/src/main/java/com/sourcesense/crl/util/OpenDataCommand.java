@@ -28,10 +28,15 @@ public class OpenDataCommand {
 	private NodeService nodeService;
 	private String listSeparator;
 	private String linkVotoFinale;
+
 	private String linkAtto;
 	private SearchService searchService;
 	private NamespaceService namespaceService;
 	private AttoUtil attoUtil;
+
+	public void setLinkVotoFinale(String linkVotoFinale) {
+		this.linkVotoFinale = linkVotoFinale;
+	}
 
 	public void setAttoUtil(AttoUtil attoUtil) {
 		this.attoUtil = attoUtil;
