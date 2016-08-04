@@ -77,6 +77,7 @@
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="ODAtto" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="PRIVATE_TOKEN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ambiente" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -92,6 +93,7 @@
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="PRIVATE_TOKEN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ambiente" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>

@@ -106,6 +106,7 @@ public interface UpsertOpenDataSoap {
      * 
      * @param privateTOKEN
      * @param odAtto
+     * @param ambiente
      * @return
      *     returns java.lang.String
      */
@@ -117,12 +118,15 @@ public interface UpsertOpenDataSoap {
         @WebParam(name = "ODAtto", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData")
         String odAtto,
         @WebParam(name = "PRIVATE_TOKEN", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData")
-        String privateTOKEN);
+        String privateTOKEN,
+        @WebParam(name = "ambiente", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData")
+        String ambiente);
 
     /**
      * 
      * @param privateTOKEN
      * @param id
+     * @param ambiente
      * @return
      *     returns java.lang.String
      */
@@ -134,7 +138,9 @@ public interface UpsertOpenDataSoap {
         @WebParam(name = "ID", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData")
         String id,
         @WebParam(name = "PRIVATE_TOKEN", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData")
-        String privateTOKEN);
+        String privateTOKEN,
+        @WebParam(name = "ambiente", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData")
+        String ambiente);
 
     /**
      * 

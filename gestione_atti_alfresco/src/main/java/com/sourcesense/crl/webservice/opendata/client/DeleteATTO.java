@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="ID" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="PRIVATE_TOKEN" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="ambiente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,7 +32,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "id",
-    "privatetoken"
+    "privatetoken",
+    "ambiente"
 })
 @XmlRootElement(name = "DeleteATTO")
 public class DeleteATTO {
@@ -40,6 +42,7 @@ public class DeleteATTO {
     protected String id;
     @XmlElement(name = "PRIVATE_TOKEN")
     protected String privatetoken;
+    protected String ambiente;
 
     /**
      * Gets the value of the id property.
@@ -87,6 +90,30 @@ public class DeleteATTO {
      */
     public void setPRIVATETOKEN(String value) {
         this.privatetoken = value;
+    }
+
+    /**
+     * Gets the value of the ambiente property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAmbiente() {
+        return ambiente;
+    }
+
+    /**
+     * Sets the value of the ambiente property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAmbiente(String value) {
+        this.ambiente = value;
     }
 
 }

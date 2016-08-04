@@ -73,6 +73,12 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 	private String dataSeparator;
 	private String listSeparator;
 	private OpenDataCommand openDataCommand;
+	private String ambiente;
+
+	public void setAmbiente(String ambiente) {
+		this.ambiente = ambiente;
+	}
+
 	private String[] modelProperties;
 	private String openDataDateFormat;
 	private UpsertOpenData upsertOpenData;
@@ -404,7 +410,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 		try {
 			odAtto = generateOdAtto(childAssocRef.getChildRef());
 			logger.debug("odAtto: " + odAtto);
-			String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken);
+			String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken, ambiente);
 			logger.info("Il webservice ha restituito " + response);
 		} catch (Exception e) {
 			try {
@@ -430,7 +436,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				String odAtto = "";
 				odAtto = generateOdAtto(nodeRef);
 				logger.debug("odAtto: " + odAtto);
-				String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken);
+				String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken, ambiente);
 				logger.info("Il webservice ha restituito " + response);
 			} catch (Exception e) {
 				try {
@@ -449,7 +455,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 						+ nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
 				idAtto = openDataCommand.getIdAtto(nodeRef);
 				logger.debug("idAtto: " + idAtto);
-				String response = upsertOpenData.getUpsertOpenDataSoap().deleteATTO(idAtto, privateToken);
+				String response = upsertOpenData.getUpsertOpenDataSoap().deleteATTO(idAtto, privateToken, ambiente);
 				logger.info("Il webservice ha restituito " + response);
 			} catch (Exception e) {
 				try {
