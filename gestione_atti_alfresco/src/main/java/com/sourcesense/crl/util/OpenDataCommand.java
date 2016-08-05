@@ -239,9 +239,9 @@ public class OpenDataCommand {
 		return null;
 	}
 
-	public NodeRef getPassaggio(NodeRef item) {
-		List<NodeRef> passaggi = searchService.selectNodes(item, "*[@cm:name='Passaggi']", null, this.namespaceService,
-				false);
+	public NodeRef getPassaggio(NodeRef attoNoderef) {
+		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
+				this.namespaceService, false);
 		if (!passaggi.isEmpty()) {
 			Set<QName> passaggiFolderQnames = new HashSet<QName>(1, 1.0f);
 			passaggiFolderQnames.add(ContentModel.TYPE_FOLDER);
@@ -253,8 +253,22 @@ public class OpenDataCommand {
 		return null;
 	}
 
-	public NodeRef getCommissione(NodeRef item) {
-		NodeRef passaggio = getPassaggio(item);
+	public List<ChildAssociationRef> getPassaggi(NodeRef attoNoderef) {
+		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
+				this.namespaceService, false);
+		if (!passaggi.isEmpty()) {
+			Set<QName> passaggiFolderQnames = new HashSet<QName>(1, 1.0f);
+			passaggiFolderQnames.add(ContentModel.TYPE_FOLDER);
+			List<ChildAssociationRef> passaggiList = nodeService.getChildAssocs(passaggi.get(0), passaggiFolderQnames);
+			if (!passaggiList.isEmpty()) {
+				return passaggiList;
+			}
+		}
+		return null;
+	}
+
+	public NodeRef getCommissione(NodeRef attoNoderef) {
+		NodeRef passaggio = getPassaggio(attoNoderef);
 		if (passaggio != null) {
 			List<NodeRef> commissioni = searchService.selectNodes(passaggio, "*[@cm:name='Commissioni']", null,
 					this.namespaceService, false);
@@ -329,11 +343,21 @@ public class OpenDataCommand {
 		}
 	}
 
-	public NodeRef getAula(NodeRef item) {
-		NodeRef passaggio = getPassaggio(item);
+	public NodeRef getAula(NodeRef attoNoderef) {
+		NodeRef passaggio = getPassaggio(attoNoderef);
 		Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
 		aulaFolderQnames.add(AttoUtil.TYPE_AULA);
 		List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggio, aulaFolderQnames);
+		if (!aulaList.isEmpty()) {
+			return aulaList.get(0).getChildRef();
+		}
+		return null;
+	}
+
+	public NodeRef getAulaByPassaggio(NodeRef passaggioNoderef) {
+		Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
+		aulaFolderQnames.add(AttoUtil.TYPE_AULA);
+		List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggioNoderef, aulaFolderQnames);
 		if (!aulaList.isEmpty()) {
 			return aulaList.get(0).getChildRef();
 		}
@@ -358,28 +382,31 @@ public class OpenDataCommand {
 		}
 	}
 
-	public String getLinkVotoFinaleAula(NodeRef item) {
-		NodeRef aula = getAula(item);
-		if (aula != null) {
-			List<NodeRef> allegati = searchService.selectNodes(aula, "*[@cm:name='Allegati']", null,
-					this.namespaceService, false);
-			if (!allegati.isEmpty()) {
-				Set<QName> allegatoFolderQnames = new HashSet<QName>(1, 1.0f);
-				allegatoFolderQnames.add(AttoUtil.TYPE_ALLEGATO_QNAME);
-				List<ChildAssociationRef> allegatiList = nodeService.getChildAssocs(allegati.get(0),
-						allegatoFolderQnames);
-				for (ChildAssociationRef allegato : allegatiList) {
-					if (((String) nodeService.getProperty(allegato.getChildRef(), AttoUtil.PROP_TIPOLOGIA_QNAME))
-							.equalsIgnoreCase("allegato_aula")) {
-						MessageFormat mf = new MessageFormat(this.linkVotoFinale);
-						String parameterFormatting[] = new String[] {
-								(String) nodeService.getProperty(allegato.getChildRef(), ContentModel.PROP_NODE_UUID) };
-						return mf.format(parameterFormatting);
+	public String getLinkVotoFinaleAula(NodeRef attoNodeRef) {
+		List<ChildAssociationRef> passaggi = getPassaggi(attoNodeRef);
+		for (ChildAssociationRef passaggio : passaggi) {
+			NodeRef aula = getAulaByPassaggio(passaggio.getChildRef());
+			if (aula != null) {
+				List<NodeRef> allegati = searchService.selectNodes(aula, "*[@cm:name='Allegati']", null,
+						this.namespaceService, false);
+				if (!allegati.isEmpty()) {
+					Set<QName> allegatoFolderQnames = new HashSet<QName>(1, 1.0f);
+					allegatoFolderQnames.add(AttoUtil.TYPE_ALLEGATO_QNAME);
+					List<ChildAssociationRef> allegatiList = nodeService.getChildAssocs(allegati.get(0),
+							allegatoFolderQnames);
+					for (ChildAssociationRef allegato : allegatiList) {
+						if (((String) nodeService.getProperty(allegato.getChildRef(), AttoUtil.PROP_TIPOLOGIA_QNAME))
+								.equalsIgnoreCase("allegato_aula")) {
+							MessageFormat mf = new MessageFormat(this.linkVotoFinale);
+							String parameterFormatting[] = new String[] { (String) nodeService
+									.getProperty(allegato.getChildRef(), ContentModel.PROP_NODE_UUID) };
+							return mf.format(parameterFormatting);
+						}
+
 					}
-
 				}
-			}
 
+			}
 		}
 		return null;
 	}

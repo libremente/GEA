@@ -13,7 +13,7 @@
 			<value>${nga:opendata.bancadati.link.atto}</value>
 		</property>
 		<property name="linkVotoFinale">
-			<value>${opendata.bancadati.link.votofinale}</value>
+			<value>${nga:opendata.bancadati.link.votofinale}</value>
 		</property>
 		<property name="namespaceService" ref="namespaceService" />
 		<property name="attoUtil" ref="attoUtil" />
