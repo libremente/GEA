@@ -273,9 +273,9 @@
 		for AMP version numbering
 	-->
 	<scm>
-		<developerConnection>scm:svn:https://forge.pronetics.it/svn/crl/trunk/gestione_atti_alfresco</developerConnection>
-		<connection>https://forge.pronetics.it/svn/crl</connection>
-		<url>https://forge.pronetics.it/svn/crl</url>
+		<developerConnection>scm:svn:https://svn.sourcesense.com/svn/crl/trunk/gestione_atti_alfresco</developerConnection>
+		<connection>https://svn.sourcesense.com/svn/crl</connection>
+		<url>https://svn.sourcesense.com/svn/crl</url>
 	</scm>
 	<build>
 		<plugins>
