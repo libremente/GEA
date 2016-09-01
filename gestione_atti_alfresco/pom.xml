@@ -281,7 +281,7 @@
     	<url>http://stash.pronetics.it/scm/old/crl</url>
     	<connection>scm:git:http://stash.pronetics.it/scm/old/crl.git</connection>
     	<developerConnection>scm:git:http://stash.pronetics.it/scm/old/crl.git</developerConnection>
-    	<tag>HEAD</tag>
+    	<tag>release</tag>
 	</scm>
 	<build>
 		<plugins>
