@@ -277,6 +277,12 @@
 		<connection>https://svn.sourcesense.com/svn/crl</connection>
 		<url>https://svn.sourcesense.com/svn/crl</url>
 	</scm> -->
+	<scm>
+    	<url>http://stash.pronetics.it/scm/old/crl</url>
+    	<connection>scm:git:http://stash.pronetics.it/scm/old/crl.git</connection>
+    	<developerConnection>scm:git:http://stash.pronetics.it/scm/old/crl.git</developerConnection>
+    	<tag>HEAD</tag>
+	</scm>
 	<build>
 		<plugins>
 			<!-- Needed for cross OS compatibility in acp/zip encoding -->
