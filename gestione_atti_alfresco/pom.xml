@@ -272,11 +272,11 @@
 		The scm is required for the buildnumber-maven-plugin which is required
 		for AMP version numbering
 	-->
-	<scm>
+	<!-- <scm>
 		<developerConnection>scm:svn:https://svn.sourcesense.com/svn/crl/trunk/gestione_atti_alfresco</developerConnection>
 		<connection>https://svn.sourcesense.com/svn/crl</connection>
 		<url>https://svn.sourcesense.com/svn/crl</url>
-	</scm>
+	</scm> -->
 	<build>
 		<plugins>
 			<!-- Needed for cross OS compatibility in acp/zip encoding -->
