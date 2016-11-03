@@ -59,6 +59,7 @@ public class AttoUtil {
 	public static final String PROP_NUMERO_DGR = "numeroDgr";
 	public static final String PROP_DATA_DGR = "dataDgr";
 	public static final String PROP_NUMERO_DCR = "numeroDcr";
+	public static final String PROP_NUMERO_DCR_PASSAGIO_AULA = "numeroDcrPassaggioAula";
 	public static final String PROP_COMMISSIONI_REFERENTI = "commReferente";
 	public static final String PROP_COMMISSIONI_CONSULTIVE = "commConsultiva";
 	public static final String PROP_COMMISSIONE_COREFERENTE = "commCoreferente";
@@ -92,6 +93,8 @@ public class AttoUtil {
 	public static final String ESITO_VOTO_PASSAGGIO_AULA = "esitoVotoPassaggioAula";
 	public static final String DATA_SEDUTA_PASSAGGIO_AULA = "dataSedutaPassaggioAula";
 	public static final String PROP_TIPOLOGIA = "tipologia";
+	public static final String PROP_DATA_LR = "dataLr";
+	public static final String PROP_NUMERO_LR = "numeroLr";
 
 	public static final QName PROP_STATO_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_STATO_ATTO);
 	public static final QName PROP_LEGISLATURA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA);
@@ -109,6 +112,13 @@ public class AttoUtil {
 	public static final QName DATA_SEDUTA_PASSAGGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			DATA_SEDUTA_PASSAGGIO_AULA);
 	public static final QName PROP_TIPOLOGIA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_TIPOLOGIA);
+
+	public static final QName PROP_NUMERO_DCR_PASSAGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			PROP_NUMERO_DCR_PASSAGIO_AULA);
+
+	public static final QName PROP_DATA_LR_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_DATA_LR);
+
+	public static final QName PROP_NUMERO_LR_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_LR);
 
 	// crl associations
 	public static final String ASSOC_ATTO_TRATTATO_SEDUTA = "attoTrattatoSedutaODG";

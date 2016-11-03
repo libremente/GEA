@@ -16,6 +16,8 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -151,7 +153,7 @@ public class OpenDataCommand {
 	public String getPrimoFirmatario(NodeRef nodeRef) {
 		String firmatario = "";
 		String primoFirmatario = (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_PRIMO_FIRMATARIO_QNAME);
-		if (primoFirmatario != null && !primoFirmatario.isEmpty()) {
+		if (!StringUtils.isEmpty(primoFirmatario)) {
 			try {
 				String idAnagrafica = getIdAnagrafica(primoFirmatario);
 				if (idAnagrafica.length() > 0) {
@@ -174,11 +176,11 @@ public class OpenDataCommand {
 				AttoUtil.PROP_FIRMATARI_QNAME);
 		if (firmatari != null) {
 			for (int i = 0; i < firmatari.size(); i++) {
-				if (firmatari.get(i) != null && !firmatari.get(i).isEmpty()) {
+				if (!StringUtils.isEmpty(firmatari.get(i))) {
 					try {
 						String idAnagrafica = getIdAnagrafica(firmatari.get(i));
-						if (idAnagrafica.length() > 0) {
-							if (firmatariString.isEmpty()) {
+						if (!StringUtils.isEmpty(idAnagrafica)) {
+							if (StringUtils.isEmpty(firmatariString)) {
 								firmatariString += "-" + idAnagrafica + "-" + firmatari.get(i);
 							} else {
 								firmatariString += listSeparator + "-" + idAnagrafica + "-" + firmatari.get(i);
@@ -223,15 +225,15 @@ public class OpenDataCommand {
 	}
 
 	public NodeRef getRelatoreNodeRef(NodeRef item) {
-		NodeRef commissioneNodeRef = getCommissione(item);
+		NodeRef commissioneNodeRef = getCommissioneReferente(item);
 		if (commissioneNodeRef != null) {
 			List<NodeRef> relatori = searchService.selectNodes(commissioneNodeRef, "*[@cm:name='Relatori']", null,
 					this.namespaceService, false);
-			if (!relatori.isEmpty()) {
+			if ((relatori != null) && (!relatori.isEmpty())) {
 				Set<QName> qnames = new HashSet<QName>(1, 1.0f);
 				qnames.add(AttoUtil.TYPE_RELATORE_QNAME);
 				List<ChildAssociationRef> relatoriList = nodeService.getChildAssocs(relatori.get(0), qnames);
-				if (!relatoriList.isEmpty()) {
+				if ((relatoriList != null) && (!relatoriList.isEmpty())) {
 					return relatoriList.get(0).getChildRef();
 				}
 			}
@@ -246,8 +248,22 @@ public class OpenDataCommand {
 			Set<QName> passaggiFolderQnames = new HashSet<QName>(1, 1.0f);
 			passaggiFolderQnames.add(ContentModel.TYPE_FOLDER);
 			List<ChildAssociationRef> passaggiList = nodeService.getChildAssocs(passaggi.get(0), passaggiFolderQnames);
-			if (!passaggiList.isEmpty()) {
+			if ((passaggiList != null) && (!passaggiList.isEmpty())) {
 				return passaggiList.get(0).getChildRef();
+			}
+		}
+		return null;
+	}
+
+	public NodeRef getUltimoPassaggio(NodeRef attoNoderef) {
+		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
+				this.namespaceService, false);
+		if ((passaggi != null) && (!passaggi.isEmpty())) {
+			Set<QName> passaggiFolderQnames = new HashSet<QName>(1, 1.0f);
+			passaggiFolderQnames.add(ContentModel.TYPE_FOLDER);
+			List<ChildAssociationRef> passaggiList = nodeService.getChildAssocs(passaggi.get(0), passaggiFolderQnames);
+			if ((passaggiList != null) && (!passaggiList.isEmpty())) {
+				return passaggiList.get(passaggiList.size() - 1).getChildRef();
 			}
 		}
 		return null;
@@ -256,32 +272,31 @@ public class OpenDataCommand {
 	public List<ChildAssociationRef> getPassaggi(NodeRef attoNoderef) {
 		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
 				this.namespaceService, false);
-		if (!passaggi.isEmpty()) {
+		if ((passaggi != null) && (!passaggi.isEmpty())) {
 			Set<QName> passaggiFolderQnames = new HashSet<QName>(1, 1.0f);
 			passaggiFolderQnames.add(ContentModel.TYPE_FOLDER);
 			List<ChildAssociationRef> passaggiList = nodeService.getChildAssocs(passaggi.get(0), passaggiFolderQnames);
-			if (!passaggiList.isEmpty()) {
+			if ((passaggiList != null) && (!passaggiList.isEmpty())) {
 				return passaggiList;
 			}
 		}
 		return null;
 	}
 
-	public NodeRef getCommissione(NodeRef attoNoderef) {
+	public NodeRef getCommissioneReferente(NodeRef attoNoderef) {
 		NodeRef passaggio = getPassaggio(attoNoderef);
 		if (passaggio != null) {
-			List<NodeRef> commissioni = searchService.selectNodes(passaggio, "*[@cm:name='Commissioni']", null,
-					this.namespaceService, false);
-			if (!commissioni.isEmpty()) {
-				Set<QName> commissioniFolderQnames = new HashSet<QName>(1, 1.0f);
-				commissioniFolderQnames.add(AttoUtil.COMMISSIONE_TYPE_QNAME);
-				List<ChildAssociationRef> commissioniList = nodeService.getChildAssocs(commissioni.get(0),
-						commissioniFolderQnames);
-				if (!commissioniList.isEmpty()) {
-					return commissioniList.get(0).getChildRef();
+			List<NodeRef> commissioni = searchService.selectNodes(passaggio,
+					"*[@cm:name='Commissioni']/*[@crlatti:ruoloCommissione='Referente' or @crlatti:ruoloCommissione='Co-Referente']",
+					null, this.namespaceService, false);
+			if ((commissioni != null) && (!commissioni.isEmpty())) {
+				for (int i = commissioni.size() - 1; i > -1; i--) {
+					if (nodeService.getProperty(commissioni.get(i), AttoUtil.PROP_DATA_VOTAZIONE) != null && nodeService
+							.getProperty(commissioni.get(i), AttoUtil.PROP_ESITO_VOTAZIONE_COMMISSIONE_QNAME) != null)
+						return commissioni.get(i);
 				}
+				return commissioni.get(commissioni.size() - 1);
 			}
-
 		}
 		return null;
 	}
@@ -312,21 +327,18 @@ public class OpenDataCommand {
 		return null;
 	}
 
-	public String getAbbinamenti(NodeRef item) {
+	public ArrayList<String> getAbbinamenti(NodeRef item) {
 		List<NodeRef> attiAbbinati = attoUtil.getAttiAbbinati(item);
 		int n = attiAbbinati.size();
-		String abbinamenti = "";
+		ArrayList<String> abbinamenti = new ArrayList<String>();
 		for (int i = 0; i < n; i++) {
-			abbinamenti += getIdAtto(attiAbbinati.get(i));
-			if (i < n - 1) {
-				abbinamenti += listSeparator;
-			}
+			abbinamenti.add(getIdAtto(attiAbbinati.get(i)));
 		}
 		return abbinamenti;
 	}
 
-	public String getEsitoVotazioneCommissione(NodeRef item) {
-		NodeRef commissione = getCommissione(item);
+	public String getEsitoVotazioneCommissioneReferente(NodeRef item) {
+		NodeRef commissione = getCommissioneReferente(item);
 		if (commissione != null) {
 			return (String) nodeService.getProperty(commissione, AttoUtil.PROP_ESITO_VOTAZIONE_COMMISSIONE_QNAME);
 		} else {
@@ -334,8 +346,8 @@ public class OpenDataCommand {
 		}
 	}
 
-	public Date getDataVotazioneCommissione(NodeRef item) {
-		NodeRef commissione = getCommissione(item);
+	public Date getDataVotazioneCommissioneReferente(NodeRef item) {
+		NodeRef commissione = getCommissioneReferente(item);
 		if (commissione != null) {
 			return (Date) nodeService.getProperty(commissione, AttoUtil.PROP_DATA_VOTAZIONE);
 		} else {
@@ -344,11 +356,11 @@ public class OpenDataCommand {
 	}
 
 	public NodeRef getAula(NodeRef attoNoderef) {
-		NodeRef passaggio = getPassaggio(attoNoderef);
+		NodeRef passaggio = getUltimoPassaggio(attoNoderef);
 		Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
 		aulaFolderQnames.add(AttoUtil.TYPE_AULA);
 		List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggio, aulaFolderQnames);
-		if (!aulaList.isEmpty()) {
+		if ((aulaList != null) && (!aulaList.isEmpty())) {
 			return aulaList.get(0).getChildRef();
 		}
 		return null;
@@ -358,7 +370,7 @@ public class OpenDataCommand {
 		Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
 		aulaFolderQnames.add(AttoUtil.TYPE_AULA);
 		List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggioNoderef, aulaFolderQnames);
-		if (!aulaList.isEmpty()) {
+		if ((aulaList != null) && (!aulaList.isEmpty())) {
 			return aulaList.get(0).getChildRef();
 		}
 		return null;
@@ -367,7 +379,7 @@ public class OpenDataCommand {
 	public String getEsitoVotazioneAula(NodeRef item) {
 		NodeRef aula = getAula(item);
 		if (aula != null) {
-			return (String) nodeService.getProperty(item, AttoUtil.ESITO_VOTO_PASSAGGIO_AULA_QNAME);
+			return (String) nodeService.getProperty(aula, AttoUtil.ESITO_VOTO_PASSAGGIO_AULA_QNAME);
 		} else {
 			return null;
 		}
@@ -376,7 +388,16 @@ public class OpenDataCommand {
 	public Date getDataVotazioneAula(NodeRef item) {
 		NodeRef aula = getAula(item);
 		if (aula != null) {
-			return (Date) nodeService.getProperty(item, AttoUtil.DATA_SEDUTA_PASSAGGIO_AULA_QNAME);
+			return (Date) nodeService.getProperty(aula, AttoUtil.DATA_SEDUTA_PASSAGGIO_AULA_QNAME);
+		} else {
+			return null;
+		}
+	}
+
+	public String getNumeroDcrPassaggioAula(NodeRef item) {
+		NodeRef aula = getAula(item);
+		if (aula != null) {
+			return (String) nodeService.getProperty(aula, AttoUtil.PROP_NUMERO_DCR_PASSAGIO_AULA_QNAME);
 		} else {
 			return null;
 		}
@@ -389,7 +410,7 @@ public class OpenDataCommand {
 			if (aula != null) {
 				List<NodeRef> allegati = searchService.selectNodes(aula, "*[@cm:name='Allegati']", null,
 						this.namespaceService, false);
-				if (!allegati.isEmpty()) {
+				if ((allegati != null) && (!allegati.isEmpty())) {
 					Set<QName> allegatoFolderQnames = new HashSet<QName>(1, 1.0f);
 					allegatoFolderQnames.add(AttoUtil.TYPE_ALLEGATO_QNAME);
 					List<ChildAssociationRef> allegatiList = nodeService.getChildAssocs(allegati.get(0),
@@ -398,8 +419,10 @@ public class OpenDataCommand {
 						if (((String) nodeService.getProperty(allegato.getChildRef(), AttoUtil.PROP_TIPOLOGIA_QNAME))
 								.equalsIgnoreCase("allegato_aula")) {
 							MessageFormat mf = new MessageFormat(this.linkVotoFinale);
-							String parameterFormatting[] = new String[] { (String) nodeService
-									.getProperty(allegato.getChildRef(), ContentModel.PROP_NODE_UUID) };
+							String parameterFormatting[] = new String[] {
+									(String) nodeService.getProperty(allegato.getChildRef(),
+											ContentModel.PROP_NODE_UUID),
+									(String) nodeService.getProperty(allegato.getChildRef(), ContentModel.PROP_NAME) };
 							return mf.format(parameterFormatting);
 						}
 
@@ -409,5 +432,16 @@ public class OpenDataCommand {
 			}
 		}
 		return null;
+	}
+
+	public String getIdsLr(NodeRef item) {
+		String idsLr = "";
+		Date dataLr = (Date) nodeService.getProperty(item, AttoUtil.PROP_DATA_LR_QNAME);
+		if (dataLr != null) {
+			String dateLrString = DateFormatUtils.format(dataLr, "yyyyMMdd");
+			String numeroLr = (String) nodeService.getProperty(item, AttoUtil.PROP_NUMERO_LR_QNAME);
+			idsLr = "lr00" + dateLrString + StringUtils.leftPad(numeroLr, 5, "0");
+		}
+		return idsLr;
 	}
 }

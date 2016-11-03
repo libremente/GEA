@@ -363,10 +363,15 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				val = openDataCommand.getAbbinamenti(childRef);
 				break;
 			}
-			case "{openDataCommand}getDataVotazioneCommissione": {
-				val = openDataCommand.getDataVotazioneCommissione(childRef);
+			case "{openDataCommand}getDataVotazioneCommissioneReferente": {
+				val = openDataCommand.getDataVotazioneCommissioneReferente(childRef);
 				if (val != null)
 					val = DateFormatUtils.format((Date) val, openDataDateFormat);
+				break;
+			}
+
+			case "{openDataCommand}getEsitoVotazioneCommissioneReferente": {
+				val = openDataCommand.getEsitoVotazioneCommissioneReferente(childRef);
 				break;
 			}
 			case "{openDataCommand}getEsitoVotazioneAula": {
@@ -379,6 +384,11 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 					val = DateFormatUtils.format((Date) val, openDataDateFormat);
 				break;
 			}
+			case "{openDataCommand}getNumeroDcrPassaggioAula": {
+				val = openDataCommand.getNumeroDcrPassaggioAula(childRef);
+				break;
+			}
+
 			default: {
 				val = nodeService.getProperty(childRef, propertyQName);
 				if (val instanceof Date) {
@@ -386,7 +396,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				} else if (val instanceof ArrayList) {
 					StringBuilder tmpVal = new StringBuilder("");
 					int z = ((ArrayList) val).size();
-					for (int j = 0; i < z; j++) {
+					for (int j = 0; j < z; j++) {
 						((ArrayList) val).get(j);
 						tmpVal.append(((ArrayList) val).get(j).toString());
 						if (j < z - 1) {
