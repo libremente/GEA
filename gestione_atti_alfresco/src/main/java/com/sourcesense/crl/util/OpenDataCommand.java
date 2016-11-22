@@ -1,6 +1,5 @@
 package com.sourcesense.crl.util;
 
-import java.sql.ResultSet;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,14 +7,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.text.html.parser.ContentModel;
-
+import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
+import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.NamespaceService;
+import org.alfresco.service.namespace.QName;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
@@ -160,7 +160,7 @@ public class OpenDataCommand {
 					firmatario = "-" + idAnagrafica + "-" + primoFirmatario;
 				}
 			} catch (Exception e) {
-				logger.error("Impossibile recuperare il primo firmatario", e);
+				logger.warn("Impossibile recuperare il primo firmatario", e);
 			} finally {
 				return firmatario;
 			}
@@ -187,7 +187,7 @@ public class OpenDataCommand {
 							}
 						}
 					} catch (Exception e) {
-						logger.error("Impossibile recuperare il firmatario", e);
+						logger.warn("Impossibile recuperare il firmatario", e);
 					}
 				}
 			}
@@ -214,7 +214,7 @@ public class OpenDataCommand {
 				return String.valueOf(
 						(int) nodeService.getProperty(legislatureNodes.getNodeRef(0), Constant.PROP_ID_ANAGRAFICA));
 			} else {
-				logger.debug("Impossibile trovare in anagrafica " + nomeAnagrafica);
+				logger.warn("Impossibile trovare in anagrafica " + nomeAnagrafica);
 				return null;
 			}
 		} finally {
