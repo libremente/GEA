@@ -1,5 +1,6 @@
 package com.sourcesense.crl.util;
 
+import java.sql.ResultSet;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,15 +8,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.alfresco.model.ContentModel;
+import javax.swing.text.html.parser.ContentModel;
+
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
-import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.NamespaceService;
-import org.alfresco.service.namespace.QName;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
@@ -307,13 +307,14 @@ public class OpenDataCommand {
 		if (relatoreNodeRef != null) {
 
 			String relatoreName = (String) nodeService.getProperty(relatoreNodeRef, ContentModel.PROP_NAME);
+			relatoreName = relatoreName.trim().replaceAll(" +", " ");
 			try {
 				String idAnagrafica = getIdAnagrafica(relatoreName);
 				if (idAnagrafica.length() > 0) {
 					relatore = "-" + idAnagrafica + "-" + relatoreName;
 				}
 			} catch (Exception e) {
-				logger.error("Impossibile recuperare il relatore", e);
+				logger.warn("Impossibile recuperare il relatore", e);
 			}
 		}
 		return relatore;
