@@ -12,6 +12,7 @@
 		"dataFirma" : "<#if firmatario.properties["crlatti:dataFirma"]?exists>${firmatario.properties["crlatti:dataFirma"]?string("yyyy-MM-dd")}<#else></#if>",
 		"dataRitiro" : "<#if firmatario.properties["crlatti:dataRitiro"]?exists>${firmatario.properties["crlatti:dataRitiro"]?string("yyyy-MM-dd")}<#else></#if>",
 		"numeroOrdinamento" : "<#if firmatario.properties["crlatti:numeroOrdinamento"]?exists>${firmatario.properties["crlatti:numeroOrdinamento"]}<#else></#if>"
+		<#-- "id_persona" : ${firmatario.properties["crlatti:idAnagrafica"]} -->
 	   }
    }<#if firmatario_has_next>,</#if>
    </#list>
