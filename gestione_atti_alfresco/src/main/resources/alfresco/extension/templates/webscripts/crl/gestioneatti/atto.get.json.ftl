@@ -71,8 +71,8 @@
 					{ 
 						"descrizione" : "${relatore.name}",
 						"dataNomina": "<#if relatore.properties["crlatti:dataNominaRelatore"]?exists>${relatore.properties["crlatti:dataNominaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
-						"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>"
-						<#-- "id_persona" : 123 -->
+						"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
+						"id_persona" : 123
 					}
 			}	
 			<#if relatore_has_next>,</#if>
@@ -403,7 +403,8 @@
 							],
 							
 					    	"relatori" : [<#if atto.properties["crlatti:relatori"]?exists>
-	
+								<#assign relatoriNode = commissione.childrenByXPath["*[@cm:name='relatori']"]>
+								<#if relatoriNode?size gt 0>
 								<#assign relatori = commissione.childrenByXPath["*[@cm:name='relatori']"][0]>
 								<#assign relatoriList = relatori.getChildAssocsByType("crlatti:relatore")>
 								<#list  relatoriList as relatore>
@@ -412,12 +413,13 @@
 										{ 
 											"descrizione" : "${relatore.name}",
 											"dataNomina": "<#if relatore.properties["crlatti:dataNominaRelatore"]?exists>${relatore.properties["crlatti:dataNominaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
-											"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>"
-											<#-- "id_persona" : 123 -->
+											"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
+											"id_persona" : 123
 										}
 								}	
 									<#if relatore_has_next>,</#if>
 								</#list>
+								</#if>
 									<#else>
 								</#if>],
 								
