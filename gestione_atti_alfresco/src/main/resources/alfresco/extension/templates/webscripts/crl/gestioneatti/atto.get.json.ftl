@@ -403,9 +403,9 @@
 							],
 							
 					    	"relatori" : [<#if atto.properties["crlatti:relatori"]?exists>
-								<#assign relatoriNode = commissione.childrenByXPath["*[@cm:name='relatori']"]>
+								<#assign relatoriNode = commissione.childrenByXPath["*[@cm:name='Relatori']"]>
 								<#if relatoriNode?size gt 0>
-								<#assign relatori = commissione.childrenByXPath["*[@cm:name='relatori']"][0]>
+								<#assign relatori = commissione.childrenByXPath["*[@cm:name='Relatori']"][0]>
 								<#assign relatoriList = relatori.getChildAssocsByType("crlatti:relatore")>
 								<#list  relatoriList as relatore>
 								{	 
