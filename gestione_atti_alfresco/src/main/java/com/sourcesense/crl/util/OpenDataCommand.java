@@ -153,14 +153,14 @@ public class OpenDataCommand {
 	public String getPrimoFirmatario(NodeRef nodeRef) {
 		String firmatario = "";
 		String primoFirmatario = (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_PRIMO_FIRMATARIO_QNAME);
-		if (!StringUtils.isEmpty(primoFirmatario)) {
+		if (StringUtils.isNotEmpty(primoFirmatario)) {
 			try {
 				String idAnagrafica = getIdAnagrafica(primoFirmatario);
-				if (idAnagrafica.length() > 0) {
+				if (StringUtils.isNotEmpty(idAnagrafica)) {
 					firmatario = "-" + idAnagrafica + "-" + primoFirmatario;
 				}
 			} catch (Exception e) {
-				logger.warn("Impossibile recuperare il primo firmatario", e);
+				logger.warn("Impossibile recuperare il primo firmatario "+primoFirmatario, e);
 			} finally {
 				return firmatario;
 			}
@@ -176,10 +176,10 @@ public class OpenDataCommand {
 				AttoUtil.PROP_FIRMATARI_QNAME);
 		if (firmatari != null) {
 			for (int i = 0; i < firmatari.size(); i++) {
-				if (!StringUtils.isEmpty(firmatari.get(i))) {
+				if (StringUtils.isNotEmpty(firmatari.get(i))) {
 					try {
 						String idAnagrafica = getIdAnagrafica(firmatari.get(i));
-						if (!StringUtils.isEmpty(idAnagrafica)) {
+						if (StringUtils.isNotEmpty(idAnagrafica)) {
 							if (StringUtils.isEmpty(firmatariString)) {
 								firmatariString += "-" + idAnagrafica + "-" + firmatari.get(i);
 							} else {
@@ -196,30 +196,25 @@ public class OpenDataCommand {
 	}
 
 	public String getIdAnagrafica(String nomeAnagrafica) {
-		String[] nomeAnagraficaSplitted = nomeAnagrafica.split(" ");
-		String nome = nomeAnagraficaSplitted[0];
-		int i = 1;
-		while (Character.isLowerCase((nomeAnagraficaSplitted[i].charAt(1)))) {
-			nome += " " + nomeAnagraficaSplitted[i];
-			i++;
-		}
-		String cognome = nomeAnagraficaSplitted[i];
-		ResultSet legislatureNodes = null;
+		String nomeAnagraficaCorretto=nomeAnagrafica.trim().replaceAll("[ \t]+", " ");
+		String nome = nomeAnagraficaCorretto.replaceAll("([ \t][A-Z0-9_\\p{Punct}]{2,})+(([ \t][a-z]{2,})?([ \t][A-Z0-9_\\p{Punct}]{2,})+)*","");
+		String cognome = nomeAnagraficaCorretto.replaceAll("^[A-Z][a-z]{1,}([ \t][A-Z][a-z]{1,})*[ \t]", "");
+		ResultSet consigliereNodes = null;
 		try {
-			legislatureNodes = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE,
+			consigliereNodes = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE,
 					SearchService.LANGUAGE_LUCENE,
 					"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica//*\" AND TYPE:\"crlatti:consigliereAnagrafica\" AND @crlatti\\:nomeConsigliereAnagrafica:\""
 							+ nome + "\" AND @crlatti\\:cognomeConsigliereAnagrafica:\"" + cognome + "\"");
-			if (legislatureNodes.length() > 0) {
+			if (consigliereNodes.length() > 0) {
 				return String.valueOf(
-						(int) nodeService.getProperty(legislatureNodes.getNodeRef(0), Constant.PROP_ID_ANAGRAFICA));
+						(int) nodeService.getProperty(consigliereNodes.getNodeRef(0), Constant.PROP_ID_ANAGRAFICA));
 			} else {
 				logger.warn("Impossibile trovare in anagrafica " + nomeAnagrafica);
 				return null;
 			}
 		} finally {
-			if (legislatureNodes != null) {
-				legislatureNodes.close();
+			if (consigliereNodes != null) {
+				consigliereNodes.close();
 			}
 		}
 	}
@@ -310,11 +305,11 @@ public class OpenDataCommand {
 			relatoreName = relatoreName.trim().replaceAll(" +", " ");
 			try {
 				String idAnagrafica = getIdAnagrafica(relatoreName);
-				if (idAnagrafica.length() > 0) {
+				if (StringUtils.isNotEmpty(idAnagrafica)) {
 					relatore = "-" + idAnagrafica + "-" + relatoreName;
 				}
 			} catch (Exception e) {
-				logger.warn("Impossibile recuperare il relatore", e);
+				logger.warn("Impossibile recuperare il relatore "+relatoreName, e);
 			}
 		}
 		return relatore;
