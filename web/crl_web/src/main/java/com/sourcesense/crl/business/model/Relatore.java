@@ -21,6 +21,7 @@ public class Relatore extends Personale implements Cloneable{
 	private Date dataNomina;
 	private Date dataUscita;
 	private String cognomeNome;
+	private Integer id_persona;
 	
 	public Object clone() {
 		try {
@@ -41,6 +42,7 @@ public class Relatore extends Personale implements Cloneable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataNomina() {
 		return dataNomina;
@@ -52,6 +54,14 @@ public class Relatore extends Personale implements Cloneable{
 	public Date getDataUscita() {
 		return dataUscita;
 	}
+	public void setId_persona(Integer id_persona) {
+		this.id_persona = id_persona;
+	}
+
+	public int getId_persona() {
+		return id_persona;
+	}
+
 	public void setDataUscita(Date dataUscita) {
 		this.dataUscita = dataUscita;
 	}

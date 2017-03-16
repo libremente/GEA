@@ -27,7 +27,7 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 	private String id;
 	private String descrizione;
 	private String cognomeNome;
-	
+	private Integer id_persona;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -116,10 +116,12 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 	}
 
 	
-	
-	
-	
-	
-	
+	public void setId_persona(Integer id_persona) {
+		this.id_persona = id_persona;
+	}
+
+	public int getId_persona() {
+		return id_persona;
+	}
 	
 }
