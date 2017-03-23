@@ -69,7 +69,7 @@
 			{	 
 					"relatore" : 
 					{ 
-						"descrizione" : "${relatore.name}",<#assign relatorename=relatore.name?trim?replace('[ \t]+', ' ' , 'r')><#assign nomeRelatore = relatorename?replace('([ \t][A-Z0-9_\\p{Punct}]{2,})+(([ \t][a-z]{2,})?([ \t][A-Z0-9_\\p{Punct}]{2,})+)*', '', 'r')><#assign cognomeRelatore = relatorename?replace('^[A-Z][a-z]{1,}([ \t][A-Z][a-z]{1,})*[ \t]', '', 'r')><#assign relatoriArray = companyhome.childrenByXPath["*[@cm:name='CRL']/*[@cm:name='Gestione Atti']/*[@cm:name='Anagrafica']/*/*[@crlatti:nomeConsigliereAnagrafica='"+nomeRelatore+"' and @crlatti:cognomeConsigliereAnagrafica='"+cognomeRelatore+"']"]>
+						"descrizione" : "${relatore.name}",<#assign relatorename=relatore.name?trim?replace('[ \t]+', ' ' , 'r')><#assign nomeRelatore = relatorename?replace('([ \t][A-Z0-9_\\p{Punct}]{2,})+(([ \t][a-z]{2,})?([ \t][A-Z0-9_\\p{Punct}]{2,})+)*', '', 'r')><#assign cognomeRelatore = relatorename?replace('^[A-Z][a-z]{1,}([ \t][A-Z][a-z]{1,})*[ \t]', '', 'r')><#assign relatoriArray = companyhome.childrenByXPath['*[@cm:name="CRL"]/*[@cm:name="Gestione Atti"]/*[@cm:name="Anagrafica"]/*/*[@crlatti:nomeConsigliereAnagrafica="'+nomeRelatore+'" and @crlatti:cognomeConsigliereAnagrafica="'+cognomeRelatore+'"]']>
 						"dataNomina": "<#if relatore.properties["crlatti:dataNominaRelatore"]?exists>${relatore.properties["crlatti:dataNominaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
 						"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>"<#if relatoriArray?size gt 0 >,
 						"id_persona" : ${relatoriArray[0].properties["crlatti:idAnagrafica"]}</#if>
@@ -411,7 +411,7 @@
 								{	 
 										"relatore" : 
 										{ 
-											"descrizione" : "${relatore.name}", <#assign relatorename=relatore.name?trim?replace('[ \t]+', ' ' , 'r')><#assign nomeRelatore = relatorename?replace('([ \t][A-Z0-9_\\p{Punct}]{2,})+(([ \t][a-z]{2,})?([ \t][A-Z0-9_\\p{Punct}]{2,})+)*', '', 'r')><#assign cognomeRelatore = relatorename?replace('^[A-Z][a-z]{1,}([ \t][A-Z][a-z]{1,})*[ \t]', '', 'r')><#assign relatoriArray = companyhome.childrenByXPath["*[@cm:name='CRL']/*[@cm:name='Gestione Atti']/*[@cm:name='Anagrafica']/*/*[@crlatti:nomeConsigliereAnagrafica='"+nomeRelatore+"' and @crlatti:cognomeConsigliereAnagrafica='"+cognomeRelatore+"']"]>
+											"descrizione" : "${relatore.name}", <#assign relatorename=relatore.name?trim?replace('[ \t]+', ' ' , 'r')><#assign nomeRelatore = relatorename?replace('([ \t][A-Z0-9_\\p{Punct}]{2,})+(([ \t][a-z]{2,})?([ \t][A-Z0-9_\\p{Punct}]{2,})+)*', '', 'r')><#assign cognomeRelatore = relatorename?replace('^[A-Z][a-z]{1,}([ \t][A-Z][a-z]{1,})*[ \t]', '', 'r')><#assign relatoriArray = companyhome.childrenByXPath['*[@cm:name="CRL"]/*[@cm:name="Gestione Atti"]/*[@cm:name="Anagrafica"]/*/*[@crlatti:nomeConsigliereAnagrafica="'+nomeRelatore+'" and @crlatti:cognomeConsigliereAnagrafica="'+cognomeRelatore+'"]']>
 											"dataNomina": "<#if relatore.properties["crlatti:dataNominaRelatore"]?exists>${relatore.properties["crlatti:dataNominaRelatore"]?string("yyyy-MM-dd")}<#else></#if>",
 											"dataUscita": "<#if relatore.properties["crlatti:dataUscitaRelatore"]?exists>${relatore.properties["crlatti:dataUscitaRelatore"]?string("yyyy-MM-dd")}<#else></#if>"<#if relatoriArray?size gt 0 >,
 											"id_persona" : ${relatoriArray[0].properties["crlatti:idAnagrafica"]}</#if>
