@@ -2,6 +2,7 @@ package com.sourcesense.crl.business.model;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -15,13 +16,13 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("relatore")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
+@JsonIgnoreProperties({"id_persona"})
 public class Relatore extends Personale implements Cloneable{
 	
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;
 	private String cognomeNome;
-	private Integer id_persona;
 	
 	public Object clone() {
 		try {
@@ -53,13 +54,6 @@ public class Relatore extends Personale implements Cloneable{
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDataUscita() {
 		return dataUscita;
-	}
-	public void setId_persona(Integer id_persona) {
-		this.id_persona = id_persona;
-	}
-
-	public int getId_persona() {
-		return id_persona;
 	}
 
 	public void setDataUscita(Date dataUscita) {

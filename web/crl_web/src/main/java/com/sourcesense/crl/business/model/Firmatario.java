@@ -2,6 +2,7 @@ package com.sourcesense.crl.business.model;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
@@ -15,6 +16,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("firmatario")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
+@JsonIgnoreProperties({"id_persona"})
 public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 
 	
@@ -27,7 +29,6 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 	private String id;
 	private String descrizione;
 	private String cognomeNome;
-	private Integer id_persona;
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);
@@ -113,15 +114,6 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 
 	public void setCognomeNome(String cognomeNome) {
 		this.cognomeNome = cognomeNome;
-	}
-
-	
-	public void setId_persona(Integer id_persona) {
-		this.id_persona = id_persona;
-	}
-
-	public int getId_persona() {
-		return id_persona;
 	}
 	
 }
