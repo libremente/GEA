@@ -3,6 +3,7 @@
 var nodeRefAtto = "";
 var tipologia = "";
 var pubblico = false;
+var pubblicoOpendata = false;
 var filename = "";
 var provenienza = "";
 var passaggio ="";
@@ -15,6 +16,8 @@ for each (field in formdata.fields) {
 	tipologia = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
+  } else if(field.name == "pubblicoOpendata"){
+	pubblicoOpendata = field.value;
   } else if(field.name == "commissione"){
 	provenienza = field.value;
   } else if(field.name == "passaggio"){
@@ -66,17 +69,28 @@ if(nodeRefAtto == ""){
 	
 	if (attoRecordNode == null){
 	
+		
+		
 		// creazione binario
 		attoRecordNode = testiFolderNode.createFile(filename);
 		attoRecordNode.specializeType("crlatti:testo");
 		attoRecordNode.properties["crlatti:tipologia"] = tipologia;
 		attoRecordNode.properties["crlatti:pubblico"] = pubblico;
+		if (pubblicoOpendata) {
+			var attiPubbliciOpendata=attoNode.childrenByXPath("*//*[@crlatti:pubblicoOpendata='true']");
+			for each (attoPubblicoOpendata in attiPubbliciOpendata) {
+					attoPubblicoOpendata.properties["crlatti:pubblicoOpendata"]=false;
+					attoPubblicoOpendata.save();
+			}
+			attoRecordNode.properties["crlatti:pubblicoOpendata"] = pubblicoOpendata;
+		}
 		attoRecordNode.properties["crlatti:provenienza"] = provenienza;
 		attoRecordNode.properties.content.write(content);
 		attoRecordNode.properties.content.setEncoding("UTF-8");
 		attoRecordNode.properties.content.guessMimetype(filename);
 		attoRecordNode.save();
-	
+		
+		
 	}
 	model.attoRecord = attoRecordNode;	
 }

@@ -7,7 +7,8 @@
 	"downloadUrl":"${attoRecord.downloadUrl}",
 	"mimetype" : "${attoRecord.mimetype}",
 	"tipologia" : "<#if attoRecord.properties["crlatti:tipologia"]?exists>${attoRecord.properties["crlatti:tipologia"]}<#else></#if>",
-	"pubblico" : "<#if attoRecord.properties["crlatti:pubblico"]?exists>${attoRecord.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>"
+	"pubblico" : "<#if attoRecord.properties["crlatti:pubblico"]?exists>${attoRecord.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
+	"pubblicoOpendata" : "<#if attoRecord.properties["crlatti:pubblicoOpendata"]?exists>${attoRecord.properties["crlatti:pubblicoOpendata"]?string("true","false")}<#else></#if>"
    }
 }
 </#escape>

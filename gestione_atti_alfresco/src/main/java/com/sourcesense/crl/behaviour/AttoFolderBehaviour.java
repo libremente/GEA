@@ -25,6 +25,7 @@ import org.alfresco.repo.policy.JavaBehaviour;
 import org.alfresco.repo.policy.PolicyComponent;
 import org.alfresco.service.cmr.action.Action;
 import org.alfresco.service.cmr.action.ActionService;
+import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
@@ -56,6 +57,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 	/* Aspect names */
 	public static final QName ATTI_INDIRIZZO_ASPECT = QName
 			.createQName("http://www.regione.lombardia.it/content/model/atti/1.0", "attiIndirizzoAspect");
+	public static final QName PUBBLICABILE_ASPECT = QName
+			.createQName("http://www.regione.lombardia.it/content/model/atti/1.0", "pubblicabile");
 	private static final String ATTO_CANCELLATO = "cancellato";
 	private static Log logger = LogFactory.getLog(AttoFolderBehaviour.class);
 	private PolicyComponent policyComponent;
@@ -68,6 +71,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 	private FileFolderService fileFolderService;
 	private NodeService nodeService;
 	private SearchService searchService;
+	private DictionaryService dictionaryService;
 	private ActionService actionService;
 	private String openDataAdminMailAddress;
 	private String dataSeparator;
@@ -126,6 +130,10 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 		this.searchService = searchService;
 	}
 
+	public void setDictionaryService(DictionaryService dictionaryService) {
+		this.dictionaryService = dictionaryService;
+	}
+
 	public void setNamespaceService(NamespaceService namespaceService) {
 		this.namespaceService = namespaceService;
 	}
@@ -165,6 +173,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 			this.policyComponent.bindClassBehaviour(NodeServicePolicies.OnCreateNodePolicy.QNAME, tipoAttoQName,
 					onCreateNode);
 		}
+		this.policyComponent.bindClassBehaviour(NodeServicePolicies.OnUpdatePropertiesPolicy.QNAME, PUBBLICABILE_ASPECT,
+				onUpdateProperties);
 	}
 
 	public void beforeDeleteNode(NodeRef nodeRef) {
@@ -333,6 +343,10 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				val = openDataCommand.getTipoIniziativa(childRef);
 				break;
 			}
+			case "{openDataCommand}linkTestoAttoComReferente": {
+				val = openDataCommand.getLinkTestoAttoComReferente(childRef);
+				break;
+			}
 			case "{openDataCommand}getLinkVotoFinaleAula": {
 				val = openDataCommand.getLinkVotoFinaleAula(childRef);
 				break;
@@ -443,19 +457,31 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 
 		if ((after.containsKey(AttoUtil.PROP_STATO_ATTO_QNAME)
 				&& !((String) after.get(AttoUtil.PROP_STATO_ATTO_QNAME)).equalsIgnoreCase(ATTO_CANCELLATO))
-				|| !after.containsKey(AttoUtil.PROP_STATO_ATTO_QNAME)) {
+				|| !after.containsKey(AttoUtil.PROP_STATO_ATTO_QNAME)
+				|| (after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) && ((boolean) after
+						.get(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) || (before
+								.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)
+								&& ((boolean) after.get(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) != (boolean) before
+										.get(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)))))) {
+			NodeRef attoNodeRef = new NodeRef(nodeRef.toString());
+			if (after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)) {
+				while (!dictionaryService.isSubClass(nodeService.getType(attoNodeRef), AttoUtil.TYPE_ATTO)) {
+					attoNodeRef = nodeService.getPrimaryParent(attoNodeRef).getParentRef();
+				}
+			}
+
 			try {
-				logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(nodeRef) + " "
-						+ nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
+				logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
+						+ nodeService.getProperty(attoNodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
 				String odAtto = "";
-				odAtto = generateOdAtto(nodeRef);
+				odAtto = generateOdAtto(attoNodeRef);
 				logger.debug("odAtto: " + odAtto);
 				String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken, ambiente);
 				logger.info("Il webservice ha restituito " + response);
 			} catch (Exception e) {
 				try {
 					logger.error("Impossibile notificare ad OpenData l'avvenuta modifica dell'atto ", e);
-					String idAtto = openDataCommand.getIdAtto(nodeRef);
+					String idAtto = openDataCommand.getIdAtto(attoNodeRef);
 					notifyOpenDataAdmin("Mancato aggiornamento atto " + idAtto, null, getEmailTemplateNodeRef());
 				} catch (OpenDataAdminNotificationException e1) {
 					// TODO Auto-generated catch block

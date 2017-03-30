@@ -93,6 +93,8 @@ public class AttoUtil {
 	public static final String ESITO_VOTO_PASSAGGIO_AULA = "esitoVotoPassaggioAula";
 	public static final String DATA_SEDUTA_PASSAGGIO_AULA = "dataSedutaPassaggioAula";
 	public static final String PROP_TIPOLOGIA = "tipologia";
+	public static final String PROP_PUBBLICO = "pubblico";
+	public static final String PROP_PUBBLICO_OPENDATA = "pubblicoOpendata";
 	public static final String PROP_DATA_LR = "dataLr";
 	public static final String PROP_NUMERO_LR = "numeroLr";
 
@@ -112,6 +114,10 @@ public class AttoUtil {
 	public static final QName DATA_SEDUTA_PASSAGGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			DATA_SEDUTA_PASSAGGIO_AULA);
 	public static final QName PROP_TIPOLOGIA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_TIPOLOGIA);
+	
+	public static final QName PROP_PUBBLICO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_PUBBLICO);
+	
+	public static final QName PROP_PUBBLICO_OPENDATA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_PUBBLICO_OPENDATA);
 
 	public static final QName PROP_NUMERO_DCR_PASSAGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			PROP_NUMERO_DCR_PASSAGIO_AULA);

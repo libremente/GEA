@@ -1425,6 +1425,11 @@
 					<type>d:boolean</type>
 					<default>false</default>
 				</property>
+				<property name="crlatti:pubblicoOpendata">
+					<title>Pubblico Opendata</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
 			</properties>
 		</aspect>
 		

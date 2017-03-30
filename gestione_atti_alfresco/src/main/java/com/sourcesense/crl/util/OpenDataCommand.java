@@ -160,7 +160,7 @@ public class OpenDataCommand {
 					firmatario = "-" + idAnagrafica + "-" + primoFirmatario;
 				}
 			} catch (Exception e) {
-				logger.warn("Impossibile recuperare il primo firmatario "+primoFirmatario, e);
+				logger.warn("Impossibile recuperare il primo firmatario " + primoFirmatario, e);
 			} finally {
 				return firmatario;
 			}
@@ -196,8 +196,9 @@ public class OpenDataCommand {
 	}
 
 	public String getIdAnagrafica(String nomeAnagrafica) {
-		String nomeAnagraficaCorretto=nomeAnagrafica.trim().replaceAll("[ \t]+", " ");
-		String nome = nomeAnagraficaCorretto.replaceAll("([ \t][A-Z0-9_\\p{Punct}]{2,})+(([ \t][a-z]{2,})?([ \t][A-Z0-9_\\p{Punct}]{2,})+)*","");
+		String nomeAnagraficaCorretto = nomeAnagrafica.trim().replaceAll("[ \t]+", " ");
+		String nome = nomeAnagraficaCorretto
+				.replaceAll("([ \t][A-Z0-9_\\p{Punct}]{2,})+(([ \t][a-z]{2,})?([ \t][A-Z0-9_\\p{Punct}]{2,})+)*", "");
 		String cognome = nomeAnagraficaCorretto.replaceAll("^[A-Z][a-z]{1,}([ \t][A-Z][a-z]{1,})*[ \t]", "");
 		ResultSet consigliereNodes = null;
 		try {
@@ -309,7 +310,7 @@ public class OpenDataCommand {
 					relatore = "-" + idAnagrafica + "-" + relatoreName;
 				}
 			} catch (Exception e) {
-				logger.warn("Impossibile recuperare il relatore "+relatoreName, e);
+				logger.warn("Impossibile recuperare il relatore " + relatoreName, e);
 			}
 		}
 		return relatore;
@@ -426,6 +427,19 @@ public class OpenDataCommand {
 				}
 
 			}
+		}
+		return null;
+	}
+
+	public String getLinkTestoAttoComReferente(NodeRef attoNodeRef) {
+		List<NodeRef> pubbliciOpendataNoderefs = searchService.selectNodes(attoNodeRef,
+				"*//*[@crlatti:pubblicoOpendata='true']", null, this.namespaceService, false);
+		if (pubbliciOpendataNoderefs.size() > 0) {
+			MessageFormat mf = new MessageFormat(this.linkVotoFinale);
+			String parameterFormatting[] = new String[] {
+					(String) nodeService.getProperty(pubbliciOpendataNoderefs.get(0), ContentModel.PROP_NODE_UUID),
+					(String) nodeService.getProperty(pubbliciOpendataNoderefs.get(0), ContentModel.PROP_NAME) };
+			return mf.format(parameterFormatting);
 		}
 		return null;
 	}
