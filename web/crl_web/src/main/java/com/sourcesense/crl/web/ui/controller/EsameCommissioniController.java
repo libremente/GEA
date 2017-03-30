@@ -88,6 +88,9 @@ public class EsameCommissioniController {
 	private String nomeRelatore;
 
 	private boolean currentFilePubblico = true;
+	
+	private boolean currentFilePubblicoOpendata = false;
+	
 	private Date currentDataSeduta;
 
 	private String componenteToDelete;
@@ -1568,6 +1571,7 @@ public class EsameCommissioniController {
 			TestoAtto testoVotatoRet = new TestoAtto();
 			testoVotatoRet.setNome(event.getFile().getFileName());
 			testoVotatoRet.setPubblico(currentFilePubblico);
+			testoVotatoRet.setPubblicoOpendata(currentFilePubblicoOpendata);
 			testoVotatoRet.setCommissione(commissioneUser.getDescrizione());
 			testoVotatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 
@@ -3153,6 +3157,14 @@ public class EsameCommissioniController {
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
+	}
+	
+	public boolean isCurrentFilePubblicoOpendata() {
+		return currentFilePubblicoOpendata;
+	}
+
+	public void setCurrentFilePubblicoOpendata(boolean currentFilePubblicoOpendata) {
+		this.currentFilePubblicoOpendata = currentFilePubblicoOpendata;
 	}
 
 	public Date getDataSedutaStralcio() {

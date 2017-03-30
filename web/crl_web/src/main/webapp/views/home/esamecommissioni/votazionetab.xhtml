@@ -91,6 +91,15 @@
 							</p:row>
 							<p:row>
 								<p:column>
+									<h:outputLabel for="isPubblicoOpendata" value="Pubblica su Opendata " />
+									<p:selectBooleanCheckbox id="isPubblicoOpendata"
+										value="#{esameCommissioniController.currentFilePubblicoOpendata}">
+										<p:ajax event="change" immediate="true"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
 									<p:fileUpload label="Sfoglia" uploadLabel="Carica"
 										cancelLabel="Cancella"
 										oncomplete="uploadFileAttributesVotazioneDialog.hide()"
@@ -297,6 +306,21 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
+
+						<p:column sortBy="#{testoAttoVotato.pubblicoOpendata}">
+							<f:facet name="header">Pubblico Opendata</f:facet>
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="si" rendered="#{testoAttoVotato.pubblicoOpendata}" />
+									<h:outputText value="no"
+										rendered="#{!testoAttoVotato.pubblicoOpendata}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{testoAttoVotato.pubblicoOpendata}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
 
 						<p:column>
 							<f:facet name="header">Elimina</f:facet>

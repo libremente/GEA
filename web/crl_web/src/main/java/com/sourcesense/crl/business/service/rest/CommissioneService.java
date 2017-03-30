@@ -303,6 +303,7 @@ public class CommissioneService {
 			part.field("commissione", testoAtto.getCommissione());
 			part.field("passaggio", testoAtto.getPassaggio());
 			part.field("pubblico", ""+testoAtto.isPubblico());
+			part.field("pubblicoOpendata", ""+testoAtto.isPubblicoOpendata());
 
 			ClientResponse response = webResource
 					.type(MediaType.MULTIPART_FORM_DATA_TYPE)

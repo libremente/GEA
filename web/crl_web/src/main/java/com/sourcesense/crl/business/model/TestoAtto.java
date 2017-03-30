@@ -24,6 +24,7 @@ public class TestoAtto implements Cloneable {
     private String descrizione;
 	private String downloadUrl;
 	private boolean pubblico;
+	private boolean pubblicoOpendata;
 	private String tipoAllegato;
 	private String tipologia;
 	private String provenienza;
@@ -66,6 +67,12 @@ public class TestoAtto implements Cloneable {
 	}
 	public void setPubblico(boolean pubblico) {
 		this.pubblico = pubblico;
+	}
+	public boolean isPubblicoOpendata() {
+		return pubblicoOpendata;
+	}
+	public void setPubblicoOpendata(boolean pubblicoOpendata) {
+		this.pubblicoOpendata = pubblicoOpendata;
 	}
 	public String getTipoAllegato() {
 		return tipoAllegato;
