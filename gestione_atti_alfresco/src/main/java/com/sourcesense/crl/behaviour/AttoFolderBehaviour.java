@@ -464,28 +464,28 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 								&& ((boolean) after.get(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) != (boolean) before
 										.get(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)))))) {
 			NodeRef attoNodeRef = new NodeRef(nodeRef.toString());
-			if (after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)) {
-				while (!dictionaryService.isSubClass(nodeService.getType(attoNodeRef), AttoUtil.TYPE_ATTO)) {
-					attoNodeRef = nodeService.getPrimaryParent(attoNodeRef).getParentRef();
-				}
+			while (!dictionaryService.isSubClass(nodeService.getType(attoNodeRef), AttoUtil.TYPE_ATTO)) {
+				attoNodeRef = nodeService.getPrimaryParent(attoNodeRef).getParentRef();
 			}
-
-			try {
-				logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
-						+ nodeService.getProperty(attoNodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
-				String odAtto = "";
-				odAtto = generateOdAtto(attoNodeRef);
-				logger.debug("odAtto: " + odAtto);
-				String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken, ambiente);
-				logger.info("Il webservice ha restituito " + response);
-			} catch (Exception e) {
+			if ((after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)
+					|| (dictionaryService.isSubClass(nodeService.getType(nodeRef), AttoUtil.TYPE_ATTO)))&& !nodeService.getType(attoNodeRef).equals(AttoUtil.TYPE_ATTO_EAC)) {
 				try {
-					logger.error("Impossibile notificare ad OpenData l'avvenuta modifica dell'atto ", e);
-					String idAtto = openDataCommand.getIdAtto(attoNodeRef);
-					notifyOpenDataAdmin("Mancato aggiornamento atto " + idAtto, null, getEmailTemplateNodeRef());
-				} catch (OpenDataAdminNotificationException e1) {
-					// TODO Auto-generated catch block
-					logger.error("Impossibile inviare mail di notifica", e);
+					logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
+							+ nodeService.getProperty(attoNodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
+					String odAtto = "";
+					odAtto = generateOdAtto(attoNodeRef);
+					logger.debug("odAtto: " + odAtto);
+					String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken, ambiente);
+					logger.info("Il webservice ha restituito " + response);
+				} catch (Exception e) {
+					try {
+						logger.error("Impossibile notificare ad OpenData l'avvenuta modifica dell'atto ", e);
+						String idAtto = openDataCommand.getIdAtto(attoNodeRef);
+						notifyOpenDataAdmin("Mancato aggiornamento atto " + idAtto, null, getEmailTemplateNodeRef());
+					} catch (OpenDataAdminNotificationException e1) {
+						// TODO Auto-generated catch block
+						logger.error("Impossibile inviare mail di notifica", e);
+					}
 				}
 			}
 		} else { // cancellazione atto

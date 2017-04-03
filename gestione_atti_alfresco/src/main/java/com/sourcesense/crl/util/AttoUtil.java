@@ -34,6 +34,7 @@ public class AttoUtil {
 	public static final String FIRMATARIO_TYPE = "firmatario";
 	public static final String TYPE_LEGISLATURA = "legislaturaAnagrafica";
 	public static final QName TYPE_ATTO = QName.createQName(CRL_ATTI_MODEL, "atto");
+	public static final QName TYPE_ATTO_EAC = QName.createQName(CRL_ATTI_MODEL, "attoEac");
 	public static final QName TYPE_AULA = QName.createQName(CRL_ATTI_MODEL, "aula");
 	public static final QName COMMISSIONE_TYPE_QNAME = QName.createQName(CRL_ATTI_MODEL, COMMISSIONE_TYPE);
 	public static final QName TYPE_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL, RELATORE_TYPE);
