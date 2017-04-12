@@ -464,11 +464,13 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 								&& ((boolean) after.get(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) != (boolean) before
 										.get(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)))))) {
 			NodeRef attoNodeRef = new NodeRef(nodeRef.toString());
-			while (!dictionaryService.isSubClass(nodeService.getType(attoNodeRef), AttoUtil.TYPE_ATTO)) {
+			while ((attoNodeRef!=null) 
+					&& 
+					(!dictionaryService.isSubClass(nodeService.getType(attoNodeRef), AttoUtil.TYPE_ATTO))) {
 				attoNodeRef = nodeService.getPrimaryParent(attoNodeRef).getParentRef();
 			}
-			if ((after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)
-					|| (dictionaryService.isSubClass(nodeService.getType(nodeRef), AttoUtil.TYPE_ATTO)))&& !nodeService.getType(attoNodeRef).equals(AttoUtil.TYPE_ATTO_EAC)) {
+			if (attoNodeRef!=null && ((after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)
+					|| (dictionaryService.isSubClass(nodeService.getType(nodeRef), AttoUtil.TYPE_ATTO)))&& !nodeService.getType(attoNodeRef).equals(AttoUtil.TYPE_ATTO_EAC))) {
 				try {
 					logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
 							+ nodeService.getProperty(attoNodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
