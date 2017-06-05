@@ -538,6 +538,9 @@ if ( checkIsNotNull(pubblico) ) {
 	}	
 }
 
+/* add PATH */
+luceneQuery = luceneQuery + ' AND PATH:"//app:company_home/cm:CRL//*"';
+
 
 protocolloLogger.info(luceneQuery);
 
