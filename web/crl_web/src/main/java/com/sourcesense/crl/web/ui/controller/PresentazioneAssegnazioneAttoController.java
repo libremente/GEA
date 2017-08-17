@@ -73,6 +73,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private Date dataPresaInCarico;
 	private String numeroAtto;
+	private String estensioneAtto;
 	private String classificazione;
 	private String oggetto;
 	private String numeroRepertorio;
@@ -510,7 +511,7 @@ public class PresentazioneAssegnazioneAttoController {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
-
+		attoBean.getAtto().setEstensioneAtto(this.atto.getEstensioneAtto());
 		attoBean.getAtto().setClassificazione(this.atto.getClassificazione());
         if(!originale){
 		   attoBean.getAtto().setOggetto(oggetto);
@@ -1629,6 +1630,16 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setNumeroAtto(String numeroAtto) {
 		this.atto.setNumeroAtto(numeroAtto);
 	}
+	
+	public String getEstensioneAtto(){
+		return atto.getEstensioneAtto();
+		
+	}
+	
+	public void setEstensioneAtto(String estensioneAtto){
+		this.atto.setEstensioneAtto(estensioneAtto);
+	}
+	
 
 	public String getClassificazione() {
 		return atto.getClassificazione();

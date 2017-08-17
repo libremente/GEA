@@ -166,7 +166,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
      * @return
      */
     protected boolean checkStatoAtto(String statoAtto) {
-        return statoAtto.equals(PRESO_CARICO_COMMISSIONE)
+        return statoAtto.equals(ASSEGNATO_COMMISSIONE)||statoAtto.equals(PRESO_CARICO_COMMISSIONE)
                 || statoAtto.equals(VOTATO_COMMISSIONE)
                 || statoAtto.equals(NOMINATO_RELATORE)
                 || statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
