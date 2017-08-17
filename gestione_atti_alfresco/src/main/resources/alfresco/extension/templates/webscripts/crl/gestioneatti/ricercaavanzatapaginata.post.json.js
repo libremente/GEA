@@ -117,8 +117,8 @@ var numeroFascicolo = getObj(atto, "numeroRepertorio");
 var rinviato = getObj(atto, "rinviato");
 
 /* Impaginazione ricerca */
-var startFrom = getObj(atto, "start");
-var limit = getObj(atto, "limit");
+var startFrom = parseInt(getObj(atto, "start"));
+var limit = parseInt(getObj(atto, "limit"));
 var orderby = getObj(atto, "orderby");
 var pubblico = getObj(atto, "pubblico");
 
@@ -539,8 +539,11 @@ if ( checkIsNotNull(pubblico) ) {
 }
 
 /* add PATH */
-luceneQuery = luceneQuery + ' AND PATH:"//app:company_home/cm:CRL//*"';
 
+/* Rimozione Query
+ * 
+ * luceneQuery = luceneQuery + ' AND PATH:"//app:company_home/cm:CRL//*"';
+*/
 
 protocolloLogger.info(luceneQuery);
 
@@ -566,7 +569,7 @@ else {
 }
 
 if(checkIsNull(limit)){
-	limit = 1000;
+	limit = 10000;
 }
 
 if(checkIsNull(startFrom)){
@@ -582,17 +585,15 @@ var def = {
  query: luceneQuery,
  store: "workspace://SpacesStore",
  language: "lucene",
- sort: [sort], /* pu accettare pi colonne */
- page: paging
+ sort: [sort]
 };
 
 /* Fine Impaginazione rirerca */
 
-
-var total = search.luceneSearch(luceneQuery).length;
-
 /* esegue la ricerca */
 var attiResults = search.query(def);
+
+
 
 var end = new Date().getTime();
 var time = end - start;
@@ -605,22 +606,30 @@ var startDb = new Date().getTime();
 protocolloLogger.info("Ricerca - Database - start:"+startDb);
 
 
-var attiResultsObj = new Array();
+
 
 var commissioniAbbinamentiDuration = 0;
 
+var attiResultsCleaned= new Array();
+
 for(var i=0; i< attiResults.length; i++){
-	
-	var attoResult = attiResults[i];
 
     /*
 	 * A quick way to retrieve only documents under this folder a lucene path
 	 * query is much slower when the document to filter are few as in this case
 	 */
-    if (!attoResult.displayPath.startsWith("/Company Home/CRL")){
-        continue;
+    if (attiResults[i].displayPath.startsWith("/Company Home/CRL")){
+    		attiResultsCleaned.push(attiResults[i]);
     }
+    
+}
 
+model.total = attiResultsCleaned.length;
+attiResultsCleaned=attiResultsCleaned.slice(startFrom, startFrom+limit<=model.total+1?startFrom+limit:model.total);
+var attiResultsObj = new Array();
+
+for(var i=0; i< attiResultsCleaned.length; i++){
+	var attoResult = attiResultsCleaned[i];
 	var attoResultObj = new Object();
 	
 	attoResultObj.id = attoResult.nodeRef.toString();
@@ -788,5 +797,4 @@ var endDb = new Date().getTime();
 var timeDb = endDb - startDb;
 protocolloLogger.info("Ricerca - Database - eseguita in :"+timeDb);
 logger.log("output commissioni e abbinamenti: "+commissioniAbbinamentiDuration+"ms");
-model.total = total;
 model.atti = attiResultsObj;
