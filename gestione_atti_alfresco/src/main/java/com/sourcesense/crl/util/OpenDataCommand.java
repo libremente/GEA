@@ -21,6 +21,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.google.gdata.util.common.base.StringUtil;
 import com.sourcesense.crl.job.anagrafica.Constant;
 
 public class OpenDataCommand {
@@ -62,7 +63,7 @@ public class OpenDataCommand {
 		try {
 			String tipoAtto = getTipoAtto(nodeRef).toLowerCase();
 			String legislatura = getLegislatura(nodeRef);
-			int numeroAtto = getNumeroAtto(nodeRef);
+			String numeroAtto = getNumeroAtto(nodeRef);
 			idAtto = tipoAtto + "-" + numeroAtto + "-" + legislatura;
 		} catch (Exception e) {
 			logger.error("Impossibile generare idAtto", e);
@@ -85,8 +86,15 @@ public class OpenDataCommand {
 		return (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_LEGISLATURA_QNAME);
 	}
 
-	public int getNumeroAtto(NodeRef nodeRef) {
-		return (int) nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME);
+	public String getNumeroAtto(NodeRef nodeRef) {
+		int numeroAtto = (int) nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME);
+		String estensioneAtto = getEstensioneAtto(nodeRef);
+		if (estensioneAtto==null) estensioneAtto=StringUtil.EMPTY_STRING;
+		return numeroAtto+estensioneAtto;
+	}
+	
+	public String getEstensioneAtto(NodeRef nodeRef) {
+		return (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_ESTENSIONE_ATTO_QNAME);
 	}
 
 	public void setNodeService(NodeService nodeService) {
