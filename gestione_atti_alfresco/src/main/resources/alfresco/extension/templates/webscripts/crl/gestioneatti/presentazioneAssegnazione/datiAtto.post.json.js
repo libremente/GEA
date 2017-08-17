@@ -2,6 +2,7 @@
 
 var atto = json.get("atto");
 var id = atto.get("id");
+var estensioneAtto= atto.get("estensioneAtto");
 var classificazione = filterParam(atto.get("classificazione"));
 var oggetto = filterParam(atto.get("oggetto"));
 var numeroRepertorio = filterParam(atto.get("numeroRepertorio"));
@@ -34,7 +35,7 @@ if(checkIsNotNull(id)){
 	if(oggetto != attoNode.properties["crlatti:oggetto"]){
 		exportAttiIndirizzo = true;
 	}
-	
+	attoNode.properties["crlatti:estensioneAtto"]=estensioneAtto;
 	attoNode.properties["crlatti:oggetto"] = oggetto;
 	attoNode.properties["crlatti:numeroRepertorio"] = numeroRepertorio;
 	attoNode.properties["crlatti:pubblico"] = pubblico;

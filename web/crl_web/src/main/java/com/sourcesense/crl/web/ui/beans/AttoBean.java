@@ -44,6 +44,7 @@ public class AttoBean implements Serializable {
 	private AttoEAC attoEAC = new AttoEAC();
 	private String codice;
 	private String numeroAtto;
+	private String estensioneAtto;
 	private String tipoAtto;
 	private String tipologia;
 	private String legislatura;
@@ -623,6 +624,16 @@ public class AttoBean implements Serializable {
 		this.atto.setNumeroAtto(numeroAtto);
 	}
 
+	public String getEstensioneAtto() {
+		return atto.getEstensioneAtto();
+	}
+
+	public void setEstensioneAtto(String estensioneAtto) {
+
+		this.atto.setEstensioneAtto(estensioneAtto);
+	}
+	
+	
 	public String getTipoAtto() {
 		return this.atto.getTipoAtto();
 	}
