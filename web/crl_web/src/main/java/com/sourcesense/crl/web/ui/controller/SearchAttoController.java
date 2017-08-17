@@ -10,6 +10,37 @@
  */
 package com.sourcesense.crl.web.ui.controller;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+
+import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.model.AttoSearch;
+import com.sourcesense.crl.business.model.ColonnaAtto;
+import com.sourcesense.crl.business.model.GruppoUtente;
+import com.sourcesense.crl.business.model.Relatore;
+import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
@@ -21,36 +52,9 @@ import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 import com.sourcesense.crl.business.service.TipoChiusuraServiceManager;
 import com.sourcesense.crl.business.service.TipoIniziativaServiceManager;
 import com.sourcesense.crl.business.service.VotazioneServiceManager;
-import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoSearch;
-import com.sourcesense.crl.business.model.ColonnaAtto;
-import com.sourcesense.crl.business.model.GruppoUtente;
-import com.sourcesense.crl.business.model.Relatore;
-import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
+import com.sourcesense.crl.web.ui.beans.AttoSearchBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
-
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
 
 /**
  * 
@@ -59,7 +63,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 
 @ViewScoped
 @ManagedBean(name = "searchAttoController")
-public class SearchAttoController implements Serializable{
+public class SearchAttoController implements Serializable {
 
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
@@ -139,9 +143,9 @@ public class SearchAttoController implements Serializable{
 	private String numerodcr;
 
 	private String primofirmatario;
-	
+
 	private String gruppoFirmatario;
-	
+
 	private String gruppoPrimoFirmatario;
 
 	private String oggetto;
@@ -217,75 +221,58 @@ public class SearchAttoController implements Serializable{
 	private List<String> commissioni = new ArrayList<String>();
 
 	private List<String> firmatari = new ArrayList<String>();
-	
+
 	private List<String> gruppiConsiliari = new ArrayList<String>();
-	
+
 	private List<Relatore> relatori = new ArrayList<Relatore>();
-	
-	
+
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 
 	public void searchAtti() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 		atto.getStatiUtente().clear();
 		atto.setCommissioneUser("");
 		atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
 		atto.setTipoWorkingList("");
-		
+
 		// LAVORAZIONE
 		if ("inlavorazione".equals(listaLavoro)) {
 
 			atto.setTipoWorkingList("inlavorazione");
-			
+
 			if (userBean.getUser().getSessionGroup().isCommissione()) {
 
-				atto.setCommissioneUser(userBean.getUser().getSessionGroup()
-						.getNome());
-				
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.NOMINATO_RELATORE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.MIS));
-				
-			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
-					.getSessionGroup().getNome())) {
+				atto.setCommissioneUser(userBean.getUser().getSessionGroup().getNome());
 
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.TRASMESSO_AULA));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.MIS));
+
+			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
+
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
 
 			} else if (GruppoUtente.SERVIZIO_COMMISSIONI
-					.equalsIgnoreCase(userBean.getUser().getSessionGroup()
-							.getNome())) {
+					.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
-				atto.getStatiUtente()
-						.add(new StatoAtto(StatoAtto.PROTOCOLLATO));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.PRESO_CARICO_SC));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
-				/*atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.EAC));*/
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+				/*
+				 * atto.getStatiUtente().add( new StatoAtto(StatoAtto.EAC));
+				 */
 
-			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
-					.getSessionGroup().getNome())) {
+			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
 				atto.setTipoAtto("MIS");
 
@@ -295,58 +282,56 @@ public class SearchAttoController implements Serializable{
 		} else if ("lavorati".equals(listaLavoro)) {
 
 			atto.setTipoWorkingList("lavorati");
-			
+
 			if (userBean.getUser().getSessionGroup().isCommissione()) {
 
-				atto.setCommissioneUser(userBean.getUser().getSessionGroup()
-						.getNome());
-				
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.TRASMESSO_AULA));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+				atto.setCommissioneUser(userBean.getUser().getSessionGroup().getNome());
+
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
 
-			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
-					.getSessionGroup().getNome())) {
+			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
 
 			} else if (GruppoUtente.SERVIZIO_COMMISSIONI
-					.equalsIgnoreCase(userBean.getUser().getSessionGroup()
-							.getNome())) {
+					.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.NOMINATO_RELATORE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.TRASMESSO_COMMISSIONE));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.TRASMESSO_AULA));
-				atto.getStatiUtente().add(
-						new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.CHIUSO));
 
-			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
-					.getSessionGroup().getNome())) {
+			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
 			}
 
 		}
 
 		atto.setGruppoUtente(userBean.getUser().getSessionGroup().getNome());
-    atto.setSummary(true);
+		atto.setSummary(true);
+		AttoSearchBean attoSearchBean = ((AttoSearchBean) context.getExternalContext().getSessionMap()
+				.get("attoSearchBean"));
+		try {
+			BeanUtils.copyProperties(attoSearchBean, atto);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		attoSearchBean.setTipoWorkingList(listaLavoro);
 		setListAtti(attoServiceManager.searchAtti(atto));
 		Collections.sort(listAtti);
 	}
@@ -356,7 +341,7 @@ public class SearchAttoController implements Serializable{
 
 		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
-		
+
 		setRelatori(personaleServiceManager.getAllRelatori());
 		setStati(statoAttoServiceManager.findAll());
 		setTipiChiusura(tipoChiusuraServiceManager.findAll());
@@ -366,75 +351,71 @@ public class SearchAttoController implements Serializable{
 		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
 		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
 		setFirmatari(personaleServiceManager.getAllFirmatariStorici(atto.getLegislatura()));
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 		atto.getStatiUtente().clear();
-		atto.setCommissioneUser("");  
+		atto.setCommissioneUser("");
 		atto.setTipoWorkingList("inlavorazione");
 		atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
-		
+
 		if (userBean.getUser().getSessionGroup().isCommissione()) {
 
-			atto.setCommissioneUser(userBean.getUser().getSessionGroup()
-					.getNome());
-			
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.NOMINATO_RELATORE));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.MIS));
+			atto.setCommissioneUser(userBean.getUser().getSessionGroup().getNome());
 
-		} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser()
-				.getSessionGroup().getNome())) {
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.MIS));
+
+		} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
 			atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
 			atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
 			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
 
-		} else if (GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean
-				.getUser().getSessionGroup().getNome())) {
+		} else if (GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
 			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
 			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
-			atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
-			/*atto.getStatiUtente().add(
-					new StatoAtto(StatoAtto.EAC));*/
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
+			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+			/*
+			 * atto.getStatiUtente().add( new StatoAtto(StatoAtto.EAC));
+			 */
 
-		} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser()
-				.getSessionGroup().getNome())) {
+		} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
 			atto.setTipoAtto("MIS");
 
 		}
-    atto.setSummary(true);
-
+		atto.setSummary(true);
+		AttoSearchBean attoSearchBean = ((AttoSearchBean) context.getExternalContext().getSessionMap()
+				.get("attoSearchBean"));
+		try {
+			BeanUtils.copyProperties(atto, attoSearchBean);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setListaLavoro(attoSearchBean.getTipoWorkingList());
 		setListAtti(attoServiceManager.searchAtti(atto));
 		Collections.sort(listAtti);
 
 	}
 
-	public void postProcessXLS(Object document) throws SecurityException,
-			NoSuchFieldException, IllegalArgumentException,
-			IllegalAccessException {
+	public void postProcessXLS(Object document)
+			throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 		HSSFWorkbook wb = (HSSFWorkbook) document;
 		wb.removeSheetAt(0);
@@ -478,8 +459,7 @@ public class SearchAttoController implements Serializable{
 
 			for (ColonnaAtto colonna : userBean.getColonneTotali()) {
 
-				Field privateStringField = atto.getClass().getDeclaredField(
-						colonna.getAttoProperty());
+				Field privateStringField = atto.getClass().getDeclaredField(colonna.getAttoProperty());
 
 				privateStringField.setAccessible(true);
 
@@ -489,8 +469,7 @@ public class SearchAttoController implements Serializable{
 
 				if (privateStringField.get(atto) instanceof Date) {
 
-					value = myDateFormat.format((Date) privateStringField
-							.get(atto));
+					value = myDateFormat.format((Date) privateStringField.get(atto));
 
 				} else {
 
@@ -509,11 +488,9 @@ public class SearchAttoController implements Serializable{
 	public String attoDetail() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = (AttoBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{attoBean}",
-						AttoBean.class).getValue(context.getELContext());
+		AttoBean attoBean = (AttoBean) context.getApplication().getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{attoBean}", AttoBean.class)
+				.getValue(context.getELContext());
 
 		Atto attoRet = null;
 
@@ -530,16 +507,9 @@ public class SearchAttoController implements Serializable{
 		} else {
 
 			attoBean.setAtto(attoServiceManager.findById(idAttoSelected));
-			attoBean.getAtto().setFirmatari(
-					personaleServiceManager.findFirmatariByAtto(attoBean
-							.getAtto()));
-			attoBean.getAtto()
-					.setTestiAtto(
-							attoRecordServiceManager.testiAttoByAtto(attoBean
-									.getAtto()));
-			attoBean.getAtto().setAllegati(
-					attoRecordServiceManager.allAllegatiAttoByAtto(attoBean
-							.getAtto()));
+			attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
 			return "pretty:Riepilogo_Atto";
 
 		}
@@ -548,11 +518,9 @@ public class SearchAttoController implements Serializable{
 	public String attoDetail(String idAttoParam, String tipo) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = (AttoBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{attoBean}",
-						AttoBean.class).getValue(context.getELContext());
+		AttoBean attoBean = (AttoBean) context.getApplication().getExpressionFactory()
+				.createValueExpression(context.getELContext(), "#{attoBean}", AttoBean.class)
+				.getValue(context.getELContext());
 
 		Atto attoRet = null;
 
@@ -569,24 +537,17 @@ public class SearchAttoController implements Serializable{
 		} else {
 
 			attoBean.setAtto(attoServiceManager.findById(idAttoParam));
-			attoBean.getAtto().setFirmatari(
-					personaleServiceManager.findFirmatariByAtto(attoBean
-							.getAtto()));
-			attoBean.getAtto()
-					.setTestiAtto(
-							attoRecordServiceManager.testiAttoByAtto(attoBean
-									.getAtto()));
-			attoBean.getAtto().setAllegati(
-					attoRecordServiceManager.allAllegatiAttoByAtto(attoBean
-							.getAtto()));
+			attoBean.getAtto().setFirmatari(personaleServiceManager.findFirmatariByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setTestiAtto(attoRecordServiceManager.testiAttoByAtto(attoBean.getAtto()));
+			attoBean.getAtto().setAllegati(attoRecordServiceManager.allAllegatiAttoByAtto(attoBean.getAtto()));
 			return "pretty:Riepilogo_Atto";
 
 		}
 
 	}
-	
-	public void reset(){
-		
+
+	public void reset() {
+
 		setAbbinamento(false);
 		setAnno("");
 		setCommissione1("");
@@ -638,15 +599,13 @@ public class SearchAttoController implements Serializable{
 		setTipoatto("");
 		setTipoChiusura("");
 		setTipoiniziativa("");
-		
-		
+
 	}
-	
+
 	public int sortNumeriAtto(String s1, String s2) {
-        
-        return Integer.parseInt(s1) -  Integer.parseInt(s2);
-    }
-	
+
+		return Integer.parseInt(s1) - Integer.parseInt(s2);
+	}
 
 	public String getNumeroAtto() {
 		return this.atto.getNumeroAtto();
@@ -744,13 +703,12 @@ public class SearchAttoController implements Serializable{
 		this.atto.setPrimoFirmatario(primofirmatario);
 	}
 
-	
 	public String getGruppoFirmatario() {
 		return atto.getGruppoFirmatario();
 	}
 
 	public void setGruppoFirmatario(String gruppoFirmatario) {
-		this.atto.setGruppoFirmatario (gruppoFirmatario);
+		this.atto.setGruppoFirmatario(gruppoFirmatario);
 	}
 
 	public String getGruppoPrimoFirmatario() {
@@ -758,7 +716,7 @@ public class SearchAttoController implements Serializable{
 	}
 
 	public void setGruppoPrimoFirmatario(String gruppoPrimoFirmatario) {
-		this.atto.setGruppoPrimoFirmatario ( gruppoPrimoFirmatario);
+		this.atto.setGruppoPrimoFirmatario(gruppoPrimoFirmatario);
 	}
 
 	public String getOggetto() {
@@ -789,8 +747,7 @@ public class SearchAttoController implements Serializable{
 		return attoRecordServiceManager;
 	}
 
-	public void setAttoRecordServiceManager(
-			AttoRecordServiceManager attoRecordServiceManager) {
+	public void setAttoRecordServiceManager(AttoRecordServiceManager attoRecordServiceManager) {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
@@ -814,10 +771,8 @@ public class SearchAttoController implements Serializable{
 		return this.atto.getEsitoVotoCommissioneReferente();
 	}
 
-	public void setEsitoVotoCommissioneReferente(
-			String esitoVotoCommissioneReferente) {
-		this.atto
-				.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
+	public void setEsitoVotoCommissioneReferente(String esitoVotoCommissioneReferente) {
+		this.atto.setEsitoVotoCommissioneReferente(esitoVotoCommissioneReferente);
 	}
 
 	public String getEsitoVotoAula() {
@@ -827,8 +782,6 @@ public class SearchAttoController implements Serializable{
 	public void setEsitoVotoAula(String esitoVotoAula) {
 		this.atto.setEsitoVotoAula(esitoVotoAula);
 	}
-
-	
 
 	public boolean isRedigente() {
 		return this.atto.isRedigente();
@@ -1089,8 +1042,8 @@ public class SearchAttoController implements Serializable{
 	/*
 	 * public Map<String, String> getFirmatari() { return firmatari; }
 	 * 
-	 * public void setFirmatari(Map<String, String> firmatari) { this.firmatari
-	 * = firmatari; }
+	 * public void setFirmatari(Map<String, String> firmatari) { this.firmatari =
+	 * firmatari; }
 	 */
 
 	public Map<String, String> getTipiChiusura() {
@@ -1105,8 +1058,7 @@ public class SearchAttoController implements Serializable{
 		return esitiVotoCommissioneReferente;
 	}
 
-	public void setEsitiVotoCommissioneReferente(
-			Map<String, String> esitiVotoCommissioneReferente) {
+	public void setEsitiVotoCommissioneReferente(Map<String, String> esitiVotoCommissioneReferente) {
 		this.esitiVotoCommissioneReferente = esitiVotoCommissioneReferente;
 	}
 
@@ -1126,7 +1078,6 @@ public class SearchAttoController implements Serializable{
 		this.commissioni = commissioni;
 	}
 
-
 	public Map<String, String> getOrganismiStatutari() {
 		return organismiStatutari;
 	}
@@ -1139,8 +1090,7 @@ public class SearchAttoController implements Serializable{
 		return legislaturaServiceManager;
 	}
 
-	public void setLegislaturaServiceManager(
-			LegislaturaServiceManager legislaturaServiceManager) {
+	public void setLegislaturaServiceManager(LegislaturaServiceManager legislaturaServiceManager) {
 		this.legislaturaServiceManager = legislaturaServiceManager;
 	}
 
@@ -1148,8 +1098,7 @@ public class SearchAttoController implements Serializable{
 		return tipoAttoServiceManager;
 	}
 
-	public void setTipoAttoServiceManager(
-			TipoAttoServiceManager tipoAttoServiceManager) {
+	public void setTipoAttoServiceManager(TipoAttoServiceManager tipoAttoServiceManager) {
 		this.tipoAttoServiceManager = tipoAttoServiceManager;
 	}
 
@@ -1157,8 +1106,7 @@ public class SearchAttoController implements Serializable{
 		return statoAttoServiceManager;
 	}
 
-	public void setStatoAttoServiceManager(
-			StatoAttoServiceManager statoAttoServiceManager) {
+	public void setStatoAttoServiceManager(StatoAttoServiceManager statoAttoServiceManager) {
 		this.statoAttoServiceManager = statoAttoServiceManager;
 	}
 
@@ -1166,8 +1114,7 @@ public class SearchAttoController implements Serializable{
 		return tipoIniziativaServiceManager;
 	}
 
-	public void setTipoIniziativaServiceManager(
-			TipoIniziativaServiceManager tipoIniziativaServiceManager) {
+	public void setTipoIniziativaServiceManager(TipoIniziativaServiceManager tipoIniziativaServiceManager) {
 		this.tipoIniziativaServiceManager = tipoIniziativaServiceManager;
 	}
 
@@ -1175,8 +1122,7 @@ public class SearchAttoController implements Serializable{
 		return tipoChiusuraServiceManager;
 	}
 
-	public void setTipoChiusuraServiceManager(
-			TipoChiusuraServiceManager tipoChiusuraServiceManager) {
+	public void setTipoChiusuraServiceManager(TipoChiusuraServiceManager tipoChiusuraServiceManager) {
 		this.tipoChiusuraServiceManager = tipoChiusuraServiceManager;
 	}
 
@@ -1193,8 +1139,7 @@ public class SearchAttoController implements Serializable{
 		return personaleServiceManager;
 	}
 
-	public void setPersonaleServiceManager(
-			PersonaleServiceManager personaleServiceManager) {
+	public void setPersonaleServiceManager(PersonaleServiceManager personaleServiceManager) {
 		this.personaleServiceManager = personaleServiceManager;
 	}
 
@@ -1202,8 +1147,7 @@ public class SearchAttoController implements Serializable{
 		return votazioneServiceManager;
 	}
 
-	public void setVotazioneServiceManager(
-			VotazioneServiceManager votazioneServiceManager) {
+	public void setVotazioneServiceManager(VotazioneServiceManager votazioneServiceManager) {
 		this.votazioneServiceManager = votazioneServiceManager;
 	}
 
@@ -1211,8 +1155,7 @@ public class SearchAttoController implements Serializable{
 		return commissioneServiceManager;
 	}
 
-	public void setCommissioneServiceManager(
-			CommissioneServiceManager commissioneServiceManager) {
+	public void setCommissioneServiceManager(CommissioneServiceManager commissioneServiceManager) {
 		this.commissioneServiceManager = commissioneServiceManager;
 	}
 
@@ -1221,7 +1164,7 @@ public class SearchAttoController implements Serializable{
 	}
 
 	public void setListAtti(List<Atto> listAtti) {
-		
+
 		this.listAtti = listAtti;
 	}
 
@@ -1306,9 +1249,6 @@ public class SearchAttoController implements Serializable{
 		this.firmatari = firmatari;
 	}
 
-	
-
-	
 	public List<String> getGruppiConsiliari() {
 		return gruppiConsiliari;
 	}
@@ -1324,7 +1264,7 @@ public class SearchAttoController implements Serializable{
 	public void setRelatori(List<Relatore> relatori) {
 		this.relatori = relatori;
 	}
-	
+
 	public String getIdAttoSelected() {
 		return idAttoSelected;
 	}
