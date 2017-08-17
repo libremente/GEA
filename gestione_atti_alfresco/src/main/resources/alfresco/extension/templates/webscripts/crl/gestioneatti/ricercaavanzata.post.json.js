@@ -557,6 +557,13 @@ for(var i=0; i< attiResults.length; i++){
     if (!attoResult.displayPath.startsWith("/Company Home/CRL")){
         continue;
     }
+    
+    if ((tipoWorkingList=="inlavorazione")&&(ruoloUtente != "Aula")&&(ruoloUtente != "ALFRESCO_ADMINISTARTORS")){
+    		var passaggioTrasmissione=attoResult.childrenByXPath('*[@cm:name="Passaggi"]/*/*/*[@cm:name="'+ruoloUtente+'" and @crlatti:statoCommissione="Trasmesso"]');
+    		if (passaggioTrasmissione.length>0) {
+    			continue;
+    		}
+    }
 
 	var attoResultObj = new Object();
 	
