@@ -558,7 +558,7 @@ for(var i=0; i< attiResults.length; i++){
         continue;
     }
     
-    if ((tipoWorkingList=="inlavorazione")&&(ruoloUtente != "Aula")&&(ruoloUtente != "ALFRESCO_ADMINISTARTORS")){
+    if ((tipoWorkingList=="inlavorazione")&&(ruoloUtente != "")&&(ruoloUtente != null)&&(ruoloUtente != "Aula")&&(ruoloUtente != "ALFRESCO_ADMINISTARTORS")){
     		var passaggioTrasmissione=attoResult.childrenByXPath('*[@cm:name="Passaggi"]/*/*/*[@cm:name="'+ruoloUtente+'" and @crlatti:statoCommissione="Trasmesso"]');
     		if (passaggioTrasmissione.length>0) {
     			continue;
