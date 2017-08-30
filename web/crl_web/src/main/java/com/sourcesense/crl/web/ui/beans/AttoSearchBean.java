@@ -16,13 +16,18 @@ public class AttoSearchBean extends AttoSearch implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String TipoWorkingList;
+	private boolean firstSaerch=true;
 
-	public String getTipoWorkingList() {
-		return TipoWorkingList;
+	public AttoSearchBean() {
+		super();
+		setTipoWorkingList("inlavorazione");
 	}
 
-	public void setTipoWorkingList(String tipoWorkingList) {
-		TipoWorkingList = tipoWorkingList;
+	public boolean isFirstSaerch() {
+		return firstSaerch;
+	}
+
+	public void setFirstSaerch(boolean firstSaerch) {
+		this.firstSaerch = firstSaerch;
 	}
 }

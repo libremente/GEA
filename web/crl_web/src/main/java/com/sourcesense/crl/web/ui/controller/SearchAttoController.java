@@ -341,7 +341,6 @@ public class SearchAttoController implements Serializable {
 
 		setCommissioni(commissioneServiceManager.getAll());
 		setOrganismiStatutari(organismoStatutarioServiceManager.findAll());
-
 		setRelatori(personaleServiceManager.getAllRelatori());
 		setStati(statoAttoServiceManager.findAll());
 		setTipiChiusura(tipoChiusuraServiceManager.findAll());
@@ -349,63 +348,69 @@ public class SearchAttoController implements Serializable {
 		setTipiAtto(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.list());
 		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
-		atto.setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
-		setFirmatari(personaleServiceManager.getAllFirmatariStorici(atto.getLegislatura()));
+
+		String legislatura=legislaturaServiceManager.getAll().get(0).getNome();
+
+		setFirmatari(personaleServiceManager.getAllFirmatariStorici(legislatura));
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
+		AttoSearchBean attoSearchBean = ((AttoSearchBean) context.getExternalContext().getSessionMap()
+				.get("attoSearchBean"));
+		if (!attoSearchBean.isFirstSaerch()){
+			try {
+				BeanUtils.copyProperties(atto, attoSearchBean);
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			attoSearchBean.setFirstSaerch(false);
+			atto.setLegislatura(legislatura);
+			atto.getStatiUtente().clear();
+			atto.setCommissioneUser("");
+			atto.setTipoWorkingList("inlavorazione");
+			atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
 
-		atto.getStatiUtente().clear();
-		atto.setCommissioneUser("");
-		atto.setTipoWorkingList("inlavorazione");
-		atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
+			if (userBean.getUser().getSessionGroup().isCommissione()) {
 
-		if (userBean.getUser().getSessionGroup().isCommissione()) {
+				atto.setCommissioneUser(userBean.getUser().getSessionGroup().getNome());
 
-			atto.setCommissioneUser(userBean.getUser().getSessionGroup().getNome());
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.MIS));
 
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.ASSEGNATO_COMMISSIONE));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_COMMISSIONE));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.NOMINATO_RELATORE));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_COMMISSIONE));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.LAVORI_COMITATO_RISTRETTO));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.MIS));
+			} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
-		} else if (GruppoUtente.AULA.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
 
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.TRASMESSO_AULA));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_AULA));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
+			} else if (GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
-		} else if (GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
-
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
-			atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
+				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
 			/*
 			 * atto.getStatiUtente().add( new StatoAtto(StatoAtto.EAC));
 			 */
 
-		} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
+			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
-			atto.setTipoAtto("MIS");
+				atto.setTipoAtto("MIS");
 
+			}
+			atto.setSummary(true);
 		}
-		atto.setSummary(true);
-		AttoSearchBean attoSearchBean = ((AttoSearchBean) context.getExternalContext().getSessionMap()
-				.get("attoSearchBean"));
-		try {
-			BeanUtils.copyProperties(atto, attoSearchBean);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setListaLavoro(attoSearchBean.getTipoWorkingList());
+		setListaLavoro(atto.getTipoWorkingList());
 		setListAtti(attoServiceManager.searchAtti(atto));
 		Collections.sort(listAtti);
 
