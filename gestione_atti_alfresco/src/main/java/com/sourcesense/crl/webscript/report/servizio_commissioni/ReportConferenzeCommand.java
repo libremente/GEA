@@ -132,7 +132,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                 String statoAtto = (String) this.getNodeRefProperty(attoProperties, "statoAtto");
                 if (this.checkStatoAtto(statoAtto)) {
                     XWPFTable currentTable = tables.get(tableIndex);
-                    String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                    String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                     String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
                     String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
                     // from Commissione

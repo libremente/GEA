@@ -142,7 +142,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                     ResultSet relatori = this.getRelatori(currentCommissione);
 
                     // from Atto
-                    String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                    String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                     String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
                     String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
                     String numeroBurl = (String) this.getNodeRefProperty(attoProperties, "numeroPubblicazioneBURL");

@@ -162,9 +162,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
                     tipoAtto = tipoAtto.substring(4);
                 }
                 // from Atto
-                String numeroAtto = StringUtils.EMPTY
-                        + (Integer) this.getNodeRefProperty(attoProperties,
-                        "numeroAtto");
+                String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                 String oggetto = (String) this.getNodeRefProperty(
                         attoProperties, "oggetto");
 

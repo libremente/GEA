@@ -15,6 +15,7 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.json.JSONException;
@@ -141,9 +142,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
                     }
                     XWPFTable currentTable = tables.get(tableIndex);
                     // from Atto
-                    String numeroAtto = ""
-                            + (Integer) this.getNodeRefProperty(attoProperties,
-                            "numeroAtto");
+                    String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                     String iniziativa = (String) this.getNodeRefProperty(
                             attoProperties, "tipoIniziativa");
                     String oggetto = (String) this.getNodeRefProperty(

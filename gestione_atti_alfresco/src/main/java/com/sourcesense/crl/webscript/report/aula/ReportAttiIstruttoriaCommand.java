@@ -117,9 +117,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
                 }
 
                 String abbinamenti = this.getAbbinamenti(currentAtto);
-                String numeroAtto = ""
-                        + (Integer) this.getNodeRefProperty(attoProperties,
-                        "numeroAtto");
+                String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                 String oggetto = (String) this.getNodeRefProperty(
                         attoProperties, "oggetto");
                 String iniziativa = (String) this.getNodeRefProperty(

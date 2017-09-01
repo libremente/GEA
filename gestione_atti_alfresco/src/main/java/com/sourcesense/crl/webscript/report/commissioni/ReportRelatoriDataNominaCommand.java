@@ -122,7 +122,7 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
                 String tipoAtto = (String) nodeRefType.getLocalName();
                 Date dataNomina = (Date) this.getNodeRefProperty(relatoreProperties, "dataNominaRelatore");
                 String commissione = (String) this.getNodeRefProperty(relatoreProperties, "commissioneRelatore");
-                String numeroAtto = "" + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto");
+                String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                 currentAtto.setAttoNodeRef(attoNode);
                 currentAtto.setConsigliere(relatore);
                 currentAtto.setDataNomina(dataNomina);

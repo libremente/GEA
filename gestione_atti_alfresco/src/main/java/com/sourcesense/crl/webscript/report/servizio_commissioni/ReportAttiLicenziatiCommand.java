@@ -136,9 +136,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                         .getProperties(currentCommissione);
                 /* Extracting values from Alfresco */
                 // from Atto
-                String numeroAtto = ""
-                        + (Integer) this.getNodeRefProperty(attoProperties,
-                        "numeroAtto");
+                String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                 String iniziativa = (String) this.getNodeRefProperty(
                         attoProperties, "tipoIniziativa");
                 String oggetto = (String) this.getNodeRefProperty(
