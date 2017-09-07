@@ -189,13 +189,17 @@ public class OpenDataCommand {
 			for (ChildAssociationRef firmatarioChildRef: firmatariList) {
 				NodeRef firmatarioNodeRef= firmatarioChildRef.getChildRef();
 				boolean isFirmatarioPopolare=nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)!=null?(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME):false;
+				String nomeFirmatario=(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
 				if (isFirmatarioPopolare) {
-					promotoriString += StringUtils.isEmpty(promotoriString)?listSeparator:""+(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
+					if (StringUtils.isEmpty(promotoriString)) {
+						promotoriString += nomeFirmatario;
+					} else {
+						promotoriString += listSeparator + nomeFirmatario;
+					}
 				}
 			}
 		}
 		return promotoriString;
-
 	}
 
 	@SuppressWarnings("finally")
