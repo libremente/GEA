@@ -10,6 +10,7 @@ var gruppoConsiliare = filterParam(jsonFirmatario.get("gruppoConsiliare")+"");
 var dataFirma = filterParam(jsonFirmatario.get("dataFirma")+"");
 var dataRitiro = filterParam(jsonFirmatario.get("dataRitiro")+"");
 var primoFirmatario = filterParam(jsonFirmatario.get("primoFirmatario")+"");
+var firmatarioPopolare = filterParam(jsonFirmatario.get("firmatarioPopolare")+"");
 var firmatarioNode = null;
 
 if(checkIsNotNull(jsonFirmatario)
@@ -57,6 +58,7 @@ if(checkIsNotNull(jsonFirmatario)
 	firmatarioNode.properties["crlatti:dataFirma"] = dataFirmaParsed;
 	firmatarioNode.properties["crlatti:dataRitiro"] = dataRitiroParsed;
 	firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
+    firmatarioNode.properties["crlatti:isFirmatarioPopolare"] = firmatarioPopolare;
 	firmatarioNode.properties["crlatti:gruppoConsiliare"] = gruppoConsiliare;
     firmatarioNode.properties["crlatti:isfirmatarioModified"] = true;
 	firmatarioNode.save();

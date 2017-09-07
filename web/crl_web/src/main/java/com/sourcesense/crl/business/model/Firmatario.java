@@ -25,6 +25,7 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 	private Date dataFirma;
 	private Date dataRitiro;
 	private boolean primoFirmatario;
+	private boolean firmatarioPopolare;
 	private String numeroOrdinamento;
 	private String id;
 	private String descrizione;
@@ -82,6 +83,12 @@ public class Firmatario implements Cloneable ,Comparable <Firmatario>{
 	}
 	public void setPrimoFirmatario(boolean primoFirmatario) {
 		this.primoFirmatario = primoFirmatario;
+	}
+	public boolean isFirmatarioPopolare() {
+		return firmatarioPopolare;
+	}
+	public void setFirmatarioPopolare(boolean firmatarioPopolare) {
+		this.firmatarioPopolare = firmatarioPopolare;
 	}
 
 	public String getNumeroOrdinamento() {

@@ -89,6 +89,7 @@ if(checkIsNotNull(id)){
 			var dataFirma = filterParam(firmatario.get("dataFirma"));
 			var dataRitiro = filterParam(firmatario.get("dataRitiro"));
 			var primoFirmatario = filterParam(firmatario.get("primoFirmatario"));
+			var firmatarioPopolare = filterParam(firmatario.get("firmatarioPopolare"));
 			var numeroOrdinamento = filterParam(firmatario.get("numeroOrdinamento"));
 			
 			//verifica l'esistenza del firmatario all'interno del folder Firmatari
@@ -120,6 +121,7 @@ if(checkIsNotNull(id)){
 			firmatarioNode.properties["crlatti:dataFirma"] = dataFirmaParsed;
 			firmatarioNode.properties["crlatti:dataRitiro"] = dataRitiroParsed;
 			firmatarioNode.properties["crlatti:isPrimoFirmatario"] = primoFirmatario;
+            firmatarioNode.properties["crlatti:isFirmatarioPopolare"] = firmatarioPopolare;
 			
 			// controllo per variabile exportAttiIndirizzo
 			// occorre generare l'xml  nel caso in cui cambia il gruppo consiliare di un firmatario

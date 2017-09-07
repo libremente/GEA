@@ -178,6 +178,19 @@ public class NavigationRules {
 
 	}
 
+
+	public boolean isFirmatariPopolariEnabled() {
+
+		if (("PDL".equals(attoBean.getTipoAtto()) || "PLP".equals(attoBean.getTipoAtto())) && "03_ATTO DI INIZIATIVA POPOLARE".equals(attoBean.getTipoIniziativa()))
+
+		{
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public boolean organismiEnabled() {
 
 		if (attoBean.getTipoAtto().equals("PDA") || attoBean.getTipoAtto().equals("PLP")

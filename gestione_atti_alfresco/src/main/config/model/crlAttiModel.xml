@@ -814,6 +814,11 @@
 					<title>Primo firmatario</title>
 					<type>d:boolean</type>
 				</property>
+				<property name="crlatti:isFirmatarioPopolare">
+					<title>Firmatario popolare</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
         <property name="crlatti:isfirmatarioModified">
           <title>Firmatario modificato in GEA</title>
           <type>d:boolean</type>

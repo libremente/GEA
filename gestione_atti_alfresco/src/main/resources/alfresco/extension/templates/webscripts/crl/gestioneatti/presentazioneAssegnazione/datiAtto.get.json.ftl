@@ -22,7 +22,8 @@
 			{
 				"descrizione":"${firmatario.name}",
 				"gruppoConsiliare":"<#if firmatario.properties["crlatti:gruppoConsiliare"]?exists>${firmatario.properties["crlatti:gruppoConsiliare"]}<#else></#if>",
-				"dataFirma":"<#if firmatario.properties["crlatti:dataFirma"]?exists>${firmatario.properties["crlatti:dataFirma"]?string("yyyy-MM-dd")}<#else></#if>",
+    			"firmatarioPopolare" : "<#if firmatario.properties["crlatti:isFirmatarioPopolare"]?exists>${firmatario.properties["crlatti:isFirmatarioPopolare"]?string("true","false")}<#else></#if>",
+    			"dataFirma":"<#if firmatario.properties["crlatti:dataFirma"]?exists>${firmatario.properties["crlatti:dataFirma"]?string("yyyy-MM-dd")}<#else></#if>",
 				"dataRitiro":"<#if firmatario.properties["crlatti:dataRitiro"]?exists>${firmatario.properties["crlatti:dataRitiro"]?string("yyyy-MM-dd")}<#else></#if>",
 				"primoFirmatario":"<#if firmatario.properties["crlatti:isPrimoFirmatario"]?exists>${firmatario.properties["crlatti:isPrimoFirmatario"]?string("true","false")}<#else></#if>"
 			}

@@ -86,20 +86,30 @@ public class PresentazioneAssegnazioneAttoController {
 	private String assegnazione;
 
 	private List<Firmatario> firmatariList = new ArrayList<Firmatario>();
+	private List<Firmatario> promotoriList = new ArrayList<Firmatario>();
 	private String firmatariOrder;
+	private String promotoriOrder;
 
 	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
 	private String nomeFirmatario;
+
+	private List<Firmatario> promotori= new ArrayList<Firmatario>();
+	private String nomePromotore;
+
 
 	private List<TestoAtto> testiAttoList = new ArrayList<TestoAtto>();
 	private String gruppoConsiliare;
 	private List<String> gruppiConsiliari = new ArrayList<String>();
 
 	private Date dataFirma;
+	private Date dataFirmaPromotore;
 	private Date dataRitiro;
+	private Date dataRitiroPromotore;
 	private boolean primoFirmatario;
+	private boolean primoPromotore;
 
 	private String firmatarioToDelete;
+	private String promotoreToDelete;
 	private String testoAttoToDelete;
 
 	private String statoCommitInfoGen = CRLMessage.COMMIT_DONE;
@@ -183,8 +193,18 @@ public class PresentazioneAssegnazioneAttoController {
 				.getTestiAtto()));
 		this.allegatiList = new ArrayList<Allegato>(Clonator.cloneList(atto
 				.getAllegati()));
-		this.firmatariList = new ArrayList<Firmatario>(Clonator.cloneList(atto
+
+		List<Firmatario> firmatariPromotoriList= new ArrayList<Firmatario>(Clonator.cloneList(atto
 				.getFirmatari()));
+
+
+		for (Firmatario firmatario:firmatariPromotoriList){
+			if (!firmatario.isFirmatarioPopolare()){
+				firmatariList.add(firmatario);
+			}else{
+				promotoriList.add(firmatario);
+			}
+		}
 
 		Collections.sort(firmatariList);
 
@@ -430,10 +450,14 @@ public class PresentazioneAssegnazioneAttoController {
 				firmatario.setDataRitiro(dataRitiro);
 				firmatario.setGruppoConsiliare(gruppoConsiliare);
 				firmatario.setPrimoFirmatario(primoFirmatario);
+				firmatario.setFirmatarioPopolare(false);
 				firmatariList.add(firmatario);
 
 				updateInfoGenHandler();
-				atto.setFirmatari(getOrderedFirmatari());
+				List<Firmatario> firmatariEPromotori = new ArrayList<Firmatario>();
+				firmatariEPromotori.addAll(getOrderedFirmatari());
+				firmatariEPromotori.addAll(getOrderedPromotori());
+				atto.setFirmatari(firmatariEPromotori);
 				attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
 				context.addMessage(null, new FacesMessage(
 						"Firmatario aggiunto con successo", ""));
@@ -441,6 +465,48 @@ public class PresentazioneAssegnazioneAttoController {
 			}
 		}
 	}
+
+
+
+	public void addPromotore() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (nomePromotore != null && !nomePromotore.trim().equals("")) {
+			if (!checkFirmatari()) {
+
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Attenzione ! Firmatario "
+						+ nomePromotore + " già presente ", ""));
+
+			} else if (primoPromotore && checkPrimoPromotore()) {
+
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Primo firmatario già selezionato ", ""));
+
+			} else {
+				Firmatario promotore = new Firmatario();
+				promotore.setCognomeNome(nomePromotore);
+				promotore.setDescrizione(nomePromotore);
+				promotore.setDataFirma(dataFirmaPromotore);
+				promotore.setDataRitiro(dataRitiroPromotore);
+				promotore.setPrimoFirmatario(primoPromotore);
+				promotore.setFirmatarioPopolare(true);
+				promotoriList.add(promotore);
+
+				updateInfoGenHandler();
+				List<Firmatario> firmatariEPromotori = new ArrayList<Firmatario>();
+				firmatariEPromotori.addAll(getOrderedFirmatari());
+				firmatariEPromotori.addAll(getOrderedPromotori());
+				atto.setFirmatari(firmatariEPromotori);
+				attoServiceManager.salvaInfoGeneraliPresentazione(this.atto);
+				context.addMessage(null, new FacesMessage(
+						"Firmatario aggiunto con successo", ""));
+
+			}
+		}
+	}
+
 
 	public void removeFirmatario() {
 
@@ -462,6 +528,30 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	public void removePromotore() {
+
+		for (Firmatario element : promotoriList) {
+
+			if (element.getDescrizione().equals(promotoreToDelete)) {
+				if (element.getId() != null) {
+					attoServiceManager.removeFirmatario(element);
+				}
+				promotoriList.remove(element);
+				FacesContext context = FacesContext.getCurrentInstance();
+				AttoBean attoBean = ((AttoBean) context.getExternalContext()
+						.getSessionMap().get("attoBean"));
+				List<Firmatario> firmatariEPromotori = new ArrayList<Firmatario>();
+				firmatariEPromotori.addAll(getOrderedFirmatari());
+				firmatariEPromotori.addAll(getOrderedPromotori());
+				atto.setFirmatari(firmatariEPromotori);
+				attoBean.getAtto().setFirmatari(
+						new ArrayList<Firmatario>(Clonator
+								.cloneList(firmatariEPromotori)));
+				break;
+			}
+		}
+	}
+
 	private boolean checkFirmatari() {
 
 		for (Firmatario element : firmatariList) {
@@ -474,9 +564,35 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	private boolean checkPromotori() {
+
+		for (Firmatario element : promotoriList) {
+
+			if (element.getDescrizione().equals(nomePromotore)) {
+
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 	private boolean checkPrimoFirmatario() {
 
 		for (Firmatario element : firmatariList) {
+
+			if (element.isPrimoFirmatario()) {
+
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	private boolean checkPrimoPromotore() {
+
+		for (Firmatario element : promotoriList) {
 
 			if (element.isPrimoFirmatario()) {
 
@@ -494,7 +610,11 @@ public class PresentazioneAssegnazioneAttoController {
 	
 	public void salvaInfoGenerali() {
 		boolean originale=false;
-		atto.setFirmatari(getOrderedFirmatari());
+
+		List<Firmatario> firmatariEPromotori = new ArrayList<Firmatario>();
+		firmatariEPromotori.addAll(getOrderedFirmatari());
+		firmatariEPromotori.addAll(getOrderedPromotori());
+		atto.setFirmatari(firmatariEPromotori);
 		if (atto.getOggettoOriginale() != null
 				&& !"".equals(atto.getOggettoOriginale())) {
             originale=false;   
@@ -583,6 +703,52 @@ public class PresentazioneAssegnazioneAttoController {
 		return firmatariList;
 
 	}
+
+
+	private List<Firmatario> getOrderedPromotori() {
+
+		if (getPromotoriOrder() != null && !getPromotoriOrder().equals("")) {
+			// Numeri atto ordinati
+			String[] attiOrd = getPromotoriOrder().split("_");
+
+			for (int i = 0; i < attiOrd.length; i++) {
+
+				String descFirma = attiOrd[i];
+
+				for (Firmatario firmatario : promotoriList) {
+
+					if (descFirma.equals(firmatario.getDescrizione())) {
+
+						if (i < 10) {
+							firmatario.setNumeroOrdinamento("0" + i);
+						} else {
+							firmatario.setNumeroOrdinamento("" + i);
+						}
+					}
+				}
+			}
+		} else {
+
+			int i = 0;
+			for (Firmatario firmatario : promotoriList) {
+
+				if (i < 10) {
+					firmatario.setNumeroOrdinamento("0" + i);
+				} else {
+					firmatario.setNumeroOrdinamento("" + i);
+				}
+				i++;
+			}
+
+		}
+		Collections.sort(promotoriList);
+		return promotoriList;
+
+	}
+
+
+
+
 
 	// Ammissibilita******************************************************
 
@@ -1245,6 +1411,15 @@ public class PresentazioneAssegnazioneAttoController {
 		this.nomeFirmatario = nomeFirmatario;
 	}
 
+
+	public String getNomePromotore() {
+		return nomePromotore;
+	}
+
+	public void setNomePromotore(String nomePromotore) {
+		this.nomePromotore = nomePromotore;
+	}
+
 	public List<String> getGruppiConsiliari() {
 		return gruppiConsiliari;
 	}
@@ -1269,6 +1444,15 @@ public class PresentazioneAssegnazioneAttoController {
 		this.dataFirma = dataFirma;
 	}
 
+
+	public Date getDataFirmaPromotore() {
+		return dataFirmaPromotore;
+	}
+
+	public void setDataFirmaPromotore(Date dataFirmaPromotore) {
+		this.dataFirmaPromotore = dataFirmaPromotore;
+	}
+
 	public Date getDataRitiro() {
 		return dataRitiro;
 	}
@@ -1276,6 +1460,15 @@ public class PresentazioneAssegnazioneAttoController {
 	public void setDataRitiro(Date dataRitiro) {
 		this.dataRitiro = dataRitiro;
 	}
+
+	public Date getDataRitiroPromotore() {
+		return dataRitiroPromotore;
+	}
+
+	public void setDataRitiroPromotore(Date dataRitiroPromotore) {
+		this.dataRitiroPromotore = dataRitiroPromotore;
+	}
+
 
 	public boolean isPrimoFirmatario() {
 		return primoFirmatario;
@@ -1285,12 +1478,29 @@ public class PresentazioneAssegnazioneAttoController {
 		this.primoFirmatario = primoFirmatario;
 	}
 
+	public boolean isPrimoPromotore() {
+		return primoPromotore;
+	}
+
+	public void setPrimoPromotore(boolean primoPromotore) {
+		this.primoPromotore = primoPromotore;
+	}
+
+
 	public String getFirmatarioToDelete() {
 		return firmatarioToDelete;
 	}
 
+
+	public String getPromotoreToDelete() {
+		return promotoreToDelete;
+	}
+
 	public void setFirmatarioToDelete(String firmatarioToDelete) {
 		this.firmatarioToDelete = firmatarioToDelete;
+	}
+	public void setPromotoreToDelete(String promotoreToDelete) {
+		this.promotoreToDelete = promotoreToDelete;
 	}
 
 	public String getTestoAttoToDelete() {
@@ -1725,6 +1935,10 @@ public class PresentazioneAssegnazioneAttoController {
 		return firmatariList;
 	}
 
+	public List<Firmatario> getPromotoriList() {
+		return promotoriList;
+	}
+
 	public void setFirmatariList(List<Firmatario> firmatariList) {
 		this.firmatariList = firmatariList;
 	}
@@ -1796,9 +2010,15 @@ public class PresentazioneAssegnazioneAttoController {
 	public String getFirmatariOrder() {
 		return firmatariOrder;
 	}
+	public String getPromotoriOrder() {
+		return promotoriOrder;
+	}
 
 	public void setFirmatariOrder(String firmatariOrder) {
 		this.firmatariOrder = firmatariOrder;
+	}
+	public void setPromotoriOrder(String promotoriOrder) {
+		this.promotoriOrder = promotoriOrder;
 	}
 
 	public boolean isAttoPubblico() {

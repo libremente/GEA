@@ -720,6 +720,7 @@
 			<show-property name="crlatti:dataFirma" />
 			<show-property name="crlatti:dataRitiro" />
 			<show-property name="crlatti:isPrimoFirmatario" />
+			<show-property name="crlatti:isFirmatarioPopolare" />
 		</property-sheet>
 	</config>
 	
