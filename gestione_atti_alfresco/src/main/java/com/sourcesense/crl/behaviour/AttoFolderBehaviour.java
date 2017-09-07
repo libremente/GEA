@@ -367,6 +367,14 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 				val = openDataCommand.getTuttiFirmatari(childRef);
 				break;
 			}
+			case "{openDataCommand}getPrimoPromotore": {
+				val = openDataCommand.getPrimoPromotore(childRef);
+				break;
+			}
+			case "{openDataCommand}getTuttiPromotori": {
+				val = openDataCommand.getTuttiPromotori(childRef);
+				break;
+			}
 			case "{openDataCommand}getRelatore": {
 				val = openDataCommand.getRelatore(childRef);
 				break;

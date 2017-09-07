@@ -158,45 +158,100 @@ public class OpenDataCommand {
 	}
 
 	@SuppressWarnings("finally")
-	public String getPrimoFirmatario(NodeRef nodeRef) {
-		String firmatario = "";
-		String primoFirmatario = (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_PRIMO_FIRMATARIO_QNAME);
-		if (StringUtils.isNotEmpty(primoFirmatario)) {
-			try {
-				String idAnagrafica = getIdAnagrafica(primoFirmatario);
-				if (StringUtils.isNotEmpty(idAnagrafica)) {
-					firmatario = "-" + idAnagrafica + "-" + primoFirmatario;
+	public String getPrimoPromotore(NodeRef nodeRef) {
+		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
+				this.namespaceService, false);
+		if (!firmatariFolder.isEmpty()){
+			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
+			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
+			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
+			for (ChildAssociationRef firmatario: firmatariList) {
+				NodeRef firmatarioNodeRef= firmatario.getChildRef();
+				if ((boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)&&(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME)) {
+					return (String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
 				}
-			} catch (Exception e) {
-				logger.warn("Impossibile recuperare il primo firmatario " + primoFirmatario, e);
-			} finally {
-				return firmatario;
 			}
-		} else {
-			return firmatario;
 		}
+		return "";
+	}
+
+	@SuppressWarnings("finally")
+	public String getTuttiPromotori(NodeRef nodeRef) {
+		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
+				this.namespaceService, false);
+		String promotoriString = "";
+		if (!firmatariFolder.isEmpty()){
+			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
+			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
+			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
+			for (ChildAssociationRef firmatarioChildRef: firmatariList) {
+				NodeRef firmatarioNodeRef= firmatarioChildRef.getChildRef();
+				if ((boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)) {
+					promotoriString += StringUtils.isEmpty(promotoriString)?listSeparator:""+(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
+				}
+			}
+		}
+		return promotoriString;
+
+	}
+
+	@SuppressWarnings("finally")
+	public String getPrimoFirmatario(NodeRef nodeRef) {
+		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
+				this.namespaceService, false);
+		String firmatario="";
+		if (!firmatariFolder.isEmpty()){
+			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
+			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
+			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
+			for (ChildAssociationRef firmatarioChildRef: firmatariList) {
+				NodeRef firmatarioNodeRef= firmatarioChildRef.getChildRef();
+				if (!(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)&&(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME)) {
+					String primoFirmatario=(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
+					try {
+						String idAnagrafica = getIdAnagrafica(primoFirmatario);
+						if (StringUtils.isNotEmpty(idAnagrafica)) {
+							firmatario = "-" + idAnagrafica + "-" + primoFirmatario;
+						}
+					} catch (Exception e) {
+						logger.warn("Impossibile recuperare il primo firmatario " + primoFirmatario, e);
+					} finally {
+						return firmatario;
+					}
+				}
+			}
+		}
+		return firmatario;
 	}
 
 	@SuppressWarnings("finally")
 	public String getTuttiFirmatari(NodeRef nodeRef) {
+
+		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
+				this.namespaceService, false);
 		String firmatariString = "";
-		ArrayList<String> firmatari = (ArrayList<String>) nodeService.getProperty(nodeRef,
-				AttoUtil.PROP_FIRMATARI_QNAME);
-		if (firmatari != null) {
-			for (int i = 0; i < firmatari.size(); i++) {
-				if (StringUtils.isNotEmpty(firmatari.get(i))) {
+		if (!firmatariFolder.isEmpty()){
+			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
+			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
+			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
+			for (ChildAssociationRef firmatarioChildRef: firmatariList) {
+				NodeRef firmatarioNodeRef= firmatarioChildRef.getChildRef();
+				if ((boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)) {
+					String nomeFirmatario=(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
+
 					try {
-						String idAnagrafica = getIdAnagrafica(firmatari.get(i));
+						String idAnagrafica = getIdAnagrafica(nomeFirmatario);
 						if (StringUtils.isNotEmpty(idAnagrafica)) {
 							if (StringUtils.isEmpty(firmatariString)) {
-								firmatariString += "-" + idAnagrafica + "-" + firmatari.get(i);
+								firmatariString += "-" + idAnagrafica + "-" + nomeFirmatario;
 							} else {
-								firmatariString += listSeparator + "-" + idAnagrafica + "-" + firmatari.get(i);
+								firmatariString += listSeparator + "-" + idAnagrafica + "-" + nomeFirmatario;
 							}
 						}
 					} catch (Exception e) {
 						logger.warn("Impossibile recuperare il firmatario", e);
 					}
+
 				}
 			}
 		}

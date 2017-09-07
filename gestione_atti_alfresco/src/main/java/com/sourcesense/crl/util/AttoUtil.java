@@ -41,6 +41,8 @@ public class AttoUtil {
 	public static final String ABBINAMENTO_TYPE = "abbinamento";
 	public static final String TYPE_TESTO = "testo";
 	public static final QName TYPE_TESTO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_TESTO);
+	public static final String TYPE_FIRMATARIO = "firmatario";
+	public static final QName TYPE_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_FIRMATARIO);
 	public static final String TYPE_ALLEGATO = "allegato";
 	public static final QName TYPE_ALLEGATO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_ALLEGATO);
 
@@ -89,6 +91,9 @@ public class AttoUtil {
 	public static final String PROP_OGGETTO_ATTO_INDIRIZZO = "oggettoAttoIndirizzo";
 
 	public static final String PROP_PRIMO_FIRMATARIO = "primoFirmatario";
+	public static final String PROP_IS_PRIMO_FIRMATARIO = "isPrimoFirmatario";
+	public static final String PROP_IS_FIRMATARIO_POPOLARE = "isFirmatarioPopolare";
+	public static final String PROP_NOME_FIRMATARIO = "nomeFirmatario";
 	public static final String PROP_DATA_NOMINA_RELATORE = "dataNominaRelatore";
 
 	public static final String ESITO_VOTO_PASSAGGIO_AULA = "esitoVotoPassaggioAula";
@@ -105,6 +110,10 @@ public class AttoUtil {
 	public static final QName PROP_ESTENSIONE_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_ESTENSIONE_ATTO);
 	public static final QName PROP_TIPO_INIZIATIVA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_TIPO_INIZIATIVA);
 	public static final QName PROP_PRIMO_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_PRIMO_FIRMATARIO);
+	public static final QName PROP_IS_PRIMO_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_IS_PRIMO_FIRMATARIO);
+
+	public static final QName PROP_IS_FIRMATARIO_POPOLARE_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_IS_FIRMATARIO_POPOLARE);
+	public static final QName PROP_NOME_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_NOME_FIRMATARIO);
 	public static final QName PROP_FIRMATARI_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_FIRMATARI);
 	public static final QName PROP_DATA_NOMINA_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			PROP_DATA_NOMINA_RELATORE);
