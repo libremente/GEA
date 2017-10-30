@@ -49,6 +49,7 @@ var stato = getObj(atto, "stato");
 
 var numeroAttoDa = getObj(atto, "numeroAttoDa");
 var numeroAttoA = getObj(atto, "numeroAttoA");
+var estensioneAtto=getObj(atto, "estensioneAtto");
 
 var numeroProtocollo = getObj(atto, "numeroProtocollo");
 var tipoIniziativa = getObj(atto, "tipoIniziativa");
@@ -201,6 +202,11 @@ if(checkIsNotNull(numeroAttoDa) && checkIsNotNull(numeroAttoA)){
 } else if(checkIsNotNull(numeroAttoA)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:numeroAtto:[MIN TO "+numeroAttoA+"]";
+}
+
+if (checkIsNotNull(estensioneAtto)){
+    luceneQuery = verifyAND(luceneQuery);
+    luceneQuery += "@crlatti\\:estensioneAtto:\""+estensioneAtto+"\"";
 }
 
 if(checkIsNotNull(numeroProtocollo)){
