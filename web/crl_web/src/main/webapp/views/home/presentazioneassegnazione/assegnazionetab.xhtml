@@ -120,6 +120,21 @@
 						<p:commandButton id="declineParere" value="Annulla"
 							onclick="parereDialog.hide()" type="button" />
 
+                    </p:confirmDialog>
+
+
+                    <p:confirmDialog id="confirmTrasmissioneDialog"
+                                     message="Conferma trasmissione" header="Trasmissione "
+                                     severity="alert" widgetVar="trasmissioneAttoDialog">
+
+                        <p:commandButton id="confirmTrasmDialog" value="Conferma"
+                                         oncomplete="trasmissioneAttoDialog.hide()"
+                                         action="#{presentazioneAssegnazioneAttoController.confermaTrasmissione}"
+                                         update="assegnazioneMsg, :informationForm:informationBar" />
+
+                        <p:commandButton id="declineTrasmAtto" value="Annulla"
+                                         onclick="trasmissioneAttoDialog.hide()" type="button" />
+
 					</p:confirmDialog>
 				</p>
 
@@ -330,146 +345,210 @@
 				</p:fieldset>
 			</p:column>
 		</p:row>
-		<p:row>
-			<p:column>
+        <p:row>
+            <p:column>
 
-				<p:fieldset legend="Assegnazioni Pareri" collapsed="false"
-					toggleable="true" toggleSpeed="500">
-					<p:panelGrid styleClass="infoTable" id="pareripanel">
+            <p:fieldset legend="Trasmissione" collapsed="false" toggleable="true"
+                        toggleSpeed="500" rendered="#{navigationBean.isInviaDirettamenteAula()}">
+            <p:panelGrid styleClass="infoTable" id="trasmissionepanel">
+                <p:row>
+                <p:column>
+                    <b> <h:outputLabel for="datarichsiscrzaula"
+                                       value="Data Richiesta Iscrizione Aula: " />
+                    </b>
+                </p:column>
+					<p:column>
+					<p>
+                        <p:calendar size="10" locale="it" id="datarichsiscrzaula"
+                                    pattern="dd/MM/yyyy"
+                                    value="#{presentazioneAssegnazioneAttoController.dataRichiestaIscrizione}">
+                            <p:ajax event="dateSelect"
+                                    listener="#{presentazioneAssegnazioneAttoController.updateTrasmissioneHandler}" />
+                        </p:calendar>
+                    </p>
+                </p:column>
+					<p:column>
+						<b> <h:outputLabel for="datatrasmissione"
+										   value="Data Trasmissione: " />
+						</b>
+					</p:column>
+					<p:column>
+						<p>
+							<p:calendar size="10" locale="it" id="datatrasmissione"
+										pattern="dd/MM/yyyy"
+										value="#{presentazioneAssegnazioneAttoController.dataTrasmissione}">
+								<p:ajax event="dateSelect"
+										listener="#{presentazioneAssegnazioneAttoController.updateTrasmissioneHandler}" />
+							</p:calendar>
+						</p>
+					</p:column>
+             </p:row>
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;"
+									  value="Passaggio diretto in Aula: " />
+					</p:column>
+					<p:column>
+                        <p:selectBooleanCheckbox
+                                value="#{presentazioneAssegnazioneAttoController.passaggioDiretto}">
+                            <p:ajax event="change"
+                                    llisteneristener="#{presentazioneAssegnazioneAttoController.updateTrasmissioneHandler}" />
+                        </p:selectBooleanCheckbox>
+					</p:column>
+				</p:row>
 
+				<p:row>
+					<p:column>
+                        <p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+                                         value="Salva Trasmissione"
+                                         oncomplete="trasmissioneAttoDialog.show()" />
+					</p:column>
+				</p:row>
+            </p:panelGrid>
+        </p:fieldset>
+</p:column>
+</p:row>
 
-						<p:row>
-							<p:column colspan="5">
-								<p:panelGrid id="addParerePanel" styleClass="tableAppend">
+<p:row>
+<p:column>
 
-									<f:facet name="header">
-										<p:row>
-											<p:column>Organismo Statutario</p:column>
-											<p:column>Data assegnazione</p:column>
-											<p:column>Data annullo</p:column>
-
-											<p:column></p:column>
-										</p:row>
-									</f:facet>
-									<p:row>
-										<p:column style="text-align:center">
-											<p:selectOneMenu id="organismostatutario" editable="true" style="width:180px"
-												effect="fold"
-												value="#{presentazioneAssegnazioneAttoController.nomeOrganismoStatutario}">
-
-												<f:selectItems
-													value="#{presentazioneAssegnazioneAttoController.organismiStatutari}" />
-											</p:selectOneMenu>
-										</p:column>
-
-										<p:column style="text-align:center">
-											<p:calendar size="10" locale="it"
-												id="dataassegnazioneorganismo" pattern="dd/MM/yyyy"
-												value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneParere}" />
-										</p:column>
-
-										<p:column style="text-align:center">
-											<p:calendar size="10" locale="it"
-												id="dataannulloorganismostatutario" pattern="dd/MM/yyyy"
-												value="#{presentazioneAssegnazioneAttoController.dataAnnulloParere}" />
-										</p:column>
-
-
-										<p:column style="text-align:center">
-											<p:commandButton value="Aggiungi"
-												action="#{presentazioneAssegnazioneAttoController.addParere}"
-												id="addParere" update="listaPareri , assegnazioneMsg"
-												icon="new-icon" />
-										</p:column>
-
-									</p:row>
-								</p:panelGrid>
-
-
-							</p:column>
-						</p:row>
-
-						<p:row>
-							<p:column colspan="5">
-
-								<p:dataTable id="listaPareri"
-									value="#{presentazioneAssegnazioneAttoController.organismiList}"
-									var="organismo" styleClass="generalInfoTab grey-text"
-									editable="true">
-
-									<p:column headerText="Nome" sortBy="#{organismo.descrizione}">
-										<h:outputText value="#{organismo.descrizione}" />
-									</p:column>
-
-
-									<p:column headerText="Data Assegnazione"
-										sortBy="#{organismo.dataAssegnazione}">
-										<p:cellEditor>
-											<f:facet name="output">
-												<h:outputText value="#{organismo.dataAssegnazione}">
-													<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-												</h:outputText>
-											</f:facet>
-											<f:facet name="input">
-												<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
-													value="#{organismo.dataAssegnazione}" />
-											</f:facet>
-										</p:cellEditor>
-									</p:column>
-
-									<p:column headerText="Data Annullo"
-										sortBy="#{organismo.dataAnnullo}">
-										<p:cellEditor>
-											<f:facet name="output">
-												<h:outputText value="#{organismo.dataAnnullo}">
-													<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
-												</h:outputText>
-											</f:facet>
-											<f:facet name="input">
-												<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
-													value="#{organismo.dataAnnullo}" />
-											</f:facet>
-										</p:cellEditor>
-									</p:column>
+    <p:fieldset legend="Assegnazioni Pareri" collapsed="false"
+        toggleable="true" toggleSpeed="500">
+        <p:panelGrid styleClass="infoTable" id="pareripanel">
 
 
+            <p:row>
+                <p:column colspan="5">
+                    <p:panelGrid id="addParerePanel" styleClass="tableAppend">
+
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column>Organismo Statutario</p:column>
+                                <p:column>Data assegnazione</p:column>
+                                <p:column>Data annullo</p:column>
+
+                                <p:column></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column style="text-align:center">
+                                <p:selectOneMenu id="organismostatutario" editable="true" style="width:180px"
+                                    effect="fold"
+                                    value="#{presentazioneAssegnazioneAttoController.nomeOrganismoStatutario}">
+
+                                    <f:selectItems
+                                        value="#{presentazioneAssegnazioneAttoController.organismiStatutari}" />
+                                </p:selectOneMenu>
+                            </p:column>
+
+                            <p:column style="text-align:center">
+                                <p:calendar size="10" locale="it"
+                                    id="dataassegnazioneorganismo" pattern="dd/MM/yyyy"
+                                    value="#{presentazioneAssegnazioneAttoController.dataAssegnazioneParere}" />
+                            </p:column>
+
+                            <p:column style="text-align:center">
+                                <p:calendar size="10" locale="it"
+                                    id="dataannulloorganismostatutario" pattern="dd/MM/yyyy"
+                                    value="#{presentazioneAssegnazioneAttoController.dataAnnulloParere}" />
+                            </p:column>
+
+
+                            <p:column style="text-align:center">
+                                <p:commandButton value="Aggiungi"
+                                    action="#{presentazioneAssegnazioneAttoController.addParere}"
+                                    id="addParere" update="listaPareri , assegnazioneMsg"
+                                    icon="new-icon" />
+                            </p:column>
+
+                        </p:row>
+                    </p:panelGrid>
+
+
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column colspan="5">
+
+                    <p:dataTable id="listaPareri"
+                        value="#{presentazioneAssegnazioneAttoController.organismiList}"
+                        var="organismo" styleClass="generalInfoTab grey-text"
+                        editable="true">
+
+                        <p:column headerText="Nome" sortBy="#{organismo.descrizione}">
+                            <h:outputText value="#{organismo.descrizione}" />
+                        </p:column>
+
+
+                        <p:column headerText="Data Assegnazione"
+                            sortBy="#{organismo.dataAssegnazione}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{organismo.dataAssegnazione}">
+                                        <f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+                                        value="#{organismo.dataAssegnazione}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Data Annullo"
+                            sortBy="#{organismo.dataAnnullo}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{organismo.dataAnnullo}">
+                                        <f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+                                        value="#{organismo.dataAnnullo}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
 
 
-									<p:column headerText="Elimina">
 
-										<p:commandButton oncomplete="parereDialog.show()"
-											icon="delete-icon">
 
-											<f:setPropertyActionListener value="#{organismo.descrizione}"
-												target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
-										</p:commandButton>
-									</p:column>
+                        <p:column headerText="Elimina">
 
-									<p:column headerText="Modifica">
-										<p:rowEditor />
-									</p:column>
+                            <p:commandButton oncomplete="parereDialog.show()"
+                                icon="delete-icon">
 
-								</p:dataTable>
-							</p:column>
-						</p:row>
-					</p:panelGrid>
-				</p:fieldset>
+                                <f:setPropertyActionListener value="#{organismo.descrizione}"
+                                    target="#{presentazioneAssegnazioneAttoController.parereToDelete}" />
+                            </p:commandButton>
+                        </p:column>
 
-			</p:column>
-		</p:row>
+                        <p:column headerText="Modifica">
+                            <p:rowEditor />
+                        </p:column>
 
-		<p:row>
+                    </p:dataTable>
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </p:fieldset>
 
-			<p:column>
+</p:column>
+</p:row>
 
-				<p:fieldset legend="Testo dell'Atto presentato" collapsed="false"
-					toggleable="true" toggleSpeed="500">
-					<p:panelGrid styleClass="infoTable" id="testoattopanel">
-						<p:row>
-							<!-- <p:column>
-					<h:graphicImage alt="add" value="/resources/img/add.png" />
-				</p:column>-->
+<p:row>
+
+<p:column>
+
+    <p:fieldset legend="Testo dell'Atto presentato" collapsed="false"
+        toggleable="true" toggleSpeed="500">
+        <p:panelGrid styleClass="infoTable" id="testoattopanel">
+            <p:row>
+                <!-- <p:column>
+        <h:graphicImage alt="add" value="/resources/img/add.png" />
+    </p:column>-->
 							<p:column colspan="3">
 
 

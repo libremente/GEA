@@ -18,22 +18,10 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.print.attribute.standard.Severity;
 
+import com.sourcesense.crl.business.model.*;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 
-import com.sourcesense.crl.business.model.Allegato;
-import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoTrattato;
-import com.sourcesense.crl.business.model.Commissione;
-import com.sourcesense.crl.business.model.Firmatario;
-import com.sourcesense.crl.business.model.GruppoConsiliare;
-import com.sourcesense.crl.business.model.Link;
-import com.sourcesense.crl.business.model.OrganismoStatutario;
-import com.sourcesense.crl.business.model.Parere;
-import com.sourcesense.crl.business.model.Personale;
-import com.sourcesense.crl.business.model.Relatore;
-import com.sourcesense.crl.business.model.StatoAtto;
-import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.CommissioneServiceManager;
@@ -116,6 +104,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private String statoCommitAmmissibilita = CRLMessage.COMMIT_DONE;
 	private String statoCommitAssegnazione = CRLMessage.COMMIT_DONE;
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
+	private String statoCommitTrasmissione = CRLMessage.COMMIT_DONE;
 	private boolean annullaAmmissibilita = false;
 
 	private String valutazioneAmmissibilita;
@@ -163,6 +152,11 @@ public class PresentazioneAssegnazioneAttoController {
 	private String linkToDelete;
 
 	private String noteNoteAllegati;
+
+	private Commissione commissioneUser = new Commissione();
+	private Date dataRichiestaIscrizione;
+	private Date dataTrasmissione;
+	private boolean passaggioDiretto=Boolean.FALSE;
 
 	private Atto atto = new Atto();
 
@@ -379,7 +373,14 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
-	
+	public void updateTrasmissioneHandler() {
+		setStatoCommitTrasmissione(CRLMessage.COMMIT_UNDONE);
+	}
+
+	public void setStatoCommitTrasmissione(String statoCommitTrasmissione) {
+		this.statoCommitTrasmissione = statoCommitTrasmissione;
+	}
+
 	public void updateTestoAtto(RowEditEvent event) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1162,6 +1163,82 @@ public class PresentazioneAssegnazioneAttoController {
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Assegnazione salvata con successo", ""));
+	}
+
+
+
+	public String confermaTrasmissione() {
+
+		String risultato = "";
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		AttoBean attoBean = ((AttoBean) context.getExternalContext()
+				.getSessionMap().get("attoBean"));
+
+		if (isPassaggioDiretto()
+				&& ((commissioneUser.getEsitoVotazione() != null && !commissioneUser
+				.getEsitoVotazione().trim().equals(""))
+				|| (commissioneUser.getQuorumEsameCommissioni() != null  || (commissioneUser
+				.getDataSedutaCommissione() != null)))) {
+
+			context.addMessage(
+					null,
+					new FacesMessage(
+							FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Presenza di estremi della votazione (art. 23 comma 9)",
+							""));
+
+		} else {
+
+			if (atto.getTipoAtto().equals("INP")
+					|| atto.getTipoAtto().equals("PAR")
+					|| atto.getTipoAtto().equals("REL")
+					|| (atto.getTipoAtto().equals("DOC") && !atto.isIterAula())) {
+
+
+					risultato = "pretty:Chiusura_Iter";
+
+			}
+
+			// Se non sono REL, INP e DOC e la comm è referente => cambia tutto
+			if (risultato.equals("")) {
+				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
+				atto.setStato(StatoAtto.TRASMESSO_AULA);
+				commissioneUser.setStato(Commissione.STATO_TRASMESSO);
+
+			} else  {
+
+				commissioneUser.setStato(Commissione.STATO_TRASMESSO);
+
+			}
+
+			commissioneUser.setDataTrasmissione(getDataTrasmissione());
+			commissioneUser.setPassaggioDirettoInAula(isPassaggioDiretto());
+			commissioneUser
+					.setDataRichiestaIscrizioneAula(getDataRichiestaIscrizione());
+
+			atto.getPassaggi().get(atto.getPassaggi().size() - 1)
+					.setCommissioni(getCommissioniList());
+
+			attoBean.getLastPassaggio().setCommissioni(
+					Clonator.cloneList(getCommissioniList()));
+
+			Target target = new Target();
+			target.setCommissione(commissioneUser.getDescrizione());
+			target.setPassaggio(attoBean.getLastPassaggio().getNome());
+			EsameCommissione esameCommissione = new EsameCommissione();
+			esameCommissione.setAtto(atto);
+			esameCommissione.setTarget(target);
+
+			commissioneServiceManager.salvaTrasmissione(esameCommissione);
+
+			setStatoCommitTrasmissione(CRLMessage.COMMIT_DONE);
+			context.addMessage(null, new FacesMessage(
+					"Trasmissione salvata con successo", ""));
+
+		}
+
+		return risultato;
 	}
 
 	public int changeStatoCommissioniAssegnato() {
@@ -2027,6 +2104,30 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void setAttoPubblico(boolean attoPubblico) {
 		this.atto.setPubblico(attoPubblico);
+	}
+
+	public Date getDataRichiestaIscrizione() {
+		return dataRichiestaIscrizione;
+	}
+
+	public void setDataRichiestaIscrizione(Date dataRichiestaIscrizione) {
+		this.dataRichiestaIscrizione = dataRichiestaIscrizione;
+	}
+
+	public Date getDataTrasmissione() {
+		return dataTrasmissione;
+	}
+
+	public void setDataTrasmissione(Date dataTrasmissione) {
+		this.dataTrasmissione = dataTrasmissione;
+	}
+
+	public boolean isPassaggioDiretto() {
+		return passaggioDiretto;
+	}
+
+	public void setPassaggioDiretto(boolean passaggioDiretto) {
+		this.passaggioDiretto = passaggioDiretto;
 	}
 
 	public AttoRecordServiceManager getAttoRecordServiceManager() {

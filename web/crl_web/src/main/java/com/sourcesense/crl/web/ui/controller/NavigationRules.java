@@ -110,6 +110,11 @@ public class NavigationRules {
 
 	}
 
+
+	public boolean isInviaDirettamenteAula(){
+		return StatoAtto.PRESO_CARICO_SC.equals(attoBean.getStato())&&(GruppoUtente.ADMIN.equals(userBean.getUserGroupName())||GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName()));
+	}
+
 	public boolean presaCaricoAulaDisabled() {
 
 		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)
