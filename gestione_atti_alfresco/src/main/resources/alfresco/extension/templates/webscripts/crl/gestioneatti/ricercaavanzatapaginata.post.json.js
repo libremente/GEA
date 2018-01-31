@@ -215,6 +215,15 @@ if (checkIsNotNull(estensioneAtto)){
     luceneQuery += "@crlatti\\:estensioneAtto:\""+estensioneAtto+"\"";
 }
 
+if (estensioneAtto==""){
+    luceneQuery+=" -@crlatti\\:estensioneAtto:\"bis\"";
+    luceneQuery+=" -@crlatti\\:estensioneAtto:\"ter\"";
+    luceneQuery+=" -@crlatti\\:estensioneAtto:\"quater\"";
+    luceneQuery+=" -@crlatti\\:estensioneAtto:\"quintus\"";
+    luceneQuery+=" -@crlatti\\:estensioneAtto:\"quinquies\"";
+    luceneQuery+=" -@crlatti\\:estensioneAtto:\"sextus\"";
+}
+
 if(checkIsNotNull(numeroProtocollo)){
 	luceneQuery = verifyAND(luceneQuery);
 	luceneQuery += "@crlatti\\:numeroProtocollo:\""+numeroProtocollo+"\"";
