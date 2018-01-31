@@ -124,6 +124,7 @@
 						<filter>${project.basedir}/src/main/properties/${env}/application.properties</filter>
 					</filters>
 					<webResources></webResources>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
              <!-- Needed for cross OS compatibility in acp/zip encoding -->
