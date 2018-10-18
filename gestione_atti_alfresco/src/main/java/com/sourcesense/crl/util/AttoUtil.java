@@ -110,9 +110,11 @@ public class AttoUtil {
 	public static final QName PROP_ESTENSIONE_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_ESTENSIONE_ATTO);
 	public static final QName PROP_TIPO_INIZIATIVA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_TIPO_INIZIATIVA);
 	public static final QName PROP_PRIMO_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_PRIMO_FIRMATARIO);
-	public static final QName PROP_IS_PRIMO_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_IS_PRIMO_FIRMATARIO);
+	public static final QName PROP_IS_PRIMO_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			PROP_IS_PRIMO_FIRMATARIO);
 
-	public static final QName PROP_IS_FIRMATARIO_POPOLARE_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_IS_FIRMATARIO_POPOLARE);
+	public static final QName PROP_IS_FIRMATARIO_POPOLARE_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			PROP_IS_FIRMATARIO_POPOLARE);
 	public static final QName PROP_NOME_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_NOME_FIRMATARIO);
 	public static final QName PROP_FIRMATARI_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_FIRMATARI);
 	public static final QName PROP_DATA_NOMINA_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL,
@@ -125,9 +127,9 @@ public class AttoUtil {
 	public static final QName DATA_SEDUTA_PASSAGGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			DATA_SEDUTA_PASSAGGIO_AULA);
 	public static final QName PROP_TIPOLOGIA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_TIPOLOGIA);
-	
+
 	public static final QName PROP_PUBBLICO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_PUBBLICO);
-	
+
 	public static final QName PROP_PUBBLICO_OPENDATA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_PUBBLICO_OPENDATA);
 
 	public static final QName PROP_NUMERO_DCR_PASSAGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
@@ -441,38 +443,42 @@ public class AttoUtil {
 
 		// Get current Passaggio
 		NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
-		String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
+		if (passaggioNodeRef != null) {
 
-		String abbinamentoType = "{" + CRL_ATTI_MODEL + "}" + ABBINAMENTO_TYPE;
-		ResultSet abbinamentiNodes = null;
-		try {
+			String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef)
+					.toPrefixString(namespacePrefixResolver);
 
-			abbinamentiNodes = searchService.query(attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
-					"PATH:\"" + lucenePassaggioNodePath + "/cm:Abbinamenti/*\" AND TYPE:\"" + abbinamentoType
-							+ "\" AND ISNULL:\"crlatti:dataDisabbinamento\"");
+			String abbinamentoType = "{" + CRL_ATTI_MODEL + "}" + ABBINAMENTO_TYPE;
+			ResultSet abbinamentiNodes = null;
+			try {
 
-			// System.out.println((String) nodeService.getProperty(attoNodeRef,
-			// ContentModel.PROP_NAME));
+				abbinamentiNodes = searchService.query(attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
+						"PATH:\"" + lucenePassaggioNodePath + "/cm:Abbinamenti/*\" AND TYPE:\"" + abbinamentoType
+								+ "\" AND ISNULL:\"crlatti:dataDisabbinamento\"");
 
-			for (int i = 0; i < abbinamentiNodes.length(); i++) {
-
-				NodeRef abbinamento = abbinamentiNodes.getNodeRef(i);
-
-				// System.out.println((String)
-				// nodeService.getProperty(abbinamento,
+				// System.out.println((String) nodeService.getProperty(attoNodeRef,
 				// ContentModel.PROP_NAME));
 
-				List<AssociationRef> attiAbbinatiAssociati = nodeService.getTargetAssocs(abbinamento,
-						QName.createQName(CRL_ATTI_MODEL, ASSOC_ATTO_ASSOCIATO_ABBINAMENTO));
+				for (int i = 0; i < abbinamentiNodes.length(); i++) {
 
-				if (attiAbbinatiAssociati.size() > 0) {
-					attiAbbinatiList.add(attiAbbinatiAssociati.get(0).getTargetRef());
+					NodeRef abbinamento = abbinamentiNodes.getNodeRef(i);
+
+					// System.out.println((String)
+					// nodeService.getProperty(abbinamento,
+					// ContentModel.PROP_NAME));
+
+					List<AssociationRef> attiAbbinatiAssociati = nodeService.getTargetAssocs(abbinamento,
+							QName.createQName(CRL_ATTI_MODEL, ASSOC_ATTO_ASSOCIATO_ABBINAMENTO));
+
+					if (attiAbbinatiAssociati.size() > 0) {
+						attiAbbinatiList.add(attiAbbinatiAssociati.get(0).getTargetRef());
+					}
+
 				}
-
-			}
-		} finally {
-			if (abbinamentiNodes != null) {
-				abbinamentiNodes.close();
+			} finally {
+				if (abbinamentiNodes != null) {
+					abbinamentiNodes.close();
+				}
 			}
 		}
 

@@ -89,10 +89,11 @@ public class OpenDataCommand {
 	public String getNumeroAtto(NodeRef nodeRef) {
 		int numeroAtto = (int) nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME);
 		String estensioneAtto = getEstensioneAtto(nodeRef);
-		if (estensioneAtto==null) estensioneAtto=StringUtil.EMPTY_STRING;
-		return numeroAtto+estensioneAtto;
+		if (estensioneAtto == null)
+			estensioneAtto = StringUtil.EMPTY_STRING;
+		return numeroAtto + estensioneAtto;
 	}
-	
+
 	public String getEstensioneAtto(NodeRef nodeRef) {
 		return (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_ESTENSIONE_ATTO_QNAME);
 	}
@@ -161,15 +162,23 @@ public class OpenDataCommand {
 	public String getPrimoPromotore(NodeRef nodeRef) {
 		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
 				this.namespaceService, false);
-		if (!firmatariFolder.isEmpty()){
+		if (!firmatariFolder.isEmpty()) {
 			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
 			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
 			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
-			for (ChildAssociationRef firmatario: firmatariList) {
-				NodeRef firmatarioNodeRef= firmatario.getChildRef();
-				boolean isFirmatarioPopolare=nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)!=null?(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME):false;
-				boolean isPrimoFirmatario=nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME)!=null?(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME):false;
-				if (isFirmatarioPopolare&&isPrimoFirmatario) {
+			for (ChildAssociationRef firmatario : firmatariList) {
+				NodeRef firmatarioNodeRef = firmatario.getChildRef();
+				boolean isFirmatarioPopolare = nodeService.getProperty(firmatarioNodeRef,
+						AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME) != null
+								? (boolean) nodeService.getProperty(firmatarioNodeRef,
+										AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)
+								: false;
+				boolean isPrimoFirmatario = nodeService.getProperty(firmatarioNodeRef,
+						AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME) != null
+								? (boolean) nodeService.getProperty(firmatarioNodeRef,
+										AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME)
+								: false;
+				if (isFirmatarioPopolare && isPrimoFirmatario) {
 					return (String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
 				}
 			}
@@ -182,14 +191,19 @@ public class OpenDataCommand {
 		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
 				this.namespaceService, false);
 		String promotoriString = "";
-		if (!firmatariFolder.isEmpty()){
+		if (!firmatariFolder.isEmpty()) {
 			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
 			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
 			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
-			for (ChildAssociationRef firmatarioChildRef: firmatariList) {
-				NodeRef firmatarioNodeRef= firmatarioChildRef.getChildRef();
-				boolean isFirmatarioPopolare=nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)!=null?(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME):false;
-				String nomeFirmatario=(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
+			for (ChildAssociationRef firmatarioChildRef : firmatariList) {
+				NodeRef firmatarioNodeRef = firmatarioChildRef.getChildRef();
+				boolean isFirmatarioPopolare = nodeService.getProperty(firmatarioNodeRef,
+						AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME) != null
+								? (boolean) nodeService.getProperty(firmatarioNodeRef,
+										AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)
+								: false;
+				String nomeFirmatario = (String) nodeService.getProperty(firmatarioNodeRef,
+						AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
 				if (isFirmatarioPopolare) {
 					if (StringUtils.isEmpty(promotoriString)) {
 						promotoriString += nomeFirmatario;
@@ -206,17 +220,26 @@ public class OpenDataCommand {
 	public String getPrimoFirmatario(NodeRef nodeRef) {
 		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
 				this.namespaceService, false);
-		String firmatario="";
-		if (!firmatariFolder.isEmpty()){
+		String firmatario = "";
+		if (!firmatariFolder.isEmpty()) {
 			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
 			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
 			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
-			for (ChildAssociationRef firmatarioChildRef: firmatariList) {
-				NodeRef firmatarioNodeRef= firmatarioChildRef.getChildRef();
-				boolean isFirmatarioPopolare=nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)!=null?(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME):false;
-				boolean isPrimoFirmatario=nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME)!=null?(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME):false;
-				if ((!isFirmatarioPopolare)&&isPrimoFirmatario) {
-					String primoFirmatario=(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
+			for (ChildAssociationRef firmatarioChildRef : firmatariList) {
+				NodeRef firmatarioNodeRef = firmatarioChildRef.getChildRef();
+				boolean isFirmatarioPopolare = nodeService.getProperty(firmatarioNodeRef,
+						AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME) != null
+								? (boolean) nodeService.getProperty(firmatarioNodeRef,
+										AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)
+								: false;
+				boolean isPrimoFirmatario = nodeService.getProperty(firmatarioNodeRef,
+						AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME) != null
+								? (boolean) nodeService.getProperty(firmatarioNodeRef,
+										AttoUtil.PROP_IS_PRIMO_FIRMATARIO_QNAME)
+								: false;
+				if ((!isFirmatarioPopolare) && isPrimoFirmatario) {
+					String primoFirmatario = (String) nodeService.getProperty(firmatarioNodeRef,
+							AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
 					try {
 						String idAnagrafica = getIdAnagrafica(primoFirmatario);
 						if (StringUtils.isNotEmpty(idAnagrafica)) {
@@ -239,15 +262,20 @@ public class OpenDataCommand {
 		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
 				this.namespaceService, false);
 		String firmatariString = "";
-		if (!firmatariFolder.isEmpty()){
+		if (!firmatariFolder.isEmpty()) {
 			Set<QName> qnames = new HashSet<QName>(1, 1.0f);
 			qnames.add(AttoUtil.TYPE_FIRMATARIO_QNAME);
 			List<ChildAssociationRef> firmatariList = nodeService.getChildAssocs(firmatariFolder.get(0), qnames);
-			for (ChildAssociationRef firmatarioChildRef: firmatariList) {
-				NodeRef firmatarioNodeRef= firmatarioChildRef.getChildRef();
-				boolean isFirmatarioPopolare=nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)!=null?(boolean)nodeService.getProperty(firmatarioNodeRef,AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME):false;
+			for (ChildAssociationRef firmatarioChildRef : firmatariList) {
+				NodeRef firmatarioNodeRef = firmatarioChildRef.getChildRef();
+				boolean isFirmatarioPopolare = nodeService.getProperty(firmatarioNodeRef,
+						AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME) != null
+								? (boolean) nodeService.getProperty(firmatarioNodeRef,
+										AttoUtil.PROP_IS_FIRMATARIO_POPOLARE_QNAME)
+								: false;
 				if (!isFirmatarioPopolare) {
-					String nomeFirmatario=(String) nodeService.getProperty(firmatarioNodeRef, AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
+					String nomeFirmatario = (String) nodeService.getProperty(firmatarioNodeRef,
+							AttoUtil.PROP_NOME_FIRMATARIO_QNAME);
 					try {
 						String idAnagrafica = getIdAnagrafica(nomeFirmatario);
 						if (StringUtils.isNotEmpty(idAnagrafica)) {
@@ -348,7 +376,7 @@ public class OpenDataCommand {
 				return passaggiList;
 			}
 		}
-		return null;
+		return new ArrayList<ChildAssociationRef>();
 	}
 
 	public NodeRef getCommissioneReferente(NodeRef attoNoderef) {
@@ -426,21 +454,25 @@ public class OpenDataCommand {
 
 	public NodeRef getAula(NodeRef attoNoderef) {
 		NodeRef passaggio = getUltimoPassaggio(attoNoderef);
-		Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
-		aulaFolderQnames.add(AttoUtil.TYPE_AULA);
-		List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggio, aulaFolderQnames);
-		if ((aulaList != null) && (!aulaList.isEmpty())) {
-			return aulaList.get(0).getChildRef();
+		if (passaggio != null) {
+			Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
+			aulaFolderQnames.add(AttoUtil.TYPE_AULA);
+			List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggio, aulaFolderQnames);
+			if ((aulaList != null) && (!aulaList.isEmpty())) {
+				return aulaList.get(0).getChildRef();
+			}
 		}
 		return null;
 	}
 
 	public NodeRef getAulaByPassaggio(NodeRef passaggioNoderef) {
-		Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
-		aulaFolderQnames.add(AttoUtil.TYPE_AULA);
-		List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggioNoderef, aulaFolderQnames);
-		if ((aulaList != null) && (!aulaList.isEmpty())) {
-			return aulaList.get(0).getChildRef();
+		if (passaggioNoderef != null) {
+			Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
+			aulaFolderQnames.add(AttoUtil.TYPE_AULA);
+			List<ChildAssociationRef> aulaList = nodeService.getChildAssocs(passaggioNoderef, aulaFolderQnames);
+			if ((aulaList != null) && (!aulaList.isEmpty())) {
+				return aulaList.get(0).getChildRef();
+			}
 		}
 		return null;
 	}

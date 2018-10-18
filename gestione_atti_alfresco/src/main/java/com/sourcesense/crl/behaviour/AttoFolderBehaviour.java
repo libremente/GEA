@@ -542,7 +542,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 
     private NodeRef retrieveAttoNodeRefFromChild(NodeRef child) {
         NodeRef attoNodeRef = child;
-        while ((child != null)
+        while ((attoNodeRef != null)
                 &&
                 (!dictionaryService.isSubClass(nodeService.getType(attoNodeRef), AttoUtil.TYPE_ATTO))) {
             attoNodeRef = nodeService.getPrimaryParent(attoNodeRef).getParentRef();
