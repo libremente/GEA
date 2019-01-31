@@ -127,6 +127,27 @@
 
 				</p:column>
 			</p:row>
+
+			<p:row>
+				<p:column style="text-align:left;">
+					<h:outputLabel for="legislatura" value="Legislatura: *" />
+				</p:column>
+
+				<p:column style="text-align:left;">
+					<p:selectOneMenu id="legislatura"
+									 value="#{inserisciEACController.legislatura}" required="true"
+									 requiredMessage="Legislatura obbligatoria">
+						<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
+						<f:selectItems value="#{inserisciEACController.legislature}" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column>
+					<p:message for="legislatura" display="icon" />
+				</p:column>
+			</p:row>
+
+
 			<p:row>
 
 				<p:column colspan="2" style="text-align:left;">

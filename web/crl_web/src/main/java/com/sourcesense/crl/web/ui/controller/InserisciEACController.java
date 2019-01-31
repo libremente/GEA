@@ -81,9 +81,13 @@ public class InserisciEACController {
 
 	private Date dataAtto;
 
+	private String legislatura;
+
 	private boolean currentFilePubblico;
 
 	private List<Allegato> allegatiEAC = new ArrayList<Allegato>();
+
+	private List<String> legislature = new ArrayList<String>();
 
 	private String allegatoEACToDelete;
 	private String numeroAttoSindacato;
@@ -116,7 +120,7 @@ public class InserisciEACController {
 		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
 		//setAttiSindacato(attoServiceManager.findAllAttiSindacato());
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
-
+		setLegislature(legislaturaServiceManager.list());
 	}
 
 	public void inserisciAtto() {
@@ -457,6 +461,14 @@ public class InserisciEACController {
 		this.currentFilePubblico = currentFilePubblico;
 	}
 
+	public List<String> getLegislature() {
+		return legislature;
+	}
+
+	public void setLegislature(List<String> legislature) {
+		this.legislature = legislature;
+	}
+
 	public AttoRecordServiceManager getAttoRecordServiceManager() {
 		return attoRecordServiceManager;
 	}
@@ -480,6 +492,16 @@ public class InserisciEACController {
 
 	public void setAnnoCreazione(String annoCreazione) {
 		this.annoCreazione = annoCreazione;
+	}
+
+	public String getLegislatura() {
+		return this.atto.getLegislatura();
+	}
+
+
+
+	public void setLegislatura(String legislatura) {
+		this.atto.setLegislatura(legislatura);
 	}
 
 }

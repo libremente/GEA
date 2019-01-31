@@ -47,15 +47,26 @@ if(tipoAtto=="PDL"){
 }
 
 if(nodeType=="crlatti:attoEac"){
-	//gestione inserimento e modifica dell'atto di tipo EAC
 	var id = atto.get("id");
 	var dataAtto = atto.get("dataAtto");
 	var note = atto.get("note");
 	var eacRootPath = gestioneAttiPath + "/cm:EAC";
 	var eacRootFolderNode = search.luceneSearch("PATH:\""+eacRootPath+"\"")[0];
-		
+
+	//gestione inserimento e modifica dell'atto di tipo EAC
+    var ecmLegislaturaPath = eacRootPath + "/cm:"+search.ISO9075Encode(legislatura);
+    var legislaturaLuceneQuery = "PATH:\""+ecmLegislaturaPath+"\"";
+    var legislaturaResults = search.luceneSearch(legislaturaLuceneQuery);
+
+    var ecmLegislaturaFolderNode = null;
+    if(legislaturaResults!=null && legislaturaResults.length>0){
+        ecmLegislaturaFolderNode = legislaturaResults[0];
+    } else {
+        ecmLegislaturaFolderNode = eacRootFolderNode.createFolder(legislatura);
+    }
+
 	//verifica esistenza del folder dell'atto EAC
-        var eacAttoPath = eacRootPath + "/*/*" + "/cm:" + search.ISO9075Encode(numeroAtto+""+estensioneAtto);
+    var eacAttoPath = ecmLegislaturaPath + "/*/*" + "/cm:" + search.ISO9075Encode(numeroAtto+""+estensioneAtto);
 	var eacAttoLuceneQuery = "PATH:\""+eacAttoPath+"\"";
 	var eacAttoResults = search.luceneSearch(eacAttoLuceneQuery);
 	var eacAttoFolderNode = null;
@@ -73,14 +84,14 @@ if(nodeType=="crlatti:attoEac"){
 	} else {
             
                 //creazione spazio anno
-                var eacAnnoPath = eacRootPath + "/cm:" + search.ISO9075Encode(anno);
+                var eacAnnoPath = ecmLegislaturaPath + "/cm:" + search.ISO9075Encode(anno);
                 var eacAnnoLuceneQuery = "PATH:\""+eacAnnoPath+"\"";
                 var eacAnnoResults = search.luceneSearch(eacAnnoLuceneQuery);
                 var eacAnnoFolderNode = null;
                 if(eacAnnoResults!=null && eacAnnoResults.length>0){
                         eacAnnoFolderNode = eacAnnoResults[0];
                 } else {
-                        eacAnnoFolderNode = eacRootFolderNode.createFolder(anno);
+                        eacAnnoFolderNode = ecmLegislaturaFolderNode.createFolder(anno);
                 }
 
                 //creazione spazio mese
@@ -106,8 +117,8 @@ if(nodeType=="crlatti:attoEac"){
 	eacAttoFolderNode.properties["crlatti:numeroAtto"] = numeroAtto;
 	eacAttoFolderNode.properties["crlatti:estensioneAtto"] = estensioneAtto;
 	eacAttoFolderNode.properties["crlatti:noteEac"] = note;
-	eacAttoFolderNode.properties["crlatti:legislatura"] = "nd";
-        eacAttoFolderNode.properties["crlatti:statoAtto"] = stato;
+	eacAttoFolderNode.properties["crlatti:legislatura"] = legislatura;
+	eacAttoFolderNode.properties["crlatti:statoAtto"] = stato;
 
 	
 	if(checkIsNotNull(dataAtto)){
