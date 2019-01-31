@@ -16,7 +16,7 @@ import javax.xml.ws.WebServiceFeature;
  * source version: 2.1
  * 
  */
-@WebServiceClient(name = "UpsertOpenData", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData", wsdlLocation = "file:/C:/alfresco/tomcat/webapps/alfresco/WEB-INF/classes/wsdl/UpsertOpenData.wsdl")
+@WebServiceClient(name = "UpsertOpenData", targetNamespace = "https://intranet.consiglio.regione.lombardia.it/OpenData", wsdlLocation = "file:/opt/alfresco/tomcat/webapps/alfresco/WEB-INF/classes/wsdl/UpsertOpenData.wsdl")
 public class UpsertOpenData extends Service {
 
 	private final static URL UPSERTOPENDATA_WSDL_LOCATION;
@@ -28,7 +28,7 @@ public class UpsertOpenData extends Service {
 		URL url = null;
 		WebServiceException e = null;
 		try {
-			url = new URL("file:/C:/alfresco/tomcat/webapps/alfresco/WEB-INF/classes/wsdl/UpsertOpenData.wsdl");
+			url = new URL("file:/opt/alfresco/tomcat/webapps/alfresco/WEB-INF/classes/wsdl/UpsertOpenData.wsdl");
 		} catch (MalformedURLException ex) {
 			e = new WebServiceException(ex);
 		}
