@@ -35,6 +35,12 @@
 			<ui:include src="./sedutetab.xhtml"/>
 			
 		</p:tab>
+
+		<p:tab id="tab4" title="Amministrazione" disabled="#{!navigationBean.isAmministrazioneEnabled()}">
+
+			<ui:include src="./amministrazione.xhtml"/>
+
+		</p:tab>
 	</p:tabView>
 </h:form>
 </html>

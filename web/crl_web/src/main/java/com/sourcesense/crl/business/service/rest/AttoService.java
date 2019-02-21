@@ -138,6 +138,69 @@ public class AttoService {
 		}
 		return atto;
 	}
+
+
+	public Atto updateAtto(String url, Atto atto) {
+
+		Atto attoRet = null;
+
+		WebResource webResource = client.resource(url);
+
+
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
+				false);
+		try {
+			String json = objectMapper.writeValueAsString(atto);
+			ClientResponse response = webResource.type(
+					MediaType.APPLICATION_JSON)
+					.put(ClientResponse.class, json);
+
+			if (response.getStatus() == 500) {
+
+				//atto.setError(response.getEntity(String.class));
+				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
+
+			} else if (response.getStatus() != 200) {
+
+				throw new ServiceNotAvailableException("Errore - "
+						+ response.getStatus()
+						+ ": Alfresco non raggiungibile ");
+
+			}else{
+
+				String responseMsg = response.getEntity(String.class);
+				atto.setError(null);
+			}
+		} catch (JsonMappingException e) {
+
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (JsonParseException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+
+		} catch (IOException e) {
+			throw new ServiceNotAvailableException(this.getClass()
+					.getSimpleName(), e);
+		}
+		return atto;
+	}
+
+
+	public void deleteAtto(String url) {
+
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource
+				.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException("Errore - "
+					+ response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+	}
+
 	
 	public AttoEAC createEAC(String url, AttoEAC atto) {
 
@@ -460,6 +523,22 @@ public class AttoService {
 		}
 				
 	}
+
+
+	public void removeAtto(String url){
+
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource
+				.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException("Errore - "
+					+ response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+
+	}
+
 	
 	
 	public TestoAtto uploadTestoAtto(String url, Atto atto,

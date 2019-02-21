@@ -43,6 +43,13 @@ public class NavigationRules {
 
 	}
 
+
+	public boolean isAmministrazioneEnabled() {
+
+		return (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
+				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName()));
+	}
+
 	public boolean isInsertMISEnabled() {
 
 		return (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
