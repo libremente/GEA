@@ -21,10 +21,14 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 @RequestScoped
 public class LoginController {
 
+
 	@ManagedProperty(value = "#{userServiceManager}")
 	private UserServiceManager userServiceManager;
 
+
 	private User user = new User();
+
+	private String domain;
 
 	private String username;
 
@@ -62,7 +66,10 @@ public class LoginController {
 
 		try {
 
+			user.setUsername(user.getUsername()+domain);
+
 			User sessionUser = userServiceManager.authenticate(user);
+
 
 			if (sessionUser != null) {
 
@@ -143,6 +150,14 @@ public class LoginController {
 
 	public void setPassword(String password) {
 		this.user.setPassword(password);
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 
 	public UserServiceManager getUserServiceManager() {
