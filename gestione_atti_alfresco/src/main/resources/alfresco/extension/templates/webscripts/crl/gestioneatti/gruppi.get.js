@@ -28,37 +28,35 @@ if(legislaturaCorrente != null){
 //	Amministratore
 //	
 	
-	var commissioneGroup = getCommissioneGroup(gruppiUtente);
-	
-	if(commissioneGroup!=null){
-                var gruppoToken = commissioneGroup.properties['cm:authorityName'].split("_");
-		gruppi.push("COMM_" + gruppoToken[2]);
-	}else if(gruppiUtente[0]!=null){
-		gruppi.push(gruppiUtente[0].properties['cm:authorityName'].substring(6));	
-	}	
+	var commissioneGroups = getCommissioneGroups(gruppiUtente);
 	
 
 }
 
 
-model.gruppi = gruppi;
+model.gruppi = commissioneGroups;
 
 
-
-function getCommissioneGroup(gruppi){
+function getCommissioneGroups(gruppi){
 	
-	var gruppoCommissione = null;
+	var gruppiCommissione = new Array();
 	
 	for(var i=0; i< gruppi.length; i++){
 		
 		var gruppo = groups.getGroup(gruppi[i].properties["cm:authorityName"].substring(6));
 		if(gruppo.getParentGroups().length>0){
 			if(gruppo.getParentGroups()[0].getShortName() == "Commissioni"){
-				gruppoCommissione = gruppi[i];
+				var gruppoToken = gruppo.properties['cm:authorityName'].split("_");
+				gruppiCommissione.push("COMM_" + gruppoToken[2]);
+			}else{
+				gruppiCommissione.push(gruppi[i].properties['cm:authorityName'].substring(6));
+			}
+		}else{
+			if (gruppo.getShortName()!="Commissioni"){
+				gruppiCommissione.push(gruppi[i].properties['cm:authorityName'].substring(6));
 			}
 		}
 	}
-	
-	return gruppoCommissione;
-
+	return gruppiCommissione;
 }
+

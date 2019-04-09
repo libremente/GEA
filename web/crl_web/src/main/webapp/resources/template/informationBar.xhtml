@@ -31,7 +31,17 @@
 			<p:column style="width:20%">
 				<h:outputLabel value="     Utente : " />
 				<h:outputLabel value="#{userBean.username}" />
+			</p:column>
 
+			<p:column style="width:20%">
+				<h:outputLabel value="     Ruolo : " />
+				<p:selectOneMenu id="ruolo" style="width:250px"
+								 value="#{userBean.user.sessionGroup}" >
+					<p:ajax event="change" process="@this" listener="#{userBean.handleChangeSessionGroup}" immediate="true" oncomplete="window.location.replace(window.location.href);"/>
+					<f:selectItem itemLabel="Scegli il Ruolo" itemValue="" />
+					onchange="window.location.replace(window.location.href);"
+					<f:selectItems value="#{userBean.user.gruppi}" var="gruppo" itemValue="#{gruppo}" itemLabel="#{gruppo.nome}" />
+				</p:selectOneMenu>
 			</p:column>
 
 			<p:column rendered="#{attoVisible}"

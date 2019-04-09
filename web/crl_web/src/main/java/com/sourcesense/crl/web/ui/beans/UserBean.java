@@ -1,5 +1,6 @@
 package com.sourcesense.crl.web.ui.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +8,22 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIOutput;
+import javax.faces.component.html.HtmlInputText;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.servlet.http.HttpServletRequest;
 
+import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.ColonnaAtto;
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+import org.primefaces.component.selectonemenu.SelectOneMenu;
+import org.primefaces.event.SelectEvent;
 
 ;
 
@@ -81,6 +94,8 @@ public class UserBean implements Serializable {
 		return user.getSessionGroup().getNome();
 	}
 
+
+
 	public User getUser() {
 		return user;
 	}
@@ -139,7 +154,22 @@ public class UserBean implements Serializable {
 			}
 		} 
 	}
-	
+
+
+	public void handleChangeSessionGroup(final AjaxBehaviorEvent event){
+		SelectOneMenu selectOneMenu= ((SelectOneMenu) event.getSource());
+		String selectedItem = (String) selectOneMenu.getSubmittedValue();
+		for (GruppoUtente gruppoUtente: user.getGruppi()){
+			if (gruppoUtente.toString().equalsIgnoreCase(selectedItem)){
+				user.setSessionGroup(gruppoUtente);
+				return;
+			}
+		}
+	}
+
+
+
+
 	public String refreshSearch(){
 		refreshColonneUser();
 		return "pretty:Home";
