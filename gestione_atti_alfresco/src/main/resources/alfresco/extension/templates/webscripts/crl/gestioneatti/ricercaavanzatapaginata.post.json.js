@@ -183,7 +183,7 @@ else{
 	
 	if(checkIsNotNull(legislatura)){
 		luceneQuery = verifyAND(luceneQuery);
-		luceneQuery += "@crlatti\\:legislatura:\";
+		luceneQuery += "@crlatti\\:legislatura:\""+legislatura+"\"";
 	}
 }
 
