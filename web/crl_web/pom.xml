@@ -72,6 +72,14 @@
 		</dependency>
 
 		<dependency>
+			<groupId>net.sourceforge.spnego</groupId>
+			<artifactId>spnego</artifactId>
+			<version>9.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>2.2</version>
