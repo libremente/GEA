@@ -42,11 +42,11 @@ function getCommissioneGroups(gruppi){
 	var gruppiCommissione = new Array();
 	
 	for(var i=0; i< gruppi.length; i++){
-		
+
 		var gruppo = groups.getGroup(gruppi[i].properties["cm:authorityName"].substring(6));
 		if(gruppo.getParentGroups().length>0){
 			if(gruppo.getParentGroups()[0].getShortName() == "Commissioni"){
-				var gruppoToken = gruppo.properties['cm:authorityName'].split("_");
+				var gruppoToken = gruppi[i].properties['cm:authorityName'].split("_");
 				gruppiCommissione.push("COMM_" + gruppoToken[2]);
 			}else{
 				gruppiCommissione.push(gruppi[i].properties['cm:authorityName'].substring(6));
