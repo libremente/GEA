@@ -39,19 +39,21 @@ public class UserServiceManager implements ServiceManager {
 
 			sessionUser.setSessionGroup(null);
 		} else {
+			for (int i=0;i<sessionUser.getGruppi().size();i++){
 
-			String nomeGruppo = sessionUser.getGruppi().get(0).getNome();
+				String nomeGruppo = sessionUser.getGruppi().get(i).getNome();
 
-			// se commissione comincia con COMM_
-			if (nomeGruppo.startsWith("COMM_")) {
+				// se commissione comincia con COMM_
+				if (nomeGruppo.startsWith("COMM_")) {
 
-				sessionUser.getGruppi().get(0).setCommissione(true);
-				sessionUser
-						.getGruppi()
-						.get(0)
-						.setNome(
-								nomeGruppo.substring(nomeGruppo.indexOf("_") + 1));
+					sessionUser.getGruppi().get(i).setCommissione(true);
+					sessionUser
+							.getGruppi()
+							.get(i)
+							.setNome(
+									nomeGruppo.substring(nomeGruppo.indexOf("_") + 1));
 
+			}
 			}
 			sessionUser.setSessionGroup(sessionUser.getGruppi().get(0));
 		}
