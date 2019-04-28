@@ -172,7 +172,7 @@ if(checkIsNotNull(tipoAttoString)){
 
 luceneQuery += " TYPE:\""+type+"\"";
 
-if(type=="crlatti:atto" || type=="crlatti:attoEac"){
+if(type=="crlatti:atto"){
 	
 	if(checkIsNotNull(legislatura)){
 		luceneQuery = verifyAND(luceneQuery);

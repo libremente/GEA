@@ -1,5 +1,6 @@
 package com.sourcesense.crl.business.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,7 +18,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @JsonTypeName("gruppoUtente")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class GruppoUtente {
+public class GruppoUtente implements Serializable {
 	
 	
 	public static final String SERVIZIO_COMMISSIONI = "ServizioCommissioni"; 

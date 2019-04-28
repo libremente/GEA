@@ -80,6 +80,23 @@
 		</p:row>
 
 		<p:row>
+
+			<p:column>
+				<h:outputLabel value="domain: *" />
+			</p:column>
+
+			<p:column style="width:20%">
+
+				<p:selectOneMenu id="domain" style="width:250px"
+								 value="#{loginController.domain}">
+					<f:selectItem itemLabel="CONSIGLIO LOMBARDIA" itemValue="@consiglio.lombardia" />
+					<f:selectItem itemLabel="" itemValue="" />
+				</p:selectOneMenu>
+			</p:column>
+
+		</p:row>
+
+		<p:row>
 			<p:column>
 				<h:outputLabel for="password" value="Password: *" />
 			</p:column>

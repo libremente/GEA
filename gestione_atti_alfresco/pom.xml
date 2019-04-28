@@ -30,7 +30,7 @@
 		below as the AMP module version. Instead we use the
 		buildnumber-maven-plugin. This requires a scm connection.
 	-->
-	<version>1.1.43</version>
+	<version>1.2</version>
 	<description>CRL Gestione Atti AMP project</description>
 
 	<!-- Repositories without proxing from Pronetics -->
@@ -51,15 +51,15 @@
 			<id>alfresco-sites</id>
 			<url>https://artifacts.alfresco.com/nexus/content/repositories/alfresco-docs</url>
 		</repository>
-		<repository>
+		<!--<repository>
 			<id>alfresco-private</id>
 			<url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
-		</repository>
+		</repository> -->
 		<repository>
 			<id>clojars</id>
 			<url>http://clojars.org/repo/</url>
 		</repository>
-	</repositories>
+    </repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>alfresco-release</id>

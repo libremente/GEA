@@ -81,6 +81,12 @@ public class AttoServiceManager implements ServiceManager {
 		attoService.removeFirmatario(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_remove_firmatario", new String[]{firmatario.getId()}));
 	}
+
+	public void removeAtto(Atto atto){
+
+		attoService.removeFirmatario(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_remove_atto", new String[]{atto.getId()}));
+	}
 	
 	
 	public TestoAtto uploadTestoAttoPresentazioneAssegnazione(Atto atto, InputStream stream, TestoAtto testoAtto) {
@@ -129,9 +135,21 @@ public class AttoServiceManager implements ServiceManager {
 		return attoService.changeAllegato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_change_allegato", new String[] { allegato.getId() }));
 		
-	} 
-	
-	
+	}
+
+
+	public Atto updateAtto(Atto atto) {
+		return attoService.updateAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_update_atto", new String[] { atto.getId() }),  atto);
+
+	}
+
+	public void deleteAtto(Atto atto) {
+		attoService.deleteAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_delete_atto", new String[] { atto.getId() }));
+
+	}
+
 	public AttoMIS persistMIS(Object object) {
 		return attoService.createMIS(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_new_atto", null), (AttoMIS) object);
