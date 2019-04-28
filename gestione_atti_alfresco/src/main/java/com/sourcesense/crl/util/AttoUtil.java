@@ -46,6 +46,7 @@ public class AttoUtil {
 	public static final String TYPE_ALLEGATO = "allegato";
 	public static final QName TYPE_ALLEGATO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_ALLEGATO);
 
+
 	// crlAttiModel properties
 	public static final String PROP_STATO_ATTO = "statoAtto";
 	public static final String PROP_ANNO = "anno";
@@ -54,8 +55,11 @@ public class AttoUtil {
 	public static final String PROP_NUM_ATTO = "numeroAtto";
 	public static final String PROP_ESTENSIONE_ATTO = "estensioneAtto";
 	public static final String PROP_OGGETTO_ATTO = "oggetto";
+	public static final QName PROP_OGGETTO_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_OGGETTO_ATTO);
 	public static final String PROP_NUMERO_LCR_ATTO = "numeroLcr";
 	public static final String PROP_DATA_SEDUTA_AULA_ATTO = "dataSedutaAula";
+	public static final String PROP_DATA_INIZIATIVA_ATTO = "dataIniziativa";
+	public static final QName PROP_DATA_INIZIATIVA_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_DATA_INIZIATIVA_ATTO);
 	public static final String PROP_DESCRIZIONE_INIZIATIVA = "descrizioneIniziativa";
 	public static final String PROP_TIPO_INIZIATIVA = "tipoIniziativa";
 	public static final String PROP_DATA_SCADENZA = "dataScadenza";
@@ -64,6 +68,11 @@ public class AttoUtil {
 	public static final String PROP_NUMERO_DCR = "numeroDcr";
 	public static final String PROP_NUMERO_DCR_PASSAGIO_AULA = "numeroDcrPassaggioAula";
 	public static final String PROP_COMMISSIONI_REFERENTI = "commReferente";
+	public static final QName PROP_COMMISSIONI_REFERENTI_QNAME =  QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONI_REFERENTI);
+	public static final String PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI = "dataAssegnazioneCommissioneReferente";
+	public static final QName PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME =  QName.createQName(CRL_ATTI_MODEL, PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI);
+
+
 	public static final String PROP_COMMISSIONI_CONSULTIVE = "commConsultiva";
 	public static final String PROP_COMMISSIONE_COREFERENTE = "commCoreferente";
 	public static final String PROP_COMMISSIONE_REDIGENTE = "commRedigente";

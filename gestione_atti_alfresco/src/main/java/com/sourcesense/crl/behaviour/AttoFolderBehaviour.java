@@ -470,13 +470,27 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
             if (attoNodeRef != null && ((after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)
                     || (dictionaryService.isSubClass(nodeService.getType(nodeRef), AttoUtil.TYPE_ATTO))) && !nodeService.getType(attoNodeRef).equals(AttoUtil.TYPE_ATTO_EAC))) {
                 try {
-                    logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
-                            + nodeService.getProperty(attoNodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
-                    String odAtto = "";
-                    odAtto = generateOdAtto(attoNodeRef);
-                    logger.debug("odAtto: " + odAtto);
-                    String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken, ambiente);
-                    logger.info("Il webservice ha restituito " + response);
+
+                    if (
+                            after.containsKey(AttoUtil.PROP_LEGISLATURA_QNAME) && after.get(AttoUtil.PROP_LEGISLATURA_QNAME) != null && !((String) after.get(AttoUtil.PROP_LEGISLATURA_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_NUMERO_ATTO_QNAME) && after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_OGGETTO_ATTO_QNAME) && after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) && after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_STATO_ATTO_QNAME) && after.get(AttoUtil.PROP_STATO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_STATO_ATTO_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) != null && !((String) after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) != null && !((String) after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME)).isEmpty()
+
+                    ) {
+                        logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
+                                + nodeService.getProperty(attoNodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
+                        String odAtto = "";
+                        odAtto = generateOdAtto(attoNodeRef);
+                        logger.debug("odAtto: " + odAtto);
+                        String response = upsertOpenData.getUpsertOpenDataSoap().upsertATTO(odAtto, privateToken, ambiente);
+                        logger.info("Il webservice ha restituito " + response);
+                    } else {
+                        logger.info("Troppe poche informazioni per fare la chiamata ad opendata");
+                    }
                 } catch (Exception e) {
                     try {
                         logger.error("Impossibile notificare ad OpenData l'avvenuta modifica dell'atto ", e);
@@ -554,11 +568,11 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
     public void onDeleteNode(ChildAssociationRef childAssociationRef, boolean b) {
         NodeRef attoNodeRef;
         if (nodeService.exists(childAssociationRef.getChildRef()) && dictionaryService.isSubClass(nodeService.getType(childAssociationRef.getChildRef()), AttoUtil.TYPE_ATTO)) {
-            attoNodeRef =childAssociationRef.getChildRef();
-        }else{
+            attoNodeRef = childAssociationRef.getChildRef();
+        } else {
             attoNodeRef = retrieveAttoNodeRefFromChild(childAssociationRef.getParentRef());
         }
-        if (attoNodeRef!=null && nodeService.exists(attoNodeRef)) {
+        if (attoNodeRef != null && nodeService.exists(attoNodeRef)) {
             try {
                 logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
                         + nodeService.getProperty(attoNodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME));
