@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
+	<!-- <parent>
 		<artifactId>pronetics-parent-war</artifactId>
 		<groupId>it.pronetics</groupId>
 		<version>1.2</version>
 	</parent>
+	-->
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sourcesense.crl</groupId>
@@ -74,7 +75,7 @@
 		<dependency>
 			<groupId>net.sourceforge.spnego</groupId>
 			<artifactId>spnego</artifactId>
-			<version>9.0</version>
+			<version>7.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>

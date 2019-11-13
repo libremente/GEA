@@ -149,7 +149,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
         	searchTerms.put("<quorumVotazione>", quorumVotazione);
         	searchTerms.put("<esitoVotazione>", esitoVotazione);
         	
-        	// get Relatore con property crlatti:dataUscitaRelatore non valorizzata
+        	// get Relatore con property crlatti:dataUscitaRelatore non valorizzata --> DONE
         	
         	NodeRef relatoreNodeRef = attoUtil.getRelatoreCorrente(commissioneCorrenteNodeRef);
         	

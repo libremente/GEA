@@ -1,7 +1,10 @@
 package com.sourcesense.crl.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.alfresco.model.ContentModel;
 import org.alfresco.service.cmr.repository.AssociationRef;
@@ -9,6 +12,7 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
+import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.DynamicNamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
@@ -104,6 +108,8 @@ public class AttoUtil {
 	public static final String PROP_IS_FIRMATARIO_POPOLARE = "isFirmatarioPopolare";
 	public static final String PROP_NOME_FIRMATARIO = "nomeFirmatario";
 	public static final String PROP_DATA_NOMINA_RELATORE = "dataNominaRelatore";
+	public static final String PROP_DATA_USCITA_RELATORE = "dataUscitaRelatore";
+	
 
 	public static final String ESITO_VOTO_PASSAGGIO_AULA = "esitoVotoPassaggioAula";
 	public static final String DATA_SEDUTA_PASSAGGIO_AULA = "dataSedutaPassaggioAula";
@@ -128,6 +134,9 @@ public class AttoUtil {
 	public static final QName PROP_FIRMATARI_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_FIRMATARI);
 	public static final QName PROP_DATA_NOMINA_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			PROP_DATA_NOMINA_RELATORE);
+	public static final QName PROP_DATA_USCITA_RELATORE_QNAME = QName.createQName(CRL_ATTI_MODEL,
+			PROP_DATA_USCITA_RELATORE);
+	
 	public static final QName PROP_ESITO_VOTAZIONE_COMMISSIONE_QNAME = QName.createQName(CRL_ATTI_MODEL,
 			PROP_ESITO_VOTAZIONE_COMMISSIONE);
 	public static final QName ESITO_VOTO_PASSAGGIO_AULA_QNAME = QName.createQName(CRL_ATTI_MODEL,
@@ -354,9 +363,22 @@ public class AttoUtil {
 		try {
 			relatoreNodes = searchService.query(commissioneNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
 					"PATH:\"" + luceneCommissioneNodePath + "/cm:Relatori/*\" AND TYPE:\"" + relatoreType + "\"");
-
+			logger.debug("getRelatoreCorrente: query eseguita:" + "PATH:\"" + luceneCommissioneNodePath + "/cm:Relatori/*\" AND TYPE:\"" + relatoreType + "\"");
 			if (relatoreNodes.length() > 0) {
 				relatore = relatoreNodes.getNodeRef(0);
+				for (ResultSetRow resultSetRow : relatoreNodes) {
+					Map<QName,Serializable> props = nodeService.getProperties(resultSetRow.getNodeRef());
+					String name = (String) props.get(ContentModel.PROP_NAME);
+					logger.debug("getRelatoreCorrente: esaminando relatore:" + name);
+					Date dataUscita = (Date) props.get(PROP_DATA_USCITA_RELATORE_QNAME);
+					if (dataUscita == null ) {
+						logger.debug("getRelatoreCorrente: data fine incarico prelevata da relatore:" + name + " " + dataUscita);
+						relatore = resultSetRow.getNodeRef();
+					}
+				}
+			}
+			else {
+				logger.debug("getRelatoreCorrente: non trovati relatori.");
 			}
 		} finally {
 			if (relatoreNodes != null) {
