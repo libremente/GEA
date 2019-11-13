@@ -1,5 +1,20 @@
+/* 
+ * Copyright (C) 2019 Consiglio Regionale della Lombardia
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.sourcesense.crl.business.aspect;
-
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -15,74 +30,65 @@ import org.springframework.stereotype.Service;
 @Aspect
 public class BusinessLogger {
 
+    private Logger log = LoggerFactory.getLogger(BusinessLogger.class);
 
-	private Logger log = LoggerFactory.getLogger(BusinessLogger.class);
-	
-	
+    @After("within(com.sourcesense.crl.business.service.rest.*)")
+    public void restServices(JoinPoint joinPoint) {
+        String trace = "Executed Rest Service : " + joinPoint.getSignature().getName() + "-" + joinPoint.getSignature().getDeclaringTypeName();
 
-	@After ("within(com.sourcesense.crl.business.service.rest.*)")
-	public void restServices(JoinPoint joinPoint) {
-	String trace = "Executed Rest Service : "+joinPoint.getSignature().getName()+"-"+joinPoint.getSignature().getDeclaringTypeName();
-		
-		
-		Object[] inputList = joinPoint.getArgs();
+        Object[] inputList = joinPoint.getArgs();
 
-		for (Object object : inputList) {
+        for (Object object : inputList) {
 
-			if(object.getClass().isAnnotationPresent(JsonRootName.class)){
-				
-				trace += " beanIn ["+object.toString()+"] ";
-				
-			}else {
-				
-				trace += " otherIn [ "+object.getClass().getCanonicalName()+" : " +object.toString()+ "]";
-			}
-		}
-		
-		
-		log.info(trace);
+            if (object.getClass().isAnnotationPresent(JsonRootName.class)) {
 
-	}
+                trace += " beanIn [" + object.toString() + "] ";
 
-		
-	@Pointcut("within(@org.springframework.stereotype.Service *)")
-	public void beanAnnotatedWithService() {
-	}
-	
-	
-	@Pointcut("execution(public * *(..))")
-	public void publicMethod() {
+            } else {
 
-	}
+                trace += " otherIn [ " + object.getClass().getCanonicalName() + " : " + object.toString() + "]";
+            }
+        }
 
-	@Pointcut("publicMethod() && beanAnnotatedWithService()")
-	public void publicMethodInsideAClassMarkedWithService() {
-	}
+        log.info(trace);
 
-	@AfterReturning(pointcut = "publicMethodInsideAClassMarkedWithService()")
-	public void prova(JoinPoint joinPoint) {
+    }
 
-		String trace = "Executed Manager : "+joinPoint.getSignature().getName()+"-"+joinPoint.getSignature().getDeclaringTypeName();
-		
-		
-		Object[] inputList = joinPoint.getArgs();
+    @Pointcut("within(@org.springframework.stereotype.Service *)")
+    public void beanAnnotatedWithService() {
+    }
 
-		for (Object object : inputList) {
+    @Pointcut("execution(public * *(..))")
+    public void publicMethod() {
 
-			if(object.getClass().isAnnotationPresent(JsonRootName.class)){
-				
-				//System.out.println("Object :" + object.toString());
-				trace += " beanIn ["+object.toString()+"] ";
-				
-			}else {
-				
-				trace += " otherIn [ "+object.getClass().getCanonicalName()+" : " +object.toString()+ "]";
-			}
-		}
-		
-		
-		log.info(trace);
+    }
 
-	}
+    @Pointcut("publicMethod() && beanAnnotatedWithService()")
+    public void publicMethodInsideAClassMarkedWithService() {
+    }
+
+    @AfterReturning(pointcut = "publicMethodInsideAClassMarkedWithService()")
+    public void prova(JoinPoint joinPoint) {
+
+        String trace = "Executed Manager : " + joinPoint.getSignature().getName() + "-" + joinPoint.getSignature().getDeclaringTypeName();
+
+        Object[] inputList = joinPoint.getArgs();
+
+        for (Object object : inputList) {
+
+            if (object.getClass().isAnnotationPresent(JsonRootName.class)) {
+
+                //System.out.println("Object :" + object.toString());
+                trace += " beanIn [" + object.toString() + "] ";
+
+            } else {
+
+                trace += " otherIn [ " + object.getClass().getCanonicalName() + " : " + object.toString() + "]";
+            }
+        }
+
+        log.info(trace);
+
+    }
 
 }
