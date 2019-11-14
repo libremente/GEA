@@ -63,8 +63,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	}
 
 	@Override
-	public int compareTo(Atto arg0) {
-		// TODO Auto-generated method stub
+	public int compareTo(Atto arg0) { 
 		return Integer.parseInt(arg0.numeroAtto)
 				- Integer.parseInt(this.numeroAtto);
 	}
@@ -389,9 +388,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	public void setNumeroRepertorio(String numeroRepertorio) {
 		this.numeroRepertorio = numeroRepertorio;
-	}
-
-	// SCRL-396 Gestione Fascicolo Archivistico
+	} 
 	public String getUrlFascicolo() {
 		return urlFascicolo;
 	}
@@ -472,8 +469,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	}
 
 	public void setTipoIniziativa(String tipoIniziativa) {
-		this.tipoIniziativa = tipoIniziativa;
-		// setto tipoIniziativaNome per SCRL-347
+		this.tipoIniziativa = tipoIniziativa; 
 		this.tipoIniziativaNome = this.getTipoIniziativaNome();
 	}
 

@@ -125,8 +125,7 @@ public class AulaService {
 			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
 					false);
 			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
-					false);
-			//objectMapper.getSerializationConfig().addMixInAnnotations(Commissione.class, Commissione.class);
+					false); 
 			
 			String json = objectMapper.writeValueAsString(esameAula);
 	
@@ -184,8 +183,7 @@ public class AulaService {
 						+ ": Alfresco non raggiungibile ");
 			}
 
-			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			String responseMsg = response.getEntity(String.class); 
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {

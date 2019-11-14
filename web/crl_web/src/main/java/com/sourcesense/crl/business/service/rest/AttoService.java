@@ -121,9 +121,7 @@ public class AttoService {
 					MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
 
-			if (response.getStatus() == 500) {
-
-				//atto.setError(response.getEntity(String.class));
+			if (response.getStatus() == 500) { 
 				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
 
 			} else if (response.getStatus() != 200) {
@@ -171,9 +169,7 @@ public class AttoService {
 					MediaType.APPLICATION_JSON)
 					.put(ClientResponse.class, json);
 
-			if (response.getStatus() == 500) {
-
-				//atto.setError(response.getEntity(String.class));
+			if (response.getStatus() == 500) { 
 				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
 
 			} else if (response.getStatus() != 200) {
@@ -231,9 +227,7 @@ public class AttoService {
 					MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class, json);
 
-			if (response.getStatus() == 500) {
-
-				//atto.setError(response.getEntity(String.class));
+			if (response.getStatus() == 500) { 
 				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
 
 			} else if (response.getStatus() != 200) {
@@ -245,8 +239,7 @@ public class AttoService {
 			}
 			else{
 				
-				String responseMsg = response.getEntity(String.class);
-				//objectMapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS, false);
+				String responseMsg = response.getEntity(String.class); 
 				atto.setError(null);
 				attoRet = objectMapper.readValue(responseMsg, AttoEAC.class);
 				atto.setId(attoRet.getId());
@@ -267,9 +260,7 @@ public class AttoService {
 		return atto;
 	}
 
-	public boolean update(Atto atto) {
-
-		// TODO
+	public boolean update(Atto atto) { 
 		return true;
 	}
 
@@ -325,9 +316,7 @@ public class AttoService {
 		}
 		String responseMsg = response.getEntity(String.class);
 		
-		try {
-			
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+		try { 
 			atto = objectMapper.readValue(responseMsg, AttoEAC.class);
 
 		} catch (JsonMappingException e) {
@@ -384,9 +373,7 @@ public class AttoService {
 	
 	
 	
-	public ArrayList<Atto> findAll() {
-
-		// TODO
+	public ArrayList<Atto> findAll() { 
 		return null;
 	}
 
@@ -460,8 +447,7 @@ public class AttoService {
 						+ ": Alfresco non raggiungibile ");
 			}
 
-			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			String responseMsg = response.getEntity(String.class); 
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {
@@ -505,8 +491,7 @@ public class AttoService {
 						+ ": Alfresco non raggiungibile ");
 			}
 
-			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			String responseMsg = response.getEntity(String.class); 
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {

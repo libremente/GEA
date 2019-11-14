@@ -26,8 +26,7 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("collegamento")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Collegamento implements Cloneable{
-	//private Atto atto;
+public class Collegamento implements Cloneable{ 
 	private String idAttoCollegato;
 	private String tipoAttoCollegato;
 	private String numeroAttoCollegato;

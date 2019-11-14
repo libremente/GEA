@@ -293,38 +293,24 @@ public final class SpnegoAuthenticator {
      */
     public SpnegoPrincipal authenticate(final HttpServletRequest req
         , final SpnegoHttpServletResponse resp) throws GSSException
-        , IOException {
-
-        // Skip auth if localhost
+        , IOException { 
         if (this.allowLocalhost && this.isLocalhost(req)) {
             return doLocalhost();
-        }
-
-        // domain/realm of server
-        final String serverRealm = this.serverPrincipal.getRealm();
-
-        // determine if we allow basic
+        } 
+        final String serverRealm = this.serverPrincipal.getRealm(); 
         final boolean basicSupported =
             this.allowBasic && (this.allowUnsecure || req.isSecure());
 
         final SpnegoPrincipal principal;
         final SpnegoAuthScheme scheme = SpnegoProvider.negotiate(
-                req, resp, basicSupported, this.promptIfNtlm, serverRealm);
-
-        // NOTE: this may also occur if we do not allow Basic Auth and
-        // the client only supports Basic Auth
+                req, resp, basicSupported, this.promptIfNtlm, serverRealm);  
         if (null == scheme) {
             LOGGER.finer("scheme null.");
             return null;
-        }
-
-        // NEGOTIATE scheme
+        } 
         if (scheme.isNegotiateScheme()) {
-            principal = doSpnegoAuth(scheme, resp);
-
-        // BASIC scheme
-        } else if (scheme.isBasicScheme()) {
-            // check if we allow Basic Auth AND if can be un-secure
+            principal = doSpnegoAuth(scheme, resp); 
+        } else if (scheme.isBasicScheme()) { 
             if (basicSupported) {
                 principal = doBasicAuth(scheme, resp);
             } else {
@@ -333,9 +319,7 @@ public final class SpnegoAuthenticator {
                         + "; req.isSecure()=" + req.isSecure());
                 throw new UnsupportedOperationException("Basic Auth not allowed"
                         + " or SSL required.");
-            }
-
-        // Unsupported scheme
+            } 
         } else {
             throw new UnsupportedOperationException("scheme=" + scheme);
         }
@@ -389,16 +373,12 @@ public final class SpnegoAuthenticator {
             return null;
         }
 
-        final String[] basicData = new String(data).split(":", 2);
-
-        // assert
+        final String[] basicData = new String(data).split(":", 2); 
         if (basicData.length != 2) {
             throw new IllegalArgumentException("Username/Password may"
                     + " have contained an invalid character. basicData.length="
                     + basicData.length);
-        }
-
-        // substring to remove domain (if provided)
+        } 
         final String username = basicData[0].substring(basicData[0].indexOf('\\') + 1);
         final String password = basicData[1];
         final CallbackHandler handler = SpnegoProvider.getUsernamePasswordHandler(
@@ -406,15 +386,12 @@ public final class SpnegoAuthenticator {
 
         SpnegoPrincipal principal = null;
 
-        try {
-            // assert
+        try { 
             if (null == username || username.isEmpty()) {
                 throw new LoginException("Username is required.");
             }
 
-            final LoginContext cntxt = new LoginContext(this.clientModuleName, handler);
-
-            // validate username/password by login/logout
+            final LoginContext cntxt = new LoginContext(this.clientModuleName, handler); 
             cntxt.login();
             cntxt.logout();
 

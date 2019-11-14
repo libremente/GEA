@@ -87,10 +87,7 @@ public class CollegamentiController {
 				.getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
 		setAttiCollegatiList(attoServiceManager.findAttiCollegatiById(getAtto()
-				.getId()));
-		//MODIFICA 
-		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
-		//setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+				.getId()));   
 		setCollegamentiAttiSindacato(attoServiceManager
 				.findAttiSindacatoById(getAtto().getId()));
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
@@ -142,9 +139,7 @@ public class CollegamentiController {
 							"Attenzione ! Le modifiche alle Leggi Regionali non sono state salvate ",
 							""));
 		}
-	}
-
-	// Atti Interni********************************************
+	} 
 
 	public void addCollegamento(String idAttoToAdd) {
 
@@ -196,9 +191,7 @@ public class CollegamentiController {
 
 					collega = false;
 
-				} else if ("MIS".equalsIgnoreCase(tipoAtto)) {
-					
-					//attoDaCollegare = attoServiceManager.findMISById(idAttoToAdd);
+				} else if ("MIS".equalsIgnoreCase(tipoAtto)) { 
 					collega = false;
 				} else {
 
@@ -259,16 +252,9 @@ public class CollegamentiController {
 		setStatoCommitAttiInterni(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Atti Interni salvati con successo", ""));
-	}
+	} 
 
-	// Atti Indirizzo e Sindacati******************************
-
-	public void handleAttoSindacatoChange() {
-
-		//MODIFICA 
-		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
-		//MODIFICA
-		//Aggiunta ricerca per range di date determinate dall'anno selezionato
+	public void handleAttoSindacatoChange() {    
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(annoCreazione), 0, 1);
 		Date dataCreazioneDa= c.getTime();
@@ -277,9 +263,7 @@ public class CollegamentiController {
 		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
 		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato,formatter.format(dataCreazioneDa),formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
-		setNumeriAttoSindacato(attiSindacato);
-		//MODIFICA
-		//eliminato ciclo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
+		setNumeriAttoSindacato(attiSindacato);  
 		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
 
 			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
@@ -363,9 +347,7 @@ public class CollegamentiController {
 				new FacesMessage(
 						"Atti di indirizzo e di Sindacato Ispettivo salvati con successo",
 						""));
-	}
-
-	// Leggi regionali********************************************
+	} 
 
 	public void addCollegamentoAttoRegionale() {
 
@@ -376,8 +358,7 @@ public class CollegamentiController {
 						FacesMessage.SEVERITY_ERROR,
 						"Attenzione ! Atto già collegato ", ""));
 
-			} else {
-				// TODO: alfresco service (link collegamento)
+			} else { 
 				CollegamentoLeggiRegionali collegamento = new CollegamentoLeggiRegionali();
 				collegamento.setDescrizione(getDescrizioneAttoRegionale());
 				collegamento.setNumeroAtto(getNumeroAttoRegionale());
@@ -415,8 +396,7 @@ public class CollegamentiController {
 	}
 
 	public void salvaLeggiRegionali() {
-		atto.setCollegamentiLeggiRegionali(getCollegamentiLeggiRegionali());
-		// TODO: alfresco service
+		atto.setCollegamentiLeggiRegionali(getCollegamentiLeggiRegionali()); 
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -428,9 +408,7 @@ public class CollegamentiController {
 		setStatoCommitLeggiRegionali(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Leggi Regionali salvate con successo", ""));
-	}
-
-	// Getters & Setters*****************************************
+	} 
 
 	public Atto getAtto() {
 		return atto;

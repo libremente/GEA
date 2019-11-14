@@ -44,20 +44,17 @@ public class PersonaleServiceManager implements ServiceManager{
 	private PersonaleService personaleService;
 
 	@Override
-	public Personale persist(Object object) {
-		// TODO Auto-generated method stub
+	public Personale persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public Personale merge(Object object) {
-		// TODO Auto-generated method stub
+	public Personale merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 	
@@ -188,20 +185,17 @@ public class PersonaleServiceManager implements ServiceManager{
 	}
 	
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() {
-		// TODO Auto-generated method stub
+	public Map<String, String> findAll() { 
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 

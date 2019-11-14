@@ -44,8 +44,7 @@ public class ReportServiceManager implements ServiceManager {
 	
 	
 	
-	public InputStream getReportFile(Report report ) {
-        //alf_retrieve_report_bin=crl/template/report/creareport?json={0}&tipoTemplate={1} 
+	public InputStream getReportFile(Report report ) { 
 		return reportService.getFile(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_retrieve_report_bin", null),report);
 	}
@@ -54,38 +53,32 @@ public class ReportServiceManager implements ServiceManager {
 	
 	
 	@Override
-	public Object persist(Object object) {
-		// TODO Auto-generated method stub
+	public Object persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public Object merge(Object object) {
-		// TODO Auto-generated method stub
+	public Object merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() {
-		// TODO Auto-generated method stub
+	public Map<String, String> findAll() { 
 		return null;
 	}
 
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 

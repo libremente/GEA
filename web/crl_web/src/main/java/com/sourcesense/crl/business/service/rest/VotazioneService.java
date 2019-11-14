@@ -37,15 +37,12 @@ public class VotazioneService {
 	 Client client;
 	
 	@Autowired
-	 ObjectMapper objectMapper;
-	
-	//TODO
+	 ObjectMapper objectMapper; 
 	public List<Votazione> getAllEsitoVotoAula() {
 		return null;
 	}
 
-	public List<Votazione> getAllEsitoVotoCommissioneReferente() {
-		// TODO Auto-generated method stub
+	public List<Votazione> getAllEsitoVotoCommissioneReferente() { 
 		return null;
 	}
 

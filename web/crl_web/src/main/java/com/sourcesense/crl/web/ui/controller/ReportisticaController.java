@@ -87,8 +87,7 @@ public class ReportisticaController implements Serializable {
 
 	private List<String> tipiAtto;
 	private Map<String, String> tipiAttoSel = new HashMap<String, String>();
-	private List<String> commissioni;
-	//private Map<String, String> commissioniSel = new HashMap<String, String>();
+	private List<String> commissioni; 
 	private List<String> commissioniSel = new ArrayList<String>();
 	private String ruoloCommissione;
 	private Date dataAssegnazioneDa;
@@ -116,9 +115,7 @@ public class ReportisticaController implements Serializable {
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
 	private Date dataConsultazioneDa;
-	private Date dataConsultazioneA;
-
-	// SErv Comm
+	private Date dataConsultazioneA; 
 	private final String ATTI_ASSE_COMM = "Atti assegnati alle commissioni";
 	private final String CONFERENZE = "Conferenza (atti in istruttoria)";
 	private final String ATTI_LICENZ = "Atti licenziati";
@@ -126,26 +123,19 @@ public class ReportisticaController implements Serializable {
 	private final String ATTI_RELATORE = "Elenco atti per relatore";
 	private final String COMPO_COMMISSIONI = "Composizione commissioni";
 	private final String ATTI_INV_ORG_EST = "Atti inviati a organi esterni";
-	private final String ATTI_INIZ_CONSILIARE = "Atti di iniziativa consiliare per consigliere";
-
-	// Comm
+	private final String ATTI_INIZ_CONSILIARE = "Atti di iniziativa consiliare per consigliere"; 
 	private final String ATTI_ISTRUTTORIA_COMM = "Atti in istruttoria alle commissioni per tipo Atto";
 	private final String ATTI_ASSEGNATI_COMM = "Atti assegnati alle commissioni";
 	private final String ELENCO_RELATORI = "Elenco dei relatori nominati in commissione per data nomina";
 	private final String ATTI_LICENZIATI_COMM = "Atti licenziati dalle commissioni";
-	private final String ELENCO_AUDIZ_COMM = "Elenco Audizioni delle commissioni";
-	
-	
-	// Aula
+	private final String ELENCO_AUDIZ_COMM = "Elenco Audizioni delle commissioni"; 
 	private final String ELENCO_LCR = "Elenco LCR";
 	private final String ELENCO_DCR = "Elenco DCR";
 	private final String ELENCO_ATTI_ISTRUTT = "Elenco Atti Istruttoria";
 	private final String ELENCO_ATTI_RINVIO = "Elenco Atti Rinviati alle Commissioni";
 
 	@PostConstruct
-	public void init() {
-
-		//setCommissioniSel(commissioneServiceManager.findAll());
+	public void init() { 
 		setCommissioniSel(commissioneServiceManager.getAll());
 		setOrganismi(organismoStatutarioServiceManager.findAll());
 		setFirmatari(personaleServiceManager.getAllFirmatario());
@@ -153,9 +143,7 @@ public class ReportisticaController implements Serializable {
 		setTipiAttoSel(tipoAttoServiceManager.findAll());
 		setLegislature(legislaturaServiceManager.list());
 		
-		root = new DefaultTreeNode("Root", null);
-
-		// SERVIZIO COMISSIONI
+		root = new DefaultTreeNode("Root", null); 
 		TreeNode servizioCommissioni = new DefaultTreeNode(
 				"Servizio commissioni", root);
 
@@ -197,9 +185,7 @@ public class ReportisticaController implements Serializable {
 		Report repAttiInizCons = new Report(ATTI_INIZ_CONSILIARE,
 				"crlreport:reportAttiIniziativaConsPerConsServComm");
 		TreeNode nodeAttiInizCons = new DefaultTreeNode("lettera",
-				repAttiInizCons, servizioCommissioni);
-
-		// COMISSIONI
+				repAttiInizCons, servizioCommissioni); 
 		TreeNode commissione = new DefaultTreeNode("Commissione", root);
 
 		Report repAttiIstruttComm = new Report(ATTI_ISTRUTTORIA_COMM,
@@ -225,10 +211,7 @@ public class ReportisticaController implements Serializable {
 		Report repAudizioniCommissioniComm = new Report(ELENCO_AUDIZ_COMM,
 				"crlreport:reportAudizioniCommissioniComm");
 		TreeNode nodeAudizioniCommissioniComm = new DefaultTreeNode("lettera",
-				repAudizioniCommissioniComm, commissione);
-		
-
-		// AULA
+				repAudizioniCommissioniComm, commissione); 
 		TreeNode aula = new DefaultTreeNode("Aula", root);
 
 		Report repElencoLcr = new Report(ELENCO_LCR, "crlreport:reportLCRAula");
@@ -687,15 +670,7 @@ public class ReportisticaController implements Serializable {
 
 	public void setLegislatura(String legislatura) {
 		this.selectedReport.setLegislatura ( legislatura);
-	}
-
-//	public String getRelatore() {
-//		return this.selectedReport.getRelator;
-//	}
-//
-//	public void setRelatore(String relatore) {
-//		this.relatore = relatore;
-//	}
+	}       
 
 	public Map<String, String> getOrganismi() {
 		return organismi;

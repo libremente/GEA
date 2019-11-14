@@ -45,8 +45,7 @@ public class TipoIniziativa implements Comparable<TipoIniziativa>{
 	}
 
 	@Override
-	public int compareTo(TipoIniziativa o) {
-		// TODO Auto-generated method stub
+	public int compareTo(TipoIniziativa o) { 
 		return this.descrizione.compareTo(o.descrizione);
 	}
 

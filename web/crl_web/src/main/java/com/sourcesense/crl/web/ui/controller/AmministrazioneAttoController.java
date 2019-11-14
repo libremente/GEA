@@ -72,9 +72,7 @@ public class AmministrazioneAttoController {
 
     private String estensioneAtto;
 
-    private boolean tipologiaVisible;
-
-    //private Map<String, String> tipiAtto = new HashMap<String, String>();
+    private boolean tipologiaVisible; 
 
     private List<TipoAtto> tipiAtto = new ArrayList<TipoAtto>();
     private Map<String,String> tipologie = new HashMap<String, String>(){

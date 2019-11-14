@@ -242,9 +242,7 @@ public class SearchAttoController implements Serializable {
 		atto.getStatiUtente().clear();
 		atto.setCommissioneUser("");
 		atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
-		atto.setTipoWorkingList("");
-
-		// LAVORAZIONE
+		atto.setTipoWorkingList(""); 
 		if ("inlavorazione".equals(listaLavoro)) {
 
 			atto.setTipoWorkingList("inlavorazione");
@@ -282,9 +280,7 @@ public class SearchAttoController implements Serializable {
 
 				atto.setTipoAtto("MIS");
 
-			}
-
-			// LAVORATI
+			} 
 		} else if ("lavorati".equals(listaLavoro)) {
 
 			atto.setTipoWorkingList("lavorati");
@@ -330,11 +326,9 @@ public class SearchAttoController implements Serializable {
 				.get("attoSearchBean"));
 		try {
 			BeanUtils.copyProperties(attoSearchBean, atto);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+		} catch (IllegalAccessException e) { 
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
+		} catch (InvocationTargetException e) { 
 			e.printStackTrace();
 		}
 		attoSearchBean.setTipoWorkingList(listaLavoro);
@@ -366,11 +360,9 @@ public class SearchAttoController implements Serializable {
 		if (!attoSearchBean.isFirstSaerch()){
 			try {
 				BeanUtils.copyProperties(atto, attoSearchBean);
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
+			} catch (IllegalAccessException e) { 
 				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
+			} catch (InvocationTargetException e) { 
 				e.printStackTrace();
 			}
 		}else {

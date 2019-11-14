@@ -197,17 +197,12 @@ public final class SpnegoHttpFilter implements Filter {
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
 
-        try {
-            // set some System properties
+        try { 
             final SpnegoFilterConfig config = SpnegoFilterConfig.getInstance(filterConfig);
             this.excludeDirs.addAll(config.getExcludeDirs());
 
-            LOGGER.info("excludeDirs=" + this.excludeDirs);
-
-            // pre-authenticate
-            this.authenticator = new SpnegoAuthenticator(config);
-
-            // authorization
+            LOGGER.info("excludeDirs=" + this.excludeDirs); 
+            this.authenticator = new SpnegoAuthenticator(config); 
             final Properties props = SpnegoHttpFilter.toProperties(filterConfig);
             if (!props.getProperty("spnego.authz.class", "").isEmpty()) {
                 props.put("spnego.server.realm", this.authenticator.getServerRealm());
@@ -261,15 +256,11 @@ public final class SpnegoHttpFilter implements Filter {
 
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final SpnegoHttpServletResponse spnegoResponse = new SpnegoHttpServletResponse(
-                (HttpServletResponse) response);
-
-        // skip authentication if resource is in the list of directories to exclude
+                (HttpServletResponse) response); 
         if (exclude(httpRequest.getContextPath(), httpRequest.getServletPath())) {
             chain.doFilter(request, response);
             return;
-        }
-
-        // client/caller principal
+        } 
         final SpnegoPrincipal principal;
         try {
             principal = this.authenticator.authenticate(httpRequest, spnegoResponse);
@@ -277,14 +268,10 @@ public final class SpnegoHttpFilter implements Filter {
             LOGGER.severe("HTTP Authorization Header="
                 + httpRequest.getHeader(Constants.AUTHZ_HEADER));
             throw new ServletException(gsse);
-        }
-
-        // context/auth loop not yet complete
+        } 
         if (spnegoResponse.isStatusSet()) {
             return;
-        }
-
-        // assert
+        } 
         if (null == principal) {
             LOGGER.severe("Principal was null.");
             spnegoResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true);
@@ -294,9 +281,7 @@ public final class SpnegoHttpFilter implements Filter {
         LOGGER.fine("principal=" + principal);
 
         final SpnegoHttpServletRequest spnegoRequest =
-                new SpnegoHttpServletRequest(httpRequest, principal, this.accessControl);
-                
-        // site wide authZ check (if enabled)
+                new SpnegoHttpServletRequest(httpRequest, principal, this.accessControl); 
         if (!isAuthorized((HttpServletRequest) spnegoRequest)) {
             LOGGER.info("Principal Not AuthoriZed: " + principal);
             if (this.page403.isEmpty()) {
@@ -319,8 +304,7 @@ public final class SpnegoHttpFilter implements Filter {
         return true;
     }
     
-    private boolean exclude(final String contextPath, final String servletPath) {
-        // each item in excludeDirs ends with a slash
+    private boolean exclude(final String contextPath, final String servletPath) { 
         final String path = contextPath + servletPath + (servletPath.endsWith("/") ? "" : "/");
         
         for (String dir : this.excludeDirs) {
@@ -357,8 +341,7 @@ public final class SpnegoHttpFilter implements Filter {
      */
     public static final class Constants {
 
-        private Constants() {
-            // default private
+        private Constants() { 
         }
         
         /** 

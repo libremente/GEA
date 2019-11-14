@@ -79,15 +79,11 @@ public class SessionPhaseListener implements PhaseListener {
 
 		try {
 
-			if (ec.isResponseCommitted()) {
-
-				// redirect is not possible
+			if (ec.isResponseCommitted()) { 
 
 				return;
 
-			}
-
-			// fix for renderer kit (Mojarra's and PrimeFaces's ajax redirect)
+			} 
 
 			if ((RequestContext.getCurrentInstance().isAjaxRequest()
 

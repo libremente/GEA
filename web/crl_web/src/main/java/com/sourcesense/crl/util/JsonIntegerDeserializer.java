@@ -27,9 +27,7 @@ public class JsonIntegerDeserializer extends JsonDeserializer<Integer>{
 
 	@Override
 	public Integer deserialize(JsonParser jp, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
-		
-		// TODO Auto-generated method stub
+			throws IOException, JsonProcessingException { 
 		Integer value =0;
 		
 		if(jp.getText()!=null && jp.getTextLength() > 0){

@@ -35,50 +35,38 @@ public class VotazioneServiceManager implements ServiceManager{
 	VotazioneService votazioneService;
 
 	@Override
-	public Votazione persist(Object object) {
-		// TODO Auto-generated method stub
+	public Votazione persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public Votazione merge(Object object) {
-		// TODO Auto-generated method stub
+	public Votazione merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
-	}
-	
-	//TODO
-	public Map<String, String> findAllEsitoVotoAula() {
-		//return votazioneService.getAllEsitoVotoAula();
+	} 
+	public Map<String, String> findAllEsitoVotoAula() { 
 		return null;
-	}
-	
-	//TODO
-	public Map<String, String> findAllEsitoVotoCommissioneReferente() {
-		//return votazioneService.getAllEsitoVotoCommissioneReferente();
+	} 
+	public Map<String, String> findAllEsitoVotoCommissioneReferente() { 
 		return null;
 	}
 
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() {
-		// TODO Auto-generated method stub
+	public Map<String, String> findAll() { 
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 

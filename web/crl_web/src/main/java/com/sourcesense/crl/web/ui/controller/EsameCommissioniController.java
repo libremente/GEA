@@ -90,10 +90,8 @@ public class EsameCommissioniController {
 
 	private boolean readonly = false;
 
-	private List<Commissione> commissioniList = new ArrayList<Commissione>();
-	// Commissione dell utente loggato
-	private Commissione commissioneUser = new Commissione();
-	// Passaggio selezionato
+	private List<Commissione> commissioniList = new ArrayList<Commissione>(); 
+	private Commissione commissioneUser = new Commissione(); 
 	private Passaggio passaggio;
 	private String passaggioSelected;
 	private List<Relatore> relatori = new ArrayList<Relatore>();
@@ -229,25 +227,15 @@ public class EsameCommissioniController {
 	private String statoCommitStralci = CRLMessage.COMMIT_DONE;
 
 	@PostConstruct
-	protected void init() {
-
-		// Liste per combo
+	protected void init() { 
 		setRelatori(personaleServiceManager.getAllRelatori());
-		setMembriComitato(personaleServiceManager.getAllMembriComitato());
-
-		// Bean atto di sessione
+		setMembriComitato(personaleServiceManager.getAllMembriComitato()); 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-
-		// Utente di sessione e Commissione di appartenenza
+				.getSessionMap().get("attoBean")); 
 		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
-
-		// set atto di classe clone di attoBean
-		setAtto((Atto) attoBean.getAtto().clone());
-
-		// Ricavo le commisioni dall'ultimo passaggio
+				.getSessionMap().get("userBean")); 
+		setAtto((Atto) attoBean.getAtto().clone()); 
 		setCommissioniList(Clonator.cloneList(attoBean.getLastPassaggio()
 				.getCommissioni()));
 
@@ -257,10 +245,7 @@ public class EsameCommissioniController {
 
 	}
 
-	private void setValoriCommissioneUtente(AttoBean attoBean, UserBean userBean) {
-
-		// I dati della commissione relativa all'utente loggato
-		// solo se admin prende la referente o deliberante
+	private void setValoriCommissioneUtente(AttoBean attoBean, UserBean userBean) {  
 		Commissione commTemp = findCommissione(userBean.getUser()
 				.getSessionGroup().getNome());
 		esitiVotazione.clear();
@@ -380,22 +365,16 @@ public class EsameCommissioniController {
 		} else {
 			setReadonly(false);
 
-		}
-
-		// Ricavo le commisioni dall'ultimo passaggio
+		} 
 		setCommissioniList(Clonator.cloneList(passaggioSelected
 				.getCommissioni()));
 
-		FacesContext context = FacesContext.getCurrentInstance();
-
-		// Utente di sessione e Commissione di appartenenza
+		FacesContext context = FacesContext.getCurrentInstance(); 
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-
-		// I dati della commissione relativa all'utente loggato
+				.getSessionMap().get("attoBean")); 
 		Commissione commTemp = findCommissione(userBean.getUser()
 				.getSessionGroup().getNome());
 		if (commTemp == null) {
@@ -429,9 +408,7 @@ public class EsameCommissioniController {
 		return null;
 	}
 
-	private void loadData(Passaggio passaggioIn, AttoBean attoBean) {
-
-		// Controllo per admin
+	private void loadData(Passaggio passaggioIn, AttoBean attoBean) { 
 		setDataPresaInCarico(commissioneUser.getDataPresaInCarico());
 		setMateria(commissioneUser.getMateria());
 		setDataScadenza(commissioneUser.getDataScadenza());
@@ -694,10 +671,7 @@ public class EsameCommissioniController {
 		context.addMessage(null, new FacesMessage("Scadenza Parere Aggiornata",
 				""));
 
-	}
-
-	// Relatori e Comitati
-	// ristretti***********************************************
+	}  
 	public void presaInCarico() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -709,9 +683,7 @@ public class EsameCommissioniController {
 
 		if (commissioneUser.getStato().equals(Commissione.STATO_ASSEGNATO)) {
 			commissioneUser.setStato(Commissione.STATO_IN_CARICO);
-		}
-
-		// Puo essere modificato solo l'ultimo passaggio
+		} 
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(getCommissioniList());
 
@@ -738,9 +710,7 @@ public class EsameCommissioniController {
 		if (canChangeStatoAtto()
 				&& attoBean.getStato().equals(StatoAtto.ASSEGNATO_COMMISSIONE)) {
 			attoBean.setStato(StatoAtto.PRESO_CARICO_COMMISSIONE);
-		}
-
-		// confrontaDataScadenza();
+		} 
 
 		String numeroAtto = attoBean.getNumeroAtto();
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
@@ -797,9 +767,7 @@ public class EsameCommissioniController {
 		return true;
 	}
 
-	public void confermaRelatori() {
-
-		// if (relatoriList.size() > 0) {
+	public void confermaRelatori() { 
 
 		commissioneUser.setRelatori(relatoriList);
 
@@ -851,9 +819,7 @@ public class EsameCommissioniController {
 
 		setStatoCommitRelatori(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
-				"Relatori salvati con successo", ""));
-
-		// }
+				"Relatori salvati con successo", "")); 
 	}
 
 	private boolean checkStatiRelatori() {
@@ -959,9 +925,7 @@ public class EsameCommissioniController {
 
 				return true;
 			}
-		}
-
-		// Update di un componente persistito
+		} 
 		/*
 		 * if (!ritorno &&
 		 * attoBean.getWorkingCommissione(commissioneUser.getDescrizione
@@ -1071,16 +1035,7 @@ public class EsameCommissioniController {
 		}
 	}
 
-	private boolean checkTestoComitato(String fileName) {
-
-		// for (TestoAtto element : testiComitatoRistrettoList) {
-		//
-		// if (element.getDescrizione().equals(fileName)) {
-		//
-		// return false;
-		// }
-		//
-		// }
+	private boolean checkTestoComitato(String fileName) {        
 
 		return true;
 	}
@@ -1110,18 +1065,14 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		Allegato allegato = (Allegato) event.getObject();
-
-	//CLAUSOLA COMMISSIONI	
+		Allegato allegato = (Allegato) event.getObject(); 
 		if (Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA
 				.equals(allegato.getTipologia())) {
 	
 			allegato.setTipoAllegato(Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
 			attoRecordServiceManager.updateAllegatoCommissione(allegato);
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
-			.setTestiClausola(Clonator.cloneList(testiClausolaList));
-			
-	//TESTO ATTO COMITATO RISTRETTO
+			.setTestiClausola(Clonator.cloneList(testiClausolaList)); 
 		} else if (Allegato.TESTO_ESAME_COMMISSIONE_COMITATO
 				.equals(allegato.getTipologia())) {
 	
@@ -1129,9 +1080,7 @@ public class EsameCommissioniController {
 			attoRecordServiceManager.updateAllegato(allegato);
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 			.setAllegatiNoteEsameCommissioni(
-					Clonator.cloneList(testiComitatoRistrettoList));
-	
-	// EMENDAMENTI COMMISSIONI
+					Clonator.cloneList(testiComitatoRistrettoList)); 
 		} else if (Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO
 				.equals(allegato.getTipologia())) {
 	
@@ -1140,8 +1089,7 @@ public class EsameCommissioniController {
 			attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 			.setEmendamentiEsameCommissioni(
 					Clonator.cloneList(emendamentiList));
-		}
-	// ALLEGATI COMMISSIONI	
+		} 
 		else if (Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO
 				.equals(allegato.getTipologia())) {
 			
@@ -1160,8 +1108,7 @@ public class EsameCommissioniController {
 	
 
 	public void confermaFineLavori() {
-		commissioneUser.setDataFineLavoriComitato(getDataFineLavori());
-		// commissioneUser.setStato(Commissione.STATO_ANNULLATO);
+		commissioneUser.setDataFineLavoriComitato(getDataFineLavori()); 
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1)
 				.setCommissioni(getCommissioniList());
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1183,9 +1130,7 @@ public class EsameCommissioniController {
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Relatori e Comitati Ristretti salvati con successo", ""));
-	}
-
-	// Abbinamenti***************************************************************
+	} 
 
 	public void addAbbinamento(String idAbbinamento, String tipoAtto) {
 
@@ -1280,9 +1225,7 @@ public class EsameCommissioniController {
 
 		if (abbinamentoSelected != null) {
 			Atto attoDaAbbinare = attoServiceManager
-					.findById(abbinamentoSelected.getIdAttoAbbinato());
-
-			// abbinamentoSelected.setAtto(attoDaAbbinare);
+					.findById(abbinamentoSelected.getIdAttoAbbinato()); 
 
 			setTipoTesto(abbinamentoSelected.getTipoTesto());
 			setDataAbbinamento(abbinamentoSelected.getDataAbbinamento());
@@ -1416,9 +1359,7 @@ public class EsameCommissioniController {
 		context.addMessage(null, new FacesMessage(
 				"Oggetto Atto corrente salvato con successo", ""));
 
-	}
-
-	// Votazione****************************************************************
+	} 
 
 	public void confrontaDataScadenza() {
 
@@ -1430,22 +1371,16 @@ public class EsameCommissioniController {
 			long scadenzaLong = getDataScadenza().getTime();
 			long todayLong = (new Date()).getTime();
 			long msDifferenza = (scadenzaLong - todayLong);
-			int giorniDifferenza = (int) (msDifferenza / 86400000);
-
-			// oggi
+			int giorniDifferenza = (int) (msDifferenza / 86400000); 
 			if (giorniDifferenza == 0) {
 
 				setMessaggioGiorniScadenza("Attenzione! La scadenza è prevista per oggi");
-				setMessaggioGiorniScadenzaColor("red");
-
-				// in scadenza
+				setMessaggioGiorniScadenzaColor("red"); 
 			} else if (giorniDifferenza > 1) {
 
 				setMessaggioGiorniScadenza("Mancano " + giorniDifferenza
 						+ " giorni alla scadenza.");
-				setMessaggioGiorniScadenzaColor("green");
-
-				// scaduto
+				setMessaggioGiorniScadenzaColor("green"); 
 			} else {
 
 				setMessaggioGiorniScadenza("Attenzione! Ritardo di "
@@ -1477,9 +1412,7 @@ public class EsameCommissioniController {
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
 
-		String stato = atto.getStato();
-
-		// Check se annulla votazione
+		String stato = atto.getStato(); 
 		if (checkAnnullaCommissione()) {
 
 			commissioneUser.setStato(Commissione.STATO_IN_CARICO);
@@ -1495,9 +1428,7 @@ public class EsameCommissioniController {
 			} else if (canChangeStatoAtto()) {
 				stato = StatoAtto.PRESO_CARICO_COMMISSIONE;
 
-			}
-
-			// Votazione OK
+			} 
 		} else {
 			commissioneUser.setStato(Commissione.STATO_VOTATO);
 
@@ -1526,9 +1457,7 @@ public class EsameCommissioniController {
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_DONE);
 		confrontaDataScadenza();
 		context.addMessage(null, new FacesMessage(
-				"Registrazione Votazione salvata con successo", ""));
-
-		// Se deliberante e PDA forward su chiusura iter
+				"Registrazione Votazione salvata con successo", "")); 
 		if (Commissione.RUOLO_DELIBERANTE.equals(commissioneUser.getRuolo())
 				&& atto.getTipoAtto().equals("PDA")) {
 			return "pretty:Chiusura_Iter";
@@ -1758,9 +1687,7 @@ public class EsameCommissioniController {
 					risultato = "pretty:Chiusura_Iter";
 				}
 
-			}
-
-			// Se non sono REL, INP e DOC e la comm è referente => cambia tutto
+			} 
 			if (canChangeStatoAtto() && risultato.equals("")) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 				atto.setStato(StatoAtto.TRASMESSO_AULA);
@@ -1825,9 +1752,7 @@ public class EsameCommissioniController {
 			return "Testo dell'atto votato";
 		}
 
-	}
-
-	// Emendamenti e Clausole*************************************************
+	} 
 
 	public void totaleEmendPresentati() {
 
@@ -1941,16 +1866,7 @@ public class EsameCommissioniController {
 		}
 	}
 
-	private boolean checkEmendamenti(String fileName) {
-
-		// for (TestoAtto element : emendamentiList) {
-		//
-		// if (element.getDescrizione().equals(fileName)) {
-		//
-		// return false;
-		// }
-		//
-		// }
+	private boolean checkEmendamenti(String fileName) {        
 
 		return true;
 	}
@@ -1976,8 +1892,7 @@ public class EsameCommissioniController {
 		}
 	}
 
-	public void uploadTestoClausola(FileUploadEvent event) {
-		// TODO Service logic
+	public void uploadTestoClausola(FileUploadEvent event) { 
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -1991,8 +1906,7 @@ public class EsameCommissioniController {
 
 			Allegato allegatoRet = new Allegato();
 
-			try {
-				// TODO change method
+			try { 
 
 				allegatoRet.setNome(event.getFile().getFileName());
 				allegatoRet.setPubblico(currentFilePubblico);
@@ -2151,12 +2065,8 @@ public class EsameCommissioniController {
 			context.addMessage(null, new FacesMessage(
 					"Emendamenti e Clausole salvati con successo", ""));
 		}
-	}
-
-	// Note e Allegati******************************************************
-	public void uploadAllegato(FileUploadEvent event) {
-
-		// TODO Service logic
+	} 
+	public void uploadAllegato(FileUploadEvent event) { 
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -2170,8 +2080,7 @@ public class EsameCommissioniController {
 
 			Allegato allegatoRet = new Allegato();
 
-			try {
-				// TODO change method
+			try { 
 
 				allegatoRet.setNome(event.getFile().getFileName());
 				allegatoRet.setPubblico(currentFilePubblico);
@@ -2304,9 +2213,7 @@ public class EsameCommissioniController {
 		context.addMessage(null, new FacesMessage(
 				"Note e Allegati salvati con successo", ""));
 
-	}
-
-	// Stralci **************************************************************
+	} 
 	public void salvaStralci() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -2329,9 +2236,7 @@ public class EsameCommissioniController {
 		setStatoCommitStralci(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Stralci salvati con successo", ""));
-	}
-
-	// Getters & Setters******************************************************
+	} 
 
 	public Atto getAtto() {
 		return atto;

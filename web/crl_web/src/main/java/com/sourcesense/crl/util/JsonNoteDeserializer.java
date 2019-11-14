@@ -27,9 +27,7 @@ public class JsonNoteDeserializer extends JsonDeserializer<String>{
 
 	@Override
 	public String deserialize(JsonParser jp, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
-		
-		// TODO Auto-generated method stub
+			throws IOException, JsonProcessingException { 
 		String value ="";
 		
 		if(jp.getText()!=null){

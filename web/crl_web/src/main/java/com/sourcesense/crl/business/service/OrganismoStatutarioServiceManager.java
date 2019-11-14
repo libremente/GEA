@@ -40,20 +40,17 @@ public class OrganismoStatutarioServiceManager implements ServiceManager{
 	private OrganismoStatutarioService organismoStatutarioService;
 
 	@Override
-	public OrganismoStatutario persist(Object object) {
-		// TODO Auto-generated method stub
+	public OrganismoStatutario persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public OrganismoStatutario merge(Object object) {
-		// TODO Auto-generated method stub
+	public OrganismoStatutario merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 
@@ -71,14 +68,12 @@ public class OrganismoStatutarioServiceManager implements ServiceManager{
 	}
 
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 

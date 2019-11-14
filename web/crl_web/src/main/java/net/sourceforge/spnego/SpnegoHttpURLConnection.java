@@ -350,9 +350,7 @@ public final class SpnegoHttpURLConnection {
      * @see java.net.URLConnection#connect()
      */
     public HttpURLConnection connect(final URL url, final ByteArrayOutputStream dooutput)
-        throws GSSException, PrivilegedActionException, IOException {
-
-        // assert
+        throws GSSException, PrivilegedActionException, IOException { 
         if (!this.messageIntegrity && this.confidentiality) {
             throw new IllegalStateException("Message Integrity was set "
                     + "to false but Confidentiality set to true.");
@@ -366,8 +364,7 @@ public final class SpnegoHttpURLConnection {
             byte[] data = null;
 
             SpnegoHttpURLConnection.LOCK.lock();
-            try {
-                // work-around to GSSContext/AD timestamp vs sequence field replay bug
+            try { 
                 try { Thread.sleep(31); } catch (InterruptedException e) { assert true; }
 
                 context = this.getGSSContext(url);
@@ -404,9 +401,7 @@ public final class SpnegoHttpURLConnection {
                 dooutput.writeTo(this.conn.getOutputStream());
             }
 
-            this.conn.connect();
-
-            // redirect if 302
+            this.conn.connect(); 
             if (this.conn.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP
                     && this.redirectCount < SpnegoHttpURLConnection.MAX_REDIRECTS) {
 
@@ -414,13 +409,9 @@ public final class SpnegoHttpURLConnection {
             }
 
             final SpnegoAuthScheme scheme = SpnegoProvider.getAuthScheme(
-                    this.conn.getHeaderField(Constants.AUTHN_HEADER));
-
-            // app servers will not return a WWW-Authenticate on 302, (and 30x...?)
+                    this.conn.getHeaderField(Constants.AUTHN_HEADER)); 
             if (null == scheme) {
-                LOGGER.fine("SpnegoProvider.getAuthScheme(...) returned null.");
-
-            // client requesting to skip context loop if 200 and mutualAuth=false
+                LOGGER.fine("SpnegoProvider.getAuthScheme(...) returned null."); 
             } else if (this.conn.getResponseCode() == HttpURLConnection.HTTP_OK
                     && !this.mutualAuth) {
                 LOGGER.fine("SpnegoProvider.getAuthScheme(...) returned null.");
@@ -434,9 +425,7 @@ public final class SpnegoHttpURLConnection {
                         data = context.initSecContext(data, 0, data.length);
                     } finally {
                         SpnegoHttpURLConnection.LOCK.unlock();
-                    }
-
-                    // TODO : support context loops where i>1
+                    } 
                     if (null != data) {
                         LOGGER.warning("Server requested context loop: " + data.length);
                     }

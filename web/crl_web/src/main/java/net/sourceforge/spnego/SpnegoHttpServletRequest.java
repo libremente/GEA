@@ -171,8 +171,7 @@ final class SpnegoHttpServletRequest extends HttpServletRequestWrapper
      * @see net.sourceforge.SpnegoAccessControl#hasRole(java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean hasRole(final String featureX, final String... featureYs) {
-        // assert
+    public boolean hasRole(final String featureX, final String... featureYs) { 
         if (null == this.accessControl) {
             throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
         }
@@ -198,8 +197,7 @@ final class SpnegoHttpServletRequest extends HttpServletRequestWrapper
      * @see net.sourceforge.SpnegoAccessControl#hasAccess(java.lang.String)
      */
     @Override
-    public boolean hasAccess(final String resource) {
-     // assert
+    public boolean hasAccess(final String resource) { 
         if (null == this.accessControl) {
             throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
         }
@@ -212,8 +210,7 @@ final class SpnegoHttpServletRequest extends HttpServletRequestWrapper
      * @see net.sourceforge.SpnegoAccessControl#hasAccess(java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean hasAccess(final String resourceX, final String... resourceYs) {
-        // assert
+    public boolean hasAccess(final String resourceX, final String... resourceYs) { 
         if (null == this.accessControl) {
             throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
         }
@@ -226,8 +223,7 @@ final class SpnegoHttpServletRequest extends HttpServletRequestWrapper
      * @see net.sourceforge.SpnegoAccessControl#getUserInfo()
      */
     @Override
-    public UserInfo getUserInfo() {
-        // assert
+    public UserInfo getUserInfo() { 
         if (null == this.accessControl) {
             throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
         }

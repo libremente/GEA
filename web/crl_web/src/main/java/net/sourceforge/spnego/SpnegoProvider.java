@@ -69,8 +69,7 @@ public final class SpnegoProvider {
     /*
      * This is a utility class (not a Singleton).
      */
-    private SpnegoProvider() {
-        // default private
+    private SpnegoProvider() { 
     }
 
     /**
@@ -103,14 +102,11 @@ public final class SpnegoProvider {
                 req.getHeader(Constants.AUTHZ_HEADER));
         
         if (null == scheme || scheme.getToken().length == 0) {
-            LOGGER.finer("Header Token was NULL");
-            //resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED, false);
+            LOGGER.finer("Header Token was NULL"); 
             resp.kerberoHeader(false);
             return null;
             
-        }
-        
-        // assert
+        } 
         if (scheme.isNtlmToken()) {
             LOGGER.warning("Downgrade NTLM request to Basic Auth.");
 
@@ -121,10 +117,7 @@ public final class SpnegoProvider {
             if (basicSupported && promptIfNtlm) {
                 resp.setHeader(Constants.AUTHN_HEADER,
                         Constants.BASIC_HEADER + " realm=\"" + realm + '\"');
-            } else {
-                // TODO : decode/decrypt NTLM token and return a new SpnegoAuthScheme
-                // of type "Basic" where the token value is a base64 encoded
-                // username + ":" + password string
+            } else {   
                 throw new UnsupportedOperationException("NTLM specified. Downgraded to " 
                         + "Basic Auth (and/or SSL) but downgrade not supported.");
             }

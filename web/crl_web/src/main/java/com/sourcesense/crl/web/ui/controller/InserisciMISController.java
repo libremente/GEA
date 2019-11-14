@@ -150,9 +150,7 @@ public class InserisciMISController {
 		}
 	}
 
-	public void uploadAllegatoParere(FileUploadEvent event) {
-
-		// TODO Service logic
+	public void uploadAllegatoParere(FileUploadEvent event) { 
 		String fileName = event.getFile().getFileName();
 
 		if (!checkAllegatoParere(fileName)) {
@@ -203,8 +201,7 @@ public class InserisciMISController {
 			if (element.getId().equals(allegatoMISToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
-				getAllegatiMIS().remove(element);
-				// attoBean.getAttoMIS().setAllegati(Clonator.cloneList(getAllegatiMIS()));
+				getAllegatiMIS().remove(element); 
 				break;
 			}
 		}

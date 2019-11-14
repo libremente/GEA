@@ -48,18 +48,14 @@ public class UserServiceManager implements ServiceManager {
 
 		User sessionUser = userService.completeAuthentication(urlBuilder
 				.buildAlfrescoURL("alfresco_context_url", "alf_gruppi_utente",
-						null), user);
-
-		// Se gruppo vuoto errore
+						null), user); 
 		if (sessionUser.getGruppi().get(0) == null) {
 
 			sessionUser.setSessionGroup(null);
 		} else {
 			for (int i=0;i<sessionUser.getGruppi().size();i++){
 
-				String nomeGruppo = sessionUser.getGruppi().get(i).getNome();
-
-				// se commissione comincia con COMM_
+				String nomeGruppo = sessionUser.getGruppi().get(i).getNome(); 
 				if (nomeGruppo.startsWith("COMM_")) {
 
 					sessionUser.getGruppi().get(i).setCommissione(true);
@@ -103,38 +99,32 @@ public class UserServiceManager implements ServiceManager {
 	}
 
 	@Override
-	public User persist(Object object) {
-		// TODO Auto-generated method stub
+	public User persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public User merge(Object object) {
-		// TODO Auto-generated method stub
+	public User merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 
 	@Override
-	public Map<String, String> findAll() {
-		// TODO Auto-generated method stub
+	public Map<String, String> findAll() { 
 		return null;
 	}
 
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 

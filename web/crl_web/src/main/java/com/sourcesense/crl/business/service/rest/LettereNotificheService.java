@@ -111,9 +111,7 @@ public class LettereNotificheService {
 						+ ": Alfresco non raggiungibile ");
 			}
 
-			String responseMsg = response.getEntity(String.class);
-			//objectMapper.configure(
-			//		DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
+			String responseMsg = response.getEntity(String.class);  
 			lettera = objectMapper.readValue(responseMsg, Lettera.class
 					);
 			

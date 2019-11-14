@@ -27,9 +27,7 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoRecordService;
-import com.sourcesense.crl.util.URLBuilder;
-
-///alfresco/d/a/workspace/SpacesStore/0000-0000-0000-0000/myfile.pdf?ticket=hu
+import com.sourcesense.crl.util.URLBuilder; 
 @Service("attoRecordServiceManager")
 public class AttoRecordServiceManager implements ServiceManager {
 	
@@ -88,38 +86,32 @@ public class AttoRecordServiceManager implements ServiceManager {
 	
 
 	@Override
-	public Object persist(Object object) {
-		// TODO Auto-generated method stub
+	public Object persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public Object merge(Object object) {
-		// TODO Auto-generated method stub
+	public Object merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() {
-		// TODO Auto-generated method stub
+	public Map<String, String> findAll() { 
 		return null;
 	}
 
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 

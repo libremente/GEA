@@ -34,17 +34,11 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 @JsonTypeName("parere")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Parere implements Cloneable {
-
-	
-	
-	
-	//TODO eliminare
+public class Parere implements Cloneable { 
 	private String organismoStatutario;
 	private Date dataAssegnazione;
 	private Date dataAnnullo;
-	private boolean obbligatorio;
-	//TODO eliminare
+	private boolean obbligatorio; 
 
 	private String descrizione;
 	private Date dataRicezioneParere;

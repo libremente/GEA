@@ -140,9 +140,7 @@ public class AttoBean implements Serializable {
 		return this.atto.getPassaggi().size();
 	}
 
-	public boolean containCommissione(String commissione) {
-
-		// le commissioni sono definite nel primo passaggio
+	public boolean containCommissione(String commissione) { 
 		for (Commissione commissioneRec : this.atto.getPassaggi().get(0)
 				.getCommissioni()) {
 
@@ -349,9 +347,7 @@ public class AttoBean implements Serializable {
 			if (Commissione.RUOLO_CONSULTIVA.equals(commRec.getRuolo())) {
 				for (TestoAtto testoAtto : commRec
 						.getTestiAttoVotatoEsameCommissioni()) {
-					testoAtto.setCommissione(commRec.getDescrizione() 
-							//+ " - "
-							//+ commRec.getRuolo()
+					testoAtto.setCommissione(commRec.getDescrizione()   
 							);
 					returnList.add(testoAtto);
 				}
@@ -524,10 +520,7 @@ public class AttoBean implements Serializable {
 	 *            the code to set
 	 */
 	public void setCodice(String codice) {
-		this.codice = codice;
-
-		// if (codice != null)
-		// setAtto(attoServiceManager.get(codice));
+		this.codice = codice;  
 	}
 
 	/**
@@ -543,9 +536,7 @@ public class AttoBean implements Serializable {
 	 */
 	public void setAtto(Atto atto) {
 
-		this.atto = atto;
-
-		// Ciclo passaggi
+		this.atto = atto; 
 		for (Passaggio passaggio : this.atto.getPassaggi()) {
 
 			for (Commissione commissione : passaggio.getCommissioni()) {
@@ -664,8 +655,7 @@ public class AttoBean implements Serializable {
 
 	public void setTipologia(String tipologia) {
 		this.atto.setTipologia(tipologia);
-	}
-	//SCRL-396 Gestione Fascicolo Archivistico
+	} 
 	public String getUrlFascicolo() {
 		
 		String url = this.atto.getUrlFascicolo();

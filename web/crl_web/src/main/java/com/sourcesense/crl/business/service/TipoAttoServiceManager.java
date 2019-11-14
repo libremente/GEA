@@ -47,20 +47,17 @@ public class TipoAttoServiceManager implements ServiceManager {
 	
 	
 	@Override
-	public TipoAtto persist(Object object) {
-		// TODO Auto-generated method stub
+	public TipoAtto persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public TipoAtto merge(Object object) {
-		// TODO Auto-generated method stub
+	public TipoAtto merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 
@@ -130,14 +127,12 @@ public class TipoAttoServiceManager implements ServiceManager {
 	
 
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 

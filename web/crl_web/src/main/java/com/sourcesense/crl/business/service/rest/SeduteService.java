@@ -66,8 +66,7 @@ public class SeduteService {
 	
 	public List<Seduta> findByGroup (String url,String param, String legislatura){
 
-		List<Seduta> sedute =null;
-		//?provenienza={0}
+		List<Seduta> sedute =null; 
 		try {
 			WebResource webResource = client.resource(url);
 			ClientResponse response = webResource
@@ -75,8 +74,7 @@ public class SeduteService {
           .queryParam("legislatura", legislatura)
           .queryParam("summary", "true")
 					.accept(MediaType.APPLICATION_JSON+ ";charset=utf-8")
-					.get(ClientResponse.class);
-      //
+					.get(ClientResponse.class); 
 
 			if (response.getStatus() != 200) {
 				throw new ServiceNotAvailableException("Errore - "

@@ -191,10 +191,7 @@ public class AttoServiceManager implements ServiceManager {
 	public AttoMIS findMISById(String id) {
 		return attoService.findMISById(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_atto_by_id", new String[] { id }));
-	}
-	
-	//MODIFICA
-	//Aggiunto parametro del tipoAttoIndirizzo
+	}  
 	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String tipoAtto, String dataCreazioneDa, String dataCreazioneA) {
 		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL(
 				"alfresco_context_url", "alf_retrieve_atti_indirizzo",new String[]{tipoAtto,dataCreazioneDa, dataCreazioneA}));
@@ -281,26 +278,22 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	@Override
-	public Atto merge(Object object) {
-		// TODO Auto-generated method stub
+	public Atto merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() {
-		// TODO Auto-generated method stub
+	public Map<String, String> findAll() { 
 		return null;
 	}
 

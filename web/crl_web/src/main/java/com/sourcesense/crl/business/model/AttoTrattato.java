@@ -45,8 +45,7 @@ public class AttoTrattato implements Cloneable , Comparable <AttoTrattato>{
 	@Override
 	public int compareTo(AttoTrattato arg0) {
 		String numero1 = (this.numeroOrdinamento ==null || this.numeroOrdinamento.equals(""))? "00" : this.numeroOrdinamento;
-		String numero2 = (arg0.getNumeroOrdinamento() ==null || arg0.getNumeroOrdinamento().equals(""))? "00" : arg0.getNumeroOrdinamento();
-		// TODO Auto-generated method stub
+		String numero2 = (arg0.getNumeroOrdinamento() ==null || arg0.getNumeroOrdinamento().equals(""))? "00" : arg0.getNumeroOrdinamento(); 
 		return Integer.parseInt(numero1) -  Integer.parseInt(numero2);
 	}
 	

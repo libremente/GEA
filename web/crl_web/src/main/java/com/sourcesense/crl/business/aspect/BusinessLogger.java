@@ -76,9 +76,7 @@ public class BusinessLogger {
 
         for (Object object : inputList) {
 
-            if (object.getClass().isAnnotationPresent(JsonRootName.class)) {
-
-                //System.out.println("Object :" + object.toString());
+            if (object.getClass().isAnnotationPresent(JsonRootName.class)) { 
                 trace += " beanIn [" + object.toString() + "] ";
 
             } else {

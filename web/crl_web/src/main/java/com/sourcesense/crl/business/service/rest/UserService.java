@@ -133,9 +133,7 @@ public class UserService {
 		}
 
 		if (gruppi != null) {
-			user.setGruppi(gruppi);
-			//String[] nomeGr = user.getGruppi().get(0).getNome().split("_");
-			//user.getGruppi().get(0).setNome(nomeGr[nomeGr.length-1]);
+			user.setGruppi(gruppi);  
 			return user;
 		}
 

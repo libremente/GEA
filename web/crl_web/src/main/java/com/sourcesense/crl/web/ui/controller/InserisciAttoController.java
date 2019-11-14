@@ -83,9 +83,7 @@ public class InserisciAttoController {
 	
 	private UserBean userBean;
 	
-	private boolean tipologiaVisible;
-
-	//private Map<String, String> tipiAtto = new HashMap<String, String>();
+	private boolean tipologiaVisible; 
 
 	private List<TipoAtto> tipiAtto = new ArrayList<TipoAtto>();
 	private Map<String,String> tipologie = new HashMap<String, String>(){
@@ -105,8 +103,7 @@ public class InserisciAttoController {
 				.getApplication()
 				.getExpressionFactory()
 				.createValueExpression(context.getELContext(), "#{userBean}",
-						UserBean.class).getValue(context.getELContext());
-		//TODO
+						UserBean.class).getValue(context.getELContext()); 
 		setTipiAtto(tipoAttoServiceManager.retrieveAllTipoAtto(),GruppoUtente.AULA.equals(userBean.getUserGroupName()));
 		setLegislature(legislaturaServiceManager.list());
 		

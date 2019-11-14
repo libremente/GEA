@@ -48,20 +48,17 @@ public class LegislaturaServiceManager implements ServiceManager {
 	
 	
 	@Override
-	public Legislatura persist(Object object) {
-		// TODO Auto-generated method stub
+	public Legislatura persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public Legislatura merge(Object object) {
-		// TODO Auto-generated method stub
+	public Legislatura merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 	
@@ -112,14 +109,12 @@ public class LegislaturaServiceManager implements ServiceManager {
 	
 	
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 

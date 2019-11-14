@@ -115,9 +115,7 @@ public class InserisciEACController {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-		
-		//Modificato controllo dopo inserimento controllo numero atto duplicato 
+				.getSessionMap().get("attoBean")); 
 		
 		if (attoBean.getAttoEAC() != null){
 		
@@ -131,10 +129,7 @@ public class InserisciEACController {
 	
 				attoBean.setAttoEAC(null);
 			}
-		}
-		//MODIFICA 
-		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
-		//setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		}   
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 		setLegislature(legislaturaServiceManager.list());
 	}
@@ -166,9 +161,7 @@ public class InserisciEACController {
 		}
 	}
 
-	public void uploadAllegatoParere(FileUploadEvent event) {
-
-		// TODO Service logic
+	public void uploadAllegatoParere(FileUploadEvent event) { 
 		String fileName = event.getFile().getFileName();
 
 		if (!checkAllegatoParere(fileName)) {
@@ -247,22 +240,14 @@ public class InserisciEACController {
 						break;
 					}
 
-				}
-				
-				
-				//attoServiceManager.persistEAC(atto);
+				} 
 				attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 
 			}
 		}
 	}
 
-	public void handleAttoSindacatoChange() {
-
-		//MODIFICA 
-		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
-		//MODIFICA
-		//Aggiunta ricerca per range di date determinate dall'anno selezionato
+	public void handleAttoSindacatoChange() {    
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(annoCreazione), 0, 1);
 		Date dataCreazioneDa= c.getTime();
@@ -271,9 +256,7 @@ public class InserisciEACController {
 		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
 		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato,formatter.format(dataCreazioneDa),formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
-		setNumeriAttoSindacato(attiSindacato);
-		//MODIFICA
-		//eliminato ciclo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
+		setNumeriAttoSindacato(attiSindacato);  
 		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
 
 			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {

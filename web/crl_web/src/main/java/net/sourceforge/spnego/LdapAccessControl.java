@@ -288,8 +288,7 @@ public class LdapAccessControl implements UserAccessControl {
     /**
      * Default constructor.
      */
-    public LdapAccessControl() {
-        // default constructor
+    public LdapAccessControl() { 
     }
 
     @Override
@@ -343,40 +342,31 @@ public class LdapAccessControl implements UserAccessControl {
 
             if (!unMatchedExpired(key, now)) {
                 return false;
-            }
-
-            // query AD to update both MapS and expiration time
+            } 
             LOGGER.fine("username: " + username + "; role: " + attribute);
 
             this.writeLock.lock();
-            try {
-                // remove from cache if exists
+            try { 
                 this.matchedList.remove(key);
                 this.unMatchedList.remove(key);
 
                 int count = 0;
                 final LdapContext context = new InitialLdapContext(environment, null);
-                for (String filter : this.policy) {
-                    // perform AD lookup add to cache
+                for (String filter : this.policy) { 
                     final NamingEnumeration<SearchResult> results =
                             context.search(this.deecee
                                     , String.format(filter, username, attribute)
                                     , this.srchCntrls);
 
                     final boolean found = results.hasMoreElements();
-                    results.close();
-
-                    // add to cache
+                    results.close(); 
                     if (found) {
-                        count++;
-                        //LOGGER.info("add attribute to matchedList: " + attribute);
+                        count++; 
                         this.matchedList.put(key, System.currentTimeMillis());
                         if (!this.uniqueOnly) {
                             break;
                         }
-                    }
-
-                    // check if we have a duplicate attribute
+                    } 
                     if (count > 1 && this.uniqueOnly) {
                         this.matchedList.remove(key);
                         throw new IllegalArgumentException("Uniqueness property violated. "
@@ -388,8 +378,7 @@ public class LdapAccessControl implements UserAccessControl {
                 }
                 context.close();
 
-                if (0 == count) {
-                    //LOGGER.info("add attribute to unMatchedList: " + attribute);
+                if (0 == count) { 
                     this.unMatchedList.put(key, System.currentTimeMillis());
                 } else {
                     cacheUserInfo(username);
@@ -411,9 +400,7 @@ public class LdapAccessControl implements UserAccessControl {
      * @see net.sourceforge.UserAccessControl#hasRole(java.lang.String, java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean hasRole(final String username, final String attributeX, final String... attributeYs) {
-
-        // assert
+    public boolean hasRole(final String username, final String attributeX, final String... attributeYs) { 
         if (null == attributeYs || 0 == attributeYs.length) {
             final String errorMsg = "Must provide at least two parameters";
             LOGGER.severe(errorMsg);
@@ -462,9 +449,7 @@ public class LdapAccessControl implements UserAccessControl {
 
         if (!unMatchedExpired(key, now)) {
             return false;
-        }
-
-        // query AD to update both MapS and expiration time
+        } 
         LOGGER.fine("username: " + username + "; resource: " + resource);
 
         boolean matched = false;
@@ -473,8 +458,7 @@ public class LdapAccessControl implements UserAccessControl {
         String[] attributes = new String[] {};
 
         this.readLock.lock();
-        try {
-            // assert
+        try { 
             if (!this.resources.containsKey(resource)) {
                 throw new IllegalArgumentException(
                         "Policy not found for user-defined Resource labeled: " + resource);
@@ -508,11 +492,9 @@ public class LdapAccessControl implements UserAccessControl {
 
         this.writeLock.lock();
         try {
-            if (matched) {
-                //LOGGER.info("add resource to matchedList: " + resource);
+            if (matched) { 
                 this.matchedList.put(key, now);
-            } else {
-                //LOGGER.info("add resource to unMatchedList: " + resource);
+            } else { 
                 this.unMatchedList.put(key, now);
             }
         } finally {
@@ -527,9 +509,7 @@ public class LdapAccessControl implements UserAccessControl {
      * @see net.sourceforge.UserAccessControl#hasAccess(java.lang.String, java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean hasAccess(final String username, final String resourceX, final String... resourceYs) {
-
-        // assert
+    public boolean hasAccess(final String username, final String resourceX, final String... resourceYs) { 
         if (null == resourceYs || 0 == resourceYs.length) {
             final String errorMsg = "Must provide at least two parameters";
             LOGGER.severe(errorMsg);
@@ -617,8 +597,7 @@ public class LdapAccessControl implements UserAccessControl {
 
         this.readLock.lock();
         try {
-            if (this.environment != null) {
-                // must call the destroy method before re-initializing
+            if (this.environment != null) { 
                 throw new IllegalStateException("LdapAccessControl already initialized");
             }
         } finally {
@@ -640,9 +619,7 @@ public class LdapAccessControl implements UserAccessControl {
                 throw new IllegalArgumentException(
                         "Policy File NOT Found: " + policyFile, e);
             }
-        }
-
-        // use defaults if not specified
+        } 
         final Hashtable<String, String> env = new Hashtable<String, String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY
                 , policies.getProperty(LDAP_FACTORY
@@ -655,9 +632,7 @@ public class LdapAccessControl implements UserAccessControl {
         env.put("com.sun.jndi.ldap.connect.pool"
                 , policies.getProperty(LDAP_POOL
                         , props.getProperty(LDAP_POOL
-                                , "true")));
-
-        // if deecee was not provided, calculate using server's realm
+                                , "true"))); 
         String dc = policies.getProperty(LDAP_DEECE
                 , props.getProperty(LDAP_DEECE, ""));
         if (dc.isEmpty()) {
@@ -669,9 +644,7 @@ public class LdapAccessControl implements UserAccessControl {
             }
             dc = "DC=" + tmp.replaceAll("\\.", ",DC=");
         }
-        LOGGER.info(dc);
-
-        // assert that an ldap url was provided
+        LOGGER.info(dc); 
         if (policies.getProperty(LDAP_URL, props.getProperty(LDAP_URL, "")).isEmpty()) {
             final String errorMessage = "Must provide a value for the spnego.authz.ldap.url parameter";
             LOGGER.severe(errorMessage);
@@ -680,10 +653,7 @@ public class LdapAccessControl implements UserAccessControl {
             env.put(Context.PROVIDER_URL
                     , policies.getProperty(LDAP_URL, props.getProperty(LDAP_URL)));
             LOGGER.info("ldap provider url: " + env.get(Context.PROVIDER_URL));
-        }
-
-        // if username/password not provided, default to krb5 username/password
-        // if nothing is specified because a keytab file was specified... error.
+        }  
         if (policies.getProperty(LDAP_USERNAME, props.getProperty(LDAP_USERNAME
                 , props.getProperty(KRB5_USERNAME, policies.getProperty(KRB5_USERNAME, "")))).isEmpty()) {
             final String errorMessage = "Must provide a username to use for connecting to the LDAP server";
@@ -703,15 +673,10 @@ public class LdapAccessControl implements UserAccessControl {
         env.put(Context.SECURITY_CREDENTIALS
                 , policies.getProperty(LDAP_PASSWORD, props.getProperty(LDAP_PASSWORD
                         , props.getProperty(KRB5_PASSWORD, policies.getProperty(KRB5_PASSWORD)))));
-        LOGGER.info("ldap security principal: " + env.get(Context.SECURITY_PRINCIPAL));
-
-        // specifiy how many minutes the cache is good for
-        // used to control when to re-query/perform another ldap search
+        LOGGER.info("ldap security principal: " + env.get(Context.SECURITY_PRINCIPAL));  
         long ttl = DEFAULT_TTL;
         ttl = Long.parseLong(policies.getProperty(TTL, props.getProperty(TTL, "-1")));
-        LOGGER.info("spnego.authz.ttl: " + ttl);
-
-        // determine if we're allowed to violate the uniqueness property
+        LOGGER.info("spnego.authz.ttl: " + ttl); 
         this.uniqueOnly = Boolean.parseBoolean(policies.getProperty(UNIQUE
                 , props.getProperty(UNIQUE, "true")));
 
@@ -719,12 +684,8 @@ public class LdapAccessControl implements UserAccessControl {
 
         this.writeLock.lock();
         try {
-            this.deecee = dc;
-
-            // create policy statements
-            loadPolicies(policies, props);
-
-            // optional labels for resources
+            this.deecee = dc; 
+            loadPolicies(policies, props); 
             loadResourceNames(policies, props);
 
             if (ttl < 1) {
@@ -762,8 +723,7 @@ public class LdapAccessControl implements UserAccessControl {
         boolean matchExpired = true;
 
         this.readLock.lock();
-        try {
-            // if has role, check if not expired
+        try { 
             if (matched) {
                 matchExpired = now - this.matchedList.get(key) > expiration;
             }
@@ -778,8 +738,7 @@ public class LdapAccessControl implements UserAccessControl {
         boolean unMatchedExpired = true;
 
         this.readLock.lock();
-        try {
-            // check if we know it's missing and we've checked recently
+        try { 
             if (unMatched) {
                 unMatchedExpired = now - this.unMatchedList.get(key) > expiration;
             }
@@ -787,9 +746,7 @@ public class LdapAccessControl implements UserAccessControl {
         } finally {
             this.readLock.unlock();
         }
-    }
-
-    // pre-condition is that caller has write lock
+    } 
     private void loadPolicies(final Properties props, final Properties policies) {
         for (int i=0; i<=MAX_NUM_FILTERS; i++) {
             final int idx = i+1;
@@ -803,17 +760,13 @@ public class LdapAccessControl implements UserAccessControl {
                 break;
             }
             this.policy.add(filter);
-        }
-
-        // need minimum of one policy to execute
+        } 
         if (0 == this.policy.size()) {
             final String errorMessage = "Must specify at least one spnego.authz.ldap.filter.1";
             LOGGER.severe(errorMessage);
             throw new IllegalStateException(errorMessage);
         }
-    }
-
-    // pre-condition is that caller has write lock
+    } 
     private void loadResourceNames(final Properties props, final Properties policies) {
         this.resources = new HashMap<String, Map<String, String[]>>();
         for (int i=0; i<=MAX_NUM_FILTERS; i++) {
@@ -845,9 +798,7 @@ public class LdapAccessControl implements UserAccessControl {
 
             this.resources.put(resname, access);
         }
-    }
-
-    // pre-condition is that caller has write lock
+    } 
     private UserInfo cacheUserInfo(final String username) throws NamingException {
 
         if (null == this.userInfoFilter
@@ -856,9 +807,7 @@ public class LdapAccessControl implements UserAccessControl {
             LOGGER.info(USER_INFO_FILTER + " was empty OR no value(s) specified for the "
                     + USER_INFO +" property");
             return null;
-        }
-
-        // perform AD lookup add to cache
+        } 
         final LdapContext context = new InitialLdapContext(this.environment, null);
         final NamingEnumeration<SearchResult> results =
                 context.search(this.deecee
@@ -886,12 +835,9 @@ public class LdapAccessControl implements UserAccessControl {
             }
         }
         results.close();
-        context.close();
-
-        // add to cache
+        context.close(); 
         final UserInfo userInfoObject;
-        if (found) {
-            //LOGGER.info("add to cache userInfoList");
+        if (found) { 
             userInfoObject = new UserInfo() {
                 private final Map<String, List<String>> info = labelInfo;
                 private final String labels = userInfoLabels.toString();

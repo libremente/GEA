@@ -58,8 +58,7 @@ public class Commissione implements Cloneable {
 	private String descrizione;
 	private String nome;
 	private String ruolo;
-	private String stato;
-	// private String tipoVotazione;
+	private String stato; 
 	private String esitoVotazione;
 	private String materia;
 	private String esitoVotoCommissioneReferente;

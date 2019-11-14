@@ -21,8 +21,7 @@ public final class Base64 {
     private static final String ALPHABET =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-    private Base64() {
-        // default private
+    private Base64() { 
     }
     
     /**

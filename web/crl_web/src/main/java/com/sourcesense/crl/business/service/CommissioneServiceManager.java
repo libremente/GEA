@@ -47,20 +47,17 @@ public class CommissioneServiceManager implements ServiceManager{
 	private CommissioneService commissioneService;
 
 	@Override
-	public Commissione persist(Object object) {
-		// TODO Auto-generated method stub
+	public Commissione persist(Object object) { 
 		return null;
 	}
 
 	@Override
-	public Commissione merge(Object object) {
-		// TODO Auto-generated method stub
+	public Commissione merge(Object object) { 
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) {
-		// TODO Auto-generated method stub
+	public boolean remove(Object object) { 
 		return false;
 	}
 	
@@ -232,16 +229,14 @@ public class CommissioneServiceManager implements ServiceManager{
 	
 
 	@Override
-	public Object findById(String id) {
-		// TODO Auto-generated method stub
+	public Object findById(String id) { 
 		return null;
 	}
 
 	
 
 	@Override
-	public List<Object> retrieveAll() {
-		// TODO Auto-generated method stub
+	public List<Object> retrieveAll() { 
 		return null;
 	}
 

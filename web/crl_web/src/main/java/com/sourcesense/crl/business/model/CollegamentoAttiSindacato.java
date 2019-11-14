@@ -30,9 +30,7 @@ import org.pojomatic.annotations.AutoProperty;
 @JsonTypeName("collegamentoAttiSindacato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class CollegamentoAttiSindacato implements Cloneable , Comparable <CollegamentoAttiSindacato>{
-	
-	//id atto sindacato
+public class CollegamentoAttiSindacato implements Cloneable , Comparable <CollegamentoAttiSindacato>{ 
 	private String idAtto;
 	private String descrizione;
 	private String tipoAtto;
@@ -54,8 +52,7 @@ public class CollegamentoAttiSindacato implements Cloneable , Comparable <Colleg
 	}
 	
 	@Override
-	public int compareTo(CollegamentoAttiSindacato arg0) {
-		// TODO Auto-generated method stub
+	public int compareTo(CollegamentoAttiSindacato arg0) { 
 		if(arg0.numeroOrdinamento==null || arg0.numeroOrdinamento.equals("")){
 			arg0.numeroOrdinamento="0";
 		}

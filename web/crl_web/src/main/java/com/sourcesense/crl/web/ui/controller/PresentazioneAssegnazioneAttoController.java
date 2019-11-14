@@ -289,9 +289,7 @@ public class PresentazioneAssegnazioneAttoController {
 							""));
 		}
 
-	}
-
-	// Info Generali******************************************************
+	} 
 	public void presaInCarico() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -682,8 +680,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private List<Firmatario> getOrderedFirmatari() {
 
-		if (getFirmatariOrder() != null && !getFirmatariOrder().equals("")) {
-			// Numeri atto ordinati
+		if (getFirmatariOrder() != null && !getFirmatariOrder().equals("")) { 
 			String[] attiOrd = getFirmatariOrder().split("_");
 
 			for (int i = 0; i < attiOrd.length; i++) {
@@ -724,8 +721,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private List<Firmatario> getOrderedPromotori() {
 
-		if (getPromotoriOrder() != null && !getPromotoriOrder().equals("")) {
-			// Numeri atto ordinati
+		if (getPromotoriOrder() != null && !getPromotoriOrder().equals("")) { 
 			String[] attiOrd = getPromotoriOrder().split("_");
 
 			for (int i = 0; i < attiOrd.length; i++) {
@@ -761,13 +757,7 @@ public class PresentazioneAssegnazioneAttoController {
 		Collections.sort(promotoriList);
 		return promotoriList;
 
-	}
-
-
-
-
-
-	// Ammissibilita******************************************************
+	} 
 
 	public String salvaAmmissibilita() {
 
@@ -883,9 +873,7 @@ public class PresentazioneAssegnazioneAttoController {
 		context.addMessage(null, new FacesMessage(
 				"Ammissibilità annullata con successo", ""));
 
-	}
-
-	// Assegnazione******************************************************
+	} 
 	public void addCommissione() {
 
 		if (nomeCommissione != null && !nomeCommissione.trim().equals("")) {
@@ -1214,9 +1202,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 					risultato = "pretty:Chiusura_Iter";
 
-			}
-
-			// Se non sono REL, INP e DOC e la comm è referente => cambia tutto
+			} 
 			if (risultato.equals("")) {
 				attoBean.setStato(StatoAtto.TRASMESSO_AULA);
 				atto.setStato(StatoAtto.TRASMESSO_AULA);
@@ -1265,8 +1251,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 			if (element.getStato().equals(Commissione.STATO_PROPOSTO)
 					&& element.getDataAssegnazione() != null) {
-				element.setStato(Commissione.STATO_ASSEGNATO);
-				// Se c'è una commissione referente cambia lo stato dell'atto
+				element.setStato(Commissione.STATO_ASSEGNATO); 
 				if (element.getRuolo().equalsIgnoreCase(
 						Commissione.RUOLO_REFERENTE)
 						|| element.getRuolo().equalsIgnoreCase(
@@ -1283,9 +1268,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 		return totaleCommChange;
 
-	}
-
-	// Note e Allegati******************************************************
+	} 
 	public void uploadAllegato(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -1312,9 +1295,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-
-			// TODO aggiungi a bean di sessione
+			} 
 			FacesContext context = FacesContext.getCurrentInstance();
 			AttoBean attoBean = ((AttoBean) context.getExternalContext()
 					.getSessionMap().get("attoBean"));
@@ -1407,9 +1388,7 @@ public class PresentazioneAssegnazioneAttoController {
 
 	public void salvaNoteEAllegati() {
 		this.atto.setLinksPresentazioneAssegnazione(linksList);
-		attoServiceManager.salvaNoteAllegatiPresentazione(atto);
-
-		// TODO Service logic
+		attoServiceManager.salvaNoteAllegatiPresentazione(atto); 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
@@ -1449,9 +1428,7 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 
 		allegatiList.clear();
-		setAllegatiList(allegatiTemp);
-
-		// TODO Service logic
+		setAllegatiList(allegatiTemp); 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
@@ -1468,9 +1445,7 @@ public class PresentazioneAssegnazioneAttoController {
 					"Testi Atto salvati con successo", ""));
 
 		}
-	}
-
-	// Getters & Setters******************************************************
+	} 
 
 	public PersonaleServiceManager getPersonaleServiceManager() {
 		return personaleServiceManager;

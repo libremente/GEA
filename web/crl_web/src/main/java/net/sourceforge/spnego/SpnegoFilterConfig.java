@@ -103,70 +103,45 @@ public final class SpnegoFilterConfig { // NOPMD
     /** domain account to use for pre-authentication. */
     private transient String username = null;
     
-    private SpnegoFilterConfig() {
-        // default private
+    private SpnegoFilterConfig() { 
     }
     
     /**
      * Class is a Singleton. Use the static getInstance() method.
      */
     private SpnegoFilterConfig(final FilterConfig config) throws FileNotFoundException
-        , URISyntaxException {
-
-        // specify logging level
-        setLogLevel(config.getInitParameter(Constants.LOGGER_LEVEL));
-        
-        // check if exists
-        assert loginConfExists(config.getInitParameter(Constants.LOGIN_CONF));
-        
-        // specify krb5 conf as a System property
+        , URISyntaxException { 
+        setLogLevel(config.getInitParameter(Constants.LOGGER_LEVEL)); 
+        assert loginConfExists(config.getInitParameter(Constants.LOGIN_CONF)); 
         if (null == config.getInitParameter(Constants.KRB5_CONF)) {
             throw new IllegalArgumentException(
                     SpnegoFilterConfig.MISSING_PROPERTY + Constants.KRB5_CONF);
         } else {
             System.setProperty("java.security.krb5.conf"
                     , config.getInitParameter(Constants.KRB5_CONF));            
-        }
-
-        // specify login conf as a System property
+        } 
         if (null == config.getInitParameter(Constants.LOGIN_CONF)) {
             throw new IllegalArgumentException(
                     SpnegoFilterConfig.MISSING_PROPERTY + Constants.LOGIN_CONF);
         } else {
             System.setProperty("java.security.auth.login.config"
                     , config.getInitParameter(Constants.LOGIN_CONF));            
-        }
-        
-        // check if exists and no options specified
-        doClientModule(config.getInitParameter(Constants.CLIENT_MODULE));
-        
-        // determine if all req. met to use keyTab
-        doServerModule(config.getInitParameter(Constants.SERVER_MODULE));
-        
-        // if username/password provided, don't use key tab 
+        } 
+        doClientModule(config.getInitParameter(Constants.CLIENT_MODULE)); 
+        doServerModule(config.getInitParameter(Constants.SERVER_MODULE)); 
         setUsernamePassword(config.getInitParameter(Constants.PREAUTH_USERNAME)
-                , config.getInitParameter(Constants.PREAUTH_PASSWORD));
-        
-        // determine if we should support Basic Authentication
+                , config.getInitParameter(Constants.PREAUTH_PASSWORD)); 
         setBasicSupport(config.getInitParameter(Constants.ALLOW_BASIC)
-                , config.getInitParameter(Constants.ALLOW_UNSEC_BASIC));
-        
-        // determine if we should Basic Auth prompt if rec. NTLM token
-        setNtlmSupport(config.getInitParameter(Constants.PROMPT_NTLM));
-        
-        // requests from localhost will not be authenticated against the KDC 
+                , config.getInitParameter(Constants.ALLOW_UNSEC_BASIC)); 
+        setNtlmSupport(config.getInitParameter(Constants.PROMPT_NTLM)); 
         if (null != config.getInitParameter(Constants.ALLOW_LOCALHOST)) {
             this.allowLocalhost = 
                 Boolean.parseBoolean(config.getInitParameter(Constants.ALLOW_LOCALHOST));
-        }
-        
-        // determine if the server supports credential delegation 
+        } 
         if (null != config.getInitParameter(Constants.ALLOW_DELEGATION)) {
             this.allowDelegation = 
                 Boolean.parseBoolean(config.getInitParameter(Constants.ALLOW_DELEGATION));
-        }
-        
-        // determine if a url path(s) should NOT undergo authentication
+        } 
         this.excludeDirs = config.getInitParameter(Constants.EXCLUDE_DIRS);
     }
     
@@ -174,24 +149,12 @@ public final class SpnegoFilterConfig { // NOPMD
         
         assert moduleExists("client", moduleName);
         
-        this.clientLoginModule = moduleName;
-        
-        // client must not have any options
-        
-        // confirm that runtime loaded the login file
-        final Configuration config = Configuration.getConfiguration();
- 
-        // we only expect one entry
-        final AppConfigurationEntry entry = config.getAppConfigurationEntry(moduleName)[0];
-        
-        // get login module options
-        final Map<String, ?> opt = entry.getOptions();
-        
-        // assert
+        this.clientLoginModule = moduleName;  
+        final Configuration config = Configuration.getConfiguration(); 
+        final AppConfigurationEntry entry = config.getAppConfigurationEntry(moduleName)[0]; 
+        final Map<String, ?> opt = entry.getOptions(); 
         if (!opt.isEmpty()) {
-            for (Map.Entry<String, ?> option : opt.entrySet()) {
-                // do not allow client modules to have any options
-                // unless they are jboss options
+            for (Map.Entry<String, ?> option : opt.entrySet()) {  
                 if (!option.getKey().startsWith("jboss")) {
                     throw new UnsupportedOperationException("Login Module for client must not "
                             + "specify any options: " + opt.size()
@@ -223,18 +186,10 @@ public final class SpnegoFilterConfig { // NOPMD
         
         assert moduleExists("server", moduleName);
         
-        this.serverLoginModule = moduleName;
-        
-        // confirm that runtime loaded the login file
-        final Configuration config = Configuration.getConfiguration();
- 
-        // we only expect one entry
-        final AppConfigurationEntry entry = config.getAppConfigurationEntry(moduleName)[0];
-        
-        // get login module options
-        final Map<String, ?> opt = entry.getOptions();
-        
-        // storeKey must be set to true
+        this.serverLoginModule = moduleName; 
+        final Configuration config = Configuration.getConfiguration(); 
+        final AppConfigurationEntry entry = config.getAppConfigurationEntry(moduleName)[0]; 
+        final Map<String, ?> opt = entry.getOptions(); 
         if (opt.containsKey("storeKey")) {
             final Object store = opt.get("storeKey");
             if (null == store || !Boolean.parseBoolean((String) store)) {
@@ -375,9 +330,7 @@ public final class SpnegoFilterConfig { // NOPMD
     }
     
     private boolean loginConfExists(final String loginconf) 
-        throws FileNotFoundException, URISyntaxException {
-
-        // confirm login.conf file exists
+        throws FileNotFoundException, URISyntaxException { 
         if (null == loginconf || loginconf.isEmpty()) {
             throw new FileNotFoundException("Must provide a login.conf file.");
         } else {
@@ -390,40 +343,26 @@ public final class SpnegoFilterConfig { // NOPMD
         return true;
     }
     
-    private boolean moduleExists(final String side, final String moduleName) {
-        
-        // confirm that runtime loaded the login file
-        final Configuration config = Configuration.getConfiguration();
- 
-        // we only expect one entry
-        final AppConfigurationEntry[] entry = config.getAppConfigurationEntry(moduleName); 
-        
-        // confirm that the module name exists in the file
+    private boolean moduleExists(final String side, final String moduleName) { 
+        final Configuration config = Configuration.getConfiguration(); 
+        final AppConfigurationEntry[] entry = config.getAppConfigurationEntry(moduleName);  
         if (null == entry) {
             throw new IllegalArgumentException("The " + side + " module name " 
                     + "was not found in the login file: " + moduleName);
-        }
-        
-        // confirm that the login module class was defined
+        } 
         if (0 == entry.length) {
             throw new IllegalArgumentException("The " + side + " module name " 
                     + "exists but login module class not defined: " + moduleName);
-        }
-        
-        // confirm that only one login module class specified
+        } 
         if (entry.length > 1) {
             throw new IllegalArgumentException("Only one login module class " 
                     + "is supported for the " + side + " module: " + entry.length);
-        }
-        
-        // confirm class name is "com.sun.security.auth.module.Krb5LoginModule"
+        } 
         if (!entry[0].getLoginModuleName().equals(
                 "com.sun.security.auth.module.Krb5LoginModule")) {
             throw new UnsupportedOperationException("Login module class not "
                     + "supported: " + entry[0].getLoginModuleName());
-        }
-        
-        // confirm Control Flag is specified as REQUIRED
+        } 
         if (!entry[0].getControlFlag().equals(
                 AppConfigurationEntry.LoginModuleControlFlag.REQUIRED)) {
             throw new UnsupportedOperationException("Control Flag must "
@@ -552,23 +491,17 @@ public final class SpnegoFilterConfig { // NOPMD
         return this.canUseKeyTab && this.username.isEmpty() && this.password.isEmpty();
     }
 
-    private static String clean(final String path) {
-        
-        // assert - more than one char (we do not support ROOT) and no wild card
+    private static String clean(final String path) { 
         if (path.length() < 2 || path.contains("*")) {
             throw new IllegalArgumentException(
                 "Invalid exclude.dirs pattern or char(s): " + path);
-        }
-        
-        // ensure that it ends with the slash character
+        } 
         final String tmp;
         if (path.endsWith("/")) {
             tmp = path;
         } else {
             tmp = path + "/";
-        }
-        
-        // we want to include the slash character
+        } 
         return tmp.substring(0, tmp.lastIndexOf('/') + 1);
     }
     

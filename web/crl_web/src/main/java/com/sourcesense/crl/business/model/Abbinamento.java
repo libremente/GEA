@@ -41,12 +41,7 @@ public class Abbinamento implements Cloneable{
 	private boolean abbinato;
 	
 	private String tipoAttoAbbinato;
-	private String numeroAttoAbbinato;
-	
-	
-		
-	
-	//private Atto atto;
+	private String numeroAttoAbbinato; 
 	
 	@Override public String toString() {
 	    return Pojomatic.toString(this);

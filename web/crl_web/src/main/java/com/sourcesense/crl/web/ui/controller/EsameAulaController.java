@@ -173,9 +173,7 @@ public class EsameAulaController {
 		totaleNonApprovati();
 		setPassaggioSelected(attoBean.getLastPassaggio().getNome());
 
-		setRelatori(personaleServiceManager.getAllRelatori());
-
-		// Utente di sessione e Commissione di appartenenza
+		setRelatori(personaleServiceManager.getAllRelatori()); 
 		UserBean userBean = ((UserBean) context.getExternalContext()
 				.getSessionMap().get("userBean"));
 
@@ -204,9 +202,7 @@ public class EsameAulaController {
 		} else {
 			setReadonly(false);
 
-		}
-
-		// Ricavo le commisioni dall'ultimo passaggio
+		} 
 		setAulaUser(passaggioSelected.getAula());
 
 	}
@@ -296,11 +292,8 @@ public class EsameAulaController {
 							"Attenzione ! Le modifiche a Dati Atto non sono state salvate ",
 							""));
 		}
-	}
-
-	// Votazione**************************************************************
-	public void presaInCarico() {
-		// TODO: alfresco service
+	} 
+	public void presaInCarico() { 
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
 				.getSessionMap().get("attoBean"));
@@ -346,8 +339,7 @@ public class EsameAulaController {
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
 	}
 
-	public void uploadTestoAttoVotato(FileUploadEvent event) {
-		// TODO Service logic
+	public void uploadTestoAttoVotato(FileUploadEvent event) { 
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -357,16 +349,13 @@ public class EsameAulaController {
 			context.addMessage(null, new FacesMessage(
 					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
 							+ fileName + " è già stato allegato ", ""));
-		} else {
-
-			// TODO Alfresco upload
+		} else { 
 			TestoAtto allegatoRet = new TestoAtto();
 			allegatoRet.setNome(event.getFile().getFileName());
 			allegatoRet.setPubblico(currentFilePubblico);
 			allegatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
 
-			try {
-				// TODO change method
+			try { 
 				allegatoRet = aulaServiceManager
 						.uploadTestoAttoVotatoEsameAula(
 								((AttoBean) FacesContext.getCurrentInstance()
@@ -461,9 +450,7 @@ public class EsameAulaController {
 
 		for (TestoAtto element : testiAttoVotatoList) {
 
-			if (element.getId().equals(testoAttoVotatoToDelete)) {
-
-				// TODO Alfresco delete
+			if (element.getId().equals(testoAttoVotatoToDelete)) { 
 				attoRecordServiceManager.deleteFile(element.getId());
 				testiAttoVotatoList.remove(element);
 				attoBean.getLastPassaggio()
@@ -540,9 +527,7 @@ public class EsameAulaController {
 		context.addMessage(null, new FacesMessage(message, ""));
 
 		return navigation;
-	}
-
-	// Emendamenti************************************************************
+	} 
 
 	public void uploadEmendamento(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -809,9 +794,7 @@ public class EsameAulaController {
 					"Emendamenti salvati con successo", ""));
 		}
 
-	}
-
-	// Rinvio e Starlci******************************************************
+	} 
 
 	public String salvaRinvioEsame() {
 
@@ -888,10 +871,7 @@ public class EsameAulaController {
 
 		EsameAula esameAula = new EsameAula();
 		esameAula.setTarget(target);
-		esameAula.setAtto(atto);
-
-		// TODO Check commissioni
-		// TODO Return passaggio da aggiungere a session bean
+		esameAula.setAtto(atto);  
 		aulaServiceManager.salvaStralciEsameAula(esameAula);
 
 		attoBean.getWorkingAula().setDataSedutaStralcio(
@@ -907,9 +887,7 @@ public class EsameAulaController {
 		setStatoCommitStralci(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Stralci salvati con successo", ""));
-	}
-
-	// Note e Allegati********************************************************
+	} 
 
 	public void uploadAllegato(FileUploadEvent event) {
 
@@ -1062,9 +1040,7 @@ public class EsameAulaController {
 		context.addMessage(null, new FacesMessage(
 				"Note e Allegati salvati con successo", ""));
 
-	}
-
-	// Getters & Setters******************************************************
+	} 
 
 	public Atto getAtto() {
 		return atto;
@@ -1780,9 +1756,7 @@ public class EsameAulaController {
 		
 		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
 		context.addMessage(null, new FacesMessage(
-				"Relatori associati all'atto. ", ""));
-
-		// }
+				"Relatori associati all'atto. ", "")); 
 	}
 
 }

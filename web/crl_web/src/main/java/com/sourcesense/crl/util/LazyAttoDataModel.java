@@ -51,9 +51,7 @@ public class LazyAttoDataModel extends LazyDataModel<Atto> {
 	@Override
 	public List<Atto> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
-		List<Atto> data = new ArrayList<Atto>();
-
-		// filter
+		List<Atto> data = new ArrayList<Atto>(); 
 		for (Atto atto : datasource) {
 			boolean match = true;
 
@@ -80,18 +78,12 @@ public class LazyAttoDataModel extends LazyDataModel<Atto> {
 			if (match) {
 				data.add(atto);
 			}
-		}
-
-		// sort
+		} 
 		if (sortField != null) {
 			Collections.sort(data, new LazySorter(sortField, sortOrder));
-		}
-
-		// rowCount
+		} 
 		int dataSize = data.size();
-		this.setRowCount(dataSize);
-
-		// paginate
+		this.setRowCount(dataSize); 
 		if (dataSize > pageSize) {
 			try {
 				return data.subList(first, first + pageSize);

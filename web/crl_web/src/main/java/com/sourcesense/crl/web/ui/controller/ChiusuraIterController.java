@@ -113,8 +113,7 @@ public class ChiusuraIterController {
 	} 
 	
 	
-	public void createLeggeRegionaleLink (){
-		//http://consiglionline.lombardia.it/normelombardia/accessibile/main.aspx?view=showdoc&iddoc=lr00{0}{1}
+	public void createLeggeRegionaleLink (){ 
 		if("".equals(getNumeroLr()) || getDataLr()==null || getNumeroLr()==null ){
 			
 			setUrlLeggiRegionali("");
@@ -144,10 +143,8 @@ public class ChiusuraIterController {
 				
 			}	
 				
-			setUrlLeggiRegionali ( attoServiceManager.regioniUrl( data, numero));	
-			//FacesContext.getCurrentInstance().getExternalContext().redirect(url);
-			}catch (Exception e) {
-				// TODO: handle exception
+			setUrlLeggiRegionali ( attoServiceManager.regioniUrl( data, numero));	 
+			}catch (Exception e) { 
 			}
 		}
 		
@@ -177,10 +174,7 @@ public String tipoChiusuraPar() {
 			return "Rifiutato e trasmesso alla Giunta";
 		}*/
 
-	}
-	
-
-	//Getters & Setters**************************************
+	} 
 	
 	public Atto getAtto() {
 		return atto;

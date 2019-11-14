@@ -72,9 +72,7 @@ public class LettereNotificheController implements Serializable{
 
 		letteraSelected.setUrlView("./lettere/default.xhtml");
 
-		root = new DefaultTreeNode("root", null);
-
-		// SERVIZIO COMMISSIONI
+		root = new DefaultTreeNode("root", null); 
 		TreeNode nodeServComm = new DefaultTreeNode("Servizio Commissioni",
 				root);
 
@@ -409,9 +407,7 @@ public class LettereNotificheController implements Serializable{
 				.setNome("Lettera Assegnazione per istruttoria");
 		letteraAssegnazioneistruttoriaINP.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraAssegnazioneistruttoriaINP = new DefaultTreeNode(
-				"lettera", letteraAssegnazioneistruttoriaINP, nodeServCommINP);
-
-		// COMMISSIONI
+				"lettera", letteraAssegnazioneistruttoriaINP, nodeServCommINP); 
 		TreeNode nodeComm = new DefaultTreeNode("Commissioni", root);
 
 		/*Lettera letteraCommissioni = new Lettera();
@@ -592,9 +588,7 @@ public class LettereNotificheController implements Serializable{
 		letteraTrasmissioneRIS.setNome("Lettera di Trasmissione RIS");
 		letteraTrasmissioneRIS.setAuthorities(true, false, false, false, false, false);
 		TreeNode nodeLetteraTrasmissioneRIS = new DefaultTreeNode("lettera",
-				letteraTrasmissioneRIS, nodeComm);
-
-		// AULA
+				letteraTrasmissioneRIS, nodeComm); 
 		TreeNode nodeAula = new DefaultTreeNode("Aula", root);
 
 		/*Lettera letteraAula = new Lettera();
@@ -806,8 +800,7 @@ public class LettereNotificheController implements Serializable{
 	
 	
    
-   public void saveFirmatario(AjaxBehaviorEvent actionEvent) {  
-       //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Welcome " + firstname + " " + surname + "!"));  
+   public void saveFirmatario(AjaxBehaviorEvent actionEvent) {   
        actionEvent.getSource();    
    
    }  

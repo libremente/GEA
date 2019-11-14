@@ -97,10 +97,7 @@ public class ConsultazioniPareriController {
 	private List<SoggettoInvitato> soggettiInvitatiList = new ArrayList<SoggettoInvitato>();
 	private String nomeSoggettoInvitato;
 	private boolean intervenuto;
-	private String soggettoInvitatoToDelete;
-	
-	
-	//pattern per il Soggetto invitato
+	private String soggettoInvitatoToDelete; 
 		private static final Pattern soggettoPattern = Pattern
 				.compile("(.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)");
 	
@@ -170,9 +167,7 @@ public class ConsultazioniPareriController {
 							"Attenzione ! Le modifiche alle Consultazioni non sono state salvate ",
 							""));
 		}
-	}
-
-	// Pareri********************************************************
+	} 
 
 	public void showParereDetail() {
 
@@ -246,9 +241,7 @@ public class ConsultazioniPareriController {
             
 			setCurrentFilePubblico(false);
 			attoBean.getWorkingOrganismoStatutario(descrizioneOrganismoSelected)
-					.getParere().getAllegati().add(allegatoParereRet);
-
-			//organismoSelected.getParere().getAllegati().add(allegatoParereRet);
+					.getParere().getAllegati().add(allegatoParereRet); 
 		}
 		}
 	}
@@ -276,9 +269,7 @@ public class ConsultazioniPareriController {
 		
 		for (Allegato element : organismoSelected.getParere().getAllegati()) {
 
-			if (element.getId().equals(allegatoParereToDelete)) {
-
-				// TODO Alfresco delete
+			if (element.getId().equals(allegatoParereToDelete)) { 
 				attoRecordServiceManager.deleteFile(element.getId());
 				organismoSelected.getParere().getAllegati().remove(element);
 				for (OrganismoStatutario organ : attoBean.getAtto().getOrganismiStatutari()) {
@@ -300,8 +291,7 @@ public class ConsultazioniPareriController {
 		organismoSelected.getParere().setDataRicezioneParere(getDataRicezioneParere());
 		organismoSelected.getParere().setEsito(getEsito());
 		organismoSelected.getParere().setNote(getNoteParere());
-		organismoSelected.getParere().setCommissioneDestinataria(getCommissioneDestinataria());
-		// parereSelected.setAllegati
+		organismoSelected.getParere().setCommissioneDestinataria(getCommissioneDestinataria()); 
 
 		atto.setOrganismiStatutari(organismiList);
 
@@ -322,9 +312,7 @@ public class ConsultazioniPareriController {
 		setStatoCommitPareri(CRLMessage.COMMIT_DONE);
 		context.addMessage(null, new FacesMessage(
 				"Pareri salvati con successo", ""));
-	}
-
-	// Consultazioni****************************************************
+	} 
 
 	public void showConsultazioneDetail() {
 		setConsultazioneSelected(findConsultazione());
@@ -424,8 +412,7 @@ public class ConsultazioniPareriController {
 					setDiscussa(false);
 					setNoteConsultazione("");
 					setSoggettiInvitatiList(new ArrayList<SoggettoInvitato>());
-					setCommissioneDestinataria(null);
-					// SCRL-325
+					setCommissioneDestinataria(null); 
 					setConsultazioneSelected(null);
 					
 				}
@@ -451,8 +438,7 @@ public class ConsultazioniPareriController {
 		return true;
 	}
 
-	public void addSoggettoInvitato() {
-		//controllo  per SCRL-325
+	public void addSoggettoInvitato() { 
 		if (consultazioneSelected != null) {
 			if (nomeSoggettoInvitato != null
 					&& !nomeSoggettoInvitato.trim().equals("")) {
@@ -482,8 +468,7 @@ public class ConsultazioniPareriController {
 								" non sono consentiti. Il Soggetto invitato non può terminare con un punto o uno spazio", ""));
 				}
 			}
-		}
-		//controllo  per SCRL-325
+		} 
 		else
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -520,9 +505,7 @@ public class ConsultazioniPareriController {
 		return true;
 	}
 
-	public void salvaConsultazione() {
-		
-		// aggiunta if insieme  a modifiche per  SCRL-325
+	public void salvaConsultazione() { 
 		if (consultazioneSelected != null) {
 			consultazioneSelected.setDataSeduta(getDataSedutaConsultazione());
 			consultazioneSelected.setPrevista(isPrevista());
@@ -548,8 +531,7 @@ public class ConsultazioniPareriController {
 			setStatoCommitConsultazioni(CRLMessage.COMMIT_DONE);
 			context.addMessage(null, new FacesMessage(
 					"Consultazioni salvate con successo", ""));
-			}
-		//SCRL-325
+			} 
 		else
 		{
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -559,9 +541,7 @@ public class ConsultazioniPareriController {
 		}	
 	}
 
-	public void uploadAllegatoConsultazione(FileUploadEvent event) {
-
-		// TODO Service logic
+	public void uploadAllegatoConsultazione(FileUploadEvent event) { 
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext()
@@ -580,9 +560,7 @@ public class ConsultazioniPareriController {
 						FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
 								+ fileName + " è già stato allegato ", ""));
 
-			} else {
-
-				// TODO Alfresco upload
+			} else { 
 				Allegato allegatoConsultazioneRet = new Allegato();
 				allegatoConsultazioneRet.setNome(fileName);
 				allegatoConsultazioneRet.setConsultazione(descrizioneConsultazioneSelected);  
@@ -607,9 +585,7 @@ public class ConsultazioniPareriController {
 				setCurrentFilePubblico(false);
 				attoBean.getWorkingConsultazione(
 						descrizioneConsultazioneSelected).getAllegati()
-						.add(allegatoConsultazioneRet);
-
-				//consultazioneSelected.getAllegati().add(allegatoConsultazioneRet);
+						.add(allegatoConsultazioneRet); 
 			}
 		}
 	}
@@ -632,9 +608,7 @@ public class ConsultazioniPareriController {
 
 		for (Allegato element : consultazioneSelected.getAllegati()) {
 
-			if (element.getId().equals(allegatoConsultazioneToDelete)) {
-
-				// TODO Alfresco delete
+			if (element.getId().equals(allegatoConsultazioneToDelete)) { 
 				consultazioneSelected.getAllegati().remove(element);
 				break;
 			}
@@ -660,10 +634,7 @@ public class ConsultazioniPareriController {
 
 	}
 		return totSogettiPresenti;
-	}
-
-
-	// Getters & Setters**********************************************
+	} 
 
 	public Atto getAtto() {
 		return atto;

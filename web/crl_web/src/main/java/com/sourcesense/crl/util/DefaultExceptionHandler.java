@@ -54,8 +54,7 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	@Override
-	public Throwable getRootCause(Throwable t) {
-		// TODO Auto-generated method stub
+	public Throwable getRootCause(Throwable t) { 
 		return super.getRootCause(t);
 	}
 	

@@ -183,9 +183,7 @@ public class AttoRecordService {
 
 	}
 	
-	public Allegato updateAllegatoCommissione(String url,Allegato allegato) {
-		
-//		Allegato allegatoRet = null; 
+	public Allegato updateAllegatoCommissione(String url,Allegato allegato) { 
 		
 		WebResource webResource = client.resource(url);
 		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,

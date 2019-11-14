@@ -245,9 +245,7 @@ public class SpnegoSOAPConnection extends SOAPConnection {
         try {
             final MimeHeaders headers = request.getMimeHeaders();
             final String[] contentType = headers.getHeader(Constants.CONTENT_TYPE);
-            final String[] soapAction = headers.getHeader(Constants.SOAP_ACTION);
-            
-            // build the Content-Type HTTP header parameter if not defined
+            final String[] soapAction = headers.getHeader(Constants.SOAP_ACTION); 
             if (null == contentType) {
                 final StringBuilder header = new StringBuilder();
     
@@ -255,20 +253,14 @@ public class SpnegoSOAPConnection extends SOAPConnection {
                     header.append("application/soap+xml; charset=UTF-8;");
                 } else {
                     header.append("text/xml; charset=UTF-8;");
-                }
-    
-                // not defined as a MIME header but we need it as an HTTP header parameter
+                } 
                 this.conn.addRequestProperty(Constants.CONTENT_TYPE, header.toString());
             } else {
                 if (contentType.length > 1) {
                     throw new IllegalArgumentException("Content-Type defined more than once.");
-                }
-                
-                // user specified as a MIME header so add it as an HTTP header parameter
+                } 
                 this.conn.addRequestProperty(Constants.CONTENT_TYPE, contentType[0]);
-            }
-            
-            // specify SOAPAction as an HTTP header parameter
+            } 
             if (null != soapAction) {
                 if (soapAction.length > 1) {
                     throw new IllegalArgumentException("SOAPAction defined more than once.");
@@ -276,12 +268,8 @@ public class SpnegoSOAPConnection extends SOAPConnection {
                 this.conn.addRequestProperty(Constants.SOAP_ACTION, soapAction[0]);
             }
     
-            request.writeTo(bos);
-            
-            // make the call
-            this.conn.connect(new URL(endpoint.toString()), bos);
-            
-            // parse the response
+            request.writeTo(bos); 
+            this.conn.connect(new URL(endpoint.toString()), bos); 
             message = this.createMessage(this.conn.getInputStream());
             
         } catch (MalformedURLException e) {
@@ -324,13 +312,10 @@ public class SpnegoSOAPConnection extends SOAPConnection {
             throw new SOAPException(e);
         }
 
-        Node soapBody = null;
-
-        // confirm that we have a soap envelope
+        Node soapBody = null; 
         final Element parent = document.getDocumentElement();
         
-        if ("Envelope".equalsIgnoreCase(parent.getLocalName())) {
-            // confirm that we have a body element
+        if ("Envelope".equalsIgnoreCase(parent.getLocalName())) { 
             
             final NodeList children = parent.getChildNodes();
             

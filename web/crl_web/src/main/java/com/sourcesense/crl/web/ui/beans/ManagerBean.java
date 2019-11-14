@@ -56,10 +56,7 @@ public class ManagerBean implements Serializable
      */
     public void setCode(String code)
     {
-        this.code = code;
-        
-//        if (code != null)
-//            setAtto(as.get(code));
+        this.code = code;  
     }
 
     /**

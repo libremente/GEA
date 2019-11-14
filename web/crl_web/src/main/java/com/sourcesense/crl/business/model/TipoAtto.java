@@ -36,8 +36,7 @@ public class TipoAtto implements Comparable<TipoAtto> {
 	private String codice;
 	
 	@Override
-	public int compareTo(TipoAtto arg0) {
-		// TODO Auto-generated method stub
+	public int compareTo(TipoAtto arg0) { 
 		return this.descrizione.compareTo(arg0.descrizione);
 	}
 	

@@ -143,12 +143,8 @@ public class GestioneSeduteController {
 	private List<Allegato> verbaliList = new ArrayList<Allegato>();
 	private String odgToDelete;
 	private String verbaleToDelete;
-	private boolean currentFilePubblico;
-	// false per legislatura corrente e true per vecchie legislature
-	private boolean disableModifiche; 
-	
-	
-	//pattern per il Soggetto partecipante
+	private boolean currentFilePubblico; 
+	private boolean disableModifiche;  
 	private static final Pattern soggettoPattern = Pattern
 			.compile("(.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)");
 	
@@ -168,10 +164,7 @@ public class GestioneSeduteController {
 				.getSessionGroup().getNome(),legislatura);
 	
 		seduteList = Clonator.cloneList(seduteListAll);
-		Collections.sort(seduteList);
-		//MODIFICA 
-		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo 
-		//setAttiSindacato(attoServiceManager.findAllAttiSindacato());
+		Collections.sort(seduteList);   
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 		
 		setDateSeduteList();
@@ -207,9 +200,7 @@ public class GestioneSeduteController {
 							"Attenzione ! Le modifiche su Inserisci ODG non sono state salvate ",
 							""));
 		}
-	}
-
-	// Inserisci Seduta***********************************
+	} 
 
 	public void filterDataTable() {
 		
@@ -267,13 +258,9 @@ public class GestioneSeduteController {
 		}	
 	
 	
-	public void showSedutaDetail() {
-		//setSedutaSelected(findSeduta(dataSedutaSelected));
-
-    //data seduta formatted as yyyy-mm-dd
+	public void showSedutaDetail() {  
     String[] tokens = dataSedutaSelected.split("/");
-    String dataSedutaIso = tokens[2]+"-"+tokens[1]+"-"+tokens[0];
-    //provenienza
+    String dataSedutaIso = tokens[2]+"-"+tokens[1]+"-"+tokens[0]; 
     FacesContext context1 = FacesContext.getCurrentInstance();
     UserBean userBean1 = ((UserBean) context1.getExternalContext()
         .getSessionMap().get("userBean"));
@@ -289,9 +276,7 @@ public class GestioneSeduteController {
 			setNote(sedutaSelected.getNote());
 			setDalleOre(sedutaSelected.getDalleOre());
 			setAlleOre(sedutaSelected.getAlleOre());
-			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));
-			// setVerbaliList(Clonator.cloneList(sedutaSelected.getVerbaliList()));
-			// setOdgList(Clonator.cloneList(sedutaSelected.getOdgList()));
+			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));  
 			setAttiTrattati(Clonator
 					.cloneList(sedutaSelected.getAttiTrattati()));
 			Collections.sort(attiTrattati);
@@ -501,9 +486,7 @@ public class GestioneSeduteController {
 			Seduta seduta = null;
 			
 			seduta = seduteServiceManager.getSeduta(userBean
-					.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente);
-			
-			// Inserimento
+					.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente); 
 			if ( seduta == null) {
 				seduta = new Seduta();
 				seduta.setDalleOre(getDalleOre());
@@ -525,9 +508,7 @@ public class GestioneSeduteController {
 						.getUser().getSessionGroup().getNome(),legislaturaCorrente);
 
 				seduteList = Clonator.cloneList(seduteListAll);
-				Collections.sort(seduteList);
-			
-				// Modifica
+				Collections.sort(seduteList); 
 				} 
 			  else {
 							
@@ -576,9 +557,7 @@ public class GestioneSeduteController {
 		setUrlLink(null);
 		linksList.clear();
 
-	}
-
-	// Inserisci ODG***************************************
+	} 
 
 	public void fillDateSeduteMap() {
 		dateSedute = new ArrayList<Date>();
@@ -666,9 +645,7 @@ public class GestioneSeduteController {
 
 					collega = false;
 
-				} else if ("MIS".equalsIgnoreCase(tipoAtto)) {
-					
-					//attoDaCollegare = attoServiceManager.findMISById(idAttoToAdd);
+				} else if ("MIS".equalsIgnoreCase(tipoAtto)) { 
 					collega = false;
 				} else {
 
@@ -857,12 +834,7 @@ public class GestioneSeduteController {
 		return true;
 	}
 
-	public void handleAttoSindacatoChange() {
-		
-		//MODIFICA 
-		//tutti gli attiIndirizzo devono essere caricati dopo la selezione del tipo
-		//MODIFICA
-		//Aggiunta ricerca per range di date determinate dall'anno selezionato
+	public void handleAttoSindacatoChange() {    
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(annoCreazione), 0, 1);
 		Date dataCreazioneDa= c.getTime();
@@ -871,9 +843,7 @@ public class GestioneSeduteController {
 		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
 		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato, formatter.format(dataCreazioneDa), formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
-		setNumeriAttoSindacato(attiSindacato);
-		//MODIFICA
-		//eliminato ciclo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
+		setNumeriAttoSindacato(attiSindacato);  
 		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
 			eliminato controllo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
 			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
@@ -923,8 +893,7 @@ public class GestioneSeduteController {
 	private List<AttoTrattato> getOrderedAttiTrattati() {
 
 		if (getAttiTrattatiorder() != null
-				&& !getAttiTrattatiorder().equals("")) {
-			// Numeri atto ordinati
+				&& !getAttiTrattatiorder().equals("")) { 
 			String[] attiOrd = getAttiTrattatiorder().split("_");
 
 			for (int i = 0; i < attiOrd.length; i++) {
@@ -966,8 +935,7 @@ public class GestioneSeduteController {
 	private List<CollegamentoAttiSindacato> getOrderedAttiSindacatoTrattati() {
 
 		if (getAttiSindacatoTrattatiorder() != null
-				&& !getAttiSindacatoTrattatiorder().equals("")) {
-			// Numeri atto ordinati
+				&& !getAttiSindacatoTrattatiorder().equals("")) { 
 			String[] attiOrd = getAttiSindacatoTrattatiorder().split("_");
 
 			for (int i = 0; i < attiOrd.length; i++) {
@@ -1139,9 +1107,7 @@ public class GestioneSeduteController {
 
 	public void setFile(StreamedContent file) {
 		this.file = file;
-	}
-
-	// Getters & Setters***********************************
+	} 
 	
 	public String getLegislatura() {
 		return legislatura;
