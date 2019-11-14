@@ -7,109 +7,39 @@
     <name>Alfresco Share client</name>
     <packaging>war</packaging>
     <description>SHARE customization meant to be the main Alfresco UI, which enables collaboration and easy ReST based remotable customization.</description>
-
-    <!-- Repo Maven Alfresco -->
-    <!-- 
-    <repositories>
-            <repository>
-                    <id>alfresco-release</id>
-                    <url>https://artifacts.alfresco.com/nexus/content/repositories/releases</url>
-            </repository>
-            <repository>
-        <id>alfresco-snapshots</id>
-        <url>https://artifacts.alfresco.com/nexus/content/repositories/snapshots</url>
-       <snapshots>
-            <enabled>true</enabled>
-       </snapshots>
-            </repository>
-    <repository>
-        <id>alfresco-sites</id>
-        <url>https://artifacts.alfresco.com/nexus/content/repositories/alfresco-docs</url>
-    </repository>
-    <repository>
-            <id>alfresco-private-repository</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
-    </repository>
-    </repositories>
-    <pluginRepositories>
-            <pluginRepository>
-                    <id>alfresco-release</id>
-                    <url>https://artifacts.alfresco.com/nexus/content/repositories/releases</url>
-            </pluginRepository>
-            <pluginRepository>
-                    <id>alfresco-snapshots</id>
-                    <url>https://artifacts.alfresco.com/nexus/content/repositories/snapshots</url>
-                    <snapshots>
-                            <enabled>true</enabled>
-                    </snapshots>
-            </pluginRepository>
-    </pluginRepositories>
-    -->
-    <!-- Configuration point for the build time properties -->
     <properties>
-        <env>local</env><!-- dev per la macchina di sviluppo interna | local per locale -->
+        <env>local</env>
         <webapp.name>share</webapp.name>
         <alfresco.version>4.2.c</alfresco.version>
         <alfresco.edition>community</alfresco.edition>
         <share.log.level>debug</share.log.level>
         <share.servlet.port>8081</share.servlet.port>
-        <surf.wiring.mode>production</surf.wiring.mode><!-- "production" is the other allowed value -->
+        <surf.wiring.mode>production</surf.wiring.mode>
     </properties>
-
-    <!-- Alfresco dependencies -->
     <dependencies>
-        <!--
-                Alfresco Dependencies. Use this dependency to switch SHARE version
-        -->
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>share</artifactId>
             <type>war</type>
             <version>${alfresco.version}</version>
         </dependency>
-        <!-- Share module dependencies 
-            | As of Alfresco 3.3 you can add here below Share Dashlets/Pages packaged as Jars (see http://blogs.alfresco.com/wp/kevinr/2010/01/28/alfresco-share-33-extensions-and-springsurf/)
-            | You can build them with Maven using the Maven Share Module Archetype, documentation can be found here: http://wiki.alfresco.com/wiki/Managing_Alfresco_Lifecyle_with_Maven)
-             
-        <dependency>
-            <groupId>org.alfresco</groupId>
-            <artifactId>my-share-module</artifactId>
-            <type>jar</type>
-            <version>0.0.1</version>
-        </dependency>
-        -->
     </dependencies>
-
     <build>
         <finalName>share</finalName>
-        <!-- Runtime properties file which is used to configure your Share instance. It's multi-environment aware (-Denv=yourEnv) -->
         <filters>
             <filter>${project.basedir}/src/main/properties/${env}/application.properties</filter>
         </filters>
-
-        <!--
-                Default profile to build as an Alfresco extension - resources are
-                copied into classpath
-        -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-            <!--
-                    | Include application properties file in classpath: this allows
-                    Spring contexts to have customization properties available at |
-                    classpath:alfresco/extension/application.properties
-            -->
             <resource>
                 <directory>src/main/properties/${env}</directory>
                 <includes>
                     <include>application.properties</include>
                 </includes>
-                <!--
-                        This gets loaded to be the filter for spring runtime placeholding,
-                        so no need for build time filtering
-                -->
+                
                 <targetPath>alfresco/web-extension</targetPath>
                 <filtering>true</filtering>
             </resource>
@@ -118,6 +48,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version>
                 <configuration>
                     <archiveClasses>false</archiveClasses>
                     <filters>
@@ -127,17 +58,12 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            <!-- Needed for cross OS compatibility in acp/zip encoding -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.5</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <!-- By default as per http://code.google.com/p/maven-alfresco-archetypes/issues/detail?id=7 FTL are not filtered to avoid corruption.
-                    | This behavior can be relaxed (in case filtering is needed in the FTLs) by selecting which files are filtered and which not as described 
-                    | here http://code.google.com/p/maven-alfresco-archetypes/issues/detail?id=7#c3
-                    -->
                     <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>ftl</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
@@ -145,10 +71,7 @@
             </plugin>
         </plugins>
     </build>
-	
-    <!-- Custom behaviors -->
     <profiles>
-        <!-- Invoke this with -Prun to run embedded jetty during your build -->
         <profile>
             <id>run</id>
             <build>
@@ -178,7 +101,6 @@
                 </plugins>
             </build>
         </profile>
-
     </profiles>
     <repositories>
         <repository>
@@ -188,7 +110,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-            <id>1_central</id>
+            <id>maven_central</id>
             <url>http://repo1.maven.org/maven2</url>
         </repository>
         <repository>
@@ -200,20 +122,8 @@
             <id>alfresco-public</id>      
             <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>   
         </repository>  
-        <!--
         <repository>
-        <id>3_sourcesense-maven-releases</id>
-        <name>Pro-netics Repositories</name>
-        <url>https://nexus.sourcesense.com/repository/maven-releases/</url>
-        </repository>
-        <repository>
-        <id>4_sourcesense-maven-snapshots</id>
-        <name>Public Repositories</name>
-        <url>http://nexus.sourcesense.com/repository/maven-snapshots/</url>
-        </repository>
-        -->
-        <repository>
-            <id>5_prime-repo</id>
+            <id>primeFaces-repo</id>
             <name>PrimeFaces Maven Repository</name>
             <url>http://repository.primefaces.org</url>
             <layout>default</layout>
