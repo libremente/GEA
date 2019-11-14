@@ -67,16 +67,13 @@ public class OdgWebScript extends AbstractWebScript {
     	OutputStream responseOutputStream = null;
     	InputStream templateInputStream = null;
     	
-    	try {
-    
-	    	// Get json properties
+    	try { 
 	    	String idSeduta = (String)req.getParameter("idSeduta");
     		String tipoTemplate = (String)req.getParameter("tipoTemplate");
     		String gruppo = (String)req.getParameter("gruppo");
     		
     		ResultSet templatesResults=null;
-    		NodeRef templateNodeRef=null;
-			// Search document template node
+    		NodeRef templateNodeRef=null; 
 			try{
 	    		templatesResults = searchService.query(Repository.getStoreRef(), 
 						SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""+tipoTemplate+"\"");
@@ -86,12 +83,8 @@ public class OdgWebScript extends AbstractWebScript {
 				if (templatesResults!=null){
 					templatesResults.close();
 				}
-			}
-			
-			// Get seduta node
-			NodeRef sedutaNodeRef = new NodeRef(idSeduta);
-			
-			// Get byte array of template node content
+			} 
+			NodeRef sedutaNodeRef = new NodeRef(idSeduta); 
 	    	ContentReader reader = contentService.getReader(templateNodeRef, ContentModel.PROP_CONTENT);
 	    	templateInputStream = reader.getContentInputStream();
 	    	byte[] templateByteArray = IOUtils.toByteArray(templateInputStream);
@@ -100,9 +93,7 @@ public class OdgWebScript extends AbstractWebScript {
 	    	byte[] documentFilledByteArray = odgCommandMap.get(tipoTemplate).generate(templateByteArray, templateNodeRef, sedutaNodeRef, gruppo);
 	    	
 	    	
-	    	String nomeodg = tipoTemplate.split(":")[1];
-    				
-    		// Set response
+	    	String nomeodg = tipoTemplate.split(":")[1]; 
             res.setContentType("application/ms-word");
             GregorianCalendar gc = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");

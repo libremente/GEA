@@ -91,14 +91,9 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
         		
         		FileInfo legislatureFileInfo = fileFolderService.create(legislatureFolderNodeResultSet.getNodeRef(0), legislature.getNumber(), Constant.TYPE_LEGISLATURA);
         		logger.info("Creato il nodo legislatura '" + legislature.getNumber() + "'");    
-        		nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, legislature.getId());
-               // logger.info("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+legislature.getId()+"'");
-                nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_INIZIO_LEGISLATURA, legislature.getFrom());
-               // logger.info("Proprieta' '"+Constant.PROP_DATA_INIZIO_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getFrom()+"'");
-                nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_FINE_LEGISLATURA, legislature.getTo());
-               // logger.info("Proprieta' '"+Constant.PROP_DATA_FINE_LEGISLATURA.toString()+"' valorizzata con '"+legislature.getTo()+"'");
-                   
-                // set content property to empty string for Share visualization in Alfresco Community Edition    
+        		nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, legislature.getId()); 
+                nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_INIZIO_LEGISLATURA, legislature.getFrom()); 
+                nodeService.setProperty(legislatureFileInfo.getNodeRef(), Constant.PROP_DATA_FINE_LEGISLATURA, legislature.getTo());  
                 ContentWriter contentWriter = contentService.getWriter(legislatureFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
                 contentWriter.setMimetype("text/plain");
                 contentWriter.setEncoding("UTF-8");
@@ -151,25 +146,10 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 	                }
 	            }
 	            
-	            /* Locate all committes nodes on Alfresco repository */
-	//            ResultSet committesNodesResultSet = searchService.query(Repository.getStoreRef(),
-	//                                                                SearchService.LANGUAGE_LUCENE,
-	//                                                                "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"");
-	//            logger.info("Trovate " + committesNodesResultSet.length() + " commissioni nel repository");
+	            /* Locate all committes nodes on Alfresco repository */    
 	            
 	
-	            /* Delete all committees on Alfresco repository */
-	//            if (committesNodesResultSet.length() > 0) {
-	//                for (int j=0; j<committesNodesResultSet.length(); j++) {
-	//                	
-	//                	String nomeCommissione = (String) nodeService.getProperty(committesNodesResultSet.getNodeRef(j), ContentModel.PROP_NAME);
-	//                	
-	//                	if(!nomeCommissione.equals("Commissione1") && !nomeCommissione.equals("Commissione2") && !nomeCommissione.equals("Commissione3")){
-	//	                    fileFolderService.delete(committesNodesResultSet.getNodeRef(j));
-	//	                    logger.info("Cancellato il nodo '" + nomeCommissione + "' dal repository");
-	//                	}
-	//                }
-	//            }
+	            /* Delete all committees on Alfresco repository */           
 	            
 	            /* Locate all group nodes on Alfresco repository */
 	            ResultSet groupNodesResultSet = null;
@@ -208,22 +188,15 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 		            
 		            for (Group group : groups) {
 		            	
-		            	String groupNodeName = group.getId() + " " + group.getCode().trim();
-		            	
-		            	// replace all not alpha or digit character
+		            	String groupNodeName = group.getId() + " " + group.getCode().trim(); 
 		            	groupNodeName = groupNodeName.replaceAll("[^a-zA-Z0-9]+","");
 		           
 		            	
 		            	FileInfo groupFileInfo = fileFolderService.create(groupFolderNodeResultSet.getNodeRef(0), groupNodeName, Constant.TYPE_GRUPPO_CONSILIARE_ANAGRAFICA);
 		        		logger.info("Creato il nodo gruppo '" + group.getName() + "'");    
-		        		nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, group.getId());
-		               // logger.info("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+group.getId()+"'");
-		                nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA, group.getName());
-		               // logger.info("Proprieta' '"+Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getName()+"'");
-		                nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA, group.getCode());
-		               // logger.info("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA.toString()+"' valorizzata con '"+group.getCode()+"'");
-		               
-		                // set content property to empty string for Share visualization in Alfresco Community Edition    
+		        		nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, group.getId()); 
+		                nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_NOME_GRUPPO_CONSILIARE_ANAGRAFICA, group.getName()); 
+		                nodeService.setProperty(groupFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSILIARE_ANAGRAFICA, group.getCode());  
 		                ContentWriter contentWriter = contentService.getWriter(groupFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
 		                contentWriter.setMimetype("text/plain");
 		                contentWriter.setEncoding("UTF-8");
@@ -241,8 +214,7 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 	                                                                          SearchService.LANGUAGE_LUCENE,
 	                                                                          "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:ConsiglieriAttivi\"");
 	            
-	            /* Locate committes folder node on Alfresco repository */
-	            // never used
+	            /* Locate committes folder node on Alfresco repository */ 
 	            ResultSet committesFolderNodeResultSet = searchService.query(Repository.getStoreRef(),
 	                                                                          SearchService.LANGUAGE_LUCENE,
 	                                                                          "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni\"");
@@ -265,16 +237,10 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 	                for (int k=0; k<councilor.getCommittees().size(); k++){
 	                	
 	                	String committeName = councilor.getCommittees().get(k).getName();
-	                	int committeOrder = councilor.getCommittees().get(k).getOrder();
-	                	
-	                	// replace all not alpha or digit character
-	                	//committeName = committeName.replaceAll("[^a-zA-Z0-9]+","");
+	                	int committeOrder = councilor.getCommittees().get(k).getOrder();  
 	                	
 	                	/* if committe does not exist...create it and insert the NodeRef in map */
-	                	if(!committesMap.containsKey(committeName)){
-	                		
-	//                		FileInfo committeFolderInfo = fileFolderService.create(committesFolderNodeResultSet.getNodeRef(0), 
-	//                				committeName, Constant.TYPE_COMMISSIONE_ANAGRAFICA);
+	                	if(!committesMap.containsKey(committeName)){  
 	                		
 	                		String luceneQueryCommissione = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/cm:"+ISO9075.encode(committeName)+"\"";
 	                		
@@ -392,9 +358,7 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
     	
     	String councilorNodeName = councilor.getId() + " " + councilor.getFirstName() + " " + councilor.getLastName();
     	
-    	String nomeFolderNode = (String) nodeService.getProperty(folderNodeRef, ContentModel.PROP_NAME);
-    	
-    	// TODO fare controllo sull'esistenza del nodo. Può succedere che ci siano entry duplicate nel database e ci possano essere errori nel creare nodi duplicati
+    	String nomeFolderNode = (String) nodeService.getProperty(folderNodeRef, ContentModel.PROP_NAME); 
     	
     	DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
         namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
@@ -410,20 +374,12 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
     	
 	        FileInfo councilorFileInfo = fileFolderService.create(folderNodeRef, councilorNodeName, Constant.TYPE_CONSIGLIERE_ANAGRAFICA);
 	        logger.info("Creato il nodo '"+councilorFileInfo.getName()+"' nello spazio " + nomeFolderNode +" all'interno del repository di Alfresco");
-	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, councilor.getId());
-	    //    logger.debug("Proprieta' '"+Constant.PROP_ID_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getId()+"'");
-	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_NOME_CONSIGLIERE_ANAGRAFICA, councilor.getFirstName());
-	    //    logger.debug("Proprieta' '"+Constant.PROP_NOME_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getFirstName()+"'");
-	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_COGNOME_CONSIGLIERE_ANAGRAFICA, councilor.getLastName());
-	    //    logger.debug("Proprieta' '"+Constant.PROP_COGNOME_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getLastName()+"'");
-	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_LEGISLATURA_CONSIGLIERE_ANAGRAFICA, nomeLegislaturaCorrente);
-	    //    logger.debug("Proprieta' '"+Constant.PROP_LEGISLATURA_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+nomeLegislaturaCorrente+"'");           
-	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getGroupName());
-	    //    logger.debug("Proprieta' '"+Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getGroupName()+"'");
-	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getCodeGroupName());
-	    //    logger.debug("Proprieta' '"+Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA.toString()+"' valorizzata con '"+councilor.getCodeGroupName()+"'");
-	
-		     // set content property to empty string for Share visualization in Alfresco Community Edition    
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_ID_ANAGRAFICA, councilor.getId()); 
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_NOME_CONSIGLIERE_ANAGRAFICA, councilor.getFirstName()); 
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_COGNOME_CONSIGLIERE_ANAGRAFICA, councilor.getLastName()); 
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_LEGISLATURA_CONSIGLIERE_ANAGRAFICA, nomeLegislaturaCorrente); 
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getGroupName()); 
+	        nodeService.setProperty(councilorFileInfo.getNodeRef(), Constant.PROP_CODICE_GRUPPO_CONSIGLIERE_ANAGRAFICA, councilor.getCodeGroupName());  
 	        ContentWriter contentWriter = contentService.getWriter(councilorFileInfo.getNodeRef(), ContentModel.PROP_CONTENT, true);
 	        contentWriter.setMimetype("text/plain");
 	        contentWriter.setEncoding("UTF-8");

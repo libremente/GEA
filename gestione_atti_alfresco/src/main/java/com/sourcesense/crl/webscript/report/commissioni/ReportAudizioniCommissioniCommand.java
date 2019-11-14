@@ -90,27 +90,21 @@ public class ReportAudizioniCommissioniCommand extends ReportBaseCommand {
                             + this.dataConsultazioneDa + " TO "
                             + this.dataConsultazioneA + " ]";
                 }
-                sp.setQuery(query);
-//                sp.addSort(sortField1, true);
-//                sp.addSort(sortField2, true);
+                sp.setQuery(query);  
                 ResultSet currentResults = this.searchService.query(sp);
                 commissione2results.put(commissione, currentResults);
             }
 
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
-            ArrayListMultimap<String, NodeRef> commissione2atti = this.retrieveConsultazioni(commissione2results, spacesStore, atto2commissione);
-
-            // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(commissione2atti), 5, false);
-            // convert to input stream
+            ArrayListMultimap<String, NodeRef> commissione2atti = this.retrieveConsultazioni(commissione2results, spacesStore, atto2commissione); 
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(commissione2atti), 5, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissione2atti, atto2commissione);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -139,9 +133,7 @@ public class ReportAudizioniCommissioniCommand extends ReportBaseCommand {
                 XWPFTable currentTable = tables.get(tableIndex);
                 NodeRef currentAtto = consultazione2atto.get(consultazioniNode);
                 Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto);
-                Map<QName, Serializable> consultazioneProperties = nodeService.getProperties(consultazioniNode);
-
-                // from Atto
+                Map<QName, Serializable> consultazioneProperties = nodeService.getProperties(consultazioniNode); 
                 QName nodeRefType = nodeService.getType(currentAtto);
                 String tipoAtto = (String) nodeRefType.getLocalName();
                 if (tipoAtto.length() > 4) {
@@ -149,12 +141,8 @@ public class ReportAudizioniCommissioniCommand extends ReportBaseCommand {
                 }
                 String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
 
-                String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
-
-                // from Consultazione
-                Date dataConsultazione = (Date) this.getNodeRefProperty(consultazioneProperties, "dataConsultazione");
-
-                //String soggettiInvitati = getSoggettiInvitati(consultazioniNode);
+                String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto"); 
+                Date dataConsultazione = (Date) this.getNodeRefProperty(consultazioneProperties, "dataConsultazione"); 
                 String soggettiInvitati = (String) consultazioneProperties.get(ContentModel.PROP_NAME);
 
                 StringBuffer sb = new StringBuffer();

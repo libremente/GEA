@@ -87,17 +87,13 @@ public class CMISClientScript extends BaseScopableProcessorExtension {
 			properties.put(PropertyIds.NAME, fileName);
 			
 			ContentReader reader = serviceRegistry.getContentService().getReader(contentNodeRef, ContentModel.PROP_CONTENT);
-			ContentStream contentStream = new ContentStreamImpl(fileName, BigInteger.valueOf(reader.getSize()), "text/plain", reader.getContentInputStream());
-		
-			// create a major version
+			ContentStream contentStream = new ContentStreamImpl(fileName, BigInteger.valueOf(reader.getSize()), "text/plain", reader.getContentInputStream()); 
 			Document newDoc = importFolder.createDocument(properties, contentStream, VersioningState.MAJOR);
 			
 			return true; 
 		    
-		}catch (Exception e) {
-			// add exception logging
-			logger.error(e);
-			//e.printStackTrace();
+		}catch (Exception e) { 
+			logger.error(e); 
 			return false;
 		}
     }

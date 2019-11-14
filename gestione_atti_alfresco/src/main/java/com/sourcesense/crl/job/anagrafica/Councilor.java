@@ -141,8 +141,7 @@ public class Councilor {
         sb.append("{firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", legislatureNumber='").append(legislatureNumber).append('\'');
-        sb.append(", groupName='").append(groupName).append('\'');
-       // sb.append(", committeeNames=").append(committeeNames);
+        sb.append(", groupName='").append(groupName).append('\''); 
         sb.append('}');
         return sb.toString();
     }

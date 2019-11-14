@@ -54,51 +54,24 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
-    private static Log logger = LogFactory.getLog(OdgGenericoCommissioniCommand.class);
-
-    // Genera il documento docx contenente l'ordine del giorno
+    private static Log logger = LogFactory.getLog(OdgGenericoCommissioniCommand.class); 
     public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef sedutaNodeRef, String gruppo) throws IOException {
 
-        byte[] documentFilledByteArray = null;
-
-        // map object containing terms for search in document
+        byte[] documentFilledByteArray = null; 
         HashMap<String, String> searchTerms = new HashMap<String, String>();
 
-        searchTerms.put("commissioneCorrente", gruppo);
-
-
-        // compila dati generali
-        documentFilledByteArray = searchAndReplaceDocx(templateByteArray, searchTerms);
-
-        // compila la tabella introduttiva del documento (dati della seduta)
-        documentFilledByteArray = fillIntroTableDocx(documentFilledByteArray, sedutaNodeRef);
-
-        // compila i dati riferiti alla seduta precedente 
-        documentFilledByteArray = fillSedutaPrecedenteTableDocx(documentFilledByteArray, sedutaNodeRef, gruppo);
-
-        // get delle consultazioni/audizioni generali
-        List<NodeRef> consultazioniGenerali = getConsultazioniGenerali(sedutaNodeRef);
-
-        // get degli atti trattati
-        List<NodeRef> attiTrattati = getAttiTrattati(sedutaNodeRef);
-
-
-        // get delle consultazioni legate all'atto (inserisco gli atti trattati già ricercati per evitare una nuova ricerca)
-        List<NodeRef> consultazioniAtto = getConsultazioniAtti(sedutaNodeRef, attiTrattati, gruppo);
-
-        // generazione delle righe della tabella necessarie a riportare tutte le consultazioni
+        searchTerms.put("commissioneCorrente", gruppo); 
+        documentFilledByteArray = searchAndReplaceDocx(templateByteArray, searchTerms); 
+        documentFilledByteArray = fillIntroTableDocx(documentFilledByteArray, sedutaNodeRef); 
+        documentFilledByteArray = fillSedutaPrecedenteTableDocx(documentFilledByteArray, sedutaNodeRef, gruppo); 
+        List<NodeRef> consultazioniGenerali = getConsultazioniGenerali(sedutaNodeRef); 
+        List<NodeRef> attiTrattati = getAttiTrattati(sedutaNodeRef); 
+        List<NodeRef> consultazioniAtto = getConsultazioniAtti(sedutaNodeRef, attiTrattati, gruppo); 
         documentFilledByteArray = createConsultazioniRowsCommissioniDocx(documentFilledByteArray, consultazioniGenerali, consultazioniAtto);
 
-        documentFilledByteArray = fillConsultazioniRowsCommissioniDocx(documentFilledByteArray, consultazioniGenerali, consultazioniAtto);
-
-
-        // get degli atti di indirizzo trattati
-        List<NodeRef> attiIndirizzoTrattati = getAttiIndirizzoTrattati(sedutaNodeRef);
-
-        // generazione delle righe della tabella necessarie a riportare tutti gli atti trattati
-        documentFilledByteArray = createAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);
-
-        // compilazione delle righe della tabella degli atti trattati
+        documentFilledByteArray = fillConsultazioniRowsCommissioniDocx(documentFilledByteArray, consultazioniGenerali, consultazioniAtto); 
+        List<NodeRef> attiIndirizzoTrattati = getAttiIndirizzoTrattati(sedutaNodeRef); 
+        documentFilledByteArray = createAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati); 
         documentFilledByteArray = fillAttiTrattatiRowsCommissioniDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati, gruppo);
 
 
@@ -114,9 +87,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
         List<XWPFTable> tables = document.getTables();
 
-        XWPFTable table = tables.get(1);
-
-        // riga della tabella contenente i riferimenti alla seduta precedente
+        XWPFTable table = tables.get(1); 
         XWPFTableRow row = table.getRow(4);
 
 
@@ -199,10 +170,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
             NodeRef commissione = attoUtil.getCommissioneCorrente(attoTrattato, commissioneCorrente);
 
 
-            if (commissione != null) {
-
-
-                // Data di scadenza in caso di atto di tipo PAR
+            if (commissione != null) { 
 
                 Date dataScadenza = (Date) nodeService.getProperty(commissione, QName.createQName(attoUtil.CRL_ATTI_MODEL, "dataScadenzaCommissione"));
 
@@ -245,10 +213,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
             searchAndReplaceParagraph(row.getCell(0), searchTerms);
             searchAndReplaceParagraph(row.getCell(1), searchTerms);
-            searchAndReplaceParagraph(row.getCell(2), searchTerms);
-
-
-            // Abbinamenti
+            searchAndReplaceParagraph(row.getCell(2), searchTerms); 
 
             List<NodeRef> attiAbbinati = attoUtil.getAttiAbbinati(attoTrattato);
             List<AttiAbbinatiLineObject> abbinamentiStringList = new ArrayList<AttiAbbinatiLineObject>();
@@ -280,10 +245,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
                 String oggettoAttoAbbinato = (String) nodeService.getProperty(attoAbbinato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
                 String tipoIniziativaAttoAbbinato = (String) nodeService.getProperty(attoAbbinato, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_TIPO_INIZIATIVA));
 
-                abbinamentiStringList.add(new AttiAbbinatiLineObject(tipoAttoDescrizioneAttoAbbinato + " N." + nomeAttoAbbinato, true, false, 10));
-                
-                //Inserito controllo non essendo obbligatorio l'oggetto degli atti
-                //su TEST e sviluppo generava errore
+                abbinamentiStringList.add(new AttiAbbinatiLineObject(tipoAttoDescrizioneAttoAbbinato + " N." + nomeAttoAbbinato, true, false, 10));  
                 if (oggettoAttoAbbinato != null) {
                 		
                 	abbinamentiStringList.add(new AttiAbbinatiLineObject(oggettoAttoAbbinato, false, false, 10));
@@ -327,9 +289,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
                 run.addBreak();
             }
 
-        }
-
-        // rimuovo la riga template per gli atti interni
+        } 
         int rowsAttiTrattatiNumber = attiTrattati.size() + 7;
         table.removeRow(rowsAttiTrattatiNumber);
 
@@ -363,8 +323,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
             String firmatarioType = "{" + attoUtil.CRL_ATTI_MODEL + "}" + "firmatarioAttoIndirizzo";
 
-            ResultSet firmatariNodes=null;
-            // Get firmatari
+            ResultSet firmatariNodes=null; 
             try{
 	            firmatariNodes = searchService.query(attoTrattato.getStoreRef(),
 	                    SearchService.LANGUAGE_LUCENE, "PATH:\"" + luceneFirmatariNodePath + "/cm:Firmatari/*\" AND TYPE:\"" + firmatarioType + "\"");
@@ -401,9 +360,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
             searchAndReplaceParagraph(row.getCell(0), searchTerms);
             searchAndReplaceParagraph(row.getCell(1), searchTerms);
 
-        }
-
-        // rimuovo la riga template per gli atti di indirizzo
+        } 
         int rowsAttiIndirizzoTrattatiNumber = attiTrattati.size() + attiIndirizzoTrattati.size() + 7;
         table.removeRow(rowsAttiIndirizzoTrattatiNumber);
 
@@ -523,9 +480,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
         List<XWPFTable> tables = document.getTables();
 
-        XWPFTable table = tables.get(0);
-
-        // Modifica delle righe della tabella relative alle consultazioni generali
+        XWPFTable table = tables.get(0); 
 
         for (int i = 0; i < consultazioniGenerali.size(); i++) {
 
@@ -534,9 +489,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
             XWPFTableRow row = table.getRow(1 + i);
 
-            NodeRef consultazioneGenerale = consultazioniGenerali.get(i);
-
-            // determino il noderef della seduta a partire dalla consultazione
+            NodeRef consultazioneGenerale = consultazioniGenerali.get(i); 
             NodeRef sedutaNodeRef = nodeService.getParentAssocs(nodeService.getParentAssocs(consultazioneGenerale).get(0).getParentRef()).get(0).getParentRef();
 
             Date dataSeduta = (Date) nodeService.getProperty(sedutaNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_DATA_SEDUTA));
@@ -560,14 +513,9 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
             searchAndReplaceParagraph(row.getCell(1), searchTerms2);
 
 
-        }
-
-        // rimuovo la riga template per le consultazioni generali
+        } 
         int rowsConsultazioniGeneraliNumber = consultazioniGenerali.size() + 1;
-        table.removeRow(rowsConsultazioniGeneraliNumber);
-
-
-        // Modifica delle righe della tabella relative alle consultazioni degli atti
+        table.removeRow(rowsConsultazioniGeneraliNumber); 
 
         for (int i = 0; i < consultazioniAtto.size(); i++) {
 
@@ -590,10 +538,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
                 searchTerms.put("dataConsultazioneAtto", dataConsultazioneGiornoString + "\r" + dataConsultazioneString);
             }
 
-            searchAndReplaceParagraph(row.getCell(0), searchTerms);
-
-
-            // determino il noderef dell'atto a partire dalla consultazione
+            searchAndReplaceParagraph(row.getCell(0), searchTerms); 
             NodeRef attoNodeRef = nodeService.getParentAssocs(nodeService.getParentAssocs(consultazioneAtto).get(0).getParentRef()).get(0).getParentRef();
 
             String nomeAtto = (String) nodeService.getProperty(attoNodeRef, ContentModel.PROP_NAME);
@@ -616,11 +561,7 @@ public class OdgGenericoCommissioniCommand extends OdgBaseCommand {
 
             searchAndReplaceParagraph(row.getCell(1), searchTerms2);
 
-        }
-
-
-
-        // rimuovo la riga template per le consultazioni generali
+        } 
         int rowsConsultazioniAttoNumber = consultazioniAtto.size() + consultazioniGenerali.size() + 1;
         table.removeRow(rowsConsultazioniAttoNumber);
 

@@ -132,8 +132,7 @@ public class DocxManager {
 		List<XWPFParagraph> paragraphs = document.getParagraphs();
 		int parCounter = 0;
 		for (int i = 0; i < paragraphs.size(); i++) {
-			XWPFParagraph currentPar = paragraphs.get(i);
-			// if(!currentPar.getText().trim().equals("")){
+			XWPFParagraph currentPar = paragraphs.get(i); 
 			newDoc.createParagraph();
 			newDoc.setParagraph(currentPar, parCounter);
 			parCounter++;// }
@@ -160,8 +159,7 @@ public class DocxManager {
 					run.addBreak();
 				}
 				newDoc.createTable();
-				newDoc.setTable(k, tableExt);
-				// newDoc.setTable(initialTablePos + (k+1), currentTable);
+				newDoc.setTable(k, tableExt); 
 				k++;
 				newPage = false;
 			}
@@ -193,8 +191,7 @@ public class DocxManager {
 		List<XWPFParagraph> paragraphs = document.getParagraphs();
 		int parCounter=0;
 		for (int i = 0; i < paragraphs.size(); i++) {
-			XWPFParagraph currentPar = paragraphs.get(i);
-			//if(!currentPar.getText().trim().equals("")){
+			XWPFParagraph currentPar = paragraphs.get(i); 
 			newDoc.createParagraph();
 			newDoc.setParagraph(currentPar, parCounter);
 			parCounter++;// }
@@ -283,8 +280,7 @@ public class DocxManager {
 		String tipoAtto = StringUtils.EMPTY;
 		Boolean tipoAttoChanged = new Boolean(false);
 		
-		for (String key : group2count.keySet()) {
-			//prelevo gli atti di questa commissione
+		for (String key : group2count.keySet()) { 
 			List<NodeRef> listaAtti = commissione2atti.get(key);
 			sortAttiPerConferenze(listaAtti);
 			
@@ -372,17 +368,11 @@ public class DocxManager {
 			newDoc.createParagraph();
 			newDoc.setParagraph(currentPar, parCounter);
 			parCounter++;
-		}
-		
-		//sezione pagina vuota
+		} 
 		
 		String titolo = StringUtils.EMPTY;
 		
-		for (String commissioneCorrente : group2count.keySet()) {
-			
-			
-			
-			// prelevo gli atti di questa commissione
+		for (String commissioneCorrente : group2count.keySet()) { 
 			List<NodeRef> listaAttiCommissione = commissione2atti.get(commissioneCorrente);
 			sortAttiPerConferenze(listaAttiCommissione);
 
@@ -395,45 +385,22 @@ public class DocxManager {
 				String tipoAttoDescrizioneCorrente = getTipoAttoDescrizioneFromTipoAtto(tipoAttoCorrente);
 
 				String titoloCorrente=tipoAttoDescrizioneCorrente + " - " + commissioneCorrente.trim();
-				if(!titoloCorrente.equals(titolo)){
-					//chiudo la sezione col vecchio titolo
+				if(!titoloCorrente.equals(titolo)){ 
 					createNewSection(newDoc.createParagraph(), titolo, contatoreHeader, newDoc,false);
 					contatoreHeader++;
 					titolo=titoloCorrente;
-				}
-
-//				if (!tipoAttoDescrizioneCorrente.equals(tipoAtto)) {
-//					XWPFParagraph newSectParagraph = newDoc.createParagraph();
-//					titolo = tipoAttoDescrizioneCorrente + " - "
-//							+ commissioneTitolo;
-//
-//					createNewSection(newSectParagraph, titolo, contatoreHeader, newDoc);
-//					contatoreHeader++;
-//				}
-
-				//logger.info("piazzo tabella n "+contaTabelleAtti+" per "+attoCorrenteNodeRef.getId()+" oggetto="+nodeService.getProperty(attoCorrenteNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL,AttoUtil.PRPT)));
+				}         
 				XWPFTable currentTable = new XWPFTable(tableExt.getCTTbl(),
 						tableExt.getBody());
 				newDoc.createTable();
 				newDoc.setTable(contaTabelleAtti, currentTable);
 
-				contaTabelleAtti++;
-//				contatoreAtti++;
-//				
-//				if(contatoreAtti==kpage){
-//					XWPFParagraph breakPageParagraph = newDoc.createParagraph();
-//					breakPageParagraph.createRun();
-//					breakPageParagraph.setPageBreak(true);
-//					contatoreAtti=0;
-//				}
-//				else{
-					newDoc.createParagraph().createRun();
-//				}
+				contaTabelleAtti++;         
+					newDoc.createParagraph().createRun(); 
 
 			}
 			
-		}
-		//finalizzol'ultima sezione
+		} 
 		createNewSection(null, titolo, contatoreHeader, newDoc, true);
 		newDoc.removeBodyElement(newDoc.getBodyElements().size()-1);
 		return newDoc;
@@ -443,13 +410,8 @@ public class DocxManager {
 	private static void createHeader(XWPFDocument doc, CTSectPr sectPr,
 			String headerValue, int id) {
 		XWPFHeader header = (XWPFHeader) doc.createRelationship(
-				XWPFRelation.HEADER, XWPFFactory.getInstance(), id);
-
-		// Creo un riferimento all'header nel paragrafo con i dettagli della
-		// sezione
-		CTHdrFtrRef headerReference = sectPr.addNewHeaderReference();
-
-		// collego il riferiemnto all'header
+				XWPFRelation.HEADER, XWPFFactory.getInstance(), id);  
+		CTHdrFtrRef headerReference = sectPr.addNewHeaderReference(); 
 		headerReference.setId(header.getPackageRelationship().getId());
 		headerReference.setType(STHdrFtr.DEFAULT);
 		
@@ -478,12 +440,7 @@ public class DocxManager {
 		else{
 			CTPPr ppr = par1.getCTP().addNewPPr();
 			sectPr = ppr.addNewSectPr();
-		}
-//		
-//		<w:pgSz w:w="11900" w:h="16840" />
-//		<w:pgMar w:top="1417" w:right="1134" w:bottom="1134"
-//			w:left="1134" w:header="708" w:footer="708" w:gutter="0" />
-//		<w:cols w:space="708" />
+		}     
 		
 		sectPr.addNewCols().setSpace(new BigInteger("708"));
 		CTPageSz pgSz = sectPr.addNewPgSz();
@@ -526,11 +483,9 @@ public class DocxManager {
 					StoreRef.STORE_REF_WORKSPACE_SPACESSTORE,
 					SearchService.LANGUAGE_LUCENE, luceneQuery);
 			NodeRef firmatarioNodeRef = null;
-			if (firmatarioAttiviResults.length() > 0) {
-				// e' un consigliere attivo
+			if (firmatarioAttiviResults.length() > 0) { 
 				firmatarioNodeRef = firmatarioAttiviResults.getNodeRef(0);
-			} else {
-				// cerco tra i consiglieri storici
+			} else { 
 				luceneQuery = GRUPPO_FIRMATARIO_QUERY_STORICI.replaceAll(
 						QUERY_REPLACER, firmatario);
 				firmatarioStoriciResults = searchService.query(
@@ -607,14 +562,11 @@ public class DocxManager {
 		String iniziativa = (String) this.getNodeRefProperty(attoProperties,
 				"tipoIniziativa");
 		String oggetto = (String) this.getNodeRefProperty(attoProperties,
-				"oggetto");
-		// from Commissione
+				"oggetto"); 
 		String tipoAtto = (String) this.getNodeRefProperty(
 				commissioneProperties, "tipoAttoCommissione");
 		Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(
-				commissioneProperties, "dataAssegnazioneCommissione");
-
-		// child of Atto
+				commissioneProperties, "dataAssegnazioneCommissione"); 
 		@SuppressWarnings("unchecked")
 		ArrayList<String> firmatariList = (ArrayList<String>) this
 				.getNodeRefProperty(attoProperties, "firmatari");

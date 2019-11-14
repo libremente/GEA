@@ -118,26 +118,18 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 	@Override
 	protected Map<String, Object> executeImpl(WebScriptRequest req, Status status) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("success", Boolean.TRUE);
-
-		// What format are they after?
+		model.put("success", Boolean.TRUE); 
 		String format = req.getFormat();
-		if ("csv".equals(format) || "xls".equals(format) || "xlsx".equals(format) || "excel".equals(format)) {
-			// Identify the thing to process
-			Object resource = identifyResource(format, req);
-
-			// Generate the spreadsheet
+		if ("csv".equals(format) || "xls".equals(format) || "xlsx".equals(format) || "excel".equals(format)) { 
+			Object resource = identifyResource(format, req); 
 			try {
 				generateSpreadsheet(resource, format, req, status, model);
 				return model;
 			} catch (IOException e) {
 				throw new WebScriptException(Status.STATUS_BAD_REQUEST, "Unable to generate template file", e);
 			}
-		}
-
-		// If we get here, then it isn't a spreadsheet version
-		if (allowHtmlFallback()) {
-			// There's some sort of help / upload form
+		} 
+		if (allowHtmlFallback()) { 
 			return model;
 		} else {
 			throw new WebScriptException("Web Script format '" + format + "' is not supported");
@@ -158,9 +150,7 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 	 */
 	public void generateSpreadsheet(Object resource, String format, WebScriptRequest req, Status status,
 			Map<String, Object> model) throws IOException {
-		Pattern qnameMunger = Pattern.compile("([A-Z][a-z]+)([A-Z].*)");
-
-		// Build up the details of the header
+		Pattern qnameMunger = Pattern.compile("([A-Z][a-z]+)([A-Z].*)"); 
 		List<Pair<QName, Boolean>> propertyDetails = buildPropertiesForHeader(resource, format, req);
 		String[] headings;
 		String[] descriptions;
@@ -176,18 +166,12 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 					required[i] = false;
 				} else {
 					QName column = property.getFirst();
-					required[i] = property.getSecond();
-
-					// Ask the dictionary service nicely for the details
+					required[i] = property.getSecond(); 
 					PropertyDefinition pd = dictionaryService.getProperty(column);
-					if (pd != null && pd.getTitle() != null) {
-						// Use the friendly titles, which may even be localised!
+					if (pd != null && pd.getTitle() != null) { 
 						headings[i] = pd.getTitle();
 						descriptions[i] = pd.getDescription();
-					} else {
-						// Nothing friendly found, try to munge the raw qname
-						// into
-						// something we can show to a user...
+					} else {   
 						String raw = column.getLocalName();
 						raw = raw.substring(0, 1).toUpperCase() + raw.substring(1);
 
@@ -206,9 +190,7 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 			for (int i = 0; i < propertyDetails.size(); i++) {
 				required[i] = false;
 			}
-		}
-
-		// Build a list of just the properties
+		} 
 		List<QName> properties = new ArrayList<QName>(propertyDetails.size());
 		for (Pair<QName, Boolean> p : propertyDetails) {
 			QName qn = null;
@@ -216,9 +198,7 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 				qn = p.getFirst();
 			}
 			properties.add(qn);
-		}
-
-		// Output
+		} 
 		if ("csv".equals(format)) {
 			StringWriter sw = new StringWriter();
 			CSVPrinter csv = new CSVPrinter(sw, CSVStrategy.EXCEL_STRATEGY);
@@ -230,21 +210,15 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 		} else {
 			Workbook wb;
 			if ("xlsx".equals(format)) {
-				wb = new XSSFWorkbook();
-				// TODO Properties
+				wb = new XSSFWorkbook(); 
 			} else {
-				wb = new HSSFWorkbook();
-				// TODO Properties
-			}
-
-			// Add our header row
+				wb = new HSSFWorkbook(); 
+			} 
 			Sheet sheet = wb.createSheet("Export");
 			Row hr = sheet.createRow(0);
 			try {
 				sheet.createFreezePane(0, 1);
-			} catch (IndexOutOfBoundsException e) {
-				// https://issues.apache.org/bugzilla/show_bug.cgi?id=51431 &
-				// http://stackoverflow.com/questions/6469693/apache-poi-clearing-freeze-split-panes
+			} catch (IndexOutOfBoundsException e) {  
 			}
 			Font fb = wb.createFont();
 			fb.setBoldweight(Font.BOLDWEIGHT_BOLD);
@@ -255,51 +229,20 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 			CellStyle csReq = wb.createCellStyle();
 			csReq.setFont(fb);
 			CellStyle csOpt = wb.createCellStyle();
-			csOpt.setFont(fi);
-
-			// Populate the header
+			csOpt.setFont(fi); 
 			Drawing draw = null;
 			for (int i = 0; i < headings.length; i++) {
 				Cell c = hr.createCell(i);
-				c.setCellValue(headings[i]);
-
-				// if (required[i]) {
-				c.setCellStyle(csReq);
-				// } else {
-				// c.setCellStyle(csOpt);
-				// }
+				c.setCellValue(headings[i]); 
+				c.setCellStyle(csReq);   
 
 				if (headings[i].length() == 0) {
 					sheet.setColumnWidth(i, 3 * 250);
 				} else {
 					sheet.setColumnWidth(i, 18 * 250);
-				}
-
-				// if (descriptions[i] != null && descriptions[i].length() > 0)
-				// {
-				// // Add a description for it too
-				// if (draw == null) {
-				// draw = sheet.createDrawingPatriarch();
-				// }
-				// ClientAnchor ca =
-				// wb.getCreationHelper().createClientAnchor();
-				// ca.setCol1(c.getColumnIndex());
-				// ca.setCol2(c.getColumnIndex() + 1);
-				// ca.setRow1(hr.getRowNum());
-				// ca.setRow2(hr.getRowNum() + 2);
-				//
-				// Comment cmt = draw.createCellComment(ca);
-				// cmt.setAuthor("");
-				// cmt.setString(wb.getCreationHelper().createRichTextString(descriptions[i]));
-				// cmt.setVisible(false);
-				// c.setCellComment(cmt);
-				// }
-			}
-
-			// Have the contents populated
-			populateBody(resource, wb, sheet, properties);
-
-			// Save it for the template
+				}                   
+			} 
+			populateBody(resource, wb, sheet, properties); 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			wb.write(baos);
 			model.put(MODEL_EXCEL, baos.toByteArray());
@@ -309,8 +252,7 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 	@Override
 	protected Map<String, Object> createTemplateParameters(WebScriptRequest req, WebScriptResponse res,
 			Map<String, Object> customParams) {
-		Map<String, Object> model = super.createTemplateParameters(req, res, customParams);
-		// We sometimes need to monkey around to do the binary output...
+		Map<String, Object> model = super.createTemplateParameters(req, res, customParams); 
 		model.put("req", req);
 		model.put("res", res);
 		model.put("writeExcel", new WriteExcel(res, model, req.getFormat(), filenameBase));
@@ -331,28 +273,19 @@ public abstract class DeclarativeSpreadsheetWebScript extends DeclarativeWebScri
 		}
 
 		public void write() throws IOException {
-			String filename = filenameBase + "." + format;
-
-			// If it isn't a CSV, reset so we can send binary
+			String filename = filenameBase + "." + format; 
 			if (!"csv".equals(format)) {
 				res.reset();
-			}
-
-			// Tell the browser it's a file download
-			res.addHeader("Content-Disposition", "attachment; filename=" + filename);
-
-			// Now send that data
+			} 
+			res.addHeader("Content-Disposition", "attachment; filename=" + filename); 
 			if ("csv".equals(format)) {
 				res.getWriter().append((String) model.get(MODEL_CSV));
-			} else {
-				// Set the mimetype, as we've reset
+			} else { 
 				if ("xlsx".equals(format)) {
 					res.setContentType(MimetypeMap.MIMETYPE_OPENXML_SPREADSHEET);
 				} else {
 					res.setContentType(MimetypeMap.MIMETYPE_EXCEL);
-				}
-
-				// Send the raw excel bytes
+				} 
 				byte[] excel = (byte[]) model.get(MODEL_EXCEL);
 				res.getOutputStream().write(excel);
 			}

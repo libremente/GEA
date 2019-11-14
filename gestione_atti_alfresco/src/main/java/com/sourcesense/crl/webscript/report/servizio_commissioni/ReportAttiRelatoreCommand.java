@@ -113,9 +113,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
                 sp.addSort(sortField2, true);
                 ResultSet currentResults = this.searchService.query(sp);
                 relatore2results.put(relatore, currentResults);
-            }
-            
-            //Se non viene selezionato nessun relatore deve considerarli tutti
+            } 
             if(relatoriJson.isEmpty()){
             	SearchParameters sp = new SearchParameters();
                 sp.addStore(spacesStore);
@@ -139,13 +137,10 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
             Map<NodeRef, NodeRef> atto2commissione = new HashMap<NodeRef, NodeRef>();
             TreeMap<String, List<NodeRef>> relatore2atti = this
                     .retrieveAttiOrdered(relatore2results, spacesStore,
-                    atto2commissione);
-
-            // obtain as much table as the results spreaded across the resultSet
+                    atto2commissione); 
             XWPFDocument generatedDocument = docxManager
                     .generateFromTemplateMap(
-                    this.retrieveLenghtMap(relatore2atti), 4, false);
-            // convert to input stream
+                    this.retrieveLenghtMap(relatore2atti), 4, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
@@ -153,8 +148,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -185,8 +179,7 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
                 String tipoAtto = (String) nodeRefType.getLocalName();
                 if (tipoAtto.length() > 4) {
                     tipoAtto = tipoAtto.substring(4);
-                }
-                // from Atto
+                } 
                 String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                 String oggetto = (String) this.getNodeRefProperty(
                         attoProperties, "oggetto");

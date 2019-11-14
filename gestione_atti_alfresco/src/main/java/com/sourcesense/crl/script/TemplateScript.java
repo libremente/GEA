@@ -34,9 +34,7 @@ import org.alfresco.service.cmr.dictionary.TypeDefinition;
 public class TemplateScript extends BaseScopableProcessorExtension {
 
 	
-	private ServiceRegistry serviceRegistry;
-	
-	// Get title from node-type definition
+	private ServiceRegistry serviceRegistry; 
 	public String getTypeDescription(String type) {
         
 		String typeDescription = "";

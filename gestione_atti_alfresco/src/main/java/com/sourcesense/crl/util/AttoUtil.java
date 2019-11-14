@@ -50,13 +50,9 @@ public class AttoUtil {
 	private static Log logger = LogFactory.getLog(AttoUtil.class);
 
 	private SearchService searchService;
-	private NodeService nodeService;
-
-	// crl namespaces
+	private NodeService nodeService; 
 	public static final String CRL_TEMPLATE_MODEL = "http://www.regione.lombardia.it/content/model/template/1.0";
-	public static final String CRL_ATTI_MODEL = "http://www.regione.lombardia.it/content/model/atti/1.0";
-
-	// crlAttiModel type
+	public static final String CRL_ATTI_MODEL = "http://www.regione.lombardia.it/content/model/atti/1.0"; 
 	public static final String COMMISSIONE_TYPE = "commissione";
 	public static final String RELATORE_TYPE = "relatore";
 	public static final String PARERE_TYPE = "parere";
@@ -73,10 +69,7 @@ public class AttoUtil {
 	public static final String TYPE_FIRMATARIO = "firmatario";
 	public static final QName TYPE_FIRMATARIO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_FIRMATARIO);
 	public static final String TYPE_ALLEGATO = "allegato";
-	public static final QName TYPE_ALLEGATO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_ALLEGATO);
-
-
-	// crlAttiModel properties
+	public static final QName TYPE_ALLEGATO_QNAME = QName.createQName(CRL_ATTI_MODEL, TYPE_ALLEGATO); 
 	public static final String PROP_STATO_ATTO = "statoAtto";
 	public static final String PROP_ANNO = "anno";
 	public static final String PROP_MESE = "mese";
@@ -180,14 +173,10 @@ public class AttoUtil {
 
 	public static final QName PROP_DATA_LR_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_DATA_LR);
 
-	public static final QName PROP_NUMERO_LR_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_LR);
-
-	// crl associations
+	public static final QName PROP_NUMERO_LR_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_NUMERO_LR); 
 	public static final String ASSOC_ATTO_TRATTATO_SEDUTA = "attoTrattatoSedutaODG";
 	public static final String ASSOC_ATTO_INDIRIZZO_TRATTATO_SEDUTA = "attoIndirizzoTrattatoSedutaODG";
-	public static final String ASSOC_ATTO_ASSOCIATO_ABBINAMENTO = "attoAssociatoAbbinamento";
-
-	// Constant
+	public static final String ASSOC_ATTO_ASSOCIATO_ABBINAMENTO = "attoAssociatoAbbinamento"; 
 
 	public static final String RUOLO_COMM_REFERENTE = "Referente";
 	public static final String RUOLO_COMM_COREFERENTE = "Co-Referente";
@@ -208,9 +197,7 @@ public class AttoUtil {
 
 		String legislaturaType = "{" + CRL_ATTI_MODEL + "}" + TYPE_LEGISLATURA;
 
-		StoreRef storeRef = new StoreRef("workspace://SpacesStore");
-
-		// Get legislature
+		StoreRef storeRef = new StoreRef("workspace://SpacesStore"); 
 		ResultSet legislatureNodes = null;
 		try {
 			legislatureNodes = searchService.query(storeRef, SearchService.LANGUAGE_LUCENE,
@@ -232,9 +219,7 @@ public class AttoUtil {
 			}
 		}
 		return legislatura;
-	}
-
-	// Search last "passaggio" function
+	} 
 	public NodeRef getLastPassaggio(NodeRef attoNodeRef) {
 
 		NodeRef passaggio = null;
@@ -274,9 +259,7 @@ public class AttoUtil {
 		}
 
 		return passaggio;
-	}
-
-	// Search Commissioni Principali function
+	} 
 	public List<NodeRef> getCommissioniPrincipali(NodeRef attoNodeRef) {
 
 		List<NodeRef> commissioniPrincipaliList = new ArrayList<NodeRef>();
@@ -287,9 +270,7 @@ public class AttoUtil {
 		namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX,
 				NamespaceService.CONTENT_MODEL_1_0_URI);
 		namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX,
-				NamespaceService.APP_MODEL_1_0_URI);
-
-		// Get current Passaggio
+				NamespaceService.APP_MODEL_1_0_URI); 
 		NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
 		String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
 
@@ -297,13 +278,10 @@ public class AttoUtil {
 		ResultSet commissioneCoreferenteNodes = null;
 		ResultSet commissioneRedigenteNodes = null;
 		ResultSet commissioneDeliberanteNodes = null;
-		try {
-			// Get commissione referente
+		try { 
 			commissioneReferenteNodes = searchService.query(attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
 					"PATH:\"" + lucenePassaggioNodePath + "/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""
-							+ RUOLO_COMM_REFERENTE + "\"");
-
-			// Check for commissione referente and co-referente
+							+ RUOLO_COMM_REFERENTE + "\""); 
 			if (commissioneReferenteNodes.length() > 0) {
 
 				commissioniPrincipaliList.add(commissioneReferenteNodes.getNodeRef(0));
@@ -316,31 +294,23 @@ public class AttoUtil {
 				if (commissioneCoreferenteNodes.length() > 0) {
 
 					commissioniPrincipaliList.add(commissioneCoreferenteNodes.getNodeRef(0));
-				}
-
-				// If commissione referente not exists
+				} 
 			} else {
 
 				commissioneRedigenteNodes = searchService.query(attoNodeRef.getStoreRef(),
 						SearchService.LANGUAGE_LUCENE,
 						"PATH:\"" + lucenePassaggioNodePath + "/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""
-								+ RUOLO_COMM_REDIGENTE + "\"");
-
-				// Check for commissione redigente
+								+ RUOLO_COMM_REDIGENTE + "\""); 
 				if (commissioneRedigenteNodes.length() > 0) {
 
-					commissioniPrincipaliList.add(commissioneRedigenteNodes.getNodeRef(0));
-
-					// If commissione redigente not exists
+					commissioniPrincipaliList.add(commissioneRedigenteNodes.getNodeRef(0)); 
 				} else {
 
 					commissioneDeliberanteNodes = searchService.query(attoNodeRef.getStoreRef(),
 							SearchService.LANGUAGE_LUCENE,
 							"PATH:\"" + lucenePassaggioNodePath
 									+ "/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\"" + RUOLO_COMM_DELIBERANTE
-									+ "\"");
-
-					// Check for commissione redigente
+									+ "\""); 
 					if (commissioneDeliberanteNodes.length() > 0) {
 
 						commissioniPrincipaliList.add(commissioneDeliberanteNodes.getNodeRef(0));
@@ -381,9 +351,7 @@ public class AttoUtil {
 		String luceneCommissioneNodePath = nodeService.getPath(commissioneNodeRef)
 				.toPrefixString(namespacePrefixResolver);
 
-		String relatoreType = "{" + CRL_ATTI_MODEL + "}" + RELATORE_TYPE;
-
-		// Get relatore
+		String relatoreType = "{" + CRL_ATTI_MODEL + "}" + RELATORE_TYPE; 
 		ResultSet relatoreNodes = null;
 		try {
 			relatoreNodes = searchService.query(commissioneNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
@@ -424,16 +392,13 @@ public class AttoUtil {
 		namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX,
 				NamespaceService.CONTENT_MODEL_1_0_URI);
 		namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX,
-				NamespaceService.APP_MODEL_1_0_URI);
-
-		// Get current Passaggio
+				NamespaceService.APP_MODEL_1_0_URI); 
 		NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
 		String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
 
 		ResultSet aulaNodes = null;
 		NodeRef aula = null;
-		try {
-			// Get commissione referente
+		try { 
 			aulaNodes = searchService.query(attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
 					"PATH:\"" + lucenePassaggioNodePath + "/cm:Aula\"");
 
@@ -459,14 +424,10 @@ public class AttoUtil {
 		namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX,
 				NamespaceService.CONTENT_MODEL_1_0_URI);
 		namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX,
-				NamespaceService.APP_MODEL_1_0_URI);
-
-		// Get current Passaggio
+				NamespaceService.APP_MODEL_1_0_URI); 
 		NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
 		String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
-		ResultSet commissioneTargetNodes = null;
-
-		// Get commissione
+		ResultSet commissioneTargetNodes = null; 
 		try {
 			commissioneTargetNodes = searchService.query(attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
 					"PATH:\"" + lucenePassaggioNodePath + "/cm:Commissioni/*\" AND @cm\\:name:\"" + commissioneTarget
@@ -482,9 +443,7 @@ public class AttoUtil {
 		}
 
 		return commissione;
-	}
-
-	// Search Atti Abbinati
+	} 
 	public List<NodeRef> getAttiAbbinati(NodeRef attoNodeRef) {
 
 		List<NodeRef> attiAbbinatiList = new ArrayList<NodeRef>();
@@ -495,9 +454,7 @@ public class AttoUtil {
 		namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX,
 				NamespaceService.CONTENT_MODEL_1_0_URI);
 		namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX,
-				NamespaceService.APP_MODEL_1_0_URI);
-
-		// Get current Passaggio
+				NamespaceService.APP_MODEL_1_0_URI); 
 		NodeRef passaggioNodeRef = getLastPassaggio(attoNodeRef);
 		if (passaggioNodeRef != null) {
 
@@ -510,18 +467,11 @@ public class AttoUtil {
 
 				abbinamentiNodes = searchService.query(attoNodeRef.getStoreRef(), SearchService.LANGUAGE_LUCENE,
 						"PATH:\"" + lucenePassaggioNodePath + "/cm:Abbinamenti/*\" AND TYPE:\"" + abbinamentoType
-								+ "\" AND ISNULL:\"crlatti:dataDisabbinamento\"");
-
-				// System.out.println((String) nodeService.getProperty(attoNodeRef,
-				// ContentModel.PROP_NAME));
+								+ "\" AND ISNULL:\"crlatti:dataDisabbinamento\"");  
 
 				for (int i = 0; i < abbinamentiNodes.length(); i++) {
 
-					NodeRef abbinamento = abbinamentiNodes.getNodeRef(i);
-
-					// System.out.println((String)
-					// nodeService.getProperty(abbinamento,
-					// ContentModel.PROP_NAME));
+					NodeRef abbinamento = abbinamentiNodes.getNodeRef(i);   
 
 					List<AssociationRef> attiAbbinatiAssociati = nodeService.getTargetAssocs(abbinamento,
 							QName.createQName(CRL_ATTI_MODEL, ASSOC_ATTO_ASSOCIATO_ABBINAMENTO));

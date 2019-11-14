@@ -78,10 +78,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	
 	
 	
-	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException;
-	
-	
-	// Get property value 
+	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException; 
 	public String getStringProperty(NodeRef attoNodeRef, String nameSpaceURI, String localName){
 		String value = (String) nodeService.getProperty(attoNodeRef, QName.createQName(nameSpaceURI, localName));
 		
@@ -239,11 +236,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	}
 	
 	
-	public VerbaleObject getVerbaleSedutaPrecedente(String gruppo, NodeRef seduta){
-		
-		// query per ottenere la seduta prima della seduta corrente in ordine cronologico
-		// selezioni tutte le sedute con data precedente a quella della seduta corrente
-		// ordino i risultati per dataSeduta e prendo il secondo result (il primo è la seduta di partenza)
+	public VerbaleObject getVerbaleSedutaPrecedente(String gruppo, NodeRef seduta){   
 		
 		String path = "/app:company_home/cm:CRL/cm:"+ISO9075.encode("Gestione Atti")+"/cm:Sedute/cm:"+ISO9075.encode(gruppo);
 		String dataSeduta = (String) nodeService.getProperty(seduta, ContentModel.PROP_NAME);
@@ -302,9 +295,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
 		 	
 		 
 			
-         List<XWPFParagraph> paragraphs = document.getParagraphs();
-
-			// Recover a Set of the keys in the HashMap
+         List<XWPFParagraph> paragraphs = document.getParagraphs(); 
 			Set<String> keySet = replacements.keySet();
 			XWPFParagraph paragraph;
 		
@@ -312,9 +303,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
 			Iterator<String> keySetIterator = null;
 			String text = null;
 			String key = null;
-			String value = null;
-		
-			// Step through each Paragraph
+			String value = null; 
 			for(int i = 0; i < paragraphs.size(); i++) {
 				paragraph = paragraphs.get(i);
 				
@@ -322,21 +311,13 @@ public abstract class OdgBaseCommand implements OdgCommand{
 				
 				for(int j=0; j < runs.size(); j++) {
 					
-					run = runs.get(j);
-					
-					// Get the text from the CharacterRun 
-					text = run.getText(0);
-					
-					// KeySet Iterator
+					run = runs.get(j); 
+					text = run.getText(0); 
 					if(text!=null){
 						keySetIterator = keySet.iterator();
-						while(keySetIterator.hasNext()) {
-			
-							// check the key in CharacterRuns text
+						while(keySetIterator.hasNext()) { 
 						    key = keySetIterator.next();
-						    if(text.contains(key)) {
-						    	
-						    	// replace term
+						    if(text.contains(key)) { 
 						    	if(replacements.get(key)!=null){
 						    		value = replacements.get(key);
 						    	}else{
@@ -368,9 +349,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	 protected void searchAndReplaceParagraph( XWPFTableCell cell, HashMap<String, String> replacements) throws IOException {
 		  	
 		 
-		 	List<XWPFParagraph> paragraphs = cell.getParagraphs();
-
-			// Recover a Set of the keys in the HashMap
+		 	List<XWPFParagraph> paragraphs = cell.getParagraphs(); 
 			Set<String> keySet = replacements.keySet();
 			XWPFParagraph paragraph;
 		
@@ -378,9 +357,7 @@ public abstract class OdgBaseCommand implements OdgCommand{
 			Iterator<String> keySetIterator = null;
 			String text = null;
 			String key = null;
-			String value = null;
-		
-			// Step through each Paragraph
+			String value = null; 
 			for(int i = 0; i < paragraphs.size(); i++) {
 		
 				paragraph = paragraphs.get(i);
@@ -389,21 +366,13 @@ public abstract class OdgBaseCommand implements OdgCommand{
 				 
 				for(int j=0; j < runs.size(); j++) {
 			
-				run = runs.get(j);
-				
-				// Get the text from the CharacterRun 
-				text = run.getText(0);
-				
-				// KeySet Iterator
+				run = runs.get(j); 
+				text = run.getText(0); 
 				if(text!=null){
 					keySetIterator = keySet.iterator();
-					while(keySetIterator.hasNext()) {
-		
-						// check the key in CharacterRuns text
+					while(keySetIterator.hasNext()) { 
 					    key = keySetIterator.next();
-					    if(text.contains(key)) {
-					    	
-					    	// replace term
+					    if(text.contains(key)) { 
 					    	if(replacements.get(key)!=null){
 					    		value = replacements.get(key);
 					    	}else{

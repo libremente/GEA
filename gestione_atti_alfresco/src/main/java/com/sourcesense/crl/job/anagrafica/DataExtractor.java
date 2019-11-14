@@ -76,22 +76,19 @@ public class DataExtractor {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException e) {
-                    // Do nothing...
+                } catch (SQLException e) { 
                 }
             }
             if ( rs!=null){
             	try {
 	            	rs.close();
-	            } catch (SQLException e) {
-	                // Do nothing...
+	            } catch (SQLException e) { 
 	            }
             }
            if (ps!=null){
         	   try {
 	        	   ps.close();
-	           } catch (SQLException e) {
-	               // Do nothing...
+	           } catch (SQLException e) { 
 	           }
            }
         }
@@ -121,22 +118,19 @@ public class DataExtractor {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException e) {
-                    // Do nothing...
+                } catch (SQLException e) { 
                 }
             }
             if ( rs!=null){
             	try {
 	            	rs.close();
-	            } catch (SQLException e) {
-	                // Do nothing...
+	            } catch (SQLException e) { 
 	            }
             }
            if (ps!=null){
         	   try {
 	        	   ps.close();
-	           } catch (SQLException e) {
-	               // Do nothing...
+	           } catch (SQLException e) { 
 	           }
            }
         }
@@ -195,22 +189,19 @@ public class DataExtractor {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException e) {
-                    // Do nothing...
+                } catch (SQLException e) { 
                 }
             }
             if ( rs!=null){
             	try {
 	            	rs.close();
-	            } catch (SQLException e) {
-	                // Do nothing...
+	            } catch (SQLException e) { 
 	            }
             }
            if (ps!=null){
         	   try {
 	        	   ps.close();
-	           } catch (SQLException e) {
-	               // Do nothing...
+	           } catch (SQLException e) { 
 	           }
            }
         }
@@ -243,22 +234,19 @@ public class DataExtractor {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException e) {
-                    // Do nothing...
+                } catch (SQLException e) { 
                 }
             }
             if ( rs!=null){
             	try {
 	            	rs.close();
-	            } catch (SQLException e) {
-	                // Do nothing...
+	            } catch (SQLException e) { 
 	            }
             }
             if (ps!=null){
             	try {
             		ps.close();
-            	} catch (SQLException e) {
-	               // Do nothing...
+            	} catch (SQLException e) { 
             	}
             }	
         }

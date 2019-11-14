@@ -70,11 +70,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     	OutputStream responseOutputStream = null;
     	InputStream templateInputStream = null;
 
-    	try {
-    
-	    	// Get json properties
-//	    	String json=(String)req.getParameter("json");
-//    		String tipoTemplate = (String)req.getParameter("tipoTemplate");
+    	try {   
     	
     		
     		
@@ -84,8 +80,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
     		 
     	    ResultSet templatesResults=null;
     	    NodeRef templateNodeRef=null;
-    	    try {
-	    	    // Search document template node	
+    	    try { 
 				templatesResults = searchService.query(Repository.getStoreRef(), 
 			    
 			    SearchService.LANGUAGE_LUCENE, "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Reports//*\" AND TYPE:\""+tipoTemplate+"\"");
@@ -93,8 +88,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
 				templateNodeRef = templatesResults.getNodeRef(0);
     	    } finally {
     	    	templatesResults.close();
-    	    }
-			// Get byte array of template node content
+    	    } 
 	    	ContentReader reader = contentService.getReader(templateNodeRef, ContentModel.PROP_CONTENT);
 	    	templateInputStream = reader.getContentInputStream();
 	    	byte[] templateByteArray = IOUtils.toByteArray(templateInputStream);
@@ -126,9 +120,7 @@ public void execute(WebScriptRequest req, WebScriptResponse res) throws IOExcept
         long duration = System.currentTimeMillis() - startTs;
         logger.info("Report "+tipoTemplate+" finished in "+duration+"ms");
 	    	
-	    	String nomeLettera = tipoTemplate.split(":")[1];
-    				
-    		// Set response
+	    	String nomeLettera = tipoTemplate.split(":")[1]; 
             res.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
             GregorianCalendar gc = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");

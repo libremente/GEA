@@ -49,11 +49,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected SearchService searchService;
 	protected NodeService nodeService;
 	protected ServiceRegistry serviceRegistry;
-	protected AttoUtil attoUtil;
-	
-	
-
-	// crlTemplateModel properties 
+	protected AttoUtil attoUtil; 
 	protected String PROP_FIRMATARIO = "firmatario";
 	protected String PROP_UFFICIO = "ufficio";
         protected String PROP_ASSESSORE = "assessore";
@@ -61,10 +57,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected String PROP_NUMEROTELFIRMATARIO = "numeroTelFirmatario";
 	protected String PROP_EMAILFIRMATARIO = "emailFirmatario";
 	
-	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException;
-	
-	
-	// Get property value 
+	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException; 
 	public String getStringProperty(NodeRef attoNodeRef, String nameSpaceURI, String localName){
 		String value = (String) nodeService.getProperty(attoNodeRef, QName.createQName(nameSpaceURI, localName));
 		
@@ -73,10 +66,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 		}
 	
 		return value;
-	}
-	
-	
-	// Search Commissioni Consultive function
+	} 
 	public List<NodeRef> getCommissioniConsultive(NodeRef attoNodeRef){
 		
 		List<NodeRef> commissioniConsultiveList = new ArrayList<NodeRef>();
@@ -84,16 +74,13 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
     	DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
         namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
         namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
-        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
-    	
-    	// Get current Passaggio 
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI); 
     	NodeRef passaggioNodeRef = attoUtil.getLastPassaggio(attoNodeRef);
     	String lucenePassaggioNodePath = nodeService.getPath(passaggioNodeRef).toPrefixString(namespacePrefixResolver);
   
 		
     	ResultSet commissioniConsultiveNodes = null;
-    	try{
-	    	// Get commissioni consultive
+    	try{ 
 	    	commissioniConsultiveNodes = searchService.query(attoNodeRef.getStoreRef(),
 	  				SearchService.LANGUAGE_LUCENE, "PATH:\""+lucenePassaggioNodePath+"/cm:Commissioni/*\" AND @crlatti\\:ruoloCommissione:\""+attoUtil.RUOLO_COMM_CONSULTIVA+"\"");
 	    	
@@ -120,9 +107,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
         namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
         namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
-        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
-    	
-    	// Get current atto 
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI); 
     	String luceneAttoNodePath = nodeService.getPath(attoNodeRef).toPrefixString(namespacePrefixResolver);
 	
     		
@@ -159,9 +144,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 		DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(null);
         namespacePrefixResolver.registerNamespace(NamespaceService.SYSTEM_MODEL_PREFIX, NamespaceService.SYSTEM_MODEL_1_0_URI);
         namespacePrefixResolver.registerNamespace(NamespaceService.CONTENT_MODEL_PREFIX, NamespaceService.CONTENT_MODEL_1_0_URI);
-        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI);
-    	
-    	// Get current atto 
+        namespacePrefixResolver.registerNamespace(NamespaceService.APP_MODEL_PREFIX, NamespaceService.APP_MODEL_1_0_URI); 
     	String luceneAttoNodePath = nodeService.getPath(attoNodeRef).toPrefixString(namespacePrefixResolver);
 	
     		
@@ -187,10 +170,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
         	}
         }
 		return lastFirmatario; 
-	}
-	
-	
-	//Aggiunto metodo per il recupero della sigla identificativa al tipo di atto mediante la tipologia definita nel modello 
+	} 
 	protected String getTipoAttoSigla(NodeRef attoNodeRef){
 		QName typeQname= nodeService.getType(attoNodeRef);
 		String type= typeQname.getLocalName();

@@ -106,19 +106,15 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 
             Map<NodeRef, NodeRef> atto2relatore = new HashMap<NodeRef, NodeRef>();
             TreeMap<String, List<NodeRef>> relatore2atti = this.retrieveAttiOrdered(relatore2results, spacesStore, atto2relatore);
-            TreeMultimap<String, Atto> commissione2atti = this.initCommissione2AttiMap(relatore2atti, atto2relatore);
-
-            // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(commissione2atti), 4, false);
-            // convert to input stream
+            TreeMultimap<String, Atto> commissione2atti = this.initCommissione2AttiMap(relatore2atti, atto2relatore); 
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(commissione2atti), 4, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissione2atti);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();

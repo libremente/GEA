@@ -95,19 +95,15 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
             ResultSet pareriResult = this.searchService.query(sp);
             organo2results.put(this.organismo, pareriResult);
             Map<NodeRef, NodeRef> atto2parere = new HashMap<NodeRef, NodeRef>();
-            LinkedListMultimap<String, NodeRef> parere2atti = this.retrieveAttiParere(organo2results, spacesStore, atto2parere);
-
-            // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(parere2atti), 2, false);
-            // convert to input stream
+            LinkedListMultimap<String, NodeRef> parere2atti = this.retrieveAttiParere(organo2results, spacesStore, atto2parere); 
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(parere2atti), 2, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream, parere2atti, atto2parere);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -131,9 +127,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
             for (NodeRef currentAtto : organo2atti.get(organo)) {
                 XWPFTable currentTable = tables.get(tableIndex);
                 Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto);
-                Map<QName, Serializable> parereProperties = nodeService.getProperties(atto2parere.get(currentAtto));
-
-                // from Atto
+                Map<QName, Serializable> parereProperties = nodeService.getProperties(atto2parere.get(currentAtto)); 
                 QName nodeRefType = nodeService.getType(currentAtto);
                 String tipoAtto = (String) nodeRefType.getLocalName();
                 if (tipoAtto.length() > 4) {
@@ -150,9 +144,7 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
                 String commCoReferente = this.renderList(commCoReferenteList);
 
                 ArrayList<String> commConsultivaList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commConsultiva");
-                String commConsultiva = this.renderList(commConsultivaList);
-
-                // from Atto
+                String commConsultiva = this.renderList(commConsultivaList); 
                 ArrayList<String> pareriList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "organismiStatutari");
                 String altriPareri = this.renderList(pareriList);
 

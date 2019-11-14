@@ -51,19 +51,13 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 	
 	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) {
 		
-		byte[] documentFilledByteArray = null;
-		
-		// map object containing terms for search in document
-    	HashMap<String, String> searchTerms = new HashMap<String, String>();
-
-		// Set properties from template
+		byte[] documentFilledByteArray = null; 
+    	HashMap<String, String> searchTerms = new HashMap<String, String>(); 
     	String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(AttoUtil.CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));	
 		searchTerms.put("<firmatario>", firmatario);
 		
 		QName templateType  =  nodeService.getType(templateNodeRef);
-		String nomeTemplate = templateType.getLocalName();
-    	
-    	// Set properties from atto
+		String nomeTemplate = templateType.getLocalName(); 
     	String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_NUM_ATTO))) + 
     			((String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_ESTENSIONE_ATTO)));
     	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_OGGETTO_ATTO));
@@ -88,8 +82,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     		
     	DictionaryService dictionaryService = serviceRegistry.getDictionaryService();		
 		TypeDefinition typeDef = dictionaryService.getType(nodeService.getType(attoNodeRef));
-		String tipoAttoDescrizione = typeDef.getTitle().toLowerCase();
-		//aggiunto tipo atto nel modello
+		String tipoAttoDescrizione = typeDef.getTitle().toLowerCase(); 
 		String tipoAttoSigla= getTipoAttoSigla(attoNodeRef);
 		
         searchTerms.put("<tipoAttoSigla>", tipoAttoSigla);
@@ -97,10 +90,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 		searchTerms.put("<oggettoAtto>", oggettoAtto);
 		searchTerms.put("<numeroRepertorio>", numeroRepertorio);
 		searchTerms.put("<tipoAttoDescrizione>", tipoAttoDescrizione);
-		searchTerms.put("<numeroDGR>", numeroDgr);
-		
-		
-    	//  Set firmatari list
+		searchTerms.put("<numeroDGR>", numeroDgr); 
     	List<String> firmatariList = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_FIRMATARI));
     	String firmatari = StringUtils.EMPTY;
     	
@@ -163,21 +153,13 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	List<String> organismiStatutari = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_ORGANISMI_STATUTARI));
   
     	
-    	List<String> listaCommissioniPrincipali = new ArrayList<String>();
-    	
-    	// Check for commissione referente
+    	List<String> listaCommissioniPrincipali = new ArrayList<String>(); 
     	if(commissioniReferenti!=null && commissioniReferenti.size()>0) {
     		
-    		listaCommissioniPrincipali.add(commissioniReferenti.get(0));
-    		
-    	// Commissione referente not exists	
-    	}else {
-    		
-    		// Check for commissione redigente
+    		listaCommissioniPrincipali.add(commissioniReferenti.get(0)); 
+    	}else { 
     		if(commissioneRedigente!=null && !commissioneRedigente.equals(StringUtils.EMPTY)) {
-    			listaCommissioniPrincipali.add(commissioneRedigente);
-    			
-    		// If commissione redigente not exists than Check for commissione deliberante	
+    			listaCommissioniPrincipali.add(commissioneRedigente); 
     		}else {
     			if(commissioneDeliberante!=null && !commissioneDeliberante.equals(StringUtils.EMPTY)) {
     				listaCommissioniPrincipali.add(commissioneDeliberante);
@@ -191,9 +173,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
         	while(i.hasNext()){
         		listaCommissioniPrincipali.add(i.next());
         	}
-        }
-    	
-    	// Create commissioni principali address list 
+        } 
     	String listaCommissioniPrincipaliDestString = StringUtils.EMPTY;
     	
     	for(int i=0; i<listaCommissioniPrincipali.size(); i++) {
@@ -204,13 +184,9 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     		listaCommissioniPrincipaliDestString += "Al Signor Presidente\rdella Commissione consiliare "+getCommissioneNumber(listaCommissioniPrincipali.get(i));
     	}
     					
-    	searchTerms.put("<listaCommissioniPrincipaliDest>", listaCommissioniPrincipaliDestString);
-
-    	// Create commissioni consultive address list 
+    	searchTerms.put("<listaCommissioniPrincipaliDest>", listaCommissioniPrincipaliDestString); 
     	String listaCommissioniConsultiveDestString = StringUtils.EMPTY;
-    	String listaCommissioniConsultiveInvitiString = "Commissione consiliare ";
-    	
-    	// Check for commissione consultive
+    	String listaCommissioniConsultiveInvitiString = "Commissione consiliare "; 
     	if(commissioniConsultive!=null && commissioniConsultive.size()>0) {
     		
     		for(int i=0; i<commissioniConsultive.size(); i++) {
@@ -229,13 +205,9 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	}
     	
     	searchTerms.put("<listaCommissioniConsultiveDest>", listaCommissioniConsultiveDestString);
-    	searchTerms.put("<listaCommissioniConsultiveInviti>", listaCommissioniConsultiveInvitiString);
-    	
-    	// Create organismi statutari address list 
+    	searchTerms.put("<listaCommissioniConsultiveInviti>", listaCommissioniConsultiveInvitiString); 
     	String listaOrganismiStatutariDestString = StringUtils.EMPTY;	
-    	String listaOrganismiStatutariInvitiString = StringUtils.EMPTY;
-    	
-    	// Check for organismi statutari
+    	String listaOrganismiStatutariInvitiString = StringUtils.EMPTY; 
     	if(organismiStatutari!=null && organismiStatutari.size()>0) {
     		
     		for(int i=0; i<organismiStatutari.size(); i++) {
@@ -278,10 +250,7 @@ public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
     	if(ultimoOrganoStatutario!=null) {
     		String ultimoOrganoStatutarioString = (String) nodeService.getProperty(ultimoOrganoStatutario, ContentModel.PROP_NAME);
     		searchTerms.put("<ultimoOrganoStatutario>", ultimoOrganoStatutarioString);
-    	}
-    	
-
-		// Generate byte array of filled document content
+    	} 
 		documentFilledByteArray = TemplateFiller.searchAndReplace(templateByteArray, searchTerms);
 		
 		logger.info("Generazione della lettera completata - template: "+nomeTemplate);

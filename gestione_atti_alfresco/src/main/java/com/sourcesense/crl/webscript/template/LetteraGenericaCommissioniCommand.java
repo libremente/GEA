@@ -48,19 +48,13 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
 	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException{
 		    	 
 		
-		byte[] documentFilledByteArray = null;
-		
-		// map object containing terms for search in document
-    	HashMap<String, String> searchTerms = new HashMap<String, String>();
-
-		// Set properties from template
+		byte[] documentFilledByteArray = null; 
+    	HashMap<String, String> searchTerms = new HashMap<String, String>(); 
     	String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(attoUtil.CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));	
 		searchTerms.put("<firmatario>", firmatario);
 		
 		QName templateType  =  nodeService.getType(templateNodeRef);
-		String nomeTemplate = templateType.getLocalName();
-    	
-    	// Set properties from atto
+		String nomeTemplate = templateType.getLocalName(); 
 		String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_NUM_ATTO))) + 
     			((String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ESTENSIONE_ATTO)));
        	String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
@@ -72,8 +66,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     		SimpleDateFormat dataDgrFormatter = new SimpleDateFormat("dd/MM/yyyy");
     		String dataDgrString = dataDgrFormatter.format(dataDgr);
     		searchTerms.put("<dataDGR>", dataDgrString);
-    	}
-    	//aggiunto tipo atto nel modello
+    	} 
       	String tipoAttoSigla= getTipoAttoSigla(attoNodeRef);
       	
         searchTerms.put("<tipoAttoSigla>", tipoAttoSigla);
@@ -88,21 +81,13 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     	String commissioneRedigente = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_REDIGENTE));
     	String commissioneDeliberante = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_DELIBERANTE));
     	
-    	List<String> listaCommissioniPrincipali = new ArrayList<String>();
-    	
-    	// Check for commissione referente
+    	List<String> listaCommissioniPrincipali = new ArrayList<String>(); 
     	if(commissioniReferenti!=null && commissioniReferenti.size()>0) {
     		
-    		listaCommissioniPrincipali.add(commissioniReferenti.get(0));	
-    		
-    	// Commissione referente not exists	
-    	}else {
-    		
-    		// Check for commissione redigente
+    		listaCommissioniPrincipali.add(commissioniReferenti.get(0));	 
+    	}else { 
     		if(commissioneRedigente!=null && !commissioneRedigente.equals("")) {
-    			listaCommissioniPrincipali.add(commissioneRedigente);
-    			
-    		// If commissione redigente not exists than Check for commissione deliberante	
+    			listaCommissioniPrincipali.add(commissioneRedigente); 
     		}else {
     			if(commissioneDeliberante!=null && !commissioneDeliberante.equals("")) {
     				listaCommissioniPrincipali.add(commissioneDeliberante);
@@ -116,9 +101,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
         	while(i.hasNext()){
         		listaCommissioniPrincipali.add(i.next());
         	}
-        }
-    	
-    	// Create commissioni principali address list 
+        } 
     	String listaCommissioniPrincipaliDestString = "";
     	
     	for(int i=0; i<listaCommissioniPrincipali.size(); i++) {
@@ -133,16 +116,12 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
     	
     	if(listaCommissioniPrincipali.size() > 0){
     		searchTerms.put("<commissioneReferente>", listaCommissioniPrincipali.get(0));
-    	}
-    	
-    	
-    	// Target Commission Data
+    	} 
     	
     	NodeRef commissioneCorrenteNodeRef = attoUtil.getCommissioneCorrente(attoNodeRef, gruppo);
     	
     
-    	if(commissioneCorrenteNodeRef!=null){
-    		// <relatoreCommissione>
+    	if(commissioneCorrenteNodeRef!=null){ 
         	
         	String quorumVotazione = (String) nodeService.getProperty(commissioneCorrenteNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_QUORUM_VOTAZIONE_COMMISSIONE));
         	
@@ -172,9 +151,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
         	}
         	
         	searchTerms.put("<quorumVotazione>", quorumVotazione);
-        	searchTerms.put("<esitoVotazione>", esitoVotazione);
-        	
-        	// get Relatore con property crlatti:dataUscitaRelatore non valorizzata --> DONE
+        	searchTerms.put("<esitoVotazione>", esitoVotazione); 
         	
         	NodeRef relatoreNodeRef = attoUtil.getRelatoreCorrente(commissioneCorrenteNodeRef);
         	
@@ -183,11 +160,7 @@ public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
         		searchTerms.put("<relatoreCommissione>", relatore);
         	}
     		
-    	}
-    	
-    			
-    			
-		// Generate byte array of filled document content
+    	} 
 		documentFilledByteArray = TemplateFiller.searchAndReplace(templateByteArray, searchTerms);
 		
 		logger.info("Generazione della lettera completata - template: "+nomeTemplate);

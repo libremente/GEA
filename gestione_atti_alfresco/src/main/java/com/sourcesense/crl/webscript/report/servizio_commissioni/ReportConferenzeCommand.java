@@ -102,10 +102,7 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                             + this.dataAssegnazioneCommReferenteDa + " TO "
                             + this.dataAssegnazioneCommReferenteA + " ]";
                 }
-                sp.setQuery(query);
-                
-                
-                ///// MODIFICATO IN TRUE
+                sp.setQuery(query); 
                 
                 sp.addSort(sortField1, true);
                 sp.addSort(sortField2, true);
@@ -113,21 +110,17 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
-            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
-
-            // obtain as much table as the results spreaded across the resultSet
+            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione); 
             Map<String, Integer> group2count = this.retrieveLenghtMapConditional(commissione2atti, false);
             
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMapConferenza2(group2count, commissione2atti, 3, atto2commissione);
-            // convert to input stream
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMapConferenza2(group2count, commissione2atti, 3, atto2commissione); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissione2atti, atto2commissione);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -152,18 +145,15 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
 
                 Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto);
                 Map<QName, Serializable> commissioneProperties = nodeService.getProperties(atto2commissione.get(currentAtto));
-                /* extracting values from Alfresco */
-                // from Atto
+                /* extracting values from Alfresco */ 
                 String statoAtto = (String) this.getNodeRefProperty(attoProperties, "statoAtto");
                 if (this.checkStatoAtto(statoAtto)) {
                     XWPFTable currentTable = tables.get(tableIndex);
                     String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                     String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
-                    String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
-                    // from Commissione
+                    String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto"); 
                     String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
-                    Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
-                    // child of Atto
+                    Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione"); 
                     ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
                     String firmatari = this.renderFirmatariConGruppoList(firmatariList);
                     

@@ -57,9 +57,7 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 	
 	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef sedutaNodeRef, String gruppo) throws IOException{
 		
-		byte[] documentFilledByteArray = null;
-		
-		// map object containing terms for search in document
+		byte[] documentFilledByteArray = null; 
     	HashMap<String, String> searchTerms = new HashMap<String, String>();
     	
     	NodeRef legislatura = attoUtil.getLegislaturaCorrente();
@@ -92,18 +90,9 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 		
 		
 		List<NodeRef> attiTrattati = getAttiTrattati(sedutaNodeRef);
-		List<NodeRef> attiIndirizzoTrattati = getAttiIndirizzoTrattati(sedutaNodeRef);
-			
-		// riempimento placeholder
-		documentFilledByteArray = searchAndReplaceDocx(templateByteArray, searchTerms);
-		
-		// genrazione documento con le righe della tabella vuote 
-		documentFilledByteArray = createAttiTrattatiRowsAulaDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);
-		
-		
-		// generazione documento con le righe della tabella popolate
-		// non è stato possibile creare e riempire le righe in un solo passaggio per dei problemi sulla reference
-		// degli oggetti riga
+		List<NodeRef> attiIndirizzoTrattati = getAttiIndirizzoTrattati(sedutaNodeRef); 
+		documentFilledByteArray = searchAndReplaceDocx(templateByteArray, searchTerms); 
+		documentFilledByteArray = createAttiTrattatiRowsAulaDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);   
 		documentFilledByteArray = fillAttiTrattatiRowsAulaDocx(documentFilledByteArray, attiTrattati, attiIndirizzoTrattati);
 		
 		 
@@ -209,11 +198,7 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 			
 			searchAndReplaceParagraph(row.getCell(1), searchTerms);
 			
-		}
-		
-
-		
-		// rimuovo la riga template per gli atti interni
+		} 
 		int rowsAttiTrattatiNumber = attiTrattati.size() + 3;
 		table.removeRow(rowsAttiTrattatiNumber);
 		
@@ -247,9 +232,7 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 
 	        String firmatarioType = "{"+attoUtil.CRL_ATTI_MODEL+"}"+"firmatarioAttoIndirizzo";
 	        
-	        ResultSet firmatariNodes=null;
-	        
-			// Get firmatari
+	        ResultSet firmatariNodes=null; 
 	    	try{
 	    		
 		        firmatariNodes = searchService.query(attoTrattato.getStoreRef(),
@@ -274,9 +257,7 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand{
 
 			searchAndReplaceParagraph(row.getCell(1), searchTerms);
 			
-		}
-			
-		// rimuovo la riga template per gli atti interni
+		} 
 		int rowsAttiIndirizzoTrattatiNumber = attiTrattati.size() + attiIndirizzoTrattati.size() + 3;
 		table.removeRow(rowsAttiIndirizzoTrattatiNumber);
 		

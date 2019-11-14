@@ -80,8 +80,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
             for (String commissione : this.commissioniJson) {
                 SearchParameters sp = new SearchParameters();
                 sp.addStore(spacesStore);
-                sp.setLanguage(SearchService.LANGUAGE_LUCENE);
-                // solo atti da preso in carico a votato dalla commissione
+                sp.setLanguage(SearchService.LANGUAGE_LUCENE); 
                 String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:" + this.legislatura + "//*\""
                         + " AND TYPE:\""
                         + "crlatti:commissione"
@@ -104,18 +103,14 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                 ResultSet currentResults = this.searchService.query(sp);
                 commissione2results.put(commissione, currentResults);
             }
-            Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
-            // Chiusura resultset in retrieveAtti
+            Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>(); 
             LinkedListMultimap<String, NodeRef> commissione2atti = this
                     .retrieveAtti(commissione2results, spacesStore,
-                    atto2commissione);
-
-            // obtain as much table as the results spreaded across the resultSet
+                    atto2commissione); 
             XWPFDocument generatedDocument = docxManager
                     .generateFromTemplateMap(
                     this.retrieveLenghtMapConditional(commissione2atti, false),
-                    2, false);
-            // convert to input stream
+                    2, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
@@ -123,8 +118,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -158,9 +152,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                 Map<QName, Serializable> attoProperties = nodeService
                         .getProperties(currentAtto);
                 Map<QName, Serializable> commissioneProperties = nodeService
-                        .getProperties(currentCommissione);
-
-                // from Atto
+                        .getProperties(currentCommissione); 
                 String statoAtto = (String) this.getNodeRefProperty(
                         attoProperties, "statoAtto");
                 if (this.checkStatoAtto(statoAtto)) {
@@ -169,8 +161,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                     String iniziativa = (String) this.getNodeRefProperty(
                             attoProperties, "tipoIniziativa");
                     String oggetto = (String) this.getNodeRefProperty(
-                            attoProperties, "oggetto");
-                    // from Commissione
+                            attoProperties, "oggetto"); 
                     String tipoAtto = (String) this.getNodeRefProperty(
                             commissioneProperties, "tipoAttoCommissione");
                     Date dateAssegnazioneCommissione = (Date) this
@@ -190,8 +181,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                                 .checkDateEmpty(dateNomina);
                         elencoRelatori.add(relatore);
                         elencoDateNomina.add(dateNominaString);
-                    }
-                    // SCRL-352
+                    } 
                     ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
                     String firmatari = this.renderFirmatariConGruppoList(firmatariList);
 
@@ -215,8 +205,7 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
                     currentTable.getRow(3).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
                     currentTable.getRow(3).getCell(3).setText(this.checkStringEmpty(commReferente));
                     currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(commCoReferente));
-                    currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(commConsultiva));
-                    //SCRL-352
+                    currentTable.getRow(5).getCell(1).setText(this.checkStringEmpty(commConsultiva)); 
                     currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(firmatari));
                     docxManager.insertListInCell(currentTable.getRow(7).getCell(1), elencoRelatori);
                     docxManager.insertListInCell(currentTable.getRow(7).getCell(3), elencoDateNomina);

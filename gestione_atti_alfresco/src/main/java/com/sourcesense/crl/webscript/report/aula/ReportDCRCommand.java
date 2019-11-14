@@ -81,11 +81,9 @@ public class ReportDCRCommand extends ReportBaseCommand {
             }
             sp.setQuery(query);
             sp.addSort(sortField1, true);
-            attiResults = this.searchService.query(sp);
-            // obtain as much table as the results spreaded across the resultSet
+            attiResults = this.searchService.query(sp); 
             XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-                    attiResults.length(), 3, false);
-            // convert to input stream
+                    attiResults.length(), 3, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
@@ -93,8 +91,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         } finally {
         	if (attiResults!=null){
@@ -124,9 +121,7 @@ public class ReportDCRCommand extends ReportBaseCommand {
             NodeRef currentAtto = atti.getNodeRef(i);
             XWPFTable currentTable = tables.get(tableIndex);
             Map<QName, Serializable> attoProperties = nodeService
-                    .getProperties(currentAtto);
-
-            // from Atto
+                    .getProperties(currentAtto); 
             QName nodeRefType = nodeService.getType(currentAtto);
             String tipoAtto = (String) nodeRefType.getLocalName();
             if (tipoAtto.length() > 4) {

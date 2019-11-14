@@ -72,26 +72,17 @@ public class LetteraWebScript extends AbstractWebScript {
 		ResultSet templatesResultsGenerico=null;
 		ResultSet templatesResults=null;
 
-		try {
-
-			// Get json properties
+		try { 
 			String idAtto = (String) req.getParameter("idAtto");
 			String tipoTemplate = (String) req.getParameter("tipoTemplate");
-			String gruppo = (String) req.getParameter("gruppo");
-
-			// Get atto node
-			NodeRef attoNodeRef = new NodeRef(idAtto);
-
-			// scelta template per le forme plurali
+			String gruppo = (String) req.getParameter("gruppo"); 
+			NodeRef attoNodeRef = new NodeRef(idAtto); 
 			List<String> firmatariList = (List<String>) nodeService.getProperty(attoNodeRef,
 					QName.createQName(AttoUtil.CRL_ATTI_MODEL, AttoUtil.PROP_FIRMATARI));
 
-			boolean isTemplateFormaSingolare = true;
-			
-			//Modificata logica al fine di evitare query inutili
+			boolean isTemplateFormaSingolare = true; 
 			if (firmatariList != null && !firmatariList.isEmpty()) {
-				if (firmatariList.size() > 1) {
-					// template per la forma plurale
+				if (firmatariList.size() > 1) { 
 					templatesResultsPlurale = searchService.query(Repository.getStoreRef(),
 							SearchService.LANGUAGE_LUCENE,
 							"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""
@@ -99,14 +90,11 @@ public class LetteraWebScript extends AbstractWebScript {
 					if (templatesResultsPlurale != null && templatesResultsPlurale.length() > 0) {
 
 						isTemplateFormaSingolare = false;
-					} else {
-						// template per la forma singolare
+					} else { 
 						templatesResultsSingolare = searchService.query(Repository.getStoreRef(),
 								SearchService.LANGUAGE_LUCENE,
 								"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""
-										+ tipoTemplate + "\"" + " AND @cm\\:name:\"singolar*\"");
-						// possiamo usare un template in forma plurale perche'
-						// presente nel repo
+										+ tipoTemplate + "\"" + " AND @cm\\:name:\"singolar*\"");  
 					}
 				}
 			}
@@ -117,17 +105,13 @@ public class LetteraWebScript extends AbstractWebScript {
 				templatesResults = templatesResultsPlurale;
 			}
 
-			if (templatesResults == null || (templatesResults != null && templatesResults.length() == 0)) {
-				// non esiste un template con la gestione del singolare e del
-				// plurale
+			if (templatesResults == null || (templatesResults != null && templatesResults.length() == 0)) {  
 				templatesResults=templatesResultsGenerico = searchService.query(Repository.getStoreRef(), SearchService.LANGUAGE_LUCENE,
 						"PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates//*\" AND TYPE:\""
 								+ tipoTemplate + "\"");
 			}
 
-			NodeRef templateNodeRef = templatesResults.getNodeRef(0);
-
-			// Get byte array of template node content
+			NodeRef templateNodeRef = templatesResults.getNodeRef(0); 
 			ContentReader reader = contentService.getReader(templateNodeRef, ContentModel.PROP_CONTENT);
 			templateInputStream = reader.getContentInputStream();
 			byte[] templateByteArray = IOUtils.toByteArray(templateInputStream);
@@ -135,9 +119,7 @@ public class LetteraWebScript extends AbstractWebScript {
 			byte[] documentFilledByteArray = lettereCommandMap.get(tipoTemplate).generate(templateByteArray,
 					templateNodeRef, attoNodeRef, gruppo);
 
-			String nomeLettera = tipoTemplate.split(":")[1];
-
-			// Set response
+			String nomeLettera = tipoTemplate.split(":")[1]; 
 			res.setContentType("application/ms-word");
 			GregorianCalendar gc = new GregorianCalendar();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -150,12 +132,9 @@ public class LetteraWebScript extends AbstractWebScript {
 		} catch (Exception e) {
 			logger.error("Exception details: " + e.getMessage(), e);
 			throw new WebScriptException("Unable to generate document from template", e);
-		} finally {
-			//Chiusura Stream
+		} finally { 
 			IoUtil.closeSilently(templateInputStream);
-			IoUtil.closeSilently(responseOutputStream);
-			
-			//Chiusura Resultset
+			IoUtil.closeSilently(responseOutputStream); 
 			if (templatesResultsPlurale != null) {
 				templatesResultsPlurale.close();
 			}

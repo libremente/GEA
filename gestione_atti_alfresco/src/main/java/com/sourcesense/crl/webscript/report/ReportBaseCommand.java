@@ -213,8 +213,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
         for (String commissione : attoChild2results.keySet()) {
             ResultSet commissioneResults = attoChild2results.get(commissione);
             List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
-            commissioneResults.close();
-            //ORDER LIST
+            commissioneResults.close(); 
             sortAttiCommissione(nodeRefList);
             
             this.retrieveAttiFromList(nodeRefList, spacesStore, atto2child,
@@ -238,9 +237,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
         LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
         for (String commissione : attoChild2results.keySet()) {
             ResultSet commissioneResults = attoChild2results.get(commissione);
-            List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
-
-            //ORDER LIST
+            List<NodeRef> nodeRefList = commissioneResults.getNodeRefs(); 
             sortAttiCommissione(nodeRefList);
 
             this.retrieveAttiLicenziatiFromList(nodeRefList, spacesStore, atto2child,
@@ -265,8 +262,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
         for (String commissione : attoChild2results.keySet()) {
             ResultSet commissioneResults = attoChild2results.get(commissione);
             List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
-            commissioneResults.close();
-            //ORDER LIST
+            commissioneResults.close(); 
             sortAttiCommissione(nodeRefList);
 
             this.retrieveAttiAssCommissioneFromList(nodeRefList, spacesStore, atto2child,
@@ -290,9 +286,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
         LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
         for (String commissione : attoChild2results.keySet()) {
             ResultSet commissioneResults = attoChild2results.get(commissione);
-            List<NodeRef> nodeRefList = commissioneResults.getNodeRefs();
-
-            //ORDER LIST
+            List<NodeRef> nodeRefList = commissioneResults.getNodeRefs(); 
             sortAttiParere(nodeRefList);
 
             this.retrieveAttiFromList(nodeRefList, spacesStore, atto2child,
@@ -469,9 +463,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 QName nodeRefType = nodeService.getType(attoNodeRef);
                 QName attoRefType = QName.createQName(CRL_ATTI_MODEL, "atto");
                 check = dictionaryService.isSubClass(nodeRefType, attoRefType);
-            }
-            
-            //controllo per la dataVotazione che dovrebbe essere sempre valorizzata per gli atti licenziati
+            } 
             Date dataVotazione = (Date) nodeService.getProperty(attoNodeRef, AttoUtil.PROP_DATA_VOTAZIONE);
             if(dataVotazione!=null){
             	child2atti.put(child, attoNodeRef);
@@ -613,9 +605,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
         String luceneCommissioneNodePath = nodeService.getPath(
                 commissioneNodeRef).toPrefixString(namespacePrefixResolver);
 
-        String relatoreType = "{" + CRL_ATTI_MODEL + "}" + "relatore";
-
-        // Get relatore
+        String relatoreType = "{" + CRL_ATTI_MODEL + "}" + "relatore"; 
         ResultSet relatoreNodes = searchService.query(
                 commissioneNodeRef.getStoreRef(),
                 SearchService.LANGUAGE_LUCENE, "PATH:\""
@@ -932,11 +922,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
     	String luceneQuery = GRUPPO_FIRMATARIO_QUERY_ATTIVI.replaceAll(QUERY_REPLACER, firmatario);
 		ResultSet firmatarioAttiviResults = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_LUCENE, luceneQuery);
 		NodeRef firmatarioNodeRef = null;
-		if(firmatarioAttiviResults.length()>0){
-			//e' un consigliere attivo
+		if(firmatarioAttiviResults.length()>0){ 
 			firmatarioNodeRef = firmatarioAttiviResults.getNodeRef(0);
-		} else {
-			//cerco tra i consiglieri storici
+		} else { 
 			luceneQuery = GRUPPO_FIRMATARIO_QUERY_STORICI.replaceAll(QUERY_REPLACER, firmatario);
 			ResultSet firmatarioStoriciResults = searchService.query(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE, SearchService.LANGUAGE_LUCENE, luceneQuery);
 			if(firmatarioStoriciResults.length()>0){
@@ -1015,12 +1003,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
      */
     protected void initCommonParams(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
-        initTipiAtto(json);
-        // extract the ruoloCommissione element from json
+        initTipiAtto(json); 
         this.ruoloCommissione = JsonUtils.retieveElementFromJson(rootJson,
-                "ruoloCommissione");
-        // converts the ruoloCommissione to a lucene field
-        // extract the commissioni list from json
+                "ruoloCommissione");  
         this.commissioniJson = JsonUtils.retieveArrayListFromJson(rootJson,
                 "commissioni");
 
@@ -1181,11 +1166,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @throws JSONException
      */
     protected void initTipiAtto(String json) throws JSONException {
-        JSONObject rootJson = new JSONObject(json);
-        // extract the tipiAtto list from the json string
+        JSONObject rootJson = new JSONObject(json); 
         List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
-                rootJson, "tipiAtto");
-        // convert the list in the lucene format
+                rootJson, "tipiAtto"); 
         this.tipiAttoLucene = tipiAttoJson;
     }
 
@@ -1198,8 +1181,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      */
     protected void initTipiAttoLuceneAtto(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
-        this.tipiAttoLucene = Lists.newArrayList();
-        // extract the tipiAtto list from the json string
+        this.tipiAttoLucene = Lists.newArrayList(); 
         List<String> tipiAttoJson = JsonUtils.retieveArrayListFromJson(
                 rootJson, "tipiAtto");
         for (String tipoAtto : tipiAttoJson) {

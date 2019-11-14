@@ -104,13 +104,9 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
             System.out.println("End of search phase: "+(System.currentTimeMillis()-startTs)+"ms");
-            Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
-            //Resultset chiusi in retrieveAttiReportAssCommissione
-            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAttiReportAssCommissione(commissione2results, spacesStore, atto2commissione);
-
-            // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMapAssCommissioni(this.retrieveLenghtMapConditional(commissione2atti, false), 3, false);
-            // convert to input stream
+            Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>(); 
+            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAttiReportAssCommissione(commissione2results, spacesStore, atto2commissione); 
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMapAssCommissioni(this.retrieveLenghtMapConditional(commissione2atti, false), 3, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             System.out.println("Before fill template: "+(System.currentTimeMillis()-startTs)+"ms");
@@ -120,8 +116,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
             finalDocument.write(ostream);
 
             System.out.println("outputstream written: "+(System.currentTimeMillis()-startTs)+"ms");
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -156,8 +151,7 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                 if (this.checkStatoAtto(statoAtto)) {
 
                   XWPFTable currentTable = tables.get(tableIndex);
-                  /* value extraction from Alfresco */
-                  // from Atto
+                  /* value extraction from Alfresco */ 
                     String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                   String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
                   String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
@@ -165,17 +159,12 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                   String commReferente = this.renderList(commReferenteList);
 
                   ArrayList<String> commCoReferenteList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "commCoreferente");
-                  String commCoReferente = this.renderList(commCoReferenteList);
-
-                  //SCRL-352
+                  String commCoReferente = this.renderList(commCoReferenteList); 
                   ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
-                  String firmatari = this.renderFirmatariConGruppoList(firmatariList);
-
-                  // from Commissione
+                  String firmatari = this.renderFirmatariConGruppoList(firmatariList); 
                   String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
                   Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
-                  String ruoloCommissione = (String) this.getNodeRefProperty(commissioneProperties, "ruoloCommissione");
-                  // from Atto
+                  String ruoloCommissione = (String) this.getNodeRefProperty(commissioneProperties, "ruoloCommissione"); 
                   ArrayList<String> pareriList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "organismiStatutari");
                   String altriPareri = this.renderList(pareriList);
 
@@ -185,14 +174,12 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
                   currentTable.getRow(0).getCell(1).setText(this.checkStringEmpty(tipoAtto.toUpperCase() + " " + numeroAtto));
                   currentTable.getRow(1).getCell(1).setText(this.checkStringEmpty(ruoloCommissione));
                   currentTable.getRow(2).getCell(1).setText(this.checkStringEmpty(decodeTipoIniziativa(iniziativa)));
-                  currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(oggetto));
-                  //SCRL-352
+                  currentTable.getRow(3).getCell(1).setText(this.checkStringEmpty(oggetto)); 
                   currentTable.getRow(4).getCell(1).setText(this.checkStringEmpty(firmatari));
                   currentTable.getRow(5).getCell(1).setText(this.checkDateEmpty(dateAssegnazioneCommissione));
                   currentTable.getRow(6).getCell(1).setText(this.checkStringEmpty(altriPareri));
                   currentTable.getRow(7).getCell(1).setText(this.checkStringEmpty(commReferente));
-                  currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commCoReferente));
-                  //SCRL-415
+                  currentTable.getRow(8).getCell(1).setText(this.checkStringEmpty(commCoReferente)); 
                   currentTable.getRow(9).getCell(1).setText(this.checkStringEmpty(commConsultiva));
 
                   tableIndex++;

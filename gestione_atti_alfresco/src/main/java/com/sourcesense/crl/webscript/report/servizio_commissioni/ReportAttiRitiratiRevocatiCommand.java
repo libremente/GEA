@@ -95,12 +95,10 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
                 tipoAtto2results.put(tipoAtto, attiResult);
             }
             LinkedListMultimap<String, NodeRef> tipoAtto2atti = this
-                    .retrieveAtti(tipoAtto2results);
-            // obtain as much table as the results spreaded across the resultSet
+                    .retrieveAtti(tipoAtto2results); 
             XWPFDocument generatedDocument = docxManager
                     .generateFromTemplateMap(
-                    this.retrieveLenghtMapConditional(tipoAtto2atti, true), 3, false);
-            // convert to input stream
+                    this.retrieveLenghtMapConditional(tipoAtto2atti, true), 3, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
@@ -108,8 +106,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -165,8 +162,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
                     if (tipoAtto.length() > 4) {
                         tipoAtto = tipoAtto.substring(4);
                     }
-                    XWPFTable currentTable = tables.get(tableIndex);
-                    // from Atto
+                    XWPFTable currentTable = tables.get(tableIndex); 
                     String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                     String iniziativa = (String) this.getNodeRefProperty(
                             attoProperties, "tipoIniziativa");
@@ -175,8 +171,7 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
                     Date datePresentazione = (Date) this.getNodeRefProperty(
                             attoProperties, "dataIniziativa");
                     Date dateRevoca = (Date) this.getNodeRefProperty(
-                            attoProperties, "dataChiusura");
-                    // child of Atto
+                            attoProperties, "dataChiusura"); 
                     ArrayList<String> firmatariList = (ArrayList<String>) this
                             .getNodeRefProperty(attoProperties, "firmatari");
                     String firmatari = this.renderFirmatariConGruppoList(firmatariList);

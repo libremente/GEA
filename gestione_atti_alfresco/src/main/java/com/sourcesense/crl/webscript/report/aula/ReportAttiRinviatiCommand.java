@@ -82,11 +82,9 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
             sp.setQuery(query);
             sp.addSort(sortField1, true);
             sp.addSort(sortField2, true);
-            attiResults = this.searchService.query(sp);
-            // obtain as much table as the results spreaded across the resultSet
+            attiResults = this.searchService.query(sp); 
             XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-                    attiResults.length(), 4, false);
-            // convert to input stream
+                    attiResults.length(), 4, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
@@ -94,8 +92,7 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         } finally {
         	if (attiResults!=null){

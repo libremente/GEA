@@ -71,12 +71,9 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
         String query = "PATH: \"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"";
         sp.setQuery(query);
         sp.addSort(sortField1, true);
-        ResultSet commissioniResult = this.searchService.query(sp);
-
-        // obtain as much table as the results spreaded across the resultSet
+        ResultSet commissioniResult = this.searchService.query(sp); 
         XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-                commissioniResult.length(), 2, false);
-        // convert to input stream
+                commissioniResult.length(), 2, false); 
         ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
         
         XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissioniResult, docxManager);
@@ -104,8 +101,7 @@ public class ReportComposizioneCommissioniCommand extends ReportBaseCommand {
         int tableIndex = 0;
         List<XWPFTable> tables = document.getTables();
         for (NodeRef currentCommissione : commissioniResult.getNodeRefs()) {
-            XWPFTable currentTable = tables.get(tableIndex);
-            // from Commissione
+            XWPFTable currentTable = tables.get(tableIndex); 
             String nomeCommissione = (String) nodeService.getProperty(currentCommissione, ContentModel.PROP_NAME);
             List<ChildAssociationRef> consiglieriAssList = nodeService.getChildAssocs(currentCommissione);
             List<String> consiglieri = new ArrayList<String>();

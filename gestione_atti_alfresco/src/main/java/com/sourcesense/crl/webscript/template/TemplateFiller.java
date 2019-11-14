@@ -49,14 +49,10 @@ public class TemplateFiller {
         logger.info("Enter 'searchAndReplace' method");
 
         try {
-            HWPFDocument document = new HWPFDocument(new ByteArrayInputStream(documentByteArray));
-
-            // Range and Paragraph of Document
+            HWPFDocument document = new HWPFDocument(new ByteArrayInputStream(documentByteArray)); 
             Range docRange = document.getRange();
             int numParagraphs = docRange.numParagraphs();
-            logger.info("docRange="+docRange+" and numParagraphs="+numParagraphs);
-
-            // Recover a Set of the keys in the HashMap
+            logger.info("docRange="+docRange+" and numParagraphs="+numParagraphs); 
             Set<String> keySet = replacements.keySet();
             logger.info("keySet="+keySet);
 
@@ -66,35 +62,24 @@ public class TemplateFiller {
             int numCharRuns = 0;
             String text = null;
             String key = null;
-            String value = null;
-
-            // Step through each Paragraph
+            String value = null; 
             for (int i = 0; i < numParagraphs; i++) {
                 paragraph = docRange.getParagraph(i);
-                logger.info("paragraph n. "+i);
-
-                // Get the number of CharacterRuns in the Paragraph
+                logger.info("paragraph n. "+i); 
                 numCharRuns = paragraph.numCharacterRuns();
                 logger.info("numCharRuns="+numCharRuns);
 
                 for (int j = 0; j < numCharRuns; j++) {
                     charRun = paragraph.getCharacterRun(j);
-                    logger.info("charRun n. "+j);
-
-                    // Get the text from the CharacterRun
+                    logger.info("charRun n. "+j); 
                     text = charRun.text();
-                    logger.info("text="+text);
-
-                    // KeySet Iterator
+                    logger.info("text="+text); 
                     keySetIterator = keySet.iterator();
-                    while (keySetIterator.hasNext()) {
-                        // check the key in CharacterRuns text
-                        key = keySetIterator.next();
-                        //logger.info("key="+key);
+                    while (keySetIterator.hasNext()) { 
+                        key = keySetIterator.next(); 
 
                         if (text.contains(key)) {
-                            logger.info("text contains key="+key);
-                            // replace term
+                            logger.info("text contains key="+key); 
                             if (replacements.get(key) != null) {
                                 value = replacements.get(key);
                             } else {
@@ -123,8 +108,7 @@ public class TemplateFiller {
             return ostream.toByteArray();
         } catch (Exception e) {
             logger.error("Exception details: " + e.getMessage());
-            return null;
-            // throw new GenerateDocumentException(TemplateFiller.class.getName(), e);
+            return null; 
         }
     }
 
@@ -139,9 +123,7 @@ public class TemplateFiller {
             Range docRange = headerStore.getOddFooterSubrange();
 
             if (docRange != null) {
-                int numParagraphs = docRange.numParagraphs();
-
-                // Recover a Set of the keys in the HashMap
+                int numParagraphs = docRange.numParagraphs(); 
                 Set<String> keySet = replacements.keySet();
 
                 Paragraph paragraph = null;
@@ -150,31 +132,19 @@ public class TemplateFiller {
                 int numCharRuns = 0;
                 String text = null;
                 String key = null;
-                String value = null;
-
-                // Step through each Paragraph
+                String value = null; 
                 for (int i = 0; i < numParagraphs; i++) {
-                    paragraph = docRange.getParagraph(i);
-
-                    // Get the number of CharacterRuns in the Paragraph
+                    paragraph = docRange.getParagraph(i); 
                     numCharRuns = paragraph.numCharacterRuns();
 
                     for (int j = 0; j < numCharRuns; j++) {
 
-                        charRun = paragraph.getCharacterRun(j);
-
-                        // Get the text from the CharacterRun
-                        text = charRun.text();
-
-                        // KeySet Iterator
+                        charRun = paragraph.getCharacterRun(j); 
+                        text = charRun.text(); 
                         keySetIterator = keySet.iterator();
-                        while (keySetIterator.hasNext()) {
-
-                            // check the key in CharacterRuns text
+                        while (keySetIterator.hasNext()) { 
                             key = keySetIterator.next();
-                            if (text.contains(key)) {
-
-                                // replace term
+                            if (text.contains(key)) { 
                                 if (replacements.get(key) != null) {
                                     value = replacements.get(key);
                                 } else {
@@ -198,8 +168,7 @@ public class TemplateFiller {
 
         } catch (Exception e) {
             logger.error("Exception details: " + e.getMessage());
-            return null;
-            // throw new GenerateDocumentException(TemplateFiller.class.getName(), e);
+            return null; 
         }
 
 

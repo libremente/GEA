@@ -85,11 +85,9 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
             sp.setQuery(query);
             sp.addSort(sortField1, true);
             sp.addSort(sortField2, true);
-            attiResults = this.searchService.query(sp);
-            // obtain as much table as the results spreaded across the resultSet
+            attiResults = this.searchService.query(sp); 
             XWPFDocument generatedDocument = docxManager.generateFromTemplate(
-                    this.retrieveLenght(attiResults), 2, false);
-            // convert to input stream
+                    this.retrieveLenght(attiResults), 2, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream,
@@ -97,8 +95,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         } finally {
         	if (attiResults!=null){
@@ -133,8 +130,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
             String statoAtto = (String) this.getNodeRefProperty(attoProperties,
                     "statoAtto");
             if (this.checkStatoAtto(statoAtto)) {
-                XWPFTable currentTable = tables.get(tableIndex);
-                // from Atto
+                XWPFTable currentTable = tables.get(tableIndex); 
                 QName nodeRefType = nodeService.getType(currentAtto);
                 String tipoAtto = (String) nodeRefType.getLocalName();
                 if (tipoAtto.length() > 4) {

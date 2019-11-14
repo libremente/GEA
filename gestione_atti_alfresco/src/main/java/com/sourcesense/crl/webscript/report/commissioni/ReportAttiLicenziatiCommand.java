@@ -110,19 +110,15 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                 commissione2results.put(commissione, currentResults);
             }
             Map<NodeRef, NodeRef> atto2commissione = new LinkedHashMap<NodeRef, NodeRef>();
-            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione);
-
-            // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMapConditional(commissione2atti, false), 2, false);
-            // convert to input stream
+            LinkedListMultimap<String, NodeRef> commissione2atti = this.retrieveAtti(commissione2results, spacesStore, atto2commissione); 
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMapConditional(commissione2atti, false), 2, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream, commissione2atti, atto2commissione, docxManager);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -164,9 +160,7 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                 if (this.checkStatoAtto(statoAtto)) {
 
                     XWPFTable currentTable = tables.get(tableIndex);
-                    ResultSet relatori = this.getRelatori(currentCommissione);
-
-                    // from Atto
+                    ResultSet relatori = this.getRelatori(currentCommissione); 
                     String numeroAtto = StringUtils.EMPTY + (Integer) this.getNodeRefProperty(attoProperties, "numeroAtto")+(String) this.getNodeRefProperty(attoProperties,"estensioneAtto");
                     String iniziativa = (String) this.getNodeRefProperty(attoProperties, "tipoIniziativa");
                     String oggetto = (String) this.getNodeRefProperty(attoProperties, "oggetto");
@@ -177,15 +171,12 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
                     Date dateLr = (Date) this.getNodeRefProperty(attoProperties, "dataLr");
 
                     ArrayList<String> firmatariList = (ArrayList<String>) this.getNodeRefProperty(attoProperties, "firmatari");
-                    String firmatari = this.renderFirmatariConGruppoList(firmatariList);
-
-                    // from Commissione
+                    String firmatari = this.renderFirmatariConGruppoList(firmatariList); 
                     String tipoAtto = (String) this.getNodeRefProperty(commissioneProperties, "tipoAttoCommissione");
                     String esitoValutazione = (String) this.getNodeRefProperty(commissioneProperties, "esitoVotazioneCommissione");
                     Date dateAssegnazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataAssegnazioneCommissione");
                     Date dateVotazioneCommissione = (Date) this.getNodeRefProperty(commissioneProperties, "dataVotazioneCommissione");
-                    String ruoloCommissione = (String) this.getNodeRefProperty(commissioneProperties, "ruoloCommissione");
-                    // from Atto
+                    String ruoloCommissione = (String) this.getNodeRefProperty(commissioneProperties, "ruoloCommissione"); 
 
                     List<String> elencoRelatori = Lists.newArrayList();
                     List<String> elencoDateNomina = Lists.newArrayList();

@@ -52,15 +52,9 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
         QName templateType = nodeService.getType(templateNodeRef);
         String nomeTemplate = templateType.getLocalName();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", Locale.ITALY);
-
-        // map object containing terms for search in document
-        HashMap<String, String> searchTerms = new HashMap<String, String>();
-
-        // map object containing terms for search in document
-        HashMap<String, String> searchTermsFooter = new HashMap<String, String>();
-
-        // Set properties from template
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", Locale.ITALY); 
+        HashMap<String, String> searchTerms = new HashMap<String, String>(); 
+        HashMap<String, String> searchTermsFooter = new HashMap<String, String>(); 
         String firmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(attoUtil.CRL_TEMPLATE_MODEL, PROP_FIRMATARIO));
         searchTerms.put("<firmatario>", firmatario);
 
@@ -77,9 +71,7 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
         searchTermsFooter.put("<numeroTelFirmatario>", numeroTelFirmatario);
 
         String emailFirmatario = (String) nodeService.getProperty(templateNodeRef, QName.createQName(attoUtil.CRL_TEMPLATE_MODEL, PROP_EMAILFIRMATARIO));
-        searchTermsFooter.put("<emailFirmatario>", emailFirmatario);
-
-        // Set properties from atto
+        searchTermsFooter.put("<emailFirmatario>", emailFirmatario); 
         String numeroAtto = ((Integer) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_NUM_ATTO)))
                 + ((String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_ESTENSIONE_ATTO)));
         String oggettoAtto = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_OGGETTO_ATTO));
@@ -100,16 +92,14 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
 
 
         String dataOdiernaString = formatter.format(new Date());
-        searchTerms.put("<dataOdierna>", dataOdiernaString);
-        //aggiunto tipo atto nel modello
+        searchTerms.put("<dataOdierna>", dataOdiernaString); 
       	String tipoAttoSigla= getTipoAttoSigla(attoNodeRef);
       	
         searchTerms.put("<tipoAttoSigla>", tipoAttoSigla);
         searchTerms.put("<numeroAtto>", numeroAtto);
         searchTerms.put("<oggettoAtto>", oggettoAtto);
         searchTerms.put("<numeroLCR>", numeroLCR);
-        searchTerms.put("<numeroDCR>", numeroDCR);
-//		searchTerms.put("<legislatura>", legislatura);
+        searchTerms.put("<numeroDCR>", numeroDCR); 
 
         List<String> commissioniReferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONI_REFERENTI));
         List<String> commissioniCoreferenti = (List<String>) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_COREFERENTE));
@@ -117,21 +107,13 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
         String commissioneDeliberante = (String) nodeService.getProperty(attoNodeRef, QName.createQName(attoUtil.CRL_ATTI_MODEL, attoUtil.PROP_COMMISSIONE_DELIBERANTE));
 
 
-        List<String> listaCommissioniPrincipali = new ArrayList<String>();
-
-        // Check for commissione referente
+        List<String> listaCommissioniPrincipali = new ArrayList<String>(); 
         if (commissioniReferenti != null && commissioniReferenti.size() > 0) {
 
-            listaCommissioniPrincipali.add(commissioniReferenti.get(0));
-
-            // Commissione referente not exists	
-        } else {
-
-            // Check for commissione redigente
+            listaCommissioniPrincipali.add(commissioniReferenti.get(0)); 
+        } else { 
             if (commissioneRedigente != null && !commissioneRedigente.equals("")) {
-                listaCommissioniPrincipali.add(commissioneRedigente);
-
-                // If commissione redigente not exists than Check for commissione deliberante	
+                listaCommissioniPrincipali.add(commissioneRedigente); 
             } else {
                 if (commissioneDeliberante != null && !commissioneDeliberante.equals("")) {
                     listaCommissioniPrincipali.add(commissioneDeliberante);
@@ -150,11 +132,7 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
         if (listaCommissioniPrincipali.size() > 0) {
             String commissionePrincipale = listaCommissioniPrincipali.get(0);
             searchTerms.put("<commissioneReferente>", commissionePrincipale);
-        }
-
-
-
-        // Create commissioni principali address list 
+        } 
         String listaCommissioniPrincipaliDestString = "";
 
         for (int i = 0; i < listaCommissioniPrincipali.size(); i++) {
@@ -185,13 +163,8 @@ public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
         if (ultimoOrganoStatutario != null) {
             String ultimoOrganoStatutarioString = (String) nodeService.getProperty(ultimoOrganoStatutario, ContentModel.PROP_NAME);
             searchTerms.put("<ultimoOrganoStatutario>", ultimoOrganoStatutarioString);
-        }
-
-
-        // Generate byte array of filled document content
-        documentFilledByteArray = TemplateFiller.searchAndReplace(templateByteArray, searchTerms);
-
-        // Fill doc footer
+        } 
+        documentFilledByteArray = TemplateFiller.searchAndReplace(templateByteArray, searchTerms); 
         documentFilledByteArray = TemplateFiller.searchAndReplaceFooter(documentFilledByteArray, searchTermsFooter);
 
         logger.info("Generazione della lettera completata - template: " + nomeTemplate);

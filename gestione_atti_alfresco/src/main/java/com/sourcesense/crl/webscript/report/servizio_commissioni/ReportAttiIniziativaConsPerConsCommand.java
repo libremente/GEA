@@ -116,18 +116,15 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
             ResultSet attiResult = this.searchService.query(sp);
             firmatario2results.put(this.firmatario, attiResult);
 
-            LinkedListMultimap<String, NodeRef> firmatario2atti = this.retrieveAtti(firmatario2results);
-            // obtain as much table as the results spreaded across the resultSet
-            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(firmatario2atti), 2, false);
-            // convert to input stream
+            LinkedListMultimap<String, NodeRef> firmatario2atti = this.retrieveAtti(firmatario2results); 
+            XWPFDocument generatedDocument = docxManager.generateFromTemplateMap(this.retrieveLenghtMap(firmatario2atti), 2, false); 
             ByteArrayInputStream tempInputStream = saveTemp(generatedDocument);
 
             XWPFDocument finalDocument = this.fillTemplate(tempInputStream, firmatario2atti);
             ostream = new ByteArrayOutputStream();
             finalDocument.write(ostream);
 
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
+        } catch (JSONException e) { 
             e.printStackTrace();
         }
         return ostream.toByteArray();
@@ -163,9 +160,7 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
         for (String firmatario : firmatario2atti.keySet()) {
             for (NodeRef currentAtto : firmatario2atti.get(firmatario)) {
                 XWPFTable currentTable = tables.get(tableIndex);
-                Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto);
-
-                // from Atto
+                Map<QName, Serializable> attoProperties = nodeService.getProperties(currentAtto); 
                 QName nodeRefType = nodeService.getType(currentAtto);
                 String tipoAtto = (String) nodeRefType.getLocalName();
                 if (tipoAtto.length() > 4) {

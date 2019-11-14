@@ -79,8 +79,7 @@ public class OpenDataCommand {
 	}
 
 	public OpenDataCommand() {
-		super();
-		// TODO Auto-generated constructor stub
+		super(); 
 	}
 
 	public String getIdAtto(NodeRef nodeRef) {
