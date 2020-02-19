@@ -24,4 +24,4 @@ Le potenzialitá del framework si possono riassumere nelle seguenti:
 * Alte performance
 * Alta modularitá dei suoi componenti (che rende possibile esporre servizi standalone o su servlet container)
 
-![alt](/stack.png)
+![alt](stack.png)
