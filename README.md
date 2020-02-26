@@ -25,3 +25,17 @@ Le potenzialitá del framework si possono riassumere nelle seguenti:
 * Alta modularitá dei suoi componenti (che rende possibile esporre servizi standalone o su servlet container)
 
 ![alt](stack.png)
+
+MODULO crl_web
+
+Questo modulo permette all'utente di seguire il ciclo di vita del documento legale. Una volta compilato, si ottiene una webapp che si connette ad Alfresco e, a seconda del profilo utente (ottenuto da LDAP), permette all'utente di effettuare operazioni di lettura/scrittura relative ad un documento ufficiale. La webapp si connette ad Alfresco e mostra un'interfaccia utente personalizzata con diverse sezioni come: home, inserimento di un nuovo documento legale, gestione delle sessioni di parlament e report. Il ciclo di vita del documento deve essere inteso come un flusso di lavoro con diversi passaggi. A seconda dei permessi dell'utente, un ciclo di vita completo può essere completato e pubblicato.
+
+La webapp è sviluppata utilizzando la molla. Spnego viene utilizzato per lo scambio di informazioni con l'utente. Per UI, JSF. Viene implementato un modello software MVC.
+
+MODULO crl_business
+
+Questo modulo implementa tutte le logiche di business che comunicano con Alfresco e crea tutte le operazioni documentali durante il ciclo di vita di un documento..... Il vaso finale costruito viene utilizzato in crl_web. 
+
+MODULO gestione_atti_share
+
+Questo modulo appartiene alla ALFRESCO SDK. Con questo modulo è possibile costruire un'istanza di Alfresco Share che può essere implementata in un server di molo (come ciclo di vita del molo). Questo non è un artefatto Alfresco-all-in-one, quindi non è necessario alcun modulo alfresco. In questo modulo è possibile vedere tutte le personalizzazioni di alfresco share per il ciclo di vita dei documenti della Regione Lombardia. La maggior parte delle personalizzazioni si trovano su share-config-custom.xml. Diverse tipologie sono dichiarate per creare questo tipo di documenti direttamente da Share alfresco. Anche gli aspetti personalizzati del modello di contenuto CRL sono mostrati agli utenti finali. Anche i metadati per i documenti CRL-documenti su moduli Share sono personalizzati. La ricerca avanzata è personalizzata anche per la Regione Lombardia. 
