@@ -1,5 +1,11 @@
 # Sistema Informativo Gestione Atti (GEA)
 ## Consiglio regionale della Lombardia
+
+## Aggiungere struttiura repositiry elenco contenuto delle cartelle
+## Aggiungere requisiti minimi di sistema
+## contesto di utilizzo e casi d’uso (quella di domimnio)
+## finalità del software (a livello di dominio)
+## screenshot
 Il Sistema Informativo di __Gestioni Atti del Consiglio regionale della Lombardia__ ha come architettura:
 
 * __Front - end__: maschera che gli utenti utilizzano per entrare nel sistema.
