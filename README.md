@@ -8,10 +8,10 @@
 ### Struttiura del repositiry 
 
 il respository consiste in un albero di direttori composto dalle seguenti cartelle:
-	- doc (contiene la documentazione del progettoo in formato .html, .cocx,.pdf)
-    - gestione_atti_alfresco (Modulo Amp per Alfresco)
-    - gestione_atti_share (Modulo Amp per Alfresco Share)
-    - web (Contiene una webapp Sprinng)
+  - doc (contiene la documentazione del progettoo in formato .html, .cocx,.pdf)
+  - gestione_atti_alfresco (Modulo Amp per Alfresco)
+  - gestione_atti_share (Modulo Amp per Alfresco Share)
+  - web (Contiene una webapp Sprinng)
  In ognuna delle sotto cartelle potrete trovare un readme che descive il modulo e dichiara la licenza d'uso.
  Le licenze d'uso contenute in questo repository sono tre:
   - GPL 3.0
