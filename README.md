@@ -1,7 +1,23 @@
 # Sistema Informativo Gestione Atti (GEA)
-## Consiglio regionale della Lombardia
 
-## Aggiungere struttiura repositiry elenco contenuto delle cartelle
+- Copyright Consiglio regionale della Lombardia
+- Stato del progetto: stable
+- Mantenimento in carico a sourcesense
+- Per segnalare CVE e problemi di sicurezza scrivere a sys-admin @ sourcesense.com
+
+### Struttiura del repositiry 
+
+il respository consiste in un albero di direttori composto dalle seguenti cartelle:
+	- doc (contiene la documentazione del progettoo in formato .html, .cocx,.pdf)
+    - gestione_atti_alfresco (Modulo Amp per Alfresco)
+    - gestione_atti_share (Modulo Amp per Alfresco Share)
+    - web (Contiene una webapp Sprinng)
+ In ognuna delle sotto cartelle potrete trovare un readme che descive il modulo e dichiara la licenza d'uso.
+ Le licenze d'uso contenute in questo repository sono tre:
+  - GPL 3.0
+  - CC 4.0
+  - Apache 2.0
+
 ## Aggiungere requisiti minimi di sistema
 ## contesto di utilizzo e casi d’uso (quella di domimnio)
 ## finalità del software (a livello di dominio)
