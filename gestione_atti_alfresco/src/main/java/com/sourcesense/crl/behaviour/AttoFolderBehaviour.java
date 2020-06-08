@@ -64,6 +64,12 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.*;
 
+/**
+ * Behaviour creato in Alfresco per gestire gli eventi degli atti prima di cancellare un documento/atto in Alfresco e quando si aggiornano le proprietà di un documento/atto in Alfresco
+ * @author sourcesense
+ * @see https://docs.alfresco.com/5.2/references/dev-extension-points-behaviors.html
+ */
+
 public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNodePolicy,
         NodeServicePolicies.OnUpdatePropertiesPolicy, NodeServicePolicies.OnCreateNodePolicy, NodeServicePolicies.OnDeleteNodePolicy {
 
@@ -171,6 +177,11 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         this.listSeparator = listSeparator;
     }
 
+    /**
+     * Metodo che inizializza i behaviour che rimarranno in ascolto dentro Alfresco Repository
+     * 
+     * Due behaviour: beforeDeleteNode,onUpdateProperties, onCreateNode
+     */
     public void init() {
         this.beforeDeleteNode = new JavaBehaviour(this, "beforeDeleteNode", NotificationFrequency.EVERY_EVENT);
         this.policyComponent.bindClassBehaviour(NodeServicePolicies.BeforeDeleteNodePolicy.QNAME, ATTI_INDIRIZZO_ASPECT,
@@ -191,6 +202,12 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         this.policyComponent.bindClassBehaviour(NodeServicePolicies.OnDeleteNodePolicy.QNAME, PUBBLICABILE_ASPECT, this.onDeleteNode);
     }
 
+    /**
+     * Metodo che si esegue quando si attiva il behaviour beforeDeleteNode. 
+     * Si genera un report in xml e si piazza: /app:company_home/cm:Export/cm:Gestione_x0020_Atti/cm:AttiIndirizzo
+     * @param NodeRef con il nodo sul quale si è avviata l'azione di delete.
+     * 
+     */
     public void beforeDeleteNode(NodeRef nodeRef) {
 
         String CRL_ATTI_MODEL = "http://www.regione.lombardia.it/content/model/atti/1.0";
@@ -320,6 +337,11 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
 
     }
 
+    /**
+     * Crea la struttura di dati da inviare come messaggio SOAP al WS Opendata.
+     * @param childRef nodo che in base alla proprietà 
+     * @return Stringa con tutto il contenuto del messaggio da inviare al WS Opendata.
+     */
     private String generateOdAtto(NodeRef childRef) {
         StringBuilder odAtto = new StringBuilder("");
         int n = modelProperties.length;
@@ -449,6 +471,13 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         return odAtto.toString();
     }
 
+    /**
+     * Metodo che si esegue quando si attiva il behaviour onCreateNode. 
+     * Crea una richiesta per il Web Service di OPENDATA per la notifica della modifica dell'atto. 
+     * Se va in errore, si notifica tramite mail l'esito negativo 
+     * @param ChildAssociationRef Nodo figlio con il quale creare la struttura di dati da inviare al Web Service.
+     * 
+     */
     @Override
     public void onCreateNode(ChildAssociationRef childAssocRef) {
         String odAtto = "";
@@ -468,6 +497,16 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         }
     }
 
+    /**
+     * Metodo che si esegue quando si attiva il behaviour onUpdateProperties. 
+     * Crea una richiesta per il Web Service di OPENDATA per la notifica dell'aggiornamento dell'atto.Se mancano dei dati nell'atto, non si invia la richiesta al WS.
+     * Se va in errore, si notifica tramite mail l'esito negativo. Se lo stato del atto è CANCELLATO, si invia la richiesta al WS per la cancellazione.
+     * @param nodeRef Nodo con il quale creare la struttura di dati da inviare al Web Service.
+     * @param Map<QName, Serializable> before: le proprietà prima dell'action update
+     * @param Map<QName, Serializable> after: le proprietà dopo l'action update
+     * 
+     */
+    
     @Override
     public void onUpdateProperties(NodeRef nodeRef, Map<QName, Serializable> before, Map<QName, Serializable> after) {
 
@@ -535,6 +574,12 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         }
     }
 
+    /**
+     * Invio della notifica di attività tramite mail realizzata impiegando il WS Opendata. 
+     * @param subjectText Titolo della mail
+     * @param model parametri per il template
+     * @param templateNodeRef il template per la mail.
+     */
     protected void notifyOpenDataAdmin(String subjectText, Map<String, Serializable> model, NodeRef templateNodeRef) { 
         Action mail = actionService.createAction(MailActionExecuter.NAME);
 
@@ -546,6 +591,12 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         actionService.executeAction(mail, null);
     }
 
+    /**
+     * Trova il template che si vuole impiegare per la mail correlata con l'attività. Fisicamente si trova in Alfresco nel path: 
+     * app:company_home/app:dictionary/app:email_templates/cm:opendata/cm:open-data-notify-email.html.ftl
+     * @return NodeRef che punta al nodo di Alfresco che ha il template 
+     * @throws OpenDataAdminNotificationException
+     */
     private NodeRef getEmailTemplateNodeRef() throws OpenDataAdminNotificationException {
         List<NodeRef> nodeRefs = searchService.selectNodes(
                 nodeService.getRootNode(StoreRef.STORE_REF_WORKSPACE_SPACESSTORE),
@@ -560,7 +611,11 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         }
     }
 
-
+/**
+ * Partendo da un Nodo figlio con tipo TYPE_ATTO, si ricava l'atto che si trova nel nodo padre
+ * @param child il nodo figlio dal quale si parte
+ * @return il NodeRef con il padre di child che rappresenta l'atto.
+ */
     private NodeRef retrieveAttoNodeRefFromChild(NodeRef child) {
         NodeRef attoNodeRef = child;
         while ((attoNodeRef != null)
@@ -571,6 +626,9 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         return attoNodeRef;
     }
 
+    /**
+     * 
+     */
     @Override
     public void onDeleteNode(ChildAssociationRef childAssociationRef, boolean b) {
         NodeRef attoNodeRef;
