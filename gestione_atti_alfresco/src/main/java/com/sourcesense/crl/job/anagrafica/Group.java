@@ -25,7 +25,11 @@
  */
 package com.sourcesense.crl.job.anagrafica;
 
-
+/**
+ * Bean che rappresenta un gruppo politico .
+ * @author sourcesense
+ *
+ */
 public class Group {
 
     private int id;

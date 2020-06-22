@@ -50,6 +50,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Con questa classe si crea la legislatura corrente e si riempe con i consiglieri, siano correnti, siano storici.
+ * @author sourcesense
+ *
+ */
 public class AnagraficaImportScript extends BaseScopableProcessorExtension {
 
     private static Log logger = LogFactory.getLog(AnagraficaImportScript.class);
@@ -62,7 +67,14 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
     private DataExtractor dataExtractor;
     
    
-
+/**
+ * Fa l'import dei consiglieri della legislatura corrente dentro Alfresco. Se non esiste la legislatura, viene creata. Path dove si cercano le legislature in Alfresco:
+ * app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature. Soltanto può esistere una legistatura corrente.
+ * I consiglieri attivi si cercano dentro Alfresco: app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:ConsiglieriAttivi
+ * importa pure i gruppi dei consiliari che si trovano in Alfresco: /app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:GruppiConsiliari\
+ * Si crea l'authority group con il nome: LEGISLATURA_NomeCommissione che servirà a permettere l'accesso ai dati ai consiglieri attivi.
+ * Si aggiungono pure i consilgieri storici: app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:ConsiglieriStorici
+ */
     public void executeImport() {
         logger.debug("Start of method 'executeImport'");
 
@@ -351,7 +363,13 @@ public class AnagraficaImportScript extends BaseScopableProcessorExtension {
     }
     
     
-    
+    /**
+     * Crea un cosigliere inserendolo nella cartella folderNodeRef.
+     * @param councilor Struttura di dati con tutti i dati anagrafici del consigliere
+     * @param folderNodeRef Cartella dove verrà creato il consigliere SE NON ESISTE ANCORA
+     * @param nomeLegislaturaCorrente idem
+     * @return il NodeRef del nuovo consigliere in ALfresco. Null se qualcosa va storto.
+     */
     private NodeRef createCouncilor(Councilor councilor, NodeRef folderNodeRef, String nomeLegislaturaCorrente){
     	
     	NodeRef counciliorNodeRef = null;

@@ -27,7 +27,11 @@ package com.sourcesense.crl.job.anagrafica;
 
 
 import java.util.Date;
-
+/**
+ * Bean che rappresenta la legislatura
+ * @author sourcesense
+ *
+ */
 public class Legislature {
 
     private int id;

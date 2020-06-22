@@ -29,7 +29,11 @@ import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
+/**
+ * Personalizzazione di log per AttiIndirizzoExport
+ * @author sourcesense
+ *
+ */
 public class AttiIndirizzoExportLoggerScript extends BaseScopableProcessorExtension {
 
 	

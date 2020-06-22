@@ -25,15 +25,17 @@
  */
 package com.sourcesense.crl.behaviour;
 
+/**
+ * Exception personalizzata per errori legati al WS di OpenData
+ * @author sourcesense
+ *
+ */
 public class OpenDataAdminNotificationException extends Exception {
 
 	public OpenDataAdminNotificationException(String string) {
 		super(string);
 	}
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5621419561403181548L;
 
 }

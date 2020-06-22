@@ -82,6 +82,11 @@ public class OpenDataCommand {
 		super(); 
 	}
 
+	/**
+	 * Genera i ID - atto rappresentato da: tipoAtto + "-" + numeroAtto + "-" + legislatura 
+	 * @param nodeRef atto dal quale calcolare l'ID
+	 * @return String con l'ID atto.
+	 */
 	public String getIdAtto(NodeRef nodeRef) {
 		String idAtto = "";
 		try {
@@ -95,6 +100,11 @@ public class OpenDataCommand {
 		return idAtto;
 	}
 
+	/**
+	 * Ritorna il nome del tipo levando il prefisso della definizione del content model.
+	 * @param nodeRef nodo dal quale ottenere il tipo
+	 * @return String  con il tipo di nodo che rappresenta nel content model di Alfresco o CRL extenzion model
+	 */
 	public String getTipoAtto(NodeRef nodeRef) {
 		String tipoAtto = "";
 		try {
@@ -106,6 +116,11 @@ public class OpenDataCommand {
 		return tipoAtto;
 	}
 
+	/**
+	 * Ottiene il nome della legislatura leggendo la proprietà del nodo "legislatura"
+	 * @param nodeRef Nodo dal quale sapere la legislatura.
+	 * @return String legislatura dell'atto
+	 */
 	public String getLegislatura(NodeRef nodeRef) {
 		return (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_LEGISLATURA_QNAME);
 	}

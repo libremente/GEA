@@ -29,6 +29,11 @@ package com.sourcesense.crl.job.anagrafica;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * BEAN per la struttura di dati che rappresenta un consigliere.
+ * @author sourcesense
+ *
+ */
 
 public class Councilor {
 

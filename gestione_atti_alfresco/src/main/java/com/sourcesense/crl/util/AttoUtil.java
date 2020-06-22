@@ -45,6 +45,12 @@ import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Classe che serve come DAO per ottenere la business logic che riguarda il ciclo di vita di un atto e tutti gli attori che sono coinvolti: commissioni, ...
+ * Si trovano tutte le costanti per mappare il content model della Regione Lombardia
+ * @author sourcesense
+ *
+ */
 public class AttoUtil {
 
 	private static Log logger = LogFactory.getLog(AttoUtil.class);
@@ -191,6 +197,11 @@ public class AttoUtil {
 	public static final QName PROP_DATA_VOTAZIONE = QName.createQName(CRL_ATTI_MODEL, PROP_DATA_VOTAZIONE_COMMISSIONE);
 	public static final QName PROP_TIPO_ATTO_COMM = QName.createQName(CRL_ATTI_MODEL, "tipo" + "" + "Commissione");
 
+	/**
+	 * cerca dentro Alfresco /app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Legislature/ gli atti che hanno come valore nel metadato correnteLegislatura true.
+	 * La ricerca dovrebbe trovare un unica legistatura corrente
+	 * @return NodeRef con la legislatura corrente.
+	 */
 	public NodeRef getLegislaturaCorrente() {
 
 		NodeRef legislatura = null;
@@ -220,6 +231,11 @@ public class AttoUtil {
 		}
 		return legislatura;
 	} 
+	/**
+	 * Trova quale è il pasaggio ulmtimo creato. Creca dentro la sottocartella cm:Passaggi tutti i nodi figli e seleziona quello che abbia come nome il numero più alto.
+	 * @param attoNodeRef
+	 * @return NodeRef con l'ultimo passaggio.
+	 */
 	public NodeRef getLastPassaggio(NodeRef attoNodeRef) {
 
 		NodeRef passaggio = null;
@@ -260,6 +276,11 @@ public class AttoUtil {
 
 		return passaggio;
 	} 
+	/**
+	 * Ritorna la lista con tutte le commissioni referenti e le commissioni coreferenti che esistono dentro la sottocartella: cm:Commissioni. 
+	 * @param attoNodeRef
+	 * @return lista di NodeRef con tutti i nodi che rappresentano le commissioni referenti e coreferenti. 
+	 */
 	public List<NodeRef> getCommissioniPrincipali(NodeRef attoNodeRef) {
 
 		List<NodeRef> commissioniPrincipaliList = new ArrayList<NodeRef>();
@@ -336,6 +357,12 @@ public class AttoUtil {
 		return commissioniPrincipaliList;
 	}
 
+	/**
+	 * Cerca il relatore corrente della commissione nella cartella cm:Relatori.Il relatore ha un tipo specifico in Alfresco. 
+	 * Il relatore corrente è l'unico che ha come data di uscita null, perché ha ancora l'incarico.
+	 * @param commissioneNodeRef
+	 * @return NodeRef con il relatore corrente
+	 */
 	public NodeRef getRelatoreCorrente(NodeRef commissioneNodeRef) {
 
 		NodeRef relatore = null;
@@ -382,6 +409,11 @@ public class AttoUtil {
 		return relatore;
 	}
 
+	/**
+	 * Cerca il nodo che si trova nella cartella /cm:Aula\, che deve essere UNICO. ALtrimenti andrà in errore.
+	 * @param attoNodeRef Cartella che contiene la sottocartella aula.
+	 * @return NodeRef con l'aula
+	 */
 	public NodeRef getAula(NodeRef attoNodeRef) {
 
 		boolean isRelazioneScritta;
@@ -414,6 +446,12 @@ public class AttoUtil {
 		return aula;
 	}
 
+	/**
+	 * Trova la commissione con nome commissioneTarget che si trova nella sottocartella dell'atto: cm:Commissioni. Deve essere UNICA, altrimenti va in errore.
+	 * @param attoNodeRef atto a partire dal quale trovare la commissione corrente
+	 * @param commissioneTarget nome della commissione cercata
+	 * @return NodeRef con la Commissione Corrente
+	 */
 	public NodeRef getCommissioneCorrente(NodeRef attoNodeRef, String commissioneTarget) {
 
 		NodeRef commissione = null;
@@ -444,6 +482,13 @@ public class AttoUtil {
 
 		return commissione;
 	} 
+	
+	/**
+	 * Trova la lista di tutti gli atti associati abbinati che si trovano dentro la cartella cm:Passaggi/cm:Abbinamenti/, 
+	 * che devono avere tipo "abbinamento" e la proprietà crlatti:dataDisabbinamento NULL.
+	 * @param attoNodeRef atto dal quale si cercano gli atti associati e abbinati.
+	 * @return List <NodeRef> con tutti i nodi che rappresentano gli atti abbinati.
+	 */
 	public List<NodeRef> getAttiAbbinati(NodeRef attoNodeRef) {
 
 		List<NodeRef> attiAbbinatiList = new ArrayList<NodeRef>();

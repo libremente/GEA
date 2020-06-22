@@ -25,7 +25,11 @@
  */
 package com.sourcesense.crl.job.anagrafica;
 
-
+/**
+ * Oggetto BEAN per rappresentare un Comitato
+ * @author sourcesense
+ *
+ */
 public class Committee {
 
     private int id;

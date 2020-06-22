@@ -30,7 +30,12 @@ import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.namespace.QName;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
-
+/**
+ * Personalizzazione per poter ricavare la descrizione della definizione del tipo in Alfresco 
+ * tramite la proprietà Title.
+ * @author sourcesense
+ *
+ */
 public class TemplateScript extends BaseScopableProcessorExtension {
 
 	

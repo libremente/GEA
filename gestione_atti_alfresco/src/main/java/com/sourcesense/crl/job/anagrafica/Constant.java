@@ -27,7 +27,13 @@ package com.sourcesense.crl.job.anagrafica;
 
 import org.alfresco.service.namespace.QName;
 
-
+/**
+ * Classe che contiene tutte le constanti che servono per mappare il content Model personalizzato di Alfresco:
+ * http://www.regione.lombardia.it/content/model/atti/1.0
+ * Si trovano anche le query. 
+ * @author sourcesense
+ *
+ */
 public class Constant {
 
 	public static String CRL_MODEL_URI = "http://www.regione.lombardia.it/content/model/atti/1.0";

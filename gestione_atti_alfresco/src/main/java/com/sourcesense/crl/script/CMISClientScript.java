@@ -62,7 +62,11 @@ public class CMISClientScript extends BaseScopableProcessorExtension {
 	private ServiceRegistry serviceRegistry;
 	
 	private static Log logger = LogFactory.getLog(CMISClientScript.class);
-	
+	/**
+	 * Crea un nuovo documento utilizzando CMIS
+	 * @param contentId ID dentro Alfresco (senza la parte workSpace://SpaceStore)
+	 * @return tru se tutto è concluso bene. false se ci sono stati degli errori
+	 */
 	public boolean sendToAttiIspettiviRepository(String contentId) {
        
 		try{

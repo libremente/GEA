@@ -37,6 +37,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ * Classe che permette di estrarre da Database tutti i dati che riguardano una legistatura.
+ * @author sourcesense
+ *
+ */
 public class DataExtractor {
 
     private static Log logger = LogFactory.getLog(DataExtractor.class);
@@ -50,6 +55,10 @@ public class DataExtractor {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Trova l'elenco di tutte le legislature sul DB. Crea una lista di BEAN Legislatura
+     * @return elento di BEAN Legislatura
+     */
     public List<Legislature> getLegislatures() {
         Connection conn = null;
         ResultSet rs=null;
@@ -94,6 +103,10 @@ public class DataExtractor {
         }
     }
 
+    /**
+     * Ottiene i dati da DB della legislatura corrente.
+     * @return Bean Legislature
+     */
     public Legislature getCurrentLegislature() {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -136,6 +149,12 @@ public class DataExtractor {
         }
     }
 
+    /**
+     * Ottiene la lista di tutti i consiglieri che appartengono ad una legislatura, 
+     * la quale viene identificata con l'id che arriva come parametro. 
+     * @param idCurrentLegislature ID nel DB della legislatura della quale si volgiono sapere i consiglieri.
+     * @return lista con i Bean che rappresentano tutti i consiglieri della legislatura corrente
+     */
     public List<Councilor> getCouncilors(int idCurrentLegislature) {
         Connection conn = null;
         PreparedStatement ps=null;
@@ -206,7 +225,10 @@ public class DataExtractor {
            }
         }
     }
-
+/**
+ * Ottiene l'elenco di tutti i gruppi sul DB che sono attivi. 
+ * @return lista con tutti i Bean Group di tutti i gruppi attivi.
+ */
     public List<Group> getGroups() {
         Connection conn = null;
         PreparedStatement ps=null;

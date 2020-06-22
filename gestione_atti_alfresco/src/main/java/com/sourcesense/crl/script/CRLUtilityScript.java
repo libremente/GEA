@@ -36,11 +36,19 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 
-
+/**
+ * Utility functions che permettono di eseguire come sudo o come sudo e con parametri una funzione creando un job in Alfresco. 
+ * @author sourcesense
+ *
+ */
 public class CRLUtilityScript extends BaseScopableProcessorExtension {
 	
 	private ServiceRegistry serviceRegistry;
-
+/**
+ * Esegue una funzione come se fosse l'utente runAsUsername come un job Alfresco.
+ * @param func  funzione da eseguire
+ * @param runAsUsername utente che deve eseguire la funzione
+ */
 	public void sudo(final Function func, String runAsUsername) {
         final Context context = Context.getCurrentContext();
         final Scriptable scope = getScope();
@@ -56,7 +64,13 @@ public class CRLUtilityScript extends BaseScopableProcessorExtension {
         AuthenticationUtil.runAs(job, runAsUsername);
     }
 	
-	
+/**
+ * 	Esegue una funzione come se fosse l'utente runAsUsername come un job Alfresco e con dei parametri somministrati come paramtro del metodo.
+ * @param func funzione che verrà eseguita.
+ * @param args parametri che servono alla funzione da eseguire
+ * @param runAsUsername utente che eseguirà la funzione.
+ * @return
+ */
 	public Object sudoWithArgs(final Function func, final Object[] args, String runAsUsername) {
         final Context context = Context.getCurrentContext();
         final Scriptable scope = getScope();

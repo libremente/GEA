@@ -29,7 +29,11 @@ import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
+/**
+ * Personalizzazione del logger per ProtocolloLogger
+ * @author sourcesense
+ *
+ */
 public class ProtocolloLoggerScript extends BaseScopableProcessorExtension {
 
 	

@@ -180,7 +180,7 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
     /**
      * Metodo che inizializza i behaviour che rimarranno in ascolto dentro Alfresco Repository
      * 
-     * Due behaviour: beforeDeleteNode,onUpdateProperties, onCreateNode
+     * Tre behaviour: beforeDeleteNode,onUpdateProperties, onCreateNode
      */
     public void init() {
         this.beforeDeleteNode = new JavaBehaviour(this, "beforeDeleteNode", NotificationFrequency.EVERY_EVENT);
@@ -627,7 +627,10 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
     }
 
     /**
-     * 
+     * Metodo che si esegue quando si attiva il behaviour onDeleteNode. Se il nodo che arriva come parametro non è un atto, si cerca l'atto nei figli del proprio nodo.
+     * Si preprara il messaggio da inviare al WS Opendata con la cancellazione dell'atto. Si notifica tramite mail l'aggiornamento dell'atto
+     * @param ChildAssociationRef nodo sul quale accade il behaviour.
+     * @param boolean:non utilizzato.
      */
     @Override
     public void onDeleteNode(ChildAssociationRef childAssociationRef, boolean b) {
