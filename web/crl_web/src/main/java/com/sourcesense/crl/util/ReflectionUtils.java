@@ -18,6 +18,12 @@ package com.sourcesense.crl.util;
 
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class ReflectionUtils {
 
 	public static Object cloneObject(Object target) {

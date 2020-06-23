@@ -38,6 +38,12 @@ import com.sourcesense.crl.business.service.LettereNotificheServiceManager;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "lettereNotificheController")
 @ViewScoped
 public class LettereNotificheController implements Serializable {

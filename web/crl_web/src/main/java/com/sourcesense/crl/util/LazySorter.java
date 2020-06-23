@@ -22,6 +22,12 @@ import org.primefaces.model.SortOrder;
 
 import com.sourcesense.crl.business.model.Atto;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class LazySorter implements Comparator<Atto> {
 
 	private String sortField;

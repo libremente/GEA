@@ -28,6 +28,12 @@ import com.sourcesense.crl.business.service.UserServiceManager;
 import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "loginController")
 @RequestScoped
 public class LoginController {

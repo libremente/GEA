@@ -34,10 +34,11 @@ import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
+ * 
+ * 
+ * @author sourcesense
  *
- * @author uji
  */
-
 @ManagedBean(name = "amministrazioneAttoController")
 @RequestScoped
 public class AmministrazioneAttoController {

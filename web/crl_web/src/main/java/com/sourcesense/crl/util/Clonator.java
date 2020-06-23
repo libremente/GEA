@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class Clonator {
 	public static List cloneList(List list) {
 		List newList = new ArrayList();

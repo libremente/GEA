@@ -32,6 +32,12 @@ import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.service.rest.PersonaleService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("personaleServiceManager")
 public class PersonaleServiceManager implements ServiceManager {
 

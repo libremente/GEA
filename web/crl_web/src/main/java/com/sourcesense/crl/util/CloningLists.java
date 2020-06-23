@@ -21,6 +21,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class CloningLists {
 
 	public static <T extends Cloneable> List<T> cloneMe(List<T> list) {

@@ -31,6 +31,12 @@ import javax.servlet.http.HttpSession;
 
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class LoginFilter implements Filter {
 
 	private FilterConfig filterConfig;

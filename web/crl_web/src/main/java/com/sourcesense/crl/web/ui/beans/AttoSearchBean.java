@@ -23,6 +23,12 @@ import javax.faces.bean.SessionScoped;
 
 import com.sourcesense.crl.business.model.AttoSearch;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "attoSearchBean")
 @SessionScoped
 public class AttoSearchBean extends AttoSearch implements Serializable {

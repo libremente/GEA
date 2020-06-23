@@ -35,6 +35,12 @@ import com.sourcesense.crl.business.service.CommissioneServiceManager;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "riepilogoAttoController")
 @ViewScoped
 public class RiepilogoAttoController {

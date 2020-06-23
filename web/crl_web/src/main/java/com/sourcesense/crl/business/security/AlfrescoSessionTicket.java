@@ -23,6 +23,12 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
  * "ticket":"TICKET_da34b98e4a5ac05368a347b3a706246baf3e5659" } }
  */
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName(value = "data")
 public class AlfrescoSessionTicket {
 

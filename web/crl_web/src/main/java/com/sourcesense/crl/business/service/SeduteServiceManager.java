@@ -29,6 +29,12 @@ import com.sourcesense.crl.business.model.Seduta;
 import com.sourcesense.crl.business.service.rest.SeduteService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("seduteServiceManager")
 public class SeduteServiceManager implements ServiceManager {
 

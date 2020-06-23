@@ -27,6 +27,12 @@ import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.rest.StatoAttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("statoAttoServiceManager")
 public class StatoAttoServiceManager implements ServiceManager {
 

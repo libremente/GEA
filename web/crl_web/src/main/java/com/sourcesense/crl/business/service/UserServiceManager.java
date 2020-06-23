@@ -28,6 +28,12 @@ import com.sourcesense.crl.business.service.rest.UserService;
 import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("userServiceManager")
 public class UserServiceManager implements ServiceManager {
 

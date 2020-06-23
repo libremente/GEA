@@ -28,6 +28,12 @@ import com.sourcesense.crl.business.model.TipoIniziativa;
 import com.sourcesense.crl.business.service.rest.TipoIniziativaService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("tipoIniziativaServiceManager")
 public class TipoIniziativaServiceManager implements ServiceManager {
 

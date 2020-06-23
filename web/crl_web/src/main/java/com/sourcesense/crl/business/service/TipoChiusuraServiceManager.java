@@ -27,6 +27,12 @@ import com.sourcesense.crl.business.model.TipoChiusura;
 import com.sourcesense.crl.business.service.rest.TipoChiusuraService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("tipoChiusuraServiceManager")
 public class TipoChiusuraServiceManager implements ServiceManager {
 

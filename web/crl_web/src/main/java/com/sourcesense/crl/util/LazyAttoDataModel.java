@@ -27,6 +27,12 @@ import org.primefaces.model.SortOrder;
 
 import com.sourcesense.crl.business.model.Atto;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class LazyAttoDataModel extends LazyDataModel<Atto> {
 
 	private List<Atto> datasource = new ArrayList<Atto>();

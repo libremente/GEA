@@ -26,6 +26,12 @@ import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.springframework.stereotype.Component;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component
 public class JsonDateSerializer extends JsonSerializer<Date> {
 

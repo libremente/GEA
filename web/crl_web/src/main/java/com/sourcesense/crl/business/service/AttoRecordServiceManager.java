@@ -29,6 +29,12 @@ import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoRecordService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("attoRecordServiceManager")
 public class AttoRecordServiceManager implements ServiceManager {
 

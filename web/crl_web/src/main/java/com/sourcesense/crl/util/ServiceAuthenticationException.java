@@ -16,6 +16,12 @@
  */
 package com.sourcesense.crl.util;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class ServiceAuthenticationException extends RuntimeException {
 
 	private String serviceName;

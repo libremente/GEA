@@ -35,6 +35,12 @@ import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.CommissioneService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("commissioneServiceManager")
 public class CommissioneServiceManager implements ServiceManager {
 

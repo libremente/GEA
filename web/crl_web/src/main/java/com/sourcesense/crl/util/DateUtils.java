@@ -22,6 +22,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class DateUtils {
 
 	public static Date generateDataScadenzaParDgrInterruzione(Date dateIn, boolean sospensioneFeriale) {

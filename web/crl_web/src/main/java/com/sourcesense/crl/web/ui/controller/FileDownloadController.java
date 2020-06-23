@@ -31,6 +31,12 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "fileDownloadController")
 @ViewScoped
 public class FileDownloadController {

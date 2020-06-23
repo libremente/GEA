@@ -16,6 +16,12 @@
  */
 package com.sourcesense.crl.util;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class CRLMessage {
 
 	public static final String SUBMIT_SUCCESS = "success";

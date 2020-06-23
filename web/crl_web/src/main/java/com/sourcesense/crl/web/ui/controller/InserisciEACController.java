@@ -46,9 +46,10 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
  * 
- * @author uji
+ * 
+ * @author sourcesense
+ *
  */
-
 @ManagedBean(name = "inserisciEACController")
 @ViewScoped
 public class InserisciEACController {

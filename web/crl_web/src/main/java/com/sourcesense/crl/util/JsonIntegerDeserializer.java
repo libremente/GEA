@@ -23,6 +23,12 @@ import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class JsonIntegerDeserializer extends JsonDeserializer<Integer> {
 
 	@Override

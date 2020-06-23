@@ -48,6 +48,12 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "commissioneService")
 @Path("/commissioni")
 public class CommissioneService {

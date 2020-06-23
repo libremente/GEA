@@ -44,6 +44,12 @@ import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "attoBean")
 @SessionScoped
 public class AttoBean implements Serializable {

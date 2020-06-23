@@ -16,6 +16,12 @@
  */
 package net.sourceforge.spnego;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public final class Base64 {
 
 	private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

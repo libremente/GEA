@@ -44,6 +44,12 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "seduteService")
 @Path("/sedute")
 public class SeduteService {

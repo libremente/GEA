@@ -35,6 +35,12 @@ import org.slf4j.LoggerFactory;
 
 import com.sourcesense.crl.business.security.SessionPhaseListener;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 
 	private static final String errorpage = "/exception.xhtml";

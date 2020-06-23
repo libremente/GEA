@@ -36,6 +36,12 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "tipoChiusuraService")
 @Path("/tipichiusura")
 public class TipoChiusuraService {

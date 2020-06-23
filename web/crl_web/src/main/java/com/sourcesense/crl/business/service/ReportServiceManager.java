@@ -27,6 +27,12 @@ import com.sourcesense.crl.business.model.Report;
 import com.sourcesense.crl.business.service.rest.ReportService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("reportServiceManager")
 public class ReportServiceManager implements ServiceManager {
 

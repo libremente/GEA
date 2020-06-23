@@ -55,6 +55,12 @@ import com.sourcesense.crl.util.DateUtils;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "esameCommissioniController")
 @ViewScoped
 public class EsameCommissioniController {

@@ -39,6 +39,12 @@ import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "collegamentiController")
 @ViewScoped
 public class CollegamentiController {

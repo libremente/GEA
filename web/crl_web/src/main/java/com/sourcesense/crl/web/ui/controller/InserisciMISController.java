@@ -43,9 +43,10 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
  * 
- * @author uji
+ * 
+ * @author sourcesense
+ *
  */
-
 @ManagedBean(name = "inserisciMISController")
 @ViewScoped
 public class InserisciMISController {

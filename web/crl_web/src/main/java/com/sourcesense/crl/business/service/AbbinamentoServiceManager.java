@@ -23,6 +23,12 @@ import com.sourcesense.crl.business.model.GestioneAbbinamento;
 import com.sourcesense.crl.business.service.rest.AbbinamentoService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("abbinamentoServiceManager")
 public class AbbinamentoServiceManager {
 

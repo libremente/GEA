@@ -16,6 +16,12 @@
  */
 package com.sourcesense.crl.util;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class ServiceNotAvailableException extends RuntimeException {
 
 	private String serviceName;

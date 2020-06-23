@@ -31,6 +31,12 @@ import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AulaService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("aulaServiceManager")
 public class AulaServiceManager implements ServiceManager {
 

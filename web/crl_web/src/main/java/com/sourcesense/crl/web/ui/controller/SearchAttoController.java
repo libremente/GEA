@@ -64,9 +64,10 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
  * 
- * @author uji
+ * 
+ * @author sourcesense
+ *
  */
-
 @ViewScoped
 @ManagedBean(name = "searchAttoController")
 public class SearchAttoController implements Serializable {

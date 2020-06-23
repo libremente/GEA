@@ -45,6 +45,12 @@ import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.business.service.ReportServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "reportisticaController")
 @ViewScoped
 public class ReportisticaController implements Serializable {

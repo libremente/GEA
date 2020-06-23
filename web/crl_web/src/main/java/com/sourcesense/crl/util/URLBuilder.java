@@ -25,6 +25,12 @@ import org.springframework.context.MessageSource;
 
 import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class URLBuilder {
 
 	public static final String ALFRESCO_TCKT_PARAM_NAME = "alf_ticket=";

@@ -33,6 +33,12 @@ import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.URLBuilder;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "chiusuraIterController")
 @ViewScoped
 public class ChiusuraIterController {

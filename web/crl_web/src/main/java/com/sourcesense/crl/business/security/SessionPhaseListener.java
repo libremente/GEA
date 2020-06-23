@@ -35,6 +35,12 @@ import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class SessionPhaseListener implements PhaseListener {
 
 	private static final String homepage = "authenticate.xhtml?reason=expired";

@@ -43,6 +43,12 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "aulaService")
 @Path("/aula")
 public class AulaService {

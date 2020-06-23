@@ -22,6 +22,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class TestDateUtils {
 
 	static String[] sDate = new String[] { "30/12/2013", "31/12/2013", "31/01/2014", "01/03/2014", "29/06/2014",

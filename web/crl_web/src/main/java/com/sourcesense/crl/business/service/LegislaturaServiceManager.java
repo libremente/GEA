@@ -28,6 +28,12 @@ import com.sourcesense.crl.business.model.Legislatura;
 import com.sourcesense.crl.business.service.rest.LegislaturaService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("legislaturaServiceManager")
 public class LegislaturaServiceManager implements ServiceManager {
 

@@ -40,9 +40,10 @@ import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
  * 
- * @author uji
+ * 
+ * @author sourcesense
+ *
  */
-
 @ManagedBean(name = "inserisciAttoController")
 @ViewScoped
 public class InserisciAttoController {

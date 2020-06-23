@@ -25,10 +25,11 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
 /**
+ * 
+ * 
+ * @author sourcesense
  *
- * @author uji
  */
-
 @ManagedBean(name = "mgmtBean")
 @ViewScoped
 public class ManagerBean implements Serializable {

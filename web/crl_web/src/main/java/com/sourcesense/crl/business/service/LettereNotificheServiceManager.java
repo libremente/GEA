@@ -27,6 +27,12 @@ import com.sourcesense.crl.business.model.Lettera;
 import com.sourcesense.crl.business.service.rest.LettereNotificheService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("lettereNotificheServiceManager")
 public class LettereNotificheServiceManager implements ServiceManager {
 

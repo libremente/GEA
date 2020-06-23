@@ -31,8 +31,12 @@ import com.sourcesense.crl.business.model.ColonnaAtto;
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
 
-;
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "userBean")
 @SessionScoped
 public class UserBean implements Serializable {

@@ -25,6 +25,12 @@ import org.springframework.stereotype.Service;
 import com.sourcesense.crl.business.model.Votazione;
 import com.sourcesense.crl.business.service.rest.VotazioneService;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("votazioneServiceManager")
 public class VotazioneServiceManager implements ServiceManager {
 

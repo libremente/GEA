@@ -19,6 +19,12 @@ package com.sourcesense.crl.business.service;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public interface ServiceManager {
 
 	public Object persist(Object object);

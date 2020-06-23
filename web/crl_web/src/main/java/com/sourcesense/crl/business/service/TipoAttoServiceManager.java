@@ -31,6 +31,12 @@ import com.sourcesense.crl.business.model.TipologiaAtto;
 import com.sourcesense.crl.business.service.rest.TipoAttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("tipoAttoServiceManager")
 public class TipoAttoServiceManager implements ServiceManager {
 

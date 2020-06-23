@@ -28,6 +28,12 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.AttoSearchBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "navigationBean")
 @RequestScoped
 public class NavigationRules {

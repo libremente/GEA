@@ -27,6 +27,12 @@ import com.sourcesense.crl.business.model.OrganismoStatutario;
 import com.sourcesense.crl.business.service.rest.OrganismoStatutarioService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("organismoStatutarioServiceManager")
 public class OrganismoStatutarioServiceManager implements ServiceManager {
 

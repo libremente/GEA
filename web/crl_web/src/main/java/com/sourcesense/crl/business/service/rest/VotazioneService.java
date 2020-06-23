@@ -27,6 +27,12 @@ import org.springframework.stereotype.Component;
 import com.sourcesense.crl.business.model.Votazione;
 import com.sun.jersey.api.client.Client;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "votazioneService")
 @Path("/votazioni")
 public class VotazioneService {

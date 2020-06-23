@@ -40,9 +40,10 @@ import com.sourcesense.crl.util.URLBuilder;
 
 /**
  * 
- * @author uji
+ * 
+ * @author sourcesense
+ *
  */
-
 @Service("attoServiceManager")
 public class AttoServiceManager implements ServiceManager {
 
