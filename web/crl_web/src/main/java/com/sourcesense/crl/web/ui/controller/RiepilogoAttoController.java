@@ -69,6 +69,9 @@ public class RiepilogoAttoController {
 
 	private Commissione commissioneSelected = new Commissione();
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 
@@ -91,6 +94,10 @@ public class RiepilogoAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @param tipoIniziativa
+	 */
 	private void initTipoIniziativa(String tipoIniziativa) {
 
 		if ("01_ATTO DI INIZIATIVA CONSILIARE".equals(tipoIniziativa)) {
@@ -129,6 +136,9 @@ public class RiepilogoAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void showCommissioneDetail() {
 
 		for (Commissione commissioneRec : commissioni) {
@@ -143,17 +153,29 @@ public class RiepilogoAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDataTrasmissioneLabel() {
 		return (Commissione.RUOLO_CONSULTIVA.equals(commissioneSelected.getRuolo()))
 				? "Data trasmissione a Comm. referente:"
 				: "Data Trasmissione Aula:";
 	}
 
+	/**
+	 * 
+	 * @param ruolo
+	 * @return
+	 */
 	public String getDataTrasmissioneLabelByRuolo(String ruolo) {
 		return (Commissione.RUOLO_CONSULTIVA.equals(ruolo)) ? "Data trasmissione a Comm. referente:"
 				: "Data Trasmissione Aula:";
 	}
 
+	/**
+	 * 
+	 */
 	public void filtraRelatori() {
 
 		for (Relatore element : relatoriList) {
@@ -165,6 +187,10 @@ public class RiepilogoAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean trasmissioneAdAulaAbilited() {
 
 		FacesContext context = FacesContext.getCurrentInstance();

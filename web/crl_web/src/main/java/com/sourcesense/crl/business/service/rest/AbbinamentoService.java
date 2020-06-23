@@ -52,6 +52,11 @@ public class AbbinamentoService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param abbinamento
+	 */
 	public void merge(String url, GestioneAbbinamento abbinamento) {
 		try {
 

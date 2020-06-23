@@ -47,10 +47,16 @@ public class SessionPhaseListener implements PhaseListener {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SessionPhaseListener.class);
 
+	/**
+	 * 
+	 */
 	public void afterPhase(PhaseEvent event) {
 		;
 	}
 
+	/**
+	 * 
+	 */
 	public void beforePhase(PhaseEvent event) {
 
 		FacesContext fc = event.getFacesContext();
@@ -67,6 +73,9 @@ public class SessionPhaseListener implements PhaseListener {
 
 	}
 
+	/**
+	 * 
+	 */
 	public PhaseId getPhaseId() {
 
 		return PhaseId.RESTORE_VIEW;
@@ -77,7 +86,6 @@ public class SessionPhaseListener implements PhaseListener {
 	 * 
 	 * Does a regular or ajax redirect.
 	 */
-
 	public void doRedirect(FacesContext fc, String redirectPage)
 
 			throws FacesException {

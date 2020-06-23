@@ -27,6 +27,12 @@ import java.util.List;
  *
  */
 public class Clonator {
+
+	/**
+	 * 
+	 * @param list
+	 * @return
+	 */
 	public static List cloneList(List list) {
 		List newList = new ArrayList();
 		Iterator it = list.iterator();

@@ -42,6 +42,11 @@ public class ReportServiceManager implements ServiceManager {
 	@Autowired
 	private ReportService reportService;
 
+	/**
+	 * 
+	 * @param report
+	 * @return
+	 */
 	public InputStream getReportFile(Report report) {
 		return reportService
 				.getFile(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_retrieve_report_bin", null), report);

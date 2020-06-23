@@ -158,6 +158,9 @@ public class EsameAulaController {
 
 	private String numeroReg;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	public void init() {
 
@@ -195,6 +198,9 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void changePassaggio() {
 
 		Passaggio passaggioSelected = null;
@@ -224,30 +230,51 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void updateDatiHandler() {
 		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateVotazioneHandler() {
 		setStatoCommitVotazione(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateEmendamentiHandler() {
 		setStatoCommitEmendamenti(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateRinvioEsameHandler() {
 		setStatoCommitRinvioEsame(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateStralciHandler() {
 		setStatoCommitStralci(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateNoteAllegatiHandler() {
 		setStatoCommitNoteAllegati(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void changeTabHandler() {
 
 		if (statoCommitVotazione.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -287,6 +314,9 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void presaInCarico() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -329,6 +359,10 @@ public class EsameAulaController {
 		setStatoCommitVotazione(CRLMessage.COMMIT_DONE);
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -361,6 +395,10 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadTestoAtto(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -394,6 +432,11 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkTestoAtto(String fileName) {
 
 		for (TestoAtto element : getAtto().getTestiAtto()) {
@@ -408,6 +451,11 @@ public class EsameAulaController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkTestoAttoVotato(String fileName) {
 
 		for (TestoAtto element : testiAttoVotatoList) {
@@ -422,6 +470,9 @@ public class EsameAulaController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeTestoAttoVotato() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -440,6 +491,9 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeTestoAtto() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -456,6 +510,10 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String salvaVotazione() {
 
 		String navigation = "";
@@ -501,6 +559,10 @@ public class EsameAulaController {
 		return navigation;
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadEmendamento(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -534,6 +596,11 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkEmendamenti(String fileName) {
 
 		for (Allegato element : emendamentiList) {
@@ -547,6 +614,9 @@ public class EsameAulaController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeEmendamento() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -564,6 +634,10 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void updateAllegato(RowEditEvent event) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -586,6 +660,10 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void updateTestoAtto(RowEditEvent event) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -602,6 +680,9 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void totaleEmendPresentati() {
 
 		numEmendPresentatiTotale = 0;
@@ -623,6 +704,9 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void totaleEmendApprovati() {
 
 		numEmendApprovatiTotale = 0;
@@ -644,6 +728,9 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void totaleNonApprovati() {
 
 		totaleNonApprovati = 0;
@@ -665,6 +752,9 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaEmendamenti() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -720,6 +810,10 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String salvaRinvioEsame() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -751,6 +845,10 @@ public class EsameAulaController {
 		return "pretty:Esame_Aula";
 	}
 
+	/**
+	 * 
+	 * @param attoBean
+	 */
 	public void updateStatoCommissioni(AttoBean attoBean) {
 
 		for (Commissione commissione : atto.getPassaggi().get(atto.getPassaggi().size() - 1).getCommissioni()) {
@@ -772,6 +870,9 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaStralci() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -798,6 +899,10 @@ public class EsameAulaController {
 		context.addMessage(null, new FacesMessage("Stralci salvati con successo", ""));
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadAllegato(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -828,6 +933,11 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegato(String fileName) {
 
 		for (Allegato element : allegatiList) {
@@ -842,6 +952,9 @@ public class EsameAulaController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegato() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -859,6 +972,9 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void addLink() {
 
 		if (nomeLink != null && !nomeLink.trim().equals("")) {
@@ -879,6 +995,9 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeLink() {
 
 		for (Link element : linksList) {
@@ -891,6 +1010,10 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkLinks() {
 
 		for (Link element : linksList) {
@@ -905,6 +1028,9 @@ public class EsameAulaController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaNoteEAllegati() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1522,6 +1648,9 @@ public class EsameAulaController {
 		this.oggettoOriginale = oggettoOriginale;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaInfoGenerali() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
@@ -1567,6 +1696,9 @@ public class EsameAulaController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void addRelatore() {
 
 		if (nomeRelatore != null && !nomeRelatore.trim().equals("")) {
@@ -1587,6 +1719,10 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkRelatori() {
 		for (Relatore element : relatoriList) {
 			if (element.getDescrizione().equals(nomeRelatore)) {
@@ -1596,6 +1732,9 @@ public class EsameAulaController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeRelatore() {
 
 		for (Relatore element : relatoriList) {
@@ -1609,6 +1748,9 @@ public class EsameAulaController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void confermaRelatori() {
 
 		atto.setRelatori(relatoriList);

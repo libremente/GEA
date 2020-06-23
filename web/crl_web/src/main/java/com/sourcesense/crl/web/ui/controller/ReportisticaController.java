@@ -129,6 +129,9 @@ public class ReportisticaController implements Serializable {
 	private final String ELENCO_ATTI_ISTRUTT = "Elenco Atti Istruttoria";
 	private final String ELENCO_ATTI_RINVIO = "Elenco Atti Rinviati alle Commissioni";
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	public void init() {
 		setCommissioniSel(commissioneServiceManager.getAll());
@@ -197,12 +200,20 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isLegislaturaVisible() {
 
 		return (!COMPO_COMMISSIONI.equals(selectedReport.getNome()));
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isTipiAttoVisible() {
 
 		return (ATTI_ASSEGNATI_COMM.equals(selectedReport.getNome()) || CONFERENZE.equals(selectedReport.getNome())
@@ -217,6 +228,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCommissioniVisible() {
 
 		return (ATTI_ASSEGNATI_COMM.equals(selectedReport.getNome()) || CONFERENZE.equals(selectedReport.getNome())
@@ -230,12 +245,20 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataConsultazioneVisible() {
 
 		return ELENCO_AUDIZ_COMM.equals(selectedReport.getNome());
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isRuoloCommissioneVisible() {
 
 		return (ATTI_ASSEGNATI_COMM.equals(selectedReport.getNome()) || CONFERENZE.equals(selectedReport.getNome())
@@ -246,6 +269,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataAssegnazioneVisible() {
 
 		return (ATTI_ASSEGNATI_COMM.equals(selectedReport.getNome()) || CONFERENZE.equals(selectedReport.getNome())
@@ -255,6 +282,10 @@ public class ReportisticaController implements Serializable {
 		;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataVotazioneCommReferenteVisible() {
 
 		return (ATTI_LICENZIATI_COMM.equals(selectedReport.getNome()) || ATTI_LICENZ.equals(selectedReport.getNome()))
@@ -263,6 +294,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataRitiroVisible() {
 
 		return (ATTI_RITIRATI.equals(selectedReport.getNome()))
@@ -271,6 +306,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataNominaRelatoreVisible() {
 
 		return (ATTI_RELATORE.equals(selectedReport.getNome()) || ELENCO_RELATORI.equals(selectedReport.getNome()))
@@ -279,12 +318,20 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isRelatoriVisible() {
 
 		return (ATTI_RELATORE.equals(selectedReport.getNome()) || ELENCO_RELATORI.equals(selectedReport.getNome()));
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isOrganismoVisible() {
 
 		return (ATTI_INV_ORG_EST.equals(selectedReport.getNome()))
@@ -292,6 +339,10 @@ public class ReportisticaController implements Serializable {
 		;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataAssegnazioneParereDaVisible() {
 
 		return (ATTI_INV_ORG_EST.equals(selectedReport.getNome())
@@ -302,6 +353,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isFirmatarioVisible() {
 
 		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
@@ -310,6 +365,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isTipologiaFirmaVisible() {
 
 		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
@@ -318,6 +377,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataPresentazioneVisible() {
 
 		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
@@ -326,6 +389,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataAssegnazioneCommReferenteVisible() {
 
 		return (ATTI_INIZ_CONSILIARE.equals(selectedReport.getNome()))
@@ -334,6 +401,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDataSedutaVisible() {
 
 		return (ELENCO_LCR.equals(selectedReport.getNome()) || ELENCO_DCR.equals(selectedReport.getNome()))
@@ -342,6 +413,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public StreamedContent getFile() {
 
 		if (selectedReport.getTipoTemplate() != null && !selectedReport.getTipoTemplate().equals("")) {
@@ -366,6 +441,10 @@ public class ReportisticaController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void onNodeSelect(NodeSelectEvent event) {
 
 		if (event.getTreeNode().getData() instanceof Report) {

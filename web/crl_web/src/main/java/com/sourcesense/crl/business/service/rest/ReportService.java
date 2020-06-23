@@ -50,6 +50,12 @@ public class ReportService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param report
+	 * @return
+	 */
 	public InputStream getFile(String url, Report report) {
 
 		InputStream responseFile = null;

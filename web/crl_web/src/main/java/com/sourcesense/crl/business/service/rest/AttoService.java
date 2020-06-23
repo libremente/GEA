@@ -66,6 +66,12 @@ public class AttoService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public Atto create(String url, Atto atto) {
 
 		Atto attoRet = null;
@@ -107,6 +113,12 @@ public class AttoService {
 		return atto;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public AttoMIS createMIS(String url, AttoMIS atto) {
 
 		AttoMIS attoRet = null;
@@ -145,6 +157,12 @@ public class AttoService {
 		return atto;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public Atto updateAtto(String url, Atto atto) {
 
 		Atto attoRet = null;
@@ -182,6 +200,10 @@ public class AttoService {
 		return atto;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void deleteAtto(String url) {
 
 		WebResource webResource = client.resource(url);
@@ -194,6 +216,12 @@ public class AttoService {
 		}
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public AttoEAC createEAC(String url, AttoEAC atto) {
 
 		AttoEAC attoRet = null;
@@ -232,10 +260,20 @@ public class AttoService {
 		return atto;
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
 	public boolean update(Atto atto) {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public Atto findById(String url) {
 		Atto atto = null;
 
@@ -268,6 +306,11 @@ public class AttoService {
 		return atto;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public AttoEAC findEACById(String url) {
 		AttoEAC atto = null;
 
@@ -298,6 +341,11 @@ public class AttoService {
 		return atto;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public AttoMIS findMISById(String url) {
 		AttoMIS atto = null;
 
@@ -329,10 +377,23 @@ public class AttoService {
 		return atto;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<Atto> findAll() {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream, Allegato allegato, String tipologia) {
 
 		try {
@@ -367,6 +428,15 @@ public class AttoService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
 	public Allegato uploadAllegatoParere(String url, Atto atto, InputStream stream, Allegato allegato,
 			String tipologia) {
 
@@ -404,6 +474,15 @@ public class AttoService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
 	public Allegato uploadAllegatoConsultazioni(String url, Atto atto, InputStream stream, Allegato allegato,
 			String tipologia) {
 
@@ -441,6 +520,10 @@ public class AttoService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void removeFirmatario(String url) {
 
 		WebResource webResource = client.resource(url);
@@ -454,6 +537,10 @@ public class AttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void removeAtto(String url) {
 
 		WebResource webResource = client.resource(url);
@@ -467,6 +554,15 @@ public class AttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @param tipologia
+	 * @return
+	 */
 	public TestoAtto uploadTestoAtto(String url, Atto atto, InputStream stream, TestoAtto testoAtto, String tipologia) {
 
 		TestoAtto attoRecord = null;
@@ -504,6 +600,11 @@ public class AttoService {
 		return attoRecord;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public TestoAtto changeAllegato(String url) {
 
 		TestoAtto attoRecord = null;
@@ -535,6 +636,11 @@ public class AttoService {
 		return attoRecord;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<String> findTipoAttiSindacato(String url) {
 		List<String> listTipi = null;
 
@@ -568,6 +674,11 @@ public class AttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String url) {
 		List<CollegamentoAttiSindacato> listAtti = null;
 
@@ -601,6 +712,11 @@ public class AttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<Collegamento> findCollegamentiAttoById(String url) {
 		List<Collegamento> listAtti = null;
 
@@ -634,6 +750,12 @@ public class AttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param url
+	 * @return
+	 */
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti = null;
 
@@ -668,6 +790,11 @@ public class AttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 */
 	public void merge(String url, Atto atto) {
 
 		try {
@@ -696,6 +823,11 @@ public class AttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param consultazioneParere
+	 */
 	public void salvaPareri(String url, ConsultazioneParere consultazioneParere) {
 
 		try {

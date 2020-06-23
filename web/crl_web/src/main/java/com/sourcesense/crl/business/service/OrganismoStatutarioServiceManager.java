@@ -60,6 +60,9 @@ public class OrganismoStatutarioServiceManager implements ServiceManager {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
 	public Map<String, String> findAll() {
 		Map<String, String> organismoStatutari = new HashMap<String, String>();
 

@@ -52,6 +52,11 @@ public class OrganismoStatutarioService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<OrganismoStatutario> getAllOrganismoStatutario(String url) {
 		List<OrganismoStatutario> listOrganismiStatutari = null;
 

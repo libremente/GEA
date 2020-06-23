@@ -63,11 +63,6 @@ public class Abbinamento implements Cloneable {
 		}
 	}
 
-	/*
-	 * public Atto getAtto() { return atto; } public void setAtto(Atto atto) {
-	 * this.atto = atto; }
-	 */
-
 	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAbbinamento() {
 		return dataAbbinamento;

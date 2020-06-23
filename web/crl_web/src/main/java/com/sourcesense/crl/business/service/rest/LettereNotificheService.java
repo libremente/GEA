@@ -50,6 +50,11 @@ public class LettereNotificheService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param lettera
+	 */
 	public void merge(String url, Lettera lettera) {
 		try {
 			WebResource webResource = client.resource(url);
@@ -77,6 +82,11 @@ public class LettereNotificheService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public Lettera getLettera(String url) {
 
 		Lettera lettera = null;
@@ -107,6 +117,11 @@ public class LettereNotificheService {
 		return lettera;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public InputStream getFile(String url) {
 
 		InputStream responseFile = null;

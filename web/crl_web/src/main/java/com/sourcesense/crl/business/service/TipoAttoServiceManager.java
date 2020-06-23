@@ -78,6 +78,10 @@ public class TipoAttoServiceManager implements ServiceManager {
 		return tipiAtto;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getAll() {
 
 		List<String> tipiAtto = new ArrayList<String>();
@@ -96,6 +100,10 @@ public class TipoAttoServiceManager implements ServiceManager {
 		return tipiAtto;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<TipoAtto> retrieveAllTipoAtto() {
 
 		List<TipoAtto> list = tipoAttoService
@@ -105,6 +113,11 @@ public class TipoAttoServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @param tipoAtto
+	 * @return
+	 */
 	public Map<String, String> findTipologieByTipoAtto(String tipoAtto) {
 
 		Map<String, String> tipologieAtto = new HashMap<String, String>();

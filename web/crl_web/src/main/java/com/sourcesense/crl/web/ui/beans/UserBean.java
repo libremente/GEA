@@ -65,6 +65,9 @@ public class UserBean implements Serializable {
 
 	private List<ColonnaAtto> colonneUser = new ArrayList<ColonnaAtto>();
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	public void init() {
 
@@ -153,6 +156,9 @@ public class UserBean implements Serializable {
 		this.colonneUser = colonneUser;
 	}
 
+	/**
+	 * 
+	 */
 	public void refreshColonneUser() {
 
 		colonneUser.clear();
@@ -164,6 +170,10 @@ public class UserBean implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void handleChangeSessionGroup(final AjaxBehaviorEvent event) {
 		SelectOneMenu selectOneMenu = ((SelectOneMenu) event.getSource());
 		String selectedItem = (String) selectOneMenu.getSubmittedValue();
@@ -175,6 +185,10 @@ public class UserBean implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String refreshSearch() {
 		refreshColonneUser();
 		return "pretty:Home";

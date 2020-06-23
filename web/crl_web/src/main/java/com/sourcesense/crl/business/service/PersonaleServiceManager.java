@@ -65,6 +65,10 @@ public class PersonaleServiceManager implements ServiceManager {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<GruppoConsiliare> getGruppiConsiliari() {
 
 		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(
@@ -73,6 +77,10 @@ public class PersonaleServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> findGruppiConsiliari() {
 		List<String> gruppi = new ArrayList<String>();
 
@@ -87,6 +95,10 @@ public class PersonaleServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllFirmatario() {
 		Map<String, String> firmatari = new HashMap<String, String>();
 
@@ -101,6 +113,10 @@ public class PersonaleServiceManager implements ServiceManager {
 		return firmatari;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllRelatore() {
 		Map<String, String> relatori = new HashMap<String, String>();
 
@@ -115,6 +131,10 @@ public class PersonaleServiceManager implements ServiceManager {
 		return relatori;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getAllFirmatario() {
 		List<String> firmatari = new ArrayList<String>();
 
@@ -129,6 +149,11 @@ public class PersonaleServiceManager implements ServiceManager {
 		return firmatari;
 	}
 
+	/**
+	 * 
+	 * @param legislatura
+	 * @return
+	 */
 	public List<String> getAllFirmatariStorici(String legislatura) {
 		List<String> firmatari = new ArrayList<String>();
 
@@ -143,6 +168,10 @@ public class PersonaleServiceManager implements ServiceManager {
 		return firmatari;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getAllRelatore() {
 		List<String> relatori = new ArrayList<String>();
 
@@ -157,6 +186,10 @@ public class PersonaleServiceManager implements ServiceManager {
 		return relatori;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllMembriComitato() {
 		Map<String, String> relatori = new HashMap<String, String>();
 
@@ -171,21 +204,38 @@ public class PersonaleServiceManager implements ServiceManager {
 		return relatori;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Relatore> getAllRelatori() {
 		return personaleService
 				.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori", null));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Relatore> getAllMembriComitato() {
 		return personaleService
 				.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori", null));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Firmatario> getAllFirmatari() {
 		return personaleService
 				.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari", null));
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
 	public List<Firmatario> findFirmatariByAtto(Atto atto) {
 		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_list_firmatari_atto", new String[] { atto.getId() }));

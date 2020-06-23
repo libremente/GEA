@@ -38,6 +38,10 @@ public class BusinessLogger {
 
 	private Logger log = LoggerFactory.getLogger(BusinessLogger.class);
 
+	/**
+	 * 
+	 * @param joinPoint
+	 */
 	@After("within(com.sourcesense.crl.business.service.rest.*)")
 	public void restServices(JoinPoint joinPoint) {
 		String trace = "Executed Rest Service : " + joinPoint.getSignature().getName() + "-"
@@ -61,19 +65,32 @@ public class BusinessLogger {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Pointcut("within(@org.springframework.stereotype.Service *)")
 	public void beanAnnotatedWithService() {
 	}
 
+	/**
+	 * 
+	 */
 	@Pointcut("execution(public * *(..))")
 	public void publicMethod() {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Pointcut("publicMethod() && beanAnnotatedWithService()")
 	public void publicMethodInsideAClassMarkedWithService() {
 	}
 
+	/**
+	 * 
+	 * @param joinPoint
+	 */
 	@AfterReturning(pointcut = "publicMethodInsideAClassMarkedWithService()")
 	public void prova(JoinPoint joinPoint) {
 

@@ -52,6 +52,11 @@ public class StatoAttoService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<StatoAtto> getAllStato(String url) {
 		List<StatoAtto> listStati = null;
 

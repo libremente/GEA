@@ -58,6 +58,10 @@ public class LegislaturaServiceManager implements ServiceManager {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Legislatura> getAll() {
 
 		List<Legislatura> listLegislature = legislaturaService
@@ -81,6 +85,10 @@ public class LegislaturaServiceManager implements ServiceManager {
 		return legislature;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> list() {
 
 		List<String> legislature = new ArrayList<String>();
@@ -96,6 +104,11 @@ public class LegislaturaServiceManager implements ServiceManager {
 		return legislature;
 	}
 
+	/**
+	 * 
+	 * @param legislatura
+	 * @return
+	 */
 	public Map<String, String> findAnniByLegislatura(String legislatura) {
 
 		return legislaturaService.getAnniByLegislatura(

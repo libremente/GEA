@@ -84,6 +84,9 @@ public class InserisciAttoController {
 
 	private Map<String, String> anni = new HashMap<String, String>();
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	private void initializeValues() {
 
@@ -97,6 +100,9 @@ public class InserisciAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void handleTipoAttoChange() {
 
 		if (atto.getTipoAtto() != null && !atto.getTipoAtto().equals(""))
@@ -111,6 +117,10 @@ public class InserisciAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String inserisciAtto() {
 
 		atto.setError(null);
@@ -163,6 +173,11 @@ public class InserisciAttoController {
 		return this.tipiAtto;
 	}
 
+	/**
+	 * 
+	 * @param tipiAtto
+	 * @param isAula
+	 */
 	public void setTipiAtto(List<TipoAtto> tipiAtto, boolean isAula) {
 
 		for (TipoAtto tipoAtto : tipiAtto) {

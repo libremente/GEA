@@ -44,26 +44,53 @@ public class SeduteServiceManager implements ServiceManager {
 	@Autowired
 	private URLBuilder urlBuilder;
 
+	/**
+	 * 
+	 * @param idSeduta
+	 */
 	public void deleteSeduta(String idSeduta) {
 		seduteService.delete(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elimina_seduta", new String[] { idSeduta }));
 	}
 
+	/**
+	 * 
+	 * @param gestioneSedute
+	 * @return
+	 */
 	public Seduta salvaSeduta(GestioneSedute gestioneSedute) {
 		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null),
 				gestioneSedute);
 	}
 
+	/**
+	 * 
+	 * @param gestioneSedute
+	 * @return
+	 */
 	public Seduta updateSeduta(GestioneSedute gestioneSedute) {
 		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null),
 				gestioneSedute);
 	}
 
+	/**
+	 * 
+	 * @param gruppo
+	 * @param legislatura
+	 * @return
+	 */
 	public List<Seduta> getSedute(String gruppo, String legislatura) {
 		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),
 				gruppo, legislatura);
 	}
 
+	/**
+	 * 
+	 * @param gruppo
+	 * @param dataSeduta
+	 * @param legislatura
+	 * @return
+	 */
 	public Seduta getSeduta(String gruppo, String dataSeduta, String legislatura) {
 
 		return seduteService.findByDate(
@@ -71,16 +98,34 @@ public class SeduteServiceManager implements ServiceManager {
 				legislatura);
 	}
 
+	/**
+	 * 
+	 * @param seduta
+	 */
 	public void salvaOdg(Seduta seduta) {
 		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
 	}
 
+	/**
+	 * 
+	 * @param seduta
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public Allegato uploadOgg(Seduta seduta, InputStream stream, Allegato testoAtto) {
 
 		return seduteService.uploadOdg(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_upload_odg", null),
 				seduta, stream, testoAtto);
 	}
 
+	/**
+	 * 
+	 * @param seduta
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public Allegato uploadVerbale(Seduta seduta, InputStream stream, Allegato testoAtto) {
 
 		return seduteService.uploadVerbale(
@@ -88,6 +133,13 @@ public class SeduteServiceManager implements ServiceManager {
 				testoAtto);
 	}
 
+	/**
+	 * 
+	 * @param tipoTemplate
+	 * @param idSeduta
+	 * @param gruppo
+	 * @return
+	 */
 	public InputStream getODGFile(String tipoTemplate, String idSeduta, String gruppo) {
 		return seduteService.getFile(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_get_odg",
 				new String[] { tipoTemplate, idSeduta, gruppo }));

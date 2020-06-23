@@ -64,6 +64,11 @@ public class CommissioneService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param esameCommissione
+	 */
 	public void merge(String url, EsameCommissione esameCommissione) {
 		try {
 			WebResource webResource = client.resource(url);
@@ -99,6 +104,10 @@ public class CommissioneService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void removeAbbinamento(String url) {
 
 		WebResource webResource = client.resource(url);
@@ -114,6 +123,11 @@ public class CommissioneService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<CommissioneReferente> retrieveCommissioniReferenteByAtto(String url) {
 
 		List<CommissioneReferente> listCommissioniReferenti = null;
@@ -147,6 +161,11 @@ public class CommissioneService {
 		return listCommissioniReferenti;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<CommissioneConsultiva> retrieveCommissioniConsultiveByAtto(String url) {
 
 		List<CommissioneConsultiva> listCommissioniConsultive = null;
@@ -180,6 +199,11 @@ public class CommissioneService {
 		return listCommissioniConsultive;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<Commissione> getAllCommissioni(String url) {
 		List<Commissione> listCommissioni = null;
 
@@ -211,6 +235,15 @@ public class CommissioneService {
 		return listCommissioni;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream, Allegato allegato, String tipologia) {
 
 		try {
@@ -254,6 +287,15 @@ public class CommissioneService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @param tipologia
+	 * @return
+	 */
 	public TestoAtto uploadTestoAtto(String url, Atto atto, InputStream stream, TestoAtto testoAtto, String tipologia) {
 
 		TestoAtto attoRecord = null;

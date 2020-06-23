@@ -53,11 +53,20 @@ public class AttoServiceManager implements ServiceManager {
 	@Autowired
 	private AttoService attoService;
 
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
 	public List<Atto> searchAtti(Atto atto) {
 		return attoService.parametricSearch(atto,
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_atto_ricerca_avanzata", null));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Atto> initListAtti() {
 
 		AttoSearch attoInit = new AttoSearch();
@@ -70,18 +79,33 @@ public class AttoServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @param firmatario
+	 */
 	public void removeFirmatario(Firmatario firmatario) {
 
 		attoService.removeFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_remove_firmatario",
 				new String[] { firmatario.getId() }));
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void removeAtto(Atto atto) {
 
 		attoService.removeFirmatario(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_remove_atto", new String[] { atto.getId() }));
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public TestoAtto uploadTestoAttoPresentazioneAssegnazione(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
 		return attoService.uploadTestoAtto(
@@ -89,6 +113,13 @@ public class AttoServiceManager implements ServiceManager {
 				atto, stream, testoAtto, TestoAtto.TESTO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadAllegatoNoteAllegatiPresentazioneAssegnazione(Atto atto, InputStream stream,
 			Allegato allegato) {
 
@@ -98,6 +129,13 @@ public class AttoServiceManager implements ServiceManager {
 				atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadAllegatoMIS(AttoMIS atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegato(
@@ -106,6 +144,13 @@ public class AttoServiceManager implements ServiceManager {
 				atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadAllegatoEAC(AttoEAC atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegato(
@@ -114,6 +159,13 @@ public class AttoServiceManager implements ServiceManager {
 				atto, stream, allegato, Allegato.TIPO_PRESENTAZIONE_ASSEGNAZIONE);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadAllegatoConsultazioni(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegatoConsultazioni(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -121,6 +173,13 @@ public class AttoServiceManager implements ServiceManager {
 				Allegato.TIPO_CONSULTAZIONE);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadAllegatoPareri(Atto atto, InputStream stream, Allegato allegato) {
 
 		return attoService.uploadAllegatoParere(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -128,6 +187,11 @@ public class AttoServiceManager implements ServiceManager {
 				Allegato.TIPO_PARERE);
 	}
 
+	/**
+	 * 
+	 * @param allegato
+	 * @return
+	 */
 	public TestoAtto changeAllegatoPresentazioneAssegnazione(Allegato allegato) {
 
 		return attoService.changeAllegato(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_change_allegato",
@@ -135,6 +199,11 @@ public class AttoServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
 	public Atto updateAtto(Atto atto) {
 		return attoService.updateAtto(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_atto", new String[] { atto.getId() }),
@@ -142,18 +211,32 @@ public class AttoServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void deleteAtto(Atto atto) {
 		attoService.deleteAtto(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_delete_atto", new String[] { atto.getId() }));
 
 	}
 
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public AttoMIS persistMIS(Object object) {
 		return attoService.createMIS(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_new_atto", null),
 				(AttoMIS) object);
 
 	}
 
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public AttoEAC persistEAC(Object object) {
 		return attoService.createEAC(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_new_atto", null),
 				(AttoEAC) object);
@@ -167,42 +250,80 @@ public class AttoServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 */
 	public Atto findById(String id) {
 		return attoService
 				.findById(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_atto_by_id", new String[] { id }));
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public AttoEAC findEACById(String id) {
 		return attoService.findEACById(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_atto_by_id", new String[] { id }));
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public AttoMIS findMISById(String id) {
 		return attoService.findMISById(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_atto_by_id", new String[] { id }));
 	}
 
+	/**
+	 * 
+	 * @param tipoAtto
+	 * @param dataCreazioneDa
+	 * @param dataCreazioneA
+	 * @return
+	 */
 	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String tipoAtto, String dataCreazioneDa,
 			String dataCreazioneA) {
 		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_retrieve_atti_indirizzo", new String[] { tipoAtto, dataCreazioneDa, dataCreazioneA }));
 	}
 
+	/**
+	 * 
+	 * @param idAtto
+	 * @return
+	 */
 	public List<CollegamentoAttiSindacato> findAttiSindacatoById(String idAtto) {
 		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_retrieve_atti_indirizzo_atto", new String[] { idAtto }));
 	}
 
+	/**
+	 * 
+	 * @param idAtto
+	 * @return
+	 */
 	public List<Collegamento> findAttiCollegatiById(String idAtto) {
 		return attoService.findCollegamentiAttoById(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_collegamenti_atto", new String[] { idAtto }));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> findTipoAttiSindacato() {
 		return attoService.findTipoAttiSindacato(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_retrieve_tipo_atti_indirizzo", null));
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void presaInCaricoSC(Atto atto) {
 
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -210,53 +331,99 @@ public class AttoServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaInfoGeneraliPresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_info_generali_presentazione_assegnazione", new String[] { atto.getId() }), atto);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaAmmissibilitaPresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_ammissibilita_presentazione_assegnazione", null), atto);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaAssegnazionePresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_assegnazione_presentazione_assegnazione", null), atto);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaNoteAllegatiPresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_note_allegati_presentazione_assegnazione", null), atto);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaConsultazioni(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_consultazioni", null), atto);
 	}
 
+	/**
+	 * 
+	 * @param consultazioneParere
+	 */
 	public void salvaPareri(ConsultazioneParere consultazioneParere) {
 		attoService.salvaPareri(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_pareri", null),
 				consultazioneParere);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaCollegamenti(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_collegamenti", null), atto);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaCollegamentiAttiSindacato(Atto atto) {
 		attoService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_collegamenti_atto_sindacato", null),
 				atto);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void salvaRelatoriAula(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_relatori_aula", null), atto);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 */
 	public void chiusuraAtto(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_chiusura_atto", null), atto);
 	}
 
+	/**
+	 * 
+	 * @param data
+	 * @param numero
+	 * @return
+	 */
 	public String regioniUrl(String data, String numero) {
 		return urlBuilder.buildSimpleURL("leggi_regionali_link", new String[] { data, numero });
 	}

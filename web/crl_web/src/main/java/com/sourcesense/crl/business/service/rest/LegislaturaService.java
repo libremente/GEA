@@ -53,6 +53,11 @@ public class LegislaturaService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<Legislatura> getAllLegislatura(String url) {
 
 		List<Legislatura> listLegislature = null;
@@ -85,6 +90,12 @@ public class LegislaturaService {
 		return listLegislature;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param legislatura
+	 * @return
+	 */
 	public Map<String, String> getAnniByLegislatura(String url, String legislatura) {
 
 		/*

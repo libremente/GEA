@@ -43,10 +43,18 @@ public class VotazioneService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Votazione> getAllEsitoVotoAula() {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Votazione> getAllEsitoVotoCommissioneReferente() {
 
 		return null;

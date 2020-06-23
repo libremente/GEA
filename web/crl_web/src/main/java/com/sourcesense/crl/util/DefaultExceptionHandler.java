@@ -144,6 +144,12 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 		}
 	}
 
+	/**
+	 * 
+	 * @param facesContext
+	 * @param t
+	 * @return
+	 */
 	protected String handleUnexpected(FacesContext facesContext, final Throwable t) {
 
 		LOG.error("An unexpected internal error has occurred", t);

@@ -42,17 +42,33 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	@Autowired
 	private LettereNotificheService lettereNotificheService;
 
+	/**
+	 * 
+	 * @param lettera
+	 * @return
+	 */
 	public Lettera getLettera(Lettera lettera) {
 
 		return lettereNotificheService.getLettera(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_retrieve_lettera", new String[] { lettera.getTipoTemplate() }));
 	}
 
+	/**
+	 * 
+	 * @param lettera
+	 */
 	public void updateLettera(Lettera lettera) {
 		lettereNotificheService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_lettera", null),
 				lettera);
 	}
 
+	/**
+	 * 
+	 * @param lettera
+	 * @param idAtto
+	 * @param gruppo
+	 * @return
+	 */
 	public InputStream getLetteraFile(Lettera lettera, String idAtto, String gruppo) {
 
 		return lettereNotificheService.getFile(urlBuilder.buildAlfrescoURL("alfresco_context_url",

@@ -68,39 +68,70 @@ public class CommissioneServiceManager implements ServiceManager {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaEmendamentiClausoleEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_emendamenti_clausole_esame_commissioni", null), esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaVotazioneEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_commissioni", null),
 				esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaPresaInCaricoEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_presa_in_carico_esame_commissioni", null), esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaRelatoriEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_relatori_esame_commissioni", null),
 				esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaComitatoRistrettoEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_comitato_ristretto_esame_commissioni", null), esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaFineLavoriEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_fine_lavori_esame_commissioni", null),
 				esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public TestoAtto uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
 		return commissioneService.uploadTestoAtto(
@@ -109,6 +140,13 @@ public class CommissioneServiceManager implements ServiceManager {
 				atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
 
 		return commissioneService.uploadAllegato(
@@ -117,6 +155,13 @@ public class CommissioneServiceManager implements ServiceManager {
 				atto, stream, testoAtto, Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public Allegato uploadTestoComitatoRistretto(Atto atto, InputStream stream, Allegato testoAtto) {
 
 		return commissioneService.uploadAllegato(
@@ -125,6 +170,13 @@ public class CommissioneServiceManager implements ServiceManager {
 				atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_COMITATO);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public Allegato uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
 
 		return commissioneService.uploadAllegato(
@@ -133,6 +185,13 @@ public class CommissioneServiceManager implements ServiceManager {
 				atto, stream, testoAtto, Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, Allegato allegato) {
 
 		return commissioneService.uploadAllegato(
@@ -141,34 +200,61 @@ public class CommissioneServiceManager implements ServiceManager {
 				atto, stream, allegato, Allegato.TIPO_ESAME_COMMISSIONE_ALLEGATO);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaCambiaRuoloInReferente(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_salva_continuazione_commissione_referente", null), esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param idAtto
+	 * @param idAttoAbbinato
+	 * @param lastPassaggio
+	 */
 	public void removeAbbinamento(String idAtto, String idAttoAbbinato, String lastPassaggio) {
 		commissioneService.removeAbbinamento(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_delete_abbinamento_esame_commissioni", new String[] { idAtto, idAttoAbbinato, lastPassaggio }));
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaNoteAllegatiEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_commissioni", null),
 				esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaStralci(EsameCommissione esameCommissione) {
 		commissioneService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_stralci_commissioni", null),
 				esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param esameCommissione
+	 */
 	public void salvaTrasmissione(EsameCommissione esameCommissione) {
 		commissioneService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_trasmissione_commissione", null),
 				esameCommissione);
 	}
 
+	/**
+	 * 
+	 * @param idAtto
+	 * @return
+	 */
 	public List<Commissione> findCommissioniByAtto(String idAtto) {
 
 		List<Commissione> commissioni = new ArrayList<Commissione>();
@@ -202,6 +288,10 @@ public class CommissioneServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getAll() {
 
 		List<String> commissioni = new ArrayList<String>();
@@ -217,37 +307,6 @@ public class CommissioneServiceManager implements ServiceManager {
 		return commissioni;
 
 	}
-
-	/*
-	 * public Map<String, String> findAllCommissioneReferente() { Map<String,
-	 * String> commissioniReferenti = new HashMap<String, String>();
-	 * 
-	 * List<CommissioneReferente> listCommissioniReferenti =
-	 * commissioneService.getAllCommissioneReferente(urlBuilder.buildAlfrescoURL(
-	 * "alfresco_context_url", "alf_list_commissioni_referenti",null));
-	 * 
-	 * for (CommissioneReferente commissioneReferente : listCommissioniReferenti) {
-	 * 
-	 * commissioniReferenti.put(commissioneReferente.getDescrizione(),
-	 * commissioneReferente.getDescrizione());
-	 * 
-	 * } return commissioniReferenti; }
-	 * 
-	 * 
-	 * public Map<String, String> findAllCommissioneConsultiva() { Map<String,
-	 * String> commissioniConsultive = new HashMap<String, String>();
-	 * 
-	 * List<CommissioneConsultiva> listCommissioniConsultive =
-	 * commissioneService.getAllCommissioneConsultiva(urlBuilder.buildAlfrescoURL(
-	 * "alfresco_context_url", "alf_list_commissioni_consultive", null));
-	 * 
-	 * for (CommissioneConsultiva commissioneConsultiva : listCommissioniConsultive)
-	 * 
-	 * commissioniConsultive.put(commissioneConsultiva.getDescrizione(),
-	 * commissioneConsultiva.getDescrizione());
-	 * 
-	 * return commissioniConsultive; }
-	 */
 
 	@Override
 	public Object findById(String id) {

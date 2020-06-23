@@ -55,6 +55,11 @@ public class AttoRecordService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<TestoAtto> retrieveTestiAtto(String url) {
 		List<TestoAtto> listTestiAtto = null;
 
@@ -87,6 +92,10 @@ public class AttoRecordService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void deleteFile(String url) {
 
 		WebResource webResource = client.resource(url);
@@ -103,6 +112,11 @@ public class AttoRecordService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<Allegato> retrieveAllegati(String url) {
 		List<Allegato> listAllegati = null;
 
@@ -137,6 +151,11 @@ public class AttoRecordService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public InputStream getFile(String url) {
 
 		InputStream responseFile = null;
@@ -156,6 +175,12 @@ public class AttoRecordService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato updateAllegatoCommissione(String url, Allegato allegato) {
 
 		WebResource webResource = client.resource(url);
@@ -192,6 +217,12 @@ public class AttoRecordService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato updateAllegato(String url, Allegato allegato) {
 
 		Allegato allegatoRet = null;
@@ -228,6 +259,12 @@ public class AttoRecordService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param testoAtto
+	 * @return
+	 */
 	public TestoAtto updateTestoAtto(String url, TestoAtto testoAtto) {
 
 		TestoAtto testoAttoRet = null;

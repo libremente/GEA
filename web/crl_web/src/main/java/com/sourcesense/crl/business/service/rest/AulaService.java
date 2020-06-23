@@ -59,6 +59,12 @@ public class AulaService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param esameAula
+	 * @return
+	 */
 	public Passaggio rinvioEsame(String url, EsameAula esameAula) {
 
 		Passaggio passaggio = null;
@@ -102,6 +108,11 @@ public class AulaService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param esameAula
+	 */
 	public void merge(String url, EsameAula esameAula) {
 		try {
 			WebResource webResource = client.resource(url);
@@ -137,6 +148,15 @@ public class AulaService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream, Allegato allegato, String tipologia) {
 
 		try {
@@ -172,6 +192,15 @@ public class AulaService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @param tipologia
+	 * @return
+	 */
 	public TestoAtto uploadTestoAtto(String url, Atto atto, InputStream stream, TestoAtto testoAtto, String tipologia) {
 
 		TestoAtto attoRecord = null;

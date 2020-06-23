@@ -187,6 +187,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 	private Atto atto = new Atto();
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 		setFirmatari(personaleServiceManager.getAllFirmatari());
@@ -230,26 +233,47 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void updateInfoGenHandler() {
 		setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateAmmissibilitaHandler() {
 		setStatoCommitAmmissibilita(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateAssegnazioneHandler() {
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateNoteHandler() {
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
 	public int sortTable(Object s1, Object s2) {
 		return ((Date) s1).compareTo((Date) s2);
 	}
 
+	/**
+	 * 
+	 */
 	public void changeTabHandler() {
 
 		if (statoCommitInfoGen.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -278,6 +302,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void presaInCarico() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -300,6 +327,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadTestoAtto(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -335,6 +366,11 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkTestoAtto(String fileName) {
 
 		for (TestoAtto element : testiAttoList) {
@@ -349,6 +385,9 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeTestoAtto() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -365,6 +404,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void updateTrasmissioneHandler() {
 		setStatoCommitTrasmissione(CRLMessage.COMMIT_UNDONE);
 	}
@@ -373,6 +415,10 @@ public class PresentazioneAssegnazioneAttoController {
 		this.statoCommitTrasmissione = statoCommitTrasmissione;
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void updateTestoAtto(RowEditEvent event) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -386,6 +432,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void updateAllegato(RowEditEvent event) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -398,6 +448,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void handleFirmatarioChange() {
 
 		for (Firmatario firmatario : firmatari) {
@@ -412,6 +465,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void addFirmatario() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -448,6 +504,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void addPromotore() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -484,6 +543,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeFirmatario() {
 
 		for (Firmatario element : firmatariList) {
@@ -501,6 +563,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removePromotore() {
 
 		for (Firmatario element : promotoriList) {
@@ -522,6 +587,10 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkFirmatari() {
 
 		for (Firmatario element : firmatariList) {
@@ -534,6 +603,10 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkPromotori() {
 
 		for (Firmatario element : promotoriList) {
@@ -546,6 +619,10 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkPrimoFirmatario() {
 
 		for (Firmatario element : firmatariList) {
@@ -558,6 +635,10 @@ public class PresentazioneAssegnazioneAttoController {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkPrimoPromotore() {
 
 		for (Firmatario element : promotoriList) {
@@ -570,11 +651,18 @@ public class PresentazioneAssegnazioneAttoController {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String ritiraPerMancanzaFirmatari() {
 		return "pretty:Chiusura_Iter";
 
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaInfoGenerali() {
 		boolean originale = false;
 
@@ -624,6 +712,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private List<Firmatario> getOrderedFirmatari() {
 
 		if (getFirmatariOrder() != null && !getFirmatariOrder().equals("")) {
@@ -664,6 +756,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private List<Firmatario> getOrderedPromotori() {
 
 		if (getPromotoriOrder() != null && !getPromotoriOrder().equals("")) {
@@ -704,6 +800,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String salvaAmmissibilita() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -766,6 +866,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void annullaAmmissibilita() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -801,6 +904,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void addCommissione() {
 
 		if (nomeCommissione != null && !nomeCommissione.trim().equals("")) {
@@ -843,6 +949,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeCommissione() {
 
 		for (Commissione element : commissioniList) {
@@ -881,6 +990,10 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCommissioniRuolo() {
 
 		for (Commissione element : commissioniList) {
@@ -906,6 +1019,10 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCommissioni() {
 
 		for (Commissione element : commissioniList) {
@@ -921,6 +1038,9 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void annulCommissione() {
 
 		boolean redigenteAnnullato = false;
@@ -999,6 +1119,9 @@ public class PresentazioneAssegnazioneAttoController {
 		attoBean.getAtto().getPassaggi().get(0).setCommissioni(commissioniList);
 	}
 
+	/**
+	 * 
+	 */
 	public void addParere() {
 
 		if (nomeOrganismoStatutario != null && !nomeOrganismoStatutario.trim().equals("")) {
@@ -1020,6 +1143,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeParere() {
 
 		for (OrganismoStatutario element : organismiList) {
@@ -1032,6 +1158,10 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkPareri() {
 
 		for (OrganismoStatutario element : organismiList) {
@@ -1046,6 +1176,9 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void confermaAssegnazione() {
 
 		this.atto.getPassaggi().get(0).setCommissioni(commissioniList);
@@ -1073,6 +1206,10 @@ public class PresentazioneAssegnazioneAttoController {
 		context.addMessage(null, new FacesMessage("Assegnazione salvata con successo", ""));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String confermaTrasmissione() {
 
 		String risultato = "";
@@ -1132,6 +1269,10 @@ public class PresentazioneAssegnazioneAttoController {
 		return risultato;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int changeStatoCommissioniAssegnato() {
 
 		int totaleCommChange = 0;
@@ -1154,6 +1295,10 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadAllegato(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -1186,6 +1331,11 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegato(String fileName) {
 
 		for (Allegato element : allegatiList) {
@@ -1200,6 +1350,9 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegato() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1217,6 +1370,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void addLink() {
 
 		if (nomeLink != null && !nomeLink.trim().equals("")) {
@@ -1237,6 +1393,9 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeLink() {
 
 		for (Link element : linksList) {
@@ -1249,6 +1408,10 @@ public class PresentazioneAssegnazioneAttoController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkLinks() {
 
 		for (Link element : linksList) {
@@ -1263,6 +1426,9 @@ public class PresentazioneAssegnazioneAttoController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaNoteEAllegati() {
 		this.atto.setLinksPresentazioneAssegnazione(linksList);
 		attoServiceManager.salvaNoteAllegatiPresentazione(atto);
@@ -1278,6 +1444,9 @@ public class PresentazioneAssegnazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void spostaAllegati() {
 
 		int conta = 0;

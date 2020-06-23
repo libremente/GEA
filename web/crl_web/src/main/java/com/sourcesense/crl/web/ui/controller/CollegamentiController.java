@@ -82,6 +82,9 @@ public class CollegamentiController {
 	private String statoCommitAttiIndirizzo = CRLMessage.COMMIT_DONE;
 	private String statoCommitLeggiRegionali = CRLMessage.COMMIT_DONE;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 
@@ -108,6 +111,9 @@ public class CollegamentiController {
 		setStatoCommitLeggiRegionali(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void changeTabHandler() {
 
 		if (statoCommitAttiInterni.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -129,6 +135,10 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param idAttoToAdd
+	 */
 	public void addCollegamento(String idAttoToAdd) {
 
 		if (!idAttoToAdd.trim().equals("")) {
@@ -149,6 +159,11 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param idAttoToAdd
+	 * @param tipoAtto
+	 */
 	public void addCollegamento(String idAttoToAdd, String tipoAtto) {
 
 		if (!idAttoToAdd.trim().equals("")) {
@@ -190,6 +205,9 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeCollegamento() {
 
 		for (Collegamento element : attiCollegatiList) {
@@ -203,6 +221,11 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param idAttoToAdd
+	 * @return
+	 */
 	private boolean checkCollegamenti(String idAttoToAdd) {
 
 		for (Collegamento element : attiCollegatiList) {
@@ -215,6 +238,9 @@ public class CollegamentiController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaCollegamenti() {
 		atto.setCollegamenti(getAttiCollegatiList());
 		atto.setNoteCollegamenti(getNoteCollegamenti());
@@ -229,6 +255,9 @@ public class CollegamentiController {
 		context.addMessage(null, new FacesMessage("Atti Interni salvati con successo", ""));
 	}
 
+	/**
+	 * 
+	 */
 	public void handleAttoSindacatoChange() {
 
 		Calendar c = Calendar.getInstance();
@@ -256,6 +285,9 @@ public class CollegamentiController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void addCollegamentoAttoSindacato() {
 
 		if (!"".equals(idAttoSindacato)) {
@@ -282,6 +314,9 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeCollegamentoAttoSindacato() {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
@@ -295,6 +330,10 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCollegamentiAttiSindacati() {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
@@ -307,6 +346,9 @@ public class CollegamentiController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaAttiIndirizzo() {
 
 		atto.setCollegamentiAttiSindacato(getCollegamentiAttiSindacato());
@@ -323,6 +365,9 @@ public class CollegamentiController {
 				new FacesMessage("Atti di indirizzo e di Sindacato Ispettivo salvati con successo", ""));
 	}
 
+	/**
+	 * 
+	 */
 	public void addCollegamentoAttoRegionale() {
 
 		if (!numeroAttoRegionale.trim().equals("")) {
@@ -344,6 +389,9 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeCollegamentoAttoRegionale() {
 
 		for (CollegamentoLeggiRegionali element : collegamentiLeggiRegionali) {
@@ -357,6 +405,10 @@ public class CollegamentiController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCollegamentiAttiRegionali() {
 
 		for (CollegamentoLeggiRegionali element : collegamentiLeggiRegionali) {
@@ -369,6 +421,9 @@ public class CollegamentiController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaLeggiRegionali() {
 		atto.setCollegamentiLeggiRegionali(getCollegamentiLeggiRegionali());
 

@@ -52,6 +52,11 @@ public class TipoChiusuraService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<TipoChiusura> getAllTipoChiusura(String url) {
 		List<TipoChiusura> listTipiChiusura = null;
 

@@ -27,16 +27,44 @@ import java.util.Map;
  */
 public interface ServiceManager {
 
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public Object persist(Object object);
 
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public Object merge(Object object);
 
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public boolean remove(Object object);
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Object> retrieveAll();
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAll();
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Object findById(String id);
 
 }

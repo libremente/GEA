@@ -49,6 +49,10 @@ public class FileDownloadController {
 	private String fileMimetype;
 	private StreamedContent file;
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void fileUpdate(RowEditEvent event) {
 
 		if (event.getObject() instanceof Allegato) {

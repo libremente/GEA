@@ -29,6 +29,12 @@ import java.util.List;
  */
 public class CloningLists {
 
+	/**
+	 * 
+	 * @param <T>
+	 * @param list
+	 * @return
+	 */
 	public static <T extends Cloneable> List<T> cloneMe(List<T> list) {
 		final List<T> list2;
 		if (list instanceof Cloneable) {
@@ -44,6 +50,12 @@ public class CloningLists {
 		return list2;
 	}
 
+	/**
+	 * 
+	 * @param <T>
+	 * @param o
+	 * @return
+	 */
 	private static <T> T forceClone(T o) {
 		final Class<?> klass = o.getClass();
 

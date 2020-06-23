@@ -100,6 +100,9 @@ public class InserisciMISController {
 	private String relatore1;
 	private String relatore2;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	private void initializeValues() {
 
@@ -118,6 +121,9 @@ public class InserisciMISController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void inserisciAtto() {
 
 		atto.setTipoAtto("MIS");
@@ -144,6 +150,10 @@ public class InserisciMISController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadAllegatoParere(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 
@@ -168,6 +178,11 @@ public class InserisciMISController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegatoParere(String fileName) {
 
 		for (Allegato element : allegatiMIS) {
@@ -182,6 +197,9 @@ public class InserisciMISController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegatoParere() {
 
 		FacesContext context = FacesContext.getCurrentInstance();

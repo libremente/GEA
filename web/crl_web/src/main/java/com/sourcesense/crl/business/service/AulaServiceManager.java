@@ -46,6 +46,10 @@ public class AulaServiceManager implements ServiceManager {
 	@Autowired
 	private URLBuilder urlBuilder;
 
+	/**
+	 * 
+	 * @param esameAula
+	 */
 	public void presaInCarico(EsameAula esameAula) {
 
 		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_presa_carico_aula",
@@ -53,11 +57,22 @@ public class AulaServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @param esameAula
+	 */
 	public void salvaVotazioneEsameAula(EsameAula esameAula) {
 		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_aula", null),
 				esameAula);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public TestoAtto uploadTestoAttoVotatoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
 		return aulaService
@@ -67,6 +82,13 @@ public class AulaServiceManager implements ServiceManager {
 						atto, stream, testoAtto, TestoAtto.TESTO_ESAME_AULA_VOTAZIONE);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadAllegatoNoteAllegatiEsameAula(Atto atto, InputStream stream, Allegato allegato) {
 
 		return aulaService
@@ -76,6 +98,13 @@ public class AulaServiceManager implements ServiceManager {
 						atto, stream, allegato, Allegato.TIPO_ESAME_AULA_ALLEGATO);
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, Allegato allegato) {
 
 		return aulaService
@@ -85,22 +114,39 @@ public class AulaServiceManager implements ServiceManager {
 						atto, stream, allegato, Allegato.TESTO_ESAME_AULA_EMENDAMENTO);
 	}
 
+	/**
+	 * 
+	 * @param esameAula
+	 */
 	public void salvaEmendamentiEsameAula(EsameAula esameAula) {
 		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_esame_aula", null),
 				esameAula);
 	}
 
+	/**
+	 * 
+	 * @param esameAula
+	 * @return
+	 */
 	public Passaggio salvaRinvioEsameEsameAula(EsameAula esameAula) {
 		return aulaService.rinvioEsame(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_rinvio_esame_esame_aula", null),
 				esameAula);
 	}
 
+	/**
+	 * 
+	 * @param esameAula
+	 */
 	public void salvaStralciEsameAula(EsameAula esameAula) {
 		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_stralci_esame_aula", null),
 				esameAula);
 	}
 
+	/**
+	 * 
+	 * @param esameAula
+	 */
 	public void salvaNoteAllegatiEsameAula(EsameAula esameAula) {
 		aulaService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_note_allegati_esame_aula", null),

@@ -43,16 +43,25 @@ public class LoginFilter implements Filter {
 	private static final String loginpage = "/authenticate.xhtml";
 	private static final String homepage = "/home";
 
+	/**
+	 * 
+	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.filterConfig = filterConfig;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void destroy() {
 		this.filterConfig = null;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {

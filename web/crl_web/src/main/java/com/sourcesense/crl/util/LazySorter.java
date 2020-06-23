@@ -39,6 +39,9 @@ public class LazySorter implements Comparator<Atto> {
 		this.sortOrder = sortOrder;
 	}
 
+	/**
+	 * 
+	 */
 	public int compare(Atto atto1, Atto atto2) {
 		try {
 			Object value1 = Atto.class.getField(this.sortField).get(atto1);

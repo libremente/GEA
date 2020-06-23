@@ -49,6 +49,10 @@ public class LoginController {
 
 	private String password;
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String readOnlyLogin() {
 
 		try {
@@ -73,6 +77,10 @@ public class LoginController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String login() {
 
 		try {
@@ -120,6 +128,10 @@ public class LoginController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String logout() {
 		HttpSession session = ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false));
 		session.removeAttribute("userBean");

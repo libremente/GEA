@@ -235,6 +235,9 @@ public class SearchAttoController implements Serializable {
 
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 
+	/**
+	 * 
+	 */
 	public void searchAtti() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -341,6 +344,9 @@ public class SearchAttoController implements Serializable {
 		Collections.sort(listAtti);
 	}
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void initLazyModel() {
 
@@ -422,6 +428,14 @@ public class SearchAttoController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @param document
+	 * @throws SecurityException
+	 * @throws NoSuchFieldException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 */
 	public void postProcessXLS(Object document)
 			throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 
@@ -496,6 +510,10 @@ public class SearchAttoController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String attoDetail() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -526,6 +544,12 @@ public class SearchAttoController implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param idAttoParam
+	 * @param tipo
+	 * @return
+	 */
 	public String attoDetail(String idAttoParam, String tipo) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -557,6 +581,9 @@ public class SearchAttoController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void reset() {
 
 		setAbbinamento(false);
@@ -613,6 +640,12 @@ public class SearchAttoController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
 	public int sortNumeriAtto(String s1, String s2) {
 
 		return Integer.parseInt(s1) - Integer.parseInt(s2);

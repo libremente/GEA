@@ -52,6 +52,11 @@ public class TipoIniziativaService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<TipoIniziativa> getAllTipoIniziativa(String url) {
 		List<TipoIniziativa> listTipiIniziativa = null;
 

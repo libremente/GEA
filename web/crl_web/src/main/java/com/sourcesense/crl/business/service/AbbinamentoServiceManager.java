@@ -38,6 +38,10 @@ public class AbbinamentoServiceManager {
 	@Autowired
 	private AbbinamentoService abbinamentoService;
 
+	/**
+	 * 
+	 * @param abbinamento
+	 */
 	public void salvaAbbinamento(GestioneAbbinamento abbinamento) {
 		abbinamentoService.merge(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_abbinamento_esame_commissioni", null),

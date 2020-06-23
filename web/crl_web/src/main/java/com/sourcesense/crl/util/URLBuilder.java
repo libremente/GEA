@@ -41,6 +41,13 @@ public class URLBuilder {
 
 	AlfrescoSessionTicket alfrescoSessionTicket;
 
+	/**
+	 * 
+	 * @param contextPropertyName
+	 * @param fileName
+	 * @param paramsValues
+	 * @return
+	 */
 	public String buildAlfrescoDownloadURL(String contextPropertyName, String fileName, String[] paramsValues) {
 
 		String url = "";
@@ -57,6 +64,13 @@ public class URLBuilder {
 		return url.replaceAll(" ", "%20");
 	}
 
+	/**
+	 * 
+	 * @param contextPropertyName
+	 * @param pathPropertyName
+	 * @param paramsValues
+	 * @return
+	 */
 	public String buildAlfrescoURL(String contextPropertyName, String pathPropertyName, String[] paramsValues) {
 
 		String url = "";
@@ -76,6 +90,12 @@ public class URLBuilder {
 		return url.replaceAll(" ", "%20");
 	}
 
+	/**
+	 * 
+	 * @param contextPropertyName
+	 * @param pathPropertyName
+	 * @return
+	 */
 	public String buildURL(String contextPropertyName, String pathPropertyName) {
 
 		String url = "";
@@ -86,6 +106,12 @@ public class URLBuilder {
 		return url;
 	}
 
+	/**
+	 * 
+	 * @param contextPropertyName
+	 * @param paramsValues
+	 * @return
+	 */
 	public String buildSimpleURL(String contextPropertyName, String[] paramsValues) {
 
 		String url = "";
@@ -95,6 +121,10 @@ public class URLBuilder {
 		return url.replaceAll(" ", "%20");
 	}
 
+	/**
+	 * 
+	 * @param paramsValues
+	 */
 	private void encodeParams(String[] paramsValues) {
 
 		try {

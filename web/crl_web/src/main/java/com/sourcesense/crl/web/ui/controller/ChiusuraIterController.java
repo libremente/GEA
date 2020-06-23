@@ -65,6 +65,9 @@ public class ChiusuraIterController {
 
 	AttoBean attoBean;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -77,6 +80,9 @@ public class ChiusuraIterController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void chiusuraAtto() {
 
 		this.atto.setStato(StatoAtto.CHIUSO);
@@ -101,6 +107,9 @@ public class ChiusuraIterController {
 		context.addMessage(null, new FacesMessage("Atto chiuso con successo", ""));
 	}
 
+	/**
+	 * 
+	 */
 	public void changeDgr() {
 
 		String tipo = atto.getTipoChiusura().trim();
@@ -109,6 +118,9 @@ public class ChiusuraIterController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void createLeggeRegionaleLink() {
 
 		if ("".equals(getNumeroLr()) || getDataLr() == null || getNumeroLr() == null) {
@@ -147,6 +159,10 @@ public class ChiusuraIterController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String tipoChiusuraPar() {
 
 		return "Parere negativo trasmesso alla Giunta";

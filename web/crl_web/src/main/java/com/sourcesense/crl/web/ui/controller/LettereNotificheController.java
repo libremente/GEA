@@ -64,6 +64,9 @@ public class LettereNotificheController implements Serializable {
 	@ManagedProperty(value = "#{lettereNotificheServiceManager}")
 	private LettereNotificheServiceManager lettereNotificheServiceManager;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	public void init() {
 
@@ -601,6 +604,10 @@ public class LettereNotificheController implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void onNodeSelect(NodeSelectEvent event) {
 
 		if (event.getTreeNode().getData() instanceof Lettera) {
@@ -632,6 +639,9 @@ public class LettereNotificheController implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaLettera() {
 
 		if (letteraSelected.getTipoTemplate() != null && !letteraSelected.equals("")) {
@@ -658,6 +668,10 @@ public class LettereNotificheController implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 * @param actionEvent
+	 */
 	public void saveFirmatario(AjaxBehaviorEvent actionEvent) {
 		actionEvent.getSource();
 

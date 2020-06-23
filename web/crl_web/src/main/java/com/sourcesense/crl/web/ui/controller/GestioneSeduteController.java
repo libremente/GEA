@@ -150,6 +150,9 @@ public class GestioneSeduteController {
 	private static final Pattern soggettoPattern = Pattern
 			.compile("(.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)");
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 
@@ -172,14 +175,23 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void updateInserisciSedutaHandler() {
 		setStatoCommitInserisciSeduta(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateInserisciOdgHandler() {
 		setStatoCommitInserisciOdg(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void changeTabHandler() {
 
 		if (statoCommitInserisciSeduta.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -195,6 +207,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void filterDataTable() {
 
 		dateSeduteList.clear();
@@ -240,6 +255,9 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void showSedutaDetail() {
 
 		String[] tokens = dataSedutaSelected.split("/");
@@ -307,6 +325,11 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param dataSeduta
+	 * @return
+	 */
 	public Seduta findSeduta(String dataSeduta) {
 		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -319,6 +342,10 @@ public class GestioneSeduteController {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param dataSeduta
+	 */
 	public void removeFromDateSedutaList(Date dataSeduta) {
 
 		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -332,6 +359,9 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void removeSeduta() {
 
 		for (Seduta element : seduteList) {
@@ -355,6 +385,10 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String dettaglioOdg() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -393,6 +427,9 @@ public class GestioneSeduteController {
 		return null;
 	}
 
+	/**
+	 * 
+	 */
 	public void addLink() {
 
 		if (nomeLink != null && !nomeLink.trim().equals("")) {
@@ -412,6 +449,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeLink() {
 
 		for (Link element : linksList) {
@@ -425,6 +465,10 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkLinks() {
 
 		for (Link element : linksList) {
@@ -439,6 +483,9 @@ public class GestioneSeduteController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaAggiungiSeduta() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -508,6 +555,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private void refreshInsert() {
 
 		setSedutaSelected(null);
@@ -523,6 +573,9 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void fillDateSeduteMap() {
 		dateSedute = new ArrayList<Date>();
 		for (Seduta element : seduteList) {
@@ -530,6 +583,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void updateSedutaInserisciOdg() {
 		if (!seduteList.isEmpty()) {
 			Format formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -538,6 +594,9 @@ public class GestioneSeduteController {
 		showSedutaDetail();
 	}
 
+	/**
+	 * 
+	 */
 	public void addAttoTrattato() {
 
 		if (!attoDaTrattare.trim().equals("")) {
@@ -576,6 +635,11 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param idAttoToAdd
+	 * @param tipoAtto
+	 */
 	public void addAttoTrattato(String idAttoToAdd, String tipoAtto) {
 
 		if (!idAttoToAdd.trim().equals("")) {
@@ -636,6 +700,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAttoTrattato() {
 
 		for (AttoTrattato element : attiTrattati) {
@@ -649,6 +716,11 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param idAttoTrattatoToAdd
+	 * @return
+	 */
 	private boolean checkAttiTrattati(String idAttoTrattatoToAdd) {
 
 		for (AttoTrattato element : attiTrattati) {
@@ -661,10 +733,18 @@ public class GestioneSeduteController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param soggetto
+	 * @return
+	 */
 	private boolean isValidSoggettoPartecipante(String soggetto) {
 		return !soggettoPattern.matcher(soggetto).matches();
 	}
 
+	/**
+	 * 
+	 */
 	public void addAudizione() {
 
 		if (!soggettoPartecipante.trim().equals("")) {
@@ -695,6 +775,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAudizione() {
 
 		for (Audizione element : audizioni) {
@@ -708,6 +791,11 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param soggettoToAdd
+	 * @return
+	 */
 	private boolean checkAudizioni(String soggettoToAdd) {
 
 		for (Audizione element : audizioni) {
@@ -720,6 +808,9 @@ public class GestioneSeduteController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void addCollegamentoAttoSindacato() {
 
 		if (!"".equals(idAttoSindacato)) {
@@ -745,6 +836,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeCollegamentoAttoSindacato() {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
@@ -758,6 +852,10 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCollegamentiAttiSindacati() {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
@@ -770,6 +868,9 @@ public class GestioneSeduteController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void handleAttoSindacatoChange() {
 
 		Calendar c = Calendar.getInstance();
@@ -797,6 +898,9 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaInserisciOdg() {
 
 		if (sedutaSelected != null) {
@@ -825,6 +929,10 @@ public class GestioneSeduteController {
 		context.addMessage(null, new FacesMessage("ODG salvato con successo", ""));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private List<AttoTrattato> getOrderedAttiTrattati() {
 
 		if (getAttiTrattatiorder() != null && !getAttiTrattatiorder().equals("")) {
@@ -866,6 +974,10 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private List<CollegamentoAttiSindacato> getOrderedAttiSindacatoTrattati() {
 
 		if (getAttiSindacatoTrattatiorder() != null && !getAttiSindacatoTrattatiorder().equals("")) {
@@ -907,6 +1019,10 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public StreamedContent getFile() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -944,6 +1060,10 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadODG(FileUploadEvent event) {
 		if (sedutaSelected != null) {
 			Allegato allegatoRet = new Allegato();
@@ -969,6 +1089,10 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadVerbale(FileUploadEvent event) {
 		if (sedutaSelected != null) {
 
@@ -996,6 +1120,9 @@ public class GestioneSeduteController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void removeVerbale() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
@@ -1011,6 +1138,9 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeTestoODG() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
@@ -1312,6 +1442,11 @@ public class GestioneSeduteController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param annoPartenzaString
+	 * @return
+	 */
 	public List<String> annoCreazioneList(String annoPartenzaString) {
 		int annoPartenza = Integer.parseInt(annoPartenzaString);
 		int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);

@@ -60,6 +60,9 @@ public class StatoAttoServiceManager implements ServiceManager {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
 	public Map<String, String> findAll() {
 		Map<String, String> stati = new HashMap<String, String>();
 

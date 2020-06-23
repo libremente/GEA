@@ -59,6 +59,13 @@ public class UserService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
+	/**
+	 * 
+	 * @param url
+	 * @param user
+	 * @return
+	 * @throws ServiceAuthenticationException
+	 */
 	public AlfrescoSessionTicket getAuthenticationToken(String url, User user) throws ServiceAuthenticationException {
 
 		String responseMsg = "error";
@@ -97,6 +104,13 @@ public class UserService {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param user
+	 * @return
+	 * @throws ServiceAuthenticationException
+	 */
 	public User completeAuthentication(String url, User user) throws ServiceAuthenticationException {
 
 		String responseMsg = "error";

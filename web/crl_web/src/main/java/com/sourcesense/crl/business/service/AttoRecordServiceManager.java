@@ -44,42 +44,76 @@ public class AttoRecordServiceManager implements ServiceManager {
 	@Autowired
 	private AttoRecordService attoRecordService;
 
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
 	public List<TestoAtto> testiAttoByAtto(Atto atto) {
 
 		return attoRecordService.retrieveTestiAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_list_testi_atto", new String[] { atto.getId() }));
 	}
 
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
 	public List<Allegato> allAllegatiAttoByAtto(Atto atto) {
 
 		return attoRecordService.retrieveAllegati(urlBuilder.buildAlfrescoURL("alfresco_context_url",
 				"alf_list_allegati_atto", new String[] { atto.getId(), "" }));
 	}
 
+	/**
+	 * 
+	 * @param fileToDownload
+	 * @return
+	 */
 	public InputStream getFileById(String fileToDownload) {
 
 		return attoRecordService
 				.getFile(urlBuilder.buildAlfrescoDownloadURL("alfresco_dwnl_direct_context_url", fileToDownload, null));
 	}
 
+	/**
+	 * 
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato updateAllegato(Allegato allegato) {
 
 		return attoRecordService.updateAllegato(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_allegato", null), allegato);
 	}
 
+	/**
+	 * 
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato updateAllegatoCommissione(Allegato allegato) {
 
 		return attoRecordService.updateAllegatoCommissione(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_allegato", null), allegato);
 	}
 
+	/**
+	 * 
+	 * @param testoAtto
+	 * @return
+	 */
 	public TestoAtto updateTestoAtto(TestoAtto testoAtto) {
 
 		return attoRecordService.updateTestoAtto(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_testo", null), testoAtto);
 	}
 
+	/**
+	 * 
+	 * @param idFile
+	 */
 	public void deleteFile(String idFile) {
 
 		attoRecordService.deleteFile(

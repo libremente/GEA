@@ -30,6 +30,12 @@ import java.util.GregorianCalendar;
  */
 public class DateUtils {
 
+	/**
+	 * 
+	 * @param dateIn
+	 * @param sospensioneFeriale
+	 * @return
+	 */
 	public static Date generateDataScadenzaParDgrInterruzione(Date dateIn, boolean sospensioneFeriale) {
 
 		try {
@@ -81,6 +87,13 @@ public class DateUtils {
 
 	}
 
+	/**
+	 * 
+	 * @param dataPresaInCarico
+	 * @param isRegolamento
+	 * @param sospensioneFeriale
+	 * @return
+	 */
 	public static Date getDataScadenzaPar(Date dataPresaInCarico, boolean isRegolamento, boolean sospensioneFeriale) {
 		if (isRegolamento) {
 			return generateDataScadenzaParRegolamento(dataPresaInCarico, sospensioneFeriale);
@@ -89,14 +102,33 @@ public class DateUtils {
 		}
 	}
 
+	/**
+	 * 
+	 * @param dateIn
+	 * @param sospensioneFeriale
+	 * @return
+	 */
 	private static Date generateDataScadenzaParRegolamento(Date dateIn, boolean sospensioneFeriale) {
 		return generateDataScadenzaPar(60, dateIn, sospensioneFeriale);
 	}
 
+	/**
+	 * 
+	 * @param dateIn
+	 * @param sospensioneFeriale
+	 * @return
+	 */
 	private static Date generateDataScadenzaParDgr(Date dateIn, boolean sospensioneFeriale) {
 		return generateDataScadenzaPar(30, dateIn, sospensioneFeriale);
 	}
 
+	/**
+	 * 
+	 * @param DELAY
+	 * @param dateIn
+	 * @param sospensioneFeriale
+	 * @return
+	 */
 	private static Date generateDataScadenzaPar(int DELAY, Date dateIn, boolean sospensioneFeriale) {
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(dateIn);
@@ -127,6 +159,12 @@ public class DateUtils {
 		return calendar.getTime();
 	}
 
+	/**
+	 * 
+	 * @param dateIn
+	 * @param startDate
+	 * @return
+	 */
 	private static int numDaysBeetwen(Date dateIn, Date startDate) {
 		int numDays = 0;
 		Calendar calendarDateIn = new GregorianCalendar();
@@ -140,6 +178,11 @@ public class DateUtils {
 		return numDays;
 	}
 
+	/**
+	 * 
+	 * @param dateIn
+	 * @return
+	 */
 	private static Date primoAgostoDate(Date dateIn) {
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(dateIn);
@@ -153,6 +196,11 @@ public class DateUtils {
 		return dataPrimoAgosto;
 	}
 
+	/**
+	 * 
+	 * @param dateIn
+	 * @return
+	 */
 	private static Date sediciSettembreDate(Date dateIn) {
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(dateIn);

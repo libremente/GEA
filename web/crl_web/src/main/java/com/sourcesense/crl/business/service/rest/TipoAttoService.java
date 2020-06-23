@@ -53,6 +53,11 @@ public class TipoAttoService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<TipoAtto> getAllTipoAtto(String url) {
 
 		List<TipoAtto> listTipiAtto = null;
@@ -87,6 +92,11 @@ public class TipoAttoService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<TipologiaAtto> getTipologieByTipoAtto(String url) {
 
 		List<TipologiaAtto> listTipologieAtto = null;

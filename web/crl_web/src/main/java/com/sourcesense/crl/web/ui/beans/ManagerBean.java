@@ -78,6 +78,9 @@ public class ManagerBean implements Serializable {
 		this.showCommDetail = showCommDetail;
 	}
 
+	/**
+	 * 
+	 */
 	public void visualizeCommDetail() {
 		this.showCommDetail = true;
 	}

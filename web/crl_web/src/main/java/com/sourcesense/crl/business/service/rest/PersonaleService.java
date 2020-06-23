@@ -54,6 +54,11 @@ public class PersonaleService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<GruppoConsiliare> getListGruppiConsiliari(String url) {
 		List<GruppoConsiliare> listGruppiConsiliari = null;
 
@@ -85,6 +90,11 @@ public class PersonaleService {
 		return listGruppiConsiliari;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<Firmatario> getAllFirmatario(String url) {
 		List<Firmatario> listFirmatari = null;
 
@@ -116,6 +126,11 @@ public class PersonaleService {
 		return listFirmatari;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<Relatore> getAllRelatore(String url) {
 		List<Relatore> listRelatori = null;
 
@@ -147,6 +162,11 @@ public class PersonaleService {
 		return listRelatori;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public List<Firmatario> findFirmatariById(String url) {
 		List<Firmatario> listFirmatari = null;
 

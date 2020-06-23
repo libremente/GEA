@@ -43,6 +43,12 @@ public class UserServiceManager implements ServiceManager {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ServiceAuthenticationException
+	 */
 	public User authenticate(User user) throws ServiceAuthenticationException {
 
 		urlBuilder.setAlfrescoSessionTicket(userService
@@ -75,6 +81,12 @@ public class UserServiceManager implements ServiceManager {
 
 	}
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws ServiceAuthenticationException
+	 */
 	public User authenticateReadOnly(User user) throws ServiceAuthenticationException {
 
 		user.setPassword(urlBuilder.getMessageSource().getMessage("alfresco_guest_password", null, Locale.ITALY));

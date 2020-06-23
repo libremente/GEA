@@ -26,6 +26,11 @@ import java.lang.reflect.Method;
  */
 public class ReflectionUtils {
 
+	/**
+	 * 
+	 * @param target
+	 * @return
+	 */
 	public static Object cloneObject(Object target) {
 
 		Object ritorno = null;

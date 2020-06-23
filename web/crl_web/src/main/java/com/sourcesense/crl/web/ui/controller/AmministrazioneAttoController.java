@@ -71,6 +71,9 @@ public class AmministrazioneAttoController {
 
 	private Map<String, String> anni = new HashMap<String, String>();
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	private void initializeValues() {
 
@@ -81,6 +84,9 @@ public class AmministrazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void updateAtto() {
 		Atto atto = attoBean.getAtto();
 		Atto attoRet = attoServiceManager.updateAtto(atto);
@@ -103,6 +109,10 @@ public class AmministrazioneAttoController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String deleteAtto() {
 		Atto atto = attoBean.getAtto();
 		attoServiceManager.deleteAtto(atto);

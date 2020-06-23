@@ -55,11 +55,19 @@ public class VotazioneServiceManager implements ServiceManager {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllEsitoVotoAula() {
 
 		return null;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllEsitoVotoCommissioneReferente() {
 
 		return null;

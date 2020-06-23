@@ -220,6 +220,9 @@ public class EsameCommissioniController {
 	private String statoCommitNote = CRLMessage.COMMIT_DONE;
 	private String statoCommitStralci = CRLMessage.COMMIT_DONE;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 		setRelatori(personaleServiceManager.getAllRelatori());
@@ -236,6 +239,11 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @param attoBean
+	 * @param userBean
+	 */
 	private void setValoriCommissioneUtente(AttoBean attoBean, UserBean userBean) {
 		Commissione commTemp = findCommissione(userBean.getUser().getSessionGroup().getNome());
 		esitiVotazione.clear();
@@ -320,6 +328,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean canChangeStatoAtto() {
 
 		return (commissioneUser.getRuolo().equals(Commissione.RUOLO_REFERENTE)
@@ -329,6 +341,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void changePassaggio() {
 
 		Passaggio passaggioSelected = null;
@@ -381,6 +396,11 @@ public class EsameCommissioniController {
 		loadData(passaggioSelected, attoBean);
 	}
 
+	/**
+	 * 
+	 * @param nome
+	 * @return
+	 */
 	private Commissione findCommissione(String nome) {
 
 		for (Commissione element : commissioniList) {
@@ -391,6 +411,11 @@ public class EsameCommissioniController {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param passaggioIn
+	 * @param attoBean
+	 */
 	private void loadData(Passaggio passaggioIn, AttoBean attoBean) {
 		setDataPresaInCarico(commissioneUser.getDataPresaInCarico());
 		setMateria(commissioneUser.getMateria());
@@ -427,54 +452,93 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void updateRelatoriHandler() {
 		setStatoCommitRelatori(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateComitatoRistrettoHandler() {
 		setStatoCommitComitatoRistretto(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updatePresaInCaricoHandler() {
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateFineLavoriHandler() {
 		setStatoCommitFineLavori(CRLMessage.COMMIT_DONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateAbbinamentiHandler() {
 		setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateOggettoAttoCorrenteHandler() {
 		setStatoCommitOggettoAttoCorrente(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateRegistrazioneVotazioneHandler() {
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateContinuazioneLavoriHandler() {
 		setStatoCommitContinuazioneLavori(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateTrasmissioneHandler() {
 		setStatoCommitTrasmissione(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateEmendamentiClausoleHandler() {
 		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateNoteHandler() {
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateStralciHandler() {
 		setStatoCommitStralci(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void changeTabHandler() {
 
 		if (statoCommitRelatori.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -552,6 +616,10 @@ public class EsameCommissioniController {
 
 	}
 
+	
+	/**
+	 * 
+	 */
 	public void scadenzaPar() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -590,6 +658,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void presaInCarico() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -631,6 +702,9 @@ public class EsameCommissioniController {
 				""));
 	}
 
+	/**
+	 * 
+	 */
 	public void addRelatore() {
 
 		if (nomeRelatore != null && !nomeRelatore.trim().equals("")) {
@@ -651,6 +725,9 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeRelatore() {
 
 		for (Relatore element : relatoriList) {
@@ -664,6 +741,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkRelatori() {
 
 		for (Relatore element : relatoriList) {
@@ -678,6 +759,9 @@ public class EsameCommissioniController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void confermaRelatori() {
 
 		commissioneUser.setRelatori(relatoriList);
@@ -728,6 +812,10 @@ public class EsameCommissioniController {
 		context.addMessage(null, new FacesMessage("Relatori salvati con successo", ""));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkStatiRelatori() {
 
 		int annullo = 0;
@@ -744,6 +832,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean isNominatoRelatore() {
 
 		int usciti = 0;
@@ -758,6 +850,9 @@ public class EsameCommissioniController {
 		return (usciti < relatoriList.size());
 	}
 
+	/**
+	 * 
+	 */
 	public void addComponente() {
 
 		if (nomeComponente != null && !nomeComponente.trim().equals("")) {
@@ -784,6 +879,9 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeComponente() {
 
 		for (Componente element : membriComitatoList) {
@@ -797,6 +895,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkComponenti() {
 
 		for (Componente element : membriComitatoList) {
@@ -809,6 +911,10 @@ public class EsameCommissioniController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCoordinatore() {
 
 		for (Componente element : membriComitatoList) {
@@ -821,6 +927,11 @@ public class EsameCommissioniController {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param attoBean
+	 * @return
+	 */
 	private boolean checkOneMembroAttivo(AttoBean attoBean) {
 
 		for (Componente element : membriComitatoList) {
@@ -840,6 +951,9 @@ public class EsameCommissioniController {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
 	public void confermaComitatoRistretto() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -887,6 +1001,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadTestoComitatoRistretto(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -926,11 +1044,19 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkTestoComitato(String fileName) {
 
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeTestoComitato() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -948,6 +1074,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void updateAllegato(RowEditEvent event) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -983,6 +1113,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void confermaFineLavori() {
 		commissioneUser.setDataFineLavoriComitato(getDataFineLavori());
 		atto.getPassaggi().get(atto.getPassaggi().size() - 1).setCommissioni(getCommissioniList());
@@ -1003,6 +1136,11 @@ public class EsameCommissioniController {
 		context.addMessage(null, new FacesMessage("Relatori e Comitati Ristretti salvati con successo", ""));
 	}
 
+	/**
+	 * 
+	 * @param idAbbinamento
+	 * @param tipoAtto
+	 */
 	public void addAbbinamento(String idAbbinamento, String tipoAtto) {
 
 		if (!idAbbinamento.trim().equals("")) {
@@ -1039,6 +1177,9 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAbbinamento() {
 
 		for (Abbinamento element : abbinamentiList) {
@@ -1069,6 +1210,11 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param idAbbinamento
+	 * @return
+	 */
 	private boolean checkAbbinamenti(String idAbbinamento) {
 
 		for (Abbinamento element : abbinamentiList) {
@@ -1081,6 +1227,9 @@ public class EsameCommissioniController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void showAbbinamentoDetail() {
 
 		setAbbinamentoSelected(findAbbinamento(idAbbinamentoSelected));
@@ -1102,6 +1251,11 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	private Abbinamento findAbbinamento(String id) {
 
 		for (Abbinamento element : abbinamentiList) {
@@ -1117,6 +1271,9 @@ public class EsameCommissioniController {
 		return null;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaAbbinamentoDisabbinamento() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1173,6 +1330,11 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @param abbinamento
+	 * @param abbinamentiSession
+	 */
 	private void mergeAbbinamento(Abbinamento abbinamento, List<Abbinamento> abbinamentiSession) {
 
 		for (Abbinamento element : abbinamentiSession) {
@@ -1191,6 +1353,9 @@ public class EsameCommissioniController {
 		abbinamentiSession.add(abbinamento);
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaOggetto() {
 		FacesContext context = FacesContext.getCurrentInstance();
 
@@ -1211,6 +1376,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void confrontaDataScadenza() {
 
 		setMessaggioGiorniScadenza("");
@@ -1251,6 +1419,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String registraVotazione() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1307,6 +1479,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkAnnullaCommissione() {
 
 		if (("".equals(getQuorum()) || getQuorum() == null) && ("".equals(getEsitoVotazione()) || getQuorum() == null)
@@ -1318,6 +1494,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkLavoriComitatoRistretto() {
 
 		for (Componente componente : this.getMembriComitatoList()) {
@@ -1329,6 +1509,10 @@ public class EsameCommissioniController {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkNominatoRelatore() {
 		for (Relatore relatore : getRelatoriList()) {
 
@@ -1340,6 +1524,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1377,6 +1565,11 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkTestoAttoVotato(String fileName) {
 
 		for (TestoAtto element : testiAttoVotatoList) {
@@ -1391,6 +1584,9 @@ public class EsameCommissioniController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeTestoAttoVotato() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1410,6 +1606,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void updateTestoAttoVotato(RowEditEvent event) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1424,6 +1624,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void cambiaRuoloInReferente() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1467,6 +1670,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String confermaTrasmissione() {
 
 		String risultato = "";
@@ -1530,6 +1737,10 @@ public class EsameCommissioniController {
 		return risultato;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String testoParereEspressoAttoVotato() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1553,6 +1764,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void totaleEmendPresentati() {
 
 		numEmendPresentatiTotale = 0;
@@ -1577,6 +1791,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void totaleEmendApprovati() {
 
 		numEmendApprovatiTotale = 0;
@@ -1601,6 +1818,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void totaleNonApprovati() {
 
 		totaleNonApprovati = 0;
@@ -1622,6 +1842,10 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadEmendamento(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -1659,11 +1883,19 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkEmendamenti(String fileName) {
 
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeEmendamento() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1683,6 +1915,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadTestoClausola(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1719,6 +1955,11 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkTestiClausola(String fileName) {
 
 		for (Allegato element : testiClausolaList) {
@@ -1733,6 +1974,9 @@ public class EsameCommissioniController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeTestoClausola() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1751,6 +1995,9 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaEmendamentiClausole() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1817,6 +2064,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadAllegato(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1852,6 +2103,11 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegato(String fileName) {
 
 		for (Allegato element : allegatiList) {
@@ -1866,6 +2122,9 @@ public class EsameCommissioniController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegato() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1884,6 +2143,9 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void addLink() {
 
 		if (nomeLink != null && !nomeLink.trim().equals("")) {
@@ -1904,6 +2166,9 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeLink() {
 
 		for (Link element : linksList) {
@@ -1916,6 +2181,10 @@ public class EsameCommissioniController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkLinks() {
 
 		for (Link element : linksList) {
@@ -1930,6 +2199,9 @@ public class EsameCommissioniController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaNoteEAllegati() {
 
 		this.commissioneUser.setLinksNoteEsameCommissione(linksList);
@@ -1953,6 +2225,9 @@ public class EsameCommissioniController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaStralci() {
 
 		FacesContext context = FacesContext.getCurrentInstance();

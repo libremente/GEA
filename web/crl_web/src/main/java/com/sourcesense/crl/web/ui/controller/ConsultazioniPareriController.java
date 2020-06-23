@@ -109,6 +109,9 @@ public class ConsultazioniPareriController {
 	private String statoCommitPareri = CRLMessage.COMMIT_DONE;
 	private String statoCommitConsultazioni = CRLMessage.COMMIT_DONE;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -137,14 +140,23 @@ public class ConsultazioniPareriController {
 		commissioni = attoBean.getCommissioniAssegnate();
 	}
 
+	/**
+	 * 
+	 */
 	public void updatePareriHandler() {
 		setStatoCommitPareri(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void updateConsultazioniHandler() {
 		setStatoCommitConsultazioni(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * 
+	 */
 	public void changeTabHandler() {
 
 		if (statoCommitPareri.equals(CRLMessage.COMMIT_UNDONE)) {
@@ -160,6 +172,9 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void showParereDetail() {
 
 		setOrganismoSelected(findOrganismo(descrizioneOrganismoSelected));
@@ -180,6 +195,11 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param descrizione
+	 * @return
+	 */
 	private OrganismoStatutario findOrganismo(String descrizione) {
 
 		for (OrganismoStatutario element : organismiList) {
@@ -190,6 +210,10 @@ public class ConsultazioniPareriController {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadAllegatoParere(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -234,6 +258,11 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegatoParere(String fileName) {
 
 		for (Allegato element : organismoSelected.getParere().getAllegati()) {
@@ -248,6 +277,9 @@ public class ConsultazioniPareriController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegatoParere() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -272,6 +304,9 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaParere() {
 
 		organismoSelected.getParere().setDataRicezioneOrgano(getDataRicezioneOrgano());
@@ -299,6 +334,9 @@ public class ConsultazioniPareriController {
 		context.addMessage(null, new FacesMessage("Pareri salvati con successo", ""));
 	}
 
+	/**
+	 * 
+	 */
 	public void showConsultazioneDetail() {
 		setConsultazioneSelected(findConsultazione());
 		setCommissioneSelected(consultazioneSelected.getCommissione());
@@ -323,6 +361,10 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private Consultazione findConsultazione() {
 		if (descrizioneConsultazioneSelected != null) {
 			for (Consultazione element : consultazioniList) {
@@ -334,10 +376,18 @@ public class ConsultazioniPareriController {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param soggetto
+	 * @return
+	 */
 	private boolean isValidSoggetto(String soggetto) {
 		return !soggettoPattern.matcher(soggetto).matches();
 	}
 
+	/**
+	 * 
+	 */
 	public void addConsultazione() {
 
 		if (soggettoConsultato != null && !soggettoConsultato.trim().equals("")) {
@@ -371,6 +421,9 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeConsultazione() {
 
 		for (Consultazione element : consultazioniList) {
@@ -401,6 +454,10 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkConsultazioni() {
 
 		for (Consultazione element : consultazioniList) {
@@ -415,6 +472,9 @@ public class ConsultazioniPareriController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void addSoggettoInvitato() {
 
 		if (consultazioneSelected != null) {
@@ -451,6 +511,9 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void removeSoggettoInvitato() {
 
 		for (SoggettoInvitato element : soggettiInvitatiList) {
@@ -464,6 +527,10 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkSoggettiInvitati() {
 
 		for (SoggettoInvitato element : soggettiInvitatiList) {
@@ -478,6 +545,9 @@ public class ConsultazioniPareriController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void salvaConsultazione() {
 
 		if (consultazioneSelected != null) {
@@ -510,6 +580,10 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadAllegatoConsultazione(FileUploadEvent event) {
 
 		String fileName = event.getFile().getFileName();
@@ -552,6 +626,11 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegatoConsultazione(String fileName) {
 
 		for (Allegato element : consultazioneSelected.getAllegati()) {
@@ -566,6 +645,9 @@ public class ConsultazioniPareriController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegatoConsultazione() {
 
 		for (Allegato element : consultazioneSelected.getAllegati()) {
@@ -578,11 +660,19 @@ public class ConsultazioniPareriController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int totSoggettiInvitati() {
 
 		return soggettiInvitatiList.size();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int totSogettiPresenti() {
 
 		int totSogettiPresenti = 0;

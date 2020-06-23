@@ -101,6 +101,9 @@ public class InserisciEACController {
 	private String descrizioneAttoSindacato;
 	private String attoSindacatoToDelete;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	private void initializeValues() {
 
@@ -122,6 +125,9 @@ public class InserisciEACController {
 		setLegislature(legislaturaServiceManager.list());
 	}
 
+	/**
+	 * 
+	 */
 	public void inserisciAtto() {
 
 		atto.setTipoAtto("EAC");
@@ -149,6 +155,10 @@ public class InserisciEACController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void uploadAllegatoParere(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 
@@ -173,6 +183,11 @@ public class InserisciEACController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegatoParere(String fileName) {
 
 		for (Allegato element : allegatiEAC) {
@@ -187,6 +202,9 @@ public class InserisciEACController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegatoParere() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -204,6 +222,9 @@ public class InserisciEACController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void addCollegamentoAttoSindacato() {
 
 		if (!"".equals(idAttoSindacato)) {
@@ -230,6 +251,9 @@ public class InserisciEACController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void handleAttoSindacatoChange() {
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(annoCreazione), 0, 1);
@@ -255,6 +279,9 @@ public class InserisciEACController {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void removeCollegamentoAttoSindacato() {
 
 		for (CollegamentoAttiSindacato element : atto.getCollegamentiAttiSindacato()) {
@@ -269,6 +296,10 @@ public class InserisciEACController {
 		attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCollegamentiAttiSindacati() {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {

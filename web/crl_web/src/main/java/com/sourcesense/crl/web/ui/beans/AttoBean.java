@@ -144,6 +144,11 @@ public class AttoBean implements Serializable {
 		return this.atto.getPassaggi().size();
 	}
 
+	/**
+	 * 
+	 * @param commissione
+	 * @return
+	 */
 	public boolean containCommissione(String commissione) {
 		for (Commissione commissioneRec : this.atto.getPassaggi().get(0).getCommissioni()) {
 

@@ -60,6 +60,13 @@ public class SeduteService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param param
+	 * @param legislatura
+	 * @return
+	 */
 	public List<Seduta> findByGroup(String url, String param, String legislatura) {
 
 		List<Seduta> sedute = null;
@@ -92,6 +99,14 @@ public class SeduteService {
 		return sedute;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param param
+	 * @param dataSeduta
+	 * @param legislatura
+	 * @return
+	 */
 	public Seduta findByDate(String url, String param, String dataSeduta, String legislatura) {
 
 		Seduta seduta = null;
@@ -126,6 +141,12 @@ public class SeduteService {
 		return seduta;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param gestioneSedute
+	 * @return
+	 */
 	public Seduta create(String url, GestioneSedute gestioneSedute) {
 
 		Seduta seduta = null;
@@ -164,6 +185,10 @@ public class SeduteService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void delete(String url) {
 
 		WebResource webResource = client.resource(url);
@@ -182,6 +207,11 @@ public class SeduteService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param seduta
+	 */
 	public void mergeSeduta(String url, Seduta seduta) {
 		try {
 			WebResource webResource = client.resource(url);
@@ -209,6 +239,12 @@ public class SeduteService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param gestioneSedute
+	 * @return
+	 */
 	public Seduta merge(String url, GestioneSedute gestioneSedute) {
 
 		Seduta seduta = null;
@@ -248,6 +284,11 @@ public class SeduteService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public InputStream getFile(String url) {
 
 		InputStream responseFile = null;
@@ -267,6 +308,14 @@ public class SeduteService {
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param seduta
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadOdg(String url, Seduta seduta, InputStream stream, Allegato allegato) {
 
 		try {
@@ -301,6 +350,14 @@ public class SeduteService {
 		return allegato;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param seduta
+	 * @param stream
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato uploadVerbale(String url, Seduta seduta, InputStream stream, Allegato allegato) {
 
 		try {
