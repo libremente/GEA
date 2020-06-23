@@ -22,29 +22,31 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
-
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("tipoAtto")
 @JsonTypeName("tipoAtto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class TipoAtto implements Comparable<TipoAtto> {
-	
-	
+
 	private String descrizione;
-	
+
 	private String codice;
-	
+
 	@Override
-	public int compareTo(TipoAtto arg0) { 
+	public int compareTo(TipoAtto arg0) {
 		return this.descrizione.compareTo(arg0.descrizione);
 	}
-	
-	
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 	public String getDescrizione() {
 		return descrizione;
@@ -61,9 +63,5 @@ public class TipoAtto implements Comparable<TipoAtto> {
 	public void setCodice(String codice) {
 		this.codice = codice;
 	}
-
-	
-	
-	
 
 }

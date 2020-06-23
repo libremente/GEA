@@ -20,6 +20,12 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("commissioneConsultiva")
 @JsonTypeName("commissioneConsultiva")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)

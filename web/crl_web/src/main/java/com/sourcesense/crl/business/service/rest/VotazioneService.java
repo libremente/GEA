@@ -16,9 +16,7 @@
  */
 package com.sourcesense.crl.business.service.rest;
 
-import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.Path;
 
@@ -34,15 +32,17 @@ import com.sun.jersey.api.client.Client;
 public class VotazioneService {
 
 	@Autowired
-	 Client client;
-	
+	Client client;
+
 	@Autowired
-	 ObjectMapper objectMapper; 
+	ObjectMapper objectMapper;
+
 	public List<Votazione> getAllEsitoVotoAula() {
 		return null;
 	}
 
-	public List<Votazione> getAllEsitoVotoCommissioneReferente() { 
+	public List<Votazione> getAllEsitoVotoCommissioneReferente() {
+
 		return null;
 	}
 

@@ -16,7 +16,6 @@
  */
 package com.sourcesense.crl.business.security;
 
-
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.springframework.beans.factory.annotation.Configurable;
 
@@ -24,11 +23,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 @JsonRootName(value = "data")
 public class Data {
 
-	
-	
-	String ticket ;
+	String ticket;
 
-	
 	public String getTicket() {
 		return ticket;
 	}
@@ -36,5 +32,5 @@ public class Data {
 	public void setTicket(String ticket) {
 		this.ticket = ticket;
 	}
-	
+
 }

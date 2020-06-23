@@ -26,67 +26,75 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service
 @Aspect
 public class BusinessLogger {
 
-    private Logger log = LoggerFactory.getLogger(BusinessLogger.class);
+	private Logger log = LoggerFactory.getLogger(BusinessLogger.class);
 
-    @After("within(com.sourcesense.crl.business.service.rest.*)")
-    public void restServices(JoinPoint joinPoint) {
-        String trace = "Executed Rest Service : " + joinPoint.getSignature().getName() + "-" + joinPoint.getSignature().getDeclaringTypeName();
+	@After("within(com.sourcesense.crl.business.service.rest.*)")
+	public void restServices(JoinPoint joinPoint) {
+		String trace = "Executed Rest Service : " + joinPoint.getSignature().getName() + "-"
+				+ joinPoint.getSignature().getDeclaringTypeName();
 
-        Object[] inputList = joinPoint.getArgs();
+		Object[] inputList = joinPoint.getArgs();
 
-        for (Object object : inputList) {
+		for (Object object : inputList) {
 
-            if (object.getClass().isAnnotationPresent(JsonRootName.class)) {
+			if (object.getClass().isAnnotationPresent(JsonRootName.class)) {
 
-                trace += " beanIn [" + object.toString() + "] ";
+				trace += " beanIn [" + object.toString() + "] ";
 
-            } else {
+			} else {
 
-                trace += " otherIn [ " + object.getClass().getCanonicalName() + " : " + object.toString() + "]";
-            }
-        }
+				trace += " otherIn [ " + object.getClass().getCanonicalName() + " : " + object.toString() + "]";
+			}
+		}
 
-        log.info(trace);
+		log.info(trace);
 
-    }
+	}
 
-    @Pointcut("within(@org.springframework.stereotype.Service *)")
-    public void beanAnnotatedWithService() {
-    }
+	@Pointcut("within(@org.springframework.stereotype.Service *)")
+	public void beanAnnotatedWithService() {
+	}
 
-    @Pointcut("execution(public * *(..))")
-    public void publicMethod() {
+	@Pointcut("execution(public * *(..))")
+	public void publicMethod() {
 
-    }
+	}
 
-    @Pointcut("publicMethod() && beanAnnotatedWithService()")
-    public void publicMethodInsideAClassMarkedWithService() {
-    }
+	@Pointcut("publicMethod() && beanAnnotatedWithService()")
+	public void publicMethodInsideAClassMarkedWithService() {
+	}
 
-    @AfterReturning(pointcut = "publicMethodInsideAClassMarkedWithService()")
-    public void prova(JoinPoint joinPoint) {
+	@AfterReturning(pointcut = "publicMethodInsideAClassMarkedWithService()")
+	public void prova(JoinPoint joinPoint) {
 
-        String trace = "Executed Manager : " + joinPoint.getSignature().getName() + "-" + joinPoint.getSignature().getDeclaringTypeName();
+		String trace = "Executed Manager : " + joinPoint.getSignature().getName() + "-"
+				+ joinPoint.getSignature().getDeclaringTypeName();
 
-        Object[] inputList = joinPoint.getArgs();
+		Object[] inputList = joinPoint.getArgs();
 
-        for (Object object : inputList) {
+		for (Object object : inputList) {
 
-            if (object.getClass().isAnnotationPresent(JsonRootName.class)) { 
-                trace += " beanIn [" + object.toString() + "] ";
+			if (object.getClass().isAnnotationPresent(JsonRootName.class)) {
+				trace += " beanIn [" + object.toString() + "] ";
 
-            } else {
+			} else {
 
-                trace += " otherIn [ " + object.getClass().getCanonicalName() + " : " + object.toString() + "]";
-            }
-        }
+				trace += " otherIn [ " + object.getClass().getCanonicalName() + " : " + object.toString() + "]";
+			}
+		}
 
-        log.info(trace);
+		log.info(trace);
 
-    }
+	}
 
 }

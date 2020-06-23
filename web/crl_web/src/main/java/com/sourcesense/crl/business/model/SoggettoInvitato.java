@@ -22,6 +22,12 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("soggettoInvitato")
 @JsonTypeName("soggettoInvitato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
@@ -29,24 +35,26 @@ import org.pojomatic.annotations.AutoProperty;
 public class SoggettoInvitato {
 	private String descrizione;
 	private boolean intervenuto;
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public String getDescrizione() {
 		return descrizione;
 	}
+
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
+
 	public boolean isIntervenuto() {
 		return intervenuto;
 	}
+
 	public void setIntervenuto(boolean intervenuto) {
 		this.intervenuto = intervenuto;
 	}
-	
-	
 
 }

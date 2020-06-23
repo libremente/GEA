@@ -27,21 +27,28 @@ import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("organismoStatutario")
 @JsonTypeName("organismoStatutario")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class OrganismoStatutario implements Cloneable{
+public class OrganismoStatutario implements Cloneable {
 	private String descrizione;
 	private Date dataAssegnazione;
 	private Date dataAnnullo;
 	private boolean obbligatorio;
 	private Parere parere = new Parere();
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -59,7 +66,7 @@ public class OrganismoStatutario implements Cloneable{
 		this.descrizione = descrizione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazione() {
 		return dataAssegnazione;
 	}
@@ -68,7 +75,7 @@ public class OrganismoStatutario implements Cloneable{
 		this.dataAssegnazione = dataAssegnazione;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAnnullo() {
 		return dataAnnullo;
 	}
@@ -92,7 +99,5 @@ public class OrganismoStatutario implements Cloneable{
 	public void setParere(Parere parere) {
 		this.parere = parere;
 	}
-	
-	
 
 }

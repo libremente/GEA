@@ -29,16 +29,21 @@ import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("parere")
 @JsonTypeName("parere")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Parere implements Cloneable { 
+public class Parere implements Cloneable {
 	private String organismoStatutario;
 	private Date dataAssegnazione;
 	private Date dataAnnullo;
-	private boolean obbligatorio; 
+	private boolean obbligatorio;
 
 	private String descrizione;
 	private Date dataRicezioneParere;
@@ -46,10 +51,9 @@ public class Parere implements Cloneable {
 	private Date dataRicezioneOrgano;
 	private String note;
 	private String commissioneDestinataria;
-	
+
 	private List<Allegato> allegati = new ArrayList<Allegato>();
-	
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -58,72 +62,92 @@ public class Parere implements Cloneable {
 			return null;
 		}
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 	public String getEsito() {
 		return esito;
 	}
+
 	public void setEsito(String esito) {
 		this.esito = esito;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRicezioneOrgano() {
 		return dataRicezioneOrgano;
 	}
+
 	public void setDataRicezioneOrgano(Date dataRicezioneOrgano) {
 		this.dataRicezioneOrgano = dataRicezioneOrgano;
 	}
+
 	public String getNote() {
 		return note;
 	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
+
 	public String getDescrizione() {
 		return descrizione;
 	}
+
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAssegnazione() {
 		return dataAssegnazione;
 	}
+
 	public void setDataAssegnazione(Date dataAssegnazione) {
 		this.dataAssegnazione = dataAssegnazione;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAnnullo() {
 		return dataAnnullo;
 	}
+
 	public void setDataAnnullo(Date dataAnnullo) {
 		this.dataAnnullo = dataAnnullo;
 	}
+
 	public boolean isObbligatorio() {
 		return obbligatorio;
 	}
+
 	public void setObbligatorio(boolean obbligatorio) {
 		this.obbligatorio = obbligatorio;
 	}
+
 	public String getOrganismoStatutario() {
 		return organismoStatutario;
 	}
+
 	public void setOrganismoStatutario(String organismoStatutario) {
 		this.organismoStatutario = organismoStatutario;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataRicezioneParere() {
 		return dataRicezioneParere;
 	}
+
 	public void setDataRicezioneParere(Date dataRicezioneParere) {
 		this.dataRicezioneParere = dataRicezioneParere;
 	}
+
 	public List<Allegato> getAllegati() {
 		return allegati;
 	}
+
 	public void setAllegati(List<Allegato> allegati) {
 		this.allegati = allegati;
 	}
@@ -135,9 +159,5 @@ public class Parere implements Cloneable {
 	public void setCommissioneDestinataria(String commissioneDestinataria) {
 		this.commissioneDestinataria = commissioneDestinataria;
 	}
-	
-	
-	
-	
 
 }

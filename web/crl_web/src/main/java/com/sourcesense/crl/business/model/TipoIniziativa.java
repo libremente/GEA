@@ -22,20 +22,25 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("tipoIniziativa")
 @JsonTypeName("tipoIniziativa")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class TipoIniziativa implements Comparable<TipoIniziativa>{
-	
+public class TipoIniziativa implements Comparable<TipoIniziativa> {
+
 	private String descrizione;
 
-	
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public String getDescrizione() {
 		return descrizione;
 	}
@@ -45,7 +50,8 @@ public class TipoIniziativa implements Comparable<TipoIniziativa>{
 	}
 
 	@Override
-	public int compareTo(TipoIniziativa o) { 
+	public int compareTo(TipoIniziativa o) {
+
 		return this.descrizione.compareTo(o.descrizione);
 	}
 

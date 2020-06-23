@@ -31,7 +31,6 @@ public class LazyAttoDataModel extends LazyDataModel<Atto> {
 
 	private List<Atto> datasource = new ArrayList<Atto>();
 
-	
 	public LazyAttoDataModel(List<Atto> datasource) {
 		this.datasource = datasource;
 	}
@@ -39,8 +38,8 @@ public class LazyAttoDataModel extends LazyDataModel<Atto> {
 	@Override
 	public void setRowIndex(final int rowIndex) {
 		/*
-		 * The following is in ancestor (LazyDataModel): this.rowIndex =
-		 * rowIndex == -1 ? rowIndex : (rowIndex % pageSize);
+		 * The following is in ancestor (LazyDataModel): this.rowIndex = rowIndex == -1
+		 * ? rowIndex : (rowIndex % pageSize);
 		 */
 		if (rowIndex == -1 || getPageSize() == 0) {
 			super.setRowIndex(-1);
@@ -49,22 +48,20 @@ public class LazyAttoDataModel extends LazyDataModel<Atto> {
 	}
 
 	@Override
-	public List<Atto> load(int first, int pageSize, String sortField,
-			SortOrder sortOrder, Map<String, String> filters) {
-		List<Atto> data = new ArrayList<Atto>(); 
+	public List<Atto> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+			Map<String, String> filters) {
+		List<Atto> data = new ArrayList<Atto>();
+
 		for (Atto atto : datasource) {
 			boolean match = true;
 
-			for (Iterator<String> it = filters.keySet().iterator(); it
-					.hasNext();) {
+			for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
 				try {
 					String filterProperty = it.next();
 					String filterValue = filters.get(filterProperty);
-					String fieldValue = String.valueOf(atto.getClass()
-							.getField(filterProperty).get(atto));
+					String fieldValue = String.valueOf(atto.getClass().getField(filterProperty).get(atto));
 
-					if (filterValue == null
-							|| fieldValue.startsWith(filterValue)) {
+					if (filterValue == null || fieldValue.startsWith(filterValue)) {
 						match = true;
 					} else {
 						match = false;
@@ -78,12 +75,15 @@ public class LazyAttoDataModel extends LazyDataModel<Atto> {
 			if (match) {
 				data.add(atto);
 			}
-		} 
+		}
+
 		if (sortField != null) {
 			Collections.sort(data, new LazySorter(sortField, sortOrder));
-		} 
+		}
+
 		int dataSize = data.size();
-		this.setRowCount(dataSize); 
+		this.setRowCount(dataSize);
+
 		if (dataSize > pageSize) {
 			try {
 				return data.subList(first, first + pageSize);

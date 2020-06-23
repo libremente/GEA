@@ -22,17 +22,23 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("attoTrattato")
 @JsonTypeName("attoTrattato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class AttoTrattato implements Cloneable , Comparable <AttoTrattato>{
-	
+public class AttoTrattato implements Cloneable, Comparable<AttoTrattato> {
+
 	private Atto atto;
 	private boolean previsto;
 	private boolean discusso;
 	private String numeroOrdinamento;
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -41,17 +47,21 @@ public class AttoTrattato implements Cloneable , Comparable <AttoTrattato>{
 			return null;
 		}
 	}
-	
+
 	@Override
 	public int compareTo(AttoTrattato arg0) {
-		String numero1 = (this.numeroOrdinamento ==null || this.numeroOrdinamento.equals(""))? "00" : this.numeroOrdinamento;
-		String numero2 = (arg0.getNumeroOrdinamento() ==null || arg0.getNumeroOrdinamento().equals(""))? "00" : arg0.getNumeroOrdinamento(); 
-		return Integer.parseInt(numero1) -  Integer.parseInt(numero2);
+		String numero1 = (this.numeroOrdinamento == null || this.numeroOrdinamento.equals("")) ? "00"
+				: this.numeroOrdinamento;
+		String numero2 = (arg0.getNumeroOrdinamento() == null || arg0.getNumeroOrdinamento().equals("")) ? "00"
+				: arg0.getNumeroOrdinamento();
+
+		return Integer.parseInt(numero1) - Integer.parseInt(numero2);
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 	public Atto getAtto() {
 		return atto;
@@ -84,9 +94,5 @@ public class AttoTrattato implements Cloneable , Comparable <AttoTrattato>{
 	public void setNumeroOrdinamento(String numeroOrdinamento) {
 		this.numeroOrdinamento = numeroOrdinamento;
 	}
-
-	
-	
-	
 
 }

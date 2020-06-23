@@ -28,23 +28,20 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.URLBuilder;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
-import com.sourcesense.crl.web.ui.beans.UserBean;
 
 @ManagedBean(name = "chiusuraIterController")
 @ViewScoped
 public class ChiusuraIterController {
-	
-	
+
 	@ManagedProperty(value = "#{attoServiceManager}")
 	private AttoServiceManager attoServiceManager;
-	
+
 	private Atto atto = new Atto();
-	
+
 	private Date dataChiusura = new Date();
 	private String tipoChiusura;
 	private String note;
@@ -56,38 +53,33 @@ public class ChiusuraIterController {
 	private String numeroDcr;
 	private String numeroDgrSeguito;
 	private Date dataDgrSeguito;
-    private boolean dgr;
-    private String numRegolamento;
+	private boolean dgr;
+	private String numRegolamento;
 	private Date dataRegolamento;
-	
-    
-    
+
 	AttoBean attoBean;
 
 	@PostConstruct
 	protected void init() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
-		
-		if(atto.getTipoChiusura()!=null){
-		dgr = "Parere trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim());
+
+		if (atto.getTipoChiusura() != null) {
+			dgr = "Parere trasmesso alla Giunta".trim().equals(atto.getTipoChiusura().trim());
 		}
-	
+
 	}
-	
-	
+
 	public void chiusuraAtto() {
-		
+
 		this.atto.setStato(StatoAtto.CHIUSO);
-		
+
 		attoServiceManager.chiusuraAtto(atto);
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
-		
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
+
 		attoBean.getAtto().setDataChiusura(getDataChiusura());
 		attoBean.getAtto().setTipoChiusura(getTipoChiusura());
 		attoBean.getAtto().setNoteChiusuraIter(getNote());
@@ -102,80 +94,74 @@ public class ChiusuraIterController {
 		attoBean.setStato(StatoAtto.CHIUSO);
 		context.addMessage(null, new FacesMessage("Atto chiuso con successo", ""));
 	}
-	
-	
-	public void changeDgr(){
-		
+
+	public void changeDgr() {
+
 		String tipo = atto.getTipoChiusura().trim();
-		
+
 		dgr = "Parere trasmesso alla Giunta".trim().equals(tipo);
-		
-	} 
-	
-	
-	public void createLeggeRegionaleLink (){ 
-		if("".equals(getNumeroLr()) || getDataLr()==null || getNumeroLr()==null ){
-			
+
+	}
+
+	public void createLeggeRegionaleLink() {
+
+		if ("".equals(getNumeroLr()) || getDataLr() == null || getNumeroLr() == null) {
+
 			setUrlLeggiRegionali("");
-			
+
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Attenzione ! sono necessari la Data ed il Numero LR", ""));
-			
-			
-		}else{
-			
+
+		} else {
+
 			URLBuilder urlBuilder = new URLBuilder();
-			Format formatter=new SimpleDateFormat("yyyyMMdd");
+			Format formatter = new SimpleDateFormat("yyyyMMdd");
 			String data = formatter.format(getDataLr());
 			String numero = getNumeroLr();
-			try{
-			
-			if(numero.length()<5){
-				String app = "";
-				for(int i=0;i < (5-numero.length());i++){
-					
-					app+="0";
+			try {
+
+				if (numero.length() < 5) {
+					String app = "";
+					for (int i = 0; i < (5 - numero.length()); i++) {
+
+						app += "0";
+					}
+
+					numero = app + numero;
+
 				}
-				
-				numero=app+numero;
-				
-			}	
-				
-			setUrlLeggiRegionali ( attoServiceManager.regioniUrl( data, numero));	 
-			}catch (Exception e) { 
+
+				setUrlLeggiRegionali(attoServiceManager.regioniUrl(data, numero));
+
+			} catch (Exception e) {
+
 			}
 		}
-		
-		
+
 	}
-	
-public String tipoChiusuraPar() {
-		
-	return "Parere negativo trasmesso alla Giunta";
-	
-		/*FacesContext context = FacesContext.getCurrentInstance();
-		attoBean = (AttoBean) context
-				.getApplication()
-				.getExpressionFactory()
-				.createValueExpression(context.getELContext(), "#{attoBean}",
-						AttoBean.class).getValue(context.getELContext());
-		
-		
 
-		if (attoBean.getTipoAtto().equals("PAR"))
-			
-		{
-			return "Respinto";
-		}
-			
-		 else {
-			return "Rifiutato e trasmesso alla Giunta";
-		}*/
+	public String tipoChiusuraPar() {
 
-	} 
-	
+		return "Parere negativo trasmesso alla Giunta";
+
+		/*
+		 * FacesContext context = FacesContext.getCurrentInstance(); attoBean =
+		 * (AttoBean) context .getApplication() .getExpressionFactory()
+		 * .createValueExpression(context.getELContext(), "#{attoBean}",
+		 * AttoBean.class).getValue(context.getELContext());
+		 * 
+		 * 
+		 * 
+		 * if (attoBean.getTipoAtto().equals("PAR"))
+		 * 
+		 * { return "Respinto"; }
+		 * 
+		 * else { return "Rifiutato e trasmesso alla Giunta"; }
+		 */
+
+	}
+
 	public Atto getAtto() {
 		return atto;
 	}
@@ -240,89 +226,68 @@ public String tipoChiusuraPar() {
 		this.atto.setDataLR(dataLr);
 	}
 
-	
 	public String getNumeroDcr() {
 		return atto.getNumeroDcr();
 	}
-
 
 	public void setNumeroDcr(String numeroDcr) {
 		this.atto.setNumeroDcr(numeroDcr);
 	}
 
-
 	public AttoServiceManager getAttoServiceManager() {
 		return attoServiceManager;
 	}
-
 
 	public void setAttoServiceManager(AttoServiceManager attoServiceManager) {
 		this.attoServiceManager = attoServiceManager;
 	}
 
-
 	public String getUrlLeggiRegionali() {
 		return urlLeggiRegionali;
 	}
-
 
 	public void setUrlLeggiRegionali(String urlLeggiRegionali) {
 		this.urlLeggiRegionali = urlLeggiRegionali;
 	}
 
-
 	public String getNumeroDgrSeguito() {
 		return this.atto.getNumeroDgrSeguito();
 	}
-
 
 	public void setNumeroDgrSeguito(String numeroDgrSeguito) {
 		this.atto.setNumeroDgrSeguito(numeroDgrSeguito);
 	}
 
-
 	public Date getDataDgrSeguito() {
 		return this.atto.getDataDgrSeguito();
 	}
 
-
 	public void setDataDgrSeguito(Date dataDgrSeguito) {
-		this.atto.setDataDgrSeguito (dataDgrSeguito);
+		this.atto.setDataDgrSeguito(dataDgrSeguito);
 	}
-
 
 	public boolean isDgr() {
 		return dgr;
 	}
 
-
 	public void setDgr(boolean dgr) {
 		this.dgr = dgr;
 	}
-
 
 	public String getNumRegolamento() {
 		return this.atto.getNumRegolamento();
 	}
 
-
 	public void setNumRegolamento(String numRegolamento) {
-		this.atto.setNumRegolamento ( numRegolamento);
+		this.atto.setNumRegolamento(numRegolamento);
 	}
-
 
 	public Date getDataRegolamento() {
 		return this.atto.getDataRegolamento();
 	}
 
-
 	public void setDataRegolamento(Date dataRegolamento) {
-		this.atto.setDataRegolamento ( dataRegolamento);
+		this.atto.setDataRegolamento(dataRegolamento);
 	}
-	
-	
-	
-	
-	
-	
+
 }

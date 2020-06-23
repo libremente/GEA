@@ -242,7 +242,8 @@ public class SearchAttoController implements Serializable {
 		atto.getStatiUtente().clear();
 		atto.setCommissioneUser("");
 		atto.setRuoloUtente(userBean.getUser().getSessionGroup().getNome());
-		atto.setTipoWorkingList(""); 
+		atto.setTipoWorkingList("");
+
 		if ("inlavorazione".equals(listaLavoro)) {
 
 			atto.setTipoWorkingList("inlavorazione");
@@ -280,7 +281,8 @@ public class SearchAttoController implements Serializable {
 
 				atto.setTipoAtto("MIS");
 
-			} 
+			}
+
 		} else if ("lavorati".equals(listaLavoro)) {
 
 			atto.setTipoWorkingList("lavorati");
@@ -326,9 +328,11 @@ public class SearchAttoController implements Serializable {
 				.get("attoSearchBean"));
 		try {
 			BeanUtils.copyProperties(attoSearchBean, atto);
-		} catch (IllegalAccessException e) { 
+		} catch (IllegalAccessException e) {
+
 			e.printStackTrace();
-		} catch (InvocationTargetException e) { 
+		} catch (InvocationTargetException e) {
+
 			e.printStackTrace();
 		}
 		attoSearchBean.setTipoWorkingList(listaLavoro);
@@ -349,7 +353,7 @@ public class SearchAttoController implements Serializable {
 		setLegislature(legislaturaServiceManager.list());
 		setGruppiConsiliari(personaleServiceManager.findGruppiConsiliari());
 
-		String legislatura=legislaturaServiceManager.getAll().get(0).getNome();
+		String legislatura = legislaturaServiceManager.getAll().get(0).getNome();
 
 		setFirmatari(personaleServiceManager.getAllFirmatariStorici(legislatura));
 
@@ -357,15 +361,17 @@ public class SearchAttoController implements Serializable {
 		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 		AttoSearchBean attoSearchBean = ((AttoSearchBean) context.getExternalContext().getSessionMap()
 				.get("attoSearchBean"));
-		if (!attoSearchBean.isFirstSaerch()){
+		if (!attoSearchBean.isFirstSaerch()) {
 			try {
 				BeanUtils.copyProperties(atto, attoSearchBean);
-			} catch (IllegalAccessException e) { 
+			} catch (IllegalAccessException e) {
+
 				e.printStackTrace();
-			} catch (InvocationTargetException e) { 
+			} catch (InvocationTargetException e) {
+
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			attoSearchBean.setFirstSaerch(false);
 			atto.setLegislatura(legislatura);
 			atto.getStatiUtente().clear();
@@ -391,15 +397,16 @@ public class SearchAttoController implements Serializable {
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VOTATO_AULA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PUBBLICATO));
 
-			} else if (GruppoUtente.SERVIZIO_COMMISSIONI.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
+			} else if (GruppoUtente.SERVIZIO_COMMISSIONI
+					.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROTOCOLLATO));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PRESO_CARICO_SC));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.VERIFICATA_AMMISSIBILITA));
 				atto.getStatiUtente().add(new StatoAtto(StatoAtto.PROPOSTA_ASSEGNAZIONE));
-			/*
-			 * atto.getStatiUtente().add( new StatoAtto(StatoAtto.EAC));
-			 */
+				/*
+				 * atto.getStatiUtente().add( new StatoAtto(StatoAtto.EAC));
+				 */
 
 			} else if (GruppoUtente.CPCV.equalsIgnoreCase(userBean.getUser().getSessionGroup().getNome())) {
 

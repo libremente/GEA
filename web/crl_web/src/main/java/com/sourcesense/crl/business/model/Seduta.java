@@ -30,11 +30,17 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 import com.sourcesense.crl.util.JsonHourSerializer;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("seduta")
 @JsonTypeName("seduta")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Seduta implements Cloneable,Comparable<Seduta>{
+public class Seduta implements Cloneable, Comparable<Seduta> {
 
 	public Object clone() {
 		try {
@@ -45,10 +51,11 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 		}
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		return Pojomatic.toString(this);
 	}
-	
+
 	private String legislatura;
 	private Date dalleOre;
 	private Date alleOre;
@@ -58,44 +65,50 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 	private String note;
 	private List<Link> links = new ArrayList<Link>();
 
-	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();	
-	private List<Consultazione> consultazioniAtti = new ArrayList<Consultazione>();	
-	private List<Audizione> audizioni = new ArrayList<Audizione>();	
+	private List<AttoTrattato> attiTrattati = new ArrayList<AttoTrattato>();
+	private List<Consultazione> consultazioniAtti = new ArrayList<Consultazione>();
+	private List<Audizione> audizioni = new ArrayList<Audizione>();
 	private List<CollegamentoAttiSindacato> attiSindacato = new ArrayList<CollegamentoAttiSindacato>();
-	
+
 	private List<Allegato> odgList = new ArrayList<Allegato>();
 	private List<Allegato> verbaliList = new ArrayList<Allegato>();
 
-	@JsonSerialize(using=JsonDateSerializer.class) 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSeduta() {
 		return dataSeduta;
 	}
-	
+
 	@Override
 	public int compareTo(Seduta o) {
-		
+
 		return o.getDataSeduta().compareTo(this.dataSeduta);
-		
+
 	}
-	
+
 	public void setDataSeduta(Date dataSeduta) {
 		this.dataSeduta = dataSeduta;
 	}
+
 	public String getNumVerbale() {
 		return numVerbale;
 	}
+
 	public void setNumVerbale(String numVerbale) {
 		this.numVerbale = numVerbale;
 	}
+
 	public String getNote() {
 		return note;
 	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
+
 	public List<Link> getLinks() {
 		return links;
 	}
+
 	public void setLinks(List<Link> links) {
 		this.links = links;
 	}
@@ -109,7 +122,7 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 	}
 
 	public List<Consultazione> getConsultazioniAtti() {
-		
+
 		return consultazioniAtti;
 	}
 
@@ -141,23 +154,22 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 		this.idSeduta = idSeduta;
 	}
 
-	
-	@JsonSerialize(using=JsonHourSerializer.class)
+	@JsonSerialize(using = JsonHourSerializer.class)
 	public Date getDalleOre() {
 		return dalleOre;
 	}
-    
-	@JsonSerialize(using=JsonHourSerializer.class)
+
+	@JsonSerialize(using = JsonHourSerializer.class)
 	public void setDalleOre(Date dalleOre) {
 		this.dalleOre = dalleOre;
 	}
 
-	@JsonSerialize(using=JsonHourSerializer.class)
+	@JsonSerialize(using = JsonHourSerializer.class)
 	public Date getAlleOre() {
 		return alleOre;
 	}
 
-	@JsonSerialize(using=JsonHourSerializer.class)
+	@JsonSerialize(using = JsonHourSerializer.class)
 	public void setAlleOre(Date alleOre) {
 		this.alleOre = alleOre;
 	}
@@ -186,5 +198,4 @@ public class Seduta implements Cloneable,Comparable<Seduta>{
 		this.legislatura = legislatura;
 	}
 
-	
 }

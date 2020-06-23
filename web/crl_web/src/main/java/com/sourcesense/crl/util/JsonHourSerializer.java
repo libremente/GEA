@@ -26,29 +26,22 @@ import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.springframework.stereotype.Component;
 
+@Component
+public class JsonHourSerializer extends JsonSerializer<Date> {
 
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
-	
-	@Component
-	public class JsonHourSerializer extends JsonSerializer<Date>{
+	@Override
+	public void serialize(Date date, JsonGenerator gen, SerializerProvider provider)
+			throws IOException, JsonProcessingException {
 
-		private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		if (date != null) {
+			String formattedDate = dateFormat.format(date);
 
-		@Override
-		public void serialize(Date date, JsonGenerator gen, SerializerProvider provider)
-				throws IOException, JsonProcessingException {
-
-			if(date!=null) {
-				String formattedDate = dateFormat.format(date);
-				
-
-				gen.writeString(formattedDate);
-			}
-			else {
-				gen.writeString("");
-			}
+			gen.writeString(formattedDate);
+		} else {
+			gen.writeString("");
 		}
-
 	}
-	
 
+}

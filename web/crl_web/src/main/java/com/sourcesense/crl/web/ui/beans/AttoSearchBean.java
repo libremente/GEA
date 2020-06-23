@@ -32,7 +32,7 @@ public class AttoSearchBean extends AttoSearch implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private boolean firstSaerch=true;
+	private boolean firstSaerch = true;
 
 	public AttoSearchBean() {
 		super();

@@ -34,13 +34,11 @@ import org.springframework.beans.factory.annotation.Configurable;
 import com.sourcesense.crl.util.JsonDateSerializer;
 import com.sourcesense.crl.util.JsonNoteDeserializer;
 
-/**@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
- * @JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
- * @author uji
- */
 /**
- * @author pronetics
  * 
+ * 
+ * @author sourcesense
+ *
  */
 @Configurable()
 @XmlRootElement(name = "atto")
@@ -63,9 +61,8 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	}
 
 	@Override
-	public int compareTo(Atto arg0) { 
-		return Integer.parseInt(arg0.numeroAtto)
-				- Integer.parseInt(this.numeroAtto);
+	public int compareTo(Atto arg0) {
+		return Integer.parseInt(arg0.numeroAtto) - Integer.parseInt(this.numeroAtto);
 	}
 
 	private boolean pubblico;
@@ -187,7 +184,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	private List<SedutaAtto> seduteAtto = new ArrayList<SedutaAtto>();
 
-  private boolean summary;
+	private boolean summary;
 
 	public Atto() {
 		Passaggio passaggio = new Passaggio();
@@ -388,7 +385,8 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 	public void setNumeroRepertorio(String numeroRepertorio) {
 		this.numeroRepertorio = numeroRepertorio;
-	} 
+	}
+
 	public String getUrlFascicolo() {
 		return urlFascicolo;
 	}
@@ -469,7 +467,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	}
 
 	public void setTipoIniziativa(String tipoIniziativa) {
-		this.tipoIniziativa = tipoIniziativa; 
+		this.tipoIniziativa = tipoIniziativa;
 		this.tipoIniziativaNome = this.getTipoIniziativaNome();
 	}
 
@@ -658,8 +656,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		return linksPresentazioneAssegnazione;
 	}
 
-	public void setLinksPresentazioneAssegnazione(
-			List<Link> linksPresentazioneAssegnazione) {
+	public void setLinksPresentazioneAssegnazione(List<Link> linksPresentazioneAssegnazione) {
 		this.linksPresentazioneAssegnazione = linksPresentazioneAssegnazione;
 	}
 
@@ -667,8 +664,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		return organismiStatutari;
 	}
 
-	public void setOrganismiStatutari(
-			List<OrganismoStatutario> organismiStatutari) {
+	public void setOrganismiStatutari(List<OrganismoStatutario> organismiStatutari) {
 		this.organismiStatutari = organismiStatutari;
 	}
 
@@ -761,8 +757,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 	}
 
 	@JsonDeserialize(using = JsonNoteDeserializer.class)
-	public void setNotePresentazioneAssegnazione(
-			String notePresentazioneAssegnazione) {
+	public void setNotePresentazioneAssegnazione(String notePresentazioneAssegnazione) {
 		this.notePresentazioneAssegnazione = notePresentazioneAssegnazione;
 	}
 
@@ -796,8 +791,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		return collegamentiAttiSindacato;
 	}
 
-	public void setCollegamentiAttiSindacato(
-			List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
+	public void setCollegamentiAttiSindacato(List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
 		this.collegamentiAttiSindacato = collegamentiAttiSindacato;
 	}
 
@@ -805,8 +799,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		return collegamentiLeggiRegionali;
 	}
 
-	public void setCollegamentiLeggiRegionali(
-			List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali) {
+	public void setCollegamentiLeggiRegionali(List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali) {
 		this.collegamentiLeggiRegionali = collegamentiLeggiRegionali;
 	}
 
@@ -893,8 +886,7 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		return esitoVotazioneCommissioneReferente;
 	}
 
-	public void setEsitoVotazioneCommissioneReferente(
-			String esitoVotazioneCommissioneReferente) {
+	public void setEsitoVotazioneCommissioneReferente(String esitoVotazioneCommissioneReferente) {
 		this.esitoVotazioneCommissioneReferente = esitoVotazioneCommissioneReferente;
 	}
 
@@ -1051,18 +1043,15 @@ public class Atto implements Cloneable, Comparable<Atto> {
 
 			return "Popolare";
 
-		} else if ("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA"
-				.equals(tipoIniziativa)) {
+		} else if ("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA".equals(tipoIniziativa)) {
 
 			return "Ufficio di Presidenza";
 
-		} else if ("07_ATTO DI INIZIATIVA AUTONOMIE LOCALI"
-				.equals(tipoIniziativa)) {
+		} else if ("07_ATTO DI INIZIATIVA AUTONOMIE LOCALI".equals(tipoIniziativa)) {
 
 			return "Consiglio delle Autonomie locali";
 
-		} else if ("06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA"
-				.equals(tipoIniziativa)) {
+		} else if ("06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA".equals(tipoIniziativa)) {
 
 			return "Presidente della Giunta";
 
@@ -1096,11 +1085,11 @@ public class Atto implements Cloneable, Comparable<Atto> {
 		this.attoProseguente = attoProseguente;
 	}
 
-  public boolean isSummary() {
-    return summary;
-  }
+	public boolean isSummary() {
+		return summary;
+	}
 
-  public void setSummary(boolean isDetailed) {
-    this.summary = isDetailed;
-  }
+	public void setSummary(boolean isDetailed) {
+		this.summary = isDetailed;
+	}
 }

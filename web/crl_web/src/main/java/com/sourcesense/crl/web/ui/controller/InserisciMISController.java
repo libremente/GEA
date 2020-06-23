@@ -103,8 +103,7 @@ public class InserisciMISController {
 	private void initializeValues() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
 		if (attoBean.getAttoMIS() != null) {
 
@@ -129,35 +128,28 @@ public class InserisciMISController {
 		if (attoRet != null && attoRet.getError() == null) {
 
 			this.atto = attoRet;
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO,
-					"Atto MIS inserito con successo", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Atto MIS inserito con successo", ""));
 
-		} else if (attoRet != null && attoRet.getError() != null
-				&& !attoRet.getError().equals("")) {
+		} else if (attoRet != null && attoRet.getError() != null && !attoRet.getError().equals("")) {
 
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"ATTENZIONE: atto già presente per la legislatura indicata",
-							""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"ATTENZIONE: atto già presente per la legislatura indicata", ""));
 			/*
-			 * context.addMessage(null, new FacesMessage(
-			 * FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));
+			 * context.addMessage(null, new FacesMessage( FacesMessage.SEVERITY_ERROR,
+			 * attoRet.getError(), ""));
 			 */
 
 		}
 	}
 
-	public void uploadAllegatoParere(FileUploadEvent event) { 
+	public void uploadAllegatoParere(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 
 		if (!checkAllegatoParere(fileName)) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
-							+ fileName + " è già stato allegato ", ""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Il file " + fileName + " è già stato allegato ", ""));
 		} else {
 
 			Allegato allegatoRet = new Allegato();
@@ -165,8 +157,7 @@ public class InserisciMISController {
 			allegatoRet.setPubblico(currentFilePubblico);
 
 			try {
-				allegatoRet = attoServiceManager.uploadAllegatoMIS(atto, event
-						.getFile().getInputstream(), allegatoRet);
+				allegatoRet = attoServiceManager.uploadAllegatoMIS(atto, event.getFile().getInputstream(), allegatoRet);
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -193,15 +184,14 @@ public class InserisciMISController {
 	public void removeAllegatoParere() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
 		for (Allegato element : getAllegatiMIS()) {
 
 			if (element.getId().equals(allegatoMISToDelete)) {
 
 				attoRecordServiceManager.deleteFile(element.getId());
-				getAllegatiMIS().remove(element); 
+				getAllegatiMIS().remove(element);
 				break;
 			}
 		}
@@ -259,8 +249,7 @@ public class InserisciMISController {
 		return commissioneServiceManager;
 	}
 
-	public void setCommissioneServiceManager(
-			CommissioneServiceManager commissioneServiceManager) {
+	public void setCommissioneServiceManager(CommissioneServiceManager commissioneServiceManager) {
 		this.commissioneServiceManager = commissioneServiceManager;
 	}
 
@@ -432,8 +421,7 @@ public class InserisciMISController {
 		return legislaturaServiceManager;
 	}
 
-	public void setLegislaturaServiceManager(
-			LegislaturaServiceManager legislaturaServiceManager) {
+	public void setLegislaturaServiceManager(LegislaturaServiceManager legislaturaServiceManager) {
 		this.legislaturaServiceManager = legislaturaServiceManager;
 	}
 
@@ -449,8 +437,7 @@ public class InserisciMISController {
 		return attoRecordServiceManager;
 	}
 
-	public void setAttoRecordServiceManager(
-			AttoRecordServiceManager attoRecordServiceManager) {
+	public void setAttoRecordServiceManager(AttoRecordServiceManager attoRecordServiceManager) {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
@@ -458,8 +445,7 @@ public class InserisciMISController {
 		return personaleServiceManager;
 	}
 
-	public void setPersonaleServiceManager(
-			PersonaleServiceManager personaleServiceManager) {
+	public void setPersonaleServiceManager(PersonaleServiceManager personaleServiceManager) {
 		this.personaleServiceManager = personaleServiceManager;
 	}
 
@@ -505,7 +491,7 @@ public class InserisciMISController {
 			atto.setStato("Chiuso");
 		else
 			atto.setStato(StatoAtto.MIS);
-		
+
 	}
 
 }

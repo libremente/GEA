@@ -23,24 +23,17 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
-import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
-import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.UserServiceManager;
-import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.ServiceAuthenticationException;
-import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 @ManagedBean(name = "loginController")
 @RequestScoped
 public class LoginController {
 
-
 	@ManagedProperty(value = "#{userServiceManager}")
 	private UserServiceManager userServiceManager;
-
 
 	private User user = new User();
 
@@ -57,11 +50,8 @@ public class LoginController {
 			User sessionUser = userServiceManager.authenticateReadOnly(user);
 
 			FacesContext context = FacesContext.getCurrentInstance();
-			UserBean userBean = (UserBean) context
-					.getApplication()
-					.getExpressionFactory()
-					.createValueExpression(context.getELContext(),
-							"#{userBean}", UserBean.class)
+			UserBean userBean = (UserBean) context.getApplication().getExpressionFactory()
+					.createValueExpression(context.getELContext(), "#{userBean}", UserBean.class)
 					.getValue(context.getELContext());
 			userBean.setUser(sessionUser);
 			return "pretty:Home";
@@ -69,9 +59,8 @@ public class LoginController {
 		} catch (ServiceAuthenticationException ex) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"Attenzione ! Utente e password errati ", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Utente e password errati ", ""));
 
 			return null;
 		}
@@ -82,32 +71,24 @@ public class LoginController {
 
 		try {
 
-			user.setUsername(user.getUsername()+domain);
+			user.setUsername(user.getUsername() + domain);
 
 			User sessionUser = userServiceManager.authenticate(user);
-
 
 			if (sessionUser != null) {
 
 				if (sessionUser.getSessionGroup() == null) {
 					FacesContext context = FacesContext.getCurrentInstance();
-					context.addMessage(
-							null,
-							new FacesMessage(
-									FacesMessage.SEVERITY_ERROR,
-									"Attenzione ! Utentenza non valida per la corrente legislatura ",
-									""));
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Utentenza non valida per la corrente legislatura ", ""));
 
 					return null;
 
 				}
 
 				FacesContext context = FacesContext.getCurrentInstance();
-				UserBean userBean = (UserBean) context
-						.getApplication()
-						.getExpressionFactory()
-						.createValueExpression(context.getELContext(),
-								"#{userBean}", UserBean.class)
+				UserBean userBean = (UserBean) context.getApplication().getExpressionFactory()
+						.createValueExpression(context.getELContext(), "#{userBean}", UserBean.class)
 						.getValue(context.getELContext());
 				userBean.setUser(sessionUser);
 				return "pretty:Home";
@@ -115,9 +96,8 @@ public class LoginController {
 			} else {
 
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Utente e password errati ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Utente e password errati ", ""));
 
 				return null;
 
@@ -126,9 +106,8 @@ public class LoginController {
 		} catch (ServiceAuthenticationException ex) {
 
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"Attenzione ! Utente e password errati ", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Utente e password errati ", ""));
 
 			return null;
 		}
@@ -136,8 +115,7 @@ public class LoginController {
 	}
 
 	public String logout() {
-		HttpSession session = ((HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false));
+		HttpSession session = ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false));
 		session.removeAttribute("userBean");
 		session.removeAttribute("attoBean");
 		session.invalidate();

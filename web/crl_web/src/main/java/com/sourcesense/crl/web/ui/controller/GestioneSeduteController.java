@@ -22,12 +22,9 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
@@ -38,19 +35,15 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.AttoMIS;
 import com.sourcesense.crl.business.model.AttoTrattato;
 import com.sourcesense.crl.business.model.Audizione;
-import com.sourcesense.crl.business.model.Collegamento;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.Consultazione;
-import com.sourcesense.crl.business.model.ConsultazioneAtto;
 import com.sourcesense.crl.business.model.GestioneSedute;
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.Link;
@@ -64,6 +57,7 @@ import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
+
 @ManagedBean(name = "gestioneSeduteController")
 @ViewScoped
 public class GestioneSeduteController {
@@ -76,13 +70,13 @@ public class GestioneSeduteController {
 
 	@ManagedProperty(value = "#{attoRecordServiceManager}")
 	private AttoRecordServiceManager attoRecordServiceManager;
-	
+
 	@ManagedProperty(value = "#{legislaturaServiceManager}")
 	private LegislaturaServiceManager legislaturaServiceManager;
 
 	private String legislatura;
 	private List<String> legislature = new ArrayList<String>();
-	
+
 	private Date dataSedutaDa;
 	private Date dataSedutaA;
 	private List<Seduta> seduteList = new ArrayList<Seduta>();
@@ -92,7 +86,7 @@ public class GestioneSeduteController {
 	private String attoDaTrattare;
 	private Date sedutaToDelete;
 	private Seduta sedutaSelected;
-	
+
 	private String legislaturaCorrente;
 
 	private Date dataSeduta;
@@ -143,30 +137,31 @@ public class GestioneSeduteController {
 	private List<Allegato> verbaliList = new ArrayList<Allegato>();
 	private String odgToDelete;
 	private String verbaleToDelete;
-	private boolean currentFilePubblico; 
-	private boolean disableModifiche;  
+	private boolean currentFilePubblico;
+
+	private boolean disableModifiche;
+
 	private static final Pattern soggettoPattern = Pattern
 			.compile("(.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)");
-	
+
 	@PostConstruct
 	protected void init() {
-		
+
 		disableModifiche = false;
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
-		
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
+
 		setLegislature(legislaturaServiceManager.list());
 		setLegislatura(legislaturaServiceManager.getAll().get(0).getNome());
 		legislaturaCorrente = legislatura;
-		seduteListAll = seduteServiceManager.getSedute(userBean.getUser()
-				.getSessionGroup().getNome(),legislatura);
-	
+		seduteListAll = seduteServiceManager.getSedute(userBean.getUser().getSessionGroup().getNome(), legislatura);
+
 		seduteList = Clonator.cloneList(seduteListAll);
-		Collections.sort(seduteList);   
+		Collections.sort(seduteList);
+
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
-		
+
 		setDateSeduteList();
 
 	}
@@ -183,91 +178,73 @@ public class GestioneSeduteController {
 
 		if (statoCommitInserisciSeduta.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Le modifiche alla Seduta non sono state salvate ",
-							""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Le modifiche alla Seduta non sono state salvate ", ""));
 		}
 
 		if (statoCommitInserisciOdg.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Le modifiche su Inserisci ODG non sono state salvate ",
-							""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Le modifiche su Inserisci ODG non sono state salvate ", ""));
 		}
-	} 
+	}
 
 	public void filterDataTable() {
-		
+
 		dateSeduteList.clear();
 		seduteList.clear();
 		refreshInsert();
-		if (!legislatura.equals(legislaturaCorrente)){
+		if (!legislatura.equals(legislaturaCorrente)) {
 			disableModifiche = true;
-		}
-		else {
+		} else {
 			disableModifiche = false;
 		}
-		
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
-		seduteListAll = seduteServiceManager.getSedute(userBean.getUser()
-				.getSessionGroup().getNome(),legislatura);
-	
-				
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
+		seduteListAll = seduteServiceManager.getSedute(userBean.getUser().getSessionGroup().getNome(), legislatura);
+
 		for (Seduta seduta : seduteListAll) {
-							
-				if  (getDataSedutaDa() == null && getDataSedutaA() == null){
-					
-					seduteList.add((Seduta) seduta.clone());
-				
-				}
-				
-				else if (getDataSedutaDa() != null
-						&& getDataSedutaA() != null
-						&& seduta.getDataSeduta().getTime()
-								- dataSedutaDa.getTime() >= 0
-						&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
-	
-					seduteList.add((Seduta) seduta.clone());
-	
-				} else if (getDataSedutaDa() != null
-						&& getDataSedutaA() == null
-						&& seduta.getDataSeduta().getTime()
-								- dataSedutaDa.getTime() >= 0) {
-	
-					seduteList.add((Seduta) seduta.clone());
-	
-				} else if (getDataSedutaDa() == null
-						&& getDataSedutaA() != null
-						&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
-	
-					seduteList.add((Seduta) seduta.clone());
-				}
+
+			if (getDataSedutaDa() == null && getDataSedutaA() == null) {
+
+				seduteList.add((Seduta) seduta.clone());
+
 			}
-		
+
+			else if (getDataSedutaDa() != null && getDataSedutaA() != null
+					&& seduta.getDataSeduta().getTime() - dataSedutaDa.getTime() >= 0
+					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
+
+				seduteList.add((Seduta) seduta.clone());
+
+			} else if (getDataSedutaDa() != null && getDataSedutaA() == null
+					&& seduta.getDataSeduta().getTime() - dataSedutaDa.getTime() >= 0) {
+
+				seduteList.add((Seduta) seduta.clone());
+
+			} else if (getDataSedutaDa() == null && getDataSedutaA() != null
+					&& seduta.getDataSeduta().getTime() - dataSedutaA.getTime() <= 86399999) {
+
+				seduteList.add((Seduta) seduta.clone());
+			}
+		}
+
 		setDateSeduteList();
 
-		}	
-	
-	
-	public void showSedutaDetail() {  
-    String[] tokens = dataSedutaSelected.split("/");
-    String dataSedutaIso = tokens[2]+"-"+tokens[1]+"-"+tokens[0]; 
-    FacesContext context1 = FacesContext.getCurrentInstance();
-    UserBean userBean1 = ((UserBean) context1.getExternalContext()
-        .getSessionMap().get("userBean"));
-    String provenienza = userBean1.getUser().getSessionGroup().getNome();
+	}
 
-    Seduta seduta = seduteServiceManager.getSeduta(provenienza, dataSedutaIso,legislatura);
-    setSedutaSelected(seduta);
+	public void showSedutaDetail() {
+
+		String[] tokens = dataSedutaSelected.split("/");
+		String dataSedutaIso = tokens[2] + "-" + tokens[1] + "-" + tokens[0];
+
+		FacesContext context1 = FacesContext.getCurrentInstance();
+		UserBean userBean1 = ((UserBean) context1.getExternalContext().getSessionMap().get("userBean"));
+		String provenienza = userBean1.getUser().getSessionGroup().getNome();
+
+		Seduta seduta = seduteServiceManager.getSeduta(provenienza, dataSedutaIso, legislatura);
+		setSedutaSelected(seduta);
 
 		if (sedutaSelected != null) {
 
@@ -276,40 +253,36 @@ public class GestioneSeduteController {
 			setNote(sedutaSelected.getNote());
 			setDalleOre(sedutaSelected.getDalleOre());
 			setAlleOre(sedutaSelected.getAlleOre());
-			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));  
-			setAttiTrattati(Clonator
-					.cloneList(sedutaSelected.getAttiTrattati()));
+			setLinksList(Clonator.cloneList(sedutaSelected.getLinks()));
+
+			setAttiTrattati(Clonator.cloneList(sedutaSelected.getAttiTrattati()));
 			Collections.sort(attiTrattati);
 
-			setCollegamentiAttiSindacato(Clonator.cloneList(sedutaSelected
-					.getAttiSindacato()));
+			setCollegamentiAttiSindacato(Clonator.cloneList(sedutaSelected.getAttiSindacato()));
 			Collections.sort(collegamentiAttiSindacato);
 
 			setAudizioni(Clonator.cloneList(sedutaSelected.getAudizioni()));
 
 			FacesContext context = FacesContext.getCurrentInstance();
-			UserBean userBean = ((UserBean) context.getExternalContext()
-					.getSessionMap().get("userBean"));
+			UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 			consultazioniAtti.clear();
 
 			for (AttoTrattato element : attiTrattati) {
 
-				for (Consultazione consultazione : element.getAtto()
-						.getConsultazioni()) {
+				for (Consultazione consultazione : element.getAtto().getConsultazioni()) {
 
 					Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 					Consultazione cons = (Consultazione) consultazione.clone();
-					if (cons.getDataSeduta() != null 
-							&& formatter.format(cons.getDataSeduta()).equals(
-								formatter.format(sedutaSelected.getDataSeduta()))
-							&& userBean.getUser().getSessionGroup().getNome()
-										.equals(cons.getCommissione())) {
-							cons.setNumeroAtto(element.getAtto().getNumeroAtto());
-							cons.setTipoAtto(element.getAtto().getTipoAtto());
-							cons.setIdAtto(element.getAtto().getId());
-							consultazioniAtti.add(cons);
+					if (cons.getDataSeduta() != null
+							&& formatter.format(cons.getDataSeduta())
+									.equals(formatter.format(sedutaSelected.getDataSeduta()))
+							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
+						cons.setNumeroAtto(element.getAtto().getNumeroAtto());
+						cons.setTipoAtto(element.getAtto().getTipoAtto());
+						cons.setIdAtto(element.getAtto().getId());
+						consultazioniAtti.add(cons);
 					}
 				}
 
@@ -327,13 +300,12 @@ public class GestioneSeduteController {
 			setAudizioni(new ArrayList<Audizione>());
 		}
 	}
-	
-	
+
 	public Seduta findSeduta(String dataSeduta) {
 		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		for (Seduta element : seduteList) {
-		
+
 			if (dataSeduta.equals(formatter.format(element.getDataSeduta()))) {
 				return element;
 			}
@@ -344,7 +316,7 @@ public class GestioneSeduteController {
 	public void removeFromDateSedutaList(Date dataSeduta) {
 
 		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-		
+
 		for (String element : dateSeduteList) {
 			if (formatter.format(dataSeduta).equals(element)) {
 				dateSeduteList.remove(element);
@@ -376,15 +348,12 @@ public class GestioneSeduteController {
 			}
 		}
 	}
-	
 
 	public String dettaglioOdg() {
 
-	
 		FacesContext context = FacesContext.getCurrentInstance();
-		
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
+
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 		setSedutaSelected(findSeduta(dataSedutaSelected));
 		setAttiTrattati(sedutaSelected.getAttiTrattati());
@@ -396,19 +365,16 @@ public class GestioneSeduteController {
 
 		for (AttoTrattato element : attiTrattati) {
 
-			for (Consultazione consultazione : element.getAtto()
-					.getConsultazioni()) {
+			for (Consultazione consultazione : element.getAtto().getConsultazioni()) {
 
 				Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 				Consultazione cons = (Consultazione) consultazione.clone();
 				if (cons.getDataSeduta() != null
 						&& formatter.format(cons.getDataSeduta())
-								.equals(formatter.format(sedutaSelected
-										.getDataSeduta()))
+								.equals(formatter.format(sedutaSelected.getDataSeduta()))
 
-						&& userBean.getUser().getSessionGroup().getNome()
-								.equals(cons.getCommissione())) {
+						&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
 
 					cons.setNumeroAtto(element.getAtto().getNumeroAtto());
 					cons.setTipoAtto(element.getAtto().getTipoAtto());
@@ -418,7 +384,7 @@ public class GestioneSeduteController {
 			}
 
 		}
-	return null;
+		return null;
 	}
 
 	public void addLink() {
@@ -426,9 +392,8 @@ public class GestioneSeduteController {
 		if (nomeLink != null && !nomeLink.trim().equals("")) {
 			if (!checkLinks()) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR, "Attenzione ! Link "
-								+ nomeLink + " già presente ", ""));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Attenzione ! Link " + nomeLink + " già presente ", ""));
 
 			} else {
 				Link link = new Link();
@@ -471,8 +436,7 @@ public class GestioneSeduteController {
 	public void salvaAggiungiSeduta() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 		GestioneSedute gestioneSedute = new GestioneSedute();
 		Target target = new Target();
@@ -484,10 +448,11 @@ public class GestioneSeduteController {
 			Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Format formatNew = new SimpleDateFormat("dd/MM/yyyy");
 			Seduta seduta = null;
-			
-			seduta = seduteServiceManager.getSeduta(userBean
-					.getUser().getSessionGroup().getNome(),formatter.format(getDataSeduta()),legislaturaCorrente); 
-			if ( seduta == null) {
+
+			seduta = seduteServiceManager.getSeduta(userBean.getUser().getSessionGroup().getNome(),
+					formatter.format(getDataSeduta()), legislaturaCorrente);
+
+			if (seduta == null) {
 				seduta = new Seduta();
 				seduta.setDalleOre(getDalleOre());
 				seduta.setAlleOre(getAlleOre());
@@ -497,21 +462,20 @@ public class GestioneSeduteController {
 				seduta.setLinks(Clonator.cloneList(getLinksList()));
 				seduta.setLegislatura(legislaturaCorrente);
 				gestioneSedute.setSeduta(seduta);
-				Seduta sedutaRet = seduteServiceManager
-						.salvaSeduta(gestioneSedute);
+				Seduta sedutaRet = seduteServiceManager.salvaSeduta(gestioneSedute);
 				seduta.setIdSeduta(sedutaRet.getIdSeduta());
 				setSedutaSelected(seduta);
 				seduteListAll.add(seduta);
 				seduteList.add(seduta);
 				dateSeduteList.add(formatNew.format(seduta.getDataSeduta()));
-				seduteListAll = seduteServiceManager.getSedute(userBean
-						.getUser().getSessionGroup().getNome(),legislaturaCorrente);
+				seduteListAll = seduteServiceManager.getSedute(userBean.getUser().getSessionGroup().getNome(),
+						legislaturaCorrente);
 
 				seduteList = Clonator.cloneList(seduteListAll);
-				Collections.sort(seduteList); 
-				} 
-			  else {
-							
+				Collections.sort(seduteList);
+
+			} else {
+
 				formatter = new SimpleDateFormat("dd/MM/yyyy");
 				seduta = findSeduta(formatter.format(getDataSeduta()));
 				seduta.setNumVerbale(getNumVerbale());
@@ -523,26 +487,20 @@ public class GestioneSeduteController {
 				seduta = seduteServiceManager.updateSeduta(gestioneSedute);
 				setSedutaSelected(seduta);
 
-				}
-				
-			
+			}
 
-				updateInserisciSedutaHandler();
-				context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO, "Seduta numero "
-							+ getNumVerbale() + " salvata con successo", ""));
+			updateInserisciSedutaHandler();
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Seduta numero " + getNumVerbale() + " salvata con successo", ""));
 
-				refreshInsert();
+			refreshInsert();
 
 		} else {
 
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"Attenzione ! Inserire Data seduta ", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Inserire Data seduta ", ""));
 		}
 	}
-	
-
 
 	private void refreshInsert() {
 
@@ -557,7 +515,7 @@ public class GestioneSeduteController {
 		setUrlLink(null);
 		linksList.clear();
 
-	} 
+	}
 
 	public void fillDateSeduteMap() {
 		dateSedute = new ArrayList<Date>();
@@ -569,8 +527,7 @@ public class GestioneSeduteController {
 	public void updateSedutaInserisciOdg() {
 		if (!seduteList.isEmpty()) {
 			Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-			setDataSedutaSelected(formatter.format(seduteList.get(0)
-					.getDataSeduta()));
+			setDataSedutaSelected(formatter.format(seduteList.get(0).getDataSeduta()));
 		}
 		showSedutaDetail();
 	}
@@ -580,35 +537,29 @@ public class GestioneSeduteController {
 		if (!attoDaTrattare.trim().equals("")) {
 			if (!checkAttiTrattati(attoDaTrattare)) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già iscritto ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già iscritto ", ""));
 
 			} else {
-				Atto attoDaCollegare = attoServiceManager
-						.findById(attoDaTrattare);
+				Atto attoDaCollegare = attoServiceManager.findById(attoDaTrattare);
 				AttoTrattato attoTrattato = new AttoTrattato();
 				attoTrattato.setAtto(attoDaCollegare);
 				attoTrattato.setPrevisto(true);
 				attiTrattati.add(attoTrattato);
 				FacesContext context = FacesContext.getCurrentInstance();
-				UserBean userBean = ((UserBean) context.getExternalContext()
-						.getSessionMap().get("userBean"));
+				UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
-				for (Consultazione consultazione : attoTrattato.getAtto()
-						.getConsultazioni()) {
+				for (Consultazione consultazione : attoTrattato.getAtto().getConsultazioni()) {
 
 					Format formatter = new SimpleDateFormat("dd/MM/yyyy");
 					Consultazione cons = (Consultazione) consultazione.clone();
-					if (cons.getDataSeduta() != null 
+					if (cons.getDataSeduta() != null
 							&& formatter.format(sedutaSelected.getDataSeduta())
-							.equals(formatter.format(cons.getDataSeduta()))
+									.equals(formatter.format(cons.getDataSeduta()))
 
-							&& userBean.getUser().getSessionGroup().getNome()
-									.equals(cons.getCommissione())) {
+							&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
 
-						cons.setNumeroAtto(attoTrattato.getAtto()
-								.getNumeroAtto());
+						cons.setNumeroAtto(attoTrattato.getAtto().getNumeroAtto());
 						cons.setTipoAtto(attoTrattato.getAtto().getTipoAtto());
 						cons.setIdAtto(attoTrattato.getAtto().getId());
 						consultazioniAtti.add(cons);
@@ -624,78 +575,61 @@ public class GestioneSeduteController {
 		if (!idAttoToAdd.trim().equals("")) {
 			if (!checkAttiTrattati(idAttoToAdd)) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già iscritto ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già iscritto ", ""));
 
 			} else {
 
 				Atto attoDaCollegare = null;
 				boolean collega = true;
-				
-				if ("EAC".equalsIgnoreCase(tipoAtto))  {
+
+				if ("EAC".equalsIgnoreCase(tipoAtto)) {
 
 					FacesContext context = FacesContext.getCurrentInstance();
-					context.addMessage(
-							null,
-							new FacesMessage(
-									FacesMessage.SEVERITY_ERROR,
-									"Attenzione ! Non è possibile collegare atti di questo tipo",
-									""));
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Non è possibile collegare atti di questo tipo", ""));
 
 					collega = false;
 
-				} else if ("MIS".equalsIgnoreCase(tipoAtto)) { 
+				} else if ("MIS".equalsIgnoreCase(tipoAtto)) {
+
 					collega = false;
 				} else {
 
 					attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
 				}
-				
-				if (collega)
-				{	
+
+				if (collega) {
 					AttoTrattato attoTrattato = new AttoTrattato();
 					attoTrattato.setAtto(attoDaCollegare);
 					attoTrattato.setPrevisto(true);
 					attiTrattati.add(attoTrattato);
 					FacesContext context = FacesContext.getCurrentInstance();
-					UserBean userBean = ((UserBean) context
-							.getExternalContext().getSessionMap()
-							.get("userBean"));
+					UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
-					for (Consultazione consultazione : attoTrattato.getAtto()
-							.getConsultazioni()) {
+					for (Consultazione consultazione : attoTrattato.getAtto().getConsultazioni()) {
 
 						Format formatter = new SimpleDateFormat("dd/MM/yyyy");
-						Consultazione cons = (Consultazione) consultazione
-								.clone();
-						if (cons.getDataSeduta() != null 
+						Consultazione cons = (Consultazione) consultazione.clone();
+						if (cons.getDataSeduta() != null
 								&& formatter.format(sedutaSelected.getDataSeduta())
-								.equals(formatter.format(cons.getDataSeduta()))
+										.equals(formatter.format(cons.getDataSeduta()))
 
-								&& userBean.getUser().getSessionGroup()
-										.getNome()
-										.equals(cons.getCommissione())) {
+								&& userBean.getUser().getSessionGroup().getNome().equals(cons.getCommissione())) {
 
-							cons.setNumeroAtto(attoTrattato.getAtto()
-									.getNumeroAtto());
-							cons.setTipoAtto(attoTrattato.getAtto()
-									.getTipoAtto());
+							cons.setNumeroAtto(attoTrattato.getAtto().getNumeroAtto());
+							cons.setTipoAtto(attoTrattato.getAtto().getTipoAtto());
 							cons.setIdAtto(attoTrattato.getAtto().getId());
 							consultazioniAtti.add(cons);
 						}
 					}
 				}
 				updateInserisciOdgHandler();
-				
-				}
+
 			}
 		}
+	}
 
-
-	
-	
-	
 	public void removeAttoTrattato() {
 
 		for (AttoTrattato element : attiTrattati) {
@@ -720,24 +654,23 @@ public class GestioneSeduteController {
 		}
 		return true;
 	}
-	
+
 	private boolean isValidSoggettoPartecipante(String soggetto) {
-		return !soggettoPattern.matcher(soggetto).matches(); 
+		return !soggettoPattern.matcher(soggetto).matches();
 	}
-	
+
 	public void addAudizione() {
 
 		if (!soggettoPartecipante.trim().equals("")) {
-			if (isValidSoggettoPartecipante(soggettoPartecipante)){
-			
+			if (isValidSoggettoPartecipante(soggettoPartecipante)) {
+
 				if (!checkAudizioni(soggettoPartecipante)) {
 					FacesContext context = FacesContext.getCurrentInstance();
-					context.addMessage(null, new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Soggetto già inserito ", ""));
+					context.addMessage(null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Soggetto già inserito ", ""));
 
 				} else {
-				
+
 					Audizione audizione = new Audizione();
 					audizione.setSoggettoPartecipante(getSoggettoPartecipante());
 					audizione.setDiscusso(isDiscusso());
@@ -746,17 +679,15 @@ public class GestioneSeduteController {
 
 					updateInserisciOdgHandler();
 				}
-			}
-			else{
+			} else {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! I caratteri \" | * < > \\ ? / :" + 
-						" non sono consentiti. Il Soggetto partecipante non può terminare con un punto o uno spazio", ""));
-			}	
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! I caratteri \" | * < > \\ ? / :"
+								+ " non sono consentiti. Il Soggetto partecipante non può terminare con un punto o uno spazio",
+								""));
+			}
 		}
-	}	
-	
+	}
 
 	public void removeAudizione() {
 
@@ -788,9 +719,8 @@ public class GestioneSeduteController {
 		if (!"".equals(idAttoSindacato)) {
 			if (!checkCollegamentiAttiSindacati()) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già collegato ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
 			} else {
 
@@ -834,25 +764,30 @@ public class GestioneSeduteController {
 		return true;
 	}
 
-	public void handleAttoSindacatoChange() {    
+	public void handleAttoSindacatoChange() {
+
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(annoCreazione), 0, 1);
-		Date dataCreazioneDa= c.getTime();
+		Date dataCreazioneDa = c.getTime();
 		c.set(Integer.parseInt(annoCreazione), 11, 31);
-		Date dataCreazioneA= c.getTime();
-		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato, formatter.format(dataCreazioneDa), formatter.format(dataCreazioneA)));
+		Date dataCreazioneA = c.getTime();
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato, formatter.format(dataCreazioneDa),
+				formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
-		setNumeriAttoSindacato(attiSindacato);  
-		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
-			eliminato controllo  perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
-			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
+		setNumeriAttoSindacato(attiSindacato);
 
-				getNumeriAttoSindacato().add(collegamento);
-
-			}
-
-		}*/
+		/*
+		 * for (CollegamentoAttiSindacato collegamento : attiSindacato) { eliminato
+		 * controllo perche' attiSindacato contiene attiIndirizzo gia' filtrati per tipo
+		 * if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
+		 * 
+		 * getNumeriAttoSindacato().add(collegamento);
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
 
 	}
 
@@ -860,40 +795,34 @@ public class GestioneSeduteController {
 
 		if (sedutaSelected != null) {
 
-			sedutaSelected.setAttiSindacato(Clonator
-					.cloneList(getOrderedAttiSindacatoTrattati()));
+			sedutaSelected.setAttiSindacato(Clonator.cloneList(getOrderedAttiSindacatoTrattati()));
 
 			Collections.sort(collegamentiAttiSindacato);
 
-			sedutaSelected.setAttiTrattati(Clonator
-					.cloneList(getOrderedAttiTrattati()));
+			sedutaSelected.setAttiTrattati(Clonator.cloneList(getOrderedAttiTrattati()));
 
 			Collections.sort(attiTrattati);
 
 			sedutaSelected.setAudizioni(Clonator.cloneList(getAudizioni()));
 
-			sedutaSelected.setConsultazioniAtti(Clonator
-					.cloneList(getConsultazioniAtti()));
+			sedutaSelected.setConsultazioniAtti(Clonator.cloneList(getConsultazioniAtti()));
 		}
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		UserBean userBean = ((UserBean) context.getExternalContext()
-				.getSessionMap().get("userBean"));
+		UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 		seduteServiceManager.salvaOdg(sedutaSelected);
 
-		userBean.getUser().getSessionGroup()
-				.setSedute(Clonator.cloneList(getSeduteList()));
+		userBean.getUser().getSessionGroup().setSedute(Clonator.cloneList(getSeduteList()));
 
 		setStatoCommitInserisciOdg(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage("ODG salvato con successo",
-				""));
+		context.addMessage(null, new FacesMessage("ODG salvato con successo", ""));
 	}
 
 	private List<AttoTrattato> getOrderedAttiTrattati() {
 
-		if (getAttiTrattatiorder() != null
-				&& !getAttiTrattatiorder().equals("")) { 
+		if (getAttiTrattatiorder() != null && !getAttiTrattatiorder().equals("")) {
+
 			String[] attiOrd = getAttiTrattatiorder().split("_");
 
 			for (int i = 0; i < attiOrd.length; i++) {
@@ -902,8 +831,7 @@ public class GestioneSeduteController {
 
 				for (AttoTrattato attoTrattato : getAttiTrattati()) {
 
-					if (numeroAtto.equals(attoTrattato.getAtto()
-							.getNumeroAtto())) {
+					if (numeroAtto.equals(attoTrattato.getAtto().getNumeroAtto())) {
 
 						if (i < 10) {
 							attoTrattato.setNumeroOrdinamento("0" + i);
@@ -934,8 +862,8 @@ public class GestioneSeduteController {
 
 	private List<CollegamentoAttiSindacato> getOrderedAttiSindacatoTrattati() {
 
-		if (getAttiSindacatoTrattatiorder() != null
-				&& !getAttiSindacatoTrattatiorder().equals("")) { 
+		if (getAttiSindacatoTrattatiorder() != null && !getAttiSindacatoTrattatiorder().equals("")) {
+
 			String[] attiOrd = getAttiSindacatoTrattatiorder().split("_");
 
 			for (int i = 0; i < attiOrd.length; i++) {
@@ -979,8 +907,7 @@ public class GestioneSeduteController {
 
 		if (sedutaSelected != null) {
 
-			UserBean userBean = ((UserBean) context.getExternalContext()
-					.getSessionMap().get("userBean"));
+			UserBean userBean = ((UserBean) context.getExternalContext().getSessionMap().get("userBean"));
 
 			String tipoTemplate = "";
 			String gruppo = userBean.getUser().getSessionGroup().getNome();
@@ -990,26 +917,21 @@ public class GestioneSeduteController {
 			if (GruppoUtente.AULA.equals(gruppo)) {
 
 				tipoTemplate = "crlodg:odgGenericoAulaDocument";
-				nomeFile = "ODG_Aula_"
-						+ formatter.format(sedutaSelected.getDataSeduta());
+				nomeFile = "ODG_Aula_" + formatter.format(sedutaSelected.getDataSeduta());
 
 			} else {
 
 				tipoTemplate = "crlodg:odgGenericoCommissioniDocument";
-				nomeFile = "ODG_" + gruppo + "_"
-						+ formatter.format(sedutaSelected.getDataSeduta());
+				nomeFile = "ODG_" + gruppo + "_" + formatter.format(sedutaSelected.getDataSeduta());
 			}
 
-			InputStream stream = seduteServiceManager.getODGFile(tipoTemplate,
-					sedutaSelected.getIdSeduta(), gruppo);
-			StreamedContent file = new DefaultStreamedContent(stream,
-					"document", nomeFile + ".docx");
+			InputStream stream = seduteServiceManager.getODGFile(tipoTemplate, sedutaSelected.getIdSeduta(), gruppo);
+			StreamedContent file = new DefaultStreamedContent(stream, "document", nomeFile + ".docx");
 			return file;
 
 		} else {
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"Attenzione ! Selezionare una Seduta ", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Selezionare una Seduta ", ""));
 
 			return null;
 		}
@@ -1024,8 +946,7 @@ public class GestioneSeduteController {
 
 			try {
 
-				Allegato allegatoAlf = seduteServiceManager.uploadOgg(
-						sedutaSelected, event.getFile().getInputstream(),
+				Allegato allegatoAlf = seduteServiceManager.uploadOgg(sedutaSelected, event.getFile().getInputstream(),
 						allegatoRet);
 
 				allegatoRet.setId(allegatoAlf.getId());
@@ -1037,9 +958,8 @@ public class GestioneSeduteController {
 			sedutaSelected.getOdgList().add(allegatoRet);
 		} else {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"Attenzione ! Selezionare una Seduta ", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Selezionare una Seduta ", ""));
 		}
 	}
 
@@ -1052,9 +972,8 @@ public class GestioneSeduteController {
 
 			try {
 
-				Allegato allegatoAlf = seduteServiceManager.uploadVerbale(
-						sedutaSelected, event.getFile().getInputstream(),
-						allegatoRet);
+				Allegato allegatoAlf = seduteServiceManager.uploadVerbale(sedutaSelected,
+						event.getFile().getInputstream(), allegatoRet);
 
 				allegatoRet.setId(allegatoAlf.getId());
 				allegatoRet.setMimetype(allegatoAlf.getMimetype());
@@ -1065,17 +984,15 @@ public class GestioneSeduteController {
 			sedutaSelected.getVerbaliList().add(allegatoRet);
 		} else {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR,
-					"Attenzione ! Selezionare una Seduta ", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Selezionare una Seduta ", ""));
 		}
 
 	}
 
 	public void removeVerbale() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
 		for (Allegato element : sedutaSelected.getVerbaliList()) {
 
@@ -1090,8 +1007,7 @@ public class GestioneSeduteController {
 
 	public void removeTestoODG() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
 		for (Allegato element : sedutaSelected.getOdgList()) {
 
@@ -1107,8 +1023,8 @@ public class GestioneSeduteController {
 
 	public void setFile(StreamedContent file) {
 		this.file = file;
-	} 
-	
+	}
+
 	public String getLegislatura() {
 		return legislatura;
 	}
@@ -1128,7 +1044,7 @@ public class GestioneSeduteController {
 	public Date getDataSedutaDa() {
 		return dataSedutaDa;
 	}
-	
+
 	public void setDataSedutaDa(Date dataSedutaDa) {
 		this.dataSedutaDa = dataSedutaDa;
 	}
@@ -1369,8 +1285,7 @@ public class GestioneSeduteController {
 		return seduteServiceManager;
 	}
 
-	public void setSeduteServiceManager(
-			SeduteServiceManager seduteServiceManager) {
+	public void setSeduteServiceManager(SeduteServiceManager seduteServiceManager) {
 		this.seduteServiceManager = seduteServiceManager;
 	}
 
@@ -1390,12 +1305,12 @@ public class GestioneSeduteController {
 			dateSeduteList.add(formatter.format(seduta.getDataSeduta()));
 		}
 	}
-	
+
 	public List<String> annoCreazioneList(String annoPartenzaString) {
-		int annoPartenza=Integer.parseInt(annoPartenzaString);
+		int annoPartenza = Integer.parseInt(annoPartenzaString);
 		int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
 		List<String> annoCreazioneStringList = new ArrayList<String>();
-		for (int i=annoPartenza; i<=annoCorrente; i++){
+		for (int i = annoPartenza; i <= annoCorrente; i++) {
 			annoCreazioneStringList.add(String.valueOf(i));
 		}
 		return annoCreazioneStringList;
@@ -1461,8 +1376,7 @@ public class GestioneSeduteController {
 		return numeriAttoSindacato;
 	}
 
-	public void setNumeriAttoSindacato(
-			List<CollegamentoAttiSindacato> numeriAttoSindacato) {
+	public void setNumeriAttoSindacato(List<CollegamentoAttiSindacato> numeriAttoSindacato) {
 		this.numeriAttoSindacato = numeriAttoSindacato;
 	}
 
@@ -1470,8 +1384,7 @@ public class GestioneSeduteController {
 		return collegamentiAttiSindacato;
 	}
 
-	public void setCollegamentiAttiSindacato(
-			List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
+	public void setCollegamentiAttiSindacato(List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
 		this.collegamentiAttiSindacato = collegamentiAttiSindacato;
 	}
 
@@ -1543,17 +1456,15 @@ public class GestioneSeduteController {
 		return attoRecordServiceManager;
 	}
 
-	public void setAttoRecordServiceManager(
-			AttoRecordServiceManager attoRecordServiceManager) {
+	public void setAttoRecordServiceManager(AttoRecordServiceManager attoRecordServiceManager) {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
-	
+
 	public LegislaturaServiceManager getLegislaturaServiceManager() {
 		return legislaturaServiceManager;
 	}
 
-	public void setLegislaturaServiceManager(
-			LegislaturaServiceManager legislaturaServiceManager) {
+	public void setLegislaturaServiceManager(LegislaturaServiceManager legislaturaServiceManager) {
 		this.legislaturaServiceManager = legislaturaServiceManager;
 	}
 
@@ -1564,6 +1475,7 @@ public class GestioneSeduteController {
 	public void setDisableModifiche(boolean disableModifiche) {
 		this.disableModifiche = disableModifiche;
 	}
+
 	public String getAnnoCreazione() {
 		return annoCreazione;
 	}

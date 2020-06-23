@@ -59,7 +59,6 @@ public class NavigationRules {
 
 	}
 
-
 	public boolean isAmministrazioneEnabled() {
 
 		return (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
@@ -133,9 +132,10 @@ public class NavigationRules {
 
 	}
 
-
-	public boolean isInviaDirettamenteAula(){
-		return StatoAtto.PRESO_CARICO_SC.equals(attoBean.getStato())&&(GruppoUtente.ADMIN.equals(userBean.getUserGroupName())||GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName()));
+	public boolean isInviaDirettamenteAula() {
+		return StatoAtto.PRESO_CARICO_SC.equals(attoBean.getStato())
+				&& (GruppoUtente.ADMIN.equals(userBean.getUserGroupName())
+						|| GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName()));
 	}
 
 	public boolean presaCaricoAulaDisabled() {
@@ -206,10 +206,10 @@ public class NavigationRules {
 
 	}
 
-
 	public boolean isFirmatariPopolariEnabled() {
 
-		if (("PDL".equals(attoBean.getTipoAtto()) || "PLP".equals(attoBean.getTipoAtto())) && "03_ATTO DI INIZIATIVA POPOLARE".equals(attoBean.getTipoIniziativa()))
+		if (("PDL".equals(attoBean.getTipoAtto()) || "PLP".equals(attoBean.getTipoAtto()))
+				&& "03_ATTO DI INIZIATIVA POPOLARE".equals(attoBean.getTipoIniziativa()))
 
 		{
 			return true;

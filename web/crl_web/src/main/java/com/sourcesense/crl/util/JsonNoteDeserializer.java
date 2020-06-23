@@ -23,19 +23,18 @@ import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 
-public class JsonNoteDeserializer extends JsonDeserializer<String>{
+public class JsonNoteDeserializer extends JsonDeserializer<String> {
 
 	@Override
-	public String deserialize(JsonParser jp, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException { 
-		String value ="";
-		
-		if(jp.getText()!=null){
-		  value = jp.getText().replaceAll("\"","\"");	
+	public String deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+		String value = "";
+
+		if (jp.getText() != null) {
+			value = jp.getText().replaceAll("\"", "\"");
 		}
-		
+
 		return value;
-		
+
 	}
 
 }

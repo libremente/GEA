@@ -28,18 +28,24 @@ import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("relatore")
 @JsonTypeName("relatore")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-@JsonIgnoreProperties({"id_persona"})
-public class Relatore extends Personale implements Cloneable{
-	
+@JsonIgnoreProperties({ "id_persona" })
+public class Relatore extends Personale implements Cloneable {
+
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;
 	private String cognomeNome;
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -48,26 +54,30 @@ public class Relatore extends Personale implements Cloneable{
 			return null;
 		}
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataNomina() {
 		return dataNomina;
 	}
+
 	public void setDataNomina(Date dataNomina) {
 		this.dataNomina = dataNomina;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataUscita() {
 		return dataUscita;
 	}
@@ -83,9 +93,5 @@ public class Relatore extends Personale implements Cloneable{
 	public void setCognomeNome(String cognomeNome) {
 		this.cognomeNome = cognomeNome;
 	}
-	
-	
-
-	
 
 }

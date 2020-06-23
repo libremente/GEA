@@ -21,9 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -36,7 +34,6 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Collegamento;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.CollegamentoLeggiRegionali;
-import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
@@ -83,16 +80,13 @@ public class CollegamentiController {
 	protected void init() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 		setAtto((Atto) attoBean.getAtto().clone());
-		setAttiCollegatiList(attoServiceManager.findAttiCollegatiById(getAtto()
-				.getId()));   
-		setCollegamentiAttiSindacato(attoServiceManager
-				.findAttiSindacatoById(getAtto().getId()));
+		setAttiCollegatiList(attoServiceManager.findAttiCollegatiById(getAtto().getId()));
+
+		setCollegamentiAttiSindacato(attoServiceManager.findAttiSindacatoById(getAtto().getId()));
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
-		setCollegamentiLeggiRegionali(Clonator.cloneList(atto
-				.getCollegamentiLeggiRegionali()));
+		setCollegamentiLeggiRegionali(Clonator.cloneList(atto.getCollegamentiLeggiRegionali()));
 		setNoteCollegamenti(atto.getNoteCollegamenti());
 	}
 
@@ -112,52 +106,37 @@ public class CollegamentiController {
 
 		if (statoCommitAttiInterni.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Le modifiche agli Atti Interni non sono state salvate ",
-							""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Le modifiche agli Atti Interni non sono state salvate ", ""));
 		}
 
 		if (statoCommitAttiIndirizzo.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Le modifiche ad Atti Indirizzo e Sindacato Ispettivo non sono state salvate ",
-							""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Le modifiche ad Atti Indirizzo e Sindacato Ispettivo non sono state salvate ", ""));
 		}
 
 		if (statoCommitLeggiRegionali.equals(CRLMessage.COMMIT_UNDONE)) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(
-					null,
-					new FacesMessage(
-							FacesMessage.SEVERITY_ERROR,
-							"Attenzione ! Le modifiche alle Leggi Regionali non sono state salvate ",
-							""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Le modifiche alle Leggi Regionali non sono state salvate ", ""));
 		}
-	} 
+	}
 
 	public void addCollegamento(String idAttoToAdd) {
 
 		if (!idAttoToAdd.trim().equals("")) {
 			if (!checkCollegamenti(idAttoToAdd)) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già abbinato ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già abbinato ", ""));
 
 			} else {
 				Atto attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
 				Collegamento collegamento = new Collegamento();
 				collegamento.setIdAttoCollegato(attoDaCollegare.getId());
-				collegamento.setNumeroAttoCollegato(attoDaCollegare
-						.getNumeroAtto());
-				collegamento
-						.setTipoAttoCollegato(attoDaCollegare.getTipoAtto());
+				collegamento.setNumeroAttoCollegato(attoDaCollegare.getNumeroAtto());
+				collegamento.setTipoAttoCollegato(attoDaCollegare.getTipoAtto());
 				attiCollegatiList.add(collegamento);
 				updateAttiInterniHandler();
 			}
@@ -169,42 +148,35 @@ public class CollegamentiController {
 		if (!idAttoToAdd.trim().equals("")) {
 			if (!checkCollegamenti(idAttoToAdd)) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già collegato ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
 			} else {
 
 				Atto attoDaCollegare = null;
 				boolean collega = true;
 
-				
 				if ("EAC".equalsIgnoreCase(tipoAtto)) {
 
 					FacesContext context = FacesContext.getCurrentInstance();
-					context.addMessage(
-							null,
-							new FacesMessage(
-									FacesMessage.SEVERITY_ERROR,
-									"Attenzione ! Non è possibile collegare atti di questo tipo",
-									""));
+					context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Non è possibile collegare atti di questo tipo", ""));
 
 					collega = false;
 
-				} else if ("MIS".equalsIgnoreCase(tipoAtto)) { 
+				} else if ("MIS".equalsIgnoreCase(tipoAtto)) {
+
 					collega = false;
 				} else {
 
 					attoDaCollegare = attoServiceManager.findById(idAttoToAdd);
 				}
-				
+
 				if (collega) {
 					Collegamento collegamento = new Collegamento();
 					collegamento.setIdAttoCollegato(attoDaCollegare.getId());
-					collegamento.setNumeroAttoCollegato(attoDaCollegare
-							.getNumeroAtto());
-					collegamento.setTipoAttoCollegato(attoDaCollegare
-							.getTipoAtto());
+					collegamento.setNumeroAttoCollegato(attoDaCollegare.getNumeroAtto());
+					collegamento.setTipoAttoCollegato(attoDaCollegare.getTipoAtto());
 					attiCollegatiList.add(collegamento);
 					updateAttiInterniHandler();
 				}
@@ -243,36 +215,38 @@ public class CollegamentiController {
 		attoServiceManager.salvaCollegamenti(atto);
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setCollegamenti(
-				Clonator.cloneList(getAttiCollegatiList()));
+		attoBean.getAtto().setCollegamenti(Clonator.cloneList(getAttiCollegatiList()));
 		attoBean.getAtto().setNoteCollegamenti(getNoteCollegamenti());
 		setStatoCommitAttiInterni(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage(
-				"Atti Interni salvati con successo", ""));
-	} 
+		context.addMessage(null, new FacesMessage("Atti Interni salvati con successo", ""));
+	}
 
-	public void handleAttoSindacatoChange() {    
+	public void handleAttoSindacatoChange() {
+
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(annoCreazione), 0, 1);
-		Date dataCreazioneDa= c.getTime();
+		Date dataCreazioneDa = c.getTime();
 		c.set(Integer.parseInt(annoCreazione), 11, 31);
-		Date dataCreazioneA= c.getTime();
-		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato,formatter.format(dataCreazioneDa),formatter.format(dataCreazioneA)));
+		Date dataCreazioneA = c.getTime();
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato, formatter.format(dataCreazioneDa),
+				formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
-		setNumeriAttoSindacato(attiSindacato);  
-		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+		setNumeriAttoSindacato(attiSindacato);
 
-			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
-
-				getNumeriAttoSindacato().add(collegamento);
-
-			}
-
-		}*/
+		/*
+		 * for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+		 * 
+		 * if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
+		 * 
+		 * getNumeriAttoSindacato().add(collegamento);
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
 
 	}
 
@@ -281,9 +255,8 @@ public class CollegamentiController {
 		if (!"".equals(idAttoSindacato)) {
 			if (!checkCollegamentiAttiSindacati()) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già collegato ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
 			} else {
 
@@ -333,32 +306,27 @@ public class CollegamentiController {
 		atto.setCollegamentiAttiSindacato(getCollegamentiAttiSindacato());
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
 		attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 
-		attoBean.getAtto().setCollegamentiAttiSindacato(
-				Clonator.cloneList(getCollegamentiAttiSindacato()));
+		attoBean.getAtto().setCollegamentiAttiSindacato(Clonator.cloneList(getCollegamentiAttiSindacato()));
 
 		setStatoCommitAttiIndirizzo(CRLMessage.COMMIT_DONE);
-		context.addMessage(
-				null,
-				new FacesMessage(
-						"Atti di indirizzo e di Sindacato Ispettivo salvati con successo",
-						""));
-	} 
+		context.addMessage(null,
+				new FacesMessage("Atti di indirizzo e di Sindacato Ispettivo salvati con successo", ""));
+	}
 
 	public void addCollegamentoAttoRegionale() {
 
 		if (!numeroAttoRegionale.trim().equals("")) {
 			if (!checkCollegamentiAttiRegionali()) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già collegato ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
-			} else { 
+			} else {
+
 				CollegamentoLeggiRegionali collegamento = new CollegamentoLeggiRegionali();
 				collegamento.setDescrizione(getDescrizioneAttoRegionale());
 				collegamento.setNumeroAtto(getNumeroAttoRegionale());
@@ -396,19 +364,16 @@ public class CollegamentiController {
 	}
 
 	public void salvaLeggiRegionali() {
-		atto.setCollegamentiLeggiRegionali(getCollegamentiLeggiRegionali()); 
+		atto.setCollegamentiLeggiRegionali(getCollegamentiLeggiRegionali());
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
-		attoBean.getAtto().setCollegamentiLeggiRegionali(
-				Clonator.cloneList(getCollegamentiLeggiRegionali()));
+		attoBean.getAtto().setCollegamentiLeggiRegionali(Clonator.cloneList(getCollegamentiLeggiRegionali()));
 
 		setStatoCommitLeggiRegionali(CRLMessage.COMMIT_DONE);
-		context.addMessage(null, new FacesMessage(
-				"Leggi Regionali salvate con successo", ""));
-	} 
+		context.addMessage(null, new FacesMessage("Leggi Regionali salvate con successo", ""));
+	}
 
 	public Atto getAtto() {
 		return atto;
@@ -470,8 +435,7 @@ public class CollegamentiController {
 		return collegamentiAttiSindacato;
 	}
 
-	public void setCollegamentiAttiSindacato(
-			List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
+	public void setCollegamentiAttiSindacato(List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
 		this.collegamentiAttiSindacato = collegamentiAttiSindacato;
 	}
 
@@ -511,8 +475,7 @@ public class CollegamentiController {
 		return collegamentiLeggiRegionali;
 	}
 
-	public void setCollegamentiLeggiRegionali(
-			List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali) {
+	public void setCollegamentiLeggiRegionali(List<CollegamentoLeggiRegionali> collegamentiLeggiRegionali) {
 		this.collegamentiLeggiRegionali = collegamentiLeggiRegionali;
 	}
 
@@ -560,8 +523,7 @@ public class CollegamentiController {
 		return numeriAttoSindacato;
 	}
 
-	public void setNumeriAttoSindacato(
-			List<CollegamentoAttiSindacato> numeriAttoSindacato) {
+	public void setNumeriAttoSindacato(List<CollegamentoAttiSindacato> numeriAttoSindacato) {
 		this.numeriAttoSindacato = numeriAttoSindacato;
 	}
 

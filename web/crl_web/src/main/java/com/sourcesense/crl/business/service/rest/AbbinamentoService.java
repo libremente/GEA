@@ -30,7 +30,6 @@ import org.codehaus.jackson.map.SerializationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sourcesense.crl.business.model.Abbinamento;
 import com.sourcesense.crl.business.model.GestioneAbbinamento;
 import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
@@ -55,37 +54,27 @@ public class AbbinamentoService {
 			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			objectMapper.getSerializationConfig().setDateFormat(myDateFormat);
 
-			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-					false);
-			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
-					false);
-			objectMapper.configure(
-					SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
-					false);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS, false);
+			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
 
 			String json = objectMapper.writeValueAsString(abbinamento);
 
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 
 	}

@@ -22,21 +22,27 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("target")
 @JsonTypeName("target")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class Target {
-	
+
 	private String commissione;
 	private String passaggio;
 	private String organismoStatutario;
 	private String provenienza;
-	
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 	public String getCommissione() {
 		return commissione;
@@ -69,8 +75,5 @@ public class Target {
 	public void setProvenienza(String provenienza) {
 		this.provenienza = provenienza;
 	}
-	
-	
-	
-	
+
 }

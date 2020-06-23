@@ -17,7 +17,6 @@
 package com.sourcesense.crl.business.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
@@ -26,11 +25,18 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("collegamentoAttiSindacato")
 @JsonTypeName("collegamentoAttiSindacato")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class CollegamentoAttiSindacato implements Cloneable , Comparable <CollegamentoAttiSindacato>{ 
+public class CollegamentoAttiSindacato implements Cloneable, Comparable<CollegamentoAttiSindacato> {
+
 	private String idAtto;
 	private String descrizione;
 	private String tipoAtto;
@@ -40,8 +46,7 @@ public class CollegamentoAttiSindacato implements Cloneable , Comparable <Colleg
 	private String numeroOrdinamento;
 	private String firmatariList;
 	private List<Firmatario> firmatari = new ArrayList<Firmatario>();
-	
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -50,24 +55,26 @@ public class CollegamentoAttiSindacato implements Cloneable , Comparable <Colleg
 			return null;
 		}
 	}
-	
+
 	@Override
-	public int compareTo(CollegamentoAttiSindacato arg0) { 
-		if(arg0.numeroOrdinamento==null || arg0.numeroOrdinamento.equals("")){
-			arg0.numeroOrdinamento="0";
+	public int compareTo(CollegamentoAttiSindacato arg0) {
+
+		if (arg0.numeroOrdinamento == null || arg0.numeroOrdinamento.equals("")) {
+			arg0.numeroOrdinamento = "0";
 		}
-		
-		if(this.numeroOrdinamento==null || this.numeroOrdinamento.equals("")){
-			this.numeroOrdinamento="0";
+
+		if (this.numeroOrdinamento == null || this.numeroOrdinamento.equals("")) {
+			this.numeroOrdinamento = "0";
 		}
-		
-		return Integer.parseInt(this.numeroOrdinamento) -  Integer.parseInt(arg0.numeroOrdinamento);
-		
+
+		return Integer.parseInt(this.numeroOrdinamento) - Integer.parseInt(arg0.numeroOrdinamento);
+
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 	public String getDescrizione() {
 		return descrizione;
@@ -134,12 +141,12 @@ public class CollegamentoAttiSindacato implements Cloneable , Comparable <Colleg
 	}
 
 	public String getFirmatariList() {
-		
-		firmatariList="";
-		
+
+		firmatariList = "";
+
 		for (Firmatario firmatario : getFirmatari()) {
-			if(firmatario.getDescrizione()!=null){
-			 firmatariList += firmatario.getDescrizione()+"-"+firmatario.getGruppoConsiliare()+"\n";
+			if (firmatario.getDescrizione() != null) {
+				firmatariList += firmatario.getDescrizione() + "-" + firmatario.getGruppoConsiliare() + "\n";
 			}
 		}
 		return firmatariList;
@@ -148,9 +155,5 @@ public class CollegamentoAttiSindacato implements Cloneable , Comparable <Colleg
 	public void setFirmatariList(String firmatariList) {
 		this.firmatariList = firmatariList;
 	}
-	
-	
-	
-	
-	
+
 }

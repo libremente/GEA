@@ -22,19 +22,24 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("tipologia")
 @JsonTypeName("tipologia")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class TipologiaAtto {
-	
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
-	private String descrizione ;
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
+	private String descrizione;
 
 	public String getDescrizione() {
 		return descrizione;
@@ -43,8 +48,5 @@ public class TipologiaAtto {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	
-	
-	
 
 }

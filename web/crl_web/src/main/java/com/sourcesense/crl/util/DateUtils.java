@@ -24,8 +24,7 @@ import java.util.GregorianCalendar;
 
 public class DateUtils {
 
-	public static Date generateDataScadenzaParDgrInterruzione(Date dateIn,
-			boolean sospensioneFeriale) {
+	public static Date generateDataScadenzaParDgrInterruzione(Date dateIn, boolean sospensioneFeriale) {
 
 		try {
 			Calendar calendar = new GregorianCalendar();
@@ -37,8 +36,7 @@ public class DateUtils {
 				Calendar calendarAppo = new GregorianCalendar();
 				calendarAppo.setTime(dateIn);
 
-				Date dataStart = sdf.parse("01/08/"
-						+ calendar.get(Calendar.YEAR));
+				Date dataStart = sdf.parse("01/08/" + calendar.get(Calendar.YEAR));
 
 				int contaMargin = 0;
 
@@ -53,8 +51,7 @@ public class DateUtils {
 
 				} else if (contaMargin == 0) {
 
-					Date dataCalc = sdf.parse("01/10/"
-							+ calendar.get(Calendar.YEAR));
+					Date dataCalc = sdf.parse("01/10/" + calendar.get(Calendar.YEAR));
 					calendar.setTime(dataCalc);
 
 				} else {
@@ -86,83 +83,80 @@ public class DateUtils {
 		}
 	}
 
-    private static Date generateDataScadenzaParRegolamento(Date dateIn, boolean sospensioneFeriale) {
-        return generateDataScadenzaPar(60, dateIn, sospensioneFeriale);
-    }
+	private static Date generateDataScadenzaParRegolamento(Date dateIn, boolean sospensioneFeriale) {
+		return generateDataScadenzaPar(60, dateIn, sospensioneFeriale);
+	}
 
-    private static Date generateDataScadenzaParDgr(Date dateIn, boolean sospensioneFeriale) {
-        return generateDataScadenzaPar(30, dateIn, sospensioneFeriale);
-    }
+	private static Date generateDataScadenzaParDgr(Date dateIn, boolean sospensioneFeriale) {
+		return generateDataScadenzaPar(30, dateIn, sospensioneFeriale);
+	}
 
-    private static Date generateDataScadenzaPar(int DELAY, Date dateIn, boolean sospensioneFeriale) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(dateIn);
-        if (sospensioneFeriale) {
-            final Date PRIMO_AGOSTO = primoAgostoDate(dateIn);
-            final Date SEDICI_SETTEMBRE = sediciSettembreDate(dateIn);
-            final boolean before = dateIn.before(PRIMO_AGOSTO);
-            final boolean between = !before && dateIn.before(SEDICI_SETTEMBRE);
-            final boolean after = !before && !between;
-            if (before) {
-                final int delta = numDaysBeetwen(dateIn, PRIMO_AGOSTO);
-                if (delta > DELAY) {
-                    calendar.add(Calendar.DAY_OF_YEAR, DELAY);
-                } else if (delta > 0 && delta <= DELAY) {
-                    calendar.add(Calendar.DAY_OF_YEAR, DELAY + 46);
-                } else if (delta == 0) {
-                    calendar.add(Calendar.DAY_OF_YEAR, DELAY);
-                }
-            } else
-            if (between) {
-                calendar.setTime(SEDICI_SETTEMBRE);
-                calendar.add(Calendar.DAY_OF_YEAR, DELAY);
-            } else {
-                calendar.add(Calendar.DAY_OF_YEAR, DELAY);
-            }
-        } else {
-            calendar.add(Calendar.DAY_OF_YEAR, DELAY);
-        }
-        return calendar.getTime();
-    }
+	private static Date generateDataScadenzaPar(int DELAY, Date dateIn, boolean sospensioneFeriale) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(dateIn);
+		if (sospensioneFeriale) {
+			final Date PRIMO_AGOSTO = primoAgostoDate(dateIn);
+			final Date SEDICI_SETTEMBRE = sediciSettembreDate(dateIn);
+			final boolean before = dateIn.before(PRIMO_AGOSTO);
+			final boolean between = !before && dateIn.before(SEDICI_SETTEMBRE);
+			final boolean after = !before && !between;
+			if (before) {
+				final int delta = numDaysBeetwen(dateIn, PRIMO_AGOSTO);
+				if (delta > DELAY) {
+					calendar.add(Calendar.DAY_OF_YEAR, DELAY);
+				} else if (delta > 0 && delta <= DELAY) {
+					calendar.add(Calendar.DAY_OF_YEAR, DELAY + 46);
+				} else if (delta == 0) {
+					calendar.add(Calendar.DAY_OF_YEAR, DELAY);
+				}
+			} else if (between) {
+				calendar.setTime(SEDICI_SETTEMBRE);
+				calendar.add(Calendar.DAY_OF_YEAR, DELAY);
+			} else {
+				calendar.add(Calendar.DAY_OF_YEAR, DELAY);
+			}
+		} else {
+			calendar.add(Calendar.DAY_OF_YEAR, DELAY);
+		}
+		return calendar.getTime();
+	}
 
-    private static int numDaysBeetwen(Date dateIn, Date startDate) {
-        int numDays = 0;
-        Calendar calendarDateIn = new GregorianCalendar();
-        calendarDateIn.setTime(dateIn);
+	private static int numDaysBeetwen(Date dateIn, Date startDate) {
+		int numDays = 0;
+		Calendar calendarDateIn = new GregorianCalendar();
+		calendarDateIn.setTime(dateIn);
 
-        while (calendarDateIn.getTime().before(startDate)) {
-            calendarDateIn.add(Calendar.DAY_OF_YEAR, 1);
-            numDays++;
-        }
+		while (calendarDateIn.getTime().before(startDate)) {
+			calendarDateIn.add(Calendar.DAY_OF_YEAR, 1);
+			numDays++;
+		}
 
-        return numDays;
-    }
+		return numDays;
+	}
 
-    private static Date primoAgostoDate(Date dateIn) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(dateIn);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date dataPrimoAgosto;
-        try {
-            dataPrimoAgosto = sdf.parse("01/08/" + calendar.get(Calendar.YEAR));
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Unparsable Date");
-        }
-        return dataPrimoAgosto;
-    }
+	private static Date primoAgostoDate(Date dateIn) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(dateIn);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dataPrimoAgosto;
+		try {
+			dataPrimoAgosto = sdf.parse("01/08/" + calendar.get(Calendar.YEAR));
+		} catch (ParseException e) {
+			throw new IllegalArgumentException("Unparsable Date");
+		}
+		return dataPrimoAgosto;
+	}
 
-    private static Date sediciSettembreDate(Date dateIn) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(dateIn);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date dataSediciSettembre;
-        try {
-            dataSediciSettembre = sdf.parse("16/09/" + calendar.get(Calendar.YEAR));
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Unparsable Date");
-        }
-        return dataSediciSettembre;
-    }                                                                                                               
+	private static Date sediciSettembreDate(Date dateIn) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(dateIn);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date dataSediciSettembre;
+		try {
+			dataSediciSettembre = sdf.parse("16/09/" + calendar.get(Calendar.YEAR));
+		} catch (ParseException e) {
+			throw new IllegalArgumentException("Unparsable Date");
+		}
+		return dataSediciSettembre;
+	}
 }
-
-
