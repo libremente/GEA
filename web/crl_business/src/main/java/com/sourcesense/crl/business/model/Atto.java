@@ -21,7 +21,7 @@ import java.util.Date;
 
 /**
  * Atto rappresentato tramite le informazioni di tipo, codice, oggetto, primo
- * firmatario, data presentazione e stato.
+ * firmatario, data presentazione e stato
  * 
  * @author sourcesense
  * 
