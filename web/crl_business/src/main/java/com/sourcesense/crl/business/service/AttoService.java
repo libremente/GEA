@@ -36,7 +36,7 @@ public class AttoService implements Serializable {
 	private ArrayList<Atto> data;
 
 	/**
-	 * Inizializza il servizio con dei dati mock. Utilizzabile per i test
+	 * Inizializza il servizio con dati mock. Utilizzabile per i test
 	 */
 	private void initDummyData() {
 		data = new ArrayList<Atto>();
