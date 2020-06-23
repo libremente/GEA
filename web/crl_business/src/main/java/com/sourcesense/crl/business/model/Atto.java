@@ -20,115 +20,105 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- *
- * @author uji
+ * Atto rappresentato tramite le informazioni di tipo, codice, oggetto, primo
+ * firmatario, data presentazione e stato.
+ * 
+ * @author sourcesense
+ * 
  */
-public class Atto implements Serializable
-{
-    /**
+public class Atto implements Serializable {
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String tipo;
-    private String codice;
-    private String oggetto;
-    private String primoFirmatario;
-    private Date   dataPresentazione;
-    private String stato;
+	private String codice;
+	private String oggetto;
+	private String primoFirmatario;
+	private Date dataPresentazione;
+	private String stato;
 
-    /**
-     * @return the tipo
-     */
-    public String getTipo()
-    {
-        return tipo;
-    }
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
+	}
 
-    /**
-     * @param tipo the tipo to set
-     */
-    public void setTipo(String tipo)
-    {
-        this.tipo = tipo;
-    }
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
-    /**
-     * @return the codice
-     */
-    public String getCodice()
-    {
-        return codice;
-    }
+	/**
+	 * @return the codice
+	 */
+	public String getCodice() {
+		return codice;
+	}
 
-    /**
-     * @param codice the codice to set
-     */
-    public void setCodice(String codice)
-    {
-        this.codice = codice;
-    }
+	/**
+	 * @param codice the codice to set
+	 */
+	public void setCodice(String codice) {
+		this.codice = codice;
+	}
 
-    /**
-     * @return the oggetto
-     */
-    public String getOggetto()
-    {
-        return oggetto;
-    }
+	/**
+	 * @return the oggetto
+	 */
+	public String getOggetto() {
+		return oggetto;
+	}
 
-    /**
-     * @param oggetto the oggetto to set
-     */
-    public void setOggetto(String oggetto)
-    {
-        this.oggetto = oggetto;
-    }
+	/**
+	 * @param oggetto the oggetto to set
+	 */
+	public void setOggetto(String oggetto) {
+		this.oggetto = oggetto;
+	}
 
-    /**
-     * @return the primoFirmatario
-     */
-    public String getPrimoFirmatario()
-    {
-        return primoFirmatario;
-    }
+	/**
+	 * @return the primoFirmatario
+	 */
+	public String getPrimoFirmatario() {
+		return primoFirmatario;
+	}
 
-    /**
-     * @param primoFirmatario the primoFirmatario to set
-     */
-    public void setPrimoFirmatario(String primoFirmatario)
-    {
-        this.primoFirmatario = primoFirmatario;
-    }
+	/**
+	 * @param primoFirmatario the primoFirmatario to set
+	 */
+	public void setPrimoFirmatario(String primoFirmatario) {
+		this.primoFirmatario = primoFirmatario;
+	}
 
-    /**
-     * @return the dataPresentazione
-     */
-    public Date getDataPresentazione()
-    {
-        return dataPresentazione;
-    }
+	/**
+	 * @return the dataPresentazione
+	 */
+	public Date getDataPresentazione() {
+		return dataPresentazione;
+	}
 
-    /**
-     * @param dataPresentazione the dataPresentazione to set
-     */
-    public void setDataPresentazione(Date dataPresentazione)
-    {
-        this.dataPresentazione = dataPresentazione;
-    }
+	/**
+	 * @param dataPresentazione the dataPresentazione to set
+	 */
+	public void setDataPresentazione(Date dataPresentazione) {
+		this.dataPresentazione = dataPresentazione;
+	}
 
-    /**
-     * @return the stato
-     */
-    public String getStato()
-    {
-        return stato;
-    }
+	/**
+	 * @return the stato
+	 */
+	public String getStato() {
+		return stato;
+	}
 
-    /**
-     * @param stato the stato to set
-     */
-    public void setStato(String stato)
-    {
-        this.stato = stato;
-    }
+	/**
+	 * @param stato the stato to set
+	 */
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
 }
