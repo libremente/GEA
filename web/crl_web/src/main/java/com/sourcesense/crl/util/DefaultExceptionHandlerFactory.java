@@ -19,6 +19,12 @@ package com.sourcesense.crl.util;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class DefaultExceptionHandlerFactory extends ExceptionHandlerFactory {
 
 	private ExceptionHandlerFactory parent;

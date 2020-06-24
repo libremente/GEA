@@ -16,64 +16,59 @@
  */
 package com.sourcesense.crl.web.ui.beans;
 
-import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.service.AttoServiceManager;
-
-
 import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-/**
- *
- * @author uji
- */
+import com.sourcesense.crl.business.model.Atto;
+import com.sourcesense.crl.business.service.AttoServiceManager;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "mgmtBean")
 @ViewScoped
-public class ManagerBean implements Serializable
-{
-	
-	
+public class ManagerBean implements Serializable {
+
 	private boolean showCommDetail;
-	
-    private String code;
-    
-    private Atto atto;
-    
-    private AttoServiceManager as = new AttoServiceManager();
-    
-    /**
-     * @return the code
-     */
-    public String getCode()
-    {
-        return code;
-    }
 
-    /**
-     * @param code the code to set
-     */
-    public void setCode(String code)
-    {
-        this.code = code;  
-    }
+	private String code;
 
-    /**
-     * @return the atto
-     */
-    public Atto getAtto()
-    {
-        return atto;
-    }
+	private Atto atto;
 
-    /**
-     * @param atto the atto to set
-     */
-    public void setAtto(Atto atto)
-    {
-        this.atto = atto;
-    }
+	private AttoServiceManager as = new AttoServiceManager();
+
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	/**
+	 * @return the atto
+	 */
+	public Atto getAtto() {
+		return atto;
+	}
+
+	/**
+	 * @param atto the atto to set
+	 */
+	public void setAtto(Atto atto) {
+		this.atto = atto;
+	}
 
 	public boolean isShowCommDetail() {
 		return showCommDetail;
@@ -82,10 +77,12 @@ public class ManagerBean implements Serializable
 	public void setShowCommDetail(boolean showCommDetail) {
 		this.showCommDetail = showCommDetail;
 	}
-    
+
+	/**
+	 * 
+	 */
 	public void visualizeCommDetail() {
-		this.showCommDetail=true;
+		this.showCommDetail = true;
 	}
-    
-    
+
 }

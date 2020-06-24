@@ -30,27 +30,40 @@ import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
 import org.primefaces.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class SessionPhaseListener implements PhaseListener {
 
 	private static final String homepage = "authenticate.xhtml?reason=expired";
 
 	private static final Logger LOG = LoggerFactory.getLogger(SessionPhaseListener.class);
 
+	/**
+	 * 
+	 */
 	public void afterPhase(PhaseEvent event) {
 		;
 	}
 
+	/**
+	 * 
+	 */
 	public void beforePhase(PhaseEvent event) {
 
 		FacesContext fc = event.getFacesContext();
 
 		String loginPage = (String) fc.getExternalContext().getRequestMap().
 
-		get("web.secfilter.authenticator.showLogin");
+				get("web.secfilter.authenticator.showLogin");
 
 		if (loginPage != null && !loginPage.equals("")) {
 
@@ -60,6 +73,9 @@ public class SessionPhaseListener implements PhaseListener {
 
 	}
 
+	/**
+	 * 
+	 */
 	public PhaseId getPhaseId() {
 
 		return PhaseId.RESTORE_VIEW;
@@ -70,28 +86,27 @@ public class SessionPhaseListener implements PhaseListener {
 	 * 
 	 * Does a regular or ajax redirect.
 	 */
-
 	public void doRedirect(FacesContext fc, String redirectPage)
 
-	throws FacesException {
+			throws FacesException {
 
 		ExternalContext ec = fc.getExternalContext();
 
 		try {
 
-			if (ec.isResponseCommitted()) { 
+			if (ec.isResponseCommitted()) {
 
 				return;
 
-			} 
+			}
 
 			if ((RequestContext.getCurrentInstance().isAjaxRequest()
 
-			|| fc.getPartialViewContext().isPartialRequest())
+					|| fc.getPartialViewContext().isPartialRequest())
 
-			&& fc.getResponseWriter() == null
+					&& fc.getResponseWriter() == null
 
-			&& fc.getRenderKit() == null) {
+					&& fc.getRenderKit() == null) {
 
 				ServletResponse response = (ServletResponse) ec.getResponse();
 
@@ -99,13 +114,15 @@ public class SessionPhaseListener implements PhaseListener {
 
 				response.setCharacterEncoding(request.getCharacterEncoding());
 
-				RenderKitFactory factory = (RenderKitFactory)FactoryFinder.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
+				RenderKitFactory factory = (RenderKitFactory) FactoryFinder
+						.getFactory(FactoryFinder.RENDER_KIT_FACTORY);
 
-				RenderKit renderKit = factory.getRenderKit(fc,fc.getApplication().getViewHandler().calculateRenderKitId(fc));
+				RenderKit renderKit = factory.getRenderKit(fc,
+						fc.getApplication().getViewHandler().calculateRenderKitId(fc));
 
 				ResponseWriter responseWriter = renderKit.createResponseWriter(
 
-				response.getWriter(), null, request.getCharacterEncoding());
+						response.getWriter(), null, request.getCharacterEncoding());
 
 				fc.setResponseWriter(responseWriter);
 
@@ -113,13 +130,13 @@ public class SessionPhaseListener implements PhaseListener {
 
 			ec.redirect(ec.getRequestContextPath() +
 
-			(redirectPage != null ? redirectPage : ""));
+					(redirectPage != null ? redirectPage : ""));
 
 		} catch (IOException e) {
 
 			LOG.error("Redirect to the specified page '" +
 
-			redirectPage + "' failed");
+					redirectPage + "' failed");
 
 			throw new FacesException(e);
 

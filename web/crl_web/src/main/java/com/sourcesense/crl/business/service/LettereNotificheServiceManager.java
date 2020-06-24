@@ -24,81 +24,85 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sourcesense.crl.business.model.Lettera;
-import com.sourcesense.crl.business.service.rest.LegislaturaService;
 import com.sourcesense.crl.business.service.rest.LettereNotificheService;
 import com.sourcesense.crl.util.URLBuilder;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("lettereNotificheServiceManager")
 public class LettereNotificheServiceManager implements ServiceManager {
-	
+
 	@Autowired
 	private URLBuilder urlBuilder;
-	
-	
+
 	@Autowired
 	private LettereNotificheService lettereNotificheService;
 
-	
-	
+	/**
+	 * 
+	 * @param lettera
+	 * @return
+	 */
+	public Lettera getLettera(Lettera lettera) {
 
- 	public Lettera  getLettera(Lettera lettera){
- 		
- 		return lettereNotificheService.getLettera(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_retrieve_lettera", new String[]{lettera.getTipoTemplate()}));
- 	}
- 	
- 	public void  updateLettera(Lettera lettera){
- 		 lettereNotificheService.merge(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_update_lettera", null),lettera);
- 	}
- 	
- 	public InputStream getLetteraFile(Lettera lettera , String idAtto, String gruppo) {
-
-		return lettereNotificheService.getFile(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_retrieve_lettera_bin", new String[]{idAtto,lettera.getTipoTemplate(),gruppo} ));
+		return lettereNotificheService.getLettera(urlBuilder.buildAlfrescoURL("alfresco_context_url",
+				"alf_retrieve_lettera", new String[] { lettera.getTipoTemplate() }));
 	}
-	
- 	
-	
+
+	/**
+	 * 
+	 * @param lettera
+	 */
+	public void updateLettera(Lettera lettera) {
+		lettereNotificheService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_lettera", null),
+				lettera);
+	}
+
+	/**
+	 * 
+	 * @param lettera
+	 * @param idAtto
+	 * @param gruppo
+	 * @return
+	 */
+	public InputStream getLetteraFile(Lettera lettera, String idAtto, String gruppo) {
+
+		return lettereNotificheService.getFile(urlBuilder.buildAlfrescoURL("alfresco_context_url",
+				"alf_retrieve_lettera_bin", new String[] { idAtto, lettera.getTipoTemplate(), gruppo }));
+	}
+
 	@Override
-	public Object persist(Object object) { 
+	public Object persist(Object object) {
 		return null;
 	}
 
-
 	@Override
-	public Object merge(Object object) { 
+	public Object merge(Object object) {
 		return null;
 	}
 
-
 	@Override
-	public boolean remove(Object object) { 
+	public boolean remove(Object object) {
 		return false;
 	}
 
-
 	@Override
-	public List<Object> retrieveAll() { 
+	public List<Object> retrieveAll() {
 		return null;
 	}
 
-
 	@Override
-	public Map<String, String> findAll() { 
+	public Map<String, String> findAll() {
 		return null;
 	}
 
-
 	@Override
-	public Object findById(String id) { 
+	public Object findById(String id) {
 		return null;
 	}
-	
-	
-	
-	
-	
 
 }

@@ -16,7 +16,6 @@
  */
 package com.sourcesense.crl.business.service;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,107 +31,116 @@ import com.sourcesense.crl.business.model.TipologiaAtto;
 import com.sourcesense.crl.business.service.rest.TipoAttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("tipoAttoServiceManager")
 public class TipoAttoServiceManager implements ServiceManager {
 
-
-	
-	
-	
 	@Autowired
-	private  URLBuilder urlBuilder;
-	
+	private URLBuilder urlBuilder;
+
 	@Autowired
 	private TipoAttoService tipoAttoService;
-	
-	
+
 	@Override
-	public TipoAtto persist(Object object) { 
+	public TipoAtto persist(Object object) {
 		return null;
 	}
 
 	@Override
-	public TipoAtto merge(Object object) { 
+	public TipoAtto merge(Object object) {
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) { 
+	public boolean remove(Object object) {
 		return false;
 	}
 
 	@Override
 	public Map<String, String> findAll() {
-		
-		
-		Map<String,String> tipiAtto = new LinkedHashMap<String, String>();
-		
-		List<TipoAtto> listTipiAtto = tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
+
+		Map<String, String> tipiAtto = new LinkedHashMap<String, String>();
+
+		List<TipoAtto> listTipiAtto = tipoAttoService
+				.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto", null));
 		Collections.sort(listTipiAtto);
-		
-		
-        for (TipoAtto tipoAtto : listTipiAtto) {
-			
-        	tipiAtto.put(tipoAtto.getDescrizione(),tipoAtto.getCodice() );
-        	
+
+		for (TipoAtto tipoAtto : listTipiAtto) {
+
+			tipiAtto.put(tipoAtto.getDescrizione(), tipoAtto.getCodice());
+
 		}
 		return tipiAtto;
 	}
-	
-	
-    public List<String> getAll() {
-		
-		
-    	List<String> tipiAtto = new ArrayList<String>();
-		
-		List<TipoAtto> listTipiAtto = tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
-		
-        for (TipoAtto tipoAtto : listTipiAtto) {
-			
-        	tipiAtto.add(tipoAtto.getDescrizione());
-        	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<String> getAll() {
+
+		List<String> tipiAtto = new ArrayList<String>();
+
+		List<TipoAtto> listTipiAtto = tipoAttoService
+				.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto", null));
+
+		for (TipoAtto tipoAtto : listTipiAtto) {
+
+			tipiAtto.add(tipoAtto.getDescrizione());
+
 		}
-        
-        Collections.sort(tipiAtto);
-        
+
+		Collections.sort(tipiAtto);
+
 		return tipiAtto;
 	}
-    
-    public List<TipoAtto> retrieveAllTipoAtto() {
-		
-    	
-    	List <TipoAtto> list = tipoAttoService.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto",null));
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<TipoAtto> retrieveAllTipoAtto() {
+
+		List<TipoAtto> list = tipoAttoService
+				.getAllTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_tipi_atto", null));
 		Collections.sort(list);
-    	return list;
-		
-		 
+		return list;
+
 	}
-	
-    
+
+	/**
+	 * 
+	 * @param tipoAtto
+	 * @return
+	 */
 	public Map<String, String> findTipologieByTipoAtto(String tipoAtto) {
-        
-		Map<String,String> tipologieAtto = new HashMap<String, String>();
-		
-		List<TipologiaAtto> listTipologieAtto = tipoAttoService.getTipologieByTipoAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_tipologie_atto_by_tipo_atto",new String [] {tipoAtto}));
-		
-        for (TipologiaAtto tipologiaAtto : listTipologieAtto) {
-			
-        	tipologieAtto.put(tipologiaAtto.getDescrizione(),tipologiaAtto.getDescrizione() );
-        	
+
+		Map<String, String> tipologieAtto = new HashMap<String, String>();
+
+		List<TipologiaAtto> listTipologieAtto = tipoAttoService.getTipologieByTipoAtto(urlBuilder.buildAlfrescoURL(
+				"alfresco_context_url", "alf_tipologie_atto_by_tipo_atto", new String[] { tipoAtto }));
+
+		for (TipologiaAtto tipologiaAtto : listTipologieAtto) {
+
+			tipologieAtto.put(tipologiaAtto.getDescrizione(), tipologiaAtto.getDescrizione());
+
 		}
 		return tipologieAtto;
-		
-		
+
 	}
-	
 
 	@Override
-	public Object findById(String id) { 
+	public Object findById(String id) {
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() { 
+	public List<Object> retrieveAll() {
 		return null;
 	}
 

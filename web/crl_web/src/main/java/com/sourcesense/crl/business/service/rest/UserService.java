@@ -37,11 +37,16 @@ import com.sourcesense.crl.business.model.User;
 import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 import com.sourcesense.crl.util.DefaultExceptionHandler;
 import com.sourcesense.crl.util.ServiceAuthenticationException;
-import com.sourcesense.crl.util.ServiceNotAvailableException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "userService")
 @Path("/users")
 public class UserService {
@@ -53,87 +58,95 @@ public class UserService {
 	Client client;
 
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultExceptionHandler.class);
-	
-	public AlfrescoSessionTicket getAuthenticationToken(String url, User user) throws ServiceAuthenticationException{
+
+	/**
+	 * 
+	 * @param url
+	 * @param user
+	 * @return
+	 * @throws ServiceAuthenticationException
+	 */
+	public AlfrescoSessionTicket getAuthenticationToken(String url, User user) throws ServiceAuthenticationException {
 
 		String responseMsg = "error";
 		AlfrescoSessionTicket data = null;
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
-				.post(ClientResponse.class, user);
+		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, user);
 
 		if (response.getStatus() != 200) {
-			
-			LOG.error("Credenziali utente errate user == "+user.getUsername()+" pwd == "+user.getPassword() );
-			
+
+			LOG.error("Credenziali utente errate user == " + user.getUsername() + " pwd == " + user.getPassword());
+
 			throw new ServiceAuthenticationException(
-					"Errore - "+ response.getStatus() +": Alfresco non raggiungibile " ) ;
-			
-			
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
+
 		}
 
 		responseMsg = response.getEntity(String.class);
-		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE,
-				true);
+		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 		try {
-			
-			data = objectMapper.readValue(responseMsg,AlfrescoSessionTicket.class);
-		
+
+			data = objectMapper.readValue(responseMsg, AlfrescoSessionTicket.class);
+
 		} catch (JsonMappingException e) {
 
-			throw new ServiceAuthenticationException( this.getClass().getSimpleName() ,e);
+			throw new ServiceAuthenticationException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceAuthenticationException(this.getClass().getSimpleName() ,e);
+			throw new ServiceAuthenticationException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceAuthenticationException(this.getClass().getSimpleName() ,e);
+			throw new ServiceAuthenticationException(this.getClass().getSimpleName(), e);
 		}
 
 		return data;
 	}
 
-	public User completeAuthentication(String url, User user) throws ServiceAuthenticationException{
+	/**
+	 * 
+	 * @param url
+	 * @param user
+	 * @return
+	 * @throws ServiceAuthenticationException
+	 */
+	public User completeAuthentication(String url, User user) throws ServiceAuthenticationException {
 
 		String responseMsg = "error";
 		List<GruppoUtente> gruppi = null;
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
-				.get(ClientResponse.class);
+		ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-			
-			LOG.error("Credenziali utente errate user == "+user.getUsername()+" pwd == "+user.getPassword() );
-			
+
+			LOG.error("Credenziali utente errate user == " + user.getUsername() + " pwd == " + user.getPassword());
+
 			throw new ServiceAuthenticationException(
-					"Errore - "+ response.getStatus() +": Alfresco non raggiungibile " ) ;
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 
 		responseMsg = response.getEntity(String.class);
-		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE,
-				true);
+		objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
 		try {
-			gruppi = objectMapper.readValue(responseMsg,
-					new TypeReference<List<GruppoUtente>>() {
-					});
+			gruppi = objectMapper.readValue(responseMsg, new TypeReference<List<GruppoUtente>>() {
+			});
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceAuthenticationException( this.getClass().getSimpleName() ,e);
+			throw new ServiceAuthenticationException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceAuthenticationException(this.getClass().getSimpleName() ,e);
+			throw new ServiceAuthenticationException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceAuthenticationException(this.getClass().getSimpleName() ,e);
+			throw new ServiceAuthenticationException(this.getClass().getSimpleName(), e);
 		}
 
 		if (gruppi != null) {
-			user.setGruppi(gruppi);  
+			user.setGruppi(gruppi);
 			return user;
 		}
 

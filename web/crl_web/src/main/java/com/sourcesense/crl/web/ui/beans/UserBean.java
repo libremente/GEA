@@ -16,7 +16,6 @@
  */
 package com.sourcesense.crl.web.ui.beans;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,37 +23,32 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIOutput;
-import javax.faces.component.html.HtmlInputText;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.servlet.http.HttpServletRequest;
 
-import com.sourcesense.crl.business.model.Allegato;
+import org.primefaces.component.selectonemenu.SelectOneMenu;
+
 import com.sourcesense.crl.business.model.ColonnaAtto;
 import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
-import org.primefaces.component.selectonemenu.SelectOneMenu;
-import org.primefaces.event.SelectEvent;
 
-;
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "userBean")
 @SessionScoped
 public class UserBean implements Serializable {
 
 	/**
-	 * /* Tipo atto N° atto Oggetto Tipo iniziativa Firmatari Stato Tipo
-	 * chiusura Com. referente, co-referente, redigente o deliberante Data
-	 * assegnazione Commissioni consultive Relatore Data nomina relatore
-	 * Abbinamenti "Esito votazione commissione referente (o redigente o
-	 * deliberante)"	"Data votazione commissione"	Data scadenza	"Data richiesta
-	 * iscrizione all'aula" Esito votazione Aula "Data votazione aula" N° DCR N°
-	 * LCR BURL Data BURL N° LR Data LR
+	 * /* Tipo atto N° atto Oggetto Tipo iniziativa Firmatari Stato Tipo chiusura
+	 * Com. referente, co-referente, redigente o deliberante Data assegnazione
+	 * Commissioni consultive Relatore Data nomina relatore Abbinamenti "Esito
+	 * votazione commissione referente (o redigente o deliberante)" "Data votazione
+	 * commissione" Data scadenza "Data richiesta iscrizione all'aula" Esito
+	 * votazione Aula "Data votazione aula" N° DCR N° LCR BURL Data BURL N° LR Data
+	 * LR
 	 */
 
 	private static final long serialVersionUID = 7726122743894534255L;
@@ -71,46 +65,48 @@ public class UserBean implements Serializable {
 
 	private List<ColonnaAtto> colonneUser = new ArrayList<ColonnaAtto>();
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	public void init() {
 
-		
-		colonneTotali.add(new ColonnaAtto("Oggetto","oggetto", true));
-		colonneTotali.add(new ColonnaAtto("Data presentazione","dataPresentazione", true));
-		colonneTotali.add(new ColonnaAtto("Stato","stato", true));
-		colonneTotali.add(new ColonnaAtto("Primo firmatario","primoFirmatario", false));
-		colonneTotali.add(new ColonnaAtto("Firmatari","elencoFirmatari", false));
-		colonneTotali.add(new ColonnaAtto("Tipo iniziativa","tipoIniziativaNome", false));
-		colonneTotali.add(new ColonnaAtto("Tipo chiusura","tipoChiusura", false));
-		colonneTotali.add(new ColonnaAtto("Com. referente, co-referente, redigente o deliberante","commissioniNonConsultive", false));
-		colonneTotali.add(new ColonnaAtto("Data assegnazione","dataAssegnazione", false));
-		colonneTotali.add(new ColonnaAtto("Commissioni consultive","commissioniConsultive", false));
-		colonneTotali.add(new ColonnaAtto("Relatore","relatore", false));
-		colonneTotali.add(new ColonnaAtto("Data nomina relatore","dataNominaRelatore", false));
-		colonneTotali.add(new ColonnaAtto("Abbinamenti","elencoAbbinamenti", false));
-		colonneTotali.add(new ColonnaAtto("Esito votazione Commissione referente (o redigente o deliberante)","esitoVotazioneCommissioneReferente",false));
-		colonneTotali.add(new ColonnaAtto("Data votazione Commissione","dataVotazioneCommissione", false));
-		colonneTotali.add(new ColonnaAtto("Data scadenza", "dataScadenza",false));
-		colonneTotali.add(new ColonnaAtto("Data richiesta iscrizione Aula","dataRichiestaIscrizioneAula",false));
-		colonneTotali.add(new ColonnaAtto("Esito votazione Aula","esitoVotazioneAula", false));
-		colonneTotali.add(new ColonnaAtto("Data votazione Aula","dataVotazioneAula", false));
-		colonneTotali.add(new ColonnaAtto("N° DCR","numeroDcr", false));
-		colonneTotali.add(new ColonnaAtto("N° LCR","numeroLcr", false));
-		colonneTotali.add(new ColonnaAtto("BURL","numeroPubblicazioneBURL", false));
-		colonneTotali.add(new ColonnaAtto("Data BURL","dataPubblicazioneBURL", false));
-		colonneTotali.add(new ColonnaAtto("N° LR","numeroLr", false));
-		colonneTotali.add(new ColonnaAtto("Data LR","dataLR", false));
-		colonneTotali.add(new ColonnaAtto("Note generali","notePresentazioneAssegnazione", false));  
+		colonneTotali.add(new ColonnaAtto("Oggetto", "oggetto", true));
+		colonneTotali.add(new ColonnaAtto("Data presentazione", "dataPresentazione", true));
+		colonneTotali.add(new ColonnaAtto("Stato", "stato", true));
+		colonneTotali.add(new ColonnaAtto("Primo firmatario", "primoFirmatario", false));
+		colonneTotali.add(new ColonnaAtto("Firmatari", "elencoFirmatari", false));
+		colonneTotali.add(new ColonnaAtto("Tipo iniziativa", "tipoIniziativaNome", false));
+		colonneTotali.add(new ColonnaAtto("Tipo chiusura", "tipoChiusura", false));
+		colonneTotali.add(new ColonnaAtto("Com. referente, co-referente, redigente o deliberante",
+				"commissioniNonConsultive", false));
+		colonneTotali.add(new ColonnaAtto("Data assegnazione", "dataAssegnazione", false));
+		colonneTotali.add(new ColonnaAtto("Commissioni consultive", "commissioniConsultive", false));
+		colonneTotali.add(new ColonnaAtto("Relatore", "relatore", false));
+		colonneTotali.add(new ColonnaAtto("Data nomina relatore", "dataNominaRelatore", false));
+		colonneTotali.add(new ColonnaAtto("Abbinamenti", "elencoAbbinamenti", false));
+		colonneTotali.add(new ColonnaAtto("Esito votazione Commissione referente (o redigente o deliberante)",
+				"esitoVotazioneCommissioneReferente", false));
+		colonneTotali.add(new ColonnaAtto("Data votazione Commissione", "dataVotazioneCommissione", false));
+		colonneTotali.add(new ColonnaAtto("Data scadenza", "dataScadenza", false));
+		colonneTotali.add(new ColonnaAtto("Data richiesta iscrizione Aula", "dataRichiestaIscrizioneAula", false));
+		colonneTotali.add(new ColonnaAtto("Esito votazione Aula", "esitoVotazioneAula", false));
+		colonneTotali.add(new ColonnaAtto("Data votazione Aula", "dataVotazioneAula", false));
+		colonneTotali.add(new ColonnaAtto("N° DCR", "numeroDcr", false));
+		colonneTotali.add(new ColonnaAtto("N° LCR", "numeroLcr", false));
+		colonneTotali.add(new ColonnaAtto("BURL", "numeroPubblicazioneBURL", false));
+		colonneTotali.add(new ColonnaAtto("Data BURL", "dataPubblicazioneBURL", false));
+		colonneTotali.add(new ColonnaAtto("N° LR", "numeroLr", false));
+		colonneTotali.add(new ColonnaAtto("Data LR", "dataLR", false));
+		colonneTotali.add(new ColonnaAtto("Note generali", "notePresentazioneAssegnazione", false));
 		refreshColonneUser();
-		
+
 	}
 
 	public String getUserGroupName() {
 
 		return user.getSessionGroup().getNome();
 	}
-
-
 
 	public User getUser() {
 		return user;
@@ -159,38 +155,44 @@ public class UserBean implements Serializable {
 	public void setColonneUser(List<ColonnaAtto> colonneUser) {
 		this.colonneUser = colonneUser;
 	}
-	
-	public void refreshColonneUser(){
-		
+
+	/**
+	 * 
+	 */
+	public void refreshColonneUser() {
+
 		colonneUser.clear();
-		
+
 		for (ColonnaAtto colonnaAtto : colonneTotali) {
-			if(colonnaAtto.isVisible()){
+			if (colonnaAtto.isVisible()) {
 				colonneUser.add(colonnaAtto);
 			}
-		} 
+		}
 	}
 
-
-	public void handleChangeSessionGroup(final AjaxBehaviorEvent event){
-		SelectOneMenu selectOneMenu= ((SelectOneMenu) event.getSource());
+	/**
+	 * 
+	 * @param event
+	 */
+	public void handleChangeSessionGroup(final AjaxBehaviorEvent event) {
+		SelectOneMenu selectOneMenu = ((SelectOneMenu) event.getSource());
 		String selectedItem = (String) selectOneMenu.getSubmittedValue();
-		for (GruppoUtente gruppoUtente: user.getGruppi()){
-			if (gruppoUtente.toString().equalsIgnoreCase(selectedItem)){
+		for (GruppoUtente gruppoUtente : user.getGruppi()) {
+			if (gruppoUtente.toString().equalsIgnoreCase(selectedItem)) {
 				user.setSessionGroup(gruppoUtente);
 				return;
 			}
 		}
 	}
 
-
-
-
-	public String refreshSearch(){
+	/**
+	 * 
+	 * @return
+	 */
+	public String refreshSearch() {
 		refreshColonneUser();
 		return "pretty:Home";
-		
+
 	}
-	
 
 }

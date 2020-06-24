@@ -16,8 +16,24 @@
  */
 package com.sourcesense.crl.web.ui.controller;
 
+import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.FileUploadEvent;
+
 import com.sourcesense.crl.business.model.Allegato;
-import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.AttoEAC;
 import com.sourcesense.crl.business.model.CollegamentoAttiSindacato;
 import com.sourcesense.crl.business.model.StatoAtto;
@@ -25,40 +41,15 @@ import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 import com.sourcesense.crl.business.service.LegislaturaServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
-
-import com.sourcesense.crl.util.CRLMessage;
 import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
-import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-
-import org.primefaces.event.FileUploadEvent;
-
 /**
  * 
- * @author uji
+ * 
+ * @author sourcesense
+ *
  */
-
 @ManagedBean(name = "inserisciEACController")
 @ViewScoped
 public class InserisciEACController {
@@ -110,30 +101,33 @@ public class InserisciEACController {
 	private String descrizioneAttoSindacato;
 	private String attoSindacatoToDelete;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	private void initializeValues() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean")); 
-		
-		if (attoBean.getAttoEAC() != null){
-		
-			if (attoBean.getAttoEAC().getId() != null
-					&& !"".equals(attoBean.getAttoEAC().getId())) { 
-	
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
+
+		if (attoBean.getAttoEAC() != null) {
+
+			if (attoBean.getAttoEAC().getId() != null && !"".equals(attoBean.getAttoEAC().getId())) {
+
 				atto = (AttoEAC) attoBean.getAttoEAC().clone();
-	
-				setCollegamentiAttiSindacato(attoServiceManager
-						.findAttiSindacatoById(atto.getId()));
-	
+
+				setCollegamentiAttiSindacato(attoServiceManager.findAttiSindacatoById(atto.getId()));
+
 				attoBean.setAttoEAC(null);
 			}
-		}   
+		}
 		setTipiAttoSindacato(attoServiceManager.findTipoAttiSindacato());
 		setLegislature(legislaturaServiceManager.list());
 	}
 
+	/**
+	 * 
+	 */
 	public void inserisciAtto() {
 
 		atto.setTipoAtto("EAC");
@@ -146,29 +140,32 @@ public class InserisciEACController {
 
 			this.atto = attoRet;
 
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO,
-					"Atto EAC inserito con successo", ""));
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Atto EAC inserito con successo", ""));
 
-		} else if (attoRet != null && attoRet.getError() != null
-				&& !attoRet.getError().equals("")) {
+		} else if (attoRet != null && attoRet.getError() != null && !attoRet.getError().equals("")) {
 
-			/*context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, attoRet.getError(), ""));*/
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "ATTENZIONE: atto già presente per la legislatura indicata", ""));
+			/*
+			 * context.addMessage(null, new FacesMessage( FacesMessage.SEVERITY_ERROR,
+			 * attoRet.getError(), ""));
+			 */
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"ATTENZIONE: atto già presente per la legislatura indicata", ""));
 
 		}
 	}
 
-	public void uploadAllegatoParere(FileUploadEvent event) { 
+	/**
+	 * 
+	 * @param event
+	 */
+	public void uploadAllegatoParere(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 
 		if (!checkAllegatoParere(fileName)) {
 			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, "Attenzione ! Il file "
-							+ fileName + " è già stato allegato ", ""));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Attenzione ! Il file " + fileName + " è già stato allegato ", ""));
 		} else {
 
 			Allegato allegatoRet = new Allegato();
@@ -176,8 +173,7 @@ public class InserisciEACController {
 			allegatoRet.setPubblico(currentFilePubblico);
 
 			try {
-				allegatoRet = attoServiceManager.uploadAllegatoEAC(atto, event
-						.getFile().getInputstream(), allegatoRet);
+				allegatoRet = attoServiceManager.uploadAllegatoEAC(atto, event.getFile().getInputstream(), allegatoRet);
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -187,6 +183,11 @@ public class InserisciEACController {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	private boolean checkAllegatoParere(String fileName) {
 
 		for (Allegato element : allegatiEAC) {
@@ -201,11 +202,13 @@ public class InserisciEACController {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void removeAllegatoParere() {
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		AttoBean attoBean = ((AttoBean) context.getExternalContext()
-				.getSessionMap().get("attoBean"));
+		AttoBean attoBean = ((AttoBean) context.getExternalContext().getSessionMap().get("attoBean"));
 
 		for (Allegato element : getAllegatiEAC()) {
 
@@ -213,21 +216,22 @@ public class InserisciEACController {
 
 				attoRecordServiceManager.deleteFile(element.getId());
 				getAllegatiEAC().remove(element);
-				attoBean.getAttoEAC().setAllegati(
-						Clonator.cloneList(getAllegatiEAC()));
+				attoBean.getAttoEAC().setAllegati(Clonator.cloneList(getAllegatiEAC()));
 				break;
 			}
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void addCollegamentoAttoSindacato() {
 
 		if (!"".equals(idAttoSindacato)) {
 			if (!checkCollegamentiAttiSindacati()) {
 				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage(
-						FacesMessage.SEVERITY_ERROR,
-						"Attenzione ! Atto già collegato ", ""));
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Attenzione ! Atto già collegato ", ""));
 
 			} else {
 
@@ -240,49 +244,62 @@ public class InserisciEACController {
 						break;
 					}
 
-				} 
+				}
 				attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 
 			}
 		}
 	}
 
-	public void handleAttoSindacatoChange() {    
+	/**
+	 * 
+	 */
+	public void handleAttoSindacatoChange() {
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(annoCreazione), 0, 1);
-		Date dataCreazioneDa= c.getTime();
+		Date dataCreazioneDa = c.getTime();
 		c.set(Integer.parseInt(annoCreazione), 11, 31);
-		Date dataCreazioneA= c.getTime();
-		Format formatter=new SimpleDateFormat("yyyy-MM-dd");
-		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato,formatter.format(dataCreazioneDa),formatter.format(dataCreazioneA)));
+		Date dataCreazioneA = c.getTime();
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+		setAttiSindacato(attoServiceManager.findAllAttiSindacato(tipoAttoSindacato, formatter.format(dataCreazioneDa),
+				formatter.format(dataCreazioneA)));
 		getNumeriAttoSindacato().clear();
-		setNumeriAttoSindacato(attiSindacato);  
-		/*for (CollegamentoAttiSindacato collegamento : attiSindacato) {
-
-			if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
-
-				getNumeriAttoSindacato().add(collegamento);
-
-			}
-
-		}*/
+		setNumeriAttoSindacato(attiSindacato);
+		/*
+		 * for (CollegamentoAttiSindacato collegamento : attiSindacato) {
+		 * 
+		 * if (collegamento.getTipoAtto().equals(tipoAttoSindacato)) {
+		 * 
+		 * getNumeriAttoSindacato().add(collegamento);
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
 
 	}
 
+	/**
+	 * 
+	 */
 	public void removeCollegamentoAttoSindacato() {
 
 		for (CollegamentoAttiSindacato element : atto.getCollegamentiAttiSindacato()) {
 
 			if (element.getNumeroAtto().equals(attoSindacatoToDelete)) {
 
-				atto.getCollegamentiAttiSindacato().remove(element);                 
+				atto.getCollegamentiAttiSindacato().remove(element);
 				break;
 			}
 		}
-		
+
 		attoServiceManager.salvaCollegamentiAttiSindacato(atto);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private boolean checkCollegamentiAttiSindacati() {
 
 		for (CollegamentoAttiSindacato element : collegamentiAttiSindacato) {
@@ -307,8 +324,7 @@ public class InserisciEACController {
 		return legislaturaServiceManager;
 	}
 
-	public void setLegislaturaServiceManager(
-			LegislaturaServiceManager legislaturaServiceManager) {
+	public void setLegislaturaServiceManager(LegislaturaServiceManager legislaturaServiceManager) {
 		this.legislaturaServiceManager = legislaturaServiceManager;
 	}
 
@@ -316,8 +332,7 @@ public class InserisciEACController {
 		return tipoAttoServiceManager;
 	}
 
-	public void setTipoAttoServiceManager(
-			TipoAttoServiceManager tipoAttoServiceManager) {
+	public void setTipoAttoServiceManager(TipoAttoServiceManager tipoAttoServiceManager) {
 		this.tipoAttoServiceManager = tipoAttoServiceManager;
 	}
 
@@ -373,9 +388,8 @@ public class InserisciEACController {
 		return atto.getCollegamentiAttiSindacato();
 	}
 
-	public void setCollegamentiAttiSindacato(
-			List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
-		this.atto.setCollegamentiAttiSindacato ( collegamentiAttiSindacato);
+	public void setCollegamentiAttiSindacato(List<CollegamentoAttiSindacato> collegamentiAttiSindacato) {
+		this.atto.setCollegamentiAttiSindacato(collegamentiAttiSindacato);
 	}
 
 	public String getTipoAttoSindacato() {
@@ -411,8 +425,8 @@ public class InserisciEACController {
 	}
 
 	/*
-	 * public Map<String, String> getTipiAttoSindacato() { return
-	 * tipiAttoSindacato; }
+	 * public Map<String, String> getTipiAttoSindacato() { return tipiAttoSindacato;
+	 * }
 	 * 
 	 * 
 	 * public void setTipiAttoSindacato(Map<String, String> tipiAttoSindacato) {
@@ -423,8 +437,8 @@ public class InserisciEACController {
 	 * numeriAttoSindacato; }
 	 * 
 	 * 
-	 * public void setNumeriAttoSindacato(Map<String, String>
-	 * numeriAttoSindacato) { this.numeriAttoSindacato = numeriAttoSindacato; }
+	 * public void setNumeriAttoSindacato(Map<String, String> numeriAttoSindacato) {
+	 * this.numeriAttoSindacato = numeriAttoSindacato; }
 	 */
 
 	public boolean isCurrentFilePubblico() {
@@ -443,8 +457,7 @@ public class InserisciEACController {
 		return numeriAttoSindacato;
 	}
 
-	public void setNumeriAttoSindacato(
-			List<CollegamentoAttiSindacato> numeriAttoSindacato) {
+	public void setNumeriAttoSindacato(List<CollegamentoAttiSindacato> numeriAttoSindacato) {
 		this.numeriAttoSindacato = numeriAttoSindacato;
 	}
 
@@ -472,8 +485,7 @@ public class InserisciEACController {
 		return attoRecordServiceManager;
 	}
 
-	public void setAttoRecordServiceManager(
-			AttoRecordServiceManager attoRecordServiceManager) {
+	public void setAttoRecordServiceManager(AttoRecordServiceManager attoRecordServiceManager) {
 		this.attoRecordServiceManager = attoRecordServiceManager;
 	}
 
@@ -496,8 +508,6 @@ public class InserisciEACController {
 	public String getLegislatura() {
 		return this.atto.getLegislatura();
 	}
-
-
 
 	public void setLegislatura(String legislatura) {
 		this.atto.setLegislatura(legislatura);

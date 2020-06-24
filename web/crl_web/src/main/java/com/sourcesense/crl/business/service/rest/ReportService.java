@@ -34,62 +34,60 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "reportService")
 @Path("/report")
 public class ReportService {
-	
-	
+
 	@Autowired
 	Client client;
 
 	@Autowired
 	ObjectMapper objectMapper;
-	
-	
-	
-	
+
+	/**
+	 * 
+	 * @param url
+	 * @param report
+	 * @return
+	 */
 	public InputStream getFile(String url, Report report) {
 
 		InputStream responseFile = null;
 		try {
-			
-		
-		WebResource webResource = client.resource(url);
 
-		String json = objectMapper.writeValueAsString(report);
-		
-		ClientResponse response = webResource.accept(
-				MediaType.MULTIPART_FORM_DATA).post(ClientResponse.class, json);
+			WebResource webResource = client.resource(url);
 
-		if (response.getStatus() != 200) {
-			throw new ServiceNotAvailableException("Errore - "
-					+ response.getStatus() + ": Alfresco non raggiungibile ");
-		}
+			String json = objectMapper.writeValueAsString(report);
 
-		responseFile = response.getEntity(InputStream.class);
-		
-		
+			ClientResponse response = webResource.accept(MediaType.MULTIPART_FORM_DATA).post(ClientResponse.class,
+					json);
+
+			if (response.getStatus() != 200) {
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
+			}
+
+			responseFile = response.getEntity(InputStream.class);
+
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
-		
+
 		return responseFile;
 
 	}
-	
-	
-	
 
 }

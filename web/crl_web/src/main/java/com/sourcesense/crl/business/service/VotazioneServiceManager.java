@@ -16,7 +16,6 @@
  */
 package com.sourcesense.crl.business.service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -26,47 +25,69 @@ import org.springframework.stereotype.Service;
 import com.sourcesense.crl.business.model.Votazione;
 import com.sourcesense.crl.business.service.rest.VotazioneService;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("votazioneServiceManager")
-public class VotazioneServiceManager implements ServiceManager{
+public class VotazioneServiceManager implements ServiceManager {
 
-	
-	
 	@Autowired
 	VotazioneService votazioneService;
 
 	@Override
-	public Votazione persist(Object object) { 
+	public Votazione persist(Object object) {
+
 		return null;
 	}
 
 	@Override
-	public Votazione merge(Object object) { 
+	public Votazione merge(Object object) {
+
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) { 
+	public boolean remove(Object object) {
+
 		return false;
-	} 
-	public Map<String, String> findAllEsitoVotoAula() { 
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Map<String, String> findAllEsitoVotoAula() {
+
 		return null;
-	} 
-	public Map<String, String> findAllEsitoVotoCommissioneReferente() { 
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Map<String, String> findAllEsitoVotoCommissioneReferente() {
+
 		return null;
 	}
 
 	@Override
-	public Object findById(String id) { 
+	public Object findById(String id) {
+
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() { 
+	public Map<String, String> findAll() {
+
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() { 
+	public List<Object> retrieveAll() {
+
 		return null;
 	}
 

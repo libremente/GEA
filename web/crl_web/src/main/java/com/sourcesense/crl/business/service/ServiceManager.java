@@ -19,14 +19,52 @@ package com.sourcesense.crl.business.service;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public interface ServiceManager {
 
-	
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public Object persist(Object object);
+
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public Object merge(Object object);
+
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public boolean remove(Object object);
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Object> retrieveAll();
-	public Map<String,String> findAll();
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Map<String, String> findAll();
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Object findById(String id);
-	
+
 }

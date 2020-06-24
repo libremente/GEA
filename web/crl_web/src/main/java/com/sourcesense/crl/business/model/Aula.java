@@ -24,35 +24,39 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
-import com.sourcesense.crl.util.JsonNoteDeserializer;
 import com.sourcesense.crl.util.JsonIntegerDeserializer;
+import com.sourcesense.crl.util.JsonNoteDeserializer;
 
-public class Aula implements Cloneable{
-	
-	
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
+public class Aula implements Cloneable {
+
 	public final static String ESITO_VOTO_APPROVATO = "Approvato";
 	public final static String ESITO_VOTO_APPROVATO_NON_PASSAGGIO = "Approvato non passaggio all' esame";
 	public final static String ESITO_VOTO_RESPINTO = "Respinto dall'Aula";
-	
+
 	public final static String TIPO_VOTO_PALESE_ALZATA_MANO = "Palese per alzata di mano";
 	public final static String TIPO_VOTO_PALESE_APPELLO_NOMINALE = "Palese per appello nominale";
 	public final static String TIPO_VOTO_SEGRETA = "Segreta";
-	
+
 	private Date dataPresaInCaricoEsameAula;
 	private String relazioneScritta;
 	private String esitoVotoAula;
 	private String tipologiaVotazione;
-	private Date   dataSedutaAula;
+	private Date dataSedutaAula;
 	private String numeroDcr;
 	private String numeroLcr;
 	private boolean emendato;
 	private String noteVotazione;
-	
+
 	private List<TestoAtto> testiAttoVotatoEsameAula = new ArrayList<TestoAtto>();
 	private List<Allegato> emendamentiEsameAula = new ArrayList<Allegato>();
 	private List<Allegato> allegatiEsameAula = new ArrayList<Allegato>();
-	
-	
+
 	private Integer numEmendPresentatiMaggiorEsameAula;
 	private Integer numEmendPresentatiMinorEsameAula;
 	private Integer numEmendPresentatiGiuntaEsameAula;
@@ -67,28 +71,27 @@ public class Aula implements Cloneable{
 	private Integer respintiEsameAula;
 	private Integer totaleNonApprovatiEsameAula;
 	private String noteEmendamentiEsameAula;
-	
+
 	private Date dataSedutaRinvio;
 	private Date dataTermineMassimo;
 	private String motivazioneRinvio;
-	
+
 	private Date dataSedutaStralcio;
 	private Date dataStralcio;
 	private Date dataIniziativaStralcio;
-	
+
 	private String articoli;
 	private String noteStralcio;
 	private String quorumEsameAula;
-	
+
 	private String numeroReg;
-	
+
 	private List<Link> linksEsameAula = new ArrayList<Link>();
-	
+
 	private String noteGeneraliEsameAula;
-	
+
 	private boolean rinvioCommBilancio;
-	
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -97,9 +100,8 @@ public class Aula implements Cloneable{
 			return null;
 		}
 	}
-	
-	
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaAula() {
 		return dataSedutaAula;
 	}
@@ -107,7 +109,7 @@ public class Aula implements Cloneable{
 	public void setDataSedutaAula(Date dataSedutaAula) {
 		this.dataSedutaAula = dataSedutaAula;
 	}
-	
+
 	public String getRelazioneScritta() {
 		return relazioneScritta;
 	}
@@ -147,7 +149,7 @@ public class Aula implements Cloneable{
 	public void setNumeroLcr(String numeroLcr) {
 		this.numeroLcr = numeroLcr;
 	}
-	
+
 	public boolean isEmendato() {
 		return emendato;
 	}
@@ -160,7 +162,7 @@ public class Aula implements Cloneable{
 		return noteVotazione;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNoteVotazione(String noteVotazione) {
 		this.noteVotazione = noteVotazione;
 	}
@@ -184,21 +186,18 @@ public class Aula implements Cloneable{
 	public Integer getNumEmendPresentatiMaggiorEsameAula() {
 		return numEmendPresentatiMaggiorEsameAula;
 	}
-	
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendPresentatiMaggiorEsameAula(
-			Integer numEmendPresentatiMaggiorEsameAula) {
+
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendPresentatiMaggiorEsameAula(Integer numEmendPresentatiMaggiorEsameAula) {
 		this.numEmendPresentatiMaggiorEsameAula = numEmendPresentatiMaggiorEsameAula;
 	}
-	
-	
+
 	public Integer getNumEmendPresentatiMinorEsameAula() {
 		return numEmendPresentatiMinorEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendPresentatiMinorEsameAula(
-			Integer numEmendPresentatiMinorEsameAula) {
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendPresentatiMinorEsameAula(Integer numEmendPresentatiMinorEsameAula) {
 		this.numEmendPresentatiMinorEsameAula = numEmendPresentatiMinorEsameAula;
 	}
 
@@ -206,9 +205,8 @@ public class Aula implements Cloneable{
 		return numEmendPresentatiGiuntaEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendPresentatiGiuntaEsameAula(
-			Integer numEmendPresentatiGiuntaEsameAula) {
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendPresentatiGiuntaEsameAula(Integer numEmendPresentatiGiuntaEsameAula) {
 		this.numEmendPresentatiGiuntaEsameAula = numEmendPresentatiGiuntaEsameAula;
 	}
 
@@ -216,19 +214,17 @@ public class Aula implements Cloneable{
 		return numEmendPresentatiMistoEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendPresentatiMistoEsameAula(
-			Integer numEmendPresentatiMistoEsameAula) {
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendPresentatiMistoEsameAula(Integer numEmendPresentatiMistoEsameAula) {
 		this.numEmendPresentatiMistoEsameAula = numEmendPresentatiMistoEsameAula;
 	}
 
 	public Integer getNumEmendApprovatiMaggiorEsameAula() {
 		return numEmendApprovatiMaggiorEsameAula;
 	}
-	
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendApprovatiMaggiorEsameAula(
-			Integer numEmendApprovatiMaggiorEsameAula) {
+
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendApprovatiMaggiorEsameAula(Integer numEmendApprovatiMaggiorEsameAula) {
 		this.numEmendApprovatiMaggiorEsameAula = numEmendApprovatiMaggiorEsameAula;
 	}
 
@@ -236,9 +232,8 @@ public class Aula implements Cloneable{
 		return numEmendApprovatiMinorEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendApprovatiMinorEsameAula(
-			Integer numEmendApprovatiMinorEsameAula) {
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendApprovatiMinorEsameAula(Integer numEmendApprovatiMinorEsameAula) {
 		this.numEmendApprovatiMinorEsameAula = numEmendApprovatiMinorEsameAula;
 	}
 
@@ -246,9 +241,8 @@ public class Aula implements Cloneable{
 		return numEmendApprovatiGiuntaEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendApprovatiGiuntaEsameAula(
-			Integer numEmendApprovatiGiuntaEsameAula) {
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendApprovatiGiuntaEsameAula(Integer numEmendApprovatiGiuntaEsameAula) {
 		this.numEmendApprovatiGiuntaEsameAula = numEmendApprovatiGiuntaEsameAula;
 	}
 
@@ -256,9 +250,8 @@ public class Aula implements Cloneable{
 		return numEmendApprovatiMistoEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
-	public void setNumEmendApprovatiMistoEsameAula(
-			Integer numEmendApprovatiMistoEsameAula) {
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
+	public void setNumEmendApprovatiMistoEsameAula(Integer numEmendApprovatiMistoEsameAula) {
 		this.numEmendApprovatiMistoEsameAula = numEmendApprovatiMistoEsameAula;
 	}
 
@@ -266,7 +259,7 @@ public class Aula implements Cloneable{
 		return nonAmmissibiliEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
 	public void setNonAmmissibiliEsameAula(Integer nonAmmissibiliEsameAula) {
 		this.nonAmmissibiliEsameAula = nonAmmissibiliEsameAula;
 	}
@@ -275,7 +268,7 @@ public class Aula implements Cloneable{
 		return decadutiEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
 	public void setDecadutiEsameAula(Integer decadutiEsameAula) {
 		this.decadutiEsameAula = decadutiEsameAula;
 	}
@@ -284,7 +277,7 @@ public class Aula implements Cloneable{
 		return ritiratiEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
 	public void setRitiratiEsameAula(Integer ritiratiEsameAula) {
 		this.ritiratiEsameAula = ritiratiEsameAula;
 	}
@@ -293,7 +286,7 @@ public class Aula implements Cloneable{
 		return respintiEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
 	public void setRespintiEsameAula(Integer respintiEsameAula) {
 		this.respintiEsameAula = respintiEsameAula;
 	}
@@ -301,8 +294,8 @@ public class Aula implements Cloneable{
 	public Integer getTotaleNonApprovatiEsameAula() {
 		return totaleNonApprovatiEsameAula;
 	}
-	
-	@JsonDeserialize(using=JsonIntegerDeserializer.class)
+
+	@JsonDeserialize(using = JsonIntegerDeserializer.class)
 	public void setTotaleNonApprovatiEsameAula(Integer totaleNonApprovatiEsameAula) {
 		this.totaleNonApprovatiEsameAula = totaleNonApprovatiEsameAula;
 	}
@@ -311,12 +304,12 @@ public class Aula implements Cloneable{
 		return noteEmendamentiEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNoteEmendamentiEsameAula(String noteEmendamentiEsameAula) {
 		this.noteEmendamentiEsameAula = noteEmendamentiEsameAula;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaRinvio() {
 		return dataSedutaRinvio;
 	}
@@ -325,7 +318,7 @@ public class Aula implements Cloneable{
 		this.dataSedutaRinvio = dataSedutaRinvio;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataTermineMassimo() {
 		return dataTermineMassimo;
 	}
@@ -333,8 +326,8 @@ public class Aula implements Cloneable{
 	public void setDataTermineMassimo(Date dataTermineMassimo) {
 		this.dataTermineMassimo = dataTermineMassimo;
 	}
-	
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSedutaStralcio() {
 		return dataSedutaStralcio;
 	}
@@ -343,7 +336,7 @@ public class Aula implements Cloneable{
 		this.dataSedutaStralcio = dataSedutaStralcio;
 	}
 
-	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataStralcio() {
 		return dataStralcio;
 	}
@@ -351,8 +344,6 @@ public class Aula implements Cloneable{
 	public void setDataStralcio(Date dataStralcio) {
 		this.dataStralcio = dataStralcio;
 	}
-
-	
 
 	public String getArticoli() {
 		return articoli;
@@ -365,8 +356,8 @@ public class Aula implements Cloneable{
 	public String getNoteStralcio() {
 		return noteStralcio;
 	}
-	
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNoteStralcio(String noteStralcio) {
 		this.noteStralcio = noteStralcio;
 	}
@@ -378,7 +369,7 @@ public class Aula implements Cloneable{
 	public void setQuorumEsameAula(String quorumEsameAula) {
 		this.quorumEsameAula = quorumEsameAula;
 	}
-	
+
 	public List<Allegato> getAllegatiEsameAula() {
 		return allegatiEsameAula;
 	}
@@ -402,8 +393,8 @@ public class Aula implements Cloneable{
 	public void setMotivazioneRinvio(String motivazioneRinvio) {
 		this.motivazioneRinvio = motivazioneRinvio;
 	}
-	
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataPresaInCaricoEsameAula() {
 		return dataPresaInCaricoEsameAula;
 	}
@@ -412,47 +403,37 @@ public class Aula implements Cloneable{
 		this.dataPresaInCaricoEsameAula = dataPresaInCaricoEsameAula;
 	}
 
-
 	public Date getDataIniziativaStralcio() {
 		return dataIniziativaStralcio;
 	}
 
-
 	public void setDataIniziativaStralcio(Date dataIniziativaStralcio) {
 		this.dataIniziativaStralcio = dataIniziativaStralcio;
 	}
-    
+
 	public String getNoteGeneraliEsameAula() {
 		return noteGeneraliEsameAula;
 	}
 
-	@JsonDeserialize(using=JsonNoteDeserializer.class)
+	@JsonDeserialize(using = JsonNoteDeserializer.class)
 	public void setNoteGeneraliEsameAula(String noteGeneraliEsameAula) {
 		this.noteGeneraliEsameAula = noteGeneraliEsameAula;
 	}
-
 
 	public String getNumeroReg() {
 		return numeroReg;
 	}
 
-
 	public void setNumeroReg(String numeroReg) {
 		this.numeroReg = numeroReg;
 	}
-
 
 	public boolean isRinvioCommBilancio() {
 		return rinvioCommBilancio;
 	}
 
-
 	public void setRinvioCommBilancio(boolean rinvioCommBilancio) {
 		this.rinvioCommBilancio = rinvioCommBilancio;
 	}
-
-	
-    
-
 
 }

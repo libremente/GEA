@@ -27,11 +27,17 @@ import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("abbinamento")
 @JsonTypeName("abbinamento")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Abbinamento implements Cloneable{
+public class Abbinamento implements Cloneable {
 	private String idAtto;
 	private String idAttoAbbinato;
 	private String tipoTesto;
@@ -39,14 +45,15 @@ public class Abbinamento implements Cloneable{
 	private Date dataDisabbinamento;
 	private String note;
 	private boolean abbinato;
-	
+
 	private String tipoAttoAbbinato;
-	private String numeroAttoAbbinato; 
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
-	
+	private String numeroAttoAbbinato;
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -55,44 +62,45 @@ public class Abbinamento implements Cloneable{
 			return null;
 		}
 	}
-	
-	/*public Atto getAtto() {
-		return atto;
-	}
-	public void setAtto(Atto atto) {
-		this.atto = atto;
-	}*/
-	
-	
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataAbbinamento() {
 		return dataAbbinamento;
 	}
+
 	public void setDataAbbinamento(Date dataAbbinamento) {
 		this.dataAbbinamento = dataAbbinamento;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataDisabbinamento() {
 		return dataDisabbinamento;
 	}
+
 	public void setDataDisabbinamento(Date dataDisabbinamento) {
 		this.dataDisabbinamento = dataDisabbinamento;
 	}
+
 	public String getTipoTesto() {
 		return tipoTesto;
 	}
+
 	public void setTipoTesto(String tipoTesto) {
 		this.tipoTesto = tipoTesto;
 	}
+
 	public String getNote() {
 		return note;
 	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
+
 	public boolean isAbbinato() {
 		return abbinato;
 	}
+
 	public void setAbbinato(boolean abbinato) {
 		this.abbinato = abbinato;
 	}
@@ -128,10 +136,5 @@ public class Abbinamento implements Cloneable{
 	public void setNumeroAttoAbbinato(String numeroAttoAbbinato) {
 		this.numeroAttoAbbinato = numeroAttoAbbinato;
 	}
-
-	
-	
-	
-	
 
 }

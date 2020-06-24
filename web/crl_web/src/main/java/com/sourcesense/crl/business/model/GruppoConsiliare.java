@@ -22,14 +22,19 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("gruppoConsiliare")
 @JsonTypeName("gruppoConsiliare")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class GruppoConsiliare {
-	
-	
-	private String descrizione ;
+
+	private String descrizione;
 
 	public String getDescrizione() {
 		return descrizione;
@@ -38,12 +43,10 @@ public class GruppoConsiliare {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 }

@@ -29,35 +29,41 @@ import org.pojomatic.annotations.AutoProperty;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("commissioneReferente")
 @JsonTypeName("commissioneReferente")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class CommissioneReferente extends Commissione {
-	
+
 	private Date dataNomina;
-	private List <Personale> membriComitatoRistretto = new ArrayList<Personale>();
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
-	
-	@JsonSerialize(using=JsonDateSerializer.class)
+	private List<Personale> membriComitatoRistretto = new ArrayList<Personale>();
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataNomina() {
 		return dataNomina;
 	}
-	
+
 	public void setDataNomina(Date dataNomina) {
 		this.dataNomina = dataNomina;
 	}
-	
-	public List <Personale> getMembriComitatoRistretto() {
+
+	public List<Personale> getMembriComitatoRistretto() {
 		return this.membriComitatoRistretto;
 	}
+
 	public void setMembriComitatoRistretto(List<Personale> membriComitatoRistretto) {
 		this.membriComitatoRistretto = membriComitatoRistretto;
 	}
-	
-	
 
 }

@@ -24,19 +24,24 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("componente")
 @JsonTypeName("componente")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Componente  implements Cloneable {
+public class Componente implements Cloneable {
 	private String nome;
 	private Date dataNomina;
 	private Date dataUscita;
 	private boolean coordinatore;
 	private String descrizione;
 	private String cognomeNome;
-	
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -45,32 +50,40 @@ public class Componente  implements Cloneable {
 			return null;
 		}
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public Date getDataNomina() {
 		return dataNomina;
 	}
+
 	public void setDataNomina(Date dataNomina) {
 		this.dataNomina = dataNomina;
 	}
+
 	public Date getDataUscita() {
 		return dataUscita;
 	}
+
 	public void setDataUscita(Date dataUscita) {
 		this.dataUscita = dataUscita;
 	}
+
 	public boolean isCoordinatore() {
 		return coordinatore;
 	}
+
 	public void setCoordinatore(boolean coordinatore) {
 		this.coordinatore = coordinatore;
 	}
@@ -90,9 +103,5 @@ public class Componente  implements Cloneable {
 	public void setCognomeNome(String cognomeNome) {
 		this.cognomeNome = cognomeNome;
 	}
-	
-	
-	
-	
 
 }

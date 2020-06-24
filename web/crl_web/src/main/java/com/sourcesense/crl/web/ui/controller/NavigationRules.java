@@ -28,6 +28,12 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.AttoSearchBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "navigationBean")
 @RequestScoped
 public class NavigationRules {
@@ -40,6 +46,9 @@ public class NavigationRules {
 	AttoSearchBean attoSearchBean;
 	UserBean userBean;
 
+	/**
+	 * 
+	 */
 	@PostConstruct
 	protected void init() {
 
@@ -59,13 +68,20 @@ public class NavigationRules {
 
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isAmministrazioneEnabled() {
 
 		return (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
 				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName()));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isInsertMISEnabled() {
 
 		return (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
@@ -73,6 +89,10 @@ public class NavigationRules {
 				|| GruppoUtente.AULA.equals(userBean.getUserGroupName()));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isInsertEACEnabled() {
 
 		return (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
@@ -80,6 +100,10 @@ public class NavigationRules {
 				|| GruppoUtente.AULA.equals(userBean.getUserGroupName()));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isInsertEnabled() {
 
 		return (GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName())
@@ -87,6 +111,10 @@ public class NavigationRules {
 				|| GruppoUtente.AULA.equals(userBean.getUserGroupName()));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSottoStatoCommissioneConsultiva() {
 
 		Commissione comm = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -100,6 +128,10 @@ public class NavigationRules {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean hasDataRichiestaIscrizioneAula() {
 		Commissione comm = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
 
@@ -107,12 +139,20 @@ public class NavigationRules {
 				|| comm.getRuolo().equals(Commissione.RUOLO_DELIBERANTE));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isEACDisabled() {
 
 		return !("ServizioCommissioni".equals(userBean.getUserGroupName())
 				|| GruppoUtente.ADMIN.equals(userBean.getUserGroupName()));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isEACDisabledComm() {
 
 		return !("ServizioCommissioni".equals(userBean.getUserGroupName())
@@ -120,6 +160,10 @@ public class NavigationRules {
 				|| userBean.getUser().getSessionGroup().isCommissione());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isMISDisabled() {
 
 		return !(GruppoUtente.CPCV.equals(userBean.getUserGroupName())
@@ -127,17 +171,30 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCPCVUser() {
 
 		return (GruppoUtente.CPCV.equals(userBean.getUserGroupName()));
 
 	}
 
-
-	public boolean isInviaDirettamenteAula(){
-		return StatoAtto.PRESO_CARICO_SC.equals(attoBean.getStato())&&(GruppoUtente.ADMIN.equals(userBean.getUserGroupName())||GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName()));
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isInviaDirettamenteAula() {
+		return StatoAtto.PRESO_CARICO_SC.equals(attoBean.getStato())
+				&& (GruppoUtente.ADMIN.equals(userBean.getUserGroupName())
+						|| GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName()));
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean presaCaricoAulaDisabled() {
 
 		if (attoBean.getStato().equals(StatoAtto.TRASMESSO_AULA)
@@ -153,6 +210,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean presentazioneAssegnazioneDisabled() {
 		boolean disabled;
 
@@ -167,6 +228,10 @@ public class NavigationRules {
 		return disabled;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean esameCommissioniDisabled() {
 
 		boolean disabled;
@@ -183,16 +248,28 @@ public class NavigationRules {
 		return disabled;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean consultazioniEPareriDisabled() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
 
 		return commissione == null || isSessionAttoPDA_UDP() || isSessionAttoORG();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean collegamentiDisabled() {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isFirmatariEnabled() {
 
 		if (attoBean.getTipoAtto().equals("PAR") || attoBean.getTipoAtto().equals("INP")
@@ -206,10 +283,14 @@ public class NavigationRules {
 
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isFirmatariPopolariEnabled() {
 
-		if (("PDL".equals(attoBean.getTipoAtto()) || "PLP".equals(attoBean.getTipoAtto())) && "03_ATTO DI INIZIATIVA POPOLARE".equals(attoBean.getTipoIniziativa()))
+		if (("PDL".equals(attoBean.getTipoAtto()) || "PLP".equals(attoBean.getTipoAtto()))
+				&& "03_ATTO DI INIZIATIVA POPOLARE".equals(attoBean.getTipoIniziativa()))
 
 		{
 			return true;
@@ -219,6 +300,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean organismiEnabled() {
 
 		if (attoBean.getTipoAtto().equals("PDA") || attoBean.getTipoAtto().equals("PLP")
@@ -234,6 +319,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean emendamentiClausoleEnabled() {
 
 		if (attoBean.getTipoAtto().equals("PDA") || attoBean.getTipoAtto().equals("PLP")
@@ -249,6 +338,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isClausoleEnabled() {
 
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -265,6 +358,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean abbinamentiEnabled() {
 
 		if (attoBean.getTipoAtto().equals("PDL") || attoBean.getTipoAtto().equals("PLP"))
@@ -277,6 +374,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean esameAulaDisabled() {
 
 		if ((GruppoUtente.AULA.equals(userBean.getUserGroupName())
@@ -294,6 +395,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean boxAulaVisible() {
 
 		if (attoBean.getTipoAtto().equals("PAR") || attoBean.getTipoAtto().equals("REL")
@@ -306,6 +411,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean emendamentiEnabled() {
 		if (isSessionAttoPDL() || isSessionAttoORG() || attoBean.getTipoAtto().equals("PDA")
 				|| attoBean.getTipoAtto().equals("PLP") || attoBean.getTipoAtto().equals("PRE")
@@ -319,14 +428,26 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean datiAttoEnabled() {
 		return isSessionAttoPDA_UDP() || isSessionAttoORG();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean rinvioEStralciEnabled() {
 		return (!isSessionAttoDOC() && !isSessionAttoPDA_UDP() && !isSessionAttoORG());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean stralciAulaEnabled() {
 
 		if (attoBean.getTipoAtto().equals("PDA") || attoBean.getTipoAtto().equals("PLP")
@@ -340,6 +461,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean pubblicazioneBurlEnabled() {
 
 		if (attoBean.getTipoAtto().equals("INP") || attoBean.getTipoAtto().equals("PAR")
@@ -353,6 +478,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean testoAttoVotatoEnabled() {
 
 		if (attoBean.getTipoAtto().equals("REL") || attoBean.getTipoAtto().equals("INP")
@@ -365,6 +494,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isBURLEnabled() {
 
 		if (attoBean.getTipoAtto().equals("REL") || attoBean.getTipoAtto().equals("INP")
@@ -383,12 +516,20 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean chiusuraIterDisabled() {
 
 		return false;
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoEsitoCommissioneApprovato() {
 		boolean risultato = false;
 		if (attoBean.getTipoAtto().equalsIgnoreCase("PDL") || attoBean.getTipoAtto().equalsIgnoreCase("PAR")
@@ -403,6 +544,10 @@ public class NavigationRules {
 		return risultato;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoEsitoCommissioneArchiviazioneINP() {
 		boolean risultato = false;
 		if (attoBean.getTipoAtto().equalsIgnoreCase("INP") || (attoBean.getTipoAtto().equalsIgnoreCase("DOC")
@@ -414,6 +559,10 @@ public class NavigationRules {
 		return risultato;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoEsitoCommissioneApprovatoREL() {
 		boolean risultato = false;
 		if (attoBean.getTipoAtto().equalsIgnoreCase("REL")) {
@@ -424,41 +573,77 @@ public class NavigationRules {
 		return risultato;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoChiuso() {
 
 		return StatoAtto.CHIUSO.equals(attoBean.getStato());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoPARChiuso() {
 
 		boolean isCommissione = userBean.getUser().getSessionGroup().isCommissione();
 		return !(isSessionAttoPAR() && isCommissione) && isSessionAttoChiuso();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoPAR() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PAR");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoPDL() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDL");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoINP() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("INP");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoDOC() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("DOC");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoPRE() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PRE");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isNotSessionAttoDOCAula() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("DOC") && !attoBean.getAtto().isIterAula();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean canTransmitToAula() {
 
 		/*
@@ -476,10 +661,18 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoPDA() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDA");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoPDA_UDP() {
 		boolean res = attoBean.getTipoAtto().equalsIgnoreCase("PDA")
 				&& ("05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA".equalsIgnoreCase(attoBean.getTipoIniziativa()));
@@ -487,31 +680,55 @@ public class NavigationRules {
 		return res;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoORG() {
 
 		return attoBean.getTipoAtto().equalsIgnoreCase("ORG");
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isSessionAttoPLP() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PLP");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isGestioneSeduteEnabled() {
 
 		return userBean.getUser().getSessionGroup().isCommissione()
 				|| GruppoUtente.AULA.equals(userBean.getUser().getSessionGroup().getNome());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean gestioneSeduteConsultazioniCommissione() {
 
 		return userBean.getUser().getSessionGroup().isCommissione();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean gestioneSeduteConsultazioniAula() {
 		return GruppoUtente.AULA.equals(userBean.getUser().getSessionGroup().getNome());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCommissioneUpdateEnabled() {
 
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -527,6 +744,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCommissioneReferente() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
 
@@ -537,6 +758,10 @@ public class NavigationRules {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCommissioneConsultiva() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
 
@@ -547,6 +772,10 @@ public class NavigationRules {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCommissioneDeliberante() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
 
@@ -557,12 +786,20 @@ public class NavigationRules {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean hasCommissioneDeliberante() {
 
 		return attoBean.getCommissioneDeliberante() != null;
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCalendarizzazioneTipo() {
 
 		if (attoBean.getTipoAtto().equalsIgnoreCase("PDL") || attoBean.getTipoAtto().equalsIgnoreCase("PDA")
@@ -578,6 +815,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isRisEnabled() {
 
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -598,6 +839,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isRisTipo() {
 
 		if (attoBean.getTipoAtto().equalsIgnoreCase("INP") || attoBean.getTipoAtto().equalsIgnoreCase("DOC")
@@ -609,6 +854,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isCalendarizzazioneEnabled() {
 
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -632,6 +881,10 @@ public class NavigationRules {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isContinuazioneLavoriReferente() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
 
@@ -645,12 +898,20 @@ public class NavigationRules {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isServizioCommissioni() {
 
 		return GruppoUtente.SERVIZIO_COMMISSIONI.equals(userBean.getUserGroupName());
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isGuest() {
 
 		if (userBean.getUser().getSessionGroup().getNome().equals(GruppoUtente.GUEST)) {

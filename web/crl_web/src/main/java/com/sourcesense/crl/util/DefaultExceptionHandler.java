@@ -30,15 +30,21 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.servlet.http.HttpSession;
 
-
-import com.sourcesense.crl.business.security.SessionPhaseListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sourcesense.crl.business.security.SessionPhaseListener;
+
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 
 	private static final String errorpage = "/exception.xhtml";
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
 	/** key for session scoped message detail */
@@ -54,10 +60,10 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	@Override
-	public Throwable getRootCause(Throwable t) { 
+	public Throwable getRootCause(Throwable t) {
 		return super.getRootCause(t);
 	}
-	
+
 	@Override
 	public ExceptionHandler getWrapped() {
 
@@ -85,44 +91,38 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 
 				if (t instanceof AbortProcessingException) {
 
-					LOG.error("An unexpected exception has occurred by event listener(s)",t);
+					LOG.error("An unexpected exception has occurred by event listener(s)", t);
 					redirectPage = errorpage;
-					fc.getExternalContext().getSessionMap().put(DefaultExceptionHandler.MESSAGE_DETAIL_KEY,t.getLocalizedMessage());
+					fc.getExternalContext().getSessionMap().put(DefaultExceptionHandler.MESSAGE_DETAIL_KEY,
+							t.getLocalizedMessage());
 
 				} else if (t instanceof ViewExpiredException) {
 
 					if (LOG.isDebugEnabled()) {
 
-						LOG.debug("View '"+ ((ViewExpiredException) t).getViewId() + "' is expired",t);
+						LOG.debug("View '" + ((ViewExpiredException) t).getViewId() + "' is expired", t);
 
 					}
-					
-					HttpSession session = (HttpSession) fc.getExternalContext()
-							.getSession(false);
+
+					HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 
 					if (session != null) {
 						session.invalidate();
 					}
 
+				} else if (t.getCause().getCause().getCause() instanceof ServiceNotAvailableException) {
 
-				} else if (t.getCause().getCause().getCause() instanceof ServiceNotAvailableException) {   
+					String errorMsg = ((ServiceNotAvailableException) t.getCause().getCause().getCause())
+							.getServiceName();
 
-					String errorMsg =   ((ServiceNotAvailableException) t.getCause().getCause().getCause()).getServiceName();
-					
-					LOG.error( errorMsg, t.getCause().getCause().getCause());
-					redirectPage = errorpage+"?error="+errorMsg;
-					
-				} else if (t.getCause().getCause().getCause() instanceof ServiceAuthenticationException){	
-					
+					LOG.error(errorMsg, t.getCause().getCause().getCause());
+					redirectPage = errorpage + "?error=" + errorMsg;
+
+				} else if (t.getCause().getCause().getCause() instanceof ServiceAuthenticationException) {
+
 					FacesContext jsfcontext = FacesContext.getCurrentInstance();
-					jsfcontext.addMessage(
-							null,
-							new FacesMessage(
-									FacesMessage.SEVERITY_ERROR,
-									"Attenzione ! Utente e password errati ",
-									""));
-					
-					
+					jsfcontext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Attenzione ! Utente e password errati ", ""));
 
 				} else {
 
@@ -130,7 +130,8 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 
 					redirectPage = errorpage + messageKey;
 
-					fc.getExternalContext().getSessionMap().put(DefaultExceptionHandler.MESSAGE_DETAIL_KEY,t.getLocalizedMessage());
+					fc.getExternalContext().getSessionMap().put(DefaultExceptionHandler.MESSAGE_DETAIL_KEY,
+							t.getLocalizedMessage());
 
 				}
 
@@ -143,8 +144,13 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 		}
 	}
 
-	protected String handleUnexpected(FacesContext facesContext,
-			final Throwable t) {
+	/**
+	 * 
+	 * @param facesContext
+	 * @param t
+	 * @return
+	 */
+	protected String handleUnexpected(FacesContext facesContext, final Throwable t) {
 
 		LOG.error("An unexpected internal error has occurred", t);
 

@@ -26,9 +26,14 @@ import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component
-public class JsonDateSerializer extends JsonSerializer<Date>{
+public class JsonDateSerializer extends JsonSerializer<Date> {
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -36,13 +41,11 @@ public class JsonDateSerializer extends JsonSerializer<Date>{
 	public void serialize(Date date, JsonGenerator gen, SerializerProvider provider)
 			throws IOException, JsonProcessingException {
 
-		if(date!=null) {
+		if (date != null) {
 			String formattedDate = dateFormat.format(date);
-			
 
 			gen.writeString(formattedDate);
-		}
-		else {
+		} else {
 			gen.writeString("");
 		}
 	}

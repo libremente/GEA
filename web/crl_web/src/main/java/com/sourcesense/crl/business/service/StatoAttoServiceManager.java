@@ -16,7 +16,6 @@
  */
 package com.sourcesense.crl.business.service;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,39 +23,49 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.StatoAtto;
 import com.sourcesense.crl.business.service.rest.StatoAttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("statoAttoServiceManager")
-public class StatoAttoServiceManager implements ServiceManager{
-	
+public class StatoAttoServiceManager implements ServiceManager {
+
 	@Autowired
-	private  URLBuilder urlBuilder;	
+	private URLBuilder urlBuilder;
 
 	@Autowired
 	private StatoAttoService statoAttoService;
 
 	@Override
-	public StatoAtto persist(Object object) { 
+	public StatoAtto persist(Object object) {
+
 		return null;
 	}
 
 	@Override
-	public StatoAtto merge(Object object) { 
+	public StatoAtto merge(Object object) {
+
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) { 
+	public boolean remove(Object object) {
+
 		return false;
 	}
 
-	
+	/**
+	 * 
+	 */
 	public Map<String, String> findAll() {
 		Map<String, String> stati = new HashMap<String, String>();
-        
+
 		stati.put(StatoAtto.PROTOCOLLATO, StatoAtto.PROTOCOLLATO);
 		stati.put(StatoAtto.PRESO_CARICO_SC, StatoAtto.PRESO_CARICO_SC);
 		stati.put(StatoAtto.VERIFICATA_AMMISSIBILITA, StatoAtto.VERIFICATA_AMMISSIBILITA);
@@ -72,19 +81,20 @@ public class StatoAttoServiceManager implements ServiceManager{
 		stati.put(StatoAtto.VOTATO_AULA, StatoAtto.VOTATO_AULA);
 		stati.put(StatoAtto.PUBBLICATO, StatoAtto.PUBBLICATO);
 		stati.put(StatoAtto.CHIUSO, StatoAtto.CHIUSO);
-		
+
 		return stati;
 	}
 
 	@Override
-	public Object findById(String id) { 
+	public Object findById(String id) {
+
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() { 
+	public List<Object> retrieveAll() {
+
 		return null;
 	}
-	
 
 }

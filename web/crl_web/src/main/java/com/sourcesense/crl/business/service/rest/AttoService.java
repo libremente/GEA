@@ -50,6 +50,12 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Component(value = "attoService")
 @Path("/atti")
 public class AttoService {
@@ -60,327 +66,335 @@ public class AttoService {
 	@Autowired
 	ObjectMapper objectMapper;
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public Atto create(String url, Atto atto) {
 
 		Atto attoRet = null;
 
 		WebResource webResource = client.resource(url);
-		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-				false);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 		try {
 			String json = objectMapper.writeValueAsString(atto);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
 
 			if (response.getStatus() == 500) {
 
-				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
+				atto.setError("Attenzione : l'atto " + atto.getNumeroAtto() + " è già presente");
 
 			} else if (response.getStatus() != 200) {
 
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 
-			}else{
+			} else {
 
-			String responseMsg = response.getEntity(String.class);
-			attoRet = objectMapper.readValue(responseMsg, Atto.class);
-			atto.setId(attoRet.getId());
-			atto.setNumeroAtto(attoRet.getNumeroAtto());
-			atto.setPubblico(attoRet.isPubblico());
+				String responseMsg = response.getEntity(String.class);
+				attoRet = objectMapper.readValue(responseMsg, Atto.class);
+				atto.setId(attoRet.getId());
+				atto.setNumeroAtto(attoRet.getNumeroAtto());
+				atto.setPubblico(attoRet.isPubblico());
 			}
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return atto;
 	}
-	
+
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public AttoMIS createMIS(String url, AttoMIS atto) {
 
 		AttoMIS attoRet = null;
 
 		WebResource webResource = client.resource(url);
-		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-				false);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 		try {
 			String json = objectMapper.writeValueAsString(atto);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
 
-			if (response.getStatus() == 500) { 
-				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
+			if (response.getStatus() == 500) {
+				atto.setError("Attenzione : l'atto " + atto.getNumeroAtto() + " è già presente");
 
 			} else if (response.getStatus() != 200) {
 
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 
-			}else{
+			} else {
 
-			String responseMsg = response.getEntity(String.class);
-			atto.setError(null);
-			attoRet = objectMapper.readValue(responseMsg, AttoMIS.class);
-			atto.setId(attoRet.getId());
+				String responseMsg = response.getEntity(String.class);
+				atto.setError(null);
+				attoRet = objectMapper.readValue(responseMsg, AttoMIS.class);
+				atto.setId(attoRet.getId());
 			}
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return atto;
 	}
 
-
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public Atto updateAtto(String url, Atto atto) {
 
 		Atto attoRet = null;
 
 		WebResource webResource = client.resource(url);
 
-
-		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-				false);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 		try {
 			String json = objectMapper.writeValueAsString(atto);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.put(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, json);
 
-			if (response.getStatus() == 500) { 
-				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
+			if (response.getStatus() == 500) {
+				atto.setError("Attenzione : l'atto " + atto.getNumeroAtto() + " è già presente");
 
 			} else if (response.getStatus() != 200) {
 
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 
-			}else{
+			} else {
 
 				String responseMsg = response.getEntity(String.class);
 				atto.setError(null);
 			}
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return atto;
 	}
 
-
+	/**
+	 * 
+	 * @param url
+	 */
 	public void deleteAtto(String url) {
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource
-				.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-			throw new ServiceNotAvailableException("Errore - "
-					+ response.getStatus() + ": Alfresco non raggiungibile ");
+			throw new ServiceNotAvailableException(
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @return
+	 */
 	public AttoEAC createEAC(String url, AttoEAC atto) {
 
 		AttoEAC attoRet = null;
 
 		WebResource webResource = client.resource(url);
-		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-				false);
+		objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 		try {
 			String json = objectMapper.writeValueAsString(atto);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
 
-			if (response.getStatus() == 500) { 
-				atto.setError("Attenzione : l'atto "+atto.getNumeroAtto()+" è già presente" );
+			if (response.getStatus() == 500) {
+				atto.setError("Attenzione : l'atto " + atto.getNumeroAtto() + " è già presente");
 
 			} else if (response.getStatus() != 200) {
 
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 
-			}
-			else{
-				
-				String responseMsg = response.getEntity(String.class); 
+			} else {
+
+				String responseMsg = response.getEntity(String.class);
 				atto.setError(null);
 				attoRet = objectMapper.readValue(responseMsg, AttoEAC.class);
 				atto.setId(attoRet.getId());
 			}
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return atto;
 	}
 
-	public boolean update(Atto atto) { 
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
+	public boolean update(Atto atto) {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public Atto findById(String url) {
 		Atto atto = null;
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource
-				.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-			throw new ServiceNotAvailableException("Errore - "
-					+ response.getStatus() + ": Alfresco non raggiungibile ");
+			throw new ServiceNotAvailableException(
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 		String responseMsg = response.getEntity(String.class);
-		
+
 		try {
-			
+
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, false);
 			atto = objectMapper.readValue(responseMsg, Atto.class);
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 
 		return atto;
 	}
 
-	
-	
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public AttoEAC findEACById(String url) {
 		AttoEAC atto = null;
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource
-				.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-			throw new ServiceNotAvailableException("Errore - "
-					+ response.getStatus() + ": Alfresco non raggiungibile ");
+			throw new ServiceNotAvailableException(
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 		String responseMsg = response.getEntity(String.class);
-		
-		try { 
+
+		try {
 			atto = objectMapper.readValue(responseMsg, AttoEAC.class);
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 
 		return atto;
 	}
-	
+
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public AttoMIS findMISById(String url) {
 		AttoMIS atto = null;
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource
-				.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-			throw new ServiceNotAvailableException("Errore - "
-					+ response.getStatus() + ": Alfresco non raggiungibile ");
+			throw new ServiceNotAvailableException(
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 		String responseMsg = response.getEntity(String.class);
-		
+
 		try {
-			
+
 			atto = objectMapper.readValue(responseMsg, AttoMIS.class);
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 
 		return atto;
 	}
-	
-	
-	
-	public ArrayList<Atto> findAll() { 
+
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Atto> findAll() {
 		return null;
 	}
 
-	public Allegato uploadAllegato(String url, Atto atto, InputStream stream,
-			Allegato allegato, String tipologia) {
-
-		
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
+	public Allegato uploadAllegato(String url, Atto atto, InputStream stream, Allegato allegato, String tipologia) {
 
 		try {
 
@@ -389,16 +403,13 @@ public class AttoService {
 			part.bodyPart(new StreamDataBodyPart("file", stream, allegato.getNome()));
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
-			part.field("pubblico", ""+allegato.isPubblico());   
-			ClientResponse response = webResource
-					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
-					.header("Accept-Charset", "UTF-8")
-					.post(ClientResponse.class, part);
+			part.field("pubblico", "" + allegato.isPubblico());
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8").post(ClientResponse.class, part);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
@@ -406,25 +417,28 @@ public class AttoService {
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return allegato;
 	}
 
-	
-	public Allegato uploadAllegatoParere(String url, Atto atto, InputStream stream,
-			Allegato allegato, String tipologia) {
-
-		
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
+	public Allegato uploadAllegatoParere(String url, Atto atto, InputStream stream, Allegato allegato,
+			String tipologia) {
 
 		try {
 
@@ -434,42 +448,44 @@ public class AttoService {
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
 			part.field("organismoStatutario", allegato.getOrganismoStatutario());
-			part.field("pubblico", ""+allegato.isPubblico());
-			
-			ClientResponse response = webResource
-					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
-					.header("Accept-Charset", "UTF-8")
-					.post(ClientResponse.class, part);
+			part.field("pubblico", "" + allegato.isPubblico());
+
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8").post(ClientResponse.class, part);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
-			String responseMsg = response.getEntity(String.class); 
+			String responseMsg = response.getEntity(String.class);
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return allegato;
 	}
-	
-	public Allegato uploadAllegatoConsultazioni(String url, Atto atto, InputStream stream,
-			Allegato allegato, String tipologia) {
 
-		
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param allegato
+	 * @param tipologia
+	 * @return
+	 */
+	public Allegato uploadAllegatoConsultazioni(String url, Atto atto, InputStream stream, Allegato allegato,
+			String tipologia) {
+
 		try {
 
 			WebResource webResource = client.resource(url);
@@ -478,72 +494,76 @@ public class AttoService {
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
 			part.field("consultazione", allegato.getConsultazione());
-			part.field("pubblico", ""+allegato.isPubblico());
-			
-			ClientResponse response = webResource
-					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
-					.header("Accept-Charset", "UTF-8")
-					.post(ClientResponse.class, part);
+			part.field("pubblico", "" + allegato.isPubblico());
+
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8").post(ClientResponse.class, part);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
-			String responseMsg = response.getEntity(String.class); 
+			String responseMsg = response.getEntity(String.class);
 			allegato = objectMapper.readValue(responseMsg, Allegato.class);
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return allegato;
 	}
-	
-	
-	public void removeFirmatario(String url){
-		
-		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource
-				.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
-
-		if (response.getStatus() != 200) {
-			throw new ServiceNotAvailableException("Errore - "
-					+ response.getStatus() + ": Alfresco non raggiungibile ");
-		}
-				
-	}
-
-
-	public void removeAtto(String url){
+	/**
+	 * 
+	 * @param url
+	 */
+	public void removeFirmatario(String url) {
 
 		WebResource webResource = client.resource(url);
 
-		ClientResponse response = webResource
-				.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
 
 		if (response.getStatus() != 200) {
-			throw new ServiceNotAvailableException("Errore - "
-					+ response.getStatus() + ": Alfresco non raggiungibile ");
+			throw new ServiceNotAvailableException(
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 		}
 
 	}
 
-	
-	
-	public TestoAtto uploadTestoAtto(String url, Atto atto,
-			InputStream stream, TestoAtto testoAtto, String tipologia) {
+	/**
+	 * 
+	 * @param url
+	 */
+	public void removeAtto(String url) {
+
+		WebResource webResource = client.resource(url);
+
+		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+			throw new ServiceNotAvailableException(
+					"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 * @param stream
+	 * @param testoAtto
+	 * @param tipologia
+	 * @return
+	 */
+	public TestoAtto uploadTestoAtto(String url, Atto atto, InputStream stream, TestoAtto testoAtto, String tipologia) {
 
 		TestoAtto attoRecord = null;
 
@@ -554,17 +574,14 @@ public class AttoService {
 			part.bodyPart(new StreamDataBodyPart("file", stream, testoAtto.getNome()));
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
-			part.field("pubblico", ""+testoAtto.isPubblico());
+			part.field("pubblico", "" + testoAtto.isPubblico());
 
-			ClientResponse response = webResource
-					.type(MediaType.MULTIPART_FORM_DATA_TYPE)
-					.header("Accept-Charset", "UTF-8")
-					.post(ClientResponse.class, part);
+			ClientResponse response = webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE)
+					.header("Accept-Charset", "UTF-8").post(ClientResponse.class, part);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
@@ -572,21 +589,22 @@ public class AttoService {
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return attoRecord;
 	}
 
-	
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public TestoAtto changeAllegato(String url) {
 
 		TestoAtto attoRecord = null;
@@ -594,13 +612,12 @@ public class AttoService {
 		try {
 
 			WebResource webResource = client.resource(url);
-			
+
 			ClientResponse response = webResource.post(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
@@ -608,267 +625,240 @@ public class AttoService {
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return attoRecord;
 	}
-	
-	
-	
-	
-	public List<String> findTipoAttiSindacato (String url){
+
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public List<String> findTipoAttiSindacato(String url) {
 		List<String> listTipi = null;
 
 		try {
 			WebResource webResource = client.resource(url);
-			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-					false);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.get(ClientResponse.class);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			
+
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listTipi = objectMapper.readValue(responseMsg,
-					new TypeReference<List<String>>() {
-					});
+			listTipi = objectMapper.readValue(responseMsg, new TypeReference<List<String>>() {
+			});
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return listTipi;
 
 	}
-	
-	public List<CollegamentoAttiSindacato> findAllAttiSindacato (String url){
+
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String url) {
 		List<CollegamentoAttiSindacato> listAtti = null;
 
 		try {
 			WebResource webResource = client.resource(url);
-			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-					false);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.get(ClientResponse.class);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			
+
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listAtti = objectMapper.readValue(responseMsg,
-					new TypeReference<List<CollegamentoAttiSindacato>>() {
-					});
+			listAtti = objectMapper.readValue(responseMsg, new TypeReference<List<CollegamentoAttiSindacato>>() {
+			});
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return listAtti;
 
 	}
 
-	
-	public List<Collegamento> findCollegamentiAttoById (String url){
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public List<Collegamento> findCollegamentiAttoById(String url) {
 		List<Collegamento> listAtti = null;
 
 		try {
 			WebResource webResource = client.resource(url);
-			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-					false);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.get(ClientResponse.class);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			
+
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listAtti = objectMapper.readValue(responseMsg,
-					new TypeReference<List<Collegamento>>() {
-					});
+			listAtti = objectMapper.readValue(responseMsg, new TypeReference<List<Collegamento>>() {
+			});
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return listAtti;
 
 	}
-	
+
+	/**
+	 * 
+	 * @param atto
+	 * @param url
+	 * @return
+	 */
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti = null;
 
 		try {
 			WebResource webResource = client.resource(url);
-			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-					false);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 			String json = objectMapper.writeValueAsString(atto);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
 
 			String responseMsg = response.getEntity(String.class);
-			
+
 			objectMapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE, true);
-			listAtti = objectMapper.readValue(responseMsg,
-					new TypeReference<List<Atto>>() {
-					});
+			listAtti = objectMapper.readValue(responseMsg, new TypeReference<List<Atto>>() {
+			});
 
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 		return listAtti;
 
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param atto
+	 */
 	public void merge(String url, Atto atto) {
 
 		try {
 			WebResource webResource = client.resource(url);
-			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-					false);
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
 			String json = objectMapper.writeValueAsString(atto);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
-			
+
 			String responseMsg = response.getEntity(String.class);
-			
+
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 
 	}
-	
-	
+
+	/**
+	 * 
+	 * @param url
+	 * @param consultazioneParere
+	 */
 	public void salvaPareri(String url, ConsultazioneParere consultazioneParere) {
 
 		try {
-            WebResource webResource = client.resource(url);
-			
+			WebResource webResource = client.resource(url);
+
 			DateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			objectMapper.getSerializationConfig().setDateFormat(myDateFormat);
-			
-			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE,
-				false);
-			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
-					false);
-			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,
-					false);
-			
+
+			objectMapper.configure(SerializationConfig.Feature.WRAP_ROOT_VALUE, false);
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS, false);
+			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
+
 			String json = objectMapper.writeValueAsString(consultazioneParere);
-			ClientResponse response = webResource.type(
-					MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class, json);
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
 
 			if (response.getStatus() != 200) {
-				throw new ServiceNotAvailableException("Errore - "
-						+ response.getStatus()
-						+ ": Alfresco non raggiungibile ");
+				throw new ServiceNotAvailableException(
+						"Errore - " + response.getStatus() + ": Alfresco non raggiungibile ");
 			}
-			
-			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS,
-					true);
-			
-			
+
+			objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS, true);
+
 		} catch (JsonMappingException e) {
 
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (JsonParseException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 
 		} catch (IOException e) {
-			throw new ServiceNotAvailableException(this.getClass()
-					.getSimpleName(), e);
+			throw new ServiceNotAvailableException(this.getClass().getSimpleName(), e);
 		}
 
 	}

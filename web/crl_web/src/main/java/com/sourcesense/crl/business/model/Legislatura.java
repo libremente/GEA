@@ -24,22 +24,28 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("legislatura")
 @JsonTypeName("legislatura")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class Legislatura {
-	
+
 	private String nome;
 	private boolean corrente;
 	private Date dataInizioLegislatura;
 	private Date dataFineLegislatura;
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -71,12 +77,5 @@ public class Legislatura {
 	public void setDataFineLegislatura(Date dataFineLegislatura) {
 		this.dataFineLegislatura = dataFineLegislatura;
 	}
-
-	
-	
-
-		
-	
-	
 
 }

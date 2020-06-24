@@ -18,29 +18,38 @@ package com.sourcesense.crl.util;
 
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 public class ReflectionUtils {
 
+	/**
+	 * 
+	 * @param target
+	 * @return
+	 */
 	public static Object cloneObject(Object target) {
-		
-		
+
 		Object ritorno = null;
 		Method metodo = null;
-		
+
 		try {
 			metodo = target.getClass().getMethod("clone", null);
-		
-		}catch (NoSuchMethodException exc) { 
-			
+
+		} catch (NoSuchMethodException exc) {
+
 		}
-		
+
 		if (metodo != null)
 			try {
 				ritorno = metodo.invoke(target, new Object[0]);
+			} catch (Exception ecc) {
+
 			}
-		catch (Exception ecc) { 
-			
-		}
-		
+
 		return ritorno;
 	}
 }

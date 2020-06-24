@@ -22,16 +22,23 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("collegamento")
 @JsonTypeName("collegamento")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Collegamento implements Cloneable{ 
+public class Collegamento implements Cloneable {
+
 	private String idAttoCollegato;
 	private String tipoAttoCollegato;
 	private String numeroAttoCollegato;
 	private String note;
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -40,15 +47,16 @@ public class Collegamento implements Cloneable{
 			return null;
 		}
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
-	
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public String getNote() {
 		return note;
 	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
@@ -76,8 +84,5 @@ public class Collegamento implements Cloneable{
 	public void setNumeroAttoCollegato(String numeroAttoCollegato) {
 		this.numeroAttoCollegato = numeroAttoCollegato;
 	}
-	
-	
-	
 
 }

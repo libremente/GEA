@@ -16,7 +16,6 @@
  */
 package com.sourcesense.crl.business.service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,63 +27,83 @@ import org.springframework.stereotype.Service;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.Firmatario;
 import com.sourcesense.crl.business.model.GruppoConsiliare;
-import com.sourcesense.crl.business.model.Legislatura;
 import com.sourcesense.crl.business.model.Personale;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.service.rest.PersonaleService;
 import com.sourcesense.crl.util.URLBuilder;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("personaleServiceManager")
-public class PersonaleServiceManager implements ServiceManager{
+public class PersonaleServiceManager implements ServiceManager {
 
 	@Autowired
-	private  URLBuilder urlBuilder;	
+	private URLBuilder urlBuilder;
 
 	@Autowired
 	private PersonaleService personaleService;
 
 	@Override
-	public Personale persist(Object object) { 
+	public Personale persist(Object object) {
+
 		return null;
 	}
 
 	@Override
-	public Personale merge(Object object) { 
+	public Personale merge(Object object) {
+
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) { 
+	public boolean remove(Object object) {
+
 		return false;
 	}
-	
-	
-	public List<GruppoConsiliare> getGruppiConsiliari(){
 
-		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_gruppi_consiliari",null));
+	/**
+	 * 
+	 * @return
+	 */
+	public List<GruppoConsiliare> getGruppiConsiliari() {
+
+		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_gruppi_consiliari", null));
 		return listGruppiConsiliari;
-		
+
 	}
-	
-	
-	public List<String> findGruppiConsiliari(){
-        List<String> gruppi = new ArrayList<String>();
-		
-		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_gruppi_consiliari",null));
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<String> findGruppiConsiliari() {
+		List<String> gruppi = new ArrayList<String>();
+
+		List<GruppoConsiliare> listGruppiConsiliari = personaleService.getListGruppiConsiliari(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_gruppi_consiliari", null));
 		for (GruppoConsiliare gruppoConsiliare : listGruppiConsiliari) {
-			
-			
+
 			gruppi.add(gruppoConsiliare.getDescrizione());
 		}
-		
+
 		return gruppi;
-		
+
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllFirmatario() {
 		Map<String, String> firmatari = new HashMap<String, String>();
 
-		List<Firmatario> listFirmatari = personaleService.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari",null));
+		List<Firmatario> listFirmatari = personaleService
+				.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari", null));
 
 		for (Firmatario firmatario : listFirmatari) {
 
@@ -93,12 +112,16 @@ public class PersonaleServiceManager implements ServiceManager{
 		}
 		return firmatari;
 	}
-     
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllRelatore() {
 		Map<String, String> relatori = new HashMap<String, String>();
 
-		List<Relatore> listRelatori = personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+		List<Relatore> listRelatori = personaleService
+				.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori", null));
 
 		for (Relatore relatore : listRelatori) {
 
@@ -107,13 +130,16 @@ public class PersonaleServiceManager implements ServiceManager{
 		}
 		return relatori;
 	}
-	
-	
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getAllFirmatario() {
 		List<String> firmatari = new ArrayList<String>();
 
-		List<Firmatario> listFirmatari = personaleService.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari",null));
+		List<Firmatario> listFirmatari = personaleService
+				.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari", null));
 
 		for (Firmatario firmatario : listFirmatari) {
 
@@ -122,12 +148,17 @@ public class PersonaleServiceManager implements ServiceManager{
 		}
 		return firmatari;
 	}
-	
-	
+
+	/**
+	 * 
+	 * @param legislatura
+	 * @return
+	 */
 	public List<String> getAllFirmatariStorici(String legislatura) {
 		List<String> firmatari = new ArrayList<String>();
 
-		List<Firmatario> listFirmatari = personaleService.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_all",new String[]{legislatura}));
+		List<Firmatario> listFirmatari = personaleService.getAllFirmatario(urlBuilder
+				.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_all", new String[] { legislatura }));
 
 		for (Firmatario firmatario : listFirmatari) {
 
@@ -137,11 +168,15 @@ public class PersonaleServiceManager implements ServiceManager{
 		return firmatari;
 	}
 
-	
-	public List<String>  getAllRelatore() {
+	/**
+	 * 
+	 * @return
+	 */
+	public List<String> getAllRelatore() {
 		List<String> relatori = new ArrayList<String>();
 
-		List<Relatore> listRelatori = personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+		List<Relatore> listRelatori = personaleService
+				.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori", null));
 
 		for (Relatore relatore : listRelatori) {
 
@@ -150,14 +185,16 @@ public class PersonaleServiceManager implements ServiceManager{
 		}
 		return relatori;
 	}
-	
-	
-	
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<String, String> findAllMembriComitato() {
 		Map<String, String> relatori = new HashMap<String, String>();
 
-		List<Relatore> listRelatori = personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+		List<Relatore> listRelatori = personaleService
+				.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori", null));
 
 		for (Relatore relatore : listRelatori) {
 
@@ -166,36 +203,59 @@ public class PersonaleServiceManager implements ServiceManager{
 		}
 		return relatori;
 	}
-	
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Relatore> getAllRelatori() {
-		return personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+		return personaleService
+				.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori", null));
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Relatore> getAllMembriComitato() {
-		return personaleService.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori",null));
+		return personaleService
+				.getAllRelatore(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_relatori", null));
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Firmatario> getAllFirmatari() {
-		return personaleService.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari",null));
+		return personaleService
+				.getAllFirmatario(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari", null));
 	}
-	
+
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
 	public List<Firmatario> findFirmatariByAtto(Atto atto) {
-		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_list_firmatari_atto", new String[] { atto.getId() }));
+		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url",
+				"alf_list_firmatari_atto", new String[] { atto.getId() }));
 	}
-	
+
 	@Override
-	public Object findById(String id) { 
+	public Object findById(String id) {
+
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() { 
+	public Map<String, String> findAll() {
+
 		return null;
 	}
 
 	@Override
-	public List<Object> retrieveAll() { 
+	public List<Object> retrieveAll() {
+
 		return null;
 	}
 

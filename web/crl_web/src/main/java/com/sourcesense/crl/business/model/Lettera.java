@@ -24,6 +24,12 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.annotations.AutoProperty;
 import org.springframework.beans.factory.annotation.Configurable;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Configurable()
 @XmlRootElement(name = "lettera")
 @JsonRootName("lettera")
@@ -48,40 +54,34 @@ public class Lettera implements Cloneable {
 	String tipoTemplate;
 	String urlView;
 	String nome;
-	
+
 	String firmatario;
 	String ufficio;
 	String direzione;
 	String numeroTelFirmatario;
 	String emailFirmatario;
-	
-	
+
 	String assessore;
-	
+
 	boolean hasFirmatario;
 	boolean hasUfficio;
 	boolean hasDirezione;
 	boolean hasNumeroTelFirmatario;
 	boolean hasEmailFirmatario;
 	boolean hasAssessore;
-	
 
-	public void setAuthorities(boolean hasFirmatario,
-	boolean hasUfficio,
-	boolean hasDirezione,
-	boolean hasNumeroTelFirmatario,
-	boolean hasEmailFirmatario,
-	boolean hasAssessore){
-		
-		this.hasFirmatario=hasFirmatario;
-		this.hasUfficio=hasUfficio;
-		this.hasDirezione=hasDirezione;
-		this.hasNumeroTelFirmatario=hasNumeroTelFirmatario;
-		this.hasEmailFirmatario=hasEmailFirmatario;
-		this.hasAssessore=hasAssessore;
-		
+	public void setAuthorities(boolean hasFirmatario, boolean hasUfficio, boolean hasDirezione,
+			boolean hasNumeroTelFirmatario, boolean hasEmailFirmatario, boolean hasAssessore) {
+
+		this.hasFirmatario = hasFirmatario;
+		this.hasUfficio = hasUfficio;
+		this.hasDirezione = hasDirezione;
+		this.hasNumeroTelFirmatario = hasNumeroTelFirmatario;
+		this.hasEmailFirmatario = hasEmailFirmatario;
+		this.hasAssessore = hasAssessore;
+
 	}
-	
+
 	public String getIdAtto() {
 		return idAtto;
 	}
@@ -209,11 +209,5 @@ public class Lettera implements Cloneable {
 	public void setHasAssessore(boolean hasAssessore) {
 		this.hasAssessore = hasAssessore;
 	}
-	
-	
-	
-	
-	
-	
 
 }

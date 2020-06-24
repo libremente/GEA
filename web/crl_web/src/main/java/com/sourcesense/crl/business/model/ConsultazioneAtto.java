@@ -22,16 +22,22 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("consultazioneAtto")
 @JsonTypeName("consultazioneAtto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class ConsultazioneAtto implements Cloneable{
+public class ConsultazioneAtto implements Cloneable {
 	private Atto atto;
 	private boolean previsto;
 	private boolean discusso;
 	private String soggettoConsultato;
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -40,10 +46,11 @@ public class ConsultazioneAtto implements Cloneable{
 			return null;
 		}
 	}
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
 
 	public Atto getAtto() {
 		return atto;
@@ -76,7 +83,5 @@ public class ConsultazioneAtto implements Cloneable{
 	public void setSoggettoConsultato(String soggettoConsultato) {
 		this.soggettoConsultato = soggettoConsultato;
 	}
-	
-	
 
 }

@@ -22,17 +22,23 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("collegamentoLeggiRegionali")
 @JsonTypeName("collegamentoLeggiRegionali")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class CollegamentoLeggiRegionali implements Cloneable{
+public class CollegamentoLeggiRegionali implements Cloneable {
 
 	private String descrizione;
 	private String tipoAtto;
 	private String numeroAtto;
 	private String link;
-	
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -42,10 +48,11 @@ public class CollegamentoLeggiRegionali implements Cloneable{
 		}
 	}
 
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	 }
-	
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public String getDescrizione() {
 		return descrizione;
 	}
@@ -77,7 +84,5 @@ public class CollegamentoLeggiRegionali implements Cloneable{
 	public void setLink(String link) {
 		this.link = link;
 	}
-
-	
 
 }

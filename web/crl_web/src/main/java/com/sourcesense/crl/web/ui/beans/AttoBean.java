@@ -27,7 +27,7 @@ import java.util.Locale;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+
 import org.springframework.context.MessageSource;
 
 import com.sourcesense.crl.business.model.Abbinamento;
@@ -39,12 +39,17 @@ import com.sourcesense.crl.business.model.Aula;
 import com.sourcesense.crl.business.model.Commissione;
 import com.sourcesense.crl.business.model.Consultazione;
 import com.sourcesense.crl.business.model.OrganismoStatutario;
-import com.sourcesense.crl.business.model.Parere;
 import com.sourcesense.crl.business.model.Passaggio;
 import com.sourcesense.crl.business.model.Relatore;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @ManagedBean(name = "attoBean")
 @SessionScoped
 public class AttoBean implements Serializable {
@@ -133,20 +138,22 @@ public class AttoBean implements Serializable {
 
 	@ManagedProperty(value = "#{messageSource}")
 	MessageSource messageSource;
-	
-	
+
 	public int getNumeroPassaggi() {
 
 		return this.atto.getPassaggi().size();
 	}
 
-	public boolean containCommissione(String commissione) { 
-		for (Commissione commissioneRec : this.atto.getPassaggi().get(0)
-				.getCommissioni()) {
+	/**
+	 * 
+	 * @param commissione
+	 * @return
+	 */
+	public boolean containCommissione(String commissione) {
+		for (Commissione commissioneRec : this.atto.getPassaggi().get(0).getCommissioni()) {
 
 			if (commissioneRec.getDescrizione().equalsIgnoreCase(commissione)
-					&& !commissioneRec.getStato().equals(
-							Commissione.STATO_ANNULLATO)) {
+					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
 
 				return true;
 			}
@@ -162,8 +169,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
 
 			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_REFERENTE)
-					&& !commissioneRec.getStato().equals(
-							Commissione.STATO_ANNULLATO)) {
+					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
 
 				commissioneRet = commissioneRec;
 			}
@@ -179,8 +185,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
 
 			if (commissioneRec.getRuolo().equals(Commissione.RUOLO_DELIBERANTE)
-					&& !commissioneRec.getStato().equals(
-							Commissione.STATO_ANNULLATO)) {
+					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
 
 				commissioneRet = commissioneRec;
 			}
@@ -196,8 +201,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commissioneRec : getLastPassaggio().getCommissioni()) {
 
 			if (commissioneRec.getDescrizione().equalsIgnoreCase(descrizione)
-					&& !commissioneRec.getStato().equals(
-							Commissione.STATO_ANNULLATO)) {
+					&& !commissioneRec.getStato().equals(Commissione.STATO_ANNULLATO)) {
 
 				commissioneRet = commissioneRec;
 			}
@@ -252,8 +256,7 @@ public class AttoBean implements Serializable {
 
 		for (Consultazione consultazioneRec : atto.getConsultazioni()) {
 
-			if (consultazioneRec.getDescrizione().equalsIgnoreCase(
-					consultazione)) {
+			if (consultazioneRec.getDescrizione().equalsIgnoreCase(consultazione)) {
 
 				consultazioneRet = consultazioneRec;
 			}
@@ -268,15 +271,13 @@ public class AttoBean implements Serializable {
 
 		Collections.sort(lista, new Comparator<Consultazione>() {
 			public int compare(Consultazione m1, Consultazione m2) {
-				return m1.getDataConsultazione().compareTo(
-						m2.getDataConsultazione());
+				return m1.getDataConsultazione().compareTo(m2.getDataConsultazione());
 			}
 		});
 
 		for (Consultazione consultazione : lista) {
 
-			Commissione commAppo = getWorkingCommissione(consultazione
-					.getCommissione());
+			Commissione commAppo = getWorkingCommissione(consultazione.getCommissione());
 
 			if (commAppo != null) {
 				consultazione.setRuoloCommissione(commAppo.getRuolo());
@@ -327,10 +328,8 @@ public class AttoBean implements Serializable {
 
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 			if (!Commissione.RUOLO_CONSULTIVA.equals(commRec.getRuolo())) {
-				for (TestoAtto testoAtto : commRec
-						.getTestiAttoVotatoEsameCommissioni()) {
-					testoAtto.setCommissione(commRec.getDescrizione() + " - "
-							+ commRec.getRuolo());
+				for (TestoAtto testoAtto : commRec.getTestiAttoVotatoEsameCommissioni()) {
+					testoAtto.setCommissione(commRec.getDescrizione() + " - " + commRec.getRuolo());
 					returnList.add(testoAtto);
 				}
 			}
@@ -345,10 +344,8 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			if (Commissione.RUOLO_CONSULTIVA.equals(commRec.getRuolo())) {
-				for (TestoAtto testoAtto : commRec
-						.getTestiAttoVotatoEsameCommissioni()) {
-					testoAtto.setCommissione(commRec.getDescrizione()   
-							);
+				for (TestoAtto testoAtto : commRec.getTestiAttoVotatoEsameCommissioni()) {
+					testoAtto.setCommissione(commRec.getDescrizione());
 					returnList.add(testoAtto);
 				}
 			}
@@ -360,8 +357,7 @@ public class AttoBean implements Serializable {
 	public List<TestoAtto> getTestiAttoAula() {
 		List<TestoAtto> returnList = new ArrayList<TestoAtto>();
 
-		for (TestoAtto testoAtto : getLastPassaggio().getAula()
-				.getTestiAttoVotatoEsameAula()) {
+		for (TestoAtto testoAtto : getLastPassaggio().getAula().getTestiAttoVotatoEsameAula()) {
 
 			returnList.add(testoAtto);
 		}
@@ -375,8 +371,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getAllegatiNoteEsameCommissioni()) {
-				allegato.setCommissione(commRec.getDescrizione() + " - "
-						+ commRec.getRuolo());
+				allegato.setCommissione(commRec.getDescrizione() + " - " + commRec.getRuolo());
 				returnList.add(allegato);
 
 			}
@@ -389,8 +384,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getEmendamentiEsameCommissioni()) {
-				allegato.setCommissione(commRec.getDescrizione() + " - "
-						+ commRec.getRuolo());
+				allegato.setCommissione(commRec.getDescrizione() + " - " + commRec.getRuolo());
 				returnList.add(allegato);
 
 			}
@@ -404,8 +398,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getTestiClausola()) {
-				allegato.setCommissione(commRec.getDescrizione() + " - "
-						+ commRec.getRuolo());
+				allegato.setCommissione(commRec.getDescrizione() + " - " + commRec.getRuolo());
 				returnList.add(allegato);
 
 			}
@@ -419,8 +412,7 @@ public class AttoBean implements Serializable {
 		for (Commissione commRec : getLastPassaggio().getCommissioni()) {
 
 			for (Allegato allegato : commRec.getAllegati()) {
-				allegato.setCommissione(commRec.getDescrizione() + " - "
-						+ commRec.getRuolo());
+				allegato.setCommissione(commRec.getDescrizione() + " - " + commRec.getRuolo());
 				returnList.add(allegato);
 			}
 		}
@@ -429,8 +421,7 @@ public class AttoBean implements Serializable {
 
 	public List<Allegato> getEmendamentiAula() {
 		List<Allegato> returnList = new ArrayList<Allegato>();
-		for (Allegato allegato : getLastPassaggio().getAula()
-				.getEmendamentiEsameAula()) {
+		for (Allegato allegato : getLastPassaggio().getAula().getEmendamentiEsameAula()) {
 
 			returnList.add(allegato);
 
@@ -440,8 +431,7 @@ public class AttoBean implements Serializable {
 
 	public List<Allegato> getAllegatiAula() {
 		List<Allegato> returnList = new ArrayList<Allegato>();
-		for (Allegato allegato : getLastPassaggio().getAula()
-				.getAllegatiEsameAula()) {
+		for (Allegato allegato : getLastPassaggio().getAula().getAllegatiEsameAula()) {
 
 			returnList.add(allegato);
 
@@ -489,7 +479,6 @@ public class AttoBean implements Serializable {
 
 	}
 
-
 	public MessageSource getMessageSource() {
 		return messageSource;
 	}
@@ -516,11 +505,10 @@ public class AttoBean implements Serializable {
 	}
 
 	/**
-	 * @param code
-	 *            the code to set
+	 * @param code the code to set
 	 */
 	public void setCodice(String codice) {
-		this.codice = codice;  
+		this.codice = codice;
 	}
 
 	/**
@@ -531,12 +519,11 @@ public class AttoBean implements Serializable {
 	}
 
 	/**
-	 * @param atto
-	 *            the atto to set
+	 * @param atto the atto to set
 	 */
 	public void setAtto(Atto atto) {
 
-		this.atto = atto; 
+		this.atto = atto;
 		for (Passaggio passaggio : this.atto.getPassaggi()) {
 
 			for (Commissione commissione : passaggio.getCommissioni()) {
@@ -545,22 +532,17 @@ public class AttoBean implements Serializable {
 
 				for (Allegato allegato : commissione.getAllegati()) {
 
-					if (Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA
-							.equals(allegato.getTipologia())) {
+					if (Allegato.TESTO_ESAME_COMMISSIONE_CLAUSOLA.equals(allegato.getTipologia())) {
 
 						commissione.getTestiClausola().add(allegato);
 
-					} else if (Allegato.TESTO_ESAME_COMMISSIONE_COMITATO
-							.equals(allegato.getTipologia())) {
+					} else if (Allegato.TESTO_ESAME_COMMISSIONE_COMITATO.equals(allegato.getTipologia())) {
 
-						commissione.getAllegatiNoteEsameCommissioni().add(
-								allegato);
+						commissione.getAllegatiNoteEsameCommissioni().add(allegato);
 
-					} else if (Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO
-							.equals(allegato.getTipologia())) {
+					} else if (Allegato.TIPO_ESAME_COMMISSIONE_EMENDAMENTO.equals(allegato.getTipologia())) {
 
-						commissione.getEmendamentiEsameCommissioni().add(
-								allegato);
+						commissione.getEmendamentiEsameCommissioni().add(allegato);
 
 					} else {
 
@@ -577,8 +559,7 @@ public class AttoBean implements Serializable {
 
 			for (Allegato allegato : passaggio.getAula().getAllegatiEsameAula()) {
 
-				if (Allegato.TESTO_ESAME_AULA_EMENDAMENTO.equals(allegato
-						.getTipologia())) {
+				if (Allegato.TESTO_ESAME_AULA_EMENDAMENTO.equals(allegato.getTipologia())) {
 
 					passaggio.getAula().getEmendamentiEsameAula().add(allegato);
 
@@ -639,8 +620,7 @@ public class AttoBean implements Serializable {
 
 		this.atto.setEstensioneAtto(estensioneAtto);
 	}
-	
-	
+
 	public String getTipoAtto() {
 		return this.atto.getTipoAtto();
 	}
@@ -655,13 +635,14 @@ public class AttoBean implements Serializable {
 
 	public void setTipologia(String tipologia) {
 		this.atto.setTipologia(tipologia);
-	} 
+	}
+
 	public String getUrlFascicolo() {
-		
+
 		String url = this.atto.getUrlFascicolo();
-		if (url != null && !url.isEmpty()){
+		if (url != null && !url.isEmpty()) {
 			String context = messageSource.getMessage("host.urlFascicolo", null, Locale.ITALY);
-			url = context.concat(url); 
+			url = context.concat(url);
 		}
 		return url;
 	}
@@ -1063,10 +1044,8 @@ public class AttoBean implements Serializable {
 		return atto.getNotePresentazioneAssegnazione();
 	}
 
-	public void setNoteNoteAllegatiPresentazioneAssegnazione(
-			String noteNoteAllegatiPresentazioneAssegnazione) {
-		this.atto
-				.setNotePresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
+	public void setNoteNoteAllegatiPresentazioneAssegnazione(String noteNoteAllegatiPresentazioneAssegnazione) {
+		this.atto.setNotePresentazioneAssegnazione(noteNoteAllegatiPresentazioneAssegnazione);
 	}
 
 	public Date getDataAssegnazioneCommissioni() {

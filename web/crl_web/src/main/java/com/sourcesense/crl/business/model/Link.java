@@ -22,21 +22,27 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @JsonRootName("link")
 @JsonTypeName("link")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class Link implements Cloneable{
-	
+public class Link implements Cloneable {
+
 	private String descrizione;
 	private String indirizzo;
 	private boolean pubblico;
-	
-	@Override public String toString() {
-	    return Pojomatic.toString(this);
-	  }
-	
+
+	@Override
+	public String toString() {
+		return Pojomatic.toString(this);
+	}
+
 	public Object clone() {
 		try {
 			return super.clone();
@@ -45,26 +51,29 @@ public class Link implements Cloneable{
 			return null;
 		}
 	}
-	
+
 	public String getDescrizione() {
 		return descrizione;
 	}
+
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
+
 	public boolean isPubblico() {
 		return pubblico;
 	}
+
 	public void setPubblico(boolean pubblico) {
 		this.pubblico = pubblico;
 	}
+
 	public String getIndirizzo() {
 		return indirizzo;
 	}
+
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
-	
-	
 
 }

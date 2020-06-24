@@ -31,22 +31,25 @@ import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sourcesense.crl.util.JsonDateSerializer;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Configurable()
 @XmlRootElement(name = "sedutaAtto")
 @JsonRootName("sedutaAtto")
 @JsonTypeName("sedutaAtto")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
-public class SedutaAtto implements Comparable<SedutaAtto>{
-	
-	
-	
+public class SedutaAtto implements Comparable<SedutaAtto> {
+
 	private String idSeduta;
 	private String nomeOrgano;
 	private String ruolo;
 	private Date dataSeduta;
-	private List <Link> links = new ArrayList<Link>();
+	private List<Link> links = new ArrayList<Link>();
 	private String numVerbale;
 	private String idVerbale;
 	private boolean pubblico;
@@ -54,117 +57,107 @@ public class SedutaAtto implements Comparable<SedutaAtto>{
 	private String nomeVerbale;
 	private String mimetypeVerbale;
 	private boolean discusso;
-	
-	
+
 	@Override
 	public int compareTo(SedutaAtto o) {
 		return o.getDataSeduta().compareTo(this.dataSeduta);
 	}
 
-	
 	public String getIdSeduta() {
 		return idSeduta;
 	}
+
 	public void setIdSeduta(String idSeduta) {
 		this.idSeduta = idSeduta;
 	}
+
 	public String getNomeOrgano() {
 		return nomeOrgano;
 	}
+
 	public void setNomeOrgano(String nomeOrgano) {
 		this.nomeOrgano = nomeOrgano;
 	}
+
 	public String getRuolo() {
 		return ruolo;
 	}
+
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
-	
+
 	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getDataSeduta() {
 		return dataSeduta;
 	}
+
 	public void setDataSeduta(Date dataSeduta) {
 		this.dataSeduta = dataSeduta;
 	}
+
 	public List<Link> getLinks() {
 		return links;
 	}
+
 	public void setLinks(List<Link> links) {
 		this.links = links;
 	}
+
 	public String getNumVerbale() {
 		return numVerbale;
 	}
+
 	public void setNumVerbale(String numVerbale) {
 		this.numVerbale = numVerbale;
 	}
-
 
 	public boolean isDiscusso() {
 		return discusso;
 	}
 
-
 	public void setDiscusso(boolean discusso) {
 		this.discusso = discusso;
 	}
-
 
 	public String getIdVerbale() {
 		return idVerbale;
 	}
 
-
 	public void setIdVerbale(String idVerbale) {
 		this.idVerbale = idVerbale;
 	}
-
 
 	public String getNomeVerbale() {
 		return nomeVerbale;
 	}
 
-
 	public void setNomeVerbale(String nomeVerbale) {
 		this.nomeVerbale = nomeVerbale;
 	}
-
 
 	public String getMimetypeVerbale() {
 		return mimetypeVerbale;
 	}
 
-
 	public void setMimetypeVerbale(String mimetypeVerbale) {
 		this.mimetypeVerbale = mimetypeVerbale;
 	}
-
 
 	public boolean isPubblico() {
 		return pubblico;
 	}
 
-
 	public void setPubblico(boolean pubblico) {
 		this.pubblico = pubblico;
 	}
-
 
 	public String getDownloadUrl() {
 		return downloadUrl;
 	}
 
-
 	public void setDownloadUrl(String downloadUrl) {
 		this.downloadUrl = downloadUrl;
 	}
-	
-	
-	
-	
-	
-	
 
 }

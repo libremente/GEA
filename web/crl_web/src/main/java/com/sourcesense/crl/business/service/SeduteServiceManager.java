@@ -16,11 +16,7 @@
  */
 package com.sourcesense.crl.business.service;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,101 +24,155 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sourcesense.crl.business.model.Allegato;
-import com.sourcesense.crl.business.model.Atto;
-import com.sourcesense.crl.business.model.Commissione;
-import com.sourcesense.crl.business.model.CommissioneReferente;
-import com.sourcesense.crl.business.model.EsameAula;
 import com.sourcesense.crl.business.model.GestioneSedute;
-import com.sourcesense.crl.business.model.Report;
 import com.sourcesense.crl.business.model.Seduta;
-import com.sourcesense.crl.business.service.rest.AulaService;
 import com.sourcesense.crl.business.service.rest.SeduteService;
 import com.sourcesense.crl.util.URLBuilder;
 
-
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("seduteServiceManager")
-public class SeduteServiceManager implements ServiceManager{
+public class SeduteServiceManager implements ServiceManager {
 
 	@Autowired
 	private SeduteService seduteService;
-	
+
 	@Autowired
-	private  URLBuilder urlBuilder;
-	
+	private URLBuilder urlBuilder;
+
+	/**
+	 * 
+	 * @param idSeduta
+	 */
 	public void deleteSeduta(String idSeduta) {
-		 seduteService.delete(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elimina_seduta", new String[]{idSeduta}));
+		seduteService.delete(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elimina_seduta", new String[] { idSeduta }));
 	}
-	
+
+	/**
+	 * 
+	 * @param gestioneSedute
+	 * @return
+	 */
 	public Seduta salvaSeduta(GestioneSedute gestioneSedute) {
-		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
+		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null),
+				gestioneSedute);
 	}
-	
+
+	/**
+	 * 
+	 * @param gestioneSedute
+	 * @return
+	 */
 	public Seduta updateSeduta(GestioneSedute gestioneSedute) {
-		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null), gestioneSedute);
+		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null),
+				gestioneSedute);
 	}
-	
-	public List<Seduta>  getSedute(String gruppo, String legislatura) { 
-		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),gruppo,legislatura);
+
+	/**
+	 * 
+	 * @param gruppo
+	 * @param legislatura
+	 * @return
+	 */
+	public List<Seduta> getSedute(String gruppo, String legislatura) {
+		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),
+				gruppo, legislatura);
 	}
-	
-	
-	public Seduta  getSeduta(String gruppo, String dataSeduta, String  legislatura) {
-	
-		return seduteService.findByDate(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_dettaglio_seduta", null),gruppo,dataSeduta, legislatura);
+
+	/**
+	 * 
+	 * @param gruppo
+	 * @param dataSeduta
+	 * @param legislatura
+	 * @return
+	 */
+	public Seduta getSeduta(String gruppo, String dataSeduta, String legislatura) {
+
+		return seduteService.findByDate(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_dettaglio_seduta", null), gruppo, dataSeduta,
+				legislatura);
 	}
-	
-	
+
+	/**
+	 * 
+	 * @param seduta
+	 */
 	public void salvaOdg(Seduta seduta) {
 		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
 	}
-	
-	
+
+	/**
+	 * 
+	 * @param seduta
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public Allegato uploadOgg(Seduta seduta, InputStream stream, Allegato testoAtto) {
 
-		return seduteService.uploadOdg(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_odg", null),seduta, stream, testoAtto);
+		return seduteService.uploadOdg(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_upload_odg", null),
+				seduta, stream, testoAtto);
 	}
-	
+
+	/**
+	 * 
+	 * @param seduta
+	 * @param stream
+	 * @param testoAtto
+	 * @return
+	 */
 	public Allegato uploadVerbale(Seduta seduta, InputStream stream, Allegato testoAtto) {
 
-		return seduteService.uploadVerbale(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_upload_verbale", null),seduta, stream, testoAtto);
+		return seduteService.uploadVerbale(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_upload_verbale", null), seduta, stream,
+				testoAtto);
 	}
-	
-	public InputStream getODGFile(String tipoTemplate,String idSeduta,String gruppo ) { 
-		return seduteService.getFile(urlBuilder.buildAlfrescoURL( 
-				"alfresco_context_url", "alf_get_odg", new String[]{tipoTemplate,idSeduta,gruppo}));
-		
+
+	/**
+	 * 
+	 * @param tipoTemplate
+	 * @param idSeduta
+	 * @param gruppo
+	 * @return
+	 */
+	public InputStream getODGFile(String tipoTemplate, String idSeduta, String gruppo) {
+		return seduteService.getFile(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_get_odg",
+				new String[] { tipoTemplate, idSeduta, gruppo }));
+
 	}
-	
-	
+
 	@Override
-	public Object persist(Object object) { 
+	public Object persist(Object object) {
 		return null;
 	}
 
 	@Override
-	public Object merge(Object object) { 
+	public Object merge(Object object) {
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) { 
+	public boolean remove(Object object) {
 		return false;
 	}
 
 	@Override
-	public List<Object> retrieveAll() { 
+	public List<Object> retrieveAll() {
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() { 
+	public Map<String, String> findAll() {
 		return null;
 	}
 
 	@Override
-	public Object findById(String id) { 
+	public Object findById(String id) {
 		return null;
 	}
 

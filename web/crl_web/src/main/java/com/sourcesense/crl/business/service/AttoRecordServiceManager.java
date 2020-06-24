@@ -27,91 +27,127 @@ import com.sourcesense.crl.business.model.Allegato;
 import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.rest.AttoRecordService;
-import com.sourcesense.crl.util.URLBuilder; 
+import com.sourcesense.crl.util.URLBuilder;
+
+/**
+ * 
+ * 
+ * @author sourcesense
+ *
+ */
 @Service("attoRecordServiceManager")
 public class AttoRecordServiceManager implements ServiceManager {
-	
+
 	@Autowired
-	private  URLBuilder urlBuilder;
+	private URLBuilder urlBuilder;
 
 	@Autowired
 	private AttoRecordService attoRecordService;
-	
-	public List <TestoAtto> testiAttoByAtto(Atto atto) {
 
-		return attoRecordService.retrieveTestiAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_list_testi_atto", new String[] { atto.getId() }));
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
+	public List<TestoAtto> testiAttoByAtto(Atto atto) {
+
+		return attoRecordService.retrieveTestiAtto(urlBuilder.buildAlfrescoURL("alfresco_context_url",
+				"alf_list_testi_atto", new String[] { atto.getId() }));
 	}
 
-	public List <Allegato> allAllegatiAttoByAtto(Atto atto) {
+	/**
+	 * 
+	 * @param atto
+	 * @return
+	 */
+	public List<Allegato> allAllegatiAttoByAtto(Atto atto) {
 
-		return attoRecordService.retrieveAllegati(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_list_allegati_atto", new String[] { atto.getId() ,""}));
+		return attoRecordService.retrieveAllegati(urlBuilder.buildAlfrescoURL("alfresco_context_url",
+				"alf_list_allegati_atto", new String[] { atto.getId(), "" }));
 	}
-	
+
+	/**
+	 * 
+	 * @param fileToDownload
+	 * @return
+	 */
 	public InputStream getFileById(String fileToDownload) {
 
-		return attoRecordService.getFile(urlBuilder.buildAlfrescoDownloadURL(
-				"alfresco_dwnl_direct_context_url", fileToDownload, null));
+		return attoRecordService
+				.getFile(urlBuilder.buildAlfrescoDownloadURL("alfresco_dwnl_direct_context_url", fileToDownload, null));
 	}
 
-	
+	/**
+	 * 
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato updateAllegato(Allegato allegato) {
 
-		return attoRecordService.updateAllegato(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_update_allegato", null), allegato);
+		return attoRecordService.updateAllegato(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_allegato", null), allegato);
 	}
-	
+
+	/**
+	 * 
+	 * @param allegato
+	 * @return
+	 */
 	public Allegato updateAllegatoCommissione(Allegato allegato) {
 
-		return attoRecordService.updateAllegatoCommissione(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_update_allegato", null), allegato);
+		return attoRecordService.updateAllegatoCommissione(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_allegato", null), allegato);
 	}
-	
-	
+
+	/**
+	 * 
+	 * @param testoAtto
+	 * @return
+	 */
 	public TestoAtto updateTestoAtto(TestoAtto testoAtto) {
 
-		return attoRecordService.updateTestoAtto(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_update_testo", null), testoAtto);
+		return attoRecordService.updateTestoAtto(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_testo", null), testoAtto);
 	}
-	
+
+	/**
+	 * 
+	 * @param idFile
+	 */
 	public void deleteFile(String idFile) {
-		
-		 attoRecordService.deleteFile(urlBuilder.buildAlfrescoURL(
-				"alfresco_context_url", "alf_delete_file", new String[] {idFile}));
-		
-		
+
+		attoRecordService.deleteFile(
+				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_delete_file", new String[] { idFile }));
+
 	}
-	
-	
 
 	@Override
-	public Object persist(Object object) { 
+	public Object persist(Object object) {
 		return null;
 	}
 
 	@Override
-	public Object merge(Object object) { 
+	public Object merge(Object object) {
 		return null;
 	}
 
 	@Override
-	public boolean remove(Object object) { 
+	public boolean remove(Object object) {
 		return false;
 	}
 
 	@Override
-	public List<Object> retrieveAll() { 
+	public List<Object> retrieveAll() {
 		return null;
 	}
 
 	@Override
-	public Map<String, String> findAll() { 
+	public Map<String, String> findAll() {
 		return null;
 	}
 
 	@Override
-	public Object findById(String id) { 
+	public Object findById(String id) {
 		return null;
 	}
 
