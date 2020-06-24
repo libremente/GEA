@@ -35,7 +35,30 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 import com.sourcesense.crl.util.JsonNoteDeserializer;
 
 /**
- * 
+ * Atto rappresentato dalle informazioni di pubblico,atto proseguente ,id; ,nome
+ * ,tipo ,codice ,oggetto ,oggetto originale ,primo firmatario ,data
+ * presentazione ,data pubblicazione ,data seduta sc ,data iniziativa,estensione
+ * atto,stato ,numero atto ,tipo atto ,tipologia ,legislatura ,anno ,error
+ * ,stato attuale ,classificazione ,n repertorio ,data repertorio ,numero
+ * repertorio ,url fascicolo ,descrizione iniziativa ,numero Dgr ,data Dgr
+ * ,assegnazione ,data assegnazione ,esito validazione ,data validazione ,data
+ * assegnazione commissioni ,numero protocollo ,tipo iniziativa ,tipo iniziativa
+ * nome ,firmatario ,tipo chiusura ,redigente ,deliberante ,numero Lr
+ * ,abbinamento ,stralcio ,organismo statutario ,soggetto consultato ,rinviato
+ * ,sospeso ,data LR ,numero pubblicazione BURL ,data pubblicazione BURL ,data
+ * chiusura ,stato chiusura ,organi ,firmatari ,elenco firmatari ,relatori
+ * ,relatore ,data nomina relatore ,consultazioni ,allegati ,elenco abbinamenti
+ * ,esitoVotazione commissione referente ,dataVotazione commissione ,data
+ * scadenza ,data richiesta iscrizione aula ,esito votazione aula ,data
+ * votazione aula ,numero Dcr ,numero Lcr ,links presentazione assegnazione
+ * ,organismi statutari ,testi atto ,collegamenti ,collegamenti atti sindacato
+ * ,collegamenti leggi regionali ,passaggi ,note collegamenti ,commissioni non
+ * consultive ,commissioni ,consultive,data presa in carico ,valutazione
+ * ammissibilità ,data richiesta informazioni ,data ricevimento informazioni
+ * ,aiuti stato ,norma finanziaria ,richiesta urgenza ,votazione urgenza ,data
+ * votazione urgenza ,note ammissibilita ,note presentazione,
+ * assegnazione,scadenza 60 gg ,iter aula,note chiusura iter,numero Dgr seguito
+ * ,data Dgr seguito ,num regolamento ,data regolamento e sedute atto
  * 
  * @author sourcesense
  *
@@ -47,9 +70,6 @@ import com.sourcesense.crl.util.JsonNoteDeserializer;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class Atto implements Cloneable, Comparable<Atto> {
-	/**
-	 * 
-	 */
 
 	public Object clone() {
 		try {

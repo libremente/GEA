@@ -23,7 +23,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Tipo di atto. Viene rappresentato secondo un codice alfanumerico
  * 
  * @author sourcesense
  *

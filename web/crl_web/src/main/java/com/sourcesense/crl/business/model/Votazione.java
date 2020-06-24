@@ -23,7 +23,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Votazione
  * 
  * @author sourcesense
  *

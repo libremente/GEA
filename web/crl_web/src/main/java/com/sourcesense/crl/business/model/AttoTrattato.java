@@ -23,7 +23,8 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Atto trattato rappresentato dalle informazioni dell'atto, previsto, discusso
+ * e numero di ordinamento
  * 
  * @author sourcesense
  *

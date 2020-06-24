@@ -28,7 +28,7 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Organismo statuario. Può essere obbligatorio o facoltativo
  * 
  * @author sourcesense
  *

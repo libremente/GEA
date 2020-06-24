@@ -17,7 +17,7 @@
 package com.sourcesense.crl.business.model;
 
 /**
- * 
+ * Valutazione dell'ammissibilità
  * 
  * @author sourcesense
  *

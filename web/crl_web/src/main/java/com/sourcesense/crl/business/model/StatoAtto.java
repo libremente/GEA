@@ -23,7 +23,11 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Stato dell'atto. Può essere dei seguenti tipi: Protocollato, Preso in carico
+ * da S.C., Verificata ammissibilità, Proposta assegnazione, Preso in carico da
+ * Commissioni, Nominato Relatore, Votato in Commissione, Trasmesso da
+ * Commissione, Lavori Comitato Ristretto, Trasmesso ad Aula, Preso in carico da
+ * Aula, Votato in Aula, Pubblicato, Chiuso, eac o mis
  * 
  * @author sourcesense
  *

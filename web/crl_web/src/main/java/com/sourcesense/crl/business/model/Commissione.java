@@ -33,7 +33,7 @@ import com.sourcesense.crl.util.JsonIntegerDeserializer;
 import com.sourcesense.crl.util.JsonNoteDeserializer;
 
 /**
- * 
+ * Commissione con stati e ruoli
  * 
  * @author sourcesense
  *

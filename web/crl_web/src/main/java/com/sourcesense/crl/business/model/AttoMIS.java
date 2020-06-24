@@ -23,7 +23,12 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Atto MIS che aggiunge le informazioni di numero repertorio, oggetto, data
+ * iniziativa commissione, data proposta commissione, commissione competente,
+ * esito voto intesa, data intesa, data risposta comitato, data approvazione
+ * progetto, data approvazione udp. data trasmissione udp, numero atto udp,data
+ * scadenza mv, data esame rapporto finale, data trasmissione commissioni, note,
+ * istituto incaricato, relatore 1 e relatore 2
  * 
  * @author sourcesense
  *

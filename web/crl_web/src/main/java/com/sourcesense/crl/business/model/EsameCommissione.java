@@ -17,7 +17,7 @@
 package com.sourcesense.crl.business.model;
 
 /**
- * 
+ * Esame della commissione
  * 
  * @author sourcesense
  *

@@ -23,7 +23,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Atto EAC che aggiunge le informazioni di data atto e note
  * 
  * @author sourcesense
  *

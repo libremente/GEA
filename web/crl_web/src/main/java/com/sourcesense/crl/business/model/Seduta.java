@@ -31,7 +31,7 @@ import com.sourcesense.crl.util.JsonDateSerializer;
 import com.sourcesense.crl.util.JsonHourSerializer;
 
 /**
- * 
+ * Seduta che comprende i verbali, le audizioni e gli atti del sindacato
  * 
  * @author sourcesense
  *

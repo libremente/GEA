@@ -20,7 +20,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Personale di un gruppo consiliare
  * 
  * @author sourcesense
  *

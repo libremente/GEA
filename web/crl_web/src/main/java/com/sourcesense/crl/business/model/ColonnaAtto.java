@@ -19,22 +19,17 @@ package com.sourcesense.crl.business.model;
 import java.io.Serializable;
 
 /**
- * 
+ * Tipo atto N° atto Oggetto Tipo iniziativa Firmatari Stato Tipo chiusura Com.
+ * referente, co-referente, redigente o deliberante Data assegnazione
+ * Commissioni consultive Relatore Data nomina relatore Abbinamenti "Esito
+ * votazione commissione referente (o redigente o deliberante)" "Data votazione
+ * commissione" Data scadenza "Data richiesta iscrizione all'aula" Esito
+ * votazione Aula "Data votazione aula" N° DCR N° LCR BURL Data BURL N° LR Data
+ * LR
  * 
  * @author sourcesense
- *
  */
 public class ColonnaAtto implements Serializable {
-
-	/*
-	 * Tipo atto N° atto Oggetto Tipo iniziativa Firmatari Stato Tipo chiusura Com.
-	 * referente, co-referente, redigente o deliberante Data assegnazione
-	 * Commissioni consultive Relatore Data nomina relatore Abbinamenti "Esito
-	 * votazione commissione referente (o redigente o deliberante)"	"Data votazione
-	 * commissione"	Data scadenza	"Data richiesta iscrizione all'aula" Esito
-	 * votazione Aula "Data votazione aula" N° DCR N° LCR BURL Data BURL N° LR Data
-	 * LR
-	 */
 
 	private static final long serialVersionUID = 4556503563459586700L;
 

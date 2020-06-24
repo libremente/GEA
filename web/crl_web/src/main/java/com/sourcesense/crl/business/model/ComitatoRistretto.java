@@ -27,7 +27,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Comitato ristretto che comprende i testi e i componenti
  * 
  * @author sourcesense
  *

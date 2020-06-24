@@ -30,7 +30,7 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Commissione referente che comprende data nomina e membri comitato ristretto
  * 
  * @author sourcesense
  *

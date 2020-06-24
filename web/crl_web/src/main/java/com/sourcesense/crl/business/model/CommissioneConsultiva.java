@@ -21,7 +21,7 @@ import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 /**
- * 
+ * Commissione consutiva
  * 
  * @author sourcesense
  *

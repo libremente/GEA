@@ -28,7 +28,9 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Abbinamento rappresentato dalle informazioni di id atto, id atto abbinato,
+ * tipo testo, data abbinamento, data disabbinamento, note, abbinato, tipo atto
+ * abbinato e numero atto abbinato
  * 
  * @author sourcesense
  *

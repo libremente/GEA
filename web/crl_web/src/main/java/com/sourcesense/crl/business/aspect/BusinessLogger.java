@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
- * 
+ * Aggiunge delle tracce all'interno dei servizi rest
  * 
  * @author sourcesense
  *

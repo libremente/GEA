@@ -25,7 +25,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Legislatura
  * 
  * @author sourcesense
  *

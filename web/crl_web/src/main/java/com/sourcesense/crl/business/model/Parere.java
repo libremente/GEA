@@ -30,7 +30,7 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Parere. Può essere obbligatorio o facoltativo
  * 
  * @author sourcesense
  *
