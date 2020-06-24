@@ -125,6 +125,11 @@ public class OpenDataCommand {
 		return (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_LEGISLATURA_QNAME);
 	}
 
+	/**
+	 * Ottiene il numero dell'atto insieme alla estensione del medesimo.
+	 * @param nodeRef atto dal quale sapere il numero e la estensione (se esiste)
+	 * @return String con il numero di atto + la estensione (se esiste)
+	 */
 	public String getNumeroAtto(NodeRef nodeRef) {
 		int numeroAtto = (int) nodeService.getProperty(nodeRef, AttoUtil.PROP_NUMERO_ATTO_QNAME);
 		String estensioneAtto = getEstensioneAtto(nodeRef);
@@ -132,7 +137,11 @@ public class OpenDataCommand {
 			estensioneAtto = StringUtil.EMPTY_STRING;
 		return numeroAtto + estensioneAtto;
 	}
-
+/**
+ * Ottiene la estensione di un atto.
+ * @param nodeRef atto dal quale ottenere la estensione
+ * @return Strin la estensione dell'atto.
+ */
 	public String getEstensioneAtto(NodeRef nodeRef) {
 		return (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_ESTENSIONE_ATTO_QNAME);
 	}
@@ -149,6 +158,11 @@ public class OpenDataCommand {
 		this.linkAtto = linkAtto;
 	}
 
+/**
+ * Ottiene il link all'atto
+ * @param nodeRef atto dal quale ottenere il link
+ * @return String link per l'atto
+ */
 	public String getLinkAtto(NodeRef nodeRef) {
 		MessageFormat mf = new MessageFormat(this.linkAtto);
 		String parameterFormatting[] = new String[] {
@@ -156,6 +170,12 @@ public class OpenDataCommand {
 		return mf.format(parameterFormatting);
 	}
 
+	/**
+	 * Ottiene il tipo di iniziativa di un nodo: Consiliare, Popolare, Ufficio di Presidenza, Consiglio delle Autonomie locali, 
+	 * Presidente della Giunta, Giunta, Commissioni, Altra Iniziativa
+	 * @param nodeRef Nodo dal quale ottenere l'iniziativa
+	 * @return String con l'iniziativa dell'atto
+	 */
 	public String getTipoIniziativa(NodeRef nodeRef) {
 		String tipoIniziativa = (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_TIPO_INIZIATIVA_QNAME);
 		if (tipoIniziativa != null) {
@@ -197,6 +217,13 @@ public class OpenDataCommand {
 
 	}
 
+	/**
+	 * Trova il nome del promotore dell'iniziativa se esiste. Cerca fra i firmatari (che dovrebbe esistere al meno uno). Prende i nodi figli della cartella firmatari, e cerca se è il primo 
+	 * firmatario popolare inoltre ad essere il primo firmtario. Se si confermano queste due proprità   (PROP_IS_FIRMATARIO_POPOLARE_QNAME + PROP_NOME_FIRMATARIO_QNAME) si ritorna il nome del firmatario:
+	 * PROP_NOME_FIRMATARIO_QNAME
+	 * @param nodeRef atto dal quale trovare il nome del promotore
+	 * @return String con il nome del promotore o la catena vuota se non esiste promotore.
+	 */
 	@SuppressWarnings("finally")
 	public String getPrimoPromotore(NodeRef nodeRef) {
 		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
@@ -225,6 +252,11 @@ public class OpenDataCommand {
 		return "";
 	}
 
+	/**
+	 * Ritorna l'elenco di tutti i promotori firmatari popolari
+	 * @param nodeRef atto dal quale trovare la cartella che contiene tutti i firmatari
+	 * @return String con tutti i nomi dei promotori che sono firmatari popolari, separati da "listSeparator"
+	 */
 	@SuppressWarnings("finally")
 	public String getTuttiPromotori(NodeRef nodeRef) {
 		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
@@ -255,6 +287,12 @@ public class OpenDataCommand {
 		return promotoriString;
 	}
 
+	/**
+	 * Ritorna il primo firmatario: il firmatario che non è firmatario popolare (PROP_IS_FIRMATARIO_POPOLARE_QNAME) 
+	 * e che ha la proprietà PROP_IS_PRIMO_FIRMATARIO_QNAME. 
+	 * @param nodeRef atto dal quale trovare i FIrmatari. 
+	 * @return String con "- idAnagrafico - primoFirmatario"
+	 */
 	@SuppressWarnings("finally")
 	public String getPrimoFirmatario(NodeRef nodeRef) {
 		List<NodeRef> firmatariFolder = searchService.selectNodes(nodeRef, "*[@cm:name='Firmatari']", null,
@@ -295,6 +333,11 @@ public class OpenDataCommand {
 		return firmatario;
 	}
 
+	/**
+	 * Ritorna l'elenco con tutti i firmatari (tranne quello poplare) dell'atto passato come parametro.
+	 * @param nodeRef tto dal quale ritrovare i firmatari
+	 * @return String con tutti i firmatari tranne il firmatario popolare.
+	 */
 	@SuppressWarnings("finally")
 	public String getTuttiFirmatari(NodeRef nodeRef) {
 
@@ -334,6 +377,12 @@ public class OpenDataCommand {
 		return firmatariString;
 	}
 
+	/**
+	 * Ritorna l'id anagrafico del nome di un firmatario. Si fa un parsing previo del nome per levare i caratteri
+	 * che pososno creare problemi nelle query
+	 * @param nomeAnagrafica nome del firmatario
+	 * @return String con l'id anagrafico.
+	 */
 	public String getIdAnagrafica(String nomeAnagrafica) {
 		String nomeAnagraficaCorretto = nomeAnagrafica.trim().replaceAll("[ \t]+", " ");
 		String nome = nomeAnagraficaCorretto
@@ -359,6 +408,12 @@ public class OpenDataCommand {
 		}
 	}
 
+	/**
+	 * Trova il nodo che si corrisponde con il relatore. Cerca tutti i relatori 
+	 * e seleziona il nodo che ha il tipo TYPE_RELATORE_QNAME
+	 * @param item atto dal quale si prende la Commissione Referente e dal quale si trovano i relatori 
+	 * @return NodeRef del relatore. Null se non si trova.
+	 */
 	public NodeRef getRelatoreNodeRef(NodeRef item) {
 		NodeRef commissioneNodeRef = getCommissioneReferente(item);
 		if (commissioneNodeRef != null) {
@@ -376,6 +431,12 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * Trova il nodo che contiene il passaggio dall'atto che riceve come parametro. 
+	 * Si assume che dentro la cartella con i passaggi si prenda il primo che ritorna il nodeService.getChildAssocs(...). 
+	 * @param attoNoderef atto dal quale trovare il passaggio
+	 * @return NodeRef con il passagio dell'atto.
+	 */
 	public NodeRef getPassaggio(NodeRef attoNoderef) {
 		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
 				this.namespaceService, false);
@@ -390,6 +451,11 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param attoNoderef
+	 * @return
+	 */
 	public NodeRef getUltimoPassaggio(NodeRef attoNoderef) {
 		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
 				this.namespaceService, false);
