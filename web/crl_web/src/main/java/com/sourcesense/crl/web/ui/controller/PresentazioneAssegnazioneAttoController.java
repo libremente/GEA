@@ -188,7 +188,7 @@ public class PresentazioneAssegnazioneAttoController {
 	private Atto atto = new Atto();
 
 	/**
-	 * 
+	 * Aggiunge in memoria l'oggetto originale dell'atto
 	 */
 	@PostConstruct
 	protected void init() {
@@ -234,34 +234,35 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiornamento delle informazioni generali
 	 */
 	public void updateInfoGenHandler() {
 		setStatoCommitInfoGen(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dell'ammissibilità
 	 */
 	public void updateAmmissibilitaHandler() {
 		setStatoCommitAmmissibilita(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dell'assegnazione
 	 */
 	public void updateAssegnazioneHandler() {
 		setStatoCommitAssegnazione(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento delle note
 	 */
 	public void updateNoteHandler() {
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
+	 * Ordinamento delle date
 	 * 
 	 * @param s1
 	 * @param s2
@@ -272,7 +273,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Gestione dei messaggi di errore
 	 */
 	public void changeTabHandler() {
 
@@ -303,7 +304,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Presa in carico
 	 */
 	public void presaInCarico() {
 
@@ -328,6 +329,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Upload del testo dell'atto
 	 * 
 	 * @param event
 	 */
@@ -367,6 +369,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che il testo dell'atto non sia già presente
 	 * 
 	 * @param fileName
 	 * @return
@@ -386,7 +389,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del testo dell'atto
 	 */
 	public void removeTestoAtto() {
 
@@ -405,7 +408,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiornamento della trasmissione
 	 */
 	public void updateTrasmissioneHandler() {
 		setStatoCommitTrasmissione(CRLMessage.COMMIT_UNDONE);
@@ -416,6 +419,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto
 	 * 
 	 * @param event
 	 */
@@ -433,6 +437,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato
 	 * 
 	 * @param event
 	 */
@@ -449,7 +454,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Cambio del firmatario
 	 */
 	public void handleFirmatarioChange() {
 
@@ -466,7 +471,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del firmatario
 	 */
 	public void addFirmatario() {
 
@@ -505,7 +510,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del promotore
 	 */
 	public void addPromotore() {
 
@@ -544,7 +549,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del firmatario
 	 */
 	public void removeFirmatario() {
 
@@ -564,7 +569,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del promotore
 	 */
 	public void removePromotore() {
 
@@ -588,6 +593,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che il firmatario non sia già presente
 	 * 
 	 * @return
 	 */
@@ -604,6 +610,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che il promotore non sia già presente
 	 * 
 	 * @return
 	 */
@@ -620,6 +627,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che il primo firmatario sia presente nell'elenco dei firmatari
 	 * 
 	 * @return
 	 */
@@ -636,6 +644,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che il primo promotore sia presente nell'elenco dei firmatari
 	 * 
 	 * @return
 	 */
@@ -652,6 +661,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Ritiro per mancanza di firmatari
 	 * 
 	 * @return
 	 */
@@ -661,7 +671,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio delle informazioni generali
 	 */
 	public void salvaInfoGenerali() {
 		boolean originale = false;
@@ -713,6 +723,8 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Ritorna l'elenco dei firmatari ordinati. Ad ogni firmatario viene assegnato
+	 * un numero che inizia con 0 nel caso dei primi 10 numeri
 	 * 
 	 * @return
 	 */
@@ -757,6 +769,8 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Ritorna l'elenco dei promotori ordinati. Ad ogni promotore viene assegnato un
+	 * numero che inizia con 0 nel caso dei primi 10 numeri
 	 * 
 	 * @return
 	 */
@@ -801,6 +815,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Salvataggio dell'ammissibilità
 	 * 
 	 * @return
 	 */
@@ -867,7 +882,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Annullamento dell'ammissibilità
 	 */
 	public void annullaAmmissibilita() {
 
@@ -905,7 +920,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta della commissione
 	 */
 	public void addCommissione() {
 
@@ -950,7 +965,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Rimozione della commissione
 	 */
 	public void removeCommissione() {
 
@@ -991,6 +1006,8 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che tutte le commissioni non annullate non abbiano il
+	 * RUOLO_REFERENTE e ne il RUOLO_DELIBERANTE
 	 * 
 	 * @return
 	 */
@@ -1020,6 +1037,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che la commissione corrente abbia lo STATO_ANNULLATO
 	 * 
 	 * @return
 	 */
@@ -1039,7 +1057,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Annullamento della commissione
 	 */
 	public void annulCommissione() {
 
@@ -1120,7 +1138,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del parere
 	 */
 	public void addParere() {
 
@@ -1144,7 +1162,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del parere
 	 */
 	public void removeParere() {
 
@@ -1159,6 +1177,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che il parere non sia già presente
 	 * 
 	 * @return
 	 */
@@ -1177,7 +1196,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Conferma dell'assegnazione
 	 */
 	public void confermaAssegnazione() {
 
@@ -1207,6 +1226,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Conferma della trasmissione
 	 * 
 	 * @return
 	 */
@@ -1270,6 +1290,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Cambia lo stato della commissione assegnata
 	 * 
 	 * @return
 	 */
@@ -1296,6 +1317,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Upload dell'allegato
 	 * 
 	 * @param event
 	 */
@@ -1332,6 +1354,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che l'allegato non sia già presente
 	 * 
 	 * @param fileName
 	 * @return
@@ -1351,7 +1374,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Rimozione dell'allegato
 	 */
 	public void removeAllegato() {
 
@@ -1371,7 +1394,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del link
 	 */
 	public void addLink() {
 
@@ -1394,7 +1417,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del link
 	 */
 	public void removeLink() {
 
@@ -1409,6 +1432,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
+	 * Verifica che il link non sia già presente
 	 * 
 	 * @return
 	 */
@@ -1427,7 +1451,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio delle note degli allegati
 	 */
 	public void salvaNoteEAllegati() {
 		this.atto.setLinksPresentazioneAssegnazione(linksList);
@@ -1445,7 +1469,7 @@ public class PresentazioneAssegnazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Spostamento degli allegati
 	 */
 	public void spostaAllegati() {
 
