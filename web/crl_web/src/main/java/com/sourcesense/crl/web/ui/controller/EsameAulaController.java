@@ -159,7 +159,8 @@ public class EsameAulaController {
 	private String numeroReg;
 
 	/**
-	 * 
+	 * Aggiunge l'atto selezionato, l'utente dell'aula, i testi dell'atto votato,
+	 * gli emendamenti, gli allegati, i link e i relatori al contesto web
 	 */
 	@PostConstruct
 	public void init() {
@@ -199,7 +200,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Verifica che il passaggio selezinato sia presente nei passaggi dell'atto
 	 */
 	public void changePassaggio() {
 
@@ -231,49 +232,51 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dello stato dei dati
 	 */
 	public void updateDatiHandler() {
 		setStatoCommitDati(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dello stato delle votazioni
 	 */
 	public void updateVotazioneHandler() {
 		setStatoCommitVotazione(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dello stato degli emendamenti
 	 */
 	public void updateEmendamentiHandler() {
 		setStatoCommitEmendamenti(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento del rinvio esame
 	 */
 	public void updateRinvioEsameHandler() {
 		setStatoCommitRinvioEsame(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento degli stralci
 	 */
 	public void updateStralciHandler() {
 		setStatoCommitStralci(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento delle note degli allegati
 	 */
 	public void updateNoteAllegatiHandler() {
 		setStatoCommitNoteAllegati(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiunge le notifiche di errore a seconda dell'operazione eseguita. Nel caso
+	 * di commit dello stato della votazione, degli emendamenti, del rinvio esame,
+	 * degli stralci, delle note e dei dati
 	 */
 	public void changeTabHandler() {
 
@@ -315,7 +318,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Presa in carico
 	 */
 	public void presaInCarico() {
 
@@ -360,6 +363,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto votato
 	 * 
 	 * @param event
 	 */
@@ -396,6 +400,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto
 	 * 
 	 * @param event
 	 */
@@ -433,6 +438,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Verifica che il testo dell'atto selezionato sia presente nell'atto
 	 * 
 	 * @param fileName
 	 * @return
@@ -452,6 +458,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Verifica che il testo dell'atto votato selezionato sia presente nell'atto
 	 * 
 	 * @param fileName
 	 * @return
@@ -492,7 +499,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Rimuove il testo dell'atto
 	 */
 	public void removeTestoAtto() {
 
@@ -511,6 +518,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Salvataggio della votazione
 	 * 
 	 * @return
 	 */
@@ -560,6 +568,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Aggiornamento dell'emendamento
 	 * 
 	 * @param event
 	 */
@@ -597,6 +606,8 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Verifica che l'emendamento selezionato sia presente nell'elenco degli
+	 * emendamenti
 	 * 
 	 * @param fileName
 	 * @return
@@ -615,7 +626,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Rimozione dell'emendamento
 	 */
 	public void removeEmendamento() {
 
@@ -635,6 +646,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato
 	 * 
 	 * @param event
 	 */
@@ -661,6 +673,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto
 	 * 
 	 * @param event
 	 */
@@ -681,7 +694,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Totale degli emendamenti presentati
 	 */
 	public void totaleEmendPresentati() {
 
@@ -705,7 +718,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Totale degli emendamenti approvati
 	 */
 	public void totaleEmendApprovati() {
 
@@ -729,7 +742,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Totale degli emendamenti non approvati
 	 */
 	public void totaleNonApprovati() {
 
@@ -753,7 +766,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio degli emendamenti
 	 */
 	public void salvaEmendamenti() {
 
@@ -811,6 +824,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Salvataggio del rinvio ad esame
 	 * 
 	 * @return
 	 */
@@ -846,6 +860,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Aggiornamento dello stato delle commissioni
 	 * 
 	 * @param attoBean
 	 */
@@ -871,7 +886,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio degli stralci
 	 */
 	public void salvaStralci() {
 
@@ -900,6 +915,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Upload dell'allegato
 	 * 
 	 * @param event
 	 */
@@ -934,6 +950,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Verifica che il nome dell'allegato scelto sia presente nell'elenco degli allegati
 	 * 
 	 * @param fileName
 	 * @return
@@ -953,7 +970,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Rimozine dell'allegato
 	 */
 	public void removeAllegato() {
 
@@ -973,7 +990,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge il link
 	 */
 	public void addLink() {
 
@@ -996,7 +1013,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del link
 	 */
 	public void removeLink() {
 
@@ -1011,6 +1028,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Verifica che il link scelto sia presente nelle descrizioni dei lin correnti
 	 * 
 	 * @return
 	 */
@@ -1029,7 +1047,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio delle note degli allegati
 	 */
 	public void salvaNoteEAllegati() {
 
@@ -1649,7 +1667,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio delle informazioni generali
 	 */
 	public void salvaInfoGenerali() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1697,7 +1715,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del relatore
 	 */
 	public void addRelatore() {
 
@@ -1720,6 +1738,7 @@ public class EsameAulaController {
 	}
 
 	/**
+	 * Verifica che il nome del relatore scelto sia presente nell'elenco dei relatori
 	 * 
 	 * @return
 	 */
@@ -1733,7 +1752,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del relatore
 	 */
 	public void removeRelatore() {
 
@@ -1749,7 +1768,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Conferma del relatore
 	 */
 	public void confermaRelatori() {
 

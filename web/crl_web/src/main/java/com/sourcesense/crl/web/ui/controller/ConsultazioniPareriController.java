@@ -110,7 +110,8 @@ public class ConsultazioniPareriController {
 	private String statoCommitConsultazioni = CRLMessage.COMMIT_DONE;
 
 	/**
-	 * 
+	 * Aggiunge l'atto selezionato, gli organismi, le commissioni destinatarie, le
+	 * consultazioni e le commissioni al contesto web
 	 */
 	@PostConstruct
 	protected void init() {
@@ -141,20 +142,25 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dei pareri
 	 */
 	public void updatePareriHandler() {
 		setStatoCommitPareri(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento delle consultazioni
 	 */
 	public void updateConsultazioniHandler() {
 		setStatoCommitConsultazioni(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
+	 * Aggiunge le notifiche di errore a seconda dell'operazione eseguita. Nel caso
+	 * di commit dello stato dei pareri aggiunge il messaggio "Attenzione ! Le
+	 * modifiche ai Pareri non sono state salvate " mentre nel caso di commit delle
+	 * consultazioni "Attenzione ! Le modifiche alle Consultazioni non sono state
+	 * salvate "
 	 * 
 	 */
 	public void changeTabHandler() {
@@ -173,7 +179,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Mostra i dettagli del parere
 	 */
 	public void showParereDetail() {
 
@@ -196,6 +202,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Trova l'organismo secondo la descrizione
 	 * 
 	 * @param descrizione
 	 * @return
@@ -211,6 +218,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Aggiorna l'allegato del parere
 	 * 
 	 * @param event
 	 */
@@ -259,6 +267,8 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Verifica che il nome del file sia presente nell'elenco degli allegati del
+	 * parere
 	 * 
 	 * @param fileName
 	 * @return
@@ -278,7 +288,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Rimuove l'allegato del parere
 	 */
 	public void removeAllegatoParere() {
 
@@ -305,7 +315,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio del parere
 	 */
 	public void salvaParere() {
 
@@ -335,7 +345,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Dettaglio della consultazione
 	 */
 	public void showConsultazioneDetail() {
 		setConsultazioneSelected(findConsultazione());
@@ -362,6 +372,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Preleva le informazioni della consultazione corrente
 	 * 
 	 * @return
 	 */
@@ -377,6 +388,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Verifica se il soggetto è formattato nel modo corretto
 	 * 
 	 * @param soggetto
 	 * @return
@@ -386,7 +398,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta della consultazione
 	 */
 	public void addConsultazione() {
 
@@ -422,7 +434,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Rimozione della consultazione
 	 */
 	public void removeConsultazione() {
 
@@ -455,6 +467,8 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Verifica se il soggetto consultato è presente nell'elenco delle descrizioni
+	 * delle consultazioni
 	 * 
 	 * @return
 	 */
@@ -473,7 +487,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del soggetto invitato
 	 */
 	public void addSoggettoInvitato() {
 
@@ -512,7 +526,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del soggetto invitato
 	 */
 	public void removeSoggettoInvitato() {
 
@@ -528,6 +542,8 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Verifica se il nome del soggetto invitato è presente nell'elenco delle
+	 * descrizioni dei soggetti invitati
 	 * 
 	 * @return
 	 */
@@ -546,7 +562,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio della consultazione
 	 */
 	public void salvaConsultazione() {
 
@@ -581,6 +597,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato della consultazione
 	 * 
 	 * @param event
 	 */
@@ -627,6 +644,8 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Verifica se il nome del file consultato è presente nell'elenco delle
+	 * consultazioni selezionate
 	 * 
 	 * @param fileName
 	 * @return
@@ -646,7 +665,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
-	 * 
+	 * Rimozione dell'allegato della consultazione
 	 */
 	public void removeAllegatoConsultazione() {
 
@@ -661,6 +680,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Totale dei soggetti invitati
 	 * 
 	 * @return
 	 */
@@ -670,6 +690,7 @@ public class ConsultazioniPareriController {
 	}
 
 	/**
+	 * Totale dei soggetti presenti
 	 * 
 	 * @return
 	 */
