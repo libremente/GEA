@@ -49,6 +49,11 @@ import org.apache.commons.logging.LogFactory;
 import com.google.gdata.util.common.base.StringUtil;
 import com.sourcesense.crl.job.anagrafica.Constant;
 
+/**
+ * Classe che fornisce tutti i metodi per ottenre l'informazione degli atti. Mini API per atti collegata con la logica del concetto nodo di Alfresco. 
+ * @author sourcesense
+ *
+ */
 public class OpenDataCommand {
 
 	private static Log logger = LogFactory.getLog(OpenDataCommand.class);
@@ -728,7 +733,7 @@ public class OpenDataCommand {
 	/**
 	 * Trova il link del voto finale in aula dell'atto. Si assume l'esistenza di allegati del tipo allegato_aula
 	 * @param atto votato in aula
-	 * @return String 
+	 * @return String con il link al voto finale
 	 */
 	public String getLinkVotoFinaleAula(NodeRef attoNodeRef) {
 		List<ChildAssociationRef> passaggi = getPassaggi(attoNodeRef);
@@ -762,9 +767,9 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * 
-	 * @param
-	 * @return
+	 * Trova il link al testo dell'atto referente commissione. Seleziona i nodi che abbiano la proprietà crlatti:pubblicoOpendata
+	 * @param attoNodeRef atto 
+	 * @return String il link al testo dell'atto referente commissione.
 	 */
 	public String getLinkTestoAttoComReferente(NodeRef attoNodeRef) {
 		List<NodeRef> pubbliciOpendataNoderefs = searchService.selectNodes(attoNodeRef,
@@ -780,9 +785,9 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * 
-	 * @param
-	 * @return
+	 * Trova gli id LR cercando la proprietà PROP_NUMERO_LR_QNAME
+	 * @param item atto dal quale cercare PROP_NUMERO_LR_QNAME
+	 * @return String ID LR dell'atto item. "" Nel caso in cui non si trovi una proprietà PROP_NUMERO_LR_QNAME nel,nodo 
 	 */
 	public String getIdsLr(NodeRef item) {
 		String idsLr = "";
