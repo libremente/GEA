@@ -55,6 +55,7 @@ public class TipoAttoService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna i tipi di atto disponibili
 	 * 
 	 * @param url
 	 * @return
@@ -94,6 +95,7 @@ public class TipoAttoService {
 	}
 
 	/**
+	 * Ritorna le tipologie disponibili di un determinato tipo di atto
 	 * 
 	 * @param url
 	 * @return

@@ -60,9 +60,7 @@ public class TipoChiusuraServiceManager implements ServiceManager {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public Map<String, String> findAll() {
 		Map<String, String> tipiChiusura = new HashMap<String, String>();
 

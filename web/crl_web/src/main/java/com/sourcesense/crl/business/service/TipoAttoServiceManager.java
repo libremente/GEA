@@ -79,6 +79,7 @@ public class TipoAttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei tipi atto
 	 * 
 	 * @return
 	 */
@@ -101,7 +102,7 @@ public class TipoAttoServiceManager implements ServiceManager {
 	}
 
 	/**
-	 * 
+	 * Ritorna l'elenco completo dei tipi atto
 	 * @return
 	 */
 	public List<TipoAtto> retrieveAllTipoAtto() {
@@ -114,6 +115,7 @@ public class TipoAttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei tipi atto
 	 * 
 	 * @param tipoAtto
 	 * @return

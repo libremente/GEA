@@ -54,6 +54,7 @@ public class LegislaturaService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco completo delle legislature per url
 	 * 
 	 * @param url
 	 * @return
@@ -91,6 +92,7 @@ public class LegislaturaService {
 	}
 
 	/**
+	 * Non implementato
 	 * 
 	 * @param url
 	 * @param legislatura

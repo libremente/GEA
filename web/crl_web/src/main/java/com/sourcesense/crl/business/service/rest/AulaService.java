@@ -60,6 +60,7 @@ public class AulaService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Rinvio dell'esame
 	 * 
 	 * @param url
 	 * @param esameAula
@@ -109,6 +110,7 @@ public class AulaService {
 	}
 
 	/**
+	 * Aggiornamento dell'esame dell'aula
 	 * 
 	 * @param url
 	 * @param esameAula
@@ -149,6 +151,7 @@ public class AulaService {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato dell'atto
 	 * 
 	 * @param url
 	 * @param atto
@@ -193,6 +196,7 @@ public class AulaService {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto
 	 * 
 	 * @param url
 	 * @param atto

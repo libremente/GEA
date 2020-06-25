@@ -45,6 +45,7 @@ public class VotazioneService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Non implementato
 	 * 
 	 * @return
 	 */
@@ -53,6 +54,7 @@ public class VotazioneService {
 	}
 
 	/**
+	 * Non implementato
 	 * 
 	 * @return
 	 */

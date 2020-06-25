@@ -53,6 +53,7 @@ public class OrganismoStatutarioService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco degli organismi statutari
 	 * 
 	 * @param url
 	 * @return

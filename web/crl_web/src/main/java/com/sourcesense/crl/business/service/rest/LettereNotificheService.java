@@ -51,6 +51,7 @@ public class LettereNotificheService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Aggiornamento della lettera
 	 * 
 	 * @param url
 	 * @param lettera
@@ -83,6 +84,7 @@ public class LettereNotificheService {
 	}
 
 	/**
+	 * Ritorna la lettera per un determinato url
 	 * 
 	 * @param url
 	 * @return
@@ -118,6 +120,7 @@ public class LettereNotificheService {
 	}
 
 	/**
+	 * Ritorna il contenuto della lettera
 	 * 
 	 * @param url
 	 * @return

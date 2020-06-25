@@ -53,6 +53,7 @@ public class AbbinamentoService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Aggiornamento dell'abbinamento
 	 * 
 	 * @param url
 	 * @param abbinamento

@@ -91,6 +91,7 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Ritorna la data formattata con il pattern dd/MM/yyyy
 	 * 
 	 * @param date
 	 * @return
@@ -108,6 +109,7 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Ritorna la data formattata con il pattern dd/MM/yyyy
 	 * 
 	 * @param date
 	 * @return
@@ -120,6 +122,7 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Generazione dela data di scadenza a seconda del tipo
 	 * 
 	 * @param dataPresaInCarico
 	 * @param isRegolamento
@@ -135,6 +138,8 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Se la data di scadenza è per un dgr viene aggiunto un ritardo di 30
+	 * giorni
 	 * 
 	 * @param dateIn
 	 * @param sospensioneFeriale
@@ -145,6 +150,8 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Se la data di scadenza è per un regolamento viene aggiunto un ritardo di 60
+	 * giorni
 	 * 
 	 * @param dateIn
 	 * @param sospensioneFeriale
@@ -155,6 +162,7 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Aggiunge un ritardo in ordine di giorni alla data
 	 * 
 	 * @param DELAY
 	 * @param dateIn
@@ -192,6 +200,7 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Ritorna il numero di giorni tra le due date selezionate
 	 * 
 	 * @param dateIn
 	 * @param startDate
@@ -209,6 +218,7 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Aggiunge il primo agosto alla data selezionata
 	 * 
 	 * @param dateIn
 	 * @return
@@ -227,6 +237,7 @@ public class TestDateUtils {
 	}
 
 	/**
+	 * Aggiunge il sedici settembre alla data selezionata
 	 * 
 	 * @param dateIn
 	 * @return

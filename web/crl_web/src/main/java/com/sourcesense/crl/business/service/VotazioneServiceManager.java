@@ -56,6 +56,7 @@ public class VotazioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Attualmente non implementato
 	 * 
 	 * @return
 	 */
@@ -65,6 +66,7 @@ public class VotazioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Attualmente non implementato
 	 * 
 	 * @return
 	 */

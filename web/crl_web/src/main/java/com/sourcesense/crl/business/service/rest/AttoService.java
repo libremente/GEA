@@ -67,6 +67,7 @@ public class AttoService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Creazione dell'atto
 	 * 
 	 * @param url
 	 * @param atto
@@ -114,6 +115,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Creazione dell'atto MIS
 	 * 
 	 * @param url
 	 * @param atto
@@ -158,6 +160,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Aggiornamento dell'atto
 	 * 
 	 * @param url
 	 * @param atto
@@ -201,6 +204,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Rimozione dell'atto
 	 * 
 	 * @param url
 	 */
@@ -217,6 +221,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Creazione dell'atto EAC
 	 * 
 	 * @param url
 	 * @param atto
@@ -261,6 +266,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Non implementato
 	 * 
 	 * @param atto
 	 * @return
@@ -270,6 +276,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Ricerca dell'atto tramite url
 	 * 
 	 * @param url
 	 * @return
@@ -307,6 +314,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Ricerca dell'atto EAC tramite url
 	 * 
 	 * @param url
 	 * @return
@@ -342,6 +350,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Ricerca dell'atto MIS tramite url
 	 * 
 	 * @param url
 	 * @return
@@ -378,6 +387,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Non implementato
 	 * 
 	 * @return
 	 */
@@ -386,6 +396,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato
 	 * 
 	 * @param url
 	 * @param atto
@@ -429,6 +440,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato del parere
 	 * 
 	 * @param url
 	 * @param atto
@@ -475,6 +487,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato della consultazione
 	 * 
 	 * @param url
 	 * @param atto
@@ -521,6 +534,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Rimozione del firmatario
 	 * 
 	 * @param url
 	 */
@@ -538,6 +552,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Rimozione dell'atto
 	 * 
 	 * @param url
 	 */
@@ -555,6 +570,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto
 	 * 
 	 * @param url
 	 * @param atto
@@ -601,6 +617,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Modifica dell'allegato
 	 * 
 	 * @param url
 	 * @return
@@ -637,6 +654,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Ricerca del tipo atti del sindacato
 	 * 
 	 * @param url
 	 * @return
@@ -675,6 +693,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Ritorna tutti gli atti del sindacato secondo l'url
 	 * 
 	 * @param url
 	 * @return
@@ -713,6 +732,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Ritorna il collegamento ad un atto tramite url
 	 * 
 	 * @param url
 	 * @return
@@ -751,6 +771,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Ritorna l'elenco degli atti tramite url
 	 * 
 	 * @param atto
 	 * @param url
@@ -791,6 +812,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Aggiornamento dell'atto
 	 * 
 	 * @param url
 	 * @param atto
@@ -824,6 +846,7 @@ public class AttoService {
 	}
 
 	/**
+	 * Salvataggio dei pareri
 	 * 
 	 * @param url
 	 * @param consultazioneParere

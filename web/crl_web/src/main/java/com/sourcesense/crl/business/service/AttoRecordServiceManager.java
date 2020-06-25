@@ -45,6 +45,7 @@ public class AttoRecordServiceManager implements ServiceManager {
 	private AttoRecordService attoRecordService;
 
 	/**
+	 * Ritorna l'elenco dei testi di un atto
 	 * 
 	 * @param atto
 	 * @return

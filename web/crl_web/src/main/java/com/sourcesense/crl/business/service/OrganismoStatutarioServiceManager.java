@@ -61,7 +61,7 @@ public class OrganismoStatutarioServiceManager implements ServiceManager {
 	}
 
 	/**
-	 * 
+	 * Ritorna l'elenco completo delle descrizioni degli organismi statutari
 	 */
 	public Map<String, String> findAll() {
 		Map<String, String> organismoStatutari = new HashMap<String, String>();

@@ -39,7 +39,7 @@ public class BusinessLogger {
 	private Logger log = LoggerFactory.getLogger(BusinessLogger.class);
 
 	/**
-	 * 
+	 * Aggiunge le tracce di debug ai servizi rest
 	 * @param joinPoint
 	 */
 	@After("within(com.sourcesense.crl.business.service.rest.*)")

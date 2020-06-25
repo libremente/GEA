@@ -66,7 +66,7 @@ public class ChiusuraIterController {
 	AttoBean attoBean;
 
 	/**
-	 * 
+	 * Aggiunge l'atto e il dgr selezionati al contesto web 
 	 */
 	@PostConstruct
 	protected void init() {
@@ -81,7 +81,7 @@ public class ChiusuraIterController {
 	}
 
 	/**
-	 * 
+	 * Operazione di chiusura dell'atto
 	 */
 	public void chiusuraAtto() {
 
@@ -108,7 +108,7 @@ public class ChiusuraIterController {
 	}
 
 	/**
-	 * 
+	 * Operazione di cambio dgr
 	 */
 	public void changeDgr() {
 
@@ -119,7 +119,7 @@ public class ChiusuraIterController {
 	}
 
 	/**
-	 * 
+	 * Creazione del link della legge regionale
 	 */
 	public void createLeggeRegionaleLink() {
 
@@ -160,6 +160,7 @@ public class ChiusuraIterController {
 	}
 
 	/**
+	 * Ritorna un parere negativo trasmesso alla Giunta
 	 * 
 	 * @return
 	 */

@@ -39,6 +39,7 @@ public class AbbinamentoServiceManager {
 	private AbbinamentoService abbinamentoService;
 
 	/**
+	 * Salvataggio dell'abbinamento
 	 * 
 	 * @param abbinamento
 	 */

@@ -54,6 +54,7 @@ public class AttoServiceManager implements ServiceManager {
 	private AttoService attoService;
 
 	/**
+	 * Ritorna l'atto completo secondo le informazioni parziali passate
 	 * 
 	 * @param atto
 	 * @return
@@ -64,6 +65,8 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Inizializza l'atto per la ricerca mettendo come vincolo la data di ricerca di
+	 * un massimo di due mesi dalla data odierna
 	 * 
 	 * @return
 	 */
@@ -80,6 +83,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Rimuove il firmatario
 	 * 
 	 * @param firmatario
 	 */
@@ -90,6 +94,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Rimuove l'atto
 	 * 
 	 * @param atto
 	 */
@@ -100,6 +105,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna il testo dell'atto
 	 * 
 	 * @param atto
 	 * @param stream
@@ -114,6 +120,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'allegato
 	 * 
 	 * @param atto
 	 * @param stream
@@ -130,6 +137,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'allegato dell'atto MIS
 	 * 
 	 * @param atto
 	 * @param stream
@@ -145,6 +153,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'allegato dell'atto EAC
 	 * 
 	 * @param atto
 	 * @param stream
@@ -160,6 +169,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'allegato delle consultazioni dell'atto
 	 * 
 	 * @param atto
 	 * @param stream
@@ -174,6 +184,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'allegato del parere dell'atto
 	 * 
 	 * @param atto
 	 * @param stream
@@ -188,6 +199,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Cambia l'allegato di una presentazione
 	 * 
 	 * @param allegato
 	 * @return
@@ -200,6 +212,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'atto
 	 * 
 	 * @param atto
 	 * @return
@@ -212,6 +225,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Rimuove l'atto
 	 * 
 	 * @param atto
 	 */
@@ -222,6 +236,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio del MIS
 	 * 
 	 * @param object
 	 * @return
@@ -233,6 +248,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio dell'EAC
 	 * 
 	 * @param object
 	 * @return
@@ -251,7 +267,9 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca dell'atto per id
 	 * 
+	 * @param id
 	 */
 	public Atto findById(String id) {
 		return attoService
@@ -259,6 +277,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca dell'atto EAC per id
 	 * 
 	 * @param id
 	 * @return
@@ -269,6 +288,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca dell'atto MIS per id
 	 * 
 	 * @param id
 	 * @return
@@ -279,6 +299,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca tutti gli atti sindacali secondo i campi
 	 * 
 	 * @param tipoAtto
 	 * @param dataCreazioneDa
@@ -292,6 +313,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca dell'atto sindacale per id
 	 * 
 	 * @param idAtto
 	 * @return
@@ -302,6 +324,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca degli atti collegati ad un atto
 	 * 
 	 * @param idAtto
 	 * @return
@@ -312,6 +335,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Tornano i tipi degli atti disponibili
 	 * 
 	 * @return
 	 */
@@ -321,6 +345,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Presa in carico dell'atto
 	 * 
 	 * @param atto
 	 */
@@ -332,6 +357,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salava le informazioni generali dell'atto
 	 * 
 	 * @param atto
 	 */
@@ -341,6 +367,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva l'ammissibiità della presentazione di un atto
 	 * 
 	 * @param atto
 	 */
@@ -350,6 +377,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva l'assegnazione della presentazione di un atto
 	 * 
 	 * @param atto
 	 */
@@ -359,6 +387,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva le note degli allegati della presentazione di un atto
 	 * 
 	 * @param atto
 	 */
@@ -368,6 +397,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva le consultazioni di un atto
 	 * 
 	 * @param atto
 	 */
@@ -376,6 +406,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio dei pareri
 	 * 
 	 * @param consultazioneParere
 	 */
@@ -385,6 +416,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva i collegamenti di un atto
 	 * 
 	 * @param atto
 	 */
@@ -393,6 +425,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva i collegamenti degli atti del sindacato
 	 * 
 	 * @param atto
 	 */
@@ -403,6 +436,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva i relatori dell'aula
 	 * 
 	 * @param atto
 	 */
@@ -411,6 +445,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Operazione di chiusura dell'atto
 	 * 
 	 * @param atto
 	 */
@@ -419,6 +454,7 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna il link delle leggi regionali secondo i parametri passati
 	 * 
 	 * @param data
 	 * @param numero

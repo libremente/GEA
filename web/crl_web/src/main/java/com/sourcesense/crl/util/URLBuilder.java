@@ -42,6 +42,7 @@ public class URLBuilder {
 	AlfrescoSessionTicket alfrescoSessionTicket;
 
 	/**
+	 * Costruisce l'url di download per i documenti di Alfresco passando il nome del file
 	 * 
 	 * @param contextPropertyName
 	 * @param fileName
@@ -65,6 +66,7 @@ public class URLBuilder {
 	}
 
 	/**
+	 * Costruisce l'url di download per i documenti di Alfresco passando il path del file
 	 * 
 	 * @param contextPropertyName
 	 * @param pathPropertyName
@@ -91,6 +93,7 @@ public class URLBuilder {
 	}
 
 	/**
+	 * Costruisce un url tramite il path passato
 	 * 
 	 * @param contextPropertyName
 	 * @param pathPropertyName
@@ -107,6 +110,7 @@ public class URLBuilder {
 	}
 
 	/**
+	 * Costruisce un url tramite il path passato
 	 * 
 	 * @param contextPropertyName
 	 * @param paramsValues
@@ -122,6 +126,7 @@ public class URLBuilder {
 	}
 
 	/**
+	 * Esegue l'encoding dei parametri passati
 	 * 
 	 * @param paramsValues
 	 */

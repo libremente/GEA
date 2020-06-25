@@ -61,9 +61,7 @@ public class TipoIniziativaServiceManager implements ServiceManager {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public Map<String, String> findAll() {
 		Map<String, String> tipiIniziative = new LinkedHashMap<String, String>();
 

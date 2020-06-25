@@ -57,7 +57,14 @@ public class UserBean implements Serializable {
 	private List<ColonnaAtto> colonneUser = new ArrayList<ColonnaAtto>();
 
 	/**
-	 * 
+	 * Aggiunge le colonne tabellari visualizzabili nel profilo utente. Per default
+	 * vengono aggiunte: Oggetto, Data presentazione, Stato, Primo firmatario,
+	 * Firmatari, Tipo iniziativa, Tipo chiusura, Com. referente, co-referente,
+	 * redigente o deliberante,Data assegnazione, Commissioni consultive, Relatore,
+	 * Data nomina relatore, Abbinamenti, Esito votazione Commissione referente (o
+	 * redigente o deliberante), Data votazione Commissione, Data scadenza, Data
+	 * richiesta iscrizione Aula, Esito votazione Aula, Data votazione Aula, N° DCR,
+	 * N° LCR, BURL, Data BURL, N° LR, Data LR, Note generali
 	 */
 	@PostConstruct
 	public void init() {
@@ -148,7 +155,7 @@ public class UserBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Refresh delle colonne utente
 	 */
 	public void refreshColonneUser() {
 
@@ -162,6 +169,7 @@ public class UserBean implements Serializable {
 	}
 
 	/**
+	 * Aggiunge il gruppo all'utente
 	 * 
 	 * @param event
 	 */
@@ -177,6 +185,7 @@ public class UserBean implements Serializable {
 	}
 
 	/**
+	 * Refresh delle colonne utente
 	 * 
 	 * @return
 	 */

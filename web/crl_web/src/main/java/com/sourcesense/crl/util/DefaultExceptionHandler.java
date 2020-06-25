@@ -146,6 +146,7 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	/**
+	 * Nel caso di errore inaspettato viene aggiunto un log di errore
 	 * 
 	 * @param facesContext
 	 * @param t

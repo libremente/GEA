@@ -54,6 +54,7 @@ public class StatoAttoService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco degli stati degli atti
 	 * 
 	 * @param url
 	 * @return

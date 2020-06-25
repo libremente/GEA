@@ -30,6 +30,7 @@ import java.util.List;
 public class CloningLists {
 
 	/**
+	 * Clonazione di una lista con i generics
 	 * 
 	 * @param <T>
 	 * @param list

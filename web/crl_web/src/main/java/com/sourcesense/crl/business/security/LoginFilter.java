@@ -44,7 +44,7 @@ public class LoginFilter implements Filter {
 	private static final String homepage = "/home";
 
 	/**
-	 * 
+	 * Inizializza il filtro aggiungendo la configurazione di default
 	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -52,7 +52,7 @@ public class LoginFilter implements Filter {
 	}
 
 	/**
-	 * 
+	 * Ripulisce eliminando il filtro di configurazione
 	 */
 	@Override
 	public void destroy() {

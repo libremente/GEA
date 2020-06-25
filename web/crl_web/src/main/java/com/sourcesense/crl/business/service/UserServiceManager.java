@@ -44,6 +44,7 @@ public class UserServiceManager implements ServiceManager {
 	private UserService userService;
 
 	/**
+	 * Esegue l'autenticazione tramite utente e password
 	 * 
 	 * @param user
 	 * @return
@@ -82,6 +83,8 @@ public class UserServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Esegue l'autenticazione tramite utente e password per avere un accesso in
+	 * sola lettura
 	 * 
 	 * @param user
 	 * @return

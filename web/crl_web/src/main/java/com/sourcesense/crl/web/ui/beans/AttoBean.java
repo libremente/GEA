@@ -54,9 +54,6 @@ import com.sourcesense.crl.business.service.AttoServiceManager;
 @SessionScoped
 public class AttoBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private boolean showCommDetail;
@@ -145,6 +142,7 @@ public class AttoBean implements Serializable {
 	}
 
 	/**
+	 * Verifica se la commissione è presente nell'atto selezionato
 	 * 
 	 * @param commissione
 	 * @return
@@ -497,30 +495,18 @@ public class AttoBean implements Serializable {
 	}
 
 	/* Fields */
-	/**
-	 * @return the code
-	 */
 	public String getCodice() {
 		return atto.getCodice();
 	}
 
-	/**
-	 * @param code the code to set
-	 */
 	public void setCodice(String codice) {
 		this.codice = codice;
 	}
 
-	/**
-	 * @return the atto
-	 */
 	public Atto getAtto() {
 		return atto;
 	}
 
-	/**
-	 * @param atto the atto to set
-	 */
 	public void setAtto(Atto atto) {
 
 		this.atto = atto;

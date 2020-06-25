@@ -54,6 +54,7 @@ public class TipoChiusuraService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco dei tipi di chiusura
 	 * 
 	 * @param url
 	 * @return

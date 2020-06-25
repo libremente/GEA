@@ -43,6 +43,7 @@ public class ReportServiceManager implements ServiceManager {
 	private ReportService reportService;
 
 	/**
+	 * Ritorna il contenuto binario del report
 	 * 
 	 * @param report
 	 * @return

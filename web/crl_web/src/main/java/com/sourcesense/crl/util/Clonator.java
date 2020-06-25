@@ -29,6 +29,7 @@ import java.util.List;
 public class Clonator {
 
 	/**
+	 * Clonazione di una lista
 	 * 
 	 * @param list
 	 * @return

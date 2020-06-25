@@ -47,6 +47,7 @@ public class AulaServiceManager implements ServiceManager {
 	private URLBuilder urlBuilder;
 
 	/**
+	 * Presa in carico dell'esame dell'aula
 	 * 
 	 * @param esameAula
 	 */
@@ -58,6 +59,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio della votazione dell'esame in aula
 	 * 
 	 * @param esameAula
 	 */
@@ -67,6 +69,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto votato all'esame dell'aula
 	 * 
 	 * @param atto
 	 * @param stream
@@ -83,6 +86,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento delle note degli allegati all'esame dell'aula
 	 * 
 	 * @param atto
 	 * @param stream
@@ -99,6 +103,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento dell'emendamento dell'esame dell'aula
 	 * 
 	 * @param atto
 	 * @param stream
@@ -115,6 +120,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio dell'esame dell'aula
 	 * 
 	 * @param esameAula
 	 */
@@ -124,6 +130,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio del rinvio dell'esame in aula
 	 * 
 	 * @param esameAula
 	 * @return
@@ -135,6 +142,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio degli stralci dell'esame in aula
 	 * 
 	 * @param esameAula
 	 */
@@ -144,6 +152,7 @@ public class AulaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio delle note degli allegati dell'esame in aula
 	 * 
 	 * @param esameAula
 	 */

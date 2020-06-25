@@ -55,6 +55,7 @@ public class PersonaleService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco dei gruppi consiliari
 	 * 
 	 * @param url
 	 * @return
@@ -91,6 +92,7 @@ public class PersonaleService {
 	}
 
 	/**
+	 * Ritorna l'elenco dei firmatari
 	 * 
 	 * @param url
 	 * @return
@@ -127,6 +129,7 @@ public class PersonaleService {
 	}
 
 	/**
+	 * Ritorna l'elenco dei relatori
 	 * 
 	 * @param url
 	 * @return
@@ -163,6 +166,7 @@ public class PersonaleService {
 	}
 
 	/**
+	 * Ritorna l'elenco dei firmatari per id
 	 * 
 	 * @param url
 	 * @return

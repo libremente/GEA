@@ -54,6 +54,7 @@ public class TipoIniziativaService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco dei tipi di iniziativa
 	 * 
 	 * @param url
 	 * @return

@@ -65,9 +65,7 @@ public class StatoAttoServiceManager implements ServiceManager {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public Map<String, String> findAll() {
 		Map<String, String> stati = new HashMap<String, String>();
 

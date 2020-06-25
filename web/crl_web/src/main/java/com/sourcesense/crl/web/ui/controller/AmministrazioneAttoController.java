@@ -72,7 +72,7 @@ public class AmministrazioneAttoController {
 	private Map<String, String> anni = new HashMap<String, String>();
 
 	/**
-	 * 
+	 * Aggiunge l'atto selezionato al contesto web
 	 */
 	@PostConstruct
 	private void initializeValues() {
@@ -85,7 +85,7 @@ public class AmministrazioneAttoController {
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dell'atto
 	 */
 	public void updateAtto() {
 		Atto atto = attoBean.getAtto();
@@ -110,6 +110,7 @@ public class AmministrazioneAttoController {
 	}
 
 	/**
+	 * Rimozione dell'atto
 	 * 
 	 * @return
 	 */

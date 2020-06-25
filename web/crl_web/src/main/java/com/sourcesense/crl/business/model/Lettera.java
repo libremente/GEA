@@ -37,9 +37,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @AutoProperty
 public class Lettera implements Cloneable {
-	/**
-	 * "idAtto" : ""+idAtto+"",            "tipoTemplate" : ""+tipoTemplate+""
-	 */
 
 	public Object clone() {
 		try {

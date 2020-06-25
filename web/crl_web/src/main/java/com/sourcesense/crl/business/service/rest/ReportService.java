@@ -52,6 +52,7 @@ public class ReportService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna il contenuto del report
 	 * 
 	 * @param url
 	 * @param report

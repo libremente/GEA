@@ -43,6 +43,7 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	private LettereNotificheService lettereNotificheService;
 
 	/**
+	 * Ritorna la lettera completa secondo le informazioni parziali fornite
 	 * 
 	 * @param lettera
 	 * @return
@@ -54,6 +55,7 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna la lettera
 	 * 
 	 * @param lettera
 	 */
@@ -63,6 +65,7 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna il contenuto della lettera di un atto
 	 * 
 	 * @param lettera
 	 * @param idAtto
