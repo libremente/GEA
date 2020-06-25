@@ -101,7 +101,7 @@ public class InserisciMISController {
 	private String relatore2;
 
 	/**
-	 * 
+	 * Aggiunge le commissioni, le legislature e i relatori al contesto web
 	 */
 	@PostConstruct
 	private void initializeValues() {
@@ -122,7 +122,7 @@ public class InserisciMISController {
 	}
 
 	/**
-	 * 
+	 * Inserimento dell'atto
 	 */
 	public void inserisciAtto() {
 
@@ -151,6 +151,7 @@ public class InserisciMISController {
 	}
 
 	/**
+	 * Upload dell'allegato parere
 	 * 
 	 * @param event
 	 */
@@ -179,6 +180,7 @@ public class InserisciMISController {
 	}
 
 	/**
+	 * Verifica che il parere non sia già presente nell'elenco degli allegati MIS
 	 * 
 	 * @param fileName
 	 * @return
@@ -198,7 +200,7 @@ public class InserisciMISController {
 	}
 
 	/**
-	 * 
+	 * Rimozione dell'allegato parere
 	 */
 	public void removeAllegatoParere() {
 
