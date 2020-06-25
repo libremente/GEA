@@ -62,7 +62,12 @@ import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import com.sourcesense.crl.util.AttoUtil;
 import com.sourcesense.crl.webscript.template.LetteraGenericaAulaCommand;
 
-
+/**
+ * Classe che crea un Command con API per la gestione dell'ordine del giorno. 
+ * Il resto dei command che sono correlati alla gestione dell'ordine del giorno estenderanno questa classe.
+ * @author sourcesense
+ *
+ */
 public abstract class OdgBaseCommand implements OdgCommand{
 	
 	protected ContentService contentService;
@@ -77,8 +82,18 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	
 	
 	
-	
+/*
+ * (non-Javadoc)
+ * @see com.sourcesense.crl.webscript.odg.OdgCommand#generate(byte[], org.alfresco.service.cmr.repository.NodeRef, org.alfresco.service.cmr.repository.NodeRef, java.lang.String)
+ */
 	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException; 
+	/**
+	 * Prede una proprietà (localName) del nodo attoNodeRef e la ritorna come String.
+	 * @param attoNodeRef atto dal quale prendere la proprietà del nodo.
+	 * @param nameSpaceURI nameSpace standard di un content - model di Alfresco 
+	 * @param localName localname di un di un content - model di Alfresco 
+	 * @return String con il valore della proprietà
+	 */
 	public String getStringProperty(NodeRef attoNodeRef, String nameSpaceURI, String localName){
 		String value = (String) nodeService.getProperty(attoNodeRef, QName.createQName(nameSpaceURI, localName));
 		
@@ -89,10 +104,12 @@ public abstract class OdgBaseCommand implements OdgCommand{
 		return value;
 	}
 	
-	
-	
-	
-	
+	/**
+	 * Trova tutti gli atti trattati di un atto che rappresenta una seduta. 
+	 * Gli atti si selezionano prendendo tutti quelli che hanno un assoc in Alfresco con la cartella  cm:AttiTrattati
+	 * @param sedutaNodeRef seduta dalla quale estrarre gli atti trattati
+	 * @return Lista con tutti i NodeRef degli atti trattati in una seduta. Se non si trovano, ritorna la lista vuota.
+	 */
 	public List<NodeRef> getAttiTrattati(NodeRef sedutaNodeRef){
 		
 		List<NodeRef> attiTrattati = new ArrayList<NodeRef>();
@@ -129,7 +146,12 @@ public abstract class OdgBaseCommand implements OdgCommand{
     	return attiTrattati;
 	}
 	
-
+	/**
+	 * Trova tutti gli atti indirizzo trattati di un atto che rappresenta una seduta. 
+	 * Gli atti si selezionano prendendo tutti quelli che hanno un assoc in Alfresco (tipo: ASSOC_ATTO_INDIRIZZO_TRATTATO_SEDUTA) con la cartella  cm:AttiSindacato
+	 * @param sedutaNodeRef seduta dalla quale estrarre gli atti indirizzo trattati
+	 * @return Lista con tutti i NodeRef degli atti indirizzo trattati in una seduta. Se non si trovano, ritorna la lista vuota.
+	 */
 	public List<NodeRef> getAttiIndirizzoTrattati(NodeRef sedutaNodeRef){
 		
 		List<NodeRef> attiTrattati = new ArrayList<NodeRef>();
@@ -167,7 +189,11 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	}
 	
 	
-	
+	/**
+	 * Trova tutte le consultazioni Generali di una seduta, selezionando i nodi dalla cartella cm:Audizioni.
+	 * @param sedutaNodeRef seduta dalla quale elencare le consultazioni generali.
+	 * @return Lista con i NodeRef delle consultazioni generali. Lista vuota se non si trova nulla.
+	 */
 	public List<NodeRef> getConsultazioniGenerali(NodeRef sedutaNodeRef){
 		
 		List<NodeRef> consultazioniGenerali = new ArrayList<NodeRef>();
@@ -196,7 +222,15 @@ public abstract class OdgBaseCommand implements OdgCommand{
     	return consultazioniGenerali;
 	}
 	
-	
+	/**
+	 * Prende tutte le consultazioni di una seduta fatte da un gruppo sugli atti trattati in in intervallo di date.
+	 * Si selezionano i nodi dentro alla cartella cm:Consultazioni con tipo definito nel conten model di CRL {"+attoUtil.CRL_ATTI_MODEL+"}consultazione 
+	 * dove la commissione di consultazione è del gruppo gruppo e la data di consultazione è dataSedutaConsultazione.
+	 * @param seduta nodo dal quale trovare la data della consultazione della seduta nella proprietà PROP_NAME
+	 * @param attiTrattati elenco nodeRef di tutti gli atti trattati
+	 * @param gruppo gruppo che ha fatto le consultazioni
+	 * @return Lista di NodeRef con tutte le consultazioni fatte agli atti.
+	 */
 	public List<NodeRef> getConsultazioniAtti(NodeRef seduta, List<NodeRef> attiTrattati, String gruppo){
 		
 		List<NodeRef> consultazioni = new ArrayList<NodeRef>();
@@ -235,7 +269,15 @@ public abstract class OdgBaseCommand implements OdgCommand{
     	return consultazioni;
 	}
 	
-	
+	/**
+	 * Crea un oggetto Verbale dalla seduta precedente. si va a cercare i nodi che si trovano 
+	 * /app:company_home/cm:CRL/cm:"+ISO9075.encode("Gestione Atti")+"/cm:Sedute/cm:"+ISO9075.encode(gruppo) 
+	 * e hanno come tipo {"+attoUtil.CRL_ATTI_MODEL+"}sedutaODG. Si ordina la lista query result con {" + attoUtil.CRL_ATTI_MODEL + "}dataSedutaSedutaODG. Una volta eseguita la query,
+	 * si prende sempre i secondo nodo del resultset, che corrinsponde con la seduta precedente.
+	 * @param gruppo cartella dentro Sedute che corrisponde al gruppo che partecipa alla seduta
+	 * @param seduta idem.
+	 * @return l'oggetto che rappresenta il verbale della seduta precedente.
+	 */
 	public VerbaleObject getVerbaleSedutaPrecedente(String gruppo, NodeRef seduta){   
 		
 		String path = "/app:company_home/cm:CRL/cm:"+ISO9075.encode("Gestione Atti")+"/cm:Sedute/cm:"+ISO9075.encode(gruppo);
@@ -286,7 +328,13 @@ public abstract class OdgBaseCommand implements OdgCommand{
 		
 	}
 	
-
+/**
+ * 
+ * @param documentByteArray
+ * @param replacements
+ * @return
+ * @throws IOException
+ */
 	 protected byte[] searchAndReplaceDocx(byte[] documentByteArray , HashMap<String, String> replacements) throws IOException {
 		  	
 		 try{
@@ -345,7 +393,12 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	 }
 	
 	 
-	 
+	 /**
+	  * 
+	  * @param cell
+	  * @param replacements
+	  * @throws IOException
+	  */
 	 protected void searchAndReplaceParagraph( XWPFTableCell cell, HashMap<String, String> replacements) throws IOException {
 		  	
 		 
@@ -436,7 +489,12 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	
 }
 
-
+/**
+ * Classe che serve come model basico per definire una seduta 
+ * con il numero di seduta e la data della seduta.
+ * @author sourcesense
+ *
+ */
 class VerbaleObject{
 	
 	private String numeroSeduta;
