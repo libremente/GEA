@@ -70,7 +70,7 @@ public class RiepilogoAttoController {
 	private Commissione commissioneSelected = new Commissione();
 
 	/**
-	 * 
+	 * Aggiunge le informazioni degli abbinamenti e dei relatori al contesto web
 	 */
 	@PostConstruct
 	protected void init() {
@@ -95,6 +95,12 @@ public class RiepilogoAttoController {
 	}
 
 	/**
+	 * Aggiunge la descrizione al tipo di iniziativa nel seguente modo: 01_ATTO DI
+	 * INIZIATIVA CONSILIARE - Consiliare 02_ATTO DI INIZIATIVA DI GIUNTA - Giunta
+	 * 03_ATTO DI INIZIATIVA POPOLARE - Popolare 05_ATTO DI INIZIATIVA UFFICIO
+	 * PRESIDENZA - Ufficio di Presidenza 06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA -
+	 * Presidente della Giunta 07_ATTO DI INIZIATIVA AUTONOMIE LOCALI - Consiglio
+	 * delle Autonomie locali 08_ATTO DI ALTRA INIZIATIVA - Altra Iniziativa
 	 * 
 	 * @param tipoIniziativa
 	 */
@@ -137,7 +143,7 @@ public class RiepilogoAttoController {
 	}
 
 	/**
-	 * 
+	 * Mostra il dettaglio della commissione
 	 */
 	public void showCommissioneDetail() {
 
@@ -154,6 +160,9 @@ public class RiepilogoAttoController {
 	}
 
 	/**
+	 * Ritorna la label della trasissione. Se la commissione ha RUOLO_CONSULTIVA
+	 * allora è "Data trasmissione a Comm. referente:" altrimenti "Data Trasmissione
+	 * Aula:"
 	 * 
 	 * @return
 	 */
@@ -164,6 +173,8 @@ public class RiepilogoAttoController {
 	}
 
 	/**
+	 * Ritorna la label della trasissione. Se il ruolo ha RUOLO_CONSULTIVA allora è
+	 * "Data trasmissione a Comm. referente:" altrimenti "Data Trasmissione Aula:"
 	 * 
 	 * @param ruolo
 	 * @return
@@ -174,7 +185,7 @@ public class RiepilogoAttoController {
 	}
 
 	/**
-	 * 
+	 * Ritorna tutti i relatori non usciti dall'aula
 	 */
 	public void filtraRelatori() {
 
@@ -188,6 +199,7 @@ public class RiepilogoAttoController {
 	}
 
 	/**
+	 * Abilitato se l'atto è di tipo REF, PDA, PDL, PRE o PLP
 	 * 
 	 * @return
 	 */

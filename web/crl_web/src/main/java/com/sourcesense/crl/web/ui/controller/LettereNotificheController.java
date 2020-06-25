@@ -65,7 +65,7 @@ public class LettereNotificheController implements Serializable {
 	private LettereNotificheServiceManager lettereNotificheServiceManager;
 
 	/**
-	 * 
+	 * Aggiunge una lettera di default ./lettere/default.xhtml
 	 */
 	@PostConstruct
 	public void init() {
@@ -582,6 +582,11 @@ public class LettereNotificheController implements Serializable {
 
 	}
 
+	/**
+	 * Ritorna il contenuto della lettera
+	 * 
+	 * @return
+	 */
 	public StreamedContent getFile() {
 
 		if (letteraSelected.getTipoTemplate() != null && !letteraSelected.equals("")) {
@@ -605,6 +610,8 @@ public class LettereNotificheController implements Serializable {
 	}
 
 	/**
+	 * Aggiunge le informazioni delle lettere, della direzione, email firmatario,
+	 * numero di telefono e ufficio dalla lettera selezionata nel contesto web
 	 * 
 	 * @param event
 	 */
@@ -640,7 +647,7 @@ public class LettereNotificheController implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Salvataggio della lettera
 	 */
 	public void salvaLettera() {
 
@@ -669,6 +676,7 @@ public class LettereNotificheController implements Serializable {
 	}
 
 	/**
+	 * Salvataggio del firmatario
 	 * 
 	 * @param actionEvent
 	 */

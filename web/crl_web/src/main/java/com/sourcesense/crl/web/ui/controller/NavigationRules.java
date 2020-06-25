@@ -48,7 +48,8 @@ public class NavigationRules {
 	UserBean userBean;
 
 	/**
-	 * 
+	 * Inizializza le informazioni dell'utente, dell'atto e della pagina di ricerca
+	 * dell'atto nel contesto web
 	 */
 	@PostConstruct
 	protected void init() {
@@ -70,6 +71,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI o ADMIN allora è amministratore
 	 * 
 	 * @return
 	 */
@@ -80,6 +82,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI , ADMIN o AULA allora può
+	 * inserire dati MIS
 	 * 
 	 * @return
 	 */
@@ -91,6 +95,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI , ADMIN o AULA allora può
+	 * inserire dati EAC
 	 * 
 	 * @return
 	 */
@@ -102,6 +108,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI , ADMIN o AULA allora può
+	 * inserire dati degli atti
 	 * 
 	 * @return
 	 */
@@ -113,6 +121,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Ritorna il sottostato della commissione consultiva
 	 * 
 	 * @return
 	 */
@@ -130,6 +139,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Se il ruolo della commissione non è di tipo RUOLO_CONSULTIVA ne
+	 * RUOLO_DELIBERANTE allora ha la data di richiesta dell'iscrizione in aula
 	 * 
 	 * @return
 	 */
@@ -141,6 +152,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Se il ruolo della commissione non è di tipo ServizioCommissioni ne ADMIN
+	 * allora l'EAC è disabilitato
 	 * 
 	 * @return
 	 */
@@ -152,6 +165,9 @@ public class NavigationRules {
 
 	/**
 	 * 
+	 * Se il ruolo della commissione non è di tipo ServizioCommissioni ne ADMIN e
+	 * l'utente non è in commissione allora l'EAC è disabilitato
+	 * 
 	 * @return
 	 */
 	public boolean isEACDisabledComm() {
@@ -162,6 +178,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Se il gruppo dell'utente non è di tipo CPCV ne ADMIN allora il MIS è
+	 * disabilitato
 	 * 
 	 * @return
 	 */
@@ -173,6 +191,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il gruppo dell'utente sia di tipo CPCV
 	 * 
 	 * @return
 	 */
@@ -183,6 +202,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il gruppo dell'utente sia di tipo ADMIN o SERVIZIO_COMMISSIONI e
+	 * che lo stato dell'atto sia di tipo PRESO_CARICO_SC
 	 * 
 	 * @return
 	 */
@@ -193,6 +214,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica lo stato dell'atto non sia di tipo TRASMESSO_AULA,
+	 * PRESO_CARICO_AULA, VOTATO_AULA ne PUBBLICATO
 	 * 
 	 * @return
 	 */
@@ -212,6 +235,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il gruppo dell'utente sia di tipo ADMIN o SERVIZIO_COMMISSIONI e
+	 * che lo stato dell'atto sia di tipo ORG e ne PDA_UDP
 	 * 
 	 * @return
 	 */
@@ -230,6 +255,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il gruppo dell'utente sia di tipo ADMIN o SERVIZIO_COMMISSIONI e
+	 * che lo stato dell'atto sia di tipo ORG e ne PDA_UDP
 	 * 
 	 * @return
 	 */
@@ -250,6 +277,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Disabilitato se la commissione non esiste oppure la sessione sia di tipo
+	 * PDA_UDP o ORG
 	 * 
 	 * @return
 	 */
@@ -260,6 +289,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Sempre disabilitato
 	 * 
 	 * @return
 	 */
@@ -268,6 +298,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Abilitato se il tipo atto è PAR, INP, PRE o REL
 	 * 
 	 * @return
 	 */
@@ -285,6 +316,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Abilitato se il tipo atto è PDL, PLP o 03_ATTO DI INIZIATIVA POPOLARE
 	 * 
 	 * @return
 	 */
@@ -302,6 +334,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Abilitato se il tipo atto è PDA, PLP, PRE, REF, PDL, DOC o REL
 	 * 
 	 * @return
 	 */
@@ -321,6 +354,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Abilitato se il tipo atto è PDA, PLP, PRE, REF, PDL, DOC o REL
 	 * 
 	 * @return
 	 */
@@ -340,6 +374,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Abilitato se il tipo atto è PDL o la commissione ha RUOLO_REFERENTE,
+	 * RUOLO_COREFERENTE o RUOLO_REDIGENTE
 	 * 
 	 * @return
 	 */
@@ -360,6 +396,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Abilitato se il tipo atto è PDL o PLP
 	 * 
 	 * @return
 	 */
@@ -376,6 +413,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Disabilitato se il tipo atto è PAR, REL, INP, EAC, MIS o DOC o che l'atto non
+	 * sia in aula
 	 * 
 	 * @return
 	 */
@@ -397,6 +436,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Box aula visibile
 	 * 
 	 * @return
 	 */
@@ -413,6 +453,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Emendamenti attivati
 	 * 
 	 * @return
 	 */
@@ -430,6 +471,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Dati atto attivati
 	 * 
 	 * @return
 	 */
@@ -438,6 +480,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Rinvio e stralci attivati
 	 * 
 	 * @return
 	 */
@@ -446,6 +489,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Stralci e aulta attivati
 	 * 
 	 * @return
 	 */
@@ -463,6 +507,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Pubblicazione BURL attivata
 	 * 
 	 * @return
 	 */
@@ -480,6 +525,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Testo dell'atto votato attivato
 	 * 
 	 * @return
 	 */
@@ -496,6 +542,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * BURL attivato
 	 * 
 	 * @return
 	 */
@@ -518,6 +565,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Sempre false
 	 * 
 	 * @return
 	 */
@@ -528,6 +576,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Esito dell'atto della commissione attivato
 	 * 
 	 * @return
 	 */
@@ -546,6 +595,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo INP, DOC ma non PRS
 	 * 
 	 * @return
 	 */
@@ -561,6 +611,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo REL
 	 * 
 	 * @return
 	 */
@@ -575,6 +626,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se lo stato dell'atto è chiuso
 	 * 
 	 * @return
 	 */
@@ -584,6 +636,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se lo stato dell'atto è chiuso e che non sia PAR
 	 * 
 	 * @return
 	 */
@@ -594,6 +647,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo PAR
 	 * 
 	 * @return
 	 */
@@ -602,6 +656,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo PDL
 	 * 
 	 * @return
 	 */
@@ -610,6 +665,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo INP
 	 * 
 	 * @return
 	 */
@@ -618,6 +674,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo DOC
 	 * 
 	 * @return
 	 */
@@ -626,6 +683,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo PRE
 	 * 
 	 * @return
 	 */
@@ -634,6 +692,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo DOC ma che non sia in aula
 	 * 
 	 * @return
 	 */
@@ -642,6 +701,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto non è di tipo PAR
 	 * 
 	 * @return
 	 */
@@ -663,6 +723,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo PDA
 	 * 
 	 * @return
 	 */
@@ -671,6 +732,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo PAR e che l'iniziativa sia di tipo 05_ATTO DI
+	 * INIZIATIVA UFFICIO PRESIDENZA
 	 * 
 	 * @return
 	 */
@@ -682,6 +745,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo ORG
 	 * 
 	 * @return
 	 */
@@ -692,6 +756,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo PLP
 	 * 
 	 * @return
 	 */
@@ -700,6 +765,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'utente è in commissione o che il gruppo sia di tipo AULA
 	 * 
 	 * @return
 	 */
@@ -710,6 +776,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'utente è in commissione
 	 * 
 	 * @return
 	 */
@@ -719,6 +786,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il gruppo sia di tipo AULA
 	 * 
 	 * @return
 	 */
@@ -727,6 +795,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il ruolo della commissione sia di tipo RUOLO_REFERENTE,
+	 * RUOLO_DELIBERANTE, RUOLO_REDIGENTE o RUOLO_COREFERENTE
 	 * 
 	 * @return
 	 */
@@ -746,6 +816,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il ruolo della commissione sia di tipo RUOLO_REFERENTE
 	 * 
 	 * @return
 	 */
@@ -760,6 +831,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il ruolo della commissione sia di tipo RUOLO_CONSULTIVA
 	 * 
 	 * @return
 	 */
@@ -774,6 +846,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che il ruolo della commissione sia di tipo RUOLO_DELIBERANTE
 	 * 
 	 * @return
 	 */
@@ -788,6 +861,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica che l'atto abbia la commissione deliberante
 	 * 
 	 * @return
 	 */
@@ -798,6 +872,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Verifica se l'atto è di tipo PDL, PDA, PLP, PRE, REF, REL o DOC
 	 * 
 	 * @return
 	 */
@@ -817,6 +892,8 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Atto di tipo INP, REL o DOC e commissione con RUOLO_REFERENTE,
+	 * RUOLO_COREFERENTE, RUOLO_REDIGENTE o RUOLO_DELIBERANTE
 	 * 
 	 * @return
 	 */
@@ -841,6 +918,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Atto di tipo INP, REL o DOC
 	 * 
 	 * @return
 	 */
@@ -856,6 +934,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Calendarizzazione attivata
 	 * 
 	 * @return
 	 */
@@ -883,6 +962,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * Referente per la continuazione lavori
 	 * 
 	 * @return
 	 */
@@ -910,6 +990,7 @@ public class NavigationRules {
 	}
 
 	/**
+	 * GUest
 	 * 
 	 * @return
 	 */

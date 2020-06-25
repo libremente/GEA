@@ -50,6 +50,7 @@ public class LoginController {
 	private String password;
 
 	/**
+	 * Login tramite utenza e password. Ritorna una sessione in sola lettura
 	 * 
 	 * @return
 	 */
@@ -78,6 +79,7 @@ public class LoginController {
 	}
 
 	/**
+	 * Login tramite utenza e password
 	 * 
 	 * @return
 	 */
@@ -129,6 +131,7 @@ public class LoginController {
 	}
 
 	/**
+	 * Logout della sessione web
 	 * 
 	 * @return
 	 */

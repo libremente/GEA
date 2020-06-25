@@ -236,7 +236,7 @@ public class SearchAttoController implements Serializable {
 	private Map<String, String> organismiStatutari = new HashMap<String, String>();
 
 	/**
-	 * 
+	 * Ritorna gli atti a seconda dello stato richiesto lavorati o i nlavorazione
 	 */
 	public void searchAtti() {
 
@@ -345,7 +345,9 @@ public class SearchAttoController implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Aggiunge le commissioni, organismi statutari, relatori, stati, tipi di
+	 * chiusura, iniziative, tipi atto, legislature, gruppi consiliari, firmatari e
+	 * atti al contesto web
 	 */
 	@PostConstruct
 	protected void initLazyModel() {
@@ -429,6 +431,7 @@ public class SearchAttoController implements Serializable {
 	}
 
 	/**
+	 * Inserisce gli atti nel documento xls
 	 * 
 	 * @param document
 	 * @throws SecurityException
@@ -511,6 +514,7 @@ public class SearchAttoController implements Serializable {
 	}
 
 	/**
+	 * Mostra il dettaglio dell'atto selezionato
 	 * 
 	 * @return
 	 */
@@ -545,6 +549,7 @@ public class SearchAttoController implements Serializable {
 	}
 
 	/**
+	 * Mostra il dettaglio dell'atto specificato da id e tipo
 	 * 
 	 * @param idAttoParam
 	 * @param tipo
@@ -582,7 +587,7 @@ public class SearchAttoController implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Svuota la cache del controller
 	 */
 	public void reset() {
 
@@ -641,6 +646,7 @@ public class SearchAttoController implements Serializable {
 	}
 
 	/**
+	 * Ritorna la sottrazione tra i due numeri atto
 	 * 
 	 * @param s1
 	 * @param s2

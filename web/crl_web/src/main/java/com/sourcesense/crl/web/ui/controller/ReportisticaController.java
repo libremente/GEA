@@ -130,7 +130,8 @@ public class ReportisticaController implements Serializable {
 	private final String ELENCO_ATTI_RINVIO = "Elenco Atti Rinviati alle Commissioni";
 
 	/**
-	 * 
+	 * Aggiunge tutte le commissioni, organismi, firmatari, relatori. tipi atto e
+	 * legislature nel contesto web
 	 */
 	@PostConstruct
 	public void init() {
@@ -201,6 +202,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * OK se il report si chiama Composizione commissioni
 	 * 
 	 * @return
 	 */
@@ -211,6 +213,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Tipo atto visibile
 	 * 
 	 * @return
 	 */
@@ -229,6 +232,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Commissione visibile
 	 * 
 	 * @return
 	 */
@@ -246,6 +250,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data consultazione visibile
 	 * 
 	 * @return
 	 */
@@ -256,6 +261,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Ruolo commissione visibile
 	 * 
 	 * @return
 	 */
@@ -270,6 +276,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data assegnazione visibile
 	 * 
 	 * @return
 	 */
@@ -283,6 +290,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data votazione commissione visibile
 	 * 
 	 * @return
 	 */
@@ -295,6 +303,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data ritiro visibile
 	 * 
 	 * @return
 	 */
@@ -307,6 +316,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data nomina relatore visibile
 	 * 
 	 * @return
 	 */
@@ -319,6 +329,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Relatore visibile
 	 * 
 	 * @return
 	 */
@@ -329,6 +340,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Organismo visibile
 	 * 
 	 * @return
 	 */
@@ -340,6 +352,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data assegnazione parere da visibile
 	 * 
 	 * @return
 	 */
@@ -354,6 +367,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Firmatario visibile
 	 * 
 	 * @return
 	 */
@@ -366,6 +380,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Tipologia firma visibile
 	 * 
 	 * @return
 	 */
@@ -378,6 +393,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data presentazione visibile
 	 * 
 	 * @return
 	 */
@@ -390,6 +406,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data assegnazione commissione referente visibile
 	 * 
 	 * @return
 	 */
@@ -402,6 +419,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Data seduta visibile
 	 * 
 	 * @return
 	 */
@@ -414,6 +432,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Ritorna il contenuto del report
 	 * 
 	 * @return
 	 */
@@ -442,6 +461,7 @@ public class ReportisticaController implements Serializable {
 	}
 
 	/**
+	 * Aggiunge il report selezionato al contesto web
 	 * 
 	 * @param event
 	 */
