@@ -25,25 +25,45 @@
  */
 package com.sourcesense.crl.webscript.template;
 
+/**
+ * <p>Classe per gestione delle eccezione nella generazione dei documenti
+ * @author sourcesense
+ */
 public class GenerateDocumentException extends RuntimeException {
 
 	private String className;
 
-	
+	/**
+	 *
+	 * @param className nome della classe di eccezione
+	 */
     public GenerateDocumentException(String className){
 		setClassName(className);
 	}
-	
+
+	/**
+	 *
+	 * @param className nome della classe di eccezione
+	 * @param t Istanza dell eccezzione
+	 */
     public GenerateDocumentException(String className, Throwable t){
     	super (t);
 		setClassName(className);
 		
 	}
-	
+
+	/**
+	 *
+	 * @return className nome della classe di eccezione
+	 */
 	public String getClassName() {
 		return className;
 	}
 
+	/**
+	 *
+	 * @param className  nome della classe di eccezione
+	 */
 	public void setClassName(String className) {
 		this.className = className;
 	}

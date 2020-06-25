@@ -29,6 +29,20 @@ import java.io.IOException;
 
 import org.alfresco.service.cmr.repository.NodeRef;
 
+/**
+ * Interfaccia che fa da base per tutti i tipi documento Lettera che si occupa di generare
+ * un documento di tipologia lettera in base al template che riceve come parametro.
+ */
 public interface LetteraCommand {
+
+	/**
+	 * Ritorna il documento costruito in base al template e i parametri in ingresso.
+	 * @param templateByteArray il template del documento da generare
+	 * @param templateNodeRef il riferimento al nodo del template
+	 * @param attoNodeRef il riferimento al nodo del atto
+	 * @param gruppo i gruppo di appartenza al momento della richiesta
+	 * @return documento generato in base al template passato come parametro.
+	 * @throws IOException
+	 */
 	byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo)  throws IOException;
 }
