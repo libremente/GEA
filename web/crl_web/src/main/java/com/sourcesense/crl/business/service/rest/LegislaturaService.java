@@ -38,7 +38,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione delle legislature. Inserimento, aggiornamento e ricerca
  * 
  * @author sourcesense
  *
@@ -54,6 +54,7 @@ public class LegislaturaService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco completo delle legislature per url
 	 * 
 	 * @param url
 	 * @return
@@ -91,6 +92,7 @@ public class LegislaturaService {
 	}
 
 	/**
+	 * Non implementato
 	 * 
 	 * @param url
 	 * @param legislatura

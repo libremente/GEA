@@ -20,7 +20,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
- * 
+ * Fornisce il ticket alfresco per la sessione
  * 
  * @author sourcesense
  *

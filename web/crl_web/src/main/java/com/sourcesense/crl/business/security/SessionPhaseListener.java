@@ -36,7 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ * Esegue il redirect verso la pagina di login all'interno di una sessione
+ * chiusa
  * 
  * @author sourcesense
  *
@@ -48,14 +49,14 @@ public class SessionPhaseListener implements PhaseListener {
 	private static final Logger LOG = LoggerFactory.getLogger(SessionPhaseListener.class);
 
 	/**
-	 * 
+	 * Metodo da implementare. Attualmente non esegue operazioni
 	 */
 	public void afterPhase(PhaseEvent event) {
 		;
 	}
 
 	/**
-	 * 
+	 * Esegue il redirect verso la pagina di login nel caso non si è autenticati
 	 */
 	public void beforePhase(PhaseEvent event) {
 
@@ -74,7 +75,7 @@ public class SessionPhaseListener implements PhaseListener {
 	}
 
 	/**
-	 * 
+	 * Ritorna il phase id jsf. Attualmente di tipo RESTORE_VIEW
 	 */
 	public PhaseId getPhaseId() {
 
@@ -84,7 +85,7 @@ public class SessionPhaseListener implements PhaseListener {
 
 	/**
 	 * 
-	 * Does a regular or ajax redirect.
+	 * Esegue il redirect ajax.
 	 */
 	public void doRedirect(FacesContext fc, String redirectPage)
 

@@ -28,7 +28,14 @@ import com.sourcesense.crl.util.JsonIntegerDeserializer;
 import com.sourcesense.crl.util.JsonNoteDeserializer;
 
 /**
- * 
+ * Aula che comprende le informazioni di data presa in carico esame aula,
+ * relazione scritta, esito voto aula, tipologia votazione, data seduta aula,
+ * numero Dcr, numero Lcr, emendato,note votazione, testi atto votato esame
+ * aula, emendamenti esame aula, allegati esame aula, numero degli emendamenti
+ * presentati di tipo maggioranza, minoranza e giunta, numero degli emendamenti
+ * approvati di tipo maggioranza, minoranza e giunta, non ammissibili, decaduti,
+ * ritirati, respinti, totale non approvati in esame aula, note emendamenti,
+ * data seduta rinvio
  * 
  * @author sourcesense
  *

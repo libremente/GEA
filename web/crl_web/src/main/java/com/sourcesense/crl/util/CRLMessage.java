@@ -17,7 +17,7 @@
 package com.sourcesense.crl.util;
 
 /**
- * 
+ * Messaggio CRL per le operazioni di commit
  * 
  * @author sourcesense
  *

@@ -42,7 +42,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione degli utenti. Inserimento, aggiornamento e
+ * ricerca
  * 
  * @author sourcesense
  *
@@ -60,6 +61,7 @@ public class UserService {
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
 	/**
+	 * Ritorna il token di autenticazione
 	 * 
 	 * @param url
 	 * @param user
@@ -105,6 +107,7 @@ public class UserService {
 	}
 
 	/**
+	 * Esegue l'autenticazione tramite utente e password
 	 * 
 	 * @param url
 	 * @param user

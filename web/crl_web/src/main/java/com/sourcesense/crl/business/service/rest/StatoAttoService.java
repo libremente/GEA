@@ -37,7 +37,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione degli stati degli atti. Inserimento,
+ * aggiornamento e ricerca
  * 
  * @author sourcesense
  *
@@ -53,6 +54,7 @@ public class StatoAttoService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco degli stati degli atti
 	 * 
 	 * @param url
 	 * @return

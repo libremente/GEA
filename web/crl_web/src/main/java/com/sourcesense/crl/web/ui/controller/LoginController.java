@@ -29,7 +29,7 @@ import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Operazioni di login e logout dalle pagine web
  * 
  * @author sourcesense
  *

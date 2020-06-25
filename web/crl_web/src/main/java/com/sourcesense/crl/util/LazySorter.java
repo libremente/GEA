@@ -23,7 +23,7 @@ import org.primefaces.model.SortOrder;
 import com.sourcesense.crl.business.model.Atto;
 
 /**
- * 
+ * Utilità per l'ordinamento degli atti
  * 
  * @author sourcesense
  *
@@ -39,9 +39,7 @@ public class LazySorter implements Comparator<Atto> {
 		this.sortOrder = sortOrder;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public int compare(Atto atto1, Atto atto2) {
 		try {
 			Object value1 = Atto.class.getField(this.sortField).get(atto1);

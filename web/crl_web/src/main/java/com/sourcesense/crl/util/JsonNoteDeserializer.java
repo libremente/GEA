@@ -24,7 +24,7 @@ import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 
 /**
- * 
+ * Deserializzatore per le note
  * 
  * @author sourcesense
  *

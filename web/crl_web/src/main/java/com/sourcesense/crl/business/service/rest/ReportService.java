@@ -35,7 +35,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione dei report. Inserimento, aggiornamento e
+ * ricerca
  * 
  * @author sourcesense
  *
@@ -51,6 +52,7 @@ public class ReportService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna il contenuto del report
 	 * 
 	 * @param url
 	 * @param report

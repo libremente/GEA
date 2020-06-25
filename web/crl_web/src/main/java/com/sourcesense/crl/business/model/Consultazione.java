@@ -30,7 +30,7 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Consultazione di un atto in una seduta
  * 
  * @author sourcesense
  *

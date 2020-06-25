@@ -29,7 +29,9 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Allegato rappresentato con le informazioni di nome, descrizione, download
+ * url, pubblico, testo, tipo allegato, id, mimetype, data seduta, tipologia,
+ * provenienza, passaggio, commissione, organismo statuario e consutazione
  * 
  * @author sourcesense
  *

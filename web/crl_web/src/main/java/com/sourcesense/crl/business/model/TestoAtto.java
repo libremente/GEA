@@ -22,7 +22,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Testo dell'atto. Comprende l'url per il download
  * 
  * @author sourcesense
  *

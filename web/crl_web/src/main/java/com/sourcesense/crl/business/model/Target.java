@@ -23,7 +23,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Target della seduta. Viene indicata sia la provenienza che la commissione
  * 
  * @author sourcesense
  *

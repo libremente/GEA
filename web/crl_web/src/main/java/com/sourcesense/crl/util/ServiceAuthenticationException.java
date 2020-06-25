@@ -17,7 +17,7 @@
 package com.sourcesense.crl.util;
 
 /**
- * 
+ * Aggiunge il nome del servizio durante l'errore di autenticazione
  * 
  * @author sourcesense
  *

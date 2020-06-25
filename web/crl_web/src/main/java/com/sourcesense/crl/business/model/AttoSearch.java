@@ -28,7 +28,16 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Atto usato per la ricerca che aggiunge i campi di ricerca numero DGR, data
+ * assegnazione a, data assegnazione da, data DGR, numero atto da, numero atto
+ * a, data pubblicazione da, data pubblicazione a, data seduta sc da, data
+ * seduta sc a, data seduta commissione da, data seduta commissione a, data
+ * seduta aula da, data seduta aula a, data iniziativa da, data iniziativa a,
+ * data chiusura da, data chiusura a, data LR, relatore, numero Dcr, esito
+ * commissione referente, esito voto aula, commissione user, commissione 1,
+ * commissione 2. commissione 3, gruppo firmatario, gruppo primo firmatario,
+ * numero Lcr, stati utente, gruppo utente, emendato, emendato aula, ruolo
+ * utente e tipo working list
  * 
  * @author sourcesense
  *

@@ -24,7 +24,7 @@ import javax.faces.bean.SessionScoped;
 import com.sourcesense.crl.business.model.AttoSearch;
 
 /**
- * 
+ * Ricerca dell'atto nelle pagine web
  * 
  * @author sourcesense
  *
@@ -33,9 +33,6 @@ import com.sourcesense.crl.business.model.AttoSearch;
 @SessionScoped
 public class AttoSearchBean extends AttoSearch implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private boolean firstSaerch = true;

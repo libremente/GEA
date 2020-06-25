@@ -33,7 +33,8 @@ import com.sourcesense.crl.business.service.rest.PersonaleService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestione del personale. Comprende i firmatari, i gruppi consiliari, i
+ * relatori e i membri del comitato
  * 
  * @author sourcesense
  *
@@ -66,6 +67,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo dei gruppi consiliari
 	 * 
 	 * @return
 	 */
@@ -78,6 +80,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei gruppi consiliari
 	 * 
 	 * @return
 	 */
@@ -96,6 +99,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei firmatari
 	 * 
 	 * @return
 	 */
@@ -114,6 +118,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei relatori
 	 * 
 	 * @return
 	 */
@@ -132,6 +137,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei firmatari
 	 * 
 	 * @return
 	 */
@@ -150,6 +156,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei firmatari storici
 	 * 
 	 * @param legislatura
 	 * @return
@@ -169,6 +176,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei relatori
 	 * 
 	 * @return
 	 */
@@ -187,6 +195,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo delle descrizioni dei membri del comitato
 	 * 
 	 * @return
 	 */
@@ -205,6 +214,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo dei relatori
 	 * 
 	 * @return
 	 */
@@ -214,6 +224,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo dei membri del comitato
 	 * 
 	 * @return
 	 */
@@ -223,6 +234,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco completo dei firmatari
 	 * 
 	 * @return
 	 */
@@ -232,6 +244,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco dei firmatari per atto
 	 * 
 	 * @param atto
 	 * @return

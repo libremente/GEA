@@ -28,7 +28,7 @@ import com.sourcesense.crl.business.service.rest.TipoChiusuraService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestisce i tipi di chiusura. Sono valori dinamici
  * 
  * @author sourcesense
  *
@@ -60,9 +60,7 @@ public class TipoChiusuraServiceManager implements ServiceManager {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public Map<String, String> findAll() {
 		Map<String, String> tipiChiusura = new HashMap<String, String>();
 

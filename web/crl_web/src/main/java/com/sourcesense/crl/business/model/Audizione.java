@@ -23,7 +23,8 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Audizione che comprende le informazioni di soggetto partecipante, previsto e
+ * discusso
  * 
  * @author sourcesense
  *

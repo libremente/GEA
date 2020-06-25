@@ -45,7 +45,7 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Inserimento dell' EAC dalle pagine web
  * 
  * @author sourcesense
  *
@@ -102,7 +102,7 @@ public class InserisciEACController {
 	private String attoSindacatoToDelete;
 
 	/**
-	 * 
+	 * Aggiunge i tipi di atto del sindacato e le legislature al contesto web
 	 */
 	@PostConstruct
 	private void initializeValues() {
@@ -126,7 +126,7 @@ public class InserisciEACController {
 	}
 
 	/**
-	 * 
+	 * Inserimento dell'atto
 	 */
 	public void inserisciAtto() {
 
@@ -156,6 +156,7 @@ public class InserisciEACController {
 	}
 
 	/**
+	 * Upload dell'allegato parere
 	 * 
 	 * @param event
 	 */
@@ -184,6 +185,7 @@ public class InserisciEACController {
 	}
 
 	/**
+	 * Verifica che il parere non sia già presente nell'elenco degli allegati EAC
 	 * 
 	 * @param fileName
 	 * @return
@@ -203,7 +205,7 @@ public class InserisciEACController {
 	}
 
 	/**
-	 * 
+	 * Rimozione dell'allegato parere
 	 */
 	public void removeAllegatoParere() {
 
@@ -223,7 +225,7 @@ public class InserisciEACController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del collegamento degli atti del sindacato
 	 */
 	public void addCollegamentoAttoSindacato() {
 
@@ -252,7 +254,8 @@ public class InserisciEACController {
 	}
 
 	/**
-	 * 
+	 * Ricerca gli atti del sindacato per anno di creazione e aggiorna il numero
+	 * degli atti del sindacato
 	 */
 	public void handleAttoSindacatoChange() {
 		Calendar c = Calendar.getInstance();
@@ -280,7 +283,7 @@ public class InserisciEACController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del collegamento degli atti del sindacato
 	 */
 	public void removeCollegamentoAttoSindacato() {
 
@@ -297,6 +300,8 @@ public class InserisciEACController {
 	}
 
 	/**
+	 * Verifica che il collegamento scelto non sia già presente nell'elenco degli
+	 * atti del sindacato
 	 * 
 	 * @return
 	 */

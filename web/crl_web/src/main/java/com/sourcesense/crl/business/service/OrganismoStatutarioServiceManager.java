@@ -28,7 +28,7 @@ import com.sourcesense.crl.business.service.rest.OrganismoStatutarioService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Operazioni di ricerca e aggiornamento dell'organismo statuario
  * 
  * @author sourcesense
  *
@@ -61,7 +61,7 @@ public class OrganismoStatutarioServiceManager implements ServiceManager {
 	}
 
 	/**
-	 * 
+	 * Ritorna l'elenco completo delle descrizioni degli organismi statutari
 	 */
 	public Map<String, String> findAll() {
 		Map<String, String> organismoStatutari = new HashMap<String, String>();

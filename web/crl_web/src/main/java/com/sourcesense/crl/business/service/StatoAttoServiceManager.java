@@ -28,7 +28,12 @@ import com.sourcesense.crl.business.service.rest.StatoAttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestione degli stati degli atti. Possono essere dei seguenti tipi:
+ * PROTOCOLLATO, PRESO_CARICO_SC, VERIFICATA_AMMISSIBILITA,
+ * PROPOSTA_ASSEGNAZIONE, ASSEGNATO_COMMISSIONE, PRESO_CARICO_COMMISSIONE,
+ * NOMINATO_RELATORE, VOTATO_COMMISSIONE, TRASMESSO_COMMISSIONE,
+ * LAVORI_COMITATO_RISTRETTO, TRASMESSO_AULA, PRESO_CARICO_AULA, VOTATO_AULA,
+ * PUBBLICATO, CHIUSO
  * 
  * @author sourcesense
  *
@@ -60,9 +65,7 @@ public class StatoAttoServiceManager implements ServiceManager {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public Map<String, String> findAll() {
 		Map<String, String> stati = new HashMap<String, String>();
 

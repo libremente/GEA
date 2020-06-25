@@ -30,7 +30,7 @@ import com.sourcesense.crl.business.service.rest.SeduteService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestione delle sedute, dei verbali e degli odg
  * 
  * @author sourcesense
  *
@@ -45,6 +45,7 @@ public class SeduteServiceManager implements ServiceManager {
 	private URLBuilder urlBuilder;
 
 	/**
+	 * Rimuove la seduta
 	 * 
 	 * @param idSeduta
 	 */
@@ -54,6 +55,7 @@ public class SeduteServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio della seduta
 	 * 
 	 * @param gestioneSedute
 	 * @return
@@ -65,6 +67,8 @@ public class SeduteServiceManager implements ServiceManager {
 
 	/**
 	 * 
+	 * Aggiornamento della seduta
+	 * 
 	 * @param gestioneSedute
 	 * @return
 	 */
@@ -74,6 +78,7 @@ public class SeduteServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna le sedute secondo il gruppo e la legislatura
 	 * 
 	 * @param gruppo
 	 * @param legislatura
@@ -85,6 +90,7 @@ public class SeduteServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna la seduta secondo il gruppo, la data seduta e la legislatura
 	 * 
 	 * @param gruppo
 	 * @param dataSeduta
@@ -99,6 +105,7 @@ public class SeduteServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio dell'odg di una seduta
 	 * 
 	 * @param seduta
 	 */
@@ -107,6 +114,7 @@ public class SeduteServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento dell'odg di una seduta
 	 * 
 	 * @param seduta
 	 * @param stream
@@ -120,6 +128,7 @@ public class SeduteServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento del verbale di una seduta
 	 * 
 	 * @param seduta
 	 * @param stream
@@ -134,6 +143,7 @@ public class SeduteServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna il contenuto dell'odg di una seduta
 	 * 
 	 * @param tipoTemplate
 	 * @param idSeduta

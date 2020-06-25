@@ -23,7 +23,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Tipologia dell'atto. Utilizza una descrizione
  * 
  * @author sourcesense
  *

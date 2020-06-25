@@ -59,7 +59,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Gestione delle sedute per le pagine web
  * 
  * @author sourcesense
  *
@@ -151,7 +151,7 @@ public class GestioneSeduteController {
 			.compile("(.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)");
 
 	/**
-	 * 
+	 * Aggiunge l'elenco delle sedute nel contesto web
 	 */
 	@PostConstruct
 	protected void init() {
@@ -176,21 +176,21 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Aggiornamento della seduta
 	 */
 	public void updateInserisciSedutaHandler() {
 		setStatoCommitInserisciSeduta(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dell'odg
 	 */
 	public void updateInserisciOdgHandler() {
 		setStatoCommitInserisciOdg(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Inserisce i messaggi di errore per la seduta e per l'odg
 	 */
 	public void changeTabHandler() {
 
@@ -208,7 +208,8 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Esclude dall'elenco le sedute che hanno data seduta da o data seduta a oppure
+	 * che non rispettino un range di date
 	 */
 	public void filterDataTable() {
 
@@ -256,7 +257,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Mostra il dettaglio della seduta nella pagina web
 	 */
 	public void showSedutaDetail() {
 
@@ -326,6 +327,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Trova la seduta per data
 	 * 
 	 * @param dataSeduta
 	 * @return
@@ -343,6 +345,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Rimuove la seduta per una certa data
 	 * 
 	 * @param dataSeduta
 	 */
@@ -360,7 +363,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Rimuove la seduta
 	 */
 	public void removeSeduta() {
 
@@ -386,6 +389,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Mostra il dettaglio dell'odg
 	 * 
 	 * @return
 	 */
@@ -428,7 +432,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge il link
 	 */
 	public void addLink() {
 
@@ -450,7 +454,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Rimuov eil link
 	 */
 	public void removeLink() {
 
@@ -466,6 +470,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Verifica che il link scelto non sia presente nell'elenco dei link
 	 * 
 	 * @return
 	 */
@@ -484,7 +489,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio della seduta
 	 */
 	public void salvaAggiungiSeduta() {
 
@@ -556,7 +561,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Pulizia del controller. Vengono rimossi i dati in cache
 	 */
 	private void refreshInsert() {
 
@@ -574,7 +579,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Crea un buffer contenente le date delle sedute
 	 */
 	public void fillDateSeduteMap() {
 		dateSedute = new ArrayList<Date>();
@@ -584,7 +589,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge la data alla seduta
 	 */
 	public void updateSedutaInserisciOdg() {
 		if (!seduteList.isEmpty()) {
@@ -595,7 +600,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge l'atto trattato corrente
 	 */
 	public void addAttoTrattato() {
 
@@ -636,6 +641,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Aggiunge l'atto trattato scelto tramite id e tipo atto
 	 * 
 	 * @param idAttoToAdd
 	 * @param tipoAtto
@@ -701,7 +707,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Rimuove l'atto trattato
 	 */
 	public void removeAttoTrattato() {
 
@@ -717,6 +723,8 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Verifica che l'atto trattato scelto non sia presente nell'elenco degli atti
+	 * trattati
 	 * 
 	 * @param idAttoTrattatoToAdd
 	 * @return
@@ -734,6 +742,8 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Verifica che il soggetto rientri nel pattern
+	 * (.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)
 	 * 
 	 * @param soggetto
 	 * @return
@@ -743,7 +753,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge l'audizione
 	 */
 	public void addAudizione() {
 
@@ -776,7 +786,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Rimuove l'audizione
 	 */
 	public void removeAudizione() {
 
@@ -792,6 +802,8 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Verifica che il soggetto scelto non sia già presente nell'elenco delle
+	 * audizioni
 	 * 
 	 * @param soggettoToAdd
 	 * @return
@@ -809,7 +821,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del collegamento degli atti del sindacato
 	 */
 	public void addCollegamentoAttoSindacato() {
 
@@ -837,7 +849,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del collegamento degli atti del sindacato
 	 */
 	public void removeCollegamentoAttoSindacato() {
 
@@ -853,6 +865,8 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Verifica che l'id dell'atto del sindacato non sia già presente nell'elenco
+	 * dei collegamenti
 	 * 
 	 * @return
 	 */
@@ -869,7 +883,8 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Ricerca gli atti del sindacato per anno di creazione e aggiorna il numero
+	 * degli atti del sindacato
 	 */
 	public void handleAttoSindacatoChange() {
 
@@ -899,7 +914,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio dell'odg
 	 */
 	public void salvaInserisciOdg() {
 
@@ -930,6 +945,9 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Ottiene l'elenco ordinato dei dati trattati assegnando un numero di
+	 * ordinamento progressivo comprensivo di uno 0 iniziale per i numeri a una
+	 * cifra
 	 * 
 	 * @return
 	 */
@@ -975,6 +993,9 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Ottiene l'elenco ordinato dei dati del sindacato trattati assegnando un
+	 * numero di ordinamento progressivo comprensivo di uno 0 iniziale per i numeri
+	 * a una cifra
 	 * 
 	 * @return
 	 */
@@ -1020,6 +1041,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Ritorna il file dell'odg
 	 * 
 	 * @return
 	 */
@@ -1061,6 +1083,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Upload del file dell'odg
 	 * 
 	 * @param event
 	 */
@@ -1090,6 +1113,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Upload del verbale
 	 * 
 	 * @param event
 	 */
@@ -1121,7 +1145,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del verbale
 	 */
 	public void removeVerbale() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1139,7 +1163,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del testo dell'odg
 	 */
 	public void removeTestoODG() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1443,6 +1467,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
+	 * Ritorna un elenco di anni a partire dall'anno scelto fino alla data odierna
 	 * 
 	 * @param annoPartenzaString
 	 * @return

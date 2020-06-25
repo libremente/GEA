@@ -23,7 +23,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Link con indirizzo. Può essere pubblico o privato
  * 
  * @author sourcesense
  *

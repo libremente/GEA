@@ -28,7 +28,8 @@ import com.sourcesense.crl.business.model.Votazione;
 import com.sun.jersey.api.client.Client;
 
 /**
- * 
+ * Servizio rest per la gestione delle votazioni. Inserimento, aggiornamento e
+ * ricerca
  * 
  * @author sourcesense
  *
@@ -44,6 +45,7 @@ public class VotazioneService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Non implementato
 	 * 
 	 * @return
 	 */
@@ -52,6 +54,7 @@ public class VotazioneService {
 	}
 
 	/**
+	 * Non implementato
 	 * 
 	 * @return
 	 */

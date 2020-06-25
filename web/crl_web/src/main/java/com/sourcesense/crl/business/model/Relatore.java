@@ -29,7 +29,7 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Relatore di un gruppo consiliare
  * 
  * @author sourcesense
  *

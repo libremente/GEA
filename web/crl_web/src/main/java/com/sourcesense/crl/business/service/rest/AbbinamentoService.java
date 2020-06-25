@@ -37,7 +37,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione degli abbinamenti
  * 
  * @author sourcesense
  *
@@ -53,6 +53,7 @@ public class AbbinamentoService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Aggiornamento dell'abbinamento
 	 * 
 	 * @param url
 	 * @param abbinamento

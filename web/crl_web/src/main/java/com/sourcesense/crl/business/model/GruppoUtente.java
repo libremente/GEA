@@ -30,7 +30,7 @@ import org.pojomatic.annotations.AutoProperty;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
- * 
+ * Gruppo utente
  * 
  * @author sourcesense
  *

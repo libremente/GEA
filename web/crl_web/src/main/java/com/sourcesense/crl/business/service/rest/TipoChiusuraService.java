@@ -37,7 +37,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione dei tipi di chiusura. Inserimento,
+ * aggiornamento e ricerca
  * 
  * @author sourcesense
  *
@@ -53,6 +54,7 @@ public class TipoChiusuraService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco dei tipi di chiusura
 	 * 
 	 * @param url
 	 * @return

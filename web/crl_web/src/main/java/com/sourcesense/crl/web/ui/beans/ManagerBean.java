@@ -25,7 +25,8 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
 /**
- * 
+ * Manager rappresentato dalle informazioni del codice, dell'atto e della spunta
+ * per visualizzare i i dettagli delle commissioni
  * 
  * @author sourcesense
  *
@@ -42,30 +43,18 @@ public class ManagerBean implements Serializable {
 
 	private AttoServiceManager as = new AttoServiceManager();
 
-	/**
-	 * @return the code
-	 */
 	public String getCode() {
 		return code;
 	}
 
-	/**
-	 * @param code the code to set
-	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-	/**
-	 * @return the atto
-	 */
 	public Atto getAtto() {
 		return atto;
 	}
 
-	/**
-	 * @param atto the atto to set
-	 */
 	public void setAtto(Atto atto) {
 		this.atto = atto;
 	}
@@ -79,7 +68,7 @@ public class ManagerBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Verifica se i dettagli delle commissioni sono visualizzabili
 	 */
 	public void visualizeCommDetail() {
 		this.showCommDetail = true;

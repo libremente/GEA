@@ -40,7 +40,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione degli atti record
  * 
  * @author sourcesense
  *
@@ -56,6 +56,7 @@ public class AttoRecordService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco dei testi dell'atto per un determinato url
 	 * 
 	 * @param url
 	 * @return
@@ -93,6 +94,7 @@ public class AttoRecordService {
 	}
 
 	/**
+	 * Rimuove l'url
 	 * 
 	 * @param url
 	 */
@@ -113,6 +115,7 @@ public class AttoRecordService {
 	}
 
 	/**
+	 * Ritorna l'elenco degli allegati per un determinato url
 	 * 
 	 * @param url
 	 * @return
@@ -152,6 +155,7 @@ public class AttoRecordService {
 	}
 
 	/**
+	 * Ritorna il contenuto di un url
 	 * 
 	 * @param url
 	 * @return
@@ -176,6 +180,7 @@ public class AttoRecordService {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato della commissione
 	 * 
 	 * @param url
 	 * @param allegato
@@ -218,6 +223,7 @@ public class AttoRecordService {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato per un determinato url
 	 * 
 	 * @param url
 	 * @param allegato
@@ -260,6 +266,7 @@ public class AttoRecordService {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto per un determinato url
 	 * 
 	 * @param url
 	 * @param testoAtto

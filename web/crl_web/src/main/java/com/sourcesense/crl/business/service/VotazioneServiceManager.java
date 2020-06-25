@@ -26,7 +26,7 @@ import com.sourcesense.crl.business.model.Votazione;
 import com.sourcesense.crl.business.service.rest.VotazioneService;
 
 /**
- * 
+ * Gestione delle votazioni e raccolta degli esiti delle sedute
  * 
  * @author sourcesense
  *
@@ -56,6 +56,7 @@ public class VotazioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Attualmente non implementato
 	 * 
 	 * @return
 	 */
@@ -65,6 +66,7 @@ public class VotazioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Attualmente non implementato
 	 * 
 	 * @return
 	 */

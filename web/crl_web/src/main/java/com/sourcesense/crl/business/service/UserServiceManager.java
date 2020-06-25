@@ -29,7 +29,7 @@ import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestisce l'utente e le operazioni di autenticazione
  * 
  * @author sourcesense
  *
@@ -44,6 +44,7 @@ public class UserServiceManager implements ServiceManager {
 	private UserService userService;
 
 	/**
+	 * Esegue l'autenticazione tramite utente e password
 	 * 
 	 * @param user
 	 * @return
@@ -82,6 +83,8 @@ public class UserServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Esegue l'autenticazione tramite utente e password per avere un accesso in
+	 * sola lettura
 	 * 
 	 * @param user
 	 * @return

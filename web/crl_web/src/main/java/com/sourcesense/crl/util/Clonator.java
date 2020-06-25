@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 
+ * Utlità per clonare le liste java
  * 
  * @author sourcesense
  *
@@ -29,6 +29,7 @@ import java.util.List;
 public class Clonator {
 
 	/**
+	 * Clonazione di una lista
 	 * 
 	 * @param list
 	 * @return

@@ -29,7 +29,7 @@ import org.pojomatic.annotations.AutoProperty;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Organo che comprende le risorse esterne
  * 
  * @author sourcesense
  *

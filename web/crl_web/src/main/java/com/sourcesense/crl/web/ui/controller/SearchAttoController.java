@@ -63,7 +63,7 @@ import com.sourcesense.crl.web.ui.beans.AttoSearchBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Operazioni di ricerca dell'atto nelle pagine web
  * 
  * @author sourcesense
  *

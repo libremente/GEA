@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * 
+ * Utilità per le date
  * 
  * @author sourcesense
  *
@@ -31,6 +31,8 @@ import java.util.GregorianCalendar;
 public class DateUtils {
 
 	/**
+	 * Genera una data di scadenza secondo il formato dd/MM/yyyy a partire dal
+	 * 01/08/
 	 * 
 	 * @param dateIn
 	 * @param sospensioneFeriale
@@ -88,6 +90,7 @@ public class DateUtils {
 	}
 
 	/**
+	 * Generazione dela data di scadenza a seconda del tipo
 	 * 
 	 * @param dataPresaInCarico
 	 * @param isRegolamento
@@ -103,6 +106,8 @@ public class DateUtils {
 	}
 
 	/**
+	 * Se la data di scadenza è per un dgr viene aggiunto un ritardo di 30
+	 * giorni
 	 * 
 	 * @param dateIn
 	 * @param sospensioneFeriale
@@ -113,6 +118,8 @@ public class DateUtils {
 	}
 
 	/**
+	 * Se la data di scadenza è per un regolamento viene aggiunto un ritardo di 60
+	 * giorni
 	 * 
 	 * @param dateIn
 	 * @param sospensioneFeriale
@@ -123,6 +130,7 @@ public class DateUtils {
 	}
 
 	/**
+	 * Aggiunge un ritardo in ordine di giorni alla data
 	 * 
 	 * @param DELAY
 	 * @param dateIn
@@ -160,6 +168,7 @@ public class DateUtils {
 	}
 
 	/**
+	 * Ritorna il numero di giorni tra le due date selezionate
 	 * 
 	 * @param dateIn
 	 * @param startDate
@@ -179,6 +188,7 @@ public class DateUtils {
 	}
 
 	/**
+	 * Aggiunge il primo agosto alla data selezionata
 	 * 
 	 * @param dateIn
 	 * @return
@@ -197,6 +207,7 @@ public class DateUtils {
 	}
 
 	/**
+	 * Aggiunge il sedici settembre alla data selezionata
 	 * 
 	 * @param dateIn
 	 * @return

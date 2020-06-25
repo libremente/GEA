@@ -24,7 +24,7 @@ import com.sourcesense.crl.business.service.rest.AbbinamentoService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Esegue il salvataggio degli abbinamenti
  * 
  * @author sourcesense
  *
@@ -39,6 +39,7 @@ public class AbbinamentoServiceManager {
 	private AbbinamentoService abbinamentoService;
 
 	/**
+	 * Salvataggio dell'abbinamento
 	 * 
 	 * @param abbinamento
 	 */

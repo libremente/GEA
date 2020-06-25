@@ -49,7 +49,7 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 /**
- * 
+ * Servizio rest per la gestione delle commissioni. Inserimento, aggiornamento e ricerca
  * 
  * @author sourcesense
  *
@@ -65,6 +65,7 @@ public class CommissioneService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Aggiornamento dell'esame della commissione
 	 * 
 	 * @param url
 	 * @param esameCommissione
@@ -105,6 +106,7 @@ public class CommissioneService {
 	}
 
 	/**
+	 * Rimozione dell'abbinamento
 	 * 
 	 * @param url
 	 */
@@ -124,6 +126,7 @@ public class CommissioneService {
 	}
 
 	/**
+	 * Ritorna l'elenco delle commissioni per atto
 	 * 
 	 * @param url
 	 * @return
@@ -162,6 +165,7 @@ public class CommissioneService {
 	}
 
 	/**
+	 * Ritorna l'elenco delle commissioni consultive per atto
 	 * 
 	 * @param url
 	 * @return
@@ -200,6 +204,7 @@ public class CommissioneService {
 	}
 
 	/**
+	 * Ritorna l'elenco di tutte le commissioni per url
 	 * 
 	 * @param url
 	 * @return
@@ -236,6 +241,7 @@ public class CommissioneService {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato dell'atto
 	 * 
 	 * @param url
 	 * @param atto
@@ -288,6 +294,7 @@ public class CommissioneService {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto
 	 * 
 	 * @param url
 	 * @param atto

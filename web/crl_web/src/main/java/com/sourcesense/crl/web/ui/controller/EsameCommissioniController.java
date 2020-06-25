@@ -56,7 +56,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Gestisce gli esami delle commissioni
  * 
  * @author sourcesense
  *
@@ -221,7 +221,9 @@ public class EsameCommissioniController {
 	private String statoCommitStralci = CRLMessage.COMMIT_DONE;
 
 	/**
-	 * 
+	 * Aggiunge l'atto selezionato, i relatori, i membri del comitato, le
+	 * commissioni, i valori della commissione utente, il passaggio e i dati al
+	 * contesto web
 	 */
 	@PostConstruct
 	protected void init() {
@@ -240,6 +242,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiornamento dei valori della commissine utente
 	 * 
 	 * @param attoBean
 	 * @param userBean
@@ -329,6 +332,9 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica se il ruolo dell'utente della commissione può cambiare lo stato.
+	 * Deve essere di tipo RUOLO_REFERENTE, RUOLO_REDIGENTE, RUOLO_DELIBERANTE o
+	 * RUOLO_COREFERENTE
 	 * 
 	 * @return
 	 */
@@ -342,7 +348,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Esegue il cambio di passaggio
 	 */
 	public void changePassaggio() {
 
@@ -397,6 +403,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Ricerca la commissione per nome tra quelle presenti
 	 * 
 	 * @param nome
 	 * @return
@@ -412,6 +419,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Caricamento dei dati
 	 * 
 	 * @param passaggioIn
 	 * @param attoBean
@@ -453,91 +461,91 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Aggiornamneto dei relatori
 	 */
 	public void updateRelatoriHandler() {
 		setStatoCommitRelatori(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento del comitato ristretto
 	 */
 	public void updateComitatoRistrettoHandler() {
 		setStatoCommitComitatoRistretto(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento della presa in carico
 	 */
 	public void updatePresaInCaricoHandler() {
 		setStatoCommitPresaInCarico(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento della fine lavori
 	 */
 	public void updateFineLavoriHandler() {
 		setStatoCommitFineLavori(CRLMessage.COMMIT_DONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento degli abbinamenti e disabbinamenti
 	 */
 	public void updateAbbinamentiHandler() {
 		setStatoCommitAbbinamentieDisabbinamenti(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento dell'atto corrente
 	 */
 	public void updateOggettoAttoCorrenteHandler() {
 		setStatoCommitOggettoAttoCorrente(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento della registrazione della votazione
 	 */
 	public void updateRegistrazioneVotazioneHandler() {
 		setStatoCommitRegistrazioneVotazione(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento della continuazione lavori
 	 */
 	public void updateContinuazioneLavoriHandler() {
 		setStatoCommitContinuazioneLavori(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento della trasmissione
 	 */
 	public void updateTrasmissioneHandler() {
 		setStatoCommitTrasmissione(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento delle clausole degli emendamenti
 	 */
 	public void updateEmendamentiClausoleHandler() {
 		setStatoCommitEmendamentiClausole(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento delle note
 	 */
 	public void updateNoteHandler() {
 		setStatoCommitNote(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiornamento degli stralci
 	 */
 	public void updateStralciHandler() {
 		setStatoCommitStralci(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiunge le notifiche di errore a seconda dell'operazione eseguita
 	 */
 	public void changeTabHandler() {
 
@@ -616,9 +624,8 @@ public class EsameCommissioniController {
 
 	}
 
-	
 	/**
-	 * 
+	 * Aggiunge la data scadenza alla commissione
 	 */
 	public void scadenzaPar() {
 
@@ -659,7 +666,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Presa in carico dell'esame della commissione
 	 */
 	public void presaInCarico() {
 
@@ -703,7 +710,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del relatore
 	 */
 	public void addRelatore() {
 
@@ -726,7 +733,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del relatore
 	 */
 	public void removeRelatore() {
 
@@ -742,6 +749,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che il nome del relatore sia presente nell'elenco dei relatori
 	 * 
 	 * @return
 	 */
@@ -760,7 +768,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Conferma del relatore
 	 */
 	public void confermaRelatori() {
 
@@ -813,6 +821,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che tutti i relatori abbiano la data di uscita
 	 * 
 	 * @return
 	 */
@@ -833,6 +842,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che tutti i relatori abbiano la data di uscita
 	 * 
 	 * @return
 	 */
@@ -851,7 +861,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge il componente ai membri del comitato
 	 */
 	public void addComponente() {
 
@@ -880,7 +890,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimuove il componente dai membri del comitato
 	 */
 	public void removeComponente() {
 
@@ -896,6 +906,8 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che il nome del componente scelto sia presente nell'elenco dei
+	 * membri del comitato
 	 * 
 	 * @return
 	 */
@@ -912,6 +924,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che tra i membri del comitato ci sia almeno un coordinatore
 	 * 
 	 * @return
 	 */
@@ -928,6 +941,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che tra i membri del comitato almeno uno non abbia data di uscita
 	 * 
 	 * @param attoBean
 	 * @return
@@ -952,7 +966,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Conferma del comitato ristretto
 	 */
 	public void confermaComitatoRistretto() {
 
@@ -1002,6 +1016,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Upload del testo del comitato ristretto
 	 * 
 	 * @param event
 	 */
@@ -1045,6 +1060,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Non implementato. Ritorna sempre ok
 	 * 
 	 * @param fileName
 	 * @return
@@ -1055,7 +1071,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del testo del comitato
 	 */
 	public void removeTestoComitato() {
 
@@ -1075,6 +1091,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato
 	 * 
 	 * @param event
 	 */
@@ -1114,7 +1131,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Conferma della fine dei lavori
 	 */
 	public void confermaFineLavori() {
 		commissioneUser.setDataFineLavoriComitato(getDataFineLavori());
@@ -1137,6 +1154,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiunta dell'abbinamento
 	 * 
 	 * @param idAbbinamento
 	 * @param tipoAtto
@@ -1178,7 +1196,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Riomzione dell'abbinamento
 	 */
 	public void removeAbbinamento() {
 
@@ -1211,6 +1229,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che la'bbinamento scelto sia presente nell'elenco degli abbinamenti
 	 * 
 	 * @param idAbbinamento
 	 * @return
@@ -1228,7 +1247,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Mostra il dettaglio dell'abbinamento nella pagina web
 	 */
 	public void showAbbinamentoDetail() {
 
@@ -1252,6 +1271,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Ricerca l'abbinamento per id
 	 * 
 	 * @param id
 	 * @return
@@ -1272,7 +1292,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio dell'abbinamento
 	 */
 	public void salvaAbbinamentoDisabbinamento() {
 
@@ -1331,6 +1351,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiornamento dell'abbinamento
 	 * 
 	 * @param abbinamento
 	 * @param abbinamentiSession
@@ -1354,7 +1375,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio dell'oggetto
 	 */
 	public void salvaOggetto() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -1377,7 +1398,8 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Ritorna un messaggio differente a seconda della data di registrazione della
+	 * votazione e della data di scadenza
 	 */
 	public void confrontaDataScadenza() {
 
@@ -1420,6 +1442,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Registrazione della votazione
 	 * 
 	 * @return
 	 */
@@ -1480,6 +1503,8 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Se non esiste il quorum, nessun esito di votazione e nessuna data di
+	 * registrazione della votazione, la commissione viene annullata
 	 * 
 	 * @return
 	 */
@@ -1495,6 +1520,8 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che almeno un componente dei membri del comitato non sia uscito
+	 * dall'aula
 	 * 
 	 * @return
 	 */
@@ -1510,6 +1537,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che almeno un relatore non sia uscito dall'aula
 	 * 
 	 * @return
 	 */
@@ -1525,6 +1553,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Upload del testo dell'atto votato
 	 * 
 	 * @param event
 	 */
@@ -1566,6 +1595,8 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che il testo scelto sia presente nell'elenco dei testi degli atti
+	 * votati
 	 * 
 	 * @param fileName
 	 * @return
@@ -1585,7 +1616,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del testo dell'atto votato
 	 */
 	public void removeTestoAttoVotato() {
 
@@ -1607,6 +1638,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto votato
 	 * 
 	 * @param event
 	 */
@@ -1625,7 +1657,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Assegnazione del ruolo di referente
 	 */
 	public void cambiaRuoloInReferente() {
 
@@ -1671,6 +1703,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Conferma della trasmissione
 	 * 
 	 * @return
 	 */
@@ -1738,6 +1771,9 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Ritorna il messaggio a seconda del tipo di atto. Se è un parere oppure se il
+	 * ruolo della commissione è RUOLO_CONSULTIVA ritorna "Testo del parere
+	 * espresso". Altrimenti "Testo dell'atto votato"
 	 * 
 	 * @return
 	 */
@@ -1765,7 +1801,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Totale degli emendamenti presentati
 	 */
 	public void totaleEmendPresentati() {
 
@@ -1792,7 +1828,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Totale degli emendamenti approvati
 	 */
 	public void totaleEmendApprovati() {
 
@@ -1819,7 +1855,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Totale degli emendamenti non approvati
 	 */
 	public void totaleNonApprovati() {
 
@@ -1843,6 +1879,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiornamento dell'emendamento
 	 * 
 	 * @param event
 	 */
@@ -1884,6 +1921,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Non implementato. Ritorna semrpe ok
 	 * 
 	 * @param fileName
 	 * @return
@@ -1894,7 +1932,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimozione dell'emendamento
 	 */
 	public void removeEmendamento() {
 
@@ -1916,6 +1954,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiornamento del testo della clausola
 	 * 
 	 * @param event
 	 */
@@ -1956,6 +1995,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica se il testo selezionato è presente nell'elenco dei testi
 	 * 
 	 * @param fileName
 	 * @return
@@ -1975,7 +2015,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del testo della clausola
 	 */
 	public void removeTestoClausola() {
 
@@ -1996,7 +2036,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio della clausola dell'emendamento
 	 */
 	public void salvaEmendamentiClausole() {
 
@@ -2065,6 +2105,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato
 	 * 
 	 * @param event
 	 */
@@ -2104,6 +2145,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che l'allegato scelto sia presente nell'elenco degli allegati
 	 * 
 	 * @param fileName
 	 * @return
@@ -2123,7 +2165,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimozione dell'allegato
 	 */
 	public void removeAllegato() {
 
@@ -2144,7 +2186,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Aggiunta del link
 	 */
 	public void addLink() {
 
@@ -2167,7 +2209,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del link
 	 */
 	public void removeLink() {
 
@@ -2182,6 +2224,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
+	 * Verifica che il link scelto non sia presente nell'elenco dei link
 	 * 
 	 * @return
 	 */
@@ -2200,7 +2243,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio delle note
 	 */
 	public void salvaNoteEAllegati() {
 
@@ -2226,7 +2269,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio degli stralci
 	 */
 	public void salvaStralci() {
 

@@ -27,7 +27,8 @@ import org.codehaus.jackson.map.SerializerProvider;
 import org.springframework.stereotype.Component;
 
 /**
- * 
+ * Serializzatore per le date json. Le formatta in automatico con il pattern
+ * yyyy-MM-dd
  * 
  * @author sourcesense
  *

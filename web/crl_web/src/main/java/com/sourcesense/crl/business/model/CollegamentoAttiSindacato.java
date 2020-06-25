@@ -26,7 +26,7 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.AutoProperty;
 
 /**
- * 
+ * Collegamento agli atti del sindacato
  * 
  * @author sourcesense
  *

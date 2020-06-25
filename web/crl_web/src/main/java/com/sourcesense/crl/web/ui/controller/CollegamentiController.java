@@ -40,7 +40,7 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Gestisce i collegamenti agli atti
  * 
  * @author sourcesense
  *
@@ -83,7 +83,8 @@ public class CollegamentiController {
 	private String statoCommitLeggiRegionali = CRLMessage.COMMIT_DONE;
 
 	/**
-	 * 
+	 * Aggiunge l'atto selezionato, gli atti collegati, i collegamenti agli atti del
+	 * sindacato, i collegamenti alle leggi regionali e le note al contesto web
 	 */
 	@PostConstruct
 	protected void init() {
@@ -99,20 +100,34 @@ public class CollegamentiController {
 		setNoteCollegamenti(atto.getNoteCollegamenti());
 	}
 
+	/**
+	 * Aggiornamento degli atti interni
+	 */
 	public void updateAttiInterniHandler() {
 		setStatoCommitAttiInterni(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * Aggiornamenti degli atti indirizzo
+	 */
 	public void updateAttiIndirizzoHandler() {
 		setStatoCommitAttiIndirizzo(CRLMessage.COMMIT_UNDONE);
 	}
 
+	/**
+	 * Aggiornamento delle leggi regionali
+	 */
 	public void updateLeggiRegionaliHandler() {
 		setStatoCommitLeggiRegionali(CRLMessage.COMMIT_UNDONE);
 	}
 
 	/**
-	 * 
+	 * Aggiunge le notifiche di errore a seconda dell'operazione eseguita. Nel caso
+	 * di commit degli atti interni viene messo il messaggio "Attenzione ! Le
+	 * modifiche agli Atti Interni non sono state salvate ", nel caso di commit di
+	 * atti indirizzo "Attenzione ! Le modifiche ad Atti Indirizzo e Sindacato
+	 * Ispettivo non sono state salvate ", nel caso di commit di leggi regionali
+	 * "Attenzione ! Le modifiche alle Leggi Regionali non sono state salvate "
 	 */
 	public void changeTabHandler() {
 
@@ -136,6 +151,7 @@ public class CollegamentiController {
 	}
 
 	/**
+	 * Inserimento del collegamento all'atto da aggiungere
 	 * 
 	 * @param idAttoToAdd
 	 */
@@ -160,6 +176,7 @@ public class CollegamentiController {
 	}
 
 	/**
+	 * Inserimento del collegamento all'atto da aggiungere secondo il tipo di atto
 	 * 
 	 * @param idAttoToAdd
 	 * @param tipoAtto
@@ -206,7 +223,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del collegamento
 	 */
 	public void removeCollegamento() {
 
@@ -222,6 +239,7 @@ public class CollegamentiController {
 	}
 
 	/**
+	 * Verifica se l'atto è presente nei collegamenti
 	 * 
 	 * @param idAttoToAdd
 	 * @return
@@ -239,7 +257,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio dei collegamenti
 	 */
 	public void salvaCollegamenti() {
 		atto.setCollegamenti(getAttiCollegatiList());
@@ -256,7 +274,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge gli atti del sindacato secondo la data scelta nella pagina web
 	 */
 	public void handleAttoSindacatoChange() {
 
@@ -286,7 +304,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge il collegamento all'atto del sindacato
 	 */
 	public void addCollegamentoAttoSindacato() {
 
@@ -315,7 +333,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Rimuove il collegamento dall'atto del sindacato
 	 */
 	public void removeCollegamentoAttoSindacato() {
 
@@ -331,6 +349,7 @@ public class CollegamentiController {
 	}
 
 	/**
+	 * Verifica che tutti i collegamenti appartengano allo stesso atto del sindacato
 	 * 
 	 * @return
 	 */
@@ -347,7 +366,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Salvataggio degli atti indirizzo
 	 */
 	public void salvaAttiIndirizzo() {
 
@@ -366,7 +385,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Aggiunge il collegamento all'atto regionale
 	 */
 	public void addCollegamentoAttoRegionale() {
 
@@ -390,7 +409,7 @@ public class CollegamentiController {
 	}
 
 	/**
-	 * 
+	 * Rimuove il collegamneto dall'atto regionale
 	 */
 	public void removeCollegamentoAttoRegionale() {
 
@@ -406,6 +425,7 @@ public class CollegamentiController {
 	}
 
 	/**
+	 * Verifica che tutti i collegamenti appartengano allo stesso numero di atto regionale
 	 * 
 	 * @return
 	 */
@@ -422,6 +442,7 @@ public class CollegamentiController {
 	}
 
 	/**
+	 * Salvataggio delle leggi regionali
 	 * 
 	 */
 	public void salvaLeggiRegionali() {

@@ -24,7 +24,7 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
  */
 
 /**
- * 
+ * Fornisce il ticket alfresco per la sessione
  * 
  * @author sourcesense
  *

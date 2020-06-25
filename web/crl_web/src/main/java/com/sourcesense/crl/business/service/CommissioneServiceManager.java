@@ -36,7 +36,7 @@ import com.sourcesense.crl.business.service.rest.CommissioneService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Contiene le operazioni delle commissioni
  * 
  * @author sourcesense
  *
@@ -69,6 +69,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio degli emendamenti e delle clausole nell'esame delle commissioni
 	 * 
 	 * @param esameCommissione
 	 */
@@ -78,6 +79,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio della votazione dell'esame delle commissioni
 	 * 
 	 * @param esameCommissione
 	 */
@@ -88,6 +90,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Presa in carico dell'esame delle commissioni
 	 * 
 	 * @param esameCommissione
 	 */
@@ -97,6 +100,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio dei relatori dell'esame delle commissioni
 	 * 
 	 * @param esameCommissione
 	 */
@@ -107,6 +111,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio del comitato ristretto dell'esame delle commissioni
 	 * 
 	 * @param esameCommissione
 	 */
@@ -116,6 +121,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Segna la fine dei lavori dell'esame di commissione
 	 * 
 	 * @param esameCommissione
 	 */
@@ -126,6 +132,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna il testo dell'atto votato all'esame della commissione
 	 * 
 	 * @param atto
 	 * @param stream
@@ -141,6 +148,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'emendamento dell'esame della commissione
 	 * 
 	 * @param atto
 	 * @param stream
@@ -156,6 +164,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna il testo del comitato ristretto
 	 * 
 	 * @param atto
 	 * @param stream
@@ -171,6 +180,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna il testo della clausola dell'esame di commissione
 	 * 
 	 * @param atto
 	 * @param stream
@@ -186,6 +196,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiorna l'allegato delle note dell'esame di commissione
 	 * 
 	 * @param atto
 	 * @param stream
@@ -201,6 +212,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Cambio del ruolo di referente
 	 * 
 	 * @param esameCommissione
 	 */
@@ -210,6 +222,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Rimuove l'abbinamento
 	 * 
 	 * @param idAtto
 	 * @param idAttoAbbinato
@@ -221,6 +234,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salva le note dell'allegato dell'esame di commissione
 	 * 
 	 * @param esameCommissione
 	 */
@@ -231,6 +245,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio degli stralci
 	 * 
 	 * @param esameCommissione
 	 */
@@ -241,6 +256,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Salvataggio della trasmissione
 	 * 
 	 * @param esameCommissione
 	 */
@@ -251,6 +267,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca le commissioni di un determinato atto
 	 * 
 	 * @param idAtto
 	 * @return
@@ -289,6 +306,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna tutte le descrizioni delle commissioni disponibili
 	 * 
 	 * @return
 	 */

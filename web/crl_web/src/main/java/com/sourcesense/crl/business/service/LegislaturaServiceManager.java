@@ -29,7 +29,7 @@ import com.sourcesense.crl.business.service.rest.LegislaturaService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Interroga e interagisce sulla legislatura
  * 
  * @author sourcesense
  *
@@ -59,6 +59,7 @@ public class LegislaturaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco delle legislature disponibili
 	 * 
 	 * @return
 	 */
@@ -86,6 +87,7 @@ public class LegislaturaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna i nomi delle legislature disponibili
 	 * 
 	 * @return
 	 */
@@ -105,6 +107,7 @@ public class LegislaturaServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ricerca gli anni di una determinata legislatura
 	 * 
 	 * @param legislatura
 	 * @return

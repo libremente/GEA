@@ -24,7 +24,7 @@ import org.codehaus.jackson.annotate.JsonTypeName;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 /**
- * 
+ * Passaggio in aula delle commissioni con relativi abbinamenti
  * 
  * @author sourcesense
  *

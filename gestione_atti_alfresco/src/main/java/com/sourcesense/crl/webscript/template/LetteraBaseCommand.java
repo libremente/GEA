@@ -43,6 +43,9 @@ import org.alfresco.service.namespace.QName;
 import com.sourcesense.crl.util.AttoUtil;
 
 
+/**
+ *
+ */
 public abstract class LetteraBaseCommand implements LetteraCommand{
 	
 	protected ContentService contentService;
@@ -56,8 +59,25 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	protected String PROP_DIREZIONE = "direzione";
 	protected String PROP_NUMEROTELFIRMATARIO = "numeroTelFirmatario";
 	protected String PROP_EMAILFIRMATARIO = "emailFirmatario";
-	
-	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException; 
+
+	/**
+	 * Ritorna il documento costruito in base al template e i parametri in ingresso di tipo lettera base.
+	 * @param templateByteArray il template del documento da generare
+	 * @param templateNodeRef il riferimento al nodo del template
+	 * @param attoNodeRef il riferimento al nodo del atto
+	 * @param gruppo i gruppo di appartenza al momento della richiesta
+	 * @return ritorna il documento di lettera base.
+	 * @throws IOException
+	 */
+	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException;
+
+	/**
+	 * Recupera il valore di un nodo.
+	 * @param attoNodeRef il rifferimento del nodo di tipo atto
+	 * @param nameSpaceURI il namespace associato al nodo
+	 * @param localName il nome con il locale del nodo da recuperare il valore.
+	 * @return il valore del nodo con il localName
+	 */
 	public String getStringProperty(NodeRef attoNodeRef, String nameSpaceURI, String localName){
 		String value = (String) nodeService.getProperty(attoNodeRef, QName.createQName(nameSpaceURI, localName));
 		
@@ -66,7 +86,13 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 		}
 	
 		return value;
-	} 
+	}
+
+	/**
+	 * Recupero delle commissioni consultive dal nodo atto
+	 * @param attoNodeRef il riferimento al nodo del atto
+	 * @return La lista dei nodi delle commissioni consultive
+	 */
 	public List<NodeRef> getCommissioniConsultive(NodeRef attoNodeRef){
 		
 		List<NodeRef> commissioniConsultiveList = new ArrayList<NodeRef>();
@@ -98,8 +124,13 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 		
 		return commissioniConsultiveList;
 	}
-	
-	
+
+
+	/**
+	 * Recupera ultimo organo statuario assegnato.
+	 * @param attoNodeRef il nodo del atto
+	 * @return il nodo dell'ultimo organo statuario assegnato.
+	 */
 	public NodeRef getLastOrganoStatutarioAssegnato(NodeRef attoNodeRef){
 		
 		NodeRef lastOrgano = null;
@@ -136,7 +167,12 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 		
 		return lastOrgano; 
 	}
-	
+
+	/**
+	 * Metodo che recupera ultimo firmatario dal atto.
+	 * @param attoNodeRef il nodo del atto
+	 * @return ritorna il nodo del ultimo firmatario
+	 */
 	public NodeRef getLastFirmatario(NodeRef attoNodeRef){
 		
 		NodeRef lastFirmatario = null;
@@ -170,30 +206,35 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
         	}
         }
 		return lastFirmatario; 
-	} 
+	}
+
+	/**
+	 * Recupera la sigla della tipologia del atto.
+	 * @param attoNodeRef il nodo del atto.
+	 * @return il valore della sigla per tipologia atto
+	 */
 	protected String getTipoAttoSigla(NodeRef attoNodeRef){
 		QName typeQname= nodeService.getType(attoNodeRef);
 		String type= typeQname.getLocalName();
 		String typeSigla= type.substring(type.length()-3, type.length());
 		return typeSigla.toUpperCase();
 	}
-	
-	
-	
 
 	public ContentService getContentService() {
         return contentService;
     }
 
+
     public void setContentService(ContentService contentService) {
         this.contentService = contentService;
     }
-    
+
     public SearchService getSearchService() {
         return searchService;
     }
 
-    public void setSearchService(SearchService searchService) {
+
+	public void setSearchService(SearchService searchService) {
         this.searchService = searchService;
     }
     

@@ -45,7 +45,8 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 /**
- * 
+ * Servizio rest per la gestione delle sedute. Inserimento, aggiornamento e
+ * ricerca
  * 
  * @author sourcesense
  *
@@ -61,6 +62,7 @@ public class SeduteService {
 	ObjectMapper objectMapper;
 
 	/**
+	 * Ritorna l'elenco delle sedute per un determinato gruppo
 	 * 
 	 * @param url
 	 * @param param
@@ -100,6 +102,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Ritorna la seduta secondo una determinata data
 	 * 
 	 * @param url
 	 * @param param
@@ -142,6 +145,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Creazione della seduta
 	 * 
 	 * @param url
 	 * @param gestioneSedute
@@ -186,6 +190,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Rimozione della seduta
 	 * 
 	 * @param url
 	 */
@@ -208,6 +213,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Aggiornamento della seduta
 	 * 
 	 * @param url
 	 * @param seduta
@@ -240,6 +246,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Aggiornamento della gestione della seduta
 	 * 
 	 * @param url
 	 * @param gestioneSedute
@@ -285,6 +292,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Ritorna l'allegato della seduta
 	 * 
 	 * @param url
 	 * @return
@@ -309,6 +317,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Aggiornamento dell'odg di una seduta
 	 * 
 	 * @param url
 	 * @param seduta
@@ -351,6 +360,7 @@ public class SeduteService {
 	}
 
 	/**
+	 * Aggiornamento del verbale di una seduta
 	 * 
 	 * @param url
 	 * @param seduta

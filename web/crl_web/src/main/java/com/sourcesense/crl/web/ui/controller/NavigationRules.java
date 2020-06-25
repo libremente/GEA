@@ -29,7 +29,8 @@ import com.sourcesense.crl.web.ui.beans.AttoSearchBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Regole di navigazione. Contiene i flag per la configurazione della
+ * navigazione da pagina web
  * 
  * @author sourcesense
  *

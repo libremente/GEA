@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ * Interfaccia implementata dai servizi CRL
  * 
  * @author sourcesense
  *
@@ -28,6 +28,7 @@ import java.util.Map;
 public interface ServiceManager {
 
 	/**
+	 * Salvataggio dell'oggetto
 	 * 
 	 * @param object
 	 * @return
@@ -35,6 +36,7 @@ public interface ServiceManager {
 	public Object persist(Object object);
 
 	/**
+	 * Aggiornamento dell'oggetto
 	 * 
 	 * @param object
 	 * @return
@@ -42,6 +44,7 @@ public interface ServiceManager {
 	public Object merge(Object object);
 
 	/**
+	 * Rimozione dell'oggetto
 	 * 
 	 * @param object
 	 * @return
@@ -49,18 +52,20 @@ public interface ServiceManager {
 	public boolean remove(Object object);
 
 	/**
+	 * Ritorna tutti gli oggetti disponibili
 	 * 
 	 * @return
 	 */
 	public List<Object> retrieveAll();
 
 	/**
-	 * 
+	 * Ritorna tutti i nomi o le descrizioni degli oggetti disponibili
 	 * @return
 	 */
 	public Map<String, String> findAll();
 
 	/**
+	 * Ritorna l'oggetto tramite l'id
 	 * 
 	 * @param id
 	 * @return

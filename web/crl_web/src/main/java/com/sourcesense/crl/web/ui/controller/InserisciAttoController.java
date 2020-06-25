@@ -39,7 +39,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Inserimento dell'atto dalle pagine web
  * 
  * @author sourcesense
  *
@@ -85,7 +85,7 @@ public class InserisciAttoController {
 	private Map<String, String> anni = new HashMap<String, String>();
 
 	/**
-	 * 
+	 * Aggiunge i tipi di atto e le legislature al contesto web
 	 */
 	@PostConstruct
 	private void initializeValues() {
@@ -101,7 +101,7 @@ public class InserisciAttoController {
 	}
 
 	/**
-	 * 
+	 * Se il tipo di atto è DOC o REF viene reso visibile, altrimenti no
 	 */
 	public void handleTipoAttoChange() {
 
@@ -118,6 +118,7 @@ public class InserisciAttoController {
 	}
 
 	/**
+	 * Inserimento dell'atto
 	 * 
 	 * @return
 	 */

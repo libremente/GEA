@@ -17,7 +17,7 @@
 package com.sourcesense.crl.util;
 
 /**
- * 
+ * Errore di servizio non disponibile
  * 
  * @author sourcesense
  *

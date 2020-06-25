@@ -32,7 +32,8 @@ import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
 
 /**
- * 
+ * Rappresenta l'utente tramite le informazioni di username, password, session
+ * token e colonne
  * 
  * @author sourcesense
  *
@@ -40,16 +41,6 @@ import com.sourcesense.crl.business.model.User;
 @ManagedBean(name = "userBean")
 @SessionScoped
 public class UserBean implements Serializable {
-
-	/**
-	 * /* Tipo atto N° atto Oggetto Tipo iniziativa Firmatari Stato Tipo chiusura
-	 * Com. referente, co-referente, redigente o deliberante Data assegnazione
-	 * Commissioni consultive Relatore Data nomina relatore Abbinamenti "Esito
-	 * votazione commissione referente (o redigente o deliberante)" "Data votazione
-	 * commissione" Data scadenza "Data richiesta iscrizione all'aula" Esito
-	 * votazione Aula "Data votazione aula" N° DCR N° LCR BURL Data BURL N° LR Data
-	 * LR
-	 */
 
 	private static final long serialVersionUID = 7726122743894534255L;
 
@@ -66,7 +57,14 @@ public class UserBean implements Serializable {
 	private List<ColonnaAtto> colonneUser = new ArrayList<ColonnaAtto>();
 
 	/**
-	 * 
+	 * Aggiunge le colonne tabellari visualizzabili nel profilo utente. Per default
+	 * vengono aggiunte: Oggetto, Data presentazione, Stato, Primo firmatario,
+	 * Firmatari, Tipo iniziativa, Tipo chiusura, Com. referente, co-referente,
+	 * redigente o deliberante,Data assegnazione, Commissioni consultive, Relatore,
+	 * Data nomina relatore, Abbinamenti, Esito votazione Commissione referente (o
+	 * redigente o deliberante), Data votazione Commissione, Data scadenza, Data
+	 * richiesta iscrizione Aula, Esito votazione Aula, Data votazione Aula, N° DCR,
+	 * N° LCR, BURL, Data BURL, N° LR, Data LR, Note generali
 	 */
 	@PostConstruct
 	public void init() {
@@ -157,7 +155,7 @@ public class UserBean implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Refresh delle colonne utente
 	 */
 	public void refreshColonneUser() {
 
@@ -171,6 +169,7 @@ public class UserBean implements Serializable {
 	}
 
 	/**
+	 * Aggiunge il gruppo all'utente
 	 * 
 	 * @param event
 	 */
@@ -186,6 +185,7 @@ public class UserBean implements Serializable {
 	}
 
 	/**
+	 * Refresh delle colonne utente
 	 * 
 	 * @return
 	 */

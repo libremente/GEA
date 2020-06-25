@@ -17,7 +17,7 @@
 package com.sourcesense.crl.business.model;
 
 /**
- * 
+ * Parere finale della consultazione
  * 
  * @author sourcesense
  *

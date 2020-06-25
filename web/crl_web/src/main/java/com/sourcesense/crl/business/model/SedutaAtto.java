@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import com.sourcesense.crl.util.JsonDateSerializer;
 
 /**
- * 
+ * Seduta con relativo verbale
  * 
  * @author sourcesense
  *

@@ -29,7 +29,7 @@ import com.sourcesense.crl.business.service.rest.TipoIniziativaService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestisce i tipi di iniziativa. Sono valori dinamici
  * 
  * @author sourcesense
  *
@@ -61,9 +61,7 @@ public class TipoIniziativaServiceManager implements ServiceManager {
 		return false;
 	}
 
-	/**
-	 * 
-	 */
+	@Override
 	public Map<String, String> findAll() {
 		Map<String, String> tipiIniziative = new LinkedHashMap<String, String>();
 
