@@ -79,12 +79,15 @@ public class OpenDataCommand {
 	}
 
 	public OpenDataCommand() {
-		super(); 
+		super();
 	}
 
 	/**
-	 * Genera i ID - atto rappresentato da: tipoAtto + "-" + numeroAtto + "-" + legislatura 
-	 * @param nodeRef atto dal quale calcolare l'ID
+	 * Genera i ID - atto rappresentato da: tipoAtto + "-" + numeroAtto + "-" +
+	 * legislatura
+	 * 
+	 * @param nodeRef
+	 *            atto dal quale calcolare l'ID
 	 * @return String con l'ID atto.
 	 */
 	public String getIdAtto(NodeRef nodeRef) {
@@ -101,9 +104,13 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Ritorna il nome del tipo levando il prefisso della definizione del content model.
-	 * @param nodeRef nodo dal quale ottenere il tipo
-	 * @return String  con il tipo di nodo che rappresenta nel content model di Alfresco o CRL extenzion model
+	 * Ritorna il nome del tipo levando il prefisso della definizione del content
+	 * model.
+	 * 
+	 * @param nodeRef
+	 *            nodo dal quale ottenere il tipo
+	 * @return String con il tipo di nodo che rappresenta nel content model di
+	 *         Alfresco o CRL extenzion model
 	 */
 	public String getTipoAtto(NodeRef nodeRef) {
 		String tipoAtto = "";
@@ -117,8 +124,11 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Ottiene il nome della legislatura leggendo la proprietà del nodo "legislatura"
-	 * @param nodeRef Nodo dal quale sapere la legislatura.
+	 * Ottiene il nome della legislatura leggendo la proprietà del nodo
+	 * "legislatura"
+	 * 
+	 * @param nodeRef
+	 *            Nodo dal quale sapere la legislatura.
 	 * @return String legislatura dell'atto
 	 */
 	public String getLegislatura(NodeRef nodeRef) {
@@ -127,7 +137,9 @@ public class OpenDataCommand {
 
 	/**
 	 * Ottiene il numero dell'atto insieme alla estensione del medesimo.
-	 * @param nodeRef atto dal quale sapere il numero e la estensione (se esiste)
+	 * 
+	 * @param nodeRef
+	 *            atto dal quale sapere il numero e la estensione (se esiste)
 	 * @return String con il numero di atto + la estensione (se esiste)
 	 */
 	public String getNumeroAtto(NodeRef nodeRef) {
@@ -137,11 +149,14 @@ public class OpenDataCommand {
 			estensioneAtto = StringUtil.EMPTY_STRING;
 		return numeroAtto + estensioneAtto;
 	}
-/**
- * Ottiene la estensione di un atto.
- * @param nodeRef atto dal quale ottenere la estensione
- * @return Strin la estensione dell'atto.
- */
+
+	/**
+	 * Ottiene la estensione di un atto.
+	 * 
+	 * @param nodeRef
+	 *            atto dal quale ottenere la estensione
+	 * @return Strin la estensione dell'atto.
+	 */
 	public String getEstensioneAtto(NodeRef nodeRef) {
 		return (String) nodeService.getProperty(nodeRef, AttoUtil.PROP_ESTENSIONE_ATTO_QNAME);
 	}
@@ -158,11 +173,13 @@ public class OpenDataCommand {
 		this.linkAtto = linkAtto;
 	}
 
-/**
- * Ottiene il link all'atto
- * @param nodeRef atto dal quale ottenere il link
- * @return String link per l'atto
- */
+	/**
+	 * Ottiene il link all'atto
+	 * 
+	 * @param nodeRef
+	 *            atto dal quale ottenere il link
+	 * @return String link per l'atto
+	 */
 	public String getLinkAtto(NodeRef nodeRef) {
 		MessageFormat mf = new MessageFormat(this.linkAtto);
 		String parameterFormatting[] = new String[] {
@@ -171,9 +188,12 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Ottiene il tipo di iniziativa di un nodo: Consiliare, Popolare, Ufficio di Presidenza, Consiglio delle Autonomie locali, 
-	 * Presidente della Giunta, Giunta, Commissioni, Altra Iniziativa
-	 * @param nodeRef Nodo dal quale ottenere l'iniziativa
+	 * Ottiene il tipo di iniziativa di un nodo: Consiliare, Popolare, Ufficio di
+	 * Presidenza, Consiglio delle Autonomie locali, Presidente della Giunta,
+	 * Giunta, Commissioni, Altra Iniziativa
+	 * 
+	 * @param nodeRef
+	 *            Nodo dal quale ottenere l'iniziativa
 	 * @return String con l'iniziativa dell'atto
 	 */
 	public String getTipoIniziativa(NodeRef nodeRef) {
@@ -218,11 +238,17 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Trova il nome del promotore dell'iniziativa se esiste. Cerca fra i firmatari (che dovrebbe esistere al meno uno). Prende i nodi figli della cartella firmatari, e cerca se è il primo 
-	 * firmatario popolare inoltre ad essere il primo firmtario. Se si confermano queste due proprità   (PROP_IS_FIRMATARIO_POPOLARE_QNAME + PROP_NOME_FIRMATARIO_QNAME) si ritorna il nome del firmatario:
-	 * PROP_NOME_FIRMATARIO_QNAME
-	 * @param nodeRef atto dal quale trovare il nome del promotore
-	 * @return String con il nome del promotore o la catena vuota se non esiste promotore.
+	 * Trova il nome del promotore dell'iniziativa se esiste. Cerca fra i firmatari
+	 * (che dovrebbe esistere al meno uno). Prende i nodi figli della cartella
+	 * firmatari, e cerca se è il primo firmatario popolare inoltre ad essere il
+	 * primo firmtario. Se si confermano queste due proprità
+	 * (PROP_IS_FIRMATARIO_POPOLARE_QNAME + PROP_NOME_FIRMATARIO_QNAME) si ritorna
+	 * il nome del firmatario: PROP_NOME_FIRMATARIO_QNAME
+	 * 
+	 * @param nodeRef
+	 *            atto dal quale trovare il nome del promotore
+	 * @return String con il nome del promotore o la catena vuota se non esiste
+	 *         promotore.
 	 */
 	@SuppressWarnings("finally")
 	public String getPrimoPromotore(NodeRef nodeRef) {
@@ -254,8 +280,11 @@ public class OpenDataCommand {
 
 	/**
 	 * Ritorna l'elenco di tutti i promotori firmatari popolari
-	 * @param nodeRef atto dal quale trovare la cartella che contiene tutti i firmatari
-	 * @return String con tutti i nomi dei promotori che sono firmatari popolari, separati da "listSeparator"
+	 * 
+	 * @param nodeRef
+	 *            atto dal quale trovare la cartella che contiene tutti i firmatari
+	 * @return String con tutti i nomi dei promotori che sono firmatari popolari,
+	 *         separati da "listSeparator"
 	 */
 	@SuppressWarnings("finally")
 	public String getTuttiPromotori(NodeRef nodeRef) {
@@ -288,9 +317,12 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Ritorna il primo firmatario: il firmatario che non è firmatario popolare (PROP_IS_FIRMATARIO_POPOLARE_QNAME) 
-	 * e che ha la proprietà PROP_IS_PRIMO_FIRMATARIO_QNAME. 
-	 * @param nodeRef atto dal quale trovare i FIrmatari. 
+	 * Ritorna il primo firmatario: il firmatario che non è firmatario popolare
+	 * (PROP_IS_FIRMATARIO_POPOLARE_QNAME) e che ha la proprietà
+	 * PROP_IS_PRIMO_FIRMATARIO_QNAME.
+	 * 
+	 * @param nodeRef
+	 *            atto dal quale trovare i FIrmatari.
 	 * @return String con "- idAnagrafico - primoFirmatario"
 	 */
 	@SuppressWarnings("finally")
@@ -334,8 +366,11 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Ritorna l'elenco con tutti i firmatari (tranne quello poplare) dell'atto passato come parametro.
-	 * @param nodeRef tto dal quale ritrovare i firmatari
+	 * Ritorna l'elenco con tutti i firmatari (tranne quello poplare) dell'atto
+	 * passato come parametro.
+	 * 
+	 * @param nodeRef
+	 *            tto dal quale ritrovare i firmatari
 	 * @return String con tutti i firmatari tranne il firmatario popolare.
 	 */
 	@SuppressWarnings("finally")
@@ -378,9 +413,11 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Ritorna l'id anagrafico del nome di un firmatario. Si fa un parsing previo del nome per levare i caratteri
-	 * che pososno creare problemi nelle query
-	 * @param nomeAnagrafica nome del firmatario
+	 * Ritorna l'id anagrafico del nome di un firmatario. Si fa un parsing previo
+	 * del nome per levare i caratteri che pososno creare problemi nelle query
+	 * 
+	 * @param nomeAnagrafica
+	 *            nome del firmatario
 	 * @return String con l'id anagrafico.
 	 */
 	public String getIdAnagrafica(String nomeAnagrafica) {
@@ -409,9 +446,12 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Trova il nodo che si corrisponde con il relatore. Cerca tutti i relatori 
-	 * e seleziona il nodo che ha il tipo TYPE_RELATORE_QNAME
-	 * @param item atto dal quale si prende la Commissione Referente e dal quale si trovano i relatori 
+	 * Trova il nodo che si corrisponde con il relatore. Cerca tutti i relatori e
+	 * seleziona il nodo che ha il tipo TYPE_RELATORE_QNAME
+	 * 
+	 * @param item
+	 *            atto dal quale si prende la Commissione Referente e dal quale si
+	 *            trovano i relatori
 	 * @return NodeRef del relatore. Null se non si trova.
 	 */
 	public NodeRef getRelatoreNodeRef(NodeRef item) {
@@ -432,9 +472,12 @@ public class OpenDataCommand {
 	}
 
 	/**
-	 * Trova il nodo che contiene il passaggio dall'atto che riceve come parametro. 
-	 * Si assume che dentro la cartella con i passaggi si prenda il primo che ritorna il nodeService.getChildAssocs(...). 
-	 * @param attoNoderef atto dal quale trovare il passaggio
+	 * Trova il nodo che contiene il passaggio dall'atto che riceve come parametro.
+	 * Si assume che dentro la cartella con i passaggi si prenda il primo che
+	 * ritorna il nodeService.getChildAssocs(...).
+	 * 
+	 * @param attoNoderef
+	 *            atto dal quale trovare il passaggio
 	 * @return NodeRef con il passagio dell'atto.
 	 */
 	public NodeRef getPassaggio(NodeRef attoNoderef) {
@@ -452,9 +495,13 @@ public class OpenDataCommand {
 	}
 
 	/**
+	 * Trova il nodo che contiene l'ultimo passaggio dall'atto che riceve come
+	 * parametro. Si assume che dentro la cartella con i passaggi si prenda l'ultimo
+	 * che ritorna il nodeService.getChildAssocs(...).
 	 * 
 	 * @param attoNoderef
-	 * @return
+	 *            atto dal quale trovare l'ultimo passaggio
+	 * @return NodeRef con lúltimo passagio dell'atto.
 	 */
 	public NodeRef getUltimoPassaggio(NodeRef attoNoderef) {
 		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
@@ -470,6 +517,14 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * Ritorna l'elenco dei nodi figli della cartella Passaggi dell'atto ricevuto
+	 * come parametro
+	 * 
+	 * @param attoNoderef
+	 *            atto dal quale trovare tutti i passagii
+	 * @return Lista con i passaggi dell'atto.
+	 */
 	public List<ChildAssociationRef> getPassaggi(NodeRef attoNoderef) {
 		List<NodeRef> passaggi = searchService.selectNodes(attoNoderef, "*[@cm:name='Passaggi']", null,
 				this.namespaceService, false);
@@ -484,6 +539,14 @@ public class OpenDataCommand {
 		return new ArrayList<ChildAssociationRef>();
 	}
 
+	/**
+	 * Trova il Referente della commissione o il Co-Referente. Ci deve essere una
+	 * data di votazione e un esito della votazione.
+	 * 
+	 * @param attoNoderef
+	 *            atto dal quale trovare il referente.
+	 * @return NodeRef Il referento o Co-referente di una commissione
+	 */
 	public NodeRef getCommissioneReferente(NodeRef attoNoderef) {
 		NodeRef passaggio = getPassaggio(attoNoderef);
 		if (passaggio != null) {
@@ -501,7 +564,12 @@ public class OpenDataCommand {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Ritona il relatore con idAnagrafica e nome
+	 * @param item  atto dal quale trovare il relatore.
+	 * @return String Il relatore: "-idAnagraficaRelatore+nomeRelatore"
+	 */
 	public String getRelatore(NodeRef item) {
 		String relatore = "";
 		NodeRef relatoreNodeRef = getRelatoreNodeRef(item);
@@ -521,6 +589,12 @@ public class OpenDataCommand {
 		return relatore;
 	}
 
+/**
+ * Ottiene la data in cui è stato nominato un relatore controllando la proprietà: PROP_DATA_NOMINA_RELATORE_QNAME.
+ * @param item atto dal quale ritrovare il relatore
+ * @return Date la data in cui è stato nominato il relatore 
+ * 
+ */
 	public Date getDataNominaRelatore(NodeRef item) {
 		NodeRef relatoreNodeRef = getRelatoreNodeRef(item);
 		if (relatoreNodeRef != null) {
@@ -529,6 +603,11 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * Ottiene l'elenco degli atti abinati ad un atto
+	 * @param item: atto dal quale ricavare gli atti abbinati.
+	 * @return ArrayList lista con tutti gli atti abbinati
+	 */
 	public ArrayList<String> getAbbinamenti(NodeRef item) {
 		List<NodeRef> attiAbbinati = attoUtil.getAttiAbbinati(item);
 		int n = attiAbbinati.size();
@@ -538,7 +617,11 @@ public class OpenDataCommand {
 		}
 		return abbinamenti;
 	}
-
+/**
+ * Ottiene il valore dell'esito della votazione della commissione dell'atto verificando il valore della proprietà PROP_ESITO_VOTAZIONE_COMMISSIONE_QNAME.
+ * @param item: atto dal quale trovare l'esito della votazione 
+ * @return String l'esito della votazione dell Commissione Referente.
+ */
 	public String getEsitoVotazioneCommissioneReferente(NodeRef item) {
 		NodeRef commissione = getCommissioneReferente(item);
 		if (commissione != null) {
@@ -548,6 +631,11 @@ public class OpenDataCommand {
 		}
 	}
 
+	/**
+	 * Ottiene la data in cui è stata esguita la votazione verificando la proprietà: PROP_DATA_VOTAZIONE
+	 * @param item atto dal quale ricavare la data della votazione.
+	 * @return Date la data della votazione.
+	 */
 	public Date getDataVotazioneCommissioneReferente(NodeRef item) {
 		NodeRef commissione = getCommissioneReferente(item);
 		if (commissione != null) {
@@ -557,6 +645,12 @@ public class OpenDataCommand {
 		}
 	}
 
+	
+	/**
+	 * Trova l'aula di un atto dove si è svolto l'ultimo passaggio. Se non esiste l'ultimo passaggio, il valoere è null.
+	 * @param attoNodeRef atto dal quale trovare l'aula.
+	 * @return NodeRef con il valore dell'aula. null se non esiste l'ultimo passaggio dell'atto.
+	 */
 	public NodeRef getAula(NodeRef attoNoderef) {
 		NodeRef passaggio = getUltimoPassaggio(attoNoderef);
 		if (passaggio != null) {
@@ -570,6 +664,12 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * 
+	 * Trova l'aula dell'atto a partire dal passaggio
+	 * @param passaggioNoderef passaggio di un atto
+	 * @return  NodeRef con l'aula dell'atto. Null se non lo trova
+	 */
 	public NodeRef getAulaByPassaggio(NodeRef passaggioNoderef) {
 		if (passaggioNoderef != null) {
 			Set<QName> aulaFolderQnames = new HashSet<QName>(1, 1.0f);
@@ -582,6 +682,11 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * Trova l'esito della votazione in aula di un atto analizzando la proprietà ESITO_VOTO_PASSAGGIO_AULA_QNAME
+	 * @param NodeRef atto
+	 * @return String esito della votazione.
+	 */
 	public String getEsitoVotazioneAula(NodeRef item) {
 		NodeRef aula = getAula(item);
 		if (aula != null) {
@@ -591,6 +696,11 @@ public class OpenDataCommand {
 		}
 	}
 
+	/**
+	 * Trova la data della votazione eseguita in aula
+	 * @param atto presuntamente votato in aula
+	 * @return Date la data della votazione in aula. Null se l'atto non è stato votato in aula.
+	 */
 	public Date getDataVotazioneAula(NodeRef item) {
 		NodeRef aula = getAula(item);
 		if (aula != null) {
@@ -600,6 +710,11 @@ public class OpenDataCommand {
 		}
 	}
 
+	/**
+	 * Trova il numero DCR di passaggio in aula analizzando la proprietà PROP_NUMERO_DCR_PASSAGIO_AULA_QNAME
+	 * @param item atto
+	 * @return String numero di passaggio in aula dell'atto. Null se l'atto non è andato in aula
+	 */
 	public String getNumeroDcrPassaggioAula(NodeRef item) {
 		NodeRef aula = getAula(item);
 		if (aula != null) {
@@ -609,6 +724,12 @@ public class OpenDataCommand {
 		}
 	}
 
+
+	/**
+	 * Trova il link del voto finale in aula dell'atto. Si assume l'esistenza di allegati del tipo allegato_aula
+	 * @param atto votato in aula
+	 * @return String 
+	 */
 	public String getLinkVotoFinaleAula(NodeRef attoNodeRef) {
 		List<ChildAssociationRef> passaggi = getPassaggi(attoNodeRef);
 		for (ChildAssociationRef passaggio : passaggi) {
@@ -640,6 +761,11 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public String getLinkTestoAttoComReferente(NodeRef attoNodeRef) {
 		List<NodeRef> pubbliciOpendataNoderefs = searchService.selectNodes(attoNodeRef,
 				"*//*[@crlatti:pubblicoOpendata='true']", null, this.namespaceService, false);
@@ -653,6 +779,11 @@ public class OpenDataCommand {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param
+	 * @return
+	 */
 	public String getIdsLr(NodeRef item) {
 		String idsLr = "";
 		Date dataLr = (Date) nodeService.getProperty(item, AttoUtil.PROP_DATA_LR_QNAME);
