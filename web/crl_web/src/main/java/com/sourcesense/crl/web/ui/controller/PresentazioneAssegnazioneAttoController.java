@@ -56,7 +56,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Contiene le operazioni per la presentazione e l'assegnazione dell'atto
  * 
  * @author sourcesense
  *

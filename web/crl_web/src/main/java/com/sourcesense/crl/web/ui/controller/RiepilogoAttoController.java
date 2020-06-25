@@ -36,7 +36,7 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Gestisce il riepilogo degli atti
  * 
  * @author sourcesense
  *

@@ -56,7 +56,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Gestisce gli esami delle commissioni
  * 
  * @author sourcesense
  *
@@ -616,7 +616,6 @@ public class EsameCommissioniController {
 
 	}
 
-	
 	/**
 	 * 
 	 */

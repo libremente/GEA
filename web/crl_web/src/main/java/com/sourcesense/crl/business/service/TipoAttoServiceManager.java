@@ -32,7 +32,7 @@ import com.sourcesense.crl.business.service.rest.TipoAttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestione dei tipi di atto. Sono valori dinamici
  * 
  * @author sourcesense
  *

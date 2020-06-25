@@ -46,7 +46,7 @@ import com.sourcesense.crl.business.service.ReportServiceManager;
 import com.sourcesense.crl.business.service.TipoAttoServiceManager;
 
 /**
- * 
+ * Crea il report visualizzato nelle pagine web
  * 
  * @author sourcesense
  *

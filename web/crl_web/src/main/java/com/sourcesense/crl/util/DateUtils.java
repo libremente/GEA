@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * 
+ * Utilità per le date
  * 
  * @author sourcesense
  *

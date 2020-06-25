@@ -60,7 +60,7 @@ public class LoginFilter implements Filter {
 	}
 
 	/**
-	 * 
+	 * Esegue il redirect verso la pagina di login
 	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)

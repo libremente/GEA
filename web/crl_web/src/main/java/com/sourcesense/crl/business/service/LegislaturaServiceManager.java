@@ -29,7 +29,7 @@ import com.sourcesense.crl.business.service.rest.LegislaturaService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Interroga e interagisce sulla legislatura
  * 
  * @author sourcesense
  *

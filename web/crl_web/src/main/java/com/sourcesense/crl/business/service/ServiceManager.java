@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ * Interfaccia implementata dai servizi CRL
  * 
  * @author sourcesense
  *

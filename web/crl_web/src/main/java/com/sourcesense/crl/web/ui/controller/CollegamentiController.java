@@ -40,7 +40,7 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Gestisce i collegamenti agli atti
  * 
  * @author sourcesense
  *

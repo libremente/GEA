@@ -29,7 +29,7 @@ import com.sourcesense.crl.util.ServiceAuthenticationException;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestisce l'utente e le operazioni di autenticazione
  * 
  * @author sourcesense
  *

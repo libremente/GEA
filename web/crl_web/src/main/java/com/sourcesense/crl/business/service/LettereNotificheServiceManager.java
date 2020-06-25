@@ -28,7 +28,7 @@ import com.sourcesense.crl.business.service.rest.LettereNotificheService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Servizio per la gestione delle lettere
  * 
  * @author sourcesense
  *

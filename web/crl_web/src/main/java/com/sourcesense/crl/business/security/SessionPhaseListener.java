@@ -36,7 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
+ * Esegue il redirect verso la pagina di login all'interno di una sessione
+ * chiusa
  * 
  * @author sourcesense
  *

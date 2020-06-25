@@ -42,7 +42,7 @@ import com.sourcesense.crl.business.service.PersonaleServiceManager;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Inserimento del MIS dalle pagine web
  * 
  * @author sourcesense
  *

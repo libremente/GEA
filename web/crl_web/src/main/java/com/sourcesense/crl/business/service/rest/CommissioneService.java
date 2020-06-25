@@ -49,7 +49,7 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 /**
- * 
+ * Servizio rest per la gestione delle commissioni. Inserimento, aggiornamento e ricerca
  * 
  * @author sourcesense
  *

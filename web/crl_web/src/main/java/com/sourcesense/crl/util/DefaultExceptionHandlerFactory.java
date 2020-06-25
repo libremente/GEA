@@ -20,7 +20,7 @@ import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 
 /**
- * 
+ * Genera l'exception handler
  * 
  * @author sourcesense
  *

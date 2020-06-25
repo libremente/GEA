@@ -33,7 +33,8 @@ import com.sourcesense.crl.business.service.rest.PersonaleService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestione del personale. Comprende i firmatari, i gruppi consiliari, i
+ * relatori e i membri del comitato
  * 
  * @author sourcesense
  *

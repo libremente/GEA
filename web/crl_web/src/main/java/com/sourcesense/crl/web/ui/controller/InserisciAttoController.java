@@ -39,7 +39,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Inserimento dell'atto dalle pagine web
  * 
  * @author sourcesense
  *

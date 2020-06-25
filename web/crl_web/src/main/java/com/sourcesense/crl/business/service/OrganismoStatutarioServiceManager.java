@@ -28,7 +28,7 @@ import com.sourcesense.crl.business.service.rest.OrganismoStatutarioService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Operazioni di ricerca e aggiornamento dell'organismo statuario
  * 
  * @author sourcesense
  *

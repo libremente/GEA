@@ -26,7 +26,7 @@ import org.springframework.context.MessageSource;
 import com.sourcesense.crl.business.security.AlfrescoSessionTicket;
 
 /**
- * 
+ * Utilità per la creazione degli url
  * 
  * @author sourcesense
  *

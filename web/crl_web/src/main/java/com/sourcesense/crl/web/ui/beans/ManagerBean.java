@@ -25,7 +25,8 @@ import com.sourcesense.crl.business.model.Atto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
 /**
- * 
+ * Manager rappresentato dalle informazioni del codice, dell'atto e della spunta
+ * per visualizzare i i dettagli delle commissioni
  * 
  * @author sourcesense
  *

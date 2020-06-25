@@ -32,7 +32,7 @@ import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoRecordServiceManager;
 
 /**
- * 
+ * Gestisce i download dei documenti
  * 
  * @author sourcesense
  *

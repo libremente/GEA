@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * Utilità per la clonazione di liste java comprese di generics
  * 
  * @author sourcesense
  *

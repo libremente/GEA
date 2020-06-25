@@ -34,7 +34,7 @@ import com.sourcesense.crl.util.URLBuilder;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Gestisce le operazioni di chiusura delle sedute
  * 
  * @author sourcesense
  *

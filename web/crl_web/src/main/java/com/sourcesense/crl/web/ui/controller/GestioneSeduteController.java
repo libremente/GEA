@@ -59,7 +59,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Gestione delle sedute per le pagine web
  * 
  * @author sourcesense
  *

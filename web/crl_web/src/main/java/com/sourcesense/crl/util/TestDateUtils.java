@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * 
+ * Classe per testare le operazioni con le date
  * 
  * @author sourcesense
  *

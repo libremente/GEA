@@ -28,7 +28,7 @@ import com.sourcesense.crl.business.service.rest.ReportService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Recupera e aggiorna i report
  * 
  * @author sourcesense
  *

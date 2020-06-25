@@ -32,7 +32,7 @@ import com.sourcesense.crl.business.service.rest.AulaService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Contiene le operazioni delle aule
  * 
  * @author sourcesense
  *

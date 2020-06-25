@@ -39,7 +39,7 @@ import com.sourcesense.crl.business.service.rest.AttoService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Contiene le operazioni degli atti
  * 
  * @author sourcesense
  *

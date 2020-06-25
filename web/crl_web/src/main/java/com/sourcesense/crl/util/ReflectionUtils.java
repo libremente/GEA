@@ -19,7 +19,7 @@ package com.sourcesense.crl.util;
 import java.lang.reflect.Method;
 
 /**
- * 
+ * Eegue la clonazione di un oggetto tramite reflection java
  * 
  * @author sourcesense
  *

@@ -37,7 +37,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 /**
- * 
+ * Servizio rest per la gestione dei tipi di iniziativa. Inserimento,
+ * aggiornamento e ricerca
  * 
  * @author sourcesense
  *

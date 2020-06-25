@@ -30,7 +30,7 @@ import com.sourcesense.crl.business.service.rest.SeduteService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestione delle sedute, dei verbali e degli odg
  * 
  * @author sourcesense
  *

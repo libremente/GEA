@@ -24,7 +24,7 @@ import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 
 /**
- * 
+ * Deserializzatore json per i numeri decimali. Converte le virgole in punti
  * 
  * @author sourcesense
  *

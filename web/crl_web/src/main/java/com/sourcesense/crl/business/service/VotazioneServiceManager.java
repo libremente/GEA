@@ -26,7 +26,7 @@ import com.sourcesense.crl.business.model.Votazione;
 import com.sourcesense.crl.business.service.rest.VotazioneService;
 
 /**
- * 
+ * Gestione delle votazioni e raccolta degli esiti delle sedute
  * 
  * @author sourcesense
  *

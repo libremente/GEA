@@ -45,7 +45,7 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Inserimento dell' EAC dalle pagine web
  * 
  * @author sourcesense
  *

@@ -24,7 +24,7 @@ import javax.faces.bean.SessionScoped;
 import com.sourcesense.crl.business.model.AttoSearch;
 
 /**
- * 
+ * Ricerca dell'atto nelle pagine web
  * 
  * @author sourcesense
  *

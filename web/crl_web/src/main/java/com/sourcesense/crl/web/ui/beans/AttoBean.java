@@ -45,7 +45,7 @@ import com.sourcesense.crl.business.model.TestoAtto;
 import com.sourcesense.crl.business.service.AttoServiceManager;
 
 /**
- * 
+ * Atto visualizzato nelle pagine web
  * 
  * @author sourcesense
  *

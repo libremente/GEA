@@ -29,7 +29,7 @@ import com.sourcesense.crl.business.service.rest.TipoIniziativaService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestisce i tipi di iniziativa. Sono valori dinamici
  * 
  * @author sourcesense
  *

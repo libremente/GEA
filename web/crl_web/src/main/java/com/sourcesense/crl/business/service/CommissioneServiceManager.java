@@ -36,7 +36,7 @@ import com.sourcesense.crl.business.service.rest.CommissioneService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Contiene le operazioni delle commissioni
  * 
  * @author sourcesense
  *

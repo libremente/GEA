@@ -28,7 +28,7 @@ import org.primefaces.model.SortOrder;
 import com.sourcesense.crl.business.model.Atto;
 
 /**
- * 
+ * Utilità per la paginazione e l'ordinamento degli atti nelle pagine web
  * 
  * @author sourcesense
  *

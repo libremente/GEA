@@ -32,7 +32,8 @@ import com.sourcesense.crl.business.model.GruppoUtente;
 import com.sourcesense.crl.business.model.User;
 
 /**
- * 
+ * Rappresenta l'utente tramite le informazioni di username, password, session
+ * token e colonne
  * 
  * @author sourcesense
  *
@@ -40,16 +41,6 @@ import com.sourcesense.crl.business.model.User;
 @ManagedBean(name = "userBean")
 @SessionScoped
 public class UserBean implements Serializable {
-
-	/**
-	 * /* Tipo atto N° atto Oggetto Tipo iniziativa Firmatari Stato Tipo chiusura
-	 * Com. referente, co-referente, redigente o deliberante Data assegnazione
-	 * Commissioni consultive Relatore Data nomina relatore Abbinamenti "Esito
-	 * votazione commissione referente (o redigente o deliberante)" "Data votazione
-	 * commissione" Data scadenza "Data richiesta iscrizione all'aula" Esito
-	 * votazione Aula "Data votazione aula" N° DCR N° LCR BURL Data BURL N° LR Data
-	 * LR
-	 */
 
 	private static final long serialVersionUID = 7726122743894534255L;
 

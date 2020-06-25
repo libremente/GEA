@@ -36,7 +36,8 @@ import org.slf4j.LoggerFactory;
 import com.sourcesense.crl.business.security.SessionPhaseListener;
 
 /**
- * 
+ * Gestore web per i messaggi di errore. Esegue il redirect verso specifiche
+ * pagine
  * 
  * @author sourcesense
  *

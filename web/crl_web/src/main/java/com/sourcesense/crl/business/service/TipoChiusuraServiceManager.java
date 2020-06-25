@@ -28,7 +28,7 @@ import com.sourcesense.crl.business.service.rest.TipoChiusuraService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestisce i tipi di chiusura. Sono valori dinamici
  * 
  * @author sourcesense
  *

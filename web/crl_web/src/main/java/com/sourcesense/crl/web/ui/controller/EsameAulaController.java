@@ -55,7 +55,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Gestisce gli esami dell'aula
  * 
  * @author sourcesense
  *

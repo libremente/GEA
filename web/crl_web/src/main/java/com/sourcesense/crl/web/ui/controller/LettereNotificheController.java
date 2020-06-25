@@ -39,7 +39,7 @@ import com.sourcesense.crl.web.ui.beans.AttoBean;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Gestione delle lettere e delle notifiche dalle pagine web
  * 
  * @author sourcesense
  *

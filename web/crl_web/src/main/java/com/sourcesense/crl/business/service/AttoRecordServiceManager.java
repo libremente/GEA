@@ -30,7 +30,7 @@ import com.sourcesense.crl.business.service.rest.AttoRecordService;
 import com.sourcesense.crl.util.URLBuilder;
 
 /**
- * 
+ * Gestisce le operazioni degli atti di tipo record
  * 
  * @author sourcesense
  *

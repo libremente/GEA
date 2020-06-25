@@ -48,7 +48,7 @@ import com.sourcesense.crl.util.Clonator;
 import com.sourcesense.crl.web.ui.beans.AttoBean;
 
 /**
- * 
+ * Gestisce le consultazioni e i pareri degli atti
  * 
  * @author sourcesense
  *
