@@ -40,10 +40,17 @@ import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Commando che si occupa di generare una Lettera generica di tipo Aula.
+ */
 public class LetteraGenericaAulaCommand extends LetteraBaseCommand {
 
     private static Log logger = LogFactory.getLog(LetteraGenericaAulaCommand.class);
 
+    /**
+     * {@inheritDoc}
+     * @return ritorna un documento  lettera generica aula .
+     */
     public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException {
 
         byte[] documentFilledByteArray = null;

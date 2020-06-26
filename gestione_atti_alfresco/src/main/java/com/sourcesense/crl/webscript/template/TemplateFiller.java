@@ -40,11 +40,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-
+/**
+ * Componente per la gestione dei template.
+ */
 public class TemplateFiller {
 
     private static Log logger = LogFactory.getLog(TemplateFiller.class);
 
+    /**
+     * Questo metodo si occupa nel sostituire nel template delle chiavi cone i valori forniti nei parametri.
+     * @param documentByteArray il documento da modificare
+     * @param replacements le sostituzioni da applicare al documento in formato chiave:valore
+     * @return Il documento modificato con tutte le sostituzioni fornite nei parametri
+     */
     public static byte[] searchAndReplace(byte[] documentByteArray, HashMap<String, String> replacements) {
         logger.info("Enter 'searchAndReplace' method");
 
