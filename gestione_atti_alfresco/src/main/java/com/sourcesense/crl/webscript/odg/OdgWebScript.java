@@ -52,7 +52,21 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
 
 
-
+/**
+ * Webscript JAVA in ALfresco che serve a generare l'ordine del giorno. Nel context del webscript si trovano i parametri con i tipi di ODG:
+ * 	    <property name="odgCommandMap">
+ *           <map>
+ *           
+ *               <entry key="crlodg:odgGenericoCommissioniDocument" value-ref="odgGenericoCommissioniCommand"/>
+ *               <entry key="crlodg:odgGenericoAulaDocument" value-ref="odgGenericoAulaCommand"/>
+ *           
+ *           </map>
+ *       </property>
+ *       
+ * Utilizza il layer ODGCommand perla generazione dei report.      
+ * @author sourcesense
+ *
+ */
 public class OdgWebScript extends AbstractWebScript {
 	
 	private ContentService contentService;
@@ -61,7 +75,11 @@ public class OdgWebScript extends AbstractWebScript {
 	private Map<String, OdgCommand> odgCommandMap;
 	
 	private static Log logger = LogFactory.getLog(OdgWebScript.class);
-		
+	
+	/**
+	 * Metodo principale del webscript. Raccoglie dai parametri idSeduta, tipoTemplate e gruppo. Cerca il template che bisogna utilizzare per la creazione dell'ODG
+	 * /app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Templates/ e genera il file Word con il report, che poi ritorna nel response direttamente.
+	 */
     public void execute(WebScriptRequest req, WebScriptResponse res) throws IOException {
     	
     	OutputStream responseOutputStream = null;

@@ -49,6 +49,12 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
+/**
+ * Genera i documenti che saranno i report di controllo per la Regione Lombardia. 
+ * Il contenuto dei report cambia in base agli atti che si vogliono trattare
+ * @author sourcesense
+ *
+ */
 public class OdgGenericoAulaCommand extends OdgBaseCommand {
 
 	private static Log logger = LogFactory.getLog(OdgGenericoAulaCommand.class);
