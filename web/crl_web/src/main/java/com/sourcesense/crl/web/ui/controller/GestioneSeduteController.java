@@ -329,8 +329,8 @@ public class GestioneSeduteController {
 	/**
 	 * Trova la seduta per data
 	 * 
-	 * @param dataSeduta
-	 * @return
+	 * @param dataSeduta data della seduta
+	 * @return seduta
 	 */
 	public Seduta findSeduta(String dataSeduta) {
 		Format formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -347,7 +347,7 @@ public class GestioneSeduteController {
 	/**
 	 * Rimuove la seduta per una certa data
 	 * 
-	 * @param dataSeduta
+	 * @param dataSeduta data della seduta
 	 */
 	public void removeFromDateSedutaList(Date dataSeduta) {
 
@@ -391,7 +391,7 @@ public class GestioneSeduteController {
 	/**
 	 * Mostra il dettaglio dell'odg
 	 * 
-	 * @return
+	 * @return testo dell'odg
 	 */
 	public String dettaglioOdg() {
 
@@ -454,7 +454,7 @@ public class GestioneSeduteController {
 	}
 
 	/**
-	 * Rimuov eil link
+	 * Rimuove il link
 	 */
 	public void removeLink() {
 
@@ -472,7 +472,7 @@ public class GestioneSeduteController {
 	/**
 	 * Verifica che il link scelto non sia presente nell'elenco dei link
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkLinks() {
 
@@ -643,8 +643,8 @@ public class GestioneSeduteController {
 	/**
 	 * Aggiunge l'atto trattato scelto tramite id e tipo atto
 	 * 
-	 * @param idAttoToAdd
-	 * @param tipoAtto
+	 * @param idAttoToAdd id dell'atto da aggiungere
+	 * @param tipoAtto tipo di atto
 	 */
 	public void addAttoTrattato(String idAttoToAdd, String tipoAtto) {
 
@@ -726,8 +726,8 @@ public class GestioneSeduteController {
 	 * Verifica che l'atto trattato scelto non sia presente nell'elenco degli atti
 	 * trattati
 	 * 
-	 * @param idAttoTrattatoToAdd
-	 * @return
+	 * @param idAttoTrattatoToAdd id dell'atto trattato
+	 * @return false se presente
 	 */
 	private boolean checkAttiTrattati(String idAttoTrattatoToAdd) {
 
@@ -745,8 +745,8 @@ public class GestioneSeduteController {
 	 * Verifica che il soggetto rientri nel pattern
 	 * (.*[\\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)
 	 * 
-	 * @param soggetto
-	 * @return
+	 * @param soggetto soggetto
+	 * @return true se non corrisponde al pattern
 	 */
 	private boolean isValidSoggettoPartecipante(String soggetto) {
 		return !soggettoPattern.matcher(soggetto).matches();
@@ -805,8 +805,8 @@ public class GestioneSeduteController {
 	 * Verifica che il soggetto scelto non sia già presente nell'elenco delle
 	 * audizioni
 	 * 
-	 * @param soggettoToAdd
-	 * @return
+	 * @param soggettoToAdd soggetto
+	 * @return false se presente
 	 */
 	private boolean checkAudizioni(String soggettoToAdd) {
 
@@ -868,7 +868,7 @@ public class GestioneSeduteController {
 	 * Verifica che l'id dell'atto del sindacato non sia già presente nell'elenco
 	 * dei collegamenti
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkCollegamentiAttiSindacati() {
 
@@ -949,7 +949,7 @@ public class GestioneSeduteController {
 	 * ordinamento progressivo comprensivo di uno 0 iniziale per i numeri a una
 	 * cifra
 	 * 
-	 * @return
+	 * @return elenco degli atti trattati
 	 */
 	private List<AttoTrattato> getOrderedAttiTrattati() {
 
@@ -997,7 +997,7 @@ public class GestioneSeduteController {
 	 * numero di ordinamento progressivo comprensivo di uno 0 iniziale per i numeri
 	 * a una cifra
 	 * 
-	 * @return
+	 * @return elenco dei dati del sindacato trattati
 	 */
 	private List<CollegamentoAttiSindacato> getOrderedAttiSindacatoTrattati() {
 
@@ -1043,7 +1043,7 @@ public class GestioneSeduteController {
 	/**
 	 * Ritorna il file dell'odg
 	 * 
-	 * @return
+	 * @return contenuto dell'odg
 	 */
 	public StreamedContent getFile() {
 
@@ -1085,7 +1085,7 @@ public class GestioneSeduteController {
 	/**
 	 * Upload del file dell'odg
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadODG(FileUploadEvent event) {
 		if (sedutaSelected != null) {
@@ -1115,7 +1115,7 @@ public class GestioneSeduteController {
 	/**
 	 * Upload del verbale
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadVerbale(FileUploadEvent event) {
 		if (sedutaSelected != null) {
@@ -1469,8 +1469,8 @@ public class GestioneSeduteController {
 	/**
 	 * Ritorna un elenco di anni a partire dall'anno scelto fino alla data odierna
 	 * 
-	 * @param annoPartenzaString
-	 * @return
+	 * @param annoPartenzaString anno di partenza
+	 * @return elenco degli anni
 	 */
 	public List<String> annoCreazioneList(String annoPartenzaString) {
 		int annoPartenza = Integer.parseInt(annoPartenzaString);

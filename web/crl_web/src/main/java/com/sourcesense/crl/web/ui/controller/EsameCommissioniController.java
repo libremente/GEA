@@ -244,8 +244,8 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiornamento dei valori della commissine utente
 	 * 
-	 * @param attoBean
-	 * @param userBean
+	 * @param attoBean atto
+	 * @param userBean utente
 	 */
 	private void setValoriCommissioneUtente(AttoBean attoBean, UserBean userBean) {
 		Commissione commTemp = findCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -336,7 +336,7 @@ public class EsameCommissioniController {
 	 * Deve essere di tipo RUOLO_REFERENTE, RUOLO_REDIGENTE, RUOLO_DELIBERANTE o
 	 * RUOLO_COREFERENTE
 	 * 
-	 * @return
+	 * @return true se verificato
 	 */
 	private boolean canChangeStatoAtto() {
 
@@ -405,8 +405,8 @@ public class EsameCommissioniController {
 	/**
 	 * Ricerca la commissione per nome tra quelle presenti
 	 * 
-	 * @param nome
-	 * @return
+	 * @param nome nome della commissione
+	 * @return commissione
 	 */
 	private Commissione findCommissione(String nome) {
 
@@ -421,8 +421,8 @@ public class EsameCommissioniController {
 	/**
 	 * Caricamento dei dati
 	 * 
-	 * @param passaggioIn
-	 * @param attoBean
+	 * @param passaggioIn passaggio
+	 * @param attoBean    atto
 	 */
 	private void loadData(Passaggio passaggioIn, AttoBean attoBean) {
 		setDataPresaInCarico(commissioneUser.getDataPresaInCarico());
@@ -751,7 +751,7 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che il nome del relatore sia presente nell'elenco dei relatori
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkRelatori() {
 
@@ -823,7 +823,7 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che tutti i relatori abbiano la data di uscita
 	 * 
-	 * @return
+	 * @return true se rimane almeno un relatore in aula
 	 */
 	private boolean checkStatiRelatori() {
 
@@ -844,7 +844,7 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che tutti i relatori abbiano la data di uscita
 	 * 
-	 * @return
+	 * @return true se rimane almeno un relatore in aula
 	 */
 	private boolean isNominatoRelatore() {
 
@@ -909,7 +909,7 @@ public class EsameCommissioniController {
 	 * Verifica che il nome del componente scelto sia presente nell'elenco dei
 	 * membri del comitato
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkComponenti() {
 
@@ -926,7 +926,7 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che tra i membri del comitato ci sia almeno un coordinatore
 	 * 
-	 * @return
+	 * @return true se esiste almeno un coordinatore
 	 */
 	private boolean checkCoordinatore() {
 
@@ -944,7 +944,7 @@ public class EsameCommissioniController {
 	 * Verifica che tra i membri del comitato almeno uno non abbia data di uscita
 	 * 
 	 * @param attoBean
-	 * @return
+	 * @return true se almeno un membro è attivo
 	 */
 	private boolean checkOneMembroAttivo(AttoBean attoBean) {
 
@@ -1018,7 +1018,7 @@ public class EsameCommissioniController {
 	/**
 	 * Upload del testo del comitato ristretto
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadTestoComitatoRistretto(FileUploadEvent event) {
 
@@ -1062,8 +1062,8 @@ public class EsameCommissioniController {
 	/**
 	 * Non implementato. Ritorna sempre ok
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return true
 	 */
 	private boolean checkTestoComitato(String fileName) {
 
@@ -1093,7 +1093,7 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiornamento dell'allegato
 	 * 
-	 * @param event
+	 * @param event evento di modifica della riga
 	 */
 	public void updateAllegato(RowEditEvent event) {
 
@@ -1156,8 +1156,8 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiunta dell'abbinamento
 	 * 
-	 * @param idAbbinamento
-	 * @param tipoAtto
+	 * @param idAbbinamento id abbinamento
+	 * @param tipoAtto      tipo di atto
 	 */
 	public void addAbbinamento(String idAbbinamento, String tipoAtto) {
 
@@ -1196,7 +1196,7 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * Riomzione dell'abbinamento
+	 * Rimozione dell'abbinamento
 	 */
 	public void removeAbbinamento() {
 
@@ -1231,8 +1231,8 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che la'bbinamento scelto sia presente nell'elenco degli abbinamenti
 	 * 
-	 * @param idAbbinamento
-	 * @return
+	 * @param idAbbinamento id abbinamento
+	 * @return false se presente
 	 */
 	private boolean checkAbbinamenti(String idAbbinamento) {
 
@@ -1273,8 +1273,8 @@ public class EsameCommissioniController {
 	/**
 	 * Ricerca l'abbinamento per id
 	 * 
-	 * @param id
-	 * @return
+	 * @param id id dell'abbinamento
+	 * @return abbinamento
 	 */
 	private Abbinamento findAbbinamento(String id) {
 
@@ -1353,8 +1353,8 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiornamento dell'abbinamento
 	 * 
-	 * @param abbinamento
-	 * @param abbinamentiSession
+	 * @param abbinamento        abbinamento
+	 * @param abbinamentiSession sessione dell'abbinamento
 	 */
 	private void mergeAbbinamento(Abbinamento abbinamento, List<Abbinamento> abbinamentiSession) {
 
@@ -1444,7 +1444,8 @@ public class EsameCommissioniController {
 	/**
 	 * Registrazione della votazione
 	 * 
-	 * @return
+	 * @return "pretty:Chiusura_Iter" se l'utente ha il ruolo di RUOLO_DELIBERANTE e
+	 *         l'atto è di tipo PDA, altrimenti null
 	 */
 	public String registraVotazione() {
 
@@ -1506,7 +1507,7 @@ public class EsameCommissioniController {
 	 * Se non esiste il quorum, nessun esito di votazione e nessuna data di
 	 * registrazione della votazione, la commissione viene annullata
 	 * 
-	 * @return
+	 * @return true nel caso di annullamento
 	 */
 	private boolean checkAnnullaCommissione() {
 
@@ -1523,7 +1524,7 @@ public class EsameCommissioniController {
 	 * Verifica che almeno un componente dei membri del comitato non sia uscito
 	 * dall'aula
 	 * 
-	 * @return
+	 * @return true se almeno un membro è presente in aula
 	 */
 	private boolean checkLavoriComitatoRistretto() {
 
@@ -1539,7 +1540,7 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che almeno un relatore non sia uscito dall'aula
 	 * 
-	 * @return
+	 * @return true se almeno un membro è presente in aula
 	 */
 	private boolean checkNominatoRelatore() {
 		for (Relatore relatore : getRelatoriList()) {
@@ -1555,7 +1556,7 @@ public class EsameCommissioniController {
 	/**
 	 * Upload del testo dell'atto votato
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -1598,8 +1599,8 @@ public class EsameCommissioniController {
 	 * Verifica che il testo scelto sia presente nell'elenco dei testi degli atti
 	 * votati
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkTestoAttoVotato(String fileName) {
 
@@ -1640,7 +1641,7 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiornamento del testo dell'atto votato
 	 * 
-	 * @param event
+	 * @param event evento di modifica della riga
 	 */
 	public void updateTestoAttoVotato(RowEditEvent event) {
 
@@ -1705,7 +1706,7 @@ public class EsameCommissioniController {
 	/**
 	 * Conferma della trasmissione
 	 * 
-	 * @return
+	 * @return "pretty:Chiusura_Iter" se lo stato può essere cambiato altrimenti ""
 	 */
 	public String confermaTrasmissione() {
 
@@ -1775,7 +1776,7 @@ public class EsameCommissioniController {
 	 * ruolo della commissione è RUOLO_CONSULTIVA ritorna "Testo del parere
 	 * espresso". Altrimenti "Testo dell'atto votato"
 	 * 
-	 * @return
+	 * @return il testo del parere espresso dell'atto votato
 	 */
 	public String testoParereEspressoAttoVotato() {
 
@@ -1881,7 +1882,7 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiornamento dell'emendamento
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadEmendamento(FileUploadEvent event) {
 
@@ -1921,10 +1922,10 @@ public class EsameCommissioniController {
 	}
 
 	/**
-	 * Non implementato. Ritorna semrpe ok
+	 * Non implementato. Ritorna sempre ok
 	 * 
 	 * @param fileName
-	 * @return
+	 * @return true
 	 */
 	private boolean checkEmendamenti(String fileName) {
 
@@ -1956,7 +1957,7 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiornamento del testo della clausola
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadTestoClausola(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -1997,8 +1998,8 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica se il testo selezionato è presente nell'elenco dei testi
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkTestiClausola(String fileName) {
 
@@ -2107,7 +2108,7 @@ public class EsameCommissioniController {
 	/**
 	 * Aggiornamento dell'allegato
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadAllegato(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -2147,8 +2148,8 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che l'allegato scelto sia presente nell'elenco degli allegati
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkAllegato(String fileName) {
 
@@ -2226,7 +2227,7 @@ public class EsameCommissioniController {
 	/**
 	 * Verifica che il link scelto non sia presente nell'elenco dei link
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkLinks() {
 

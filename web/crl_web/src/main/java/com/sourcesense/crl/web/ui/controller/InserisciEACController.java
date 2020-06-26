@@ -158,7 +158,7 @@ public class InserisciEACController {
 	/**
 	 * Upload dell'allegato parere
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadAllegatoParere(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -187,8 +187,8 @@ public class InserisciEACController {
 	/**
 	 * Verifica che il parere non sia già presente nell'elenco degli allegati EAC
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkAllegatoParere(String fileName) {
 
@@ -303,7 +303,7 @@ public class InserisciEACController {
 	 * Verifica che il collegamento scelto non sia già presente nell'elenco degli
 	 * atti del sindacato
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkCollegamentiAttiSindacati() {
 

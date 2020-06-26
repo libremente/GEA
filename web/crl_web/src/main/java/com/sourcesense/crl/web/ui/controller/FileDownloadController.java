@@ -52,7 +52,7 @@ public class FileDownloadController {
 	/**
 	 * Aggiornamento dell'allegato o del testo
 	 * 
-	 * @param event
+	 * @param event evento di modifica della riga
 	 */
 	public void fileUpdate(RowEditEvent event) {
 

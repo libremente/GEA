@@ -44,10 +44,10 @@ public class URLBuilder {
 	/**
 	 * Costruisce l'url di download per i documenti di Alfresco passando il nome del file
 	 * 
-	 * @param contextPropertyName
-	 * @param fileName
-	 * @param paramsValues
-	 * @return
+	 * @param contextPropertyName nome del context
+	 * @param fileName nome del file
+	 * @param paramsValues parametri dell'url
+	 * @return url di download
 	 */
 	public String buildAlfrescoDownloadURL(String contextPropertyName, String fileName, String[] paramsValues) {
 
@@ -68,10 +68,10 @@ public class URLBuilder {
 	/**
 	 * Costruisce l'url di download per i documenti di Alfresco passando il path del file
 	 * 
-	 * @param contextPropertyName
-	 * @param pathPropertyName
-	 * @param paramsValues
-	 * @return
+	 * @param contextPropertyName nome del context
+	 * @param fileName nome del file
+	 * @param paramsValues parametri dell'url
+	 * @return url di download
 	 */
 	public String buildAlfrescoURL(String contextPropertyName, String pathPropertyName, String[] paramsValues) {
 
@@ -95,9 +95,9 @@ public class URLBuilder {
 	/**
 	 * Costruisce un url tramite il path passato
 	 * 
-	 * @param contextPropertyName
-	 * @param pathPropertyName
-	 * @return
+	 * @param contextPropertyName nome del context
+	 * @param pathPropertyName nome del path del file
+	 * @return url di download
 	 */
 	public String buildURL(String contextPropertyName, String pathPropertyName) {
 
@@ -112,9 +112,9 @@ public class URLBuilder {
 	/**
 	 * Costruisce un url tramite il path passato
 	 * 
-	 * @param contextPropertyName
-	 * @param paramsValues
-	 * @return
+	 * @param contextPropertyName nome del context
+	 * @param paramValues nome del path del file
+	 * @return url di download
 	 */
 	public String buildSimpleURL(String contextPropertyName, String[] paramsValues) {
 
@@ -128,7 +128,7 @@ public class URLBuilder {
 	/**
 	 * Esegue l'encoding dei parametri passati
 	 * 
-	 * @param paramsValues
+	 * @param paramsValues parametri da codificare
 	 */
 	private void encodeParams(String[] paramsValues) {
 

@@ -112,7 +112,7 @@ public class AmministrazioneAttoController {
 	/**
 	 * Rimozione dell'atto
 	 * 
-	 * @return
+	 * @return il valore "pretty:Home"
 	 */
 	public String deleteAtto() {
 		Atto atto = attoBean.getAtto();

@@ -153,7 +153,7 @@ public class CollegamentiController {
 	/**
 	 * Inserimento del collegamento all'atto da aggiungere
 	 * 
-	 * @param idAttoToAdd
+	 * @param idAttoToAdd id dell'atto da aggiungere
 	 */
 	public void addCollegamento(String idAttoToAdd) {
 
@@ -178,8 +178,8 @@ public class CollegamentiController {
 	/**
 	 * Inserimento del collegamento all'atto da aggiungere secondo il tipo di atto
 	 * 
-	 * @param idAttoToAdd
-	 * @param tipoAtto
+	 * @param idAttoToAdd id dell'atto da aggiungere
+	 * @param tipoAtto tipo atto
 	 */
 	public void addCollegamento(String idAttoToAdd, String tipoAtto) {
 
@@ -241,8 +241,8 @@ public class CollegamentiController {
 	/**
 	 * Verifica se l'atto è presente nei collegamenti
 	 * 
-	 * @param idAttoToAdd
-	 * @return
+	 * @param idAttoToAdd id dell'atto
+	 * @return false se è presente
 	 */
 	private boolean checkCollegamenti(String idAttoToAdd) {
 
@@ -351,7 +351,7 @@ public class CollegamentiController {
 	/**
 	 * Verifica che tutti i collegamenti appartengano allo stesso atto del sindacato
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkCollegamentiAttiSindacati() {
 
@@ -427,7 +427,7 @@ public class CollegamentiController {
 	/**
 	 * Verifica che tutti i collegamenti appartengano allo stesso numero di atto regionale
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkCollegamentiAttiRegionali() {
 
@@ -443,7 +443,6 @@ public class CollegamentiController {
 
 	/**
 	 * Salvataggio delle leggi regionali
-	 * 
 	 */
 	public void salvaLeggiRegionali() {
 		atto.setCollegamentiLeggiRegionali(getCollegamentiLeggiRegionali());

@@ -120,7 +120,7 @@ public class InserisciAttoController {
 	/**
 	 * Inserimento dell'atto
 	 * 
-	 * @return
+	 * @return "pretty:Riepilogo_Atto" se ok altrimenti null
 	 */
 	public String inserisciAtto() {
 
@@ -175,9 +175,10 @@ public class InserisciAttoController {
 	}
 
 	/**
+	 * aggiunta dei tipi di atto
 	 * 
-	 * @param tipiAtto
-	 * @param isAula
+	 * @param tipiAtto tipi di atto
+	 * @param isAula se a true aggiunge anche gli atti dell'aula
 	 */
 	public void setTipiAtto(List<TipoAtto> tipiAtto, boolean isAula) {
 

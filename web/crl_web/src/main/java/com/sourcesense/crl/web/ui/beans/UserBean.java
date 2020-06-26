@@ -171,7 +171,7 @@ public class UserBean implements Serializable {
 	/**
 	 * Aggiunge il gruppo all'utente
 	 * 
-	 * @param event
+	 * @param event evento JSF
 	 */
 	public void handleChangeSessionGroup(final AjaxBehaviorEvent event) {
 		SelectOneMenu selectOneMenu = ((SelectOneMenu) event.getSource());
@@ -187,7 +187,7 @@ public class UserBean implements Serializable {
 	/**
 	 * Refresh delle colonne utente
 	 * 
-	 * @return
+	 * @return il valore "pretty:Home"
 	 */
 	public String refreshSearch() {
 		refreshColonneUser();
