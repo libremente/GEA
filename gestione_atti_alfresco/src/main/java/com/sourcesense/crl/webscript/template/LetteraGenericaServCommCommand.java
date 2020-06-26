@@ -44,11 +44,17 @@ import org.apache.commons.logging.LogFactory;
 
 import com.sourcesense.crl.util.AttoUtil;
 
-
+/**
+ * {@inheritDoc}
+ * @return ritorna un documento  lettera generica servizio commissioni .
+ */
 public class LetteraGenericaServCommCommand extends LetteraBaseCommand{
 
 	private static Log logger = LogFactory.getLog(LetteraGenericaServCommCommand.class);
-	
+	/**
+	 * {@inheritDoc}
+	 * @return ritorna un documento  lettera generica commissioni .
+	 */
 	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) {
 		
 		byte[] documentFilledByteArray = null; 

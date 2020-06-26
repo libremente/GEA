@@ -44,7 +44,7 @@ import com.sourcesense.crl.util.AttoUtil;
 
 
 /**
- *
+ * Questo comando contiente le funzionalita base delle generazione di un documento di tipo lettera.
  */
 public abstract class LetteraBaseCommand implements LetteraCommand{
 	
@@ -66,7 +66,7 @@ public abstract class LetteraBaseCommand implements LetteraCommand{
 	 * @param templateNodeRef il riferimento al nodo del template
 	 * @param attoNodeRef il riferimento al nodo del atto
 	 * @param gruppo i gruppo di appartenza al momento della richiesta
-	 * @return ritorna il documento di lettera base.
+	 * @return ritorna un documento di tipo documento di lettera .
 	 * @throws IOException
 	 */
 	public abstract byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException;

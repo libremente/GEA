@@ -53,6 +53,9 @@ import org.springframework.extensions.webscripts.WebScriptResponse;
 
 import com.sourcesense.crl.util.AttoUtil;
 
+/**
+ * Questo Web Script fa da interfaccia per la generazione dei documenti di tipo {@link LetteraCommand Lettera}
+ */
 public class LetteraWebScript extends AbstractWebScript {
 
 	private ContentService contentService;
@@ -62,6 +65,13 @@ public class LetteraWebScript extends AbstractWebScript {
 
 	private static Log logger = LogFactory.getLog(LetteraWebScript.class);
 
+	/**
+	 * Questo metodo in base ai parametri ricevuti in request
+	 * crea  il documento {@link LetteraCommand Lettera} in formato doc.
+	 * @param req WebScriptRequest
+	 * @param res WebScriptResponse
+	 * @throws IOException
+	 */
 	public void execute(WebScriptRequest req, WebScriptResponse res) throws IOException {
 
 		OutputStream responseOutputStream = null;

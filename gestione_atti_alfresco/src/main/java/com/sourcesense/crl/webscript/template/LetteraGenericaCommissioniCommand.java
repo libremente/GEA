@@ -41,10 +41,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
+/**
+ * Commando che si occupa di generare una Lettera generica di tipo Commissioni.
+ */
 public class LetteraGenericaCommissioniCommand extends LetteraBaseCommand{
 
 	private static Log logger = LogFactory.getLog(LetteraGenericaCommissioniCommand.class);
-	
+
+	/**
+	 * {@inheritDoc}
+	 * @return ritorna un documento  lettera generica commissioni .
+	 */
 	public byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo) throws IOException{
 		    	 
 		
