@@ -395,7 +395,8 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	
 	 
 	 /**
-	  * Sostituisce nel template cell i paramteri che si trovano dentro replacements
+	  * Sostituisce nel template cell i paramteri che si trovano dentro replacements: titoloAtto, oggettoAtto,commissioneReferente, 
+	  * relatoreCommissione,firmatariAttoIndirizzo...
 	  * @param cell documento template
 	  * @param replacements valori dei parametri da sostituire nel template
 	  * @throws IOException se ci sono dei problemi aggiornando i parametri oppure accedendo al template

@@ -145,12 +145,16 @@ public class OdgGenericoAulaCommand extends OdgBaseCommand {
 	}
 
 	/**
+	 * Metodo più importante: genera il documento con tutta l'informazione degli atti. Interroga Alfresco per ricavare i dati 
+	 * che poi serviranno per sovrascrivere i parametri dentro il template da riempire. Per gli attiTrattati si inseriscono nel documento:  
+	 * titoloAtto, oggettoAtto, commissioneReferente, relatoreCommissione (nel caso in cui esista). Per gli attiIndirizzoTrattati invece:
+	 * titoloAtto, oggettoAtto, firmatariAttoIndirizzo.
 	 * 
-	 * @param documentByteArray
-	 * @param attiTrattati
-	 * @param attiIndirizzoTrattati
-	 * @return
-	 * @throws IOException
+	 * @param documentByteArray template da completare
+	 * @param attiTrattati primo insieme di atti che bisogna inserire nel documento.
+	 * @param attiIndirizzoTrattati secondo insieme di atti che bisogna inserire nel documento.
+	 * @return contenuto binario del file template popolato con i dati degli atti.
+	 * @throws IOException se esistono problemi con la lettura del template oppure la scrittura del nuovo documento.
 	 */
 	private byte[] fillAttiTrattatiRowsAulaDocx(byte[] documentByteArray, List<NodeRef> attiTrattati,
 			List<NodeRef> attiIndirizzoTrattati) throws IOException {
