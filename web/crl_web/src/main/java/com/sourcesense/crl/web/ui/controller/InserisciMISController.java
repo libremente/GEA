@@ -153,7 +153,7 @@ public class InserisciMISController {
 	/**
 	 * Upload dell'allegato parere
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadAllegatoParere(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -182,8 +182,8 @@ public class InserisciMISController {
 	/**
 	 * Verifica che il parere non sia già presente nell'elenco degli allegati MIS
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkAllegatoParere(String fileName) {
 

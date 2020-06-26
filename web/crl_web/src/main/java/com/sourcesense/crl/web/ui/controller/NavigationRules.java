@@ -73,7 +73,7 @@ public class NavigationRules {
 	/**
 	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI o ADMIN allora è amministratore
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isAmministrazioneEnabled() {
 
@@ -85,7 +85,7 @@ public class NavigationRules {
 	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI , ADMIN o AULA allora può
 	 * inserire dati MIS
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isInsertMISEnabled() {
 
@@ -98,7 +98,7 @@ public class NavigationRules {
 	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI , ADMIN o AULA allora può
 	 * inserire dati EAC
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isInsertEACEnabled() {
 
@@ -111,7 +111,7 @@ public class NavigationRules {
 	 * Se l'utente è nel gruppo SERVIZIO_COMMISSIONI , ADMIN o AULA allora può
 	 * inserire dati degli atti
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isInsertEnabled() {
 
@@ -123,7 +123,7 @@ public class NavigationRules {
 	/**
 	 * Ritorna il sottostato della commissione consultiva
 	 * 
-	 * @return
+	 * @return lo stato della commissione
 	 */
 	public String getSottoStatoCommissioneConsultiva() {
 
@@ -142,7 +142,7 @@ public class NavigationRules {
 	 * Se il ruolo della commissione non è di tipo RUOLO_CONSULTIVA ne
 	 * RUOLO_DELIBERANTE allora ha la data di richiesta dell'iscrizione in aula
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean hasDataRichiestaIscrizioneAula() {
 		Commissione comm = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -155,7 +155,7 @@ public class NavigationRules {
 	 * Se il ruolo della commissione non è di tipo ServizioCommissioni ne ADMIN
 	 * allora l'EAC è disabilitato
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isEACDisabled() {
 
@@ -168,7 +168,7 @@ public class NavigationRules {
 	 * Se il ruolo della commissione non è di tipo ServizioCommissioni ne ADMIN e
 	 * l'utente non è in commissione allora l'EAC è disabilitato
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isEACDisabledComm() {
 
@@ -181,7 +181,7 @@ public class NavigationRules {
 	 * Se il gruppo dell'utente non è di tipo CPCV ne ADMIN allora il MIS è
 	 * disabilitato
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isMISDisabled() {
 
@@ -193,7 +193,7 @@ public class NavigationRules {
 	/**
 	 * Verifica che il gruppo dell'utente sia di tipo CPCV
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCPCVUser() {
 
@@ -205,7 +205,7 @@ public class NavigationRules {
 	 * Verifica che il gruppo dell'utente sia di tipo ADMIN o SERVIZIO_COMMISSIONI e
 	 * che lo stato dell'atto sia di tipo PRESO_CARICO_SC
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isInviaDirettamenteAula() {
 		return StatoAtto.PRESO_CARICO_SC.equals(attoBean.getStato())
@@ -217,7 +217,7 @@ public class NavigationRules {
 	 * Verifica lo stato dell'atto non sia di tipo TRASMESSO_AULA,
 	 * PRESO_CARICO_AULA, VOTATO_AULA ne PUBBLICATO
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean presaCaricoAulaDisabled() {
 
@@ -238,7 +238,7 @@ public class NavigationRules {
 	 * Verifica che il gruppo dell'utente sia di tipo ADMIN o SERVIZIO_COMMISSIONI e
 	 * che lo stato dell'atto sia di tipo ORG e ne PDA_UDP
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean presentazioneAssegnazioneDisabled() {
 		boolean disabled;
@@ -258,7 +258,7 @@ public class NavigationRules {
 	 * Verifica che il gruppo dell'utente sia di tipo ADMIN o SERVIZIO_COMMISSIONI e
 	 * che lo stato dell'atto sia di tipo ORG e ne PDA_UDP
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean esameCommissioniDisabled() {
 
@@ -280,7 +280,7 @@ public class NavigationRules {
 	 * Disabilitato se la commissione non esiste oppure la sessione sia di tipo
 	 * PDA_UDP o ORG
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean consultazioniEPareriDisabled() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -291,7 +291,7 @@ public class NavigationRules {
 	/**
 	 * Sempre disabilitato
 	 * 
-	 * @return
+	 * @return false
 	 */
 	public boolean collegamentiDisabled() {
 		return false;
@@ -300,7 +300,7 @@ public class NavigationRules {
 	/**
 	 * Abilitato se il tipo atto è PAR, INP, PRE o REL
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isFirmatariEnabled() {
 
@@ -318,7 +318,7 @@ public class NavigationRules {
 	/**
 	 * Abilitato se il tipo atto è PDL, PLP o 03_ATTO DI INIZIATIVA POPOLARE
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isFirmatariPopolariEnabled() {
 
@@ -336,7 +336,7 @@ public class NavigationRules {
 	/**
 	 * Abilitato se il tipo atto è PDA, PLP, PRE, REF, PDL, DOC o REL
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean organismiEnabled() {
 
@@ -356,7 +356,7 @@ public class NavigationRules {
 	/**
 	 * Abilitato se il tipo atto è PDA, PLP, PRE, REF, PDL, DOC o REL
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean emendamentiClausoleEnabled() {
 
@@ -377,7 +377,7 @@ public class NavigationRules {
 	 * Abilitato se il tipo atto è PDL o la commissione ha RUOLO_REFERENTE,
 	 * RUOLO_COREFERENTE o RUOLO_REDIGENTE
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isClausoleEnabled() {
 
@@ -398,7 +398,7 @@ public class NavigationRules {
 	/**
 	 * Abilitato se il tipo atto è PDL o PLP
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean abbinamentiEnabled() {
 
@@ -416,7 +416,7 @@ public class NavigationRules {
 	 * Disabilitato se il tipo atto è PAR, REL, INP, EAC, MIS o DOC o che l'atto non
 	 * sia in aula
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean esameAulaDisabled() {
 
@@ -438,7 +438,7 @@ public class NavigationRules {
 	/**
 	 * Box aula visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean boxAulaVisible() {
 
@@ -455,7 +455,7 @@ public class NavigationRules {
 	/**
 	 * Emendamenti attivati
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean emendamentiEnabled() {
 		if (isSessionAttoPDL() || isSessionAttoORG() || attoBean.getTipoAtto().equals("PDA")
@@ -473,7 +473,7 @@ public class NavigationRules {
 	/**
 	 * Dati atto attivati
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean datiAttoEnabled() {
 		return isSessionAttoPDA_UDP() || isSessionAttoORG();
@@ -482,7 +482,7 @@ public class NavigationRules {
 	/**
 	 * Rinvio e stralci attivati
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean rinvioEStralciEnabled() {
 		return (!isSessionAttoDOC() && !isSessionAttoPDA_UDP() && !isSessionAttoORG());
@@ -491,7 +491,7 @@ public class NavigationRules {
 	/**
 	 * Stralci e aulta attivati
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean stralciAulaEnabled() {
 
@@ -509,7 +509,7 @@ public class NavigationRules {
 	/**
 	 * Pubblicazione BURL attivata
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean pubblicazioneBurlEnabled() {
 
@@ -527,7 +527,7 @@ public class NavigationRules {
 	/**
 	 * Testo dell'atto votato attivato
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean testoAttoVotatoEnabled() {
 
@@ -544,7 +544,7 @@ public class NavigationRules {
 	/**
 	 * BURL attivato
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isBURLEnabled() {
 
@@ -567,7 +567,7 @@ public class NavigationRules {
 	/**
 	 * Sempre false
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean chiusuraIterDisabled() {
 
@@ -578,7 +578,7 @@ public class NavigationRules {
 	/**
 	 * Esito dell'atto della commissione attivato
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoEsitoCommissioneApprovato() {
 		boolean risultato = false;
@@ -597,7 +597,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo INP, DOC ma non PRS
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoEsitoCommissioneArchiviazioneINP() {
 		boolean risultato = false;
@@ -613,7 +613,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo REL
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoEsitoCommissioneApprovatoREL() {
 		boolean risultato = false;
@@ -628,7 +628,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se lo stato dell'atto è chiuso
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoChiuso() {
 
@@ -638,7 +638,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se lo stato dell'atto è chiuso e che non sia PAR
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoPARChiuso() {
 
@@ -649,7 +649,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo PAR
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoPAR() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PAR");
@@ -658,7 +658,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo PDL
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoPDL() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDL");
@@ -667,7 +667,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo INP
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoINP() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("INP");
@@ -676,7 +676,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo DOC
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoDOC() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("DOC");
@@ -685,7 +685,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo PRE
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoPRE() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PRE");
@@ -694,7 +694,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo DOC ma che non sia in aula
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isNotSessionAttoDOCAula() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("DOC") && !attoBean.getAtto().isIterAula();
@@ -703,7 +703,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto non è di tipo PAR
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean canTransmitToAula() {
 
@@ -725,7 +725,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo PDA
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoPDA() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PDA");
@@ -747,7 +747,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo ORG
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoORG() {
 
@@ -758,7 +758,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo PLP
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isSessionAttoPLP() {
 		return attoBean.getTipoAtto().equalsIgnoreCase("PLP");
@@ -767,7 +767,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'utente è in commissione o che il gruppo sia di tipo AULA
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isGestioneSeduteEnabled() {
 
@@ -778,7 +778,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'utente è in commissione
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean gestioneSeduteConsultazioniCommissione() {
 
@@ -788,7 +788,7 @@ public class NavigationRules {
 	/**
 	 * Verifica che il gruppo sia di tipo AULA
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean gestioneSeduteConsultazioniAula() {
 		return GruppoUtente.AULA.equals(userBean.getUser().getSessionGroup().getNome());
@@ -798,7 +798,7 @@ public class NavigationRules {
 	 * Verifica che il ruolo della commissione sia di tipo RUOLO_REFERENTE,
 	 * RUOLO_DELIBERANTE, RUOLO_REDIGENTE o RUOLO_COREFERENTE
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCommissioneUpdateEnabled() {
 
@@ -818,7 +818,7 @@ public class NavigationRules {
 	/**
 	 * Verifica che il ruolo della commissione sia di tipo RUOLO_REFERENTE
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCommissioneReferente() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -833,7 +833,7 @@ public class NavigationRules {
 	/**
 	 * Verifica che il ruolo della commissione sia di tipo RUOLO_CONSULTIVA
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCommissioneConsultiva() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -848,7 +848,7 @@ public class NavigationRules {
 	/**
 	 * Verifica che il ruolo della commissione sia di tipo RUOLO_DELIBERANTE
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCommissioneDeliberante() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -863,7 +863,7 @@ public class NavigationRules {
 	/**
 	 * Verifica che l'atto abbia la commissione deliberante
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean hasCommissioneDeliberante() {
 
@@ -874,7 +874,7 @@ public class NavigationRules {
 	/**
 	 * Verifica se l'atto è di tipo PDL, PDA, PLP, PRE, REF, REL o DOC
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCalendarizzazioneTipo() {
 
@@ -895,7 +895,7 @@ public class NavigationRules {
 	 * Atto di tipo INP, REL o DOC e commissione con RUOLO_REFERENTE,
 	 * RUOLO_COREFERENTE, RUOLO_REDIGENTE o RUOLO_DELIBERANTE
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isRisEnabled() {
 
@@ -920,7 +920,7 @@ public class NavigationRules {
 	/**
 	 * Atto di tipo INP, REL o DOC
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isRisTipo() {
 
@@ -936,7 +936,7 @@ public class NavigationRules {
 	/**
 	 * Calendarizzazione attivata
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCalendarizzazioneEnabled() {
 
@@ -964,7 +964,7 @@ public class NavigationRules {
 	/**
 	 * Referente per la continuazione lavori
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isContinuazioneLavoriReferente() {
 		Commissione commissione = attoBean.getWorkingCommissione(userBean.getUser().getSessionGroup().getNome());
@@ -981,7 +981,7 @@ public class NavigationRules {
 
 	/**
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isServizioCommissioni() {
 
@@ -990,9 +990,9 @@ public class NavigationRules {
 	}
 
 	/**
-	 * GUest
+	 * Guest
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isGuest() {
 

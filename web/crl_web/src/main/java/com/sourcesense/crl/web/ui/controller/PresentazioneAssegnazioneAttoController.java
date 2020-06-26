@@ -264,9 +264,9 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Ordinamento delle date
 	 * 
-	 * @param s1
-	 * @param s2
-	 * @return
+	 * @param s1 data 1
+	 * @param s2 data 2
+	 * @return valore numerico della comparazione java
 	 */
 	public int sortTable(Object s1, Object s2) {
 		return ((Date) s1).compareTo((Date) s2);
@@ -331,7 +331,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Upload del testo dell'atto
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadTestoAtto(FileUploadEvent event) {
 
@@ -371,8 +371,8 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che il testo dell'atto non sia già presente
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkTestoAtto(String fileName) {
 
@@ -421,7 +421,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Aggiornamento del testo dell'atto
 	 * 
-	 * @param event
+	 * @param event evento di modifica della riga
 	 */
 	public void updateTestoAtto(RowEditEvent event) {
 
@@ -439,7 +439,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Aggiornamento dell'allegato
 	 * 
-	 * @param event
+	 * @param event evento di modifica della riga
 	 */
 	public void updateAllegato(RowEditEvent event) {
 
@@ -595,7 +595,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che il firmatario non sia già presente
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkFirmatari() {
 
@@ -612,7 +612,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che il promotore non sia già presente
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkPromotori() {
 
@@ -629,7 +629,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che il primo firmatario sia presente nell'elenco dei firmatari
 	 * 
-	 * @return
+	 * @return true se c'è almeno un primo firmatario
 	 */
 	private boolean checkPrimoFirmatario() {
 
@@ -646,7 +646,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che il primo promotore sia presente nell'elenco dei firmatari
 	 * 
-	 * @return
+	 * @return true se c'è almeno un primo firmatario
 	 */
 	private boolean checkPrimoPromotore() {
 
@@ -663,7 +663,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Ritiro per mancanza di firmatari
 	 * 
-	 * @return
+	 * @return il valore "pretty:Chiusura_Iter"
 	 */
 	public String ritiraPerMancanzaFirmatari() {
 		return "pretty:Chiusura_Iter";
@@ -726,7 +726,7 @@ public class PresentazioneAssegnazioneAttoController {
 	 * Ritorna l'elenco dei firmatari ordinati. Ad ogni firmatario viene assegnato
 	 * un numero che inizia con 0 nel caso dei primi 10 numeri
 	 * 
-	 * @return
+	 * @return l'elenco dei firmatari ordinati
 	 */
 	private List<Firmatario> getOrderedFirmatari() {
 
@@ -772,7 +772,7 @@ public class PresentazioneAssegnazioneAttoController {
 	 * Ritorna l'elenco dei promotori ordinati. Ad ogni promotore viene assegnato un
 	 * numero che inizia con 0 nel caso dei primi 10 numeri
 	 * 
-	 * @return
+	 * @return l'elenco dei promotori ordinati
 	 */
 	private List<Firmatario> getOrderedPromotori() {
 
@@ -817,7 +817,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Salvataggio dell'ammissibilità
 	 * 
-	 * @return
+	 * @return "pretty:Chiusura_Iter" se tutto ok altrimenti null
 	 */
 	public String salvaAmmissibilita() {
 
@@ -1009,7 +1009,7 @@ public class PresentazioneAssegnazioneAttoController {
 	 * Verifica che tutte le commissioni non annullate non abbiano il
 	 * RUOLO_REFERENTE e ne il RUOLO_DELIBERANTE
 	 * 
-	 * @return
+	 * @return true se tutte le commissioni sono annullate
 	 */
 	private boolean checkCommissioniRuolo() {
 
@@ -1039,7 +1039,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che la commissione corrente abbia lo STATO_ANNULLATO
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkCommissioni() {
 
@@ -1179,7 +1179,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che il parere non sia già presente
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkPareri() {
 
@@ -1228,7 +1228,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Conferma della trasmissione
 	 * 
-	 * @return
+	 * @return "pretty:Chiusura_Iter" se tutto ok altrimenti null
 	 */
 	public String confermaTrasmissione() {
 
@@ -1292,7 +1292,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Cambia lo stato della commissione assegnata
 	 * 
-	 * @return
+	 * @return il numero di commissioni da assegnare
 	 */
 	public int changeStatoCommissioniAssegnato() {
 
@@ -1319,7 +1319,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Upload dell'allegato
 	 * 
-	 * @param event
+	 * @param event evento dell'upload del file
 	 */
 	public void uploadAllegato(FileUploadEvent event) {
 
@@ -1356,8 +1356,8 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che l'allegato non sia già presente
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkAllegato(String fileName) {
 
@@ -1434,7 +1434,7 @@ public class PresentazioneAssegnazioneAttoController {
 	/**
 	 * Verifica che il link non sia già presente
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkLinks() {
 

@@ -585,7 +585,7 @@ public class LettereNotificheController implements Serializable {
 	/**
 	 * Ritorna il contenuto della lettera
 	 * 
-	 * @return
+	 * @return contenuto della lettera
 	 */
 	public StreamedContent getFile() {
 
@@ -613,7 +613,7 @@ public class LettereNotificheController implements Serializable {
 	 * Aggiunge le informazioni delle lettere, della direzione, email firmatario,
 	 * numero di telefono e ufficio dalla lettera selezionata nel contesto web
 	 * 
-	 * @param event
+	 * @param event evento di selezione del nodo
 	 */
 	public void onNodeSelect(NodeSelectEvent event) {
 
@@ -678,7 +678,7 @@ public class LettereNotificheController implements Serializable {
 	/**
 	 * Salvataggio del firmatario
 	 * 
-	 * @param actionEvent
+	 * @param actionEvent evento ajax JSF
 	 */
 	public void saveFirmatario(AjaxBehaviorEvent actionEvent) {
 		actionEvent.getSource();
