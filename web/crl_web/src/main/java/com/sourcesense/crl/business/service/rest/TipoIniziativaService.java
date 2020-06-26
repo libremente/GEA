@@ -56,8 +56,8 @@ public class TipoIniziativaService {
 	/**
 	 * Ritorna l'elenco dei tipi di iniziativa
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei tipi di iniziativa
 	 */
 	public List<TipoIniziativa> getAllTipoIniziativa(String url) {
 		List<TipoIniziativa> listTipiIniziativa = null;

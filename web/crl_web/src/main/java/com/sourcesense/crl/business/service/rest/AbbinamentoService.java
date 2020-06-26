@@ -55,8 +55,8 @@ public class AbbinamentoService {
 	/**
 	 * Aggiornamento dell'abbinamento
 	 * 
-	 * @param url
-	 * @param abbinamento
+	 * @param url url
+	 * @param abbinamento abbinamento
 	 */
 	public void merge(String url, GestioneAbbinamento abbinamento) {
 		try {

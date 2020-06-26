@@ -30,45 +30,46 @@ public interface ServiceManager {
 	/**
 	 * Salvataggio dell'oggetto
 	 * 
-	 * @param object
-	 * @return
+	 * @param object oggetto da persistere
+	 * @return oggetto risultante
 	 */
 	public Object persist(Object object);
 
 	/**
 	 * Aggiornamento dell'oggetto
 	 * 
-	 * @param object
-	 * @return
+	 * @param object oggetto da aggiornare
+	 * @return oggetto risultante
 	 */
 	public Object merge(Object object);
 
 	/**
 	 * Rimozione dell'oggetto
 	 * 
-	 * @param object
-	 * @return
+	 * @param object oggetto da rimuovere
+	 * @return risultato della rimozione
 	 */
 	public boolean remove(Object object);
 
 	/**
 	 * Ritorna tutti gli oggetti disponibili
 	 * 
-	 * @return
+	 * @return elenco di oggetti
 	 */
 	public List<Object> retrieveAll();
 
 	/**
 	 * Ritorna tutti i nomi o le descrizioni degli oggetti disponibili
-	 * @return
+	 * 
+	 * @return elenco di oggetti
 	 */
 	public Map<String, String> findAll();
 
 	/**
 	 * Ritorna l'oggetto tramite l'id
 	 * 
-	 * @param id
-	 * @return
+	 * @param id id dell'oggetto
+	 * @return oggetto
 	 */
 	public Object findById(String id);
 

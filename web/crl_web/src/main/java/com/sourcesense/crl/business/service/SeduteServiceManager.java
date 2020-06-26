@@ -47,7 +47,7 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Rimuove la seduta
 	 * 
-	 * @param idSeduta
+	 * @param idSeduta id della seduta
 	 */
 	public void deleteSeduta(String idSeduta) {
 		seduteService.delete(
@@ -57,8 +57,8 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio della seduta
 	 * 
-	 * @param gestioneSedute
-	 * @return
+	 * @param gestioneSedute gestione seduta
+	 * @return seduta
 	 */
 	public Seduta salvaSeduta(GestioneSedute gestioneSedute) {
 		return seduteService.create(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null),
@@ -69,8 +69,8 @@ public class SeduteServiceManager implements ServiceManager {
 	 * 
 	 * Aggiornamento della seduta
 	 * 
-	 * @param gestioneSedute
-	 * @return
+	 * @param gestioneSedute gestione seduta
+	 * @return seduta
 	 */
 	public Seduta updateSeduta(GestioneSedute gestioneSedute) {
 		return seduteService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_seduta", null),
@@ -80,9 +80,9 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Ritorna le sedute secondo il gruppo e la legislatura
 	 * 
-	 * @param gruppo
-	 * @param legislatura
-	 * @return
+	 * @param gruppo      gruppo
+	 * @param legislatura legislatura
+	 * @return elenco delle sedute
 	 */
 	public List<Seduta> getSedute(String gruppo, String legislatura) {
 		return seduteService.findByGroup(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_elenco_sedute", null),
@@ -92,10 +92,10 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Ritorna la seduta secondo il gruppo, la data seduta e la legislatura
 	 * 
-	 * @param gruppo
-	 * @param dataSeduta
-	 * @param legislatura
-	 * @return
+	 * @param gruppo      gruppo
+	 * @param dataSeduta  data seduta
+	 * @param legislatura legislatura
+	 * @return seduta
 	 */
 	public Seduta getSeduta(String gruppo, String dataSeduta, String legislatura) {
 
@@ -107,7 +107,7 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio dell'odg di una seduta
 	 * 
-	 * @param seduta
+	 * @param seduta seduta
 	 */
 	public void salvaOdg(Seduta seduta) {
 		seduteService.mergeSeduta(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_odg", null), seduta);
@@ -116,10 +116,10 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Aggiornamento dell'odg di una seduta
 	 * 
-	 * @param seduta
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param seduta    seduta
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return allegato
 	 */
 	public Allegato uploadOgg(Seduta seduta, InputStream stream, Allegato testoAtto) {
 
@@ -130,10 +130,10 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Aggiornamento del verbale di una seduta
 	 * 
-	 * @param seduta
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param seduta    seduta
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return allegato
 	 */
 	public Allegato uploadVerbale(Seduta seduta, InputStream stream, Allegato testoAtto) {
 
@@ -145,10 +145,10 @@ public class SeduteServiceManager implements ServiceManager {
 	/**
 	 * Ritorna il contenuto dell'odg di una seduta
 	 * 
-	 * @param tipoTemplate
-	 * @param idSeduta
-	 * @param gruppo
-	 * @return
+	 * @param tipoTemplate tipo di template
+	 * @param idSeduta     id della seduta
+	 * @param gruppo       gruppo
+	 * @return contenuto dell'odg
 	 */
 	public InputStream getODGFile(String tipoTemplate, String idSeduta, String gruppo) {
 		return seduteService.getFile(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_get_odg",

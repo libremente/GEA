@@ -41,7 +41,7 @@ public class AbbinamentoServiceManager {
 	/**
 	 * Salvataggio dell'abbinamento
 	 * 
-	 * @param abbinamento
+	 * @param abbinamento abbinamento con l'atto
 	 */
 	public void salvaAbbinamento(GestioneAbbinamento abbinamento) {
 		abbinamentoService.merge(

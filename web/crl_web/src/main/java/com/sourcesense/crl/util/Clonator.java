@@ -31,8 +31,8 @@ public class Clonator {
 	/**
 	 * Clonazione di una lista
 	 * 
-	 * @param list
-	 * @return
+	 * @param list lista da clonare
+	 * @return lista clonata
 	 */
 	public static List cloneList(List list) {
 		List newList = new ArrayList();

@@ -51,7 +51,8 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 /**
- * Servizio rest per la gestione degli atti. Inserimento, aggiornamento e ricerca
+ * Servizio rest per la gestione degli atti. Inserimento, aggiornamento e
+ * ricerca
  * 
  * @author sourcesense
  *
@@ -69,9 +70,9 @@ public class AttoService {
 	/**
 	 * Creazione dell'atto
 	 * 
-	 * @param url
-	 * @param atto
-	 * @return
+	 * @param url  url
+	 * @param atto atto
+	 * @return atto creato
 	 */
 	public Atto create(String url, Atto atto) {
 
@@ -117,9 +118,9 @@ public class AttoService {
 	/**
 	 * Creazione dell'atto MIS
 	 * 
-	 * @param url
-	 * @param atto
-	 * @return
+	 * @param url  url
+	 * @param atto atto
+	 * @return atto creato
 	 */
 	public AttoMIS createMIS(String url, AttoMIS atto) {
 
@@ -162,9 +163,9 @@ public class AttoService {
 	/**
 	 * Aggiornamento dell'atto
 	 * 
-	 * @param url
-	 * @param atto
-	 * @return
+	 * @param url  url
+	 * @param atto atto
+	 * @return atto aggiornato
 	 */
 	public Atto updateAtto(String url, Atto atto) {
 
@@ -206,7 +207,7 @@ public class AttoService {
 	/**
 	 * Rimozione dell'atto
 	 * 
-	 * @param url
+	 * @param url url
 	 */
 	public void deleteAtto(String url) {
 
@@ -223,9 +224,9 @@ public class AttoService {
 	/**
 	 * Creazione dell'atto EAC
 	 * 
-	 * @param url
-	 * @param atto
-	 * @return
+	 * @param url  url
+	 * @param atto atto
+	 * @return atto creato
 	 */
 	public AttoEAC createEAC(String url, AttoEAC atto) {
 
@@ -268,8 +269,8 @@ public class AttoService {
 	/**
 	 * Non implementato
 	 * 
-	 * @param atto
-	 * @return
+	 * @param atto atto
+	 * @return true
 	 */
 	public boolean update(Atto atto) {
 		return true;
@@ -278,8 +279,8 @@ public class AttoService {
 	/**
 	 * Ricerca dell'atto tramite url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url id
+	 * @return atto
 	 */
 	public Atto findById(String url) {
 		Atto atto = null;
@@ -316,8 +317,8 @@ public class AttoService {
 	/**
 	 * Ricerca dell'atto EAC tramite url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url id
+	 * @return atto EAC
 	 */
 	public AttoEAC findEACById(String url) {
 		AttoEAC atto = null;
@@ -352,8 +353,8 @@ public class AttoService {
 	/**
 	 * Ricerca dell'atto MIS tramite url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url id
+	 * @return atto MIS
 	 */
 	public AttoMIS findMISById(String url) {
 		AttoMIS atto = null;
@@ -389,7 +390,7 @@ public class AttoService {
 	/**
 	 * Non implementato
 	 * 
-	 * @return
+	 * @return null
 	 */
 	public ArrayList<Atto> findAll() {
 		return null;
@@ -398,12 +399,12 @@ public class AttoService {
 	/**
 	 * Aggiornamento dell'allegato
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto dell'allegato
+	 * @param allegato  allegato
+	 * @param tipologia tipologia
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream, Allegato allegato, String tipologia) {
 
@@ -442,12 +443,12 @@ public class AttoService {
 	/**
 	 * Aggiornamento dell'allegato del parere
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto dell'allegato
+	 * @param allegato  allegato
+	 * @param tipologia tipologia
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoParere(String url, Atto atto, InputStream stream, Allegato allegato,
 			String tipologia) {
@@ -489,12 +490,12 @@ public class AttoService {
 	/**
 	 * Aggiornamento dell'allegato della consultazione
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto dell'allegato
+	 * @param allegato  allegato
+	 * @param tipologia tipologia
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoConsultazioni(String url, Atto atto, InputStream stream, Allegato allegato,
 			String tipologia) {
@@ -536,7 +537,7 @@ public class AttoService {
 	/**
 	 * Rimozione del firmatario
 	 * 
-	 * @param url
+	 * @param url url
 	 */
 	public void removeFirmatario(String url) {
 
@@ -554,7 +555,7 @@ public class AttoService {
 	/**
 	 * Rimozione dell'atto
 	 * 
-	 * @param url
+	 * @param url url
 	 */
 	public void removeAtto(String url) {
 
@@ -572,12 +573,12 @@ public class AttoService {
 	/**
 	 * Aggiornamento del testo dell'atto
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @param tipologia tipologia
+	 * @return testo dell'atto aggiornato
 	 */
 	public TestoAtto uploadTestoAtto(String url, Atto atto, InputStream stream, TestoAtto testoAtto, String tipologia) {
 
@@ -619,8 +620,8 @@ public class AttoService {
 	/**
 	 * Modifica dell'allegato
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return testo dell'atto
 	 */
 	public TestoAtto changeAllegato(String url) {
 
@@ -656,8 +657,8 @@ public class AttoService {
 	/**
 	 * Ricerca del tipo atti del sindacato
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei tipi di atto
 	 */
 	public List<String> findTipoAttiSindacato(String url) {
 		List<String> listTipi = null;
@@ -695,8 +696,8 @@ public class AttoService {
 	/**
 	 * Ritorna tutti gli atti del sindacato secondo l'url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei collegamenti degli atti del sindacato
 	 */
 	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String url) {
 		List<CollegamentoAttiSindacato> listAtti = null;
@@ -734,8 +735,8 @@ public class AttoService {
 	/**
 	 * Ritorna il collegamento ad un atto tramite url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei collegamenti
 	 */
 	public List<Collegamento> findCollegamentiAttoById(String url) {
 		List<Collegamento> listAtti = null;
@@ -773,9 +774,9 @@ public class AttoService {
 	/**
 	 * Ritorna l'elenco degli atti tramite url
 	 * 
-	 * @param atto
-	 * @param url
-	 * @return
+	 * @param atto atto
+	 * @param url  url
+	 * @return elenco degli atti
 	 */
 	public List<Atto> parametricSearch(Atto atto, String url) {
 		List<Atto> listAtti = null;
@@ -814,8 +815,8 @@ public class AttoService {
 	/**
 	 * Aggiornamento dell'atto
 	 * 
-	 * @param url
-	 * @param atto
+	 * @param url  url
+	 * @param atto atto
 	 */
 	public void merge(String url, Atto atto) {
 
@@ -848,8 +849,8 @@ public class AttoService {
 	/**
 	 * Salvataggio dei pareri
 	 * 
-	 * @param url
-	 * @param consultazioneParere
+	 * @param url url
+	 * @param consultazioneParere consultazione parere
 	 */
 	public void salvaPareri(String url, ConsultazioneParere consultazioneParere) {
 

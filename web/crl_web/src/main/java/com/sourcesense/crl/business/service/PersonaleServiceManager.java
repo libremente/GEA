@@ -69,7 +69,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo dei gruppi consiliari
 	 * 
-	 * @return
+	 * @return elenco dei gruppi consiliari
 	 */
 	public List<GruppoConsiliare> getGruppiConsiliari() {
 
@@ -82,7 +82,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei gruppi consiliari
 	 * 
-	 * @return
+	 * @return elenco delle descrizioni dei gruppi consiliari
 	 */
 	public List<String> findGruppiConsiliari() {
 		List<String> gruppi = new ArrayList<String>();
@@ -101,7 +101,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei firmatari
 	 * 
-	 * @return
+	 * @return elenco delle descrizioni dei firmatari
 	 */
 	public Map<String, String> findAllFirmatario() {
 		Map<String, String> firmatari = new HashMap<String, String>();
@@ -120,7 +120,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei relatori
 	 * 
-	 * @return
+	 * @return elenco delle descrizioni dei relatori
 	 */
 	public Map<String, String> findAllRelatore() {
 		Map<String, String> relatori = new HashMap<String, String>();
@@ -139,7 +139,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei firmatari
 	 * 
-	 * @return
+	 * @return elenco delle descrizioni dei firmatari
 	 */
 	public List<String> getAllFirmatario() {
 		List<String> firmatari = new ArrayList<String>();
@@ -158,8 +158,8 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei firmatari storici
 	 * 
-	 * @param legislatura
-	 * @return
+	 * @param legislatura legislatura
+	 * @return elenco delle descrizioni dei firmatari storici
 	 */
 	public List<String> getAllFirmatariStorici(String legislatura) {
 		List<String> firmatari = new ArrayList<String>();
@@ -178,7 +178,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei relatori
 	 * 
-	 * @return
+	 * @return elenco delle descrizioni dei relatori
 	 */
 	public List<String> getAllRelatore() {
 		List<String> relatori = new ArrayList<String>();
@@ -197,7 +197,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei membri del comitato
 	 * 
-	 * @return
+	 * @return elenco delle descrizioni dei membri del comitato
 	 */
 	public Map<String, String> findAllMembriComitato() {
 		Map<String, String> relatori = new HashMap<String, String>();
@@ -216,7 +216,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo dei relatori
 	 * 
-	 * @return
+	 * @return elenco dei relatori
 	 */
 	public List<Relatore> getAllRelatori() {
 		return personaleService
@@ -226,7 +226,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo dei membri del comitato
 	 * 
-	 * @return
+	 * @return elenco dei relatori
 	 */
 	public List<Relatore> getAllMembriComitato() {
 		return personaleService
@@ -236,7 +236,7 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo dei firmatari
 	 * 
-	 * @return
+	 * @return elenco dei firmatari
 	 */
 	public List<Firmatario> getAllFirmatari() {
 		return personaleService
@@ -246,8 +246,8 @@ public class PersonaleServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco dei firmatari per atto
 	 * 
-	 * @param atto
-	 * @return
+	 * @param atto atto
+	 * @return elenco dei firmatari
 	 */
 	public List<Firmatario> findFirmatariByAtto(Atto atto) {
 		return personaleService.findFirmatariById(urlBuilder.buildAlfrescoURL("alfresco_context_url",

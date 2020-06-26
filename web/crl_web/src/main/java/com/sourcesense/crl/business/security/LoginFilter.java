@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
 import com.sourcesense.crl.web.ui.beans.UserBean;
 
 /**
- * 
+ * Filtro web per il login
  * 
  * @author sourcesense
  *

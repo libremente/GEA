@@ -32,9 +32,9 @@ public class CloningLists {
 	/**
 	 * Clonazione di una lista con i generics
 	 * 
-	 * @param <T>
-	 * @param list
-	 * @return
+	 * @param <T> parametro generico della lista
+	 * @param list lista da clonare
+	 * @return lista clonata
 	 */
 	public static <T extends Cloneable> List<T> cloneMe(List<T> list) {
 		final List<T> list2;
@@ -52,10 +52,11 @@ public class CloningLists {
 	}
 
 	/**
+	 * Clonazione di un oggetto
 	 * 
-	 * @param <T>
-	 * @param o
-	 * @return
+	 * @param <T> tipo di oggetto
+	 * @param o oggetto da clonare
+	 * @return oggetto clonato
 	 */
 	private static <T> T forceClone(T o) {
 		final Class<?> klass = o.getClass();

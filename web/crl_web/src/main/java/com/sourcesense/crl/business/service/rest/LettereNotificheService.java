@@ -53,8 +53,8 @@ public class LettereNotificheService {
 	/**
 	 * Aggiornamento della lettera
 	 * 
-	 * @param url
-	 * @param lettera
+	 * @param url url
+	 * @param lettera lettera
 	 */
 	public void merge(String url, Lettera lettera) {
 		try {
@@ -86,8 +86,8 @@ public class LettereNotificheService {
 	/**
 	 * Ritorna la lettera per un determinato url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return lettera
 	 */
 	public Lettera getLettera(String url) {
 
@@ -122,8 +122,8 @@ public class LettereNotificheService {
 	/**
 	 * Ritorna il contenuto della lettera
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return contenuto della lettera
 	 */
 	public InputStream getFile(String url) {
 

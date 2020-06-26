@@ -45,8 +45,8 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	/**
 	 * Ritorna la lettera completa secondo le informazioni parziali fornite
 	 * 
-	 * @param lettera
-	 * @return
+	 * @param lettera lettera parziale
+	 * @return lettera completa
 	 */
 	public Lettera getLettera(Lettera lettera) {
 
@@ -57,7 +57,7 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna la lettera
 	 * 
-	 * @param lettera
+	 * @param lettera lettera
 	 */
 	public void updateLettera(Lettera lettera) {
 		lettereNotificheService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_update_lettera", null),
@@ -67,10 +67,10 @@ public class LettereNotificheServiceManager implements ServiceManager {
 	/**
 	 * Ritorna il contenuto della lettera di un atto
 	 * 
-	 * @param lettera
-	 * @param idAtto
-	 * @param gruppo
-	 * @return
+	 * @param lettera lettera
+	 * @param idAtto  id dell'atto
+	 * @param gruppo  gruppo
+	 * @return contenuto della lettera
 	 */
 	public InputStream getLetteraFile(Lettera lettera, String idAtto, String gruppo) {
 

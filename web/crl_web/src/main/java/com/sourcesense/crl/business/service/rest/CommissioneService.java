@@ -67,8 +67,8 @@ public class CommissioneService {
 	/**
 	 * Aggiornamento dell'esame della commissione
 	 * 
-	 * @param url
-	 * @param esameCommissione
+	 * @param url url
+	 * @param esameCommissione esame di commissione
 	 */
 	public void merge(String url, EsameCommissione esameCommissione) {
 		try {
@@ -108,7 +108,7 @@ public class CommissioneService {
 	/**
 	 * Rimozione dell'abbinamento
 	 * 
-	 * @param url
+	 * @param url url
 	 */
 	public void removeAbbinamento(String url) {
 
@@ -128,8 +128,8 @@ public class CommissioneService {
 	/**
 	 * Ritorna l'elenco delle commissioni per atto
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco delle commissioni per atto
 	 */
 	public List<CommissioneReferente> retrieveCommissioniReferenteByAtto(String url) {
 
@@ -167,8 +167,8 @@ public class CommissioneService {
 	/**
 	 * Ritorna l'elenco delle commissioni consultive per atto
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco delle commissioni consultive per atto
 	 */
 	public List<CommissioneConsultiva> retrieveCommissioniConsultiveByAtto(String url) {
 
@@ -206,8 +206,8 @@ public class CommissioneService {
 	/**
 	 * Ritorna l'elenco di tutte le commissioni per url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco di tutte le commissioni per url
 	 */
 	public List<Commissione> getAllCommissioni(String url) {
 		List<Commissione> listCommissioni = null;
@@ -243,12 +243,12 @@ public class CommissioneService {
 	/**
 	 * Aggiornamento dell'allegato dell'atto
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto dell'allegato
+	 * @param allegato  allegato
+	 * @param tipologia tipologia
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream, Allegato allegato, String tipologia) {
 
@@ -296,12 +296,12 @@ public class CommissioneService {
 	/**
 	 * Aggiornamento del testo dell'atto
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @param tipologia tipologia
+	 * @return testo dell'atto aggiornato
 	 */
 	public TestoAtto uploadTestoAtto(String url, Atto atto, InputStream stream, TestoAtto testoAtto, String tipologia) {
 

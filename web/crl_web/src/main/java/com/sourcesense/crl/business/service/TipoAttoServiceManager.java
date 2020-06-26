@@ -81,7 +81,7 @@ public class TipoAttoServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei tipi atto
 	 * 
-	 * @return
+	 * @return elenco delle descrizioni dei tipi atto
 	 */
 	public List<String> getAll() {
 
@@ -103,7 +103,7 @@ public class TipoAttoServiceManager implements ServiceManager {
 
 	/**
 	 * Ritorna l'elenco completo dei tipi atto
-	 * @return
+	 * @return elenco dei tipi atto
 	 */
 	public List<TipoAtto> retrieveAllTipoAtto() {
 
@@ -117,8 +117,8 @@ public class TipoAttoServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco completo delle descrizioni dei tipi atto
 	 * 
-	 * @param tipoAtto
-	 * @return
+	 * @param tipoAtto tipo di atto
+	 * @return elenco delle descrizioni dei tipi atto
 	 */
 	public Map<String, String> findTipologieByTipoAtto(String tipoAtto) {
 

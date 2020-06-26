@@ -46,8 +46,8 @@ public class UserServiceManager implements ServiceManager {
 	/**
 	 * Esegue l'autenticazione tramite utente e password
 	 * 
-	 * @param user
-	 * @return
+	 * @param user utente
+	 * @return utente completo
 	 * @throws ServiceAuthenticationException
 	 */
 	public User authenticate(User user) throws ServiceAuthenticationException {
@@ -86,8 +86,8 @@ public class UserServiceManager implements ServiceManager {
 	 * Esegue l'autenticazione tramite utente e password per avere un accesso in
 	 * sola lettura
 	 * 
-	 * @param user
-	 * @return
+	 * @param user utente
+	 * @return utente completo
 	 * @throws ServiceAuthenticationException
 	 */
 	public User authenticateReadOnly(User user) throws ServiceAuthenticationException {

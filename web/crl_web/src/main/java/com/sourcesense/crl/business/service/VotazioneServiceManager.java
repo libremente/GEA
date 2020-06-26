@@ -58,7 +58,7 @@ public class VotazioneServiceManager implements ServiceManager {
 	/**
 	 * Attualmente non implementato
 	 * 
-	 * @return
+	 * @return null
 	 */
 	public Map<String, String> findAllEsitoVotoAula() {
 
@@ -68,7 +68,7 @@ public class VotazioneServiceManager implements ServiceManager {
 	/**
 	 * Attualmente non implementato
 	 * 
-	 * @return
+	 * @return null
 	 */
 	public Map<String, String> findAllEsitoVotoCommissioneReferente() {
 

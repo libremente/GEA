@@ -64,10 +64,10 @@ public class SeduteService {
 	/**
 	 * Ritorna l'elenco delle sedute per un determinato gruppo
 	 * 
-	 * @param url
-	 * @param param
-	 * @param legislatura
-	 * @return
+	 * @param url         url
+	 * @param param       gruppo
+	 * @param legislatura legislatura
+	 * @return elenco delle sedute
 	 */
 	public List<Seduta> findByGroup(String url, String param, String legislatura) {
 
@@ -104,11 +104,11 @@ public class SeduteService {
 	/**
 	 * Ritorna la seduta secondo una determinata data
 	 * 
-	 * @param url
-	 * @param param
-	 * @param dataSeduta
-	 * @param legislatura
-	 * @return
+	 * @param url         url
+	 * @param param       gruppo
+	 * @param dataSeduta  data della seduta
+	 * @param legislatura legislatura
+	 * @return seduta
 	 */
 	public Seduta findByDate(String url, String param, String dataSeduta, String legislatura) {
 
@@ -147,9 +147,9 @@ public class SeduteService {
 	/**
 	 * Creazione della seduta
 	 * 
-	 * @param url
-	 * @param gestioneSedute
-	 * @return
+	 * @param url            url
+	 * @param gestioneSedute gestione delle sedute
+	 * @return seduta
 	 */
 	public Seduta create(String url, GestioneSedute gestioneSedute) {
 
@@ -192,7 +192,7 @@ public class SeduteService {
 	/**
 	 * Rimozione della seduta
 	 * 
-	 * @param url
+	 * @param url url
 	 */
 	public void delete(String url) {
 
@@ -215,8 +215,8 @@ public class SeduteService {
 	/**
 	 * Aggiornamento della seduta
 	 * 
-	 * @param url
-	 * @param seduta
+	 * @param url    url
+	 * @param seduta seduta
 	 */
 	public void mergeSeduta(String url, Seduta seduta) {
 		try {
@@ -248,9 +248,9 @@ public class SeduteService {
 	/**
 	 * Aggiornamento della gestione della seduta
 	 * 
-	 * @param url
-	 * @param gestioneSedute
-	 * @return
+	 * @param url            url
+	 * @param gestioneSedute gestione della seduta
+	 * @return seduta
 	 */
 	public Seduta merge(String url, GestioneSedute gestioneSedute) {
 
@@ -294,8 +294,8 @@ public class SeduteService {
 	/**
 	 * Ritorna l'allegato della seduta
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return contenuto dell'allegato
 	 */
 	public InputStream getFile(String url) {
 
@@ -319,11 +319,11 @@ public class SeduteService {
 	/**
 	 * Aggiornamento dell'odg di una seduta
 	 * 
-	 * @param url
-	 * @param seduta
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param url      url
+	 * @param seduta   seduta
+	 * @param stream   contenuto dell'odg
+	 * @param allegato allegato
+	 * @return allegato
 	 */
 	public Allegato uploadOdg(String url, Seduta seduta, InputStream stream, Allegato allegato) {
 
@@ -362,11 +362,11 @@ public class SeduteService {
 	/**
 	 * Aggiornamento del verbale di una seduta
 	 * 
-	 * @param url
-	 * @param seduta
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param url      url
+	 * @param seduta   seduta
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadVerbale(String url, Seduta seduta, InputStream stream, Allegato allegato) {
 

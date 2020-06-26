@@ -56,8 +56,8 @@ public class TipoChiusuraService {
 	/**
 	 * Ritorna l'elenco dei tipi di chiusura
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei tipi di chiusura
 	 */
 	public List<TipoChiusura> getAllTipoChiusura(String url) {
 		List<TipoChiusura> listTipiChiusura = null;

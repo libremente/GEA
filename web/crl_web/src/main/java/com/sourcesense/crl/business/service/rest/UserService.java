@@ -63,9 +63,9 @@ public class UserService {
 	/**
 	 * Ritorna il token di autenticazione
 	 * 
-	 * @param url
-	 * @param user
-	 * @return
+	 * @param url url
+	 * @param user utente
+	 * @return token di autenticazione
 	 * @throws ServiceAuthenticationException
 	 */
 	public AlfrescoSessionTicket getAuthenticationToken(String url, User user) throws ServiceAuthenticationException {
@@ -109,9 +109,9 @@ public class UserService {
 	/**
 	 * Esegue l'autenticazione tramite utente e password
 	 * 
-	 * @param url
-	 * @param user
-	 * @return
+	 * @param url url
+	 * @param user utente
+	 * @return utente completo
 	 * @throws ServiceAuthenticationException
 	 */
 	public User completeAuthentication(String url, User user) throws ServiceAuthenticationException {

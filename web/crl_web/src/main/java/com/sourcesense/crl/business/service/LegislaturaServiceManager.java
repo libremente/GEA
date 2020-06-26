@@ -61,7 +61,7 @@ public class LegislaturaServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco delle legislature disponibili
 	 * 
-	 * @return
+	 * @return elenco delle legislature
 	 */
 	public List<Legislatura> getAll() {
 
@@ -89,7 +89,7 @@ public class LegislaturaServiceManager implements ServiceManager {
 	/**
 	 * Ritorna i nomi delle legislature disponibili
 	 * 
-	 * @return
+	 * @return elenco dei nomi delle legislature
 	 */
 	public List<String> list() {
 
@@ -109,8 +109,8 @@ public class LegislaturaServiceManager implements ServiceManager {
 	/**
 	 * Ricerca gli anni di una determinata legislatura
 	 * 
-	 * @param legislatura
-	 * @return
+	 * @param legislatura legislatura
+	 * @return elenco degli anni
 	 */
 	public Map<String, String> findAnniByLegislatura(String legislatura) {
 

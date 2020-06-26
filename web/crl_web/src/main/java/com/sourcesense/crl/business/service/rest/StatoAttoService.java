@@ -56,8 +56,8 @@ public class StatoAttoService {
 	/**
 	 * Ritorna l'elenco degli stati degli atti
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco degli stati degli atti
 	 */
 	public List<StatoAtto> getAllStato(String url) {
 		List<StatoAtto> listStati = null;

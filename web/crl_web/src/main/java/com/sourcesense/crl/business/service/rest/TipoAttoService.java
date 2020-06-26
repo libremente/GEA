@@ -57,8 +57,8 @@ public class TipoAttoService {
 	/**
 	 * Ritorna i tipi di atto disponibili
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return tipi di atto disponibili
 	 */
 	public List<TipoAtto> getAllTipoAtto(String url) {
 
@@ -97,8 +97,8 @@ public class TipoAttoService {
 	/**
 	 * Ritorna le tipologie disponibili di un determinato tipo di atto
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return tipologie disponibili
 	 */
 	public List<TipologiaAtto> getTipologieByTipoAtto(String url) {
 

@@ -58,8 +58,8 @@ public class AttoRecordService {
 	/**
 	 * Ritorna l'elenco dei testi dell'atto per un determinato url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei testi dell'atto
 	 */
 	public List<TestoAtto> retrieveTestiAtto(String url) {
 		List<TestoAtto> listTestiAtto = null;
@@ -96,7 +96,7 @@ public class AttoRecordService {
 	/**
 	 * Rimuove l'url
 	 * 
-	 * @param url
+	 * @param url url
 	 */
 	public void deleteFile(String url) {
 
@@ -117,8 +117,8 @@ public class AttoRecordService {
 	/**
 	 * Ritorna l'elenco degli allegati per un determinato url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco degli allegati
 	 */
 	public List<Allegato> retrieveAllegati(String url) {
 		List<Allegato> listAllegati = null;
@@ -157,8 +157,8 @@ public class AttoRecordService {
 	/**
 	 * Ritorna il contenuto di un url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return contenuto dell'url
 	 */
 	public InputStream getFile(String url) {
 
@@ -182,9 +182,9 @@ public class AttoRecordService {
 	/**
 	 * Aggiornamento dell'allegato della commissione
 	 * 
-	 * @param url
-	 * @param allegato
-	 * @return
+	 * @param url      url
+	 * @param allegato allegato
+	 * @return allegato risultante
 	 */
 	public Allegato updateAllegatoCommissione(String url, Allegato allegato) {
 
@@ -225,9 +225,9 @@ public class AttoRecordService {
 	/**
 	 * Aggiornamento dell'allegato per un determinato url
 	 * 
-	 * @param url
-	 * @param allegato
-	 * @return
+	 * @param url      url
+	 * @param allegato allegato
+	 * @return allegato risultante
 	 */
 	public Allegato updateAllegato(String url, Allegato allegato) {
 
@@ -268,9 +268,9 @@ public class AttoRecordService {
 	/**
 	 * Aggiornamento del testo dell'atto per un determinato url
 	 * 
-	 * @param url
-	 * @param testoAtto
-	 * @return
+	 * @param url       url
+	 * @param testoAtto testo dell'atto
+	 * @return testo dell'atto risultante
 	 */
 	public TestoAtto updateTestoAtto(String url, TestoAtto testoAtto) {
 

@@ -47,7 +47,7 @@ public class VotazioneService {
 	/**
 	 * Non implementato
 	 * 
-	 * @return
+	 * @return null
 	 */
 	public List<Votazione> getAllEsitoVotoAula() {
 		return null;
@@ -56,7 +56,7 @@ public class VotazioneService {
 	/**
 	 * Non implementato
 	 * 
-	 * @return
+	 * @return null
 	 */
 	public List<Votazione> getAllEsitoVotoCommissioneReferente() {
 

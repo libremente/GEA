@@ -55,8 +55,8 @@ public class OrganismoStatutarioService {
 	/**
 	 * Ritorna l'elenco degli organismi statutari
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco degli organismi statutari
 	 */
 	public List<OrganismoStatutario> getAllOrganismoStatutario(String url) {
 		List<OrganismoStatutario> listOrganismiStatutari = null;

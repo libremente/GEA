@@ -148,9 +148,9 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 	/**
 	 * Nel caso di errore inaspettato viene aggiunto un log di errore
 	 * 
-	 * @param facesContext
-	 * @param t
-	 * @return
+	 * @param facesContext contesto web JSF
+	 * @param t            eccezione da gestire
+	 * @return nome della classe che gestirà l'errore
 	 */
 	protected String handleUnexpected(FacesContext facesContext, final Throwable t) {
 

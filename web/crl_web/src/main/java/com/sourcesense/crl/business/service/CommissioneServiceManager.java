@@ -71,7 +71,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio degli emendamenti e delle clausole nell'esame delle commissioni
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaEmendamentiClausoleEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -81,7 +81,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio della votazione dell'esame delle commissioni
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaVotazioneEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
@@ -92,7 +92,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Presa in carico dell'esame delle commissioni
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaPresaInCaricoEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -102,7 +102,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio dei relatori dell'esame delle commissioni
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaRelatoriEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
@@ -113,7 +113,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio del comitato ristretto dell'esame delle commissioni
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaComitatoRistrettoEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -123,7 +123,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Segna la fine dei lavori dell'esame di commissione
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaFineLavoriEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
@@ -134,10 +134,10 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna il testo dell'atto votato all'esame della commissione
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return testo dell'atto
 	 */
 	public TestoAtto uploadTestoAttoVotatoEsameCommissioni(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
@@ -150,10 +150,10 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'emendamento dell'esame della commissione
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return allegato
 	 */
 	public Allegato uploadEmendamentoEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
 
@@ -166,10 +166,10 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna il testo del comitato ristretto
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return allegato
 	 */
 	public Allegato uploadTestoComitatoRistretto(Atto atto, InputStream stream, Allegato testoAtto) {
 
@@ -182,10 +182,10 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna il testo della clausola dell'esame di commissione
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return allegato
 	 */
 	public Allegato uploadTestoClausolaEsameCommissioni(Atto atto, InputStream stream, Allegato testoAtto) {
 
@@ -198,10 +198,10 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'allegato delle note dell'esame di commissione
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato
 	 */
 	public Allegato uploadAllegatoNoteAllegatiEsameCommissioni(Atto atto, InputStream stream, Allegato allegato) {
 
@@ -214,7 +214,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Cambio del ruolo di referente
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaCambiaRuoloInReferente(EsameCommissione esameCommissione) {
 		commissioneService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -224,9 +224,9 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Rimuove l'abbinamento
 	 * 
-	 * @param idAtto
-	 * @param idAttoAbbinato
-	 * @param lastPassaggio
+	 * @param idAtto         id dell'atto
+	 * @param idAttoAbbinato id dell'atto abbinato
+	 * @param lastPassaggio  ultimo passaggio
 	 */
 	public void removeAbbinamento(String idAtto, String idAttoAbbinato, String lastPassaggio) {
 		commissioneService.removeAbbinamento(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -236,7 +236,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Salva le note dell'allegato dell'esame di commissione
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaNoteAllegatiEsameCommissioni(EsameCommissione esameCommissione) {
 		commissioneService.merge(
@@ -247,7 +247,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio degli stralci
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaStralci(EsameCommissione esameCommissione) {
 		commissioneService.merge(
@@ -258,7 +258,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio della trasmissione
 	 * 
-	 * @param esameCommissione
+	 * @param esameCommissione esame della commissione
 	 */
 	public void salvaTrasmissione(EsameCommissione esameCommissione) {
 		commissioneService.merge(
@@ -269,8 +269,8 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Ricerca le commissioni di un determinato atto
 	 * 
-	 * @param idAtto
-	 * @return
+	 * @param idAtto id dell'atto
+	 * @return elenco di commissioni
 	 */
 	public List<Commissione> findCommissioniByAtto(String idAtto) {
 
@@ -308,7 +308,7 @@ public class CommissioneServiceManager implements ServiceManager {
 	/**
 	 * Ritorna tutte le descrizioni delle commissioni disponibili
 	 * 
-	 * @return
+	 * @return l'elenco delle descrizioni delle commissioni
 	 */
 	public List<String> getAll() {
 

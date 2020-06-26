@@ -47,8 +47,8 @@ public class AttoRecordServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'elenco dei testi di un atto
 	 * 
-	 * @param atto
-	 * @return
+	 * @param atto atto
+	 * @return elenco di atti
 	 */
 	public List<TestoAtto> testiAttoByAtto(Atto atto) {
 
@@ -57,9 +57,10 @@ public class AttoRecordServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna l'elenco di allegati dell'atto
 	 * 
-	 * @param atto
-	 * @return
+	 * @param atto atto
+	 * @return elenco di allegati
 	 */
 	public List<Allegato> allAllegatiAttoByAtto(Atto atto) {
 
@@ -68,9 +69,10 @@ public class AttoRecordServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Ritorna il contenuto del file di downlaod
 	 * 
-	 * @param fileToDownload
-	 * @return
+	 * @param fileToDownload nome del file di downlaod
+	 * @return il contenuto del file di downlaod
 	 */
 	public InputStream getFileById(String fileToDownload) {
 
@@ -79,9 +81,10 @@ public class AttoRecordServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato
 	 * 
-	 * @param allegato
-	 * @return
+	 * @param allegato allegato
+	 * @return l'allegato aggiornato
 	 */
 	public Allegato updateAllegato(Allegato allegato) {
 
@@ -90,9 +93,10 @@ public class AttoRecordServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento dell'allegato della commissione
 	 * 
-	 * @param allegato
-	 * @return
+	 * @param allegato allegato
+	 * @return l'allegato aggiornato
 	 */
 	public Allegato updateAllegatoCommissione(Allegato allegato) {
 
@@ -101,9 +105,10 @@ public class AttoRecordServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Aggiornamento del testo dell'atto
 	 * 
-	 * @param testoAtto
-	 * @return
+	 * @param testoAtto testo dell'atto
+	 * @return testo dell'atto aggiornato
 	 */
 	public TestoAtto updateTestoAtto(TestoAtto testoAtto) {
 
@@ -112,8 +117,9 @@ public class AttoRecordServiceManager implements ServiceManager {
 	}
 
 	/**
+	 * Rimozione del file
 	 * 
-	 * @param idFile
+	 * @param idFile file
 	 */
 	public void deleteFile(String idFile) {
 

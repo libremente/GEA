@@ -56,8 +56,8 @@ public class LegislaturaService {
 	/**
 	 * Ritorna l'elenco completo delle legislature per url
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco completo delle legislature per url
 	 */
 	public List<Legislatura> getAllLegislatura(String url) {
 
@@ -94,9 +94,9 @@ public class LegislaturaService {
 	/**
 	 * Non implementato
 	 * 
-	 * @param url
-	 * @param legislatura
-	 * @return
+	 * @param url url
+	 * @param legislatura legislatura
+	 * @return null
 	 */
 	public Map<String, String> getAnniByLegislatura(String url, String legislatura) {
 

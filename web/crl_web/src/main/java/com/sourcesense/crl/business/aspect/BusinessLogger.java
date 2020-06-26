@@ -40,7 +40,8 @@ public class BusinessLogger {
 
 	/**
 	 * Aggiunge le tracce di debug ai servizi rest
-	 * @param joinPoint
+	 * 
+	 * @param joinPoint il punto su cui applicare le tracce
 	 */
 	@After("within(com.sourcesense.crl.business.service.rest.*)")
 	public void restServices(JoinPoint joinPoint) {
@@ -66,14 +67,14 @@ public class BusinessLogger {
 	}
 
 	/**
-	 * 
+	 * Non implementato
 	 */
 	@Pointcut("within(@org.springframework.stereotype.Service *)")
 	public void beanAnnotatedWithService() {
 	}
 
 	/**
-	 * 
+	 * Non implementato
 	 */
 	@Pointcut("execution(public * *(..))")
 	public void publicMethod() {
@@ -81,15 +82,16 @@ public class BusinessLogger {
 	}
 
 	/**
-	 * 
+	 * Non implementato
 	 */
 	@Pointcut("publicMethod() && beanAnnotatedWithService()")
 	public void publicMethodInsideAClassMarkedWithService() {
 	}
 
 	/**
+	 * Metodo di test
 	 * 
-	 * @param joinPoint
+	 * @param joinPoint il punto su cui elaborare il test
 	 */
 	@AfterReturning(pointcut = "publicMethodInsideAClassMarkedWithService()")
 	public void prova(JoinPoint joinPoint) {

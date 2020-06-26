@@ -62,9 +62,9 @@ public class AulaService {
 	/**
 	 * Rinvio dell'esame
 	 * 
-	 * @param url
-	 * @param esameAula
-	 * @return
+	 * @param url url
+	 * @param esameAula esame aula
+	 * @return passaggio
 	 */
 	public Passaggio rinvioEsame(String url, EsameAula esameAula) {
 
@@ -112,8 +112,8 @@ public class AulaService {
 	/**
 	 * Aggiornamento dell'esame dell'aula
 	 * 
-	 * @param url
-	 * @param esameAula
+	 * @param url url
+	 * @param esameAula esame aula
 	 */
 	public void merge(String url, EsameAula esameAula) {
 		try {
@@ -153,12 +153,12 @@ public class AulaService {
 	/**
 	 * Aggiornamento dell'allegato dell'atto
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto dell'allegato
+	 * @param allegato  allegato
+	 * @param tipologia tipologia
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegato(String url, Atto atto, InputStream stream, Allegato allegato, String tipologia) {
 
@@ -198,12 +198,12 @@ public class AulaService {
 	/**
 	 * Aggiornamento del testo dell'atto
 	 * 
-	 * @param url
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @param tipologia
-	 * @return
+	 * @param url       url
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @param tipologia tipologia
+	 * @return testo dell'atto aggiornato
 	 */
 	public TestoAtto uploadTestoAtto(String url, Atto atto, InputStream stream, TestoAtto testoAtto, String tipologia) {
 

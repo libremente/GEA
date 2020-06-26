@@ -54,9 +54,9 @@ public class ReportService {
 	/**
 	 * Ritorna il contenuto del report
 	 * 
-	 * @param url
-	 * @param report
-	 * @return
+	 * @param url url
+	 * @param report report
+	 * @return contenuto del report
 	 */
 	public InputStream getFile(String url, Report report) {
 

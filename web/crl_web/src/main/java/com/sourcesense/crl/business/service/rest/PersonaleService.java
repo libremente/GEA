@@ -94,8 +94,8 @@ public class PersonaleService {
 	/**
 	 * Ritorna l'elenco dei firmatari
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei firmatari
 	 */
 	public List<Firmatario> getAllFirmatario(String url) {
 		List<Firmatario> listFirmatari = null;
@@ -131,8 +131,8 @@ public class PersonaleService {
 	/**
 	 * Ritorna l'elenco dei relatori
 	 * 
-	 * @param url
-	 * @return
+	 * @param url url
+	 * @return elenco dei relatori
 	 */
 	public List<Relatore> getAllRelatore(String url) {
 		List<Relatore> listRelatori = null;
@@ -168,8 +168,8 @@ public class PersonaleService {
 	/**
 	 * Ritorna l'elenco dei firmatari per id
 	 * 
-	 * @param url
-	 * @return
+	 * @param url id
+	 * @return elenco dei firmatari
 	 */
 	public List<Firmatario> findFirmatariById(String url) {
 		List<Firmatario> listFirmatari = null;

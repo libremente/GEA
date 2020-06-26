@@ -34,9 +34,9 @@ public class DateUtils {
 	 * Genera una data di scadenza secondo il formato dd/MM/yyyy a partire dal
 	 * 01/08/
 	 * 
-	 * @param dateIn
-	 * @param sospensioneFeriale
-	 * @return
+	 * @param dateIn             data da modificare
+	 * @param sospensioneFeriale specifica se considerare o no le ferie
+	 * @return data generata
 	 */
 	public static Date generateDataScadenzaParDgrInterruzione(Date dateIn, boolean sospensioneFeriale) {
 
@@ -92,10 +92,10 @@ public class DateUtils {
 	/**
 	 * Generazione dela data di scadenza a seconda del tipo
 	 * 
-	 * @param dataPresaInCarico
-	 * @param isRegolamento
-	 * @param sospensioneFeriale
-	 * @return
+	 * @param dataPresaInCarico  data da modificare
+	 * @param isRegolamento      specifica se la data appartiene ad un regolamento
+	 * @param sospensioneFeriale specifica se considerare o no le ferie
+	 * @return data generata
 	 */
 	public static Date getDataScadenzaPar(Date dataPresaInCarico, boolean isRegolamento, boolean sospensioneFeriale) {
 		if (isRegolamento) {
@@ -106,12 +106,11 @@ public class DateUtils {
 	}
 
 	/**
-	 * Se la data di scadenza è per un dgr viene aggiunto un ritardo di 30
-	 * giorni
+	 * Se la data di scadenza è per un dgr viene aggiunto un ritardo di 30 giorni
 	 * 
-	 * @param dateIn
-	 * @param sospensioneFeriale
-	 * @return
+	 * @param dateIn             data da modificare
+	 * @param sospensioneFeriale specifica se considerare o no le ferie
+	 * @return data generata
 	 */
 	private static Date generateDataScadenzaParRegolamento(Date dateIn, boolean sospensioneFeriale) {
 		return generateDataScadenzaPar(60, dateIn, sospensioneFeriale);
@@ -121,9 +120,9 @@ public class DateUtils {
 	 * Se la data di scadenza è per un regolamento viene aggiunto un ritardo di 60
 	 * giorni
 	 * 
-	 * @param dateIn
-	 * @param sospensioneFeriale
-	 * @return
+	 * @param dateIn             data da modificare
+	 * @param sospensioneFeriale specifica se considerare o no le ferie
+	 * @return data generata
 	 */
 	private static Date generateDataScadenzaParDgr(Date dateIn, boolean sospensioneFeriale) {
 		return generateDataScadenzaPar(30, dateIn, sospensioneFeriale);
@@ -132,10 +131,10 @@ public class DateUtils {
 	/**
 	 * Aggiunge un ritardo in ordine di giorni alla data
 	 * 
-	 * @param DELAY
-	 * @param dateIn
-	 * @param sospensioneFeriale
-	 * @return
+	 * @param DELAY ritardo in giorni della data da modificare
+	 * @param dateIn data da modificare
+	 * @param sospensioneFeriale specifica se considerare o no le ferie
+	 * @return data generata
 	 */
 	private static Date generateDataScadenzaPar(int DELAY, Date dateIn, boolean sospensioneFeriale) {
 		Calendar calendar = new GregorianCalendar();
@@ -170,9 +169,9 @@ public class DateUtils {
 	/**
 	 * Ritorna il numero di giorni tra le due date selezionate
 	 * 
-	 * @param dateIn
-	 * @param startDate
-	 * @return
+	 * @param dateIn data da modificare
+	 * @param startDate data di partenza da cui partire con la modifica
+	 * @return intervallo di giorni tra le due date
 	 */
 	private static int numDaysBeetwen(Date dateIn, Date startDate) {
 		int numDays = 0;
@@ -190,8 +189,8 @@ public class DateUtils {
 	/**
 	 * Aggiunge il primo agosto alla data selezionata
 	 * 
-	 * @param dateIn
-	 * @return
+	 * @param dateIn data da modificare
+	 * @return data aggiornata
 	 */
 	private static Date primoAgostoDate(Date dateIn) {
 		Calendar calendar = new GregorianCalendar();
@@ -209,8 +208,8 @@ public class DateUtils {
 	/**
 	 * Aggiunge il sedici settembre alla data selezionata
 	 * 
-	 * @param dateIn
-	 * @return
+	 * @param dateIn data da modificare
+	 * @return data aggiornata
 	 */
 	private static Date sediciSettembreDate(Date dateIn) {
 		Calendar calendar = new GregorianCalendar();

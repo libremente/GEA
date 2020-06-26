@@ -45,8 +45,8 @@ public class ReportServiceManager implements ServiceManager {
 	/**
 	 * Ritorna il contenuto binario del report
 	 * 
-	 * @param report
-	 * @return
+	 * @param report report
+	 * @return contenuto del report
 	 */
 	public InputStream getReportFile(Report report) {
 		return reportService

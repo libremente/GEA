@@ -56,8 +56,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ritorna l'atto completo secondo le informazioni parziali passate
 	 * 
-	 * @param atto
-	 * @return
+	 * @param atto atto
+	 * @return elenco di atti
 	 */
 	public List<Atto> searchAtti(Atto atto) {
 		return attoService.parametricSearch(atto,
@@ -68,7 +68,7 @@ public class AttoServiceManager implements ServiceManager {
 	 * Inizializza l'atto per la ricerca mettendo come vincolo la data di ricerca di
 	 * un massimo di due mesi dalla data odierna
 	 * 
-	 * @return
+	 * @return elenco di atti
 	 */
 	public List<Atto> initListAtti() {
 
@@ -85,7 +85,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Rimuove il firmatario
 	 * 
-	 * @param firmatario
+	 * @param firmatario firmatario
 	 */
 	public void removeFirmatario(Firmatario firmatario) {
 
@@ -96,7 +96,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Rimuove l'atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void removeAtto(Atto atto) {
 
@@ -107,10 +107,10 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna il testo dell'atto
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return testo dell'atto aggiornato
 	 */
 	public TestoAtto uploadTestoAttoPresentazioneAssegnazione(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
@@ -122,10 +122,10 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'allegato
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoNoteAllegatiPresentazioneAssegnazione(Atto atto, InputStream stream,
 			Allegato allegato) {
@@ -139,10 +139,10 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'allegato dell'atto MIS
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoMIS(AttoMIS atto, InputStream stream, Allegato allegato) {
 
@@ -155,10 +155,10 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'allegato dell'atto EAC
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoEAC(AttoEAC atto, InputStream stream, Allegato allegato) {
 
@@ -171,10 +171,10 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'allegato delle consultazioni dell'atto
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoConsultazioni(Atto atto, InputStream stream, Allegato allegato) {
 
@@ -186,10 +186,10 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'allegato del parere dell'atto
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoPareri(Atto atto, InputStream stream, Allegato allegato) {
 
@@ -201,8 +201,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Cambia l'allegato di una presentazione
 	 * 
-	 * @param allegato
-	 * @return
+	 * @param allegato allegato
+	 * @return testo dell'atto
 	 */
 	public TestoAtto changeAllegatoPresentazioneAssegnazione(Allegato allegato) {
 
@@ -214,8 +214,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Aggiorna l'atto
 	 * 
-	 * @param atto
-	 * @return
+	 * @param atto atto
+	 * @return atto aggiornato
 	 */
 	public Atto updateAtto(Atto atto) {
 		return attoService.updateAtto(
@@ -227,7 +227,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Rimuove l'atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void deleteAtto(Atto atto) {
 		attoService.deleteAtto(
@@ -238,8 +238,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio del MIS
 	 * 
-	 * @param object
-	 * @return
+	 * @param object atto MIS
+	 * @return atto MIS aggiornato
 	 */
 	public AttoMIS persistMIS(Object object) {
 		return attoService.createMIS(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_new_atto", null),
@@ -250,8 +250,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio dell'EAC
 	 * 
-	 * @param object
-	 * @return
+	 * @param object atto EAC
+	 * @return atto EAC aggiornato
 	 */
 	public AttoEAC persistEAC(Object object) {
 		return attoService.createEAC(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_new_atto", null),
@@ -269,7 +269,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ricerca dell'atto per id
 	 * 
-	 * @param id
+	 * @param id id dell'atto
+	 * @return atto
 	 */
 	public Atto findById(String id) {
 		return attoService
@@ -279,8 +280,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ricerca dell'atto EAC per id
 	 * 
-	 * @param id
-	 * @return
+	 * @param id id dell'atto
+	 * @return atto EAC
 	 */
 	public AttoEAC findEACById(String id) {
 		return attoService.findEACById(
@@ -290,8 +291,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ricerca dell'atto MIS per id
 	 * 
-	 * @param id
-	 * @return
+	 * @param id id dell'atto
+	 * @return atto MIS
 	 */
 	public AttoMIS findMISById(String id) {
 		return attoService.findMISById(
@@ -301,10 +302,10 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ricerca tutti gli atti sindacali secondo i campi
 	 * 
-	 * @param tipoAtto
-	 * @param dataCreazioneDa
-	 * @param dataCreazioneA
-	 * @return
+	 * @param tipoAtto        tipo di atto
+	 * @param dataCreazioneDa data creazione di inizio
+	 * @param dataCreazioneA  data creazione di fine
+	 * @return elenco di collegamenti agli atti del sindacato
 	 */
 	public List<CollegamentoAttiSindacato> findAllAttiSindacato(String tipoAtto, String dataCreazioneDa,
 			String dataCreazioneA) {
@@ -315,8 +316,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ricerca dell'atto sindacale per id
 	 * 
-	 * @param idAtto
-	 * @return
+	 * @param idAtto id dell'atto
+	 * @return elenco di collegamenti agli atti del sindacato
 	 */
 	public List<CollegamentoAttiSindacato> findAttiSindacatoById(String idAtto) {
 		return attoService.findAllAttiSindacato(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -326,8 +327,8 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ricerca degli atti collegati ad un atto
 	 * 
-	 * @param idAtto
-	 * @return
+	 * @param idAtto id dell'atto
+	 * @return elenco di collegamenti agli atti del sindacato
 	 */
 	public List<Collegamento> findAttiCollegatiById(String idAtto) {
 		return attoService.findCollegamentiAttoById(
@@ -337,7 +338,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Tornano i tipi degli atti disponibili
 	 * 
-	 * @return
+	 * @return elenco dei tipi di atti
 	 */
 	public List<String> findTipoAttiSindacato() {
 		return attoService.findTipoAttiSindacato(
@@ -347,7 +348,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Presa in carico dell'atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void presaInCaricoSC(Atto atto) {
 
@@ -357,9 +358,9 @@ public class AttoServiceManager implements ServiceManager {
 	}
 
 	/**
-	 * Salava le informazioni generali dell'atto
+	 * Salva le informazioni generali dell'atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaInfoGeneraliPresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -369,7 +370,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salva l'ammissibiità della presentazione di un atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaAmmissibilitaPresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -379,7 +380,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salva l'assegnazione della presentazione di un atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaAssegnazionePresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -389,7 +390,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salva le note degli allegati della presentazione di un atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaNoteAllegatiPresentazione(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url",
@@ -399,7 +400,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salva le consultazioni di un atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaConsultazioni(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_consultazioni", null), atto);
@@ -408,7 +409,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio dei pareri
 	 * 
-	 * @param consultazioneParere
+	 * @param consultazioneParere consultazione parere
 	 */
 	public void salvaPareri(ConsultazioneParere consultazioneParere) {
 		attoService.salvaPareri(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_pareri", null),
@@ -418,7 +419,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salva i collegamenti di un atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaCollegamenti(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_collegamenti", null), atto);
@@ -427,7 +428,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salva i collegamenti degli atti del sindacato
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaCollegamentiAttiSindacato(Atto atto) {
 		attoService.merge(
@@ -438,7 +439,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Salva i relatori dell'aula
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void salvaRelatoriAula(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_relatori_aula", null), atto);
@@ -447,7 +448,7 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Operazione di chiusura dell'atto
 	 * 
-	 * @param atto
+	 * @param atto atto
 	 */
 	public void chiusuraAtto(Atto atto) {
 		attoService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_chiusura_atto", null), atto);
@@ -456,9 +457,9 @@ public class AttoServiceManager implements ServiceManager {
 	/**
 	 * Ritorna il link delle leggi regionali secondo i parametri passati
 	 * 
-	 * @param data
-	 * @param numero
-	 * @return
+	 * @param data   data
+	 * @param numero numero
+	 * @return link
 	 */
 	public String regioniUrl(String data, String numero) {
 		return urlBuilder.buildSimpleURL("leggi_regionali_link", new String[] { data, numero });

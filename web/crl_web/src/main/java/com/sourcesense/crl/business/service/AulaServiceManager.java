@@ -49,7 +49,7 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Presa in carico dell'esame dell'aula
 	 * 
-	 * @param esameAula
+	 * @param esameAula esame dell'aula
 	 */
 	public void presaInCarico(EsameAula esameAula) {
 
@@ -61,7 +61,7 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio della votazione dell'esame in aula
 	 * 
-	 * @param esameAula
+	 * @param esameAula esame dell'aula
 	 */
 	public void salvaVotazioneEsameAula(EsameAula esameAula) {
 		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_votazione_esame_aula", null),
@@ -71,10 +71,10 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Aggiornamento del testo dell'atto votato all'esame dell'aula
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param testoAtto
-	 * @return
+	 * @param atto      atto
+	 * @param stream    contenuto del testo dell'atto
+	 * @param testoAtto testo dell'atto
+	 * @return testo dell'atto aggiornato
 	 */
 	public TestoAtto uploadTestoAttoVotatoEsameAula(Atto atto, InputStream stream, TestoAtto testoAtto) {
 
@@ -88,10 +88,10 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Aggiornamento delle note degli allegati all'esame dell'aula
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadAllegatoNoteAllegatiEsameAula(Atto atto, InputStream stream, Allegato allegato) {
 
@@ -105,10 +105,10 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Aggiornamento dell'emendamento dell'esame dell'aula
 	 * 
-	 * @param atto
-	 * @param stream
-	 * @param allegato
-	 * @return
+	 * @param atto     atto
+	 * @param stream   contenuto dell'allegato
+	 * @param allegato allegato
+	 * @return allegato aggiornato
 	 */
 	public Allegato uploadEmendamentoEsameAula(Atto atto, InputStream stream, Allegato allegato) {
 
@@ -122,7 +122,7 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio dell'esame dell'aula
 	 * 
-	 * @param esameAula
+	 * @param esameAula esame dell'aula
 	 */
 	public void salvaEmendamentiEsameAula(EsameAula esameAula) {
 		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_emendamenti_esame_aula", null),
@@ -132,8 +132,8 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio del rinvio dell'esame in aula
 	 * 
-	 * @param esameAula
-	 * @return
+	 * @param esameAula esame dell'aula
+	 * @return passaggio
 	 */
 	public Passaggio salvaRinvioEsameEsameAula(EsameAula esameAula) {
 		return aulaService.rinvioEsame(
@@ -144,7 +144,7 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio degli stralci dell'esame in aula
 	 * 
-	 * @param esameAula
+	 * @param esameAula esame dell'aula
 	 */
 	public void salvaStralciEsameAula(EsameAula esameAula) {
 		aulaService.merge(urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_salva_stralci_esame_aula", null),
@@ -154,7 +154,7 @@ public class AulaServiceManager implements ServiceManager {
 	/**
 	 * Salvataggio delle note degli allegati dell'esame in aula
 	 * 
-	 * @param esameAula
+	 * @param esameAula esame dell'aula
 	 */
 	public void salvaNoteAllegatiEsameAula(EsameAula esameAula) {
 		aulaService.merge(

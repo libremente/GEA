@@ -29,8 +29,8 @@ public class ReflectionUtils {
 	/**
 	 * Clonazione di un oggetto tramite reflection
 	 * 
-	 * @param target
-	 * @return
+	 * @param target oggetto da clonare
+	 * @return oggetto clonato
 	 */
 	public static Object cloneObject(Object target) {
 
