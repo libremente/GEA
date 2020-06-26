@@ -29,6 +29,11 @@ import java.io.IOException;
 
 import org.alfresco.service.cmr.repository.NodeRef;
 
+/**
+ * Interfaccia che implementeranno tutti i command che dovranno generare l'ordine del giorno
+ * @author sourcesense
+ *
+ */
 public interface OdgCommand {
 	byte[] generate(byte[] templateByteArray, NodeRef templateNodeRef, NodeRef attoNodeRef, String gruppo)  throws IOException;
 }
