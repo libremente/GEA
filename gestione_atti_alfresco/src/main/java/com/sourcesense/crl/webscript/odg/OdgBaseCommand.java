@@ -329,11 +329,12 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	}
 	
 /**
+ * Sostituisce parametri all'interno del documento (template) con i valori che si trovano dentro replacements
  * 
- * @param documentByteArray
- * @param replacements
- * @return
- * @throws IOException
+ * @param documentByteArray template da riempire
+ * @param replacements: valori che saranno inseriti nel template
+ * @return documento che risulta dopo aver sostituito i parametri dal template con i valori 
+ * @throws IOException se ci sono problemi nell'apertura del template o nella generazione del nuovo documento.
  */
 	 protected byte[] searchAndReplaceDocx(byte[] documentByteArray , HashMap<String, String> replacements) throws IOException {
 		  	
@@ -394,10 +395,11 @@ public abstract class OdgBaseCommand implements OdgCommand{
 	
 	 
 	 /**
-	  * 
-	  * @param cell
-	  * @param replacements
-	  * @throws IOException
+	  * Sostituisce nel template cell i paramteri che si trovano dentro replacements: titoloAtto, oggettoAtto,commissioneReferente, 
+	  * relatoreCommissione,firmatariAttoIndirizzo...
+	  * @param cell documento template
+	  * @param replacements valori dei parametri da sostituire nel template
+	  * @throws IOException se ci sono dei problemi aggiornando i parametri oppure accedendo al template
 	  */
 	 protected void searchAndReplaceParagraph( XWPFTableCell cell, HashMap<String, String> replacements) throws IOException {
 		  	

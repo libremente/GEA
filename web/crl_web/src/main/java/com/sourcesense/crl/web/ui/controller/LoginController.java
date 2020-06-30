@@ -52,7 +52,7 @@ public class LoginController {
 	/**
 	 * Login tramite utenza e password. Ritorna una sessione in sola lettura
 	 * 
-	 * @return
+	 * @return "pretty:Home" se l'autenticazione è ok altrimenti null
 	 */
 	public String readOnlyLogin() {
 
@@ -81,7 +81,7 @@ public class LoginController {
 	/**
 	 * Login tramite utenza e password
 	 * 
-	 * @return
+	 * @return "pretty:Home" se l'autenticazione è ok altrimenti null
 	 */
 	public String login() {
 
@@ -133,7 +133,7 @@ public class LoginController {
 	/**
 	 * Logout della sessione web
 	 * 
-	 * @return
+	 * @return il valore "pretty:login"
 	 */
 	public String logout() {
 		HttpSession session = ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false));

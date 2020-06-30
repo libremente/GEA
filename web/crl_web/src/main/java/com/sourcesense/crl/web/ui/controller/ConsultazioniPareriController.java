@@ -204,8 +204,8 @@ public class ConsultazioniPareriController {
 	/**
 	 * Trova l'organismo secondo la descrizione
 	 * 
-	 * @param descrizione
-	 * @return
+	 * @param descrizione descrizione
+	 * @return organismo statutario
 	 */
 	private OrganismoStatutario findOrganismo(String descrizione) {
 
@@ -220,7 +220,7 @@ public class ConsultazioniPareriController {
 	/**
 	 * Aggiorna l'allegato del parere
 	 * 
-	 * @param event
+	 * @param event evento di upload
 	 */
 	public void uploadAllegatoParere(FileUploadEvent event) {
 
@@ -270,8 +270,8 @@ public class ConsultazioniPareriController {
 	 * Verifica che il nome del file sia presente nell'elenco degli allegati del
 	 * parere
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkAllegatoParere(String fileName) {
 
@@ -374,7 +374,7 @@ public class ConsultazioniPareriController {
 	/**
 	 * Preleva le informazioni della consultazione corrente
 	 * 
-	 * @return
+	 * @return consultazione
 	 */
 	private Consultazione findConsultazione() {
 		if (descrizioneConsultazioneSelected != null) {
@@ -390,8 +390,8 @@ public class ConsultazioniPareriController {
 	/**
 	 * Verifica se il soggetto è formattato nel modo corretto
 	 * 
-	 * @param soggetto
-	 * @return
+	 * @param soggetto soggetto
+	 * @return true se il soggetto non è formattato correttamente
 	 */
 	private boolean isValidSoggetto(String soggetto) {
 		return !soggettoPattern.matcher(soggetto).matches();
@@ -470,7 +470,7 @@ public class ConsultazioniPareriController {
 	 * Verifica se il soggetto consultato è presente nell'elenco delle descrizioni
 	 * delle consultazioni
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkConsultazioni() {
 
@@ -545,7 +545,7 @@ public class ConsultazioniPareriController {
 	 * Verifica se il nome del soggetto invitato è presente nell'elenco delle
 	 * descrizioni dei soggetti invitati
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkSoggettiInvitati() {
 
@@ -599,7 +599,7 @@ public class ConsultazioniPareriController {
 	/**
 	 * Aggiornamento dell'allegato della consultazione
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadAllegatoConsultazione(FileUploadEvent event) {
 
@@ -647,8 +647,8 @@ public class ConsultazioniPareriController {
 	 * Verifica se il nome del file consultato è presente nell'elenco delle
 	 * consultazioni selezionate
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkAllegatoConsultazione(String fileName) {
 
@@ -682,7 +682,7 @@ public class ConsultazioniPareriController {
 	/**
 	 * Totale dei soggetti invitati
 	 * 
-	 * @return
+	 * @return totale dei soggetti invitati
 	 */
 	public int totSoggettiInvitati() {
 
@@ -692,7 +692,7 @@ public class ConsultazioniPareriController {
 	/**
 	 * Totale dei soggetti presenti
 	 * 
-	 * @return
+	 * @return totale dei soggetti invitati
 	 */
 	public int totSogettiPresenti() {
 

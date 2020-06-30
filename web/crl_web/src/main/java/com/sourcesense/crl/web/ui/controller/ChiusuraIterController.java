@@ -162,7 +162,7 @@ public class ChiusuraIterController {
 	/**
 	 * Ritorna un parere negativo trasmesso alla Giunta
 	 * 
-	 * @return
+	 * @return il valore "Parere negativo trasmesso alla Giunta"
 	 */
 	public String tipoChiusuraPar() {
 

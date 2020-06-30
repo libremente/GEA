@@ -102,7 +102,7 @@ public class RiepilogoAttoController {
 	 * Presidente della Giunta 07_ATTO DI INIZIATIVA AUTONOMIE LOCALI - Consiglio
 	 * delle Autonomie locali 08_ATTO DI ALTRA INIZIATIVA - Altra Iniziativa
 	 * 
-	 * @param tipoIniziativa
+	 * @param tipoIniziativa tipo di iniziativa
 	 */
 	private void initTipoIniziativa(String tipoIniziativa) {
 
@@ -160,11 +160,11 @@ public class RiepilogoAttoController {
 	}
 
 	/**
-	 * Ritorna la label della trasissione. Se la commissione ha RUOLO_CONSULTIVA
+	 * Ritorna la label della trasmissione. Se la commissione ha RUOLO_CONSULTIVA
 	 * allora è "Data trasmissione a Comm. referente:" altrimenti "Data Trasmissione
 	 * Aula:"
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public String getDataTrasmissioneLabel() {
 		return (Commissione.RUOLO_CONSULTIVA.equals(commissioneSelected.getRuolo()))
@@ -176,8 +176,8 @@ public class RiepilogoAttoController {
 	 * Ritorna la label della trasissione. Se il ruolo ha RUOLO_CONSULTIVA allora è
 	 * "Data trasmissione a Comm. referente:" altrimenti "Data Trasmissione Aula:"
 	 * 
-	 * @param ruolo
-	 * @return
+	 * @param ruolo ruolo
+	 * @return autorizzazione
 	 */
 	public String getDataTrasmissioneLabelByRuolo(String ruolo) {
 		return (Commissione.RUOLO_CONSULTIVA.equals(ruolo)) ? "Data trasmissione a Comm. referente:"
@@ -201,7 +201,7 @@ public class RiepilogoAttoController {
 	/**
 	 * Abilitato se l'atto è di tipo REF, PDA, PDL, PRE o PLP
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean trasmissioneAdAulaAbilited() {
 

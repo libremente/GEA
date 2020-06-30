@@ -204,7 +204,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * OK se il report si chiama Composizione commissioni
 	 * 
-	 * @return
+	 * @return false se il report si chiama Composizione commissioni
 	 */
 	public boolean isLegislaturaVisible() {
 
@@ -215,7 +215,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Tipo atto visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isTipiAttoVisible() {
 
@@ -234,7 +234,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Commissione visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isCommissioniVisible() {
 
@@ -252,7 +252,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data consultazione visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataConsultazioneVisible() {
 
@@ -263,7 +263,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Ruolo commissione visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isRuoloCommissioneVisible() {
 
@@ -278,7 +278,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data assegnazione visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataAssegnazioneVisible() {
 
@@ -292,7 +292,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data votazione commissione visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataVotazioneCommReferenteVisible() {
 
@@ -305,7 +305,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data ritiro visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataRitiroVisible() {
 
@@ -318,7 +318,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data nomina relatore visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataNominaRelatoreVisible() {
 
@@ -331,7 +331,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Relatore visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isRelatoriVisible() {
 
@@ -342,7 +342,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Organismo visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isOrganismoVisible() {
 
@@ -354,7 +354,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data assegnazione parere da visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataAssegnazioneParereDaVisible() {
 
@@ -369,7 +369,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Firmatario visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isFirmatarioVisible() {
 
@@ -382,7 +382,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Tipologia firma visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isTipologiaFirmaVisible() {
 
@@ -395,7 +395,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data presentazione visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataPresentazioneVisible() {
 
@@ -408,7 +408,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data assegnazione commissione referente visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataAssegnazioneCommReferenteVisible() {
 
@@ -421,7 +421,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Data seduta visibile
 	 * 
-	 * @return
+	 * @return autorizzazione
 	 */
 	public boolean isDataSedutaVisible() {
 
@@ -434,7 +434,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Ritorna il contenuto del report
 	 * 
-	 * @return
+	 * @return il contenuto del report
 	 */
 	public StreamedContent getFile() {
 
@@ -463,7 +463,7 @@ public class ReportisticaController implements Serializable {
 	/**
 	 * Aggiunge il report selezionato al contesto web
 	 * 
-	 * @param event
+	 * @param event evento di selezione del nodo
 	 */
 	public void onNodeSelect(NodeSelectEvent event) {
 

@@ -433,7 +433,7 @@ public class SearchAttoController implements Serializable {
 	/**
 	 * Inserisce gli atti nel documento xls
 	 * 
-	 * @param document
+	 * @param document documento
 	 * @throws SecurityException
 	 * @throws NoSuchFieldException
 	 * @throws IllegalArgumentException
@@ -516,7 +516,7 @@ public class SearchAttoController implements Serializable {
 	/**
 	 * Mostra il dettaglio dell'atto selezionato
 	 * 
-	 * @return
+	 * @return dettaglio dell'atto selezionato
 	 */
 	public String attoDetail() {
 
@@ -551,9 +551,9 @@ public class SearchAttoController implements Serializable {
 	/**
 	 * Mostra il dettaglio dell'atto specificato da id e tipo
 	 * 
-	 * @param idAttoParam
-	 * @param tipo
-	 * @return
+	 * @param idAttoParam id atto
+	 * @param tipo tipo
+	 * @return dettaglio dell'atto selezionato
 	 */
 	public String attoDetail(String idAttoParam, String tipo) {
 
@@ -648,9 +648,9 @@ public class SearchAttoController implements Serializable {
 	/**
 	 * Ritorna la sottrazione tra i due numeri atto
 	 * 
-	 * @param s1
-	 * @param s2
-	 * @return
+	 * @param s1 numero atto 1
+	 * @param s2 numero atto 2
+	 * @return la sottrazione tra i due numeri atto
 	 */
 	public int sortNumeriAtto(String s1, String s2) {
 

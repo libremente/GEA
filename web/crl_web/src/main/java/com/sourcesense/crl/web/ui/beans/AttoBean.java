@@ -144,8 +144,8 @@ public class AttoBean implements Serializable {
 	/**
 	 * Verifica se la commissione è presente nell'atto selezionato
 	 * 
-	 * @param commissione
-	 * @return
+	 * @param commissione commissione
+	 * @returnok se la commissione è presente e non ha lo STATO_ANNULLATO
 	 */
 	public boolean containCommissione(String commissione) {
 		for (Commissione commissioneRec : this.atto.getPassaggi().get(0).getCommissioni()) {

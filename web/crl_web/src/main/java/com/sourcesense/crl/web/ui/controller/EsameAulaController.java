@@ -365,7 +365,7 @@ public class EsameAulaController {
 	/**
 	 * Aggiornamento del testo dell'atto votato
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadTestoAttoVotato(FileUploadEvent event) {
 
@@ -402,7 +402,7 @@ public class EsameAulaController {
 	/**
 	 * Aggiornamento del testo dell'atto
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadTestoAtto(FileUploadEvent event) {
 
@@ -440,8 +440,8 @@ public class EsameAulaController {
 	/**
 	 * Verifica che il testo dell'atto selezionato sia presente nell'atto
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkTestoAtto(String fileName) {
 
@@ -460,8 +460,8 @@ public class EsameAulaController {
 	/**
 	 * Verifica che il testo dell'atto votato selezionato sia presente nell'atto
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkTestoAttoVotato(String fileName) {
 
@@ -478,7 +478,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * 
+	 * Rimozione del testo dell'atto votato
 	 */
 	public void removeTestoAttoVotato() {
 
@@ -520,7 +520,7 @@ public class EsameAulaController {
 	/**
 	 * Salvataggio della votazione
 	 * 
-	 * @return
+	 * @return una stringa vuota
 	 */
 	public String salvaVotazione() {
 
@@ -570,7 +570,7 @@ public class EsameAulaController {
 	/**
 	 * Aggiornamento dell'emendamento
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadEmendamento(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
@@ -609,8 +609,8 @@ public class EsameAulaController {
 	 * Verifica che l'emendamento selezionato sia presente nell'elenco degli
 	 * emendamenti
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkEmendamenti(String fileName) {
 
@@ -648,7 +648,7 @@ public class EsameAulaController {
 	/**
 	 * Aggiornamento dell'allegato
 	 * 
-	 * @param event
+	 * @param event evento di edit della riga
 	 */
 	public void updateAllegato(RowEditEvent event) {
 
@@ -675,7 +675,7 @@ public class EsameAulaController {
 	/**
 	 * Aggiornamento del testo dell'atto
 	 * 
-	 * @param event
+	 * @param event evento di edit della riga
 	 */
 	public void updateTestoAtto(RowEditEvent event) {
 
@@ -826,7 +826,7 @@ public class EsameAulaController {
 	/**
 	 * Salvataggio del rinvio ad esame
 	 * 
-	 * @return
+	 * @return il valore "pretty:Esame_Aula"
 	 */
 	public String salvaRinvioEsame() {
 
@@ -862,7 +862,7 @@ public class EsameAulaController {
 	/**
 	 * Aggiornamento dello stato delle commissioni
 	 * 
-	 * @param attoBean
+	 * @param attoBean atto
 	 */
 	public void updateStatoCommissioni(AttoBean attoBean) {
 
@@ -917,7 +917,7 @@ public class EsameAulaController {
 	/**
 	 * Upload dell'allegato
 	 * 
-	 * @param event
+	 * @param event evento di upload del file
 	 */
 	public void uploadAllegato(FileUploadEvent event) {
 
@@ -952,8 +952,8 @@ public class EsameAulaController {
 	/**
 	 * Verifica che il nome dell'allegato scelto sia presente nell'elenco degli allegati
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileName nome del file
+	 * @return false se presente
 	 */
 	private boolean checkAllegato(String fileName) {
 
@@ -970,7 +970,7 @@ public class EsameAulaController {
 	}
 
 	/**
-	 * Rimozine dell'allegato
+	 * Rimozione dell'allegato
 	 */
 	public void removeAllegato() {
 
@@ -1030,7 +1030,7 @@ public class EsameAulaController {
 	/**
 	 * Verifica che il link scelto sia presente nelle descrizioni dei lin correnti
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkLinks() {
 
@@ -1740,7 +1740,7 @@ public class EsameAulaController {
 	/**
 	 * Verifica che il nome del relatore scelto sia presente nell'elenco dei relatori
 	 * 
-	 * @return
+	 * @return false se presente
 	 */
 	private boolean checkRelatori() {
 		for (Relatore element : relatoriList) {
