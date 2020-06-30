@@ -41,7 +41,7 @@ public class JsonUtils {
 	 * @param root oggetto root del json
 	 * @param elementName nome della proprietà da recuperare
 	 * @return il valore della proprietà passata in input
-	 * @throws JSONException
+	 * @throws JSONException in caso di errore nella lettura del json
 	 */
 	public static String retieveElementFromJson(JSONObject root, String elementName)
 			throws JSONException {
@@ -55,7 +55,7 @@ public class JsonUtils {
 	 * @param root oggetto root del json
 	 * @param arrayName nome della proprietà da recuperare
 	 * @return la lista di  valori della proprietà passata in input
-	 * @throws JSONException
+	 * @throws JSONException in caso di errori in lettura del json
 	 */
 	public static List<String> retieveArrayListFromJson(JSONObject root,
 			String arrayName) throws JSONException {

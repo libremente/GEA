@@ -162,7 +162,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Relatori. For each relatore is analyzed its typer hierarchy, and when a
      * Commissione is found, its name is checked.
      *
-     * @param relatoriResults
+     * @param relatoriResults lista dei relatori
      * @return List of Commissioni NodeRef
      */
     protected List<NodeRef> retrieveCommissioniFromRelatori(
@@ -212,7 +212,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @param attoChild2results - String commissione -> ResultSet
      * @param spacesStore - current space store of search
      * @param atto2child - NodeRef type Atto -> NodeRef type Commissione
-     * @return
+     * @return una mappa con comissioni -> node ref atto
      */
     protected LinkedListMultimap<String, NodeRef> retrieveAtti(
             Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
@@ -261,7 +261,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @param attoChild2results - String commissione -> ResultSet
      * @param spacesStore - current space store of search
      * @param atto2child - NodeRef type Atto -> NodeRef type Commissione
-     * @return
+     * @return Mappa commsione -> NodeRef atto
      */
     protected LinkedListMultimap<String, NodeRef> retrieveAttiReportAssCommissione(
             Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
@@ -286,7 +286,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * @param attoChild2results - String commissione -> ResultSet
      * @param spacesStore - current space store of search
      * @param atto2child - NodeRef type Atto -> NodeRef type Commissione
-     * @return
+     * @return mappa commisione -> NodeRef AttoParere
      */
     protected LinkedListMultimap<String, NodeRef> retrieveAttiParere(
             Map<String, ResultSet> attoChild2results, StoreRef spacesStore,
@@ -708,8 +708,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      *
      * @param generatedDocument documento generato
      * @return Uno stream di byte array del documento passato nei parametri
-     * @throws IOException
-     * @throws FileNotFoundException
+     * @throws IOException IOException
+     * @throws FileNotFoundException FileNotFoundException
      */
     protected ByteArrayInputStream saveTemp(XWPFDocument generatedDocument)
             throws IOException, FileNotFoundException {
