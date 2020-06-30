@@ -29,7 +29,19 @@ import java.io.IOException;
 
 import org.alfresco.service.cmr.repository.StoreRef;
 
+/**
+ * Interface che si occupa di gestire la genereziane dei report
+ * in modo generico in base agli parametri in input.
+ * @author sourcesense
+ */
 public interface ReportCommand {
-
+	/**
+	 * Metodo che genera un documento di tipoligia report in base al template e gli paramtri in ingreso.
+	 * @param templateByteArray template del report da generare
+	 * @param json json con i parametri da sostituire nel template
+	 * @param spacesStore lo spazio su alfresco per recuperare informazioni da inserire nel report
+	 * @return il file generato dai template e i parametri in ingresso
+	 * @throws IOException
+	 */
 	byte[] generate(byte[] templateByteArray,String json, StoreRef spacesStore)  throws IOException;
 }

@@ -53,6 +53,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Generazione report  Atti per relatore
  * V2 - Big OK ( mancano dati tipoAttoRelatore e commissioneRelatore nei dati)
  *
  * bug ordinamento relatori
@@ -62,6 +63,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiRelatoreCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di  Atti per relatore
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -156,11 +161,11 @@ public class ReportAttiRelatoreCommand extends ReportBaseCommand {
     }
 
     /**
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      *
-     *
-     * @param finalDocStream
-     * @param queryRes
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param relatore2atti - String relatore -> list NodeRef type Atto
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")

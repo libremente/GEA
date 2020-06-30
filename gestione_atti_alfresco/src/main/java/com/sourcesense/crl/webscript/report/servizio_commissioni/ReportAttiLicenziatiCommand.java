@@ -55,6 +55,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Generazione report  Atti licenziati.
  * V2 - Big OK
  *
  * @author Alessandro Benedetti
@@ -63,7 +64,11 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 	private static Log logger = LogFactory.getLog(ReportAttiLicenziatiCommand.class);
-	
+
+    /**
+     * Generazione di un report di  Atti licenziati
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -132,10 +137,12 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
     }
 
     /**
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      *
-     * @param finalDocStream
-     * @param queryRes
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param commissione2atti - String commissione ->  NodeRef type Atto
+     * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")

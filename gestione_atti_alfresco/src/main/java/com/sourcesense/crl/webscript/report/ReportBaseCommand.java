@@ -70,6 +70,11 @@ import com.google.common.collect.Multimap;
 import com.sourcesense.crl.util.AttoUtil;
 import com.sourcesense.crl.webscript.report.util.JsonUtils;
 
+/**
+ * Implementazione base  che si occupa di gestire la genereziane dei report
+ * in modo generico in base agli parametri in input.
+ * @author sourcesense
+ */
 public abstract class ReportBaseCommand implements ReportCommand {
 
     protected ContentService contentService;
@@ -145,6 +150,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
         tipoIniziativaDecode.put("08_ATTO DI ALTRA INIZIATIVA", "Altra Iniziativa");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public abstract byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException;
@@ -190,7 +198,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * check if the Commissione in input is good, related to the selection of
      * Commissione good
      *
-     * @param tipoAtto
+     * @param commissione commissione da controllare se è valida
      * @return
      */
     private boolean checkCommissione(String commissione) {
@@ -295,6 +303,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
         return child2atti;
     }
 
+    /**
+     * Metodo che ordina gli atti di una commissione
+     * @param nodeRefList la lista degli nodi che rapresentano gli atti di una commissione
+     */
     protected void sortAttiCommissione(List<NodeRef> nodeRefList) {
 
         Collections.sort(nodeRefList, new Comparator<NodeRef>() {
@@ -321,7 +333,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
         });
 
     }
-    
+
+
+    /**
+     * Metodo che ordina gli atti di una commissione per numero atto
+     * @param nodeRefList la lista degli nodi che rapresentano gli atti di una commissione
+     */
     protected void sortAttiPerNumeroAtto(List<NodeRef> nodeRefList) {
 
         Collections.sort(nodeRefList, new Comparator<NodeRef>() {
@@ -339,7 +356,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
         });
 
     }
-    
+
+
+    /**
+     * Metodo che ordina gli atti parere
+     * @param nodeRefList la lista degli nodi che rapresentano gli atti parere
+     */
     protected void sortAttiParere(List<NodeRef> nodeRefList) {
 
         Collections.sort(nodeRefList, new Comparator<NodeRef>() {
@@ -367,6 +389,13 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
     }
 
+    /**
+     * Recupera le consultazioni partendo dai figli del  nodo atto
+     * @param attoChild2results i nodi figli del atto
+     * @param spacesStore  lo spazio alfresco utilizzato per la ricerca delle consultazioni
+     * @param atto2child mappa dei nodi del atto
+     * @return la lista delle consultazioni
+     */
     protected ArrayListMultimap<String, NodeRef> retrieveConsultazioni(Map<String, ResultSet> attoChild2results, StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child) {
         ArrayListMultimap<String, NodeRef> commissione2consultazioni = ArrayListMultimap.create();
         for (String commissione : attoChild2results.keySet()) {
@@ -378,6 +407,15 @@ public abstract class ReportBaseCommand implements ReportCommand {
         return commissione2consultazioni;
     }
 
+    /**
+     * Recupero delle consultazioni dalla lista di nodi facendo una query sul
+     * repository nello space indicato
+     * @param nodeRefList la lista di nodi da considerare
+     * @param spacesStore spazio alfresco dove effeturare la ricerca
+     * @param atto2child  una mappa che collega ogni atto ai suoi figli
+     * @param child2atti una mappa che collega un figlio agli atti
+     * @param child la stringa del nodo figlio
+     */
     protected void retrieveConsultazioniFromList(List<NodeRef> nodeRefList,
             StoreRef spacesStore, Map<NodeRef, NodeRef> atto2child,
             ArrayListMultimap<String, NodeRef> child2atti, String child) {
@@ -522,10 +560,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Retrieve Atto using an ordered sequence of node child names ( for example
      * Relatore) and then extract from each relatore the related Atto
      *
-     * @param relatore2results
-     * @param spacesStore
-     * @param atto2commissione
-     * @return
+     * @param relatore2results  un mappa che collega i relatori con i risultati
+     * @param spacesStore spazio alfresco per il recupero delle info
+     * @param atto2commissione mappa che collega un atto alla commissione
+     * @return una mappa ordinate degli atti
      */
     protected TreeMap<String, List<NodeRef>> retrieveAttiOrdered(
             Map<String, ResultSet> relatore2results, StoreRef spacesStore,
@@ -586,8 +624,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
     /**
      * Return the list of Relatore for a specific Commissione
      *
-     * @param commissioneNodeRef
-     * @return
+     * @param commissioneNodeRef nodo di riferimento della commissione
+     * @return la lista deirelatori per la commissione
      */
     public ResultSet getRelatori(NodeRef commissioneNodeRef) {
         DynamicNamespacePrefixResolver namespacePrefixResolver = new DynamicNamespacePrefixResolver(
@@ -615,6 +653,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
         return relatoreNodes;
     }
 
+    /**
+     * Metodo per decodificare il tipo iniziativa
+     * @param value inziativa da decodificare
+     * @return inziativa decodificata
+     */
     protected String decodeTipoIniziativa(String value) {
 
         value = value.trim();
@@ -640,8 +683,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      *
      * @param field - field name
      * @param valueList - list of field values
-     * @param Apex - boolean to make phrase search or not
-     * @return
+     * @param phraseSearch - boolean to make phrase search or not
+     * @return ritorna la query costruita per lucene in formato stringa
      */
     protected static String convertListToString(String field,
             List<String> valueList, Boolean phraseSearch) {
@@ -663,8 +706,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Save temporary on the fileSystem the byteArray. In this way is possible
      * to access to the tables in a right and independent manner.
      *
-     * @param generatedDocument
-     * @return
+     * @param generatedDocument documento generato
+     * @return Uno stream di byte array del documento passato nei parametri
      * @throws IOException
      * @throws FileNotFoundException
      */
@@ -676,10 +719,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
-     * Convert the TipoAtto list in input in the json in the Alfresco syntax
-     *
-     * @param tipiAttoJson
-     * @return
+     * Converte la lista di Tipo atto nel json con la sintassi alfresco
+     * @param tipiAttoJson la lista dei tipo atto da convertire
+     * @return la lista convertita nella sintassi alfresco
      */
     protected List<String> convertToLuceneTipiAtto(List<String> tipiAttoJson) {
         List<String> luceneTipiAttoList = new ArrayList<String>();
@@ -694,8 +736,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Return from a map that relate a specific label to a number of results for
      * this label, the total number of results.
      *
-     * @param group2atti
-     * @return
+     * @param group2atti una mappa che collega i gruppi agli atti
+     * @return ritorna il count del totale dei risultati
      */
     protected int retrieveLenght(ArrayListMultimap<String, NodeRef> group2atti) {
         int count = 0;
@@ -709,8 +751,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Return a map that relate a specific label to a number of results for this
      * label
      *
-     * @param commissione2atti
-     * @return
+     * @param commissione2atti una mappa che collega la commissione agli atti
+     * @return una mappa con il totale dei risultati per commissione
      */
     protected Map<String, Integer> retrieveLenghtMap(
             Multimap<String, NodeRef> commissione2atti) {
@@ -726,8 +768,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Return a map that relate a specific label to a number of results for this
      * label
      *
-     * @param commissione2atti
-     * @return
+     * @param commissione2atti una mappa che collega la commissione agli atti
+     * @return una mappa con il totale dei risultati per commissione
      */
     protected Map<String, Integer> retrieveLenghtMap(
             Map<String, List<NodeRef>> commissione2atti) {
@@ -743,9 +785,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Return a map that relate a specific label to a number of results for this
      * label. Only elements that match the conditional rule are counted.
      *
-     * @param commissione2atti
-     * @param doubleCheck TODO
-     * @return
+     * @param commissione2atti una mappa che collega la commissione agli atti
+     * @param doubleCheck  se effetuare un doppio controllo sullo stato del atto per conteggiarlo
+     * @return una mappa con il totale dei risultati per commissione
      */
     protected Map<String, Integer> retrieveLenghtMapConditional(
             LinkedListMultimap<String, NodeRef> commissione2atti, Boolean doubleCheck) {
@@ -782,8 +824,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Check the validity of the Stato Atto. Implementing classes contains the
      * logic.
      *
-     * @param statoAtto
-     * @return
+     * @param statoAtto lo stato del atto
+     * @return true con  lo stato valido
      */
     protected boolean checkStatoAtto(String statoAtto) {
         return true;
@@ -793,8 +835,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
      * Check the validity of the Stato Atto. Implementing classes contains the
      * logic.
      *
-     * @param statoAtto
-     * @return
+     * @param statoAtto lo stato del atto
+     * @return true con  lo stato valido
      */
     protected boolean checkStatoAtto(String statoAtto, String tipoChiusura) {
         return true;
@@ -803,8 +845,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
     /**
      * Return last passaggio for a Atto NodeRef
      *
-     * @param attoNodeRef
-     * @return
+     * @param attoNodeRef il nodo dell atto
+     *
+     * @return ultimo passaggio di un atto
      */
     protected NodeRef getLastPassaggio(NodeRef attoNodeRef) {
 
@@ -851,7 +894,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
     /**
      * Return the string with the name of all the Abbinamento, comma separed
      *
-     * @param currentAtto
+     * @param currentAtto atto corrente
      * @return abbinamento1, abbinamento2, abbinamento3, etc..
      */
     protected String getAbbinamenti(NodeRef currentAtto) {
@@ -873,6 +916,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
         return abbinamentiValue;
     }
 
+    /**
+     * Recupera i Soggetti invitati di una consultazione
+     * @param consultazione il nodo della consultazione
+     * @return i Soggetti invitati
+     */
     protected String getSoggettiInvitati(NodeRef consultazione) {
         String soggettiValue = StringUtils.EMPTY;
         NodeRef soggettiInvitatiFolder = nodeService.getChildByName(consultazione, ContentModel.ASSOC_CONTAINS, "SoggettiInvitati");
@@ -896,10 +944,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
-     * Encode a list of values in a single String , comma separed
+     * Trasforma una lista di firmatari in una stringa separta da virgola.
      *
-     * @param stringList
-     * @return
+     * @param firmatari lista dei firmatari
+     * @return una stringa con tutti i firmatari separta da virgola
      */
     protected String renderFirmatariConGruppoList(List<String> firmatari) {
         String encodedString = StringUtils.EMPTY;
@@ -916,7 +964,13 @@ public abstract class ReportBaseCommand implements ReportCommand {
         }
         return encodedString;
     }
-    
+
+
+    /**
+     * Recupera il gruppo consiliare di un firmatario
+     * @param firmatario per il quale recuperar il gruppo
+     * @return Gruppo Consiliare del firmatario
+     */
     protected String getGruppoConsiliare(String firmatario) {
 		String gruppoConsiliare = StringUtils.EMPTY;
     	String luceneQuery = GRUPPO_FIRMATARIO_QUERY_ATTIVI.replaceAll(QUERY_REPLACER, firmatario);
@@ -938,10 +992,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
 	}
 
 	/**
-     * Encode a list of values in a single String , comma separed
+     * Trasforma una lista di stringhe in un unica stringa seprata da virgola.
      *
-     * @param stringList
-     * @return
+     * @param stringList una lista di String da convertire
+     * @return la lista trasformata in un unica stringa separata da virgola
      */
     protected String renderList(List<String> stringList) {
         String encodedString = StringUtils.EMPTY;
@@ -956,12 +1010,13 @@ public abstract class ReportBaseCommand implements ReportCommand {
         }
         return encodedString;
     }
-    
+
     /**
-     * Encode a list of values in a single String , comma separed
+     * Trasforma una lista di stringhe in un unica stringa seprata da virgola.
      *
-     * @param stringList
-     * @return
+     * @param stringList una lista di String da convertire
+     * @param toExclude il valore da exludere dalla conversione
+     * @return la lista trasformata in un unica stringa separata da virgola
      */
     protected String renderWithExclusionList(List<String> stringList, String toExclude) {
         String encodedString = StringUtils.EMPTY;
@@ -982,8 +1037,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
     /**
      * Return "Si" for True or "No" for False. Useful in front end rendering.
      *
-     * @param booleano
-     * @return
+     * @param booleano valore da trasformare
+     * @return "Si" in caso di true e "No" in caso di false
      */
     protected String processBoolean(String booleano) {
         String result = StringUtils.EMPTY;
@@ -998,7 +1053,7 @@ public abstract class ReportBaseCommand implements ReportCommand {
     /**
      * Init the common params : List<String> tipiAttoLucene; String
      * ruoloCommissioneLuceneField; List<String> commissioniJson;
-     *
+     * @param json contentente le info per inizializzare i parametri comuni
      * @throws JSONException
      */
     protected void initCommonParams(String json) throws JSONException {
@@ -1012,9 +1067,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
-     * Simple init method.
+     * Metodo per inizializzare il firmatario
      *
-     * @param json
+     * @param json con le varie info dove recuperare il firmatario
      * @throws JSONException
      */
     protected void initFirmatario(String json) throws JSONException {
@@ -1023,6 +1078,11 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 "firmatario");
     }
 
+    /**
+     * Controlla se la data sia vuota in quel caso ritorna un '*'.
+     * @param date data da controllare
+     * @return se la data e null o vuota ritorna '*' altrimenti ritorna la data
+     */
     protected String checkEmptyDate(String date) {
         String result = date;
         if (date == null || date.trim().equals("") || date.trim().equals("null")) {
@@ -1032,18 +1092,36 @@ public abstract class ReportBaseCommand implements ReportCommand {
 
     }
 
+    /**
+     * Metodo per inizializzare data seduta da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataSedutaDa(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataSedutaDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataSedutaDa"));
     }
 
+    /**
+     * Metodo per inizializzare data seduta a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataSedutaA(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataSedutaA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataSedutaA"));
     }
 
+    /**
+     * Metodo per inizializzare data assegnazione parere da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataAssegnazioneParereDa(String json)
             throws JSONException {
         JSONObject rootJson = new JSONObject(json);
@@ -1051,6 +1129,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 rootJson, "dataAssegnazioneParereDa"));
     }
 
+    /**
+     * Metodo per inizializzare data assegnazione parere a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataAssegnazioneParereA(String json)
             throws JSONException {
         JSONObject rootJson = new JSONObject(json);
@@ -1058,42 +1142,86 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 rootJson, "dataAssegnazioneParereA"));
     }
 
+    /**
+     * Metodo per inizializzare data presentazione da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataPresentazioneDa(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataPresentazioneDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataPresentazioneDa"));
     }
 
+
+    /**
+     * Metodo per inizializzare data presentazione a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataPresentazioneA(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataPresentazioneA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataPresentazioneA"));
     }
 
+
+    /**
+     * Metodo per inizializzare data nomina relatore da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataNominaRelatoreDa(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataNominaRelatoreDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataNominaRelatoreDa"));
     }
 
+    /**
+     * Metodo per inizializzare data nomina relatore a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataNominaRelatoreA(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataNominaRelatoreA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataNominaRelatoreA"));
     }
 
+    /**
+     * Metodo per inizializzare data ritiro da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataRitiroDa(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataRitiroDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataRitiroDa"));
     }
 
+    /**
+     * Metodo per inizializzare data ritiro a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataRitiroA(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataRitiroA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataRitiroA"));
     }
 
+    /**
+     * Metodo per inizializzare data assegnazione commisione referente da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataAssegnazioneCommReferenteDa(String json)
             throws JSONException {
         JSONObject rootJson = new JSONObject(json);
@@ -1101,6 +1229,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 .retieveElementFromJson(rootJson, "dataAssegnazioneDa"));
     }
 
+    /**
+     * Metodo per inizializzare legislatura
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initLegislatura(String json)
             throws JSONException {
         JSONObject rootJson = new JSONObject(json);
@@ -1108,6 +1242,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 .retieveElementFromJson(rootJson, "legislatura"));
     }
 
+    /**
+     * Metodo per inizializzare data assegnazione commisione referente a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataAssegnazioneCommReferenteA(String json)
             throws JSONException {
         JSONObject rootJson = new JSONObject(json);
@@ -1115,6 +1255,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 rootJson, "dataAssegnazioneA"));
     }
 
+    /**
+     * Metodo per inizializzare data votazione commisione referente da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataVotazioneCommReferenteDa(String json)
             throws JSONException {
         JSONObject rootJson = new JSONObject(json);
@@ -1122,6 +1268,12 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 rootJson, "dataVotazioneCommReferenteDa"));
     }
 
+    /**
+     * Metodo per inizializzare data votazione commisione referente a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataVotazioneCommReferenteA(String json)
             throws JSONException {
         JSONObject rootJson = new JSONObject(json);
@@ -1129,30 +1281,60 @@ public abstract class ReportBaseCommand implements ReportCommand {
                 rootJson, "dataVotazioneCommReferenteA"));
     }
 
+    /**
+     * Metodo per inizializzare tipologia firma
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initTipoFirma(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.tipologiaFirma = JsonUtils.retieveElementFromJson(rootJson,
                 "tipologiaFirma");
     }
 
+    /**
+     * Metodo per inizializzare Organismo
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initOrganismo(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.organismo = JsonUtils
                 .retieveElementFromJson(rootJson, "organismo");
     }
 
+    /**
+     * Metodo per inizializzare i Relatori
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initRelatori(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.relatoriJson = JsonUtils.retieveArrayListFromJson(rootJson,
                 "relatori");
     }
 
+    /**
+     * Metodo per inizializzare data consultazione da
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataConsultazioneDa(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataConsultazioneDa = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
                 "dataConsultazioneDa"));
     }
 
+    /**
+     * Metodo per inizializzare data consultazione a
+     *
+     * @param json contente tutte le info passate alla generazione del report
+     * @throws JSONException
+     */
     protected void initDataConsultazioneA(String json) throws JSONException {
         JSONObject rootJson = new JSONObject(json);
         this.dataConsultazioneA = checkEmptyDate(JsonUtils.retieveElementFromJson(rootJson,
@@ -1160,9 +1342,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
-     * Init the list of Tipo Atto , extracting values from the json
+     * Metodo per inizializzare i tipi atto
      *
-     * @param rootJson
+     * @param json contente tutte le info passate alla generazione del report
      * @throws JSONException
      */
     protected void initTipiAtto(String json) throws JSONException {
@@ -1173,10 +1355,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
-     * Init the list of Tipo Atto, extracting the list of Tipo Atto from the
-     * json,inverting case and adding a specific prefix
+     *  Metodo per inizializzare i tipi atto invertendo il case
+     *  e aggiungendo un prefisso specifico
      *
-     * @param json
+     * @param json contente tutte le info passate alla generazione del report
      * @throws JSONException
      */
     protected void initTipiAttoLuceneAtto(String json) throws JSONException {
@@ -1193,8 +1375,8 @@ public abstract class ReportBaseCommand implements ReportCommand {
     /**
      * Reverse the case of the String in input and capitalizes it
      *
-     * @param tipoAtto
-     * @return
+     * @param tipoAtto tipologia atto
+     * @return ritorna una stringa in maiuscolo del atto
      */
     private String reverseCase(String tipoAtto) {
         String lowercase = tipoAtto.toLowerCase();
@@ -1203,10 +1385,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
-     * Check for null dates and format the result
+     * controlla se la data sia diversa da null e la formata in "dd/MM/yyyy"
      *
-     * @param attributeDate
-     * @return
+     * @param attributeDate la data da formattare
+     * @return una data formatata o una stringa vuota in caso di null.
      */
     protected String checkDateEmpty(Date attributeDate) {
         if (attributeDate == null) {
@@ -1219,10 +1401,10 @@ public abstract class ReportBaseCommand implements ReportCommand {
     }
 
     /**
-     * Check for null text element
+     * Controlla se un testo sia null in quel caso torna una stringa vuota
      *
-     * @param attribute
-     * @return
+     * @param attribute testo da controllare
+     * @return in caso di nulla un testo vuoto altrimenti lo stesso valore in input
      */
     protected String checkStringEmpty(String attribute) {
         if (attribute == null) {
@@ -1236,9 +1418,9 @@ public abstract class ReportBaseCommand implements ReportCommand {
     /**
      * returna specific attribute value in a properties map
      *
-     * @param properties
-     * @param attribute
-     * @return
+     * @param properties mappa contentente le proprietà
+     * @param attribute attributo da recuperare nella mappa
+     * @return il  valore recuperato dalle proprietà.
      */
     protected Serializable getNodeRefProperty(
             Map<QName, Serializable> properties, String attribute) {

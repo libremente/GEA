@@ -48,6 +48,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Generazione di report di tipologia DCR.
+ *
  * GET OK -? noteVotazione ="";//?
  *
  * @author Alessandro Benedetti
@@ -55,6 +57,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportDCRCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di tipologia DCR
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -103,13 +109,11 @@ public class ReportDCRCommand extends ReportBaseCommand {
     }
 
     /**
-     * fills the docx template,correctly replicated with the values extracted
-     * from the NodeRef in input (AttoNodeRef- CommissioneNodeRef)
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      *
-     * @param finalDocStream - docx stream
-     * @param commissione2atti - String commissione -> list NodeRef type Atto
-     * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param atti - ResultSet della query alfresco degi atti
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     public XWPFDocument fillTemplate(ByteArrayInputStream finalDocStream,

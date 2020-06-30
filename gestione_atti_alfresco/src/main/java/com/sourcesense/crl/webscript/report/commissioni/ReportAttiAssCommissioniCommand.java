@@ -52,6 +52,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Genarazione dei report di tipologia Atti assegnati alle commissioni
  * V2 - Big Ok
  *
  * @author Alessandro Benedetti
@@ -59,6 +60,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di Atti assegnati alle commissioni
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -123,14 +128,15 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
 
     }
 
+
+
     /**
-     * fills the docx template,correctly replicated with the values extracted
-     * from the NodeRef in input (AttoNodeRef- CommissioneNodeRef)
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      *
-     * @param finalDocStream - docx stream
+     * @param finalDocStream - docx stream del documento in generazione
      * @param commissione2atti - String commissione -> list NodeRef type Atto
      * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
-     * @return
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
@@ -190,6 +196,10 @@ public class ReportAttiAssCommissioniCommand extends ReportBaseCommand {
         return document;
     }
 
+    /**
+     * {@inheritDoc}
+     * ritorna sempre valido
+     */
     protected boolean checkStatoAtto(String statoAtto) {
         return true;
     }

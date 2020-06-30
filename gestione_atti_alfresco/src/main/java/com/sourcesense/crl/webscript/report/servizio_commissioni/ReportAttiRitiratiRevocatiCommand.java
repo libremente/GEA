@@ -52,6 +52,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Generazione report Atti ritirati e revocati
  * V2 - Big OK
  *
  * @author Alessandro Benedetti
@@ -59,6 +60,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di Atti ritirati e revocati
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -113,6 +118,11 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
 
     }
 
+    /**
+     * Recupera gli atti aggregati per tipo atto dal resulset di ricerca
+     * @param tipoAtto2results  String tipo atto -> ResulSet ricerca alfresco
+     * @return mappa String tipo atto -> list NodeRef type Atto
+     */
     private LinkedListMultimap<String, NodeRef> retrieveAtti(
             Map<String, ResultSet> tipoAtto2results) {
         LinkedListMultimap<String, NodeRef> tipo2atti = LinkedListMultimap.create();
@@ -126,19 +136,21 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
     }
 
     /**
-     * return the substring for the Atto type : crlatti:attoPdl -> Pdl
+     * the substring for the Atto type : crlatti:attoPdl -> Pdl
      *
-     * @param tipo
-     * @return
+     * @param tipo tipo atto
+     * @return the substring for the Atto type : crlatti:attoPdl -> Pdl
      */
     private String convertAttoType(String tipo) {
         return tipo.substring(12);
     }
 
     /**
-     * @param finalDocStream
-     * @param queryRes
-     * @return
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
+     *
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param tipoAtto2atti - String tipoatto ->  NodeRef type Atto
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
@@ -200,11 +212,12 @@ public class ReportAttiRitiratiRevocatiCommand extends ReportBaseCommand {
     }
 
     /**
-     * Check if the statoAtto is "Chiuso" and tipoChiusura is "Ritirato dai
-     * promotori"
+     * {@inheritDoc}
      *
-     * @param statoAtto
-     * @return
+     * Controlla se lo stato dell'atto sia uno dei seguenti <br/>
+     * {@link ReportBaseCommand#CHIUSO}<br/>
+     * {@link ReportBaseCommand#RITIRATO}<br/>
+     *
      */
     protected boolean checkStatoAtto(String statoAtto, String tipoChiusura) {
         return statoAtto.equals(CHIUSO) && tipoChiusura.equals(RITIRATO);
