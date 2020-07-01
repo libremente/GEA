@@ -51,6 +51,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Generazione di report Atti di iniziativa consiliare per consigliere
  * V2 -Big Ok
  *
  * @author Alessandro Benedetti
@@ -58,6 +59,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di Atti di iniziativa consiliare per consigliere
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -131,6 +136,11 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
 
     }
 
+    /**
+     * Ritonra una mappa firmatario -> atto  dal resulset della query alfresco
+     * @param attoChild2results  String attofiglio -> ResultSet query alfresco
+     * @return String firmatario ->  NodeRef type Atto
+     */
     protected LinkedListMultimap<String, NodeRef> retrieveAtti(
             Map<String, ResultSet> attoChild2results) {
         LinkedListMultimap<String, NodeRef> child2atti = LinkedListMultimap.create();
@@ -145,9 +155,11 @@ public class ReportAttiIniziativaConsPerConsCommand extends ReportBaseCommand {
     }
 
     /**
-     * @param finalDocStream
-     * @param queryRes
-     * @return
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
+     *
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param firmatario2atti - String firmatario ->  NodeRef type Atto
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")

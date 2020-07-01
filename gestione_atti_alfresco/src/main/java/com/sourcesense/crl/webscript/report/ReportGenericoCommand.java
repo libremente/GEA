@@ -29,8 +29,15 @@ import java.io.IOException;
 
 import org.alfresco.service.cmr.repository.StoreRef;
 
+/**
+ * Generazione di un tipo di report generico
+ */
 public class ReportGenericoCommand extends ReportBaseCommand {
 
+	/**
+	 * Ritorna lo stesso template passato in ingresso senza fare nessuna modifica.
+	 * {@inheritDoc}
+	 */
 	@Override
 	public byte[] generate(byte[] templateByteArray, String json, StoreRef spacesStore)
 			throws IOException {

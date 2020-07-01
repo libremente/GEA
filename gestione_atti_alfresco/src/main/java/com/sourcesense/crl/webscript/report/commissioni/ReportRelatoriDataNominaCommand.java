@@ -55,6 +55,7 @@ import com.sourcesense.crl.webscript.report.model.Atto;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Genarazione  report dei relatori nominati in commissione per data nomina - Commissioni
  * V2 - Big Ok
  *
  * @author Alessandro Benedetti
@@ -62,6 +63,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report dei relatori nominati in commissione per data nomina - Commissioni
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -158,12 +163,11 @@ public class ReportRelatoriDataNominaCommand extends ReportBaseCommand {
     }
 
     /**
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      *
-     *
-     * @param finalDocStream
-     * @param atto2relatore
-     * @param queryRes
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param commissione2atti - String commissione -> {@link Atto}
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")

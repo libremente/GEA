@@ -53,6 +53,7 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Genarazione  report Conferenze
  * V2 - Big Ok
  *
  * @author Alessandro Benedetti
@@ -60,6 +61,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportConferenzeCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di Conferenze
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -128,9 +133,12 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
     }
 
     /**
-     * @param finalDocStream
-     * @param queryRes
-     * @return
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
+     *
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param commissione2atti - String commissione ->  NodeRef type Atto
+     * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
@@ -174,11 +182,17 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
     
     
 
+
     /**
-     * Check if the statoAtto is comprehended between "preso in carico e votato"
+     * {@inheritDoc}
      *
-     * @param statoAtto
-     * @return
+     * Controlla se lo stato dell'atto sia uno dei seguenti <br/>
+     * {@link ReportBaseCommand#ASSEGNATO_COMMISSIONE}<br/>
+     * {@link ReportBaseCommand#PRESO_CARICO_COMMISSIONE}<br/>
+     * {@link ReportBaseCommand#VOTATO_COMMISSIONE}<br/>
+     * {@link ReportBaseCommand#NOMINATO_RELATORE}<br/>
+     * {@link ReportBaseCommand#LAVORI_COMITATO_RISTRETTO}<br/>
+     *
      */
     protected boolean checkStatoAtto(String statoAtto) {
         return statoAtto.equals(ASSEGNATO_COMMISSIONE)||statoAtto.equals(PRESO_CARICO_COMMISSIONE)
@@ -186,10 +200,12 @@ public class ReportConferenzeCommand extends ReportBaseCommand {
                 || statoAtto.equals(NOMINATO_RELATORE)
                 || statoAtto.equals(LAVORI_COMITATO_RISTRETTO);
     }
-    
-    
-    
-    
+
+
+    /**
+     *
+     * {@inheritDoc}
+     */
     @Override
     protected Map<String, Integer> retrieveLenghtMapConditional(
             LinkedListMultimap<String, NodeRef> commissione2atti, Boolean doubleCheck) {

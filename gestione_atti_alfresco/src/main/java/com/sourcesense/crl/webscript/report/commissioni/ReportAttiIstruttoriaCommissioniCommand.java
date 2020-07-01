@@ -54,6 +54,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Genarazione dei report di tipologia Atti istruttoria  commissioni.
+ *
  * V2
  *
  * @author Alessandro Benedetti
@@ -61,6 +63,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di Atti istruttoria  commissioni
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -125,16 +131,16 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
 
     }
 
+
     /**
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      * qui vanno inseriti nella table, presa dal template solo 6: tipo atto-
      * numero atto- oggetto - iniziativa -firmatari- data assegnazione -
      *
-     *
-     *
-     * @param finalDocStream
-     * @param docxManager
-     * @param queryRes
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param commissione2atti - String commissione ->  NodeRef type Atto
+     * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
@@ -218,10 +224,14 @@ public class ReportAttiIstruttoriaCommissioniCommand extends ReportBaseCommand {
     }
 
     /**
-     * Check if the statoAtto is comprehended between "preso in carico e votato"
+     * {@inheritDoc}
      *
-     * @param statoAtto
-     * @return
+     * Controlla se lo stato dell'atto sia uno dei seguenti <br/>
+     * {@link ReportBaseCommand#PRESO_CARICO_COMMISSIONE}<br/>
+     * {@link ReportBaseCommand#VOTATO_COMMISSIONE}<br/>
+     * {@link ReportBaseCommand#NOMINATO_RELATORE}<br/>
+     * {@link ReportBaseCommand#LAVORI_COMITATO_RISTRETTO}<br/>
+     *
      */
     protected boolean checkStatoAtto(String statoAtto) {
         return statoAtto.equals(PRESO_CARICO_COMMISSIONE)

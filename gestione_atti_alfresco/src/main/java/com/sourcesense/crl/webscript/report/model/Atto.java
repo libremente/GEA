@@ -29,6 +29,9 @@ import java.util.Date;
 
 import org.alfresco.service.cmr.repository.NodeRef;
 
+/**
+ * Modello del atto
+ */
 public class Atto implements Comparable<Atto> {
 	private Date dataNomina;
 	private String tipoAtto;

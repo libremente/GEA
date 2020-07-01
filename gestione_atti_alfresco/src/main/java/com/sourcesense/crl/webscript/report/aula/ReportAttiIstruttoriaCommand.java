@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.sourcesense.crl.webscript.report.ReportCommand;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -49,6 +50,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Generazione di report per Atti istruttoria.
+ *
  * String relazioneScritta = "";// to complete String noteGenerali = "";// to
  * complete
  *
@@ -57,6 +60,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di Atti Istruttoria
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -107,13 +114,11 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
     }
 
     /**
-     * fills the docx template,correctly replicated with the values extracted
-     * from the NodeRef in input (AttoNodeRef- CommissioneNodeRef)
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      *
-     * @param finalDocStream - docx stream
-     * @param commissione2atti - String commissione -> list NodeRef type Atto
-     * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param atti - ResultSet della query alfresco degi atti
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
@@ -227,9 +232,7 @@ public class ReportAttiIstruttoriaCommand extends ReportBaseCommand {
 
     /**
      * Check if the statoAtto is comprehended between "preso in carico e votato"
-     *
-     * @param statoAtto
-     * @return
+     * {@inheritDoc}
      */
     protected boolean checkStatoAtto(String statoAtto) {
         return statoAtto.equals(PRESO_CARICO_AULA);

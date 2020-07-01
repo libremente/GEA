@@ -52,7 +52,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
- * *
+ *
+ * Generazione di report atti inviati ad organi esterni
  * V2 - Big Ok
  *
  * @author Alessandro Benedetti
@@ -60,6 +61,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di atti inviati ad organi esterni
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -111,9 +116,12 @@ public class ReportAttiInviatiOrganiEsterniCommand extends ReportBaseCommand {
     }
 
     /**
-     * @param finalDocStream
-     * @param queryRes
-     * @return
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
+     *
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param organo2atti - String organo ->  NodeRef type Atto
+     * @param atto2parere - NodeRef type Atto -> NodeRef type Parere
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")

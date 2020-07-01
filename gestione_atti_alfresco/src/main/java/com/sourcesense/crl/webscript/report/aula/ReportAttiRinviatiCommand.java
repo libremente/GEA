@@ -49,6 +49,9 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ *
+ * Generazione di report per Atti rinviati.
+ *
  * V2 Date dateRinvio =null; //(Date)
  * this.getNodeRefProperty(attoProperties,"dataRinvio"); Date dateTermine
  * =null;// (Date) this.getNodeRefProperty(attoProperties,"dataChiusura");
@@ -59,6 +62,10 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
  */
 public class ReportAttiRinviatiCommand extends ReportBaseCommand {
 
+    /**
+     * Generazione di un report di Atti Rinviati
+     * {@inheritDoc}
+     */
     @Override
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
@@ -104,13 +111,11 @@ public class ReportAttiRinviatiCommand extends ReportBaseCommand {
     }
 
     /**
-     * fills the docx template,correctly replicated with the values extracted
-     * from the NodeRef in input (AttoNodeRef- CommissioneNodeRef)
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      *
-     * @param finalDocStream - docx stream
-     * @param commissione2atti - String commissione -> list NodeRef type Atto
-     * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param atti - ResultSet della query alfresco degi atti
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")

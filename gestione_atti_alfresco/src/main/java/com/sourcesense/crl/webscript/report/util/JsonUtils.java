@@ -32,14 +32,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Utilità per gestire il json
+ */
 public class JsonUtils {
 	/**
-	 * return a simple element for the current JsonObj and elementname
-	 * 
-	 * @param root
-	 * @param arrayName
-	 * @return
-	 * @throws JSONException
+	 * Recupera il valore di una proprietà del json
+	 * @param root oggetto root del json
+	 * @param elementName nome della proprietà da recuperare
+	 * @return il valore della proprietà passata in input
+	 * @throws JSONException in caso di errore nella lettura del json
 	 */
 	public static String retieveElementFromJson(JSONObject root, String elementName)
 			throws JSONException {
@@ -47,13 +49,13 @@ public class JsonUtils {
 		return elementValue;
 	}
 
+
 	/**
-	 * return the ArrayList of elements for the current JsonObj and arrayName
-	 * 
-	 * @param root
-	 * @param arrayName
-	 * @return
-	 * @throws JSONException
+	 * Recupera il valore di una proprietà del json di tipo lista
+	 * @param root oggetto root del json
+	 * @param arrayName nome della proprietà da recuperare
+	 * @return la lista di  valori della proprietà passata in input
+	 * @throws JSONException in caso di errori in lettura del json
 	 */
 	public static List<String> retieveArrayListFromJson(JSONObject root,
 			String arrayName) throws JSONException {
@@ -73,8 +75,8 @@ public class JsonUtils {
 	 * Returns the value for this single json element in this form :
 	 * "tipoAtto":"PDL"
 	 * 
-	 * @param tipoAtto
-	 * @return
+	 * @param jsonElement elemento json da trasformare
+	 * @return ritorna il valore nel seguente formato "tipoAtto":"PDL"
 	 */
 	public static String extractJsonSingleValue(String jsonElement) {
 		int indexFieldValueSeparator = jsonElement.indexOf(":");

@@ -56,6 +56,8 @@ import com.sourcesense.crl.webscript.report.ReportBaseCommand;
 import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 
 /**
+ * Genarazione dei report di tipologia Atti Licenziati.
+ *
  * V2 - Big Ok ( scavalla pagine a 2, come comportarsi con fogli vuoti?
  *
  * @author Alessandro Benedetti
@@ -64,7 +66,11 @@ import com.sourcesense.crl.webscript.report.util.office.DocxManager;
 public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
 	private static Log logger = LogFactory.getLog(ReportAttiLicenziatiCommand.class);
-	
+
+    /**
+     * Generazione di un report di Atti Licenziati
+     * {@inheritDoc}
+     */
     public byte[] generate(byte[] templateByteArray, String json,
             StoreRef spacesStore) throws IOException {
         ByteArrayOutputStream ostream = null;
@@ -125,18 +131,18 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
 
     }
 
+
     /**
+     * Valorizza il template docx con i valori recuperati dalla query verso alfresco.
      * qui vanno inseriti nella table, presa dal template solo 8: tipo atto-
      * numero atto- competenza - iniziativa -firmatari- oggetto - data
      * assegnazione - esito votazione - data valutazione numero BURL - data BURL
      * - numero LR - data LR -elenco relatori -data nomina relatori
      *
-     *
-     *
-     * @param finalDocStream
-     * @param docxManager
-     * @param queryRes
-     * @return
+     * @param finalDocStream - docx stream del documento in generazione
+     * @param commissione2atti - String commissione ->  NodeRef type Atto
+     * @param atto2commissione - NodeRef type Atto -> NodeRef type Commissione
+     * @return {@link XWPFDocument} documento word del report
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
@@ -217,6 +223,17 @@ public class ReportAttiLicenziatiCommand extends ReportBaseCommand {
         return document;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Controlla se lo stato sia uno dei seguenti <br/>
+     * {@link ReportBaseCommand#TRASMESSO_AULA}<br/>
+     * {@link ReportBaseCommand#PRESO_CARICO_AULA}<br/>
+     * {@link ReportBaseCommand#VOTATO_AULA}<br/>
+     * {@link ReportBaseCommand#PUBBLICATO}<br/>
+     * {@link ReportBaseCommand#CHIUSO}<br/>
+     *
+     */
     protected boolean checkStatoAtto(String statoAtto) {
         return statoAtto.equals(TRASMESSO_AULA)
                 || statoAtto.equals(PRESO_CARICO_AULA)
