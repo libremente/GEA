@@ -33,7 +33,13 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
 
 ## contesto di utilizzo e casi d’uso (quella di domimnio)
 ## finalità del software (a livello di dominio)
-## screenshot
+### screenshot
+
+![alt](Home Front End Regione Lombardia.jpeg)
+![alt](HomeUtenteGea.jpeg)
+![alt](InserimentoAttoEAC.jpeg)
+![alt](Snapshot Login Regione Lombardia GEA.jpeg)
+
 Il Sistema Informativo di __Gestioni Atti del Consiglio regionale della Lombardia__ ha come architettura:
 
 * __Front - end__: maschera che gli utenti utilizzano per entrare nel sistema.
