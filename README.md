@@ -18,19 +18,18 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
   - CC 4.0
   - Apache 2.0
 
-## Requisiti minimi di sistema
+### Requisiti minimi di sistema
+ 
+ DB: MySQL 5.5 or PostgreSQL 9.0.4
+ App Server: Tomcat 7.0.30 
+ JDK Version: 1.7.0 u7
 
-DB: MySQL 5.5 or PostgreSQL 9.0.4
-App Server: Tomcat 7.0.30 
-JDK Version: 1.7.0 u7
-
-Hardware: minimo:
- JVM RAM: 2 GB. La macchina deve avere al meno 6 GB di RAM.
-Disco: 5 GB
-
-Hardaware consigliato:
-JVM RAM: 4 GB. RAM fisica nella macchina: 12 GB
-Disco: 10GB
+ Hardware: minimo:
+  JVM RAM: 2 GB. La macchina deve avere al meno 6 GB di RAM.
+  Disco: 5 GB
+ Hardaware consigliato:
+  JVM RAM: 4 GB. RAM fisica nella macchina: 12 GB
+  Disco: 10GB
 
 ## contesto di utilizzo e casi d’uso (quella di domimnio)
 ## finalità del software (a livello di dominio)
