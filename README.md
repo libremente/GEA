@@ -76,3 +76,15 @@ La maggior parte delle personalizzazioni si trovano su share-config-custom.xml.
 Diverse tipologie sono dichiarate per creare questo tipo di documenti direttamente da Share alfresco. 
 Anche gli aspetti personalizzati del modello di contenuto CRL sono mostrati agli utenti finali.
 Anche i metadati per i documenti CRL-documenti su moduli Share sono personalizzati. La ricerca avanzata è personalizzata anche per la Regione Lombardia. 
+
+## Licenza
+
+Concesso in licenza a norma GPL 3.0 cosi come descritta nel file LICENSE
+
+Non è possibile utilizzare l'opera salvo nel rispetto della Licenza.
+
+È possibile ottenere una copia della Licenza al seguente indirizzo: https://www.gnu.org/licenses/gpl-3.0.txt
+
+Salvo diversamente indicato dalla legge applicabile o concordato per iscritto, il software distribuito secondo i termini della Licenza è distribuito "TAL QUALE", SENZA GARANZIE O CONDIZIONI DI ALCUN TIPO, esplicite o implicite.
+
+Si veda la Licenza per la lingua specifica che disciplina le autorizzazioni e le limitazioni secondo i termini della Licenza.
