@@ -2,7 +2,7 @@
 
 - Copyright Consiglio regionale della Lombardia
 - Stato del progetto: stable
-- Mantenimento in carico a sourcesense
+- Mantenimento in carico a Sourcesense S.p.a www.sourcesense.com
 - Per segnalare CVE e problemi di sicurezza scrivere a sys-admin @ sourcesense.com
 
 ### Struttiura del repositiry 
