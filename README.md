@@ -30,6 +30,10 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
  Hardaware consigliato:
   JVM RAM: 4 GB. RAM fisica nella macchina: 12 GB
   Disco: 10GB
+  
+### Istruzioni pewr l'installazione
+
+ Potete trovare il manuale qui: (doc/Manuale di Installazione e Amministrazione/) 
 
 ## contesto di utilizzo e casi d’uso (quella di domimnio)
 ## finalità del software (a livello di dominio)
