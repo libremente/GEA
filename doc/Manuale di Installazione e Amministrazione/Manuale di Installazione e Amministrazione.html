@@ -1337,6 +1337,30 @@
     <ol class="c19 lst-kix_list_1-0" start="3">
         <li class="c22"><span class="c21">Configurazione Alfresco</span></li>
     </ol>
+  
+  <p class="c20"><span class="c1">
+    Per lo sviluppo con SDK Alfresco o per semplicemente compilare l'applicazione, la gestione delle dependencies è automatica 
+    perché avviene con MAVEN. E' importante avere impostato nel file sttings di maven tutti i puntamenti ai repositories 
+    dove MAVEN scarica le librerie di Alfresco:</span></p>
+  
+   <p class="c41"><span class="c1">
+     &lt;repository&gt;
+                       &lt;id&gt;5_prime-repo&lt;/id&gt;
+                       &lt;name&gt;PrimeFaces Maven Repository&lt;/name&gt;
+                       &lt;url&gt;http://repository.primefaces.org&lt;/url&gt;
+                       &lt;layout&gt;default&lt;/layout&gt;
+               &lt;/repository&gt;</span></p>
+  
+   <p class="c41"><span class="c1">
+     &lt;repository&gt;
+                       &lt;id&gt;2_alfresco-private&lt;/id&gt;
+                       &lt;name&gt;Alfresco Private&lt;/name&gt;
+                       &lt;url&gt;https://artifacts.alfresco.com/nexus/content/groups/private&lt;/url&gt;
+                       &lt;layout&gt;default&lt;/layout&gt;
+               &lt;/repository&gt;</span></p>
+  <p class="c20"><span class="c1">
+  Per compilare, utilizzare : mvn clean install. Per far partire SDK: mvn install -Prun. Per il debug: mvndebug clean install -Prun. </span></p>
+  
     <p class="c20"><span class="c1">Per configurare Alfresco occorre partire da una nuova istanza di Alfresco community
             4.2.c e di Apache Tomcat 7.0.37 ed eseguire i seguenti passi:</span></p>
     <ul class="c19 lst-kix_list_3-0 start">
