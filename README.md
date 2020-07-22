@@ -23,6 +23,7 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
  DB: MySQL 5.5 or PostgreSQL 9.0.4
  App Server: Tomcat 7.0.30 
  JDK Version: 1.7.0 u7
+ Sistemi operativi: Red Hat Enterprise Linux 6.4 x64, Sun Solaris 11.1 x64, Windows Server 2012 R2 x64, Windows Server 2008 R2 x64, Ubuntu 12.04 LTS x64, Suse 11.3 x64
 
  Hardware: minimo:
   JVM RAM: 2 GB. La macchina deve avere al meno 6 GB di RAM.
