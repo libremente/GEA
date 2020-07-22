@@ -5,7 +5,7 @@
 - Mantenimento in carico a Sourcesense S.p.a https://www.sourcesense.com
 - Per segnalare CVE e problemi di sicurezza scrivere a sys-admin @ sourcesense.com
 
-### Struttiura del repositiry 
+### Struttura del repository 
 
 il respository consiste in un albero di direttori composto dalle seguenti cartelle:
   - doc (contiene la documentazione del progettoo in formato .html, .cocx,.pdf)
@@ -37,7 +37,8 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
  Potete trovare il manuale qui: (doc/Manuale di Installazione e Amministrazione/) 
 
 ## contesto di utilizzo e casi d’uso (quella di domimnio)
-## finalità del software (a livello di dominio)
+## Finalità del software (a livello di dominio)
+Il sistema permette monitorare il ciclo di vita di un atto, concetto fondamentale nell'attività quotidiana del parlamento della Regione Lombardia. Si parte dalla creazione del tipo di atto, aggiornamento, discussione in aula, pareri sull'atto, ....... e si finisce con la pubblicazione dell'atto in OPENDATA.
 
 Il Sistema Informativo di __Gestioni Atti del Consiglio regionale della Lombardia__ ha come architettura:
 
