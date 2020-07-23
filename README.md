@@ -38,9 +38,16 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
 
 
 ## contesto di utilizzo e casi d’uso (quella di domimnio)
-I casi d'uso sono strettamente legati al ciclo di vita dei diversi tipi di atti che il sistema gestice. Capire i passaggi che fanno i diversi tipi di atti è l'elemento più importante per comprendere la finalità del sistema GEA. 
+I casi d'uso sono strettamente legati al ciclo di vita dei diversi tipi di atti che il sistema gestice. 
+Capire i passaggi che fanno i diversi tipi di atti è l'elemento più importante per comprendere la finalità del sistema GEA. 
 
 Per ulteriori informazioni, fare riferimento al documento funzionalità degli atti.odt che si trova nella cartella doc.
+
+Qui di seguto alcuni diagrammi esplicativi di esempio dei flussi:
+
+![alt](DOC_Documento_generico.png)
+
+![alt](EAC_Elenco_Atti_Comunitari.png)
  
 ## Finalità del software (a livello di dominio)
 Il sistema permette monitorare il ciclo di vita di un atto, concetto fondamentale nell'attività quotidiana del parlamento della Regione Lombardia. Si parte dalla creazione del tipo di atto, aggiornamento, discussione in aula, pareri sull'atto, ....... e si finisce con la pubblicazione dell'atto in OPENDATA.
