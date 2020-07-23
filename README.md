@@ -5,7 +5,7 @@
 - Mantenimento in carico a Sourcesense S.p.a https://www.sourcesense.com
 - Per segnalare CVE e problemi di sicurezza scrivere a sys-admin @ sourcesense.com
 
-### Struttura del repository 
+## Struttura del repository 
 
 il respository consiste in un albero di direttori composto dalle seguenti cartelle:
   - doc (contiene la documentazione del progettoo in formato .html, .cocx,.pdf)
@@ -18,7 +18,7 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
   - CC 4.0
   - Apache 2.0
 
-### Requisiti minimi di sistema
+## Requisiti minimi di sistema
  
  DB: MySQL 5.5 or PostgreSQL 9.0.4
  App Server: Tomcat 7.0.30 
@@ -32,12 +32,12 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
   JVM RAM: 4 GB. RAM fisica nella macchina: 12 GB
   Disco: 10GB
   
-### Istruzioni per l'installazione
+## Istruzioni per l'installazione
 
  Potete trovare il manuale qui: (doc/Manuale di Installazione e Amministrazione/) 
 
 
-## contesto di utilizzo e casi d’uso (quella di domimnio)
+## Contesto di utilizzo e casi d’uso
 I casi d'uso sono strettamente legati al ciclo di vita dei diversi tipi di atti che il sistema gestice. 
 Capire i passaggi che fanno i diversi tipi di atti è l'elemento più importante per comprendere la finalità del sistema GEA. 
 
