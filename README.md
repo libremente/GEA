@@ -32,7 +32,7 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
   JVM RAM: 4 GB. RAM fisica nella macchina: 12 GB
   Disco: 10GB
   
-### Istruzioni pewr l'installazione
+### Istruzioni per l'installazione
 
  Potete trovare il manuale qui: (doc/Manuale di Installazione e Amministrazione/) 
 
