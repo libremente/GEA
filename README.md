@@ -1,13 +1,22 @@
 # Sistema Informativo Gestione Atti (GEA)
 
+## Note sul copyright
+
 - Copyright Consiglio regionale della Lombardia
 - Stato del progetto: stable
 - Mantenimento in carico a Sourcesense S.p.a https://www.sourcesense.com
 - Per segnalare CVE e problemi di sicurezza scrivere a sys-admin @ sourcesense.com
 
-## Struttura del repository 
+## Finalità del software
 
-il respository consiste in un albero di direttori composto dalle seguenti cartelle:
+il sistema “gestione atti” è volto alla gestione di determinate categorie di atti :  progetto di legge (PDL), progetto di atto amministrativo (PDA), parere (PAR), relazione (REL), petizione popolare (INP), documento generico (DOC), proposta di referendum (REF) elenco atti comunitari (EAC), MIS (missioni valutative), proposte di atto amministrativo di iniziativa dell’ufficio di Presidenza del Consiglio (PDA-UDP), atti di organizzazione interna (ORG). Gli atti   sono di competenza   del Servizio Commissioni, di ciascuna Commissione permanente e speciale, del Servizio Assemblea e del Comitato paritetico di Controllo. Gli uffici preposti a  questi organi provvedono all’inserimento dei dati e degli atti di propria competenza.
+In via generale,  per quanto concerne gli atti formali  istruiti  dalle   Commissioni consiliari vengono inseriti i testi, la documentazione  e i  dati relativi a ciascuna fase dell’atto, dalla  protocollazione  dello stesso sino alla sua approvazione  in Commissione (PAR , REL, INP)  o in Aula consiliare (PDA, PDL, DOC, REF). Quanto inserito generalmente  è visibile sul sito internet del Consiglio.
+In GEA è presente una sezione denominata EAC in cui sono pubblicati l’elenco degli atti comunitari inviati dalla Conferenza dei Presidenti delle Assemblee legislative unitamente alla nota di assegnazione alle Commissioni consiliari  a firma del Presidente del Consiglio. In questa sezione non sono presenti flussi procedimentali . Questi atti non sono visibili sul sito internet del Consiglio.
+E’ inserita, altresì,  una pagina dedicata all’inserimento di missioni valutative implementata dal Comitato Paritetico di Controllo e Valutazione. La pagina consente la creazione manuale di una scheda a cui gli utenti possono accedere mediante modalità di sola lettura.
+
+## Struttura del repository
+
+l respository consiste in un albero di direttori composto dalle seguenti cartelle:
   - doc (contiene la documentazione del progettoo in formato .html, .cocx,.pdf)
   - gestione_atti_alfresco (Modulo Amp per Alfresco)
   - gestione_atti_share (Modulo Amp per Alfresco Share)
@@ -17,40 +26,8 @@ il respository consiste in un albero di direttori composto dalle seguenti cartel
   - GPL 3.0
   - CC 4.0
   - Apache 2.0
-
-## Requisiti minimi di sistema
- 
- DB: MySQL 5.5 or PostgreSQL 9.0.4
- App Server: Tomcat 7.0.30 
- JDK Version: 1.7.0 u7
- Sistemi operativi: Red Hat Enterprise Linux 6.4 x64, Sun Solaris 11.1 x64, Windows Server 2012 R2 x64, Windows Server 2008 R2 x64, Ubuntu 12.04 LTS x64, Suse 11.3 x64
-
- Hardware: minimo:
-  JVM RAM: 2 GB. La macchina deve avere al meno 6 GB di RAM.
-  Disco: 5 GB
- Hardaware consigliato:
-  JVM RAM: 4 GB. RAM fisica nella macchina: 12 GB
-  Disco: 10GB
   
-## Istruzioni per l'installazione
-
- Potete trovare il manuale qui: (doc/Manuale di Installazione e Amministrazione/) 
-
-
-## Contesto di utilizzo e casi d’uso
-I casi d'uso sono strettamente legati al ciclo di vita dei diversi tipi di atti che il sistema gestice. 
-Capire i passaggi che fanno i diversi tipi di atti è l'elemento più importante per comprendere la finalità del sistema GEA. 
-
-Per ulteriori informazioni, fare riferimento al documento funzionalità degli atti.odt che si trova nella cartella doc.
-
-Qui di seguto alcuni diagrammi esplicativi di esempio dei flussi:
-
-![alt](DOC_Documento_generico.png)
-
-![alt](EAC_Elenco_Atti_Comunitari.png)
- 
-## Finalità del software (a livello di dominio)
-Il sistema permette monitorare il ciclo di vita di un atto, concetto fondamentale nell'attività quotidiana del parlamento della Regione Lombardia. Si parte dalla creazione del tipo di atto, aggiornamento, discussione in aula, pareri sull'atto, ....... e si finisce con la pubblicazione dell'atto in OPENDATA.
+## Architettura del sistema
 
 Il Sistema Informativo di __Gestioni Atti del Consiglio regionale della Lombardia__ ha come architettura:
 
@@ -107,6 +84,24 @@ Diverse tipologie sono dichiarate per creare questo tipo di documenti direttamen
 Anche gli aspetti personalizzati del modello di contenuto CRL sono mostrati agli utenti finali.
 Anche i metadati per i documenti CRL-documenti su moduli Share sono personalizzati. La ricerca avanzata è personalizzata anche per la Regione Lombardia. 
 
+## Requisiti minimi di sistema
+ 
+ DB: MySQL 5.5 or PostgreSQL 9.0.4
+ App Server: Tomcat 7.0.30 
+ JDK Version: 1.7.0 u7
+ Sistemi operativi: Red Hat Enterprise Linux 6.4 x64, Sun Solaris 11.1 x64, Windows Server 2012 R2 x64, Windows Server 2008 R2 x64, Ubuntu 12.04 LTS x64, Suse 11.3 x64
+
+ Hardware: minimo:
+  JVM RAM: 2 GB. La macchina deve avere al meno 6 GB di RAM.
+  Disco: 5 GB
+ Hardaware consigliato:
+  JVM RAM: 4 GB. RAM fisica nella macchina: 12 GB
+  Disco: 10GB
+  
+## Istruzioni per l'installazione
+
+ Potete trovare il manuale qui: (doc/Manuale di Installazione e Amministrazione/) 
+
 ## Licenza
 
 Concesso in licenza a norma GPL 3.0 cosi come descritta nel file LICENSE
@@ -118,7 +113,7 @@ Non è possibile utilizzare l'opera salvo nel rispetto della Licenza.
 Salvo diversamente indicato dalla legge applicabile o concordato per iscritto, il software distribuito secondo i termini della Licenza è distribuito "TAL QUALE", SENZA GARANZIE O CONDIZIONI DI ALCUN TIPO, esplicite o implicite.
 
 Si veda la Licenza per la lingua specifica che disciplina le autorizzazioni e le limitazioni secondo i termini della Licenza.
-
+ 
 ## Screenshot
 
 __Home__
