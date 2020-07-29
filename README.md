@@ -116,6 +116,9 @@ Si veda la Licenza per la lingua specifica che disciplina le autorizzazioni e le
  
 ## Screenshot
 
+__Login__
+![alt](SnapshotLoginRegioneLombardiaGEA.jpeg)
+
 __Home__
 ![alt](HomeFrontEndRegioneLombardia.jpeg)
 
@@ -125,5 +128,4 @@ __Home__Utente__
 __Inserimento__
 ![alt](InserimentoAttoEAC.jpeg)
 
-__Login__
-![alt](SnapshotLoginRegioneLombardiaGEA.jpeg)
+
